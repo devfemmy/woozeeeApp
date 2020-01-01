@@ -48,9 +48,9 @@ const PreviewEntry = (props) => {
         mediaURL: url,
         entryTypes : ['story'],
         description: form.caption,
-        // type: type
+        type: type
       };
-      axios.post(`entries`, data, {headers: {Authorization: token}})
+      axios.post(`stories`, data, {headers: {Authorization: token}})
       .then(res => {
         console.log(res)
         setLoading(false);

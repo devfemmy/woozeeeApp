@@ -260,6 +260,7 @@ export default function Social({ navigation }) {
               width: '100%',
               justifyContent: 'flex-start',
             }}
+            onPress={routeLiveStream}
           >
             <Text style={{ fontSize: 16 }} status="primary">
               {t('startLiveStream')}
