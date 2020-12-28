@@ -1,0 +1,12 @@
+{
+  "name": "Woozeee",
+  "displayName": "Woozeee",
+  "expo": {
+    "name": "Woozeee",
+    "slug": "Woozeee",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
