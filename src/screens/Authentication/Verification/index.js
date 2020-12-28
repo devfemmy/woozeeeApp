@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -26,62 +26,67 @@ export default function VerifyWithCode({ navigation }) {
   return (
     <Layout level="1" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ flex: 1, paddingHorizontal: 15, paddingVertical: 25 }}>
-          <TopNavigationArea title="Verify account" navigation={navigation} />
-          <View style={{ paddingVertical: 10 }}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={{ flex: 1, paddingHorizontal: 15, paddingVertical: 25 }}>
+            <TopNavigationArea title="Verify account" navigation={navigation} />
             <View style={{ paddingVertical: 10 }}>
-              <RegularInput
-                value={values.email}
-                label="Code"
-                accessibilityLabel="Code"
-                placeholder="Enter Verification Code"
-                autoCapitalize="none"
-                autoCompleteType="off"
-                textContentType="oneTimeCode"
-                autoFocus
-                autoCorrect={false}
-                onChangeText={updateCodeValue}
-              />
-              <Button
-                size="tiny"
-                appearance="ghost"
-                style={{ alignSelf: 'flex-end' }}
-              >
-                <Text status="primary" category="s2">
-                  Resend Code
-                </Text>
-              </Button>
+              <View style={{ paddingVertical: 10 }}>
+                <RegularInput
+                  value={values.email}
+                  label="Code"
+                  accessibilityLabel="Code"
+                  placeholder="Enter Verification Code"
+                  autoCapitalize="none"
+                  autoCompleteType="off"
+                  textContentType="oneTimeCode"
+                  autoFocus
+                  autoCorrect={false}
+                  onChangeText={updateCodeValue}
+                />
+                <Button
+                  size="tiny"
+                  appearance="ghost"
+                  style={{ alignSelf: 'flex-end' }}
+                >
+                  <Text status="primary" category="s2">
+                    Resend Code
+                  </Text>
+                </Button>
+              </View>
+              <View style={{ paddingVertical: 20 }}>
+                <Button
+                  status="danger"
+                  size="large"
+                  accessibilityLiveRegion="assertive"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Continue"
+                >
+                  <Text style={{ color: 'white' }}>Submit</Text>
+                </Button>
+              </View>
             </View>
-            <View style={{ paddingVertical: 20 }}>
-              <Button
-                status="danger"
-                size="large"
-                accessibilityLiveRegion="assertive"
-                accessibilityComponentType="button"
-                accessibilityLabel="Continue"
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                }}
               >
-                <Text style={{ color: 'white' }}>Submit</Text>
-              </Button>
+                <Text>Already have an account?</Text>
+                <Button appearance="ghost" size="tiny" onPress={routeLogin}>
+                  <Text category="h6" status="primary">
+                    Sign in
+                  </Text>
+                </Button>
+              </View>
             </View>
           </View>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-              }}
-            >
-              <Text>Already have an account?</Text>
-              <Button appearance="ghost" size="tiny" onPress={routeLogin}>
-                <Text category="h6" status="primary">
-                  Sign in
-                </Text>
-              </Button>
-            </View>
-          </View>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </Layout>
   );

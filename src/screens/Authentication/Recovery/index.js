@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -45,57 +45,65 @@ export default function RecoverWithEmail({ navigation }) {
   return (
     <Layout level="1" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ flex: 1, paddingHorizontal: 15, paddingVertical: 25 }}>
-          <TopNavigationArea title="Recover account" navigation={navigation} />
-          <View style={{ paddingVertical: 10 }}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={{ flex: 1, paddingHorizontal: 15, paddingVertical: 25 }}>
+            <TopNavigationArea
+              title="Recover account"
+              navigation={navigation}
+            />
             <View style={{ paddingVertical: 10 }}>
-              <RegularInput
-                value={values.email}
-                label="Email"
-                accessibilityLabel="Email"
-                placeholder="Enter your email address"
-                autoCapitalize="none"
-                autoCompleteType="email"
-                textContentType="emailAddress"
-                caption={inputState.caption}
-                captionIcon={inputState.status}
-                status={inputState.status}
-                autoFocus
-                autoCorrect={false}
-                onChangeText={updateEmailValue}
-              />
+              <View style={{ paddingVertical: 10 }}>
+                <RegularInput
+                  value={values.email}
+                  label="Email"
+                  accessibilityLabel="Email"
+                  placeholder="Enter your email address"
+                  autoCapitalize="none"
+                  autoCompleteType="email"
+                  textContentType="emailAddress"
+                  caption={inputState.caption}
+                  captionIcon={inputState.status}
+                  status={inputState.status}
+                  autoFocus
+                  autoCorrect={false}
+                  onChangeText={updateEmailValue}
+                />
+              </View>
+              <View style={{ paddingVertical: 20 }}>
+                <Button
+                  status="danger"
+                  size="large"
+                  accessibilityLiveRegion="assertive"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Continue"
+                  disabled={inputState.status !== 'success'}
+                >
+                  <Text style={{ color: 'white' }}>Continue</Text>
+                </Button>
+              </View>
             </View>
-            <View style={{ paddingVertical: 20 }}>
-              <Button
-                status="danger"
-                size="large"
-                accessibilityLiveRegion="assertive"
-                accessibilityComponentType="button"
-                accessibilityLabel="Continue"
-                disabled={inputState.status !== 'success'}
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                }}
               >
-                <Text style={{ color: 'white' }}>Continue</Text>
-              </Button>
+                <Text>Don&apos;t have an account?</Text>
+                <Button appearance="ghost" size="tiny" onPress={routeRegister}>
+                  <Text category="h6" status="primary">
+                    Sign up
+                  </Text>
+                </Button>
+              </View>
             </View>
           </View>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-              }}
-            >
-              <Text>Don&apos;t have an account?</Text>
-              <Button appearance="ghost" size="tiny" onPress={routeRegister}>
-                <Text category="h6" status="primary">
-                  Sign up
-                </Text>
-              </Button>
-            </View>
-          </View>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     </Layout>
   );
