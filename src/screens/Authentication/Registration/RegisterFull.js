@@ -34,7 +34,6 @@ export default function RegisterFull({ navigation }) {
   return (
     <Layout level="1" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        {' '}
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
