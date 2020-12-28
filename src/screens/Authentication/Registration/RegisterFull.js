@@ -4,13 +4,11 @@ import { View } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Layout, Button } from '@ui-kitten/components';
+import { Layout, Button, Text } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import { RegularInput, SecureInput } from '~src/components/CustomInputs';
-
-import { RegularText, BoldText } from '~src/components/CustomTexts';
 
 // eslint-disable-next-line react/prop-types
 export default function RegisterFull({ navigation }) {
@@ -121,7 +119,7 @@ export default function RegisterFull({ navigation }) {
                 accessibilityLabel="Continue"
                 onPress={routeVerification}
               >
-                <RegularText appearance="alternative">Continue</RegularText>
+                <Text style={{ color: 'white' }}>Continue</Text>
               </Button>
             </View>
           </View>
@@ -135,9 +133,11 @@ export default function RegisterFull({ navigation }) {
                 paddingVertical: 10,
               }}
             >
-              <RegularText>Already have an account?</RegularText>
+              <Text>Already have an account?</Text>
               <Button appearance="ghost" size="tiny" onPress={routeLogin}>
-                <BoldText status="primary">Sign in</BoldText>
+                <Text category="h6" status="primary">
+                  Sign in
+                </Text>
               </Button>
             </View>
           </View>

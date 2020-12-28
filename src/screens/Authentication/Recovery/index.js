@@ -4,13 +4,11 @@ import { View } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Layout, Button } from '@ui-kitten/components';
+import { Layout, Button, Text } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import { RegularInput } from '~src/components/CustomInputs';
-
-import { RegularText, BoldText } from '~src/components/CustomTexts';
 
 // eslint-disable-next-line react/prop-types
 export default function RecoverWithEmail({ navigation }) {
@@ -76,7 +74,7 @@ export default function RecoverWithEmail({ navigation }) {
                 accessibilityLabel="Continue"
                 disabled={inputState.status !== 'success'}
               >
-                <RegularText appearance="alternative">Continue</RegularText>
+                <Text style={{ color: 'white' }}>Continue</Text>
               </Button>
             </View>
           </View>
@@ -89,9 +87,11 @@ export default function RecoverWithEmail({ navigation }) {
                 flexWrap: 'wrap',
               }}
             >
-              <RegularText>Don&apos;t have an account?</RegularText>
+              <Text>Don&apos;t have an account?</Text>
               <Button appearance="ghost" size="tiny" onPress={routeRegister}>
-                <BoldText status="primary">Sign up</BoldText>
+                <Text category="h6" status="primary">
+                  Sign up
+                </Text>
               </Button>
             </View>
           </View>

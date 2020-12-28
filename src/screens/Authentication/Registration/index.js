@@ -4,30 +4,17 @@ import { View } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Layout, Button } from '@ui-kitten/components';
+import { Layout, Button, Text } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import { RegularInput } from '~src/components/CustomInputs';
-
-import { RegularText, BoldText } from '~src/components/CustomTexts';
 
 import {
   IconFacebook,
   IconGoogle,
   IconTwitter,
 } from '~src/components/CustomIcons';
-
-const getInputState = (condition) => {
-  switch (condition) {
-    case true:
-      return 'danger';
-    case false:
-      return 'success';
-    default:
-      return 'basic';
-  }
-};
 
 // eslint-disable-next-line react/prop-types
 export default function RegisterMin({ navigation }) {
@@ -101,7 +88,7 @@ export default function RegisterMin({ navigation }) {
                 onPress={routeRegisterFull}
                 disabled={inputState.status !== 'success'}
               >
-                <RegularText appearance="alternative">Continue</RegularText>
+                <Text style={{ color: 'white' }}>Continue</Text>
               </Button>
             </View>
           </View>
@@ -114,21 +101,21 @@ export default function RegisterMin({ navigation }) {
                 flexWrap: 'wrap',
               }}
             >
-              <RegularText category="p2">
+              <Text category="p2">
                 By Continuing, you agree to Woozeee&apos;s
-              </RegularText>
+              </Text>
               <Button appearance="ghost" size="tiny">
-                <BoldText status="primary" category="p2">
+                <Text status="primary" category="s2">
                   Terms and condition
-                </BoldText>
+                </Text>
               </Button>
-              <RegularText category="p2">
+              <Text category="p2">
                 and confirm that you have read Woozeee&apos;s
-              </RegularText>
+              </Text>
               <Button appearance="ghost" size="tiny">
-                <BoldText status="primary" category="p2">
+                <Text status="primary" category="s2">
                   Privacy policy
-                </BoldText>
+                </Text>
               </Button>
             </View>
             <View
@@ -138,7 +125,7 @@ export default function RegisterMin({ navigation }) {
                 paddingBottom: 10,
               }}
             >
-              <RegularText>Or continue with</RegularText>
+              <Text>Or continue with</Text>
             </View>
             <View style={{ paddingVertical: 10 }}>
               <Button
@@ -151,7 +138,7 @@ export default function RegisterMin({ navigation }) {
                 accessibilityLabel="Login with Google"
                 style={{ marginVertical: 5 }}
               >
-                <RegularText>Google</RegularText>
+                <Text>Google</Text>
               </Button>
               <Button
                 status="primary"
@@ -162,7 +149,7 @@ export default function RegisterMin({ navigation }) {
                 accessibilityLabel="Login with Facebook"
                 style={{ marginVertical: 5 }}
               >
-                <RegularText appearance="alternative">Facebook</RegularText>
+                <Text appearance="alternative">Facebook</Text>
               </Button>
               <Button
                 status="info"
@@ -173,7 +160,7 @@ export default function RegisterMin({ navigation }) {
                 accessibilityLabel="Login with Twitter"
                 style={{ marginVertical: 5 }}
               >
-                <RegularText appearance="alternative">Twitter</RegularText>
+                <Text appearance="alternative">Twitter</Text>
               </Button>
             </View>
             <View
@@ -185,9 +172,9 @@ export default function RegisterMin({ navigation }) {
                 paddingVertical: 10,
               }}
             >
-              <RegularText>Already have an account?</RegularText>
+              <Text>Already have an account?</Text>
               <Button appearance="ghost" size="tiny" onPress={routeLogin}>
-                <BoldText status="primary">Sign in</BoldText>
+                <Text status="primary">Sign in</Text>
               </Button>
             </View>
           </View>

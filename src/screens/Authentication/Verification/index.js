@@ -4,13 +4,11 @@ import { View } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Layout, Button } from '@ui-kitten/components';
+import { Layout, Button, Text } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import { RegularInput } from '~src/components/CustomInputs';
-
-import { RegularText, BoldText } from '~src/components/CustomTexts';
 
 // eslint-disable-next-line react/prop-types
 export default function VerifyWithCode({ navigation }) {
@@ -49,9 +47,9 @@ export default function VerifyWithCode({ navigation }) {
                 appearance="ghost"
                 style={{ alignSelf: 'flex-end' }}
               >
-                <RegularText status="primary" category="s2">
+                <Text status="primary" category="s2">
                   Resend Code
-                </RegularText>
+                </Text>
               </Button>
             </View>
             <View style={{ paddingVertical: 20 }}>
@@ -62,7 +60,7 @@ export default function VerifyWithCode({ navigation }) {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
               >
-                <RegularText appearance="alternative">Submit</RegularText>
+                <Text style={{ color: 'white' }}>Submit</Text>
               </Button>
             </View>
           </View>
@@ -75,9 +73,11 @@ export default function VerifyWithCode({ navigation }) {
                 flexWrap: 'wrap',
               }}
             >
-              <RegularText>Already have an account?</RegularText>
+              <Text>Already have an account?</Text>
               <Button appearance="ghost" size="tiny" onPress={routeLogin}>
-                <BoldText status="primary">Sign in</BoldText>
+                <Text category="h6" status="primary">
+                  Sign in
+                </Text>
               </Button>
             </View>
           </View>

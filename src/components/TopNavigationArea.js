@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 
 import {
   Layout,
+  Text,
   Toggle,
   TopNavigation,
   TopNavigationAction,
@@ -10,8 +11,6 @@ import {
 } from '@ui-kitten/components';
 
 import { AppSettingsContext } from '~src/contexts';
-
-import { BoldText } from '~src/components/CustomTexts';
 
 import {
   IconBack,
@@ -59,7 +58,7 @@ export default function TopNavigationArea(props) {
 
   const TopNavigationTitle = (propsNavigation) => (
     /* eslint-disable-next-line react/jsx-props-no-spreading */
-    <BoldText {...propsNavigation}>{title}</BoldText>
+    <Text category="h6" {...propsNavigation}>{title}</Text>
   );
 
   const TopNavigationBack = (propsNavigation) => (

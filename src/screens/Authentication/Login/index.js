@@ -4,15 +4,13 @@ import { View } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Layout, Button, Spinner } from '@ui-kitten/components';
+import { Layout, Button, Text, Spinner } from '@ui-kitten/components';
 
 import { AuthContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import { RegularInput, SecureInput } from '~src/components/CustomInputs';
-
-import { RegularText, BoldText } from '~src/components/CustomTexts';
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ navigation }) {
@@ -87,13 +85,13 @@ export default function Login({ navigation }) {
             >
               {errorMsg.auth ? (
                 <>
-                  <BoldText status="danger" category="label">
+                  <Text status="danger" category="label">
                     Error!
                     {/* prettier-ignore */}{' '}
-                  </BoldText>
-                  <RegularText status="danger" category="label">
+                  </Text>
+                  <Text status="danger" category="label">
                     {errorMsg.auth}
-                  </RegularText>
+                  </Text>
                 </>
               ) : null}
             </View>
@@ -129,9 +127,9 @@ export default function Login({ navigation }) {
                 style={{ alignSelf: 'flex-end' }}
                 onPress={routeRecovery}
               >
-                <RegularText status="primary" category="s2">
+                <Text status="primary" category="s2">
                   Forgot password?
-                </RegularText>
+                </Text>
               </Button>
             </View>
             <View style={{ paddingVertical: 20 }}>
@@ -145,7 +143,7 @@ export default function Login({ navigation }) {
                 onPress={loginUser}
                 disabled={isLoading}
               >
-                <RegularText appearance="alternative">Continue</RegularText>
+                <Text style={{ color: 'white' }}>Continue</Text>
               </Button>
             </View>
           </View>
@@ -158,9 +156,11 @@ export default function Login({ navigation }) {
                 flexWrap: 'wrap',
               }}
             >
-              <RegularText>Don&apos;t have an account?</RegularText>
+              <Text>Don&apos;t have an account?</Text>
               <Button appearance="ghost" size="tiny" onPress={routeRegister}>
-                <BoldText status="primary">Sign up</BoldText>
+                <Text category="h6" status="primary">
+                  Sign up
+                </Text>
               </Button>
             </View>
           </View>

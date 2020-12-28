@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,18 +8,31 @@ import { BlurView } from 'expo-blur';
 
 // prettier-ignore
 import {
-  Layout, Button,
+  Layout, Button, Text,
 } from '@ui-kitten/components';
 
 import { AppSettingsContext } from '~src/contexts';
-
-import { RegularText, BoldText } from '~src/components/CustomTexts';
 
 import OverlayLoader from '~src/components/OverlayLoader';
 
 import BackgroundVideo from '~src/components/BackgroundVideo';
 
-import styles from './styles';
+const styles = StyleSheet.create({
+  uiContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minHeight: '100%',
+    zIndex: 9,
+    paddingVertical: 25,
+  },
+  brandMotto: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 25,
+  },
+});
 
 // eslint-disable-next-line react/prop-types
 export default function OnboardingScreen({ navigation }) {
@@ -37,27 +50,27 @@ export default function OnboardingScreen({ navigation }) {
       <SafeAreaView style={{ flex: 1 }}>
         <BlurView intensity={15} tint="dark" style={styles.uiContainer}>
           <View>
-            <BoldText category="h1" status="danger">
+            <Text category="h1" status="danger">
               Woozeee
-            </BoldText>
+            </Text>
           </View>
           <View>
             <View style={styles.brandMotto}>
-              <BoldText appearance="alternative">Have fun</BoldText>
-              <RegularText
-                appearance="alternative"
-                style={{ marginHorizontal: 10 }}
-              >
+              <Text category="h6" appearance="alternative">
+                Have fun
+              </Text>
+              <Text appearance="alternative" style={{ marginHorizontal: 10 }}>
                 |
-              </RegularText>
-              <BoldText appearance="alternative">Make money</BoldText>
-              <RegularText
-                appearance="alternative"
-                style={{ marginHorizontal: 10 }}
-              >
+              </Text>
+              <Text category="h6" appearance="alternative">
+                Make money
+              </Text>
+              <Text appearance="alternative" style={{ marginHorizontal: 10 }}>
                 |
-              </RegularText>
-              <BoldText appearance="alternative">Give back</BoldText>
+              </Text>
+              <Text category="h6" appearance="alternative">
+                Give back
+              </Text>
             </View>
             <View style={{ paddingBottom: 25 }}>
               <Button
@@ -67,7 +80,7 @@ export default function OnboardingScreen({ navigation }) {
                 accessibilityLabel="Proceed"
                 onPress={routeAuthentication}
               >
-                <RegularText appearance="alternative">Proceed</RegularText>
+                <Text style={{ color: 'white' }}>Proceed</Text>
               </Button>
             </View>
             <View style={{ paddingBottom: 25, alignItems: 'center' }}>
@@ -79,7 +92,9 @@ export default function OnboardingScreen({ navigation }) {
                 accessibilityHint="Sign in or Sign up"
                 onPress={routeAuthentication}
               >
-                <BoldText status="danger">Sign in / Sign up</BoldText>
+                <Text category="h6" status="danger">
+                  Sign in / Sign up
+                </Text>
               </Button>
             </View>
           </View>

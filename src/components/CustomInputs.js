@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 
 import { Pressable } from 'react-native';
 
-import { Input } from '@ui-kitten/components';
-
-import { BoldText, RegularText } from './CustomTexts';
+import { Input, Text } from '@ui-kitten/components';
 
 import { IconEye, IconInputState } from './CustomIcons';
 
@@ -25,12 +23,13 @@ const InputLabel = (props) => {
   // eslint-disable-next-line react/prop-types
   const { label, ...otherProps } = props;
   return (
-    <BoldText
+    <Text
+      category="label"
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...otherProps}
     >
       {label}
-    </BoldText>
+    </Text>
   );
 };
 
@@ -38,7 +37,7 @@ const InputCaption = (props) => {
   // eslint-disable-next-line react/prop-types
   const { caption, ...otherProps } = props;
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return <RegularText {...otherProps}>{caption}</RegularText>;
+  return <Text {...otherProps}>{caption}</Text>;
 };
 
 const CaptionIcon = (props) => {
