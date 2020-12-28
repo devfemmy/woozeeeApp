@@ -56,19 +56,15 @@ export default function OnboardingScreen({ navigation }) {
           </View>
           <View>
             <View style={styles.brandMotto}>
-              <Text category="h6" appearance="alternative">
+              <Text category="h6" style={{ color: 'white' }}>
                 Have fun
               </Text>
-              <Text appearance="alternative" style={{ marginHorizontal: 10 }}>
-                |
-              </Text>
-              <Text category="h6" appearance="alternative">
+              <Text style={{ color: 'white', marginHorizontal: 10 }}>|</Text>
+              <Text category="h6" style={{ color: 'white' }}>
                 Make money
               </Text>
-              <Text appearance="alternative" style={{ marginHorizontal: 10 }}>
-                |
-              </Text>
-              <Text category="h6" appearance="alternative">
+              <Text style={{ color: 'white', marginHorizontal: 10 }}>|</Text>
+              <Text category="h6" style={{ color: 'white' }}>
                 Give back
               </Text>
             </View>
