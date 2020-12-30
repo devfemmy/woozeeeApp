@@ -4,7 +4,10 @@ import { View, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { Layout, Button, Text, Spinner } from '@ui-kitten/components';
+// prettier-ignore
+import {
+  Layout, Button, Text, Spinner,
+} from '@ui-kitten/components';
 
 import { AuthContext } from '~src/contexts';
 
@@ -64,21 +67,28 @@ export default function Login({ navigation }) {
   const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
   // eslint-disable-next-line react/prop-types
-  const routeRegister = () => navigation.navigate('Registration');
+  const routeRegisterMin = () => navigation.navigate('RegisterMin');
 
   // eslint-disable-next-line react/prop-types
-  const routeRecovery = () => navigation.navigate('Recovery');
+  const routeRecoverWithEmail = () => navigation.navigate('RecoverWithEmail');
 
   return (
     <Layout level="1" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
+        <TopNavigationArea title="Sign in" navigation={navigation} />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <View style={{ flex: 1, paddingHorizontal: 15, paddingVertical: 25 }}>
-            <TopNavigationArea title="Sign in" navigation={navigation} />
-            <View style={{ paddingVertical: 10 }}>
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: 15,
+              paddingBottom: 25,
+              justifyContent: 'space-between',
+            }}
+          >
+            <View style={{ paddingBottom: 10 }}>
               <View
                 style={{
                   paddingVertical: 10,
@@ -129,7 +139,7 @@ export default function Login({ navigation }) {
                   size="tiny"
                   appearance="ghost"
                   style={{ alignSelf: 'flex-end' }}
-                  onPress={routeRecovery}
+                  onPress={routeRecoverWithEmail}
                 >
                   <Text status="primary" category="s2">
                     Forgot password?
@@ -161,7 +171,11 @@ export default function Login({ navigation }) {
                 }}
               >
                 <Text>Don&apos;t have an account?</Text>
-                <Button appearance="ghost" size="tiny" onPress={routeRegister}>
+                <Button
+                  appearance="ghost"
+                  size="tiny"
+                  onPress={routeRegisterMin}
+                >
                   <Text category="h6" status="primary">
                     Sign up
                   </Text>

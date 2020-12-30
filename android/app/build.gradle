@@ -135,7 +135,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.woozeee"
+        applicationId "com.econnectnp.woozeee"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

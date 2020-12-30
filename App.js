@@ -1,4 +1,8 @@
+import 'react-native-gesture-handler';
+
 import React, { useState, useMemo } from 'react';
+
+import { enableScreens } from 'react-native-screens';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -21,6 +25,8 @@ import useAppSettingsReducer from '~src/reducers/useAppSettingsReducer';
 import useAuthReducer from '~src/reducers/useAuthReducer';
 
 import Router from '~src/router';
+
+enableScreens();
 
 export default function App() {
   const isMounted = useIsMounted();

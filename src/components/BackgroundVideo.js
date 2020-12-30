@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Animated, StyleSheet } from 'react-native';
 
@@ -21,25 +21,28 @@ export default function BackgroundVideo(props) {
 
   const opacity = React.useMemo(() => new Animated.Value(0), []);
 
-  return (
-    <Layout style={styles.background}>
-      <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
-        <Video
-          isLooping
-          isMuted
-          positionMillis={500}
-          onLoad={() => {
-            Animated.timing(opacity, {
-              toValue: 1,
-              useNativeDriver: true,
-            }).start();
-          }}
-          resizeMode="cover"
-          shouldPlay
-          source={videoUri}
-          style={{ flex: 1 }}
-        />
-      </Animated.View>
-    </Layout>
+  return useMemo(
+    () => (
+      <Layout style={styles.background}>
+        <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
+          <Video
+            isLooping
+            isMuted
+            positionMillis={500}
+            onLoad={() => {
+              Animated.timing(opacity, {
+                toValue: 1,
+                useNativeDriver: true,
+              }).start();
+            }}
+            resizeMode="cover"
+            shouldPlay
+            source={videoUri}
+            style={{ flex: 1 }}
+          />
+        </Animated.View>
+      </Layout>
+    ),
+    [],
   );
 }

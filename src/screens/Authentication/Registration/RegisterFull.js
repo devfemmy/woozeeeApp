@@ -29,7 +29,7 @@ export default function RegisterFull({ navigation }) {
   const routeLogin = () => navigation.navigate('Login');
 
   // eslint-disable-next-line react/prop-types
-  const routeVerification = () => navigation.navigate('Verification');
+  const routeVerifyWithCode = () => navigation.navigate('VerifyWithCode');
 
   return (
     <Layout level="1" style={{ flex: 1 }}>
@@ -123,7 +123,7 @@ export default function RegisterFull({ navigation }) {
                   accessibilityLiveRegion="assertive"
                   accessibilityComponentType="button"
                   accessibilityLabel="Continue"
-                  onPress={routeVerification}
+                  onPress={routeVerifyWithCode}
                 >
                   <Text style={{ color: 'white' }}>Continue</Text>
                 </Button>

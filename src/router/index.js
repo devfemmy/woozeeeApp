@@ -5,48 +5,42 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { AuthContext } from '~src/contexts';
 
-import Authentication from './Authentication';
-
+/* Screens import */
 import Onboarding from '~src/screens/Onboarding';
+import Login from '~src/screens/Authentication/Login';
+import RegisterMin from '~src/screens/Authentication/Registration';
+import RegisterFull from '~src/screens/Authentication/Registration/RegisterFull';
+import VerifyWithCode from '~src/screens/Authentication/Verification';
+import RecoverWithEmail from '~src/screens/Authentication/Recovery';
 
 const { Navigator, Screen } = createStackNavigator();
 
-function RootNavigation() {
+export default function Router() {
   const { authState } = useContext(AuthContext);
 
-  return (
-    <>
-      {authState.loginToken ? (
-        <Navigator
-          headerMode="none"
-          initialRouteName="Home"
-          detachInactiveScreens
-        >
-          <Screen name="Home" component={Onboarding} />
-        </Navigator>
-      ) : (
-        <Navigator
-          headerMode="none"
-          initialRouteName="Onboarding"
-          detachInactiveScreens
-        >
-          <Screen name="Onboarding" component={Onboarding} />
-          <Screen name="Authentication" component={Authentication} />
-        </Navigator>
-      )}
-    </>
-  );
-}
+  const screens = {
+    Auth: {
+      Onboarding,
+      Login,
+      RegisterMin,
+      RegisterFull,
+      VerifyWithCode,
+      RecoverWithEmail,
+    },
 
-export default function Router() {
+    User: {
+      // Home,
+    },
+  };
+
   return (
     <NavigationContainer>
-      <Navigator
-        headerMode="none"
-        initialRouteName="Root"
-        detachInactiveScreens
-      >
-        <Screen name="Root" component={RootNavigation} />
+      <Navigator detachInactiveScreens headerMode="none">
+        {Object.entries({
+          ...(authState.loginToken ? screens.User : screens.Auth),
+        }).map(([name, component]) => (
+          <Screen name={name} component={component} key={name} />
+        ))}
       </Navigator>
     </NavigationContainer>
   );

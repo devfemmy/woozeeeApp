@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 export default function OnboardingScreen({ navigation }) {
   const { isLoading } = useContext(AppSettingsContext);
   // eslint-disable-next-line react/prop-types
-  const routeAuthentication = () => navigation.navigate('Authentication');
+  const routeLogin = () => navigation.navigate('Login');
 
   return (
     <Layout level="1" style={{ flex: 1 }}>
@@ -74,7 +74,7 @@ export default function OnboardingScreen({ navigation }) {
                 accessibilityLiveRegion="assertive"
                 accessibilityComponentType="button"
                 accessibilityLabel="Proceed"
-                onPress={routeAuthentication}
+                onPress={routeLogin}
               >
                 <Text style={{ color: 'white' }}>Proceed</Text>
               </Button>
@@ -86,7 +86,7 @@ export default function OnboardingScreen({ navigation }) {
                 accessibilityLiveRegion="polite"
                 accessibilityComponentType="button"
                 accessibilityHint="Sign in or Sign up"
-                onPress={routeAuthentication}
+                onPress={routeLogin}
               >
                 <Text category="h6" status="danger">
                   Sign in / Sign up

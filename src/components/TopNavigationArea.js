@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 
 import {
+  Divider,
   Layout,
   Text,
   Toggle,
@@ -123,6 +124,7 @@ export default function TopNavigationArea(props) {
         accessibilityLiveRegion="polite"
         accessibilityLabel="screen navigation"
       />
+      <Divider />
     </Layout>
   );
 }
