@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 
 import { Animated, StyleSheet } from 'react-native';
 
+import { useIsFocused } from '@react-navigation/native';
+
 import { Video } from 'expo-av';
 
 import { Layout } from '@ui-kitten/components';
@@ -21,6 +23,8 @@ export default function BackgroundVideo(props) {
 
   const opacity = React.useMemo(() => new Animated.Value(0), []);
 
+  const isFocused = useIsFocused();
+
   return useMemo(
     () => (
       <Layout style={styles.background}>
@@ -36,7 +40,7 @@ export default function BackgroundVideo(props) {
               }).start();
             }}
             resizeMode="cover"
-            shouldPlay
+            shouldPlay={isFocused}
             source={videoUri}
             style={{ flex: 1 }}
           />

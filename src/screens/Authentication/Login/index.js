@@ -22,9 +22,9 @@ export default function Login({ navigation }) {
     authOptions,
   } = useContext(AuthContext);
 
-  const [isLoading, setLoading] = useState(false);
-
   const { login } = authOptions;
+
+  const [isLoading, setLoading] = useState(false);
 
   const [errorMsg, setErrorMsg] = useState({
     auth: null,
@@ -73,7 +73,7 @@ export default function Login({ navigation }) {
   const routeRecoverWithEmail = () => navigation.navigate('RecoverWithEmail');
 
   return (
-    <Layout level="1" style={{ flex: 1 }}>
+    <Layout level="2" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea title="Sign in" navigation={navigation} />
         <ScrollView
@@ -85,30 +85,27 @@ export default function Login({ navigation }) {
               flex: 1,
               paddingHorizontal: 15,
               paddingBottom: 25,
-              justifyContent: 'space-between',
             }}
           >
             <View style={{ paddingBottom: 10 }}>
-              <View
-                style={{
-                  paddingVertical: 10,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'row',
-                }}
-              >
-                {errorMsg.auth ? (
-                  <>
-                    <Text status="danger" category="label">
-                      Error!
-                      {/* prettier-ignore */}{' '}
-                    </Text>
-                    <Text status="danger" category="p2">
-                      {errorMsg.auth}
-                    </Text>
-                  </>
-                ) : null}
-              </View>
+              {errorMsg.auth ? (
+                <View
+                  style={{
+                    paddingVertical: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                  }}
+                >
+                  <Text status="danger" category="label">
+                    Error!
+                    {/* prettier-ignore */}{' '}
+                  </Text>
+                  <Text status="danger" category="p2">
+                    {errorMsg.auth}
+                  </Text>
+                </View>
+              ) : null}
               <View style={{ paddingVertical: 10 }}>
                 <RegularInput
                   value={values.email}
