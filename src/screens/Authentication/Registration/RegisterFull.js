@@ -34,7 +34,10 @@ export default function RegisterFull({ navigation }) {
   return (
     <Layout level="2" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea title="Sign in" navigation={navigation} />
+        <TopNavigationArea
+          title="Registration Details"
+          navigation={navigation}
+        />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

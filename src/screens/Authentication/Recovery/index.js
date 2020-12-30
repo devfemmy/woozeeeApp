@@ -45,7 +45,7 @@ export default function RecoverWithEmail({ navigation }) {
   return (
     <Layout level="2" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea title="Sign in" navigation={navigation} />
+        <TopNavigationArea title="Account Recovery" navigation={navigation} />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

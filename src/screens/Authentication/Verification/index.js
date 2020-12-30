@@ -26,7 +26,10 @@ export default function VerifyWithCode({ navigation }) {
   return (
     <Layout level="2" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea title="Sign in" navigation={navigation} />
+        <TopNavigationArea
+          title="Account Verification"
+          navigation={navigation}
+        />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

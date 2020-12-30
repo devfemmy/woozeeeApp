@@ -54,7 +54,10 @@ export default function RegisterMin({ navigation }) {
   return (
     <Layout level="2" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea title="Sign in" navigation={navigation} />
+        <TopNavigationArea
+          title="Classic Registration"
+          navigation={navigation}
+        />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
