@@ -22,8 +22,16 @@ import {
 } from '~src/components/CustomIcons';
 
 export default function TopNavigationArea(props) {
-  // eslint-disable-next-line react/prop-types
-  const { navigation, title, iconType } = props;
+  const {
+    // eslint-disable-next-line react/prop-types
+    navigation,
+    // eslint-disable-next-line react/prop-types
+    title,
+    // eslint-disable-next-line react/prop-types
+    iconType,
+    // eslint-disable-next-line react/prop-types
+    style,
+  } = props;
 
   const { appState, appOptions } = useContext(AppSettingsContext);
 
@@ -112,7 +120,7 @@ export default function TopNavigationArea(props) {
   // );
 
   return (
-    <Layout level="1">
+    <Layout level="2">
       <TopNavigation
         alignment="center"
         /* eslint-disable-next-line react/jsx-props-no-spreading */
@@ -123,6 +131,7 @@ export default function TopNavigationArea(props) {
         // accessoryRight={() => <TopNavigationMenu />}
         accessibilityLiveRegion="polite"
         accessibilityLabel="screen navigation"
+        style={[style, { backgroundColor: 'transparent' }]}
       />
       <Divider />
     </Layout>

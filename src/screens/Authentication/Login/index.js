@@ -83,8 +83,7 @@ export default function Login({ navigation }) {
           <View
             style={{
               flex: 1,
-              paddingHorizontal: 15,
-              paddingBottom: 25,
+              padding: 15,
             }}
           >
             <View style={{ paddingBottom: 10 }}>

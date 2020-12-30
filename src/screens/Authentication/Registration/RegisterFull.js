@@ -32,15 +32,20 @@ export default function RegisterFull({ navigation }) {
   const routeVerifyWithCode = () => navigation.navigate('VerifyWithCode');
 
   return (
-    <Layout level="1" style={{ flex: 1 }}>
+    <Layout level="2" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
+        <TopNavigationArea title="Sign in" navigation={navigation} />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <View style={{ flex: 1, paddingHorizontal: 15, paddingVertical: 25 }}>
-            <TopNavigationArea title="Sign Up" navigation={navigation} />
-            <View style={{ paddingVertical: 10 }}>
+          <View
+            style={{
+              flex: 1,
+              padding: 15,
+            }}
+          >
+            <View style={{ paddingBottom: 10 }}>
               <View
                 style={{
                   paddingVertical: 10,

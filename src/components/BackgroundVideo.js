@@ -40,7 +40,7 @@ export default function BackgroundVideo(props) {
               }).start();
             }}
             resizeMode="cover"
-            shouldPlay={isFocused}
+            shouldPlay={isFocused || undefined}
             source={videoUri}
             style={{ flex: 1 }}
           />
