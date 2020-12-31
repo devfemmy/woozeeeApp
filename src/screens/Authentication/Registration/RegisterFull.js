@@ -67,7 +67,8 @@ export default function RegisterFull({ navigation }) {
                   autoFocus
                   autoCorrect={false}
                   /* prettier-ignore */
-                  onChangeText={(value) => updateInputValues(value, 'firstName')
+                  onChangeText={
+                    (value) => updateInputValues(value, 'firstName')
                   }
                   style={{ flex: 1, marginRight: 5 }}
                 />

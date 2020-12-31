@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import { Pressable } from 'react-native';
 
@@ -57,6 +57,8 @@ function SecureInput(props) {
   const {
     //  prettier-ignore
     // eslint-disable-next-line react/prop-types
+    value,
+    // eslint-disable-next-line react/prop-types
     label,
     // eslint-disable-next-line react/prop-types
     caption,
@@ -80,35 +82,43 @@ function SecureInput(props) {
 
   // eslint-disable-next-line react/prop-types
 
-  return (
-    <Input
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
-      {...otherProps}
-      size="large"
-      accessibilityLiveRegion="polite"
-      secureTextEntry={isSecureEntry}
-      accessoryRight={secureToggleIcon}
-      maxFontSizeMultiplier={1.5}
-      textStyle={fonts.fontRegular}
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
-      label={(evaProps) => <InputLabel {...evaProps} label={label} />}
-      caption={
-        /* prettier-ignore */
+  return useMemo(
+    () => (
+      <Input
         /* eslint-disable-next-line react/jsx-props-no-spreading */
-        (evaProps) => (caption ? <InputCaption {...evaProps} caption={caption} /> : null)
-      }
-      captionIcon={
-        /* prettier-ignore */
+        {...otherProps}
+        value={value}
+        size="large"
+        accessibilityLiveRegion="polite"
+        secureTextEntry={isSecureEntry}
+        accessoryRight={secureToggleIcon}
+        maxFontSizeMultiplier={1.5}
+        textStyle={fonts.fontRegular}
         /* eslint-disable-next-line react/jsx-props-no-spreading */
-        (evaProps) => (captionIcon ? <CaptionIcon {...evaProps} captionIcon={captionIcon} /> : null)
-      }
-    />
+        label={(evaProps) => <InputLabel {...evaProps} label={label} />}
+        caption={
+          /* prettier-ignore */
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          (evaProps) => (caption ? <InputCaption {...evaProps} caption={caption} /> : null)
+        }
+        captionIcon={
+          /* prettier-ignore */
+          (evaProps) => (
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+            captionIcon ? <CaptionIcon {...evaProps} captionIcon={captionIcon} /> : null
+          )
+        }
+      />
+    ),
+    [value, isSecureEntry],
   );
 }
 
 function RegularInput(props) {
   const {
     //  prettier-ignore
+    // eslint-disable-next-line react/prop-types
+    value,
     // eslint-disable-next-line react/prop-types
     label,
     // eslint-disable-next-line react/prop-types
@@ -118,27 +128,33 @@ function RegularInput(props) {
     ...otherProps
   } = props;
 
-  return (
-    <Input
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
-      {...otherProps}
-      size="large"
-      accessibilityLiveRegion="polite"
-      maxFontSizeMultiplier={1.5}
-      textStyle={fonts.fontRegular}
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
-      label={(evaProps) => <InputLabel {...evaProps} label={label} />}
-      caption={
-        /* prettier-ignore */
+  return useMemo(
+    () => (
+      <Input
         /* eslint-disable-next-line react/jsx-props-no-spreading */
-        (evaProps) => (caption ? <InputCaption {...evaProps} caption={caption} /> : null)
-      }
-      captionIcon={
-        /* prettier-ignore */
+        {...otherProps}
+        value={value}
+        size="large"
+        accessibilityLiveRegion="polite"
+        maxFontSizeMultiplier={1.5}
+        textStyle={fonts.fontRegular}
         /* eslint-disable-next-line react/jsx-props-no-spreading */
-        (evaProps) => (captionIcon ? <CaptionIcon {...evaProps} captionIcon={captionIcon} /> : null)
-      }
-    />
+        label={(evaProps) => <InputLabel {...evaProps} label={label} />}
+        caption={
+          /* prettier-ignore */
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          (evaProps) => (caption ? <InputCaption {...evaProps} caption={caption} /> : null)
+        }
+        captionIcon={
+          /* prettier-ignore */
+          (evaProps) => (
+            /* eslint-disable-next-line react/jsx-props-no-spreading */
+            captionIcon ? <CaptionIcon {...evaProps} captionIcon={captionIcon} /> : null
+          )
+        }
+      />
+    ),
+    [value],
   );
 }
 
