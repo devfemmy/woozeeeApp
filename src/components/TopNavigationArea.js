@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useMemo, useCallback } from 'react';
 
 import {
   Divider,
@@ -37,6 +37,8 @@ export default function TopNavigationArea(props) {
 
   const { updateSettings } = appOptions;
 
+  const { darkMode } = useMemo(() => appState, [appState]);
+
   const [isError, setError] = useState(false);
 
   // const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
@@ -44,10 +46,11 @@ export default function TopNavigationArea(props) {
   // eslint-disable-next-line react/prop-types
   const routeBack = () => navigation.goBack();
 
-  const switchTheme = async () => {
+  // prettier-ignore
+  const useSwitchTheme = useCallback(async () => {
     try {
       const settingsError = await updateSettings(appState, {
-        darkMode: !appState.darkMode,
+        darkMode: !darkMode,
       });
 
       if (settingsError) {
@@ -56,41 +59,54 @@ export default function TopNavigationArea(props) {
     } catch (e) {
       await setError(true);
     }
-  };
+  }, [darkMode]);
 
   const renderSwitch = () => (
-    <Toggle checked={appState.darkMode} onChange={switchTheme} />
+    <Toggle checked={darkMode} onChange={useSwitchTheme} />
+  );
+
+  // const toggleTopNavigationMenu = () => setNavigationMenuOpen((prevState) => !prevState);
+
+  // prettier-ignore
+  const TopNavigationTitle = (navigationProps) => useMemo(
+    () => (
+      /* eslint-disable-next-line react/jsx-props-no-spreading */
+      <Text category="h6" {...navigationProps}>
+        {title}
+      </Text>
+    ),
+    [],
   );
 
   // prettier-ignore
-  // const toggleTopNavigationMenu = () => setNavigationMenuOpen((prevState) => !prevState);
-
-  const TopNavigationTitle = (propsNavigation) => (
-    /* eslint-disable-next-line react/jsx-props-no-spreading */
-    <Text category="h6" {...propsNavigation}>{title}</Text>
+  const TopNavigationBack = (navigationProps) => useMemo(
+    () => (
+      <TopNavigationAction
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
+        {...navigationProps}
+        icon={iconType === 'close' ? IconClose : IconBack}
+        onPress={routeBack}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel="Go back"
+        accessibilityActions={['onPress']}
+      />
+    ),
+    [],
   );
 
-  const TopNavigationBack = (propsNavigation) => (
-    <TopNavigationAction
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
-      {...propsNavigation}
-      icon={iconType === 'close' ? IconClose : IconBack}
-      onPress={routeBack}
-      accessibilityLiveRegion="polite"
-      accessibilityLabel="Go back"
-      accessibilityActions={['onPress']}
-    />
-  );
-
-  const TopNavigationSwitchTheme = (propsNavigation) => (
-    <TopNavigationAction
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
-      {...propsNavigation}
-      icon={renderSwitch}
-      accessibilityLiveRegion="polite"
-      accessibilityLabel="Switch theme"
-      accessibilityActions={['onPress']}
-    />
+  // prettier-ignore
+  const TopNavigationSwitchTheme = (navigationProps) => useMemo(
+    () => (
+      <TopNavigationAction
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
+        {...navigationProps}
+        icon={renderSwitch}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel="Switch theme"
+        accessibilityActions={['onPress']}
+      />
+    ),
+    [],
   );
 
   // const TopNavigationMenuIcon = () => (
@@ -119,21 +135,24 @@ export default function TopNavigationArea(props) {
   //   </>
   // );
 
-  return (
-    <Layout level="2">
-      <TopNavigation
-        alignment="center"
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
-        title={TopNavigationTitle}
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
-        accessoryLeft={TopNavigationBack}
-        accessoryRight={TopNavigationSwitchTheme}
-        // accessoryRight={() => <TopNavigationMenu />}
-        accessibilityLiveRegion="polite"
-        accessibilityLabel="screen navigation"
-        style={[style, { backgroundColor: 'transparent' }]}
-      />
-      <Divider />
-    </Layout>
+  return useMemo(
+    () => (
+      <Layout level="2">
+        <TopNavigation
+          alignment="center"
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          title={TopNavigationTitle}
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          accessoryLeft={TopNavigationBack}
+          accessoryRight={TopNavigationSwitchTheme}
+          // accessoryRight={() => <TopNavigationMenu />}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="screen navigation"
+          style={[style, { backgroundColor: 'transparent' }]}
+        />
+        <Divider />
+      </Layout>
+    ),
+    [darkMode],
   );
 }

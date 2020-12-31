@@ -40,7 +40,7 @@ export default function RecoverWithEmail({ navigation }) {
   };
 
   // eslint-disable-next-line react/prop-types
-  const routeRegister = () => navigation.navigate('Registration');
+  const routeRegisterMin = () => navigation.navigate('RegisterMin');
 
   return (
     <Layout level="2" style={{ flex: 1 }}>
@@ -97,7 +97,11 @@ export default function RecoverWithEmail({ navigation }) {
                 }}
               >
                 <Text>Don&apos;t have an account?</Text>
-                <Button appearance="ghost" size="tiny" onPress={routeRegister}>
+                <Button
+                  appearance="ghost"
+                  size="tiny"
+                  onPress={routeRegisterMin}
+                >
                   <Text category="h6" status="primary">
                     Sign up
                   </Text>

@@ -182,7 +182,9 @@ export default function RegisterMin({ navigation }) {
               >
                 <Text>Already have an account?</Text>
                 <Button appearance="ghost" size="tiny" onPress={routeLogin}>
-                  <Text status="primary">Sign in</Text>
+                  <Text status="primary" category="h6">
+                    Sign in
+                  </Text>
                 </Button>
               </View>
             </View>
