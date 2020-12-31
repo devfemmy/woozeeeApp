@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -45,17 +45,17 @@ export default function OnboardingScreen({ navigation }) {
       <OverlayLoader isLoading={isLoading} />
       {/* Onboarding screen background video */}
       <BackgroundVideo
-        videoUri={{
-          uri:
-            'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4',
-        }}
+        videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
+        thumbUri={require('~assets/images/splash.png')}
       />
       <SafeAreaView style={{ flex: 1 }}>
         <BlurView intensity={15} tint="dark" style={styles.uiContainer}>
           <View>
-            <Text category="h1" status="danger">
-              Woozeee
-            </Text>
+            <Image
+              source={require('~assets/images/logo.png')}
+              resizeMode="contain"
+              style={{ width: 280 }}
+            />
           </View>
           <View>
             <View style={styles.brandMotto}>

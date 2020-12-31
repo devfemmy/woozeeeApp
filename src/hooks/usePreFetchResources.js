@@ -30,7 +30,10 @@ export default function usePreFetchResources() {
           },
         });
 
-        await Asset.loadAsync([require('~assets/images/splash.png')]);
+        await Asset.loadAsync([
+          require('~assets/images/splash.png'),
+          require('~assets/images/logo.png'),
+        ]);
       } catch (e) {
         const err = e;
       } finally {

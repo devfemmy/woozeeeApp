@@ -6,12 +6,12 @@
     "slug": "Woozeee",
     "version": "1.0.0",
     "assetBundlePatterns": [
-      "**/*"
+      "src/assets/*"
     ],
     "splash": {
       "image": "src/assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#3f51b5"
+      "backgroundColor": "#043F7C"
     },
     "icon": "src/assets/images/icon.png",
     "android": {
