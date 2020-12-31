@@ -39,6 +39,9 @@ export default function BackgroundVideo(props) {
                 useNativeDriver: true,
               }).start();
             }}
+            usePoster
+            posterSource={require('~src/assets/images/splash.png')}
+            posterStyle={{ resizeMode: 'contain' }}
             resizeMode="cover"
             shouldPlay={Boolean(isFocused || undefined)}
             source={videoUri}

@@ -8,7 +8,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { StatusBar } from 'expo-status-bar';
 
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import {
+  ApplicationProvider,
+  IconRegistry,
+  Layout,
+} from '@ui-kitten/components';
 
 import * as eva from '@eva-design/eva';
 
@@ -101,7 +105,9 @@ export default function App() {
               authOptions,
             }}
           >
-            <Router />
+            <Layout level="2" style={{ flex: 1 }}>
+              <Router />
+            </Layout>
           </AuthContext.Provider>
         </AppSettingsContext.Provider>
       </ApplicationProvider>

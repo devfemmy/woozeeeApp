@@ -30,10 +30,7 @@ export default function usePreFetchResources() {
           },
         });
 
-        await Asset.loadAsync([
-          require('~assets/images/splash.png'),
-          require('~assets/videos/onboarding-bg-video.mp4'),
-        ]);
+        await Asset.loadAsync([require('~assets/images/splash.png')]);
       } catch (e) {
         const err = e;
       } finally {
