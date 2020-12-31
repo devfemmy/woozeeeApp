@@ -14,28 +14,28 @@ import * as eva from '@eva-design/eva';
 
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
-import useIsMounted from '~src/hooks/useIsMounted';
+import useMounted from '~src/hooks/useMounted';
 
 import usePreFetchResources from '~src/hooks/usePreFetchResources';
 
 import { AppSettingsContext, AuthContext } from '~src/contexts';
 
-import useAppSettingsReducer from '~src/reducers/useAppSettingsReducer';
+import useAppSettings from '~src/reducers/useAppSettings';
 
-import useAuthReducer from '~src/reducers/useAuthReducer';
+import useAuth from '~src/reducers/useAuth';
 
 import Router from '~src/router';
 
 enableScreens();
 
 export default function App() {
-  const isMounted = useIsMounted();
+  const isMounted = useMounted();
 
   const isPreloaded = usePreFetchResources();
 
-  const { appState, appOptions } = useAppSettingsReducer();
+  const { appState, appOptions } = useAppSettings();
 
-  const { authState, authOptions } = useAuthReducer();
+  const { authState, authOptions } = useAuth();
 
   const { fetchSettings } = appOptions;
 

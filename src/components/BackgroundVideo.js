@@ -40,13 +40,13 @@ export default function BackgroundVideo(props) {
               }).start();
             }}
             resizeMode="cover"
-            shouldPlay={isFocused || undefined}
+            shouldPlay={Boolean(isFocused || undefined)}
             source={videoUri}
             style={{ flex: 1 }}
           />
         </Animated.View>
       </Layout>
     ),
-    [],
+    [isFocused, opacity, videoUri],
   );
 }

@@ -1,4 +1,7 @@
-import React, { useState, useContext, useMemo, useCallback } from 'react';
+// prettier-ignore
+import React, {
+  useState, useContext, useMemo,
+} from 'react';
 
 import {
   Divider,
@@ -37,77 +40,11 @@ export default function TopNavigationArea(props) {
 
   const { updateSettings } = appOptions;
 
-  const { darkMode } = useMemo(() => appState, [appState]);
-
   const [isError, setError] = useState(false);
 
   // const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
 
-  // eslint-disable-next-line react/prop-types
-  const routeBack = () => navigation.goBack();
-
-  // prettier-ignore
-  const useSwitchTheme = useCallback(async () => {
-    try {
-      const settingsError = await updateSettings(appState, {
-        darkMode: !darkMode,
-      });
-
-      if (settingsError) {
-        await setError(true);
-      }
-    } catch (e) {
-      await setError(true);
-    }
-  }, [darkMode]);
-
-  const renderSwitch = () => (
-    <Toggle checked={darkMode} onChange={useSwitchTheme} />
-  );
-
   // const toggleTopNavigationMenu = () => setNavigationMenuOpen((prevState) => !prevState);
-
-  // prettier-ignore
-  const TopNavigationTitle = (navigationProps) => useMemo(
-    () => (
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
-      <Text category="h6" {...navigationProps}>
-        {title}
-      </Text>
-    ),
-    [],
-  );
-
-  // prettier-ignore
-  const TopNavigationBack = (navigationProps) => useMemo(
-    () => (
-      <TopNavigationAction
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
-        {...navigationProps}
-        icon={iconType === 'close' ? IconClose : IconBack}
-        onPress={routeBack}
-        accessibilityLiveRegion="polite"
-        accessibilityLabel="Go back"
-        accessibilityActions={['onPress']}
-      />
-    ),
-    [],
-  );
-
-  // prettier-ignore
-  const TopNavigationSwitchTheme = (navigationProps) => useMemo(
-    () => (
-      <TopNavigationAction
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
-        {...navigationProps}
-        icon={renderSwitch}
-        accessibilityLiveRegion="polite"
-        accessibilityLabel="Switch theme"
-        accessibilityActions={['onPress']}
-      />
-    ),
-    [],
-  );
 
   // const TopNavigationMenuIcon = () => (
   //   <TopNavigationAction
@@ -135,8 +72,62 @@ export default function TopNavigationArea(props) {
   //   </>
   // );
 
-  return useMemo(
-    () => (
+  return useMemo(() => {
+    // eslint-disable-next-line react/prop-types
+    const routeBack = () => navigation.goBack();
+
+    // prettier-ignore
+    const useSwitchTheme = async () => {
+      try {
+        const settingsError = await updateSettings(appState, {
+          darkMode: !appState.darkMode,
+        });
+
+        if (settingsError) {
+          await setError(true);
+        }
+      } catch (e) {
+        await setError(true);
+      }
+    };
+
+    const renderSwitch = () => (
+      <Toggle checked={appState.darkMode} onChange={useSwitchTheme} />
+    );
+
+    const TopNavigationTitle = (navigationProps) => (
+      /* eslint-disable-next-line react/jsx-props-no-spreading */
+      <Text category="h6" {...navigationProps}>
+        {title}
+      </Text>
+    );
+
+    // prettier-ignore
+    const TopNavigationBack = (navigationProps) => (
+      <TopNavigationAction
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
+        {...navigationProps}
+        icon={iconType === 'close' ? IconClose : IconBack}
+        onPress={routeBack}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel="Go back"
+        accessibilityActions={['onPress']}
+      />
+    );
+
+    // prettier-ignore
+    const TopNavigationSwitchTheme = (navigationProps) => (
+      <TopNavigationAction
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
+        {...navigationProps}
+        icon={renderSwitch}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel="Switch theme"
+        accessibilityActions={['onPress']}
+      />
+    );
+
+    return (
       <Layout level="2">
         <TopNavigation
           alignment="center"
@@ -152,7 +143,6 @@ export default function TopNavigationArea(props) {
         />
         <Divider />
       </Layout>
-    ),
-    [darkMode],
-  );
+    );
+  }, [iconType, style, title, appState, navigation, updateSettings]);
 }

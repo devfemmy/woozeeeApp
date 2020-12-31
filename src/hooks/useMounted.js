@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-export default function useIsMounted() {
+export default function useMounted() {
   const [isMounted, setMounted] = useState(false);
 
   useCallback(() => {

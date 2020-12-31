@@ -35,7 +35,7 @@ export default function usePreFetchResources() {
           require('~assets/videos/onboarding-bg-video.mp4'),
         ]);
       } catch (e) {
-        console.warn(e);
+        const err = e;
       } finally {
         await setPreloaded(true);
         await SplashScreen.hideAsync();

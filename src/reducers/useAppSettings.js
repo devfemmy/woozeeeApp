@@ -11,7 +11,7 @@ import {
   initializeState,
 } from '~src/store/AppSettings';
 
-export default function useAppSettingsReducer() {
+export default function useAppSettings() {
   const [appState, dispatch] = useReducer(
     reducer,
     initialState,
@@ -28,9 +28,7 @@ export default function useAppSettingsReducer() {
 
         try {
           // get token from AsyncStorage
-          const settingsAsync = await AsyncStorage.getItem(
-            '@woozeeeAppSettings',
-          );
+          const settingsAsync = await AsyncStorage.getItem('APP_SETTINGS');
 
           if (settingsAsync) {
             settings = await JSON.parse(settingsAsync);
@@ -55,7 +53,7 @@ export default function useAppSettingsReducer() {
         try {
           if (options) {
             settings = await JSON.stringify(options);
-            await AsyncStorage.setItem('@woozeeeAppSettings', settings);
+            await AsyncStorage.setItem('APP_SETTINGS', settings);
           }
 
           await dispatch({

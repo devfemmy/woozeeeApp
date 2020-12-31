@@ -11,7 +11,7 @@ import {
   initializeState,
 } from '~src/store/Authentication';
 
-export default function useAuthReducer() {
+export default function useAuth() {
   const [authState, dispatch] = useReducer(
     reducer,
     initialState,
@@ -30,9 +30,7 @@ export default function useAuthReducer() {
           // start loading modal
 
           // get token from AsyncStorage
-          const tokenAsync = await AsyncStorage.getItem(
-            '@woozeeeUserAuthToken',
-          );
+          const tokenAsync = await AsyncStorage.getItem('USER_AUTH_TOKEN');
 
           if (tokenAsync) {
             token = await JSON.parse(tokenAsync);
@@ -70,7 +68,7 @@ export default function useAuthReducer() {
           if (!msg) {
             token = await JSON.stringify(userData);
 
-            await AsyncStorage.setItem('@woozeeeUserAuthToken', token);
+            await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
           }
 
           await dispatch({
@@ -89,7 +87,7 @@ export default function useAuthReducer() {
         let msg = null;
 
         try {
-          await AsyncStorage.removeItem('@woozeeeUserAuthToken');
+          await AsyncStorage.removeItem('USER_AUTH_TOKEN');
 
           await dispatch({
             type: 'LOG_OUT',

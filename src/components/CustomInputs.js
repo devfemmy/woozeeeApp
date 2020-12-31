@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 
 import { Pressable } from 'react-native';
 
@@ -73,11 +73,14 @@ function SecureInput(props) {
     setSecureEntry((prevState) => !prevState);
   };
 
-  const secureToggleIcon = (propsIcon) => (
-    <Pressable onPress={toggleSecureEntry}>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <IconEye {...propsIcon} isOpen={isSecureEntry} />
-    </Pressable>
+  const secureToggleIcon = useCallback(
+    (propsIcon) => (
+      <Pressable onPress={toggleSecureEntry}>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <IconEye {...propsIcon} isOpen={isSecureEntry} />
+      </Pressable>
+    ),
+    [isSecureEntry],
   );
 
   // eslint-disable-next-line react/prop-types
@@ -110,7 +113,15 @@ function SecureInput(props) {
         }
       />
     ),
-    [value, isSecureEntry],
+    [
+      value,
+      isSecureEntry,
+      secureToggleIcon,
+      caption,
+      captionIcon,
+      label,
+      otherProps,
+    ],
   );
 }
 
@@ -154,7 +165,7 @@ function RegularInput(props) {
         }
       />
     ),
-    [value],
+    [value, caption, captionIcon, label, otherProps],
   );
 }
 
