@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
 
-import useBeforeLeave from '~src/hooks/useBeforeLeave';
+import useToast from '~src/hooks/useToast';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -34,20 +34,9 @@ export default function RegisterFull({ navigation }) {
   const routeVerifyWithCode = () => navigation.navigate('VerifyWithCode');
 
   // Determines if any input field has been entered
-  const isStartedTyping = Object.values(values).some((v) => v !== '');
+  // const isStartedTyping = Object.values(values).some((v) => v !== '');
 
-  // check input changes when user try to leave screen
-  useEffect(() => {
-    const beforeLeave = useBeforeLeave;
-
-    // prettier-ignore
-    // eslint-disable-next-line react/prop-types
-    const backAction = navigation.addListener(
-      'beforeRemove', (e) => beforeLeave(navigation, e, isStartedTyping),
-    );
-
-    return () => backAction.removeListener;
-  }, [navigation, isStartedTyping]);
+  useToast('Click again to go back');
 
   return (
     <Layout level="2" style={{ flex: 1 }}>

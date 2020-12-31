@@ -17,6 +17,8 @@ import OverlayLoader from '~src/components/OverlayLoader';
 
 import BackgroundVideo from '~src/components/BackgroundVideo';
 
+import useToast from '~src/hooks/useToast';
+
 const styles = StyleSheet.create({
   uiContainer: {
     flex: 1,
@@ -39,6 +41,8 @@ export default function OnboardingScreen({ navigation }) {
   const { isLoading } = useContext(AppSettingsContext);
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
+
+  useToast('Click again to exit');
 
   return (
     <Layout level="1" style={{ flex: 1 }}>

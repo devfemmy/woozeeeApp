@@ -9,12 +9,9 @@ export default function useGeneratedThumb(videoUri) {
   useMemo(
     () => async () => {
       try {
-        const { uri } = await VideoThumbnails.getThumbnailAsync(
-          'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4',
-          {
-            time: 1500,
-          },
-        );
+        const { uri } = await VideoThumbnails.getThumbnailAsync(videoUri, {
+          time: 1500,
+        });
 
         setImageUri(uri);
       } catch (e) {

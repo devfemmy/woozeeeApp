@@ -15,6 +15,8 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import { RegularInput, SecureInput } from '~src/components/CustomInputs';
 
+import useToast from '~src/hooks/useToast';
+
 // eslint-disable-next-line react/prop-types
 export default function Login({ navigation }) {
   // prettier-ignore
@@ -48,6 +50,7 @@ export default function Login({ navigation }) {
 
     try {
       await setLoading(true);
+
       if (values.email && values.password) {
         loginError = await login(values);
       } else {
@@ -60,6 +63,7 @@ export default function Login({ navigation }) {
         ...prevState,
         auth: loginError,
       }));
+
       await setLoading(false);
     }
   };
