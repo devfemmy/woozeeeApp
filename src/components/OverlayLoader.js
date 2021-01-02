@@ -20,7 +20,7 @@ export default function OverlayLoader(props) {
   const { isLoading } = props;
 
   return isLoading ? (
-    <BlurView intensity="25" tint="dark" style={styles.overlayCentered}>
+    <BlurView intensity="50" tint="dark" style={styles.overlayCentered}>
       <Spinner
         size="giant"
         status="danger"

@@ -6,6 +6,8 @@ import { enableScreens } from 'react-native-screens';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import * as SplashScreen from 'expo-splash-screen';
+
 import { StatusBar } from 'expo-status-bar';
 
 import {
@@ -17,6 +19,8 @@ import {
 import * as eva from '@eva-design/eva';
 
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+
+import mapping from './mapping.json';
 
 import useMounted from '~src/hooks/useMounted';
 
@@ -33,6 +37,10 @@ import Router from '~src/router';
 enableScreens();
 
 export default function App() {
+  SplashScreen.preventAutoHideAsync()
+    .then(() => {})
+    .catch(() => {});
+
   const isMounted = useMounted();
 
   const isPreloaded = usePreFetchResources();
@@ -80,23 +88,22 @@ export default function App() {
     preFetchData().then(() => {});
   }, [isMounted, fetchSettings, fetchToken]);
 
-  const { darkMode } = appState;
-
-  const theme = darkMode ? 'dark' : 'light';
+  const theme = appState.darkMode ? 'dark' : 'light';
 
   return isPreloaded ? (
     <SafeAreaProvider>
       <IconRegistry icons={EvaIconsPack} />
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <ApplicationProvider {...eva} theme={eva[theme]}>
+      <ApplicationProvider
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
+        {...eva}
+        customMapping={mapping}
+        theme={eva[theme]}
+      >
         <AppSettingsContext.Provider
           value={{
             appState,
             appOptions,
             isLoading,
-            setLoading,
-            errorMsg,
-            setErrorMsg,
           }}
         >
           <AuthContext.Provider

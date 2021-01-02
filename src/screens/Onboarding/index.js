@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
 // eslint-disable-next-line react/prop-types
 export default function OnboardingScreen({ navigation }) {
   const { isLoading } = useContext(AppSettingsContext);
+
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
 

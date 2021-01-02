@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
-import * as SplashScreen from 'expo-splash-screen';
+// import * as SplashScreen from 'expo-splash-screen';
 
 export default function usePreFetchResources() {
   const [isPreloaded, setPreloaded] = useState(false);
@@ -9,8 +9,6 @@ export default function usePreFetchResources() {
   useEffect(() => {
     const loadPreloadedData = async () => {
       try {
-        await SplashScreen.preventAutoHideAsync();
-
         await Font.loadAsync({
           'montserrat-light': {
             uri: require('~assets/fonts/montserrat/montserrat-light.ttf'),
@@ -38,11 +36,12 @@ export default function usePreFetchResources() {
         const err = e;
       } finally {
         await setPreloaded(true);
-        await SplashScreen.hideAsync();
       }
     };
 
-    loadPreloadedData().then(() => {});
+    loadPreloadedData()
+      .then(() => {})
+      .catch(() => {});
   }, []);
 
   return isPreloaded;

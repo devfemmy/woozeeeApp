@@ -1,7 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import * as SplashScreen from 'expo-splash-screen';
 
 import { AuthContext } from '~src/contexts';
 
@@ -32,6 +34,15 @@ export default function Router() {
       // Home,
     },
   };
+
+  useEffect(() => {
+    const hideSplash = async () => {
+      await SplashScreen.hideAsync();
+    };
+    hideSplash()
+      .then(() => {})
+      .catch(() => {});
+  }, []);
 
   return (
     <NavigationContainer>

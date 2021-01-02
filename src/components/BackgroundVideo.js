@@ -27,6 +27,8 @@ export default function BackgroundVideo(props) {
 
   const opacity = React.useMemo(() => new Animated.Value(0), []);
 
+  const thumbOpacity = React.useMemo(() => new Animated.Value(0), []);
+
   const [cachedUri, setCachedUri] = useState(null);
 
   useMemo(() => {
@@ -46,16 +48,25 @@ export default function BackgroundVideo(props) {
   return useMemo(
     () => (
       <Layout style={styles.background}>
-        <Image
-          source={thumbUri}
-          style={{
-            flex: 1,
-            resizeMode: 'cover',
-            width: '100%',
-            height: '100%',
-            position: 'absolute',
-          }}
-        />
+        <Animated.View
+          style={[styles.backgroundViewWrapper, { opacity: thumbOpacity }]}
+        >
+          <Image
+            source={thumbUri}
+            style={{
+              resizeMode: 'cover',
+              width: '100%',
+              height: '100%',
+            }}
+            onLoadStart={() => {
+              Animated.timing(thumbOpacity, {
+                toValue: 1,
+                useNativeDriver: true,
+                duration: 1000,
+              }).start();
+            }}
+          />
+        </Animated.View>
         <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
           <Video
             isLooping
@@ -70,7 +81,7 @@ export default function BackgroundVideo(props) {
             }}
             resizeMode="cover"
             shouldPlay={isFocused || isFocused === undefined}
-            source={{ uri: cachedUri }}
+            // source={{ uri: cachedUri }}
             style={{ flex: 1 }}
           />
         </Animated.View>

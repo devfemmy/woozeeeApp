@@ -33,6 +33,6 @@ export default function useToast(msg) {
           'hardwareBackPress', onBackPress,
         );
       };
-    }, [exitCount]),
+    }, [exitCount, msg]),
   );
 }

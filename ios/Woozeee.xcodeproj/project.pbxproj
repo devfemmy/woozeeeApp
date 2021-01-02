@@ -21,6 +21,7 @@
 		0F34618F3BB348AE8F741E86 /* montserrat-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B79E38D8B64B45BB8A443B04 /* montserrat-medium.ttf */; };
 		81FA6C28F65542B49569885A /* montserrat-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 056B528047D24CC6B9B6CDF0 /* montserrat-regular.ttf */; };
 		070053F716D7450291716A36 /* montserrat-semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBFB2F9EE3B348F4B7247A3D /* montserrat-semibold.ttf */; };
+		96836A75E9E545D5AFC413A7 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D36B0899845B4B99837154C6 /* logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		B79E38D8B64B45BB8A443B04 /* montserrat-medium.ttf */ = {isa = PBXFileReference; name = "montserrat-medium.ttf"; path = "../src/assets/fonts/montserrat/montserrat-medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		056B528047D24CC6B9B6CDF0 /* montserrat-regular.ttf */ = {isa = PBXFileReference; name = "montserrat-regular.ttf"; path = "../src/assets/fonts/montserrat/montserrat-regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		BBFB2F9EE3B348F4B7247A3D /* montserrat-semibold.ttf */ = {isa = PBXFileReference; name = "montserrat-semibold.ttf"; path = "../src/assets/fonts/montserrat/montserrat-semibold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D36B0899845B4B99837154C6 /* logo.png */ = {isa = PBXFileReference; name = "logo.png"; path = "../src/assets/images/logo.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				B79E38D8B64B45BB8A443B04 /* montserrat-medium.ttf */,
 				056B528047D24CC6B9B6CDF0 /* montserrat-regular.ttf */,
 				BBFB2F9EE3B348F4B7247A3D /* montserrat-semibold.ttf */,
+				D36B0899845B4B99837154C6 /* logo.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				0F34618F3BB348AE8F741E86 /* montserrat-medium.ttf in Resources */,
 				81FA6C28F65542B49569885A /* montserrat-regular.ttf in Resources */,
 				070053F716D7450291716A36 /* montserrat-semibold.ttf in Resources */,
+				96836A75E9E545D5AFC413A7 /* logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
