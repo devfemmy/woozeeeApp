@@ -79,7 +79,7 @@ export default function TopNavigationArea(props) {
     // prettier-ignore
     const useSwitchTheme = async () => {
       try {
-        const settingsError = await updateSettings(appState, {
+        const settingsError = await updateSettings({
           darkMode: !appState.darkMode,
         });
 

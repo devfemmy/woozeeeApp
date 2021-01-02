@@ -39,9 +39,7 @@ export default function usePreFetchResources() {
       }
     };
 
-    loadPreloadedData()
-      .then(() => {})
-      .catch(() => {});
+    loadPreloadedData().then(() => {});
   }, []);
 
   return isPreloaded;
