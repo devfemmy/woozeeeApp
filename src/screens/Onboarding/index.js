@@ -51,7 +51,7 @@ export default function OnboardingScreen({ navigation }) {
       {/* Onboarding screen background video */}
       <BackgroundVideo
         videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
-        thumbUri={require('~assets/images/splash.png')}
+        thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
       />
       <SafeAreaView style={{ flex: 1 }}>
         <BlurView intensity={15} tint="dark" style={styles.uiContainer}>

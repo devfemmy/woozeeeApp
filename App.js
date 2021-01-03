@@ -10,17 +10,17 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import { StatusBar } from 'expo-status-bar';
 
+import * as eva from '@eva-design/eva';
+
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+
 import {
   ApplicationProvider,
   IconRegistry,
   Layout,
 } from '@ui-kitten/components';
 
-import * as eva from '@eva-design/eva';
-
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
-
-import mapping from './mapping.json';
+import mapping from '~src/constants/mapping.json';
 
 import useMounted from '~src/hooks/useMounted';
 
@@ -96,8 +96,8 @@ export default function App() {
       <ApplicationProvider
         /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...eva}
-        customMapping={mapping}
         theme={eva[theme]}
+        customMapping={mapping}
       >
         <AppSettingsContext.Provider
           value={{

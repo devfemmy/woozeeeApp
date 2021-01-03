@@ -27,7 +27,7 @@ export default function BackgroundVideo(props) {
 
   const opacity = React.useMemo(() => new Animated.Value(0), []);
 
-  const thumbOpacity = React.useMemo(() => new Animated.Value(0), []);
+  const thumbOpacity = React.useMemo(() => new Animated.Value(0.25), []);
 
   const [cachedUri, setCachedUri] = useState(null);
 
@@ -81,12 +81,12 @@ export default function BackgroundVideo(props) {
             }}
             resizeMode="cover"
             shouldPlay={isFocused || isFocused === undefined}
-            // source={{ uri: cachedUri }}
+            source={{ uri: cachedUri }}
             style={{ flex: 1 }}
           />
         </Animated.View>
       </Layout>
     ),
-    [isFocused, opacity, cachedUri, thumbUri],
+    [isFocused, opacity, cachedUri, thumbUri, thumbOpacity],
   );
 }

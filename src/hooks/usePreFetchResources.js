@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
-// import * as SplashScreen from 'expo-splash-screen';
 
 export default function usePreFetchResources() {
   const [isPreloaded, setPreloaded] = useState(false);
@@ -31,6 +30,7 @@ export default function usePreFetchResources() {
         await Asset.loadAsync([
           require('~assets/images/splash.png'),
           require('~assets/images/logo.png'),
+          require('~assets/images/onboarding-video-thumb.jpg'),
         ]);
       } catch (e) {
         const err = e;
