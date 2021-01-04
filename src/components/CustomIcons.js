@@ -75,3 +75,8 @@ export const IconCheckmarkCircle = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="checkmark-circle-outline" />
 );
+
+export const IconHome = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="home-outline" />
+);

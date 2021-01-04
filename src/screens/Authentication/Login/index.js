@@ -15,8 +15,6 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import { RegularInput, SecureInput } from '~src/components/CustomInputs';
 
-import useToast from '~src/hooks/useToast';
-
 // eslint-disable-next-line react/prop-types
 export default function Login({ navigation }) {
   // prettier-ignore
@@ -79,7 +77,11 @@ export default function Login({ navigation }) {
   return (
     <Layout level="2" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea title="Sign in" navigation={navigation} />
+        <TopNavigationArea
+          title="Sign in"
+          navigation={navigation}
+          screen="auth"
+        />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

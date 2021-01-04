@@ -57,6 +57,7 @@ export default function RegisterMin({ navigation }) {
         <TopNavigationArea
           title="Classic Registration"
           navigation={navigation}
+          screen="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}

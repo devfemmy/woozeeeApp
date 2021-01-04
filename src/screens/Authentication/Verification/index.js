@@ -29,6 +29,7 @@ export default function VerifyWithCode({ navigation }) {
         <TopNavigationArea
           title="Account Verification"
           navigation={navigation}
+          screen="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}

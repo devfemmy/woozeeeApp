@@ -41,5 +41,18 @@
 
     "text-label-font-weight": "600",
     "text-label-font-family": "montserrat-semiBold"
+  },
+  "components": {
+    "BottomNavigationTab": {
+      "appearances": {
+        "default": {
+          "mapping": {
+            "textFontSize": "text-subtitle-2-font-size",
+            "textFontWeight": "text-subtitle-2-font-weight",
+            "textFontFamily": "text-subtitle-2-font-family"
+          }
+        }
+      }
+    }
   }
 }
