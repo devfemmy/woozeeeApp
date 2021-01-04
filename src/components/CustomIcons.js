@@ -38,6 +38,11 @@ export const IconAlertCircle = (props) => (
   <Icon {...props} name="alert-circle-outline" />
 );
 
+export const IconAlertTriangle = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="alert-triangle-outline" />
+);
+
 export const IconPersonAdd = (props) => (
   <Icon
     // eslint-disable-next-line react/jsx-props-no-spreading
@@ -49,6 +54,31 @@ export const IconPersonAdd = (props) => (
 export const IconClose = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="close-outline" />
+);
+
+export const IconCheckmarkCircle = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="checkmark-circle-outline" />
+);
+
+export const IconCalendar = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="calendar-outline" />
+);
+
+export const IconCreditCard = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="credit-card-outline" />
+);
+
+export const IconClock = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="clock-outline" />
+);
+
+export const IconHome = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="home-outline" />
 );
 
 export const IconFacebook = (props) => (
@@ -64,19 +94,4 @@ export const IconGoogle = (props) => (
 export const IconTwitter = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="twitter-outline" />
-);
-
-export const IconAlertTriangle = (props) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  <Icon {...props} name="alert-triangle-outline" />
-);
-
-export const IconCheckmarkCircle = (props) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  <Icon {...props} name="checkmark-circle-outline" />
-);
-
-export const IconHome = (props) => (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  <Icon {...props} name="home-outline" />
 );

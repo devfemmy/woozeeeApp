@@ -15,6 +15,9 @@ export default function UserRoute() {
       tabBar={(props) => <BottomNavigationArea {...props} />}
     >
       <Screen name="Home" component={HomeRoute} />
+      <Screen name="MyWallet" component={HomeRoute} />
+      <Screen name="BillPay" component={HomeRoute} />
+      <Screen name="MyActivities" component={HomeRoute} />
     </Navigator>
   );
 }

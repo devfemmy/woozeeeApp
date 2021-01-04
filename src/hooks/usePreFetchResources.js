@@ -31,6 +31,12 @@ export default function usePreFetchResources() {
           require('~assets/images/splash.png'),
           require('~assets/images/logo.png'),
           require('~assets/images/onboarding-video-thumb.jpg'),
+          require('~assets/images/card-insure.png'),
+          require('~assets/images/card-wallet.png'),
+          require('~assets/images/card-rewards.png'),
+          require('~assets/images/woozeee-socials.jpg'),
+          require('~assets/images/woozeee-marketplace.jpg'),
+          require('~assets/images/woozeee-charity.jpg'),
         ]);
       } catch (e) {
         const err = e;

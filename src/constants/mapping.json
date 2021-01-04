@@ -47,9 +47,9 @@
       "appearances": {
         "default": {
           "mapping": {
-            "textFontSize": "text-subtitle-2-font-size",
-            "textFontWeight": "text-subtitle-2-font-weight",
-            "textFontFamily": "text-subtitle-2-font-family"
+            "textFontSize": "text-label-font-size",
+            "textFontWeight": "text-label-font-weight",
+            "textFontFamily": "text-label-font-family"
           }
         }
       }

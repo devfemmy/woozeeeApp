@@ -1,21 +1,39 @@
 import React from 'react';
 
-import { BottomNavigation, BottomNavigationTab } from '@ui-kitten/components';
+import {
+  BottomNavigation,
+  BottomNavigationTab,
+  Layout,
+  Divider,
+} from '@ui-kitten/components';
 
-import { IconHome } from './CustomIcons';
+import {
+  IconHome,
+  IconCreditCard,
+  IconCalendar,
+  IconClock,
+} from './CustomIcons';
 
 export default function BottomNavigationArea(props) {
   // eslint-disable-next-line react/prop-types
-  const { navigation, state } = props;
+  const { navigation, state, style } = props;
 
   return (
-    <BottomNavigation
-      /* eslint-disable-next-line react/prop-types */
-      selectedIndex={state.index}
-      /* eslint-disable-next-line react/prop-types */
-      onSelect={(index) => navigation.navigate(state.routeNames[index])}
-    >
-      <BottomNavigationTab title="HOME" icon={IconHome} />
-    </BottomNavigation>
+    <Layout level="1">
+      <Divider />
+      <BottomNavigation
+        appearance="noIndicator"
+        style={[style, { backgroundColor: 'transparent' }]}
+        /* eslint-disable-next-line react/prop-types */
+        selectedIndex={state.index}
+        /* eslint-disable-next-line react/prop-types */
+        onSelect={(index) => navigation.navigate(state.routeNames[index])}
+      >
+        <BottomNavigationTab title="HOME" icon={IconHome} />
+        <BottomNavigationTab title="WALLET" icon={IconCreditCard} />
+        <BottomNavigationTab title="BILL PAY" icon={IconCalendar} />
+        <BottomNavigationTab title="ACTIVITIES" icon={IconClock} />
+      </BottomNavigation>
+    </Layout>
   );
 }
