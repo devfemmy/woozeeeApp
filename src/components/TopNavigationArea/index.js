@@ -4,6 +4,7 @@ import { Divider, Layout, TopNavigation } from '@ui-kitten/components';
 
 // Components import
 import BackAction from './components/BackAction';
+import LogoutAction from './components/LogoutAction';
 // import TopNavigationMenu from './components/TopNavigationMenu';
 import Title from './components/Title';
 import Logo from './components/Logo';
@@ -55,11 +56,14 @@ export default function TopNavigationArea(props) {
           alignment="center"
           /* eslint-disable-next-line react/jsx-props-no-spreading */
           title={(evaProps) => <Logo {...evaProps} />}
+          /* prettier-ignore */
+          accessoryLeft={(evaProps) => (icon === 'logout' ? (
           /* eslint-disable-next-line react/jsx-props-no-spreading */
-          accessoryLeft={(evaProps) => (
+            <LogoutAction {...evaProps} navigation={navigation} icon={icon} />
+          ) : (
             // eslint-disable-next-line react/jsx-props-no-spreading
             <BackAction {...evaProps} navigation={navigation} icon={icon} />
-          )}
+          ))}
           /* eslint-disable-next-line react/jsx-props-no-spreading */
           accessoryRight={(evaProps) => <SwitchTheme {...evaProps} />}
           // accessoryRight={() => <TopNavigationMenu />}

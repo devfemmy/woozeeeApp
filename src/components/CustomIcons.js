@@ -81,6 +81,11 @@ export const IconHome = (props) => (
   <Icon {...props} name="home-outline" />
 );
 
+export const IconLogout = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="log-out-outline" />
+);
+
 export const IconFacebook = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="facebook-outline" />

@@ -26,7 +26,7 @@ import useMounted from '~src/hooks/useMounted';
 
 import usePreFetchResources from '~src/hooks/usePreFetchResources';
 
-import { AppSettingsContext, AuthContext } from '~src/contexts';
+import { AppSettingsContext, AuthContext, LoadingContext } from '~src/contexts';
 
 import useAppSettings from '~src/reducers/useAppSettings';
 
@@ -103,7 +103,6 @@ export default function App() {
           value={{
             appState,
             appOptions,
-            isLoading,
           }}
         >
           <AuthContext.Provider
@@ -112,9 +111,11 @@ export default function App() {
               authOptions,
             }}
           >
-            <Layout level="2" style={{ flex: 1 }}>
-              <Router />
-            </Layout>
+            <LoadingContext.Provider value={{ isLoading, setLoading }}>
+              <Layout level="2" style={{ flex: 1 }}>
+                <Router />
+              </Layout>
+            </LoadingContext.Provider>
           </AuthContext.Provider>
         </AppSettingsContext.Provider>
       </ApplicationProvider>

@@ -11,7 +11,7 @@ import {
   Layout, Button, Text,
 } from '@ui-kitten/components';
 
-import { AppSettingsContext } from '~src/contexts';
+import { LoadingContext } from '~src/contexts';
 
 import OverlayLoader from '~src/components/OverlayLoader';
 
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 
 // eslint-disable-next-line react/prop-types
 export default function OnboardingScreen({ navigation }) {
-  const { isLoading } = useContext(AppSettingsContext);
+  const { isLoading } = useContext(LoadingContext);
 
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
@@ -54,7 +54,7 @@ export default function OnboardingScreen({ navigation }) {
         thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
       />
       <SafeAreaView style={{ flex: 1 }}>
-        <BlurView intensity={15} tint="dark" style={styles.uiContainer}>
+        <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
           <View>
             <Image
               source={require('~assets/images/logo.png')}

@@ -4,4 +4,6 @@ const AuthContext = createContext(undefined);
 
 const AppSettingsContext = createContext(undefined);
 
-export { AuthContext, AppSettingsContext };
+const LoadingContext = createContext(undefined);
+
+export { AuthContext, AppSettingsContext, LoadingContext };
