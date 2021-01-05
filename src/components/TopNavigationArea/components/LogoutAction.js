@@ -14,7 +14,7 @@ export default function LogoutAction(props) {
 
   const { logout } = authOptions;
 
-  const { isLoading, setLoading } = useContext(LoadingContext);
+  const { setLoading } = useContext(LoadingContext);
 
   return useMemo(() => {
     // eslint-disable-next-line react/prop-types
@@ -38,8 +38,7 @@ export default function LogoutAction(props) {
         accessibilityLiveRegion="polite"
         accessibilityLabel="Logout"
         accessibilityActions={['onPress']}
-        disabled={isLoading}
       />
     );
-  }, [isLoading, logout, otherProps]);
+  }, [setLoading, logout, otherProps]);
 }

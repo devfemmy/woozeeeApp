@@ -29,10 +29,10 @@ export default function BottomNavigationArea(props) {
         /* eslint-disable-next-line react/prop-types */
         onSelect={(index) => navigation.navigate(state.routeNames[index])}
       >
-        <BottomNavigationTab title="HOME" icon={IconHome} />
-        <BottomNavigationTab title="WALLET" icon={IconCreditCard} />
-        <BottomNavigationTab title="BILL PAY" icon={IconCalendar} />
-        <BottomNavigationTab title="ACTIVITIES" icon={IconClock} />
+        <BottomNavigationTab title="Home" icon={IconHome} />
+        <BottomNavigationTab title="Wallet" icon={IconCreditCard} />
+        <BottomNavigationTab title="Bill Pay" icon={IconCalendar} />
+        <BottomNavigationTab title="Activities" icon={IconClock} />
       </BottomNavigation>
     </Layout>
   );
