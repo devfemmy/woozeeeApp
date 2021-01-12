@@ -39,12 +39,12 @@ export default function RegisterFull({ navigation }) {
   useToast('Click again to go back');
 
   return (
-    <Layout level="2" style={{ flex: 1 }}>
+    <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
           title="Registration Details"
           navigation={navigation}
-          screen="auth"
+          page="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}

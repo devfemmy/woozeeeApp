@@ -10,13 +10,14 @@ import { AuthContext } from '~src/contexts';
 /* Screens import */
 import Onboarding from '~src/screens/Authentication';
 import Login from '~src/screens/Authentication/Login';
-import RegisterMin from '~src/screens/Authentication/Registration';
+import Register from '~src/screens/Authentication/Registration';
 import RegisterFull from '~src/screens/Authentication/Registration/RegisterFull';
 import VerifyWithCode from '~src/screens/Authentication/Verification';
 import RecoverWithEmail from '~src/screens/Authentication/Recovery';
 
 /* Routes import */
 import UserRoute from './User';
+import SocialsRoute from './User/HomeTab/Socials';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -27,7 +28,7 @@ export default function Router() {
     Auth: {
       Onboarding,
       Login,
-      RegisterMin,
+      Register,
       RegisterFull,
       VerifyWithCode,
       RecoverWithEmail,
@@ -35,6 +36,7 @@ export default function Router() {
 
     User: {
       UserRoute,
+      SocialsRoute,
     },
   };
 

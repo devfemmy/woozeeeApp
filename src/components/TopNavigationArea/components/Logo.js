@@ -8,7 +8,7 @@ export default function Title(props) {
       /* eslint-disable-next-line react/jsx-props-no-spreading */
       <View {...props}>
         <Image
-          source={require('~assets/images/logo.png')}
+          source={require('~assets/images/drawable/logo.png')}
           resizeMode="contain"
           style={{ width: 180 }}
         />

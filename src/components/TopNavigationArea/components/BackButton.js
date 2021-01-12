@@ -4,7 +4,7 @@ import { TopNavigationAction } from '@ui-kitten/components';
 
 import { IconBack, IconClose } from '~src/components/CustomIcons';
 
-export default function BackAction(props) {
+export default function BackButton(props) {
   // eslint-disable-next-line react/prop-types
   const { navigation, icon, ...otherProps } = props;
 

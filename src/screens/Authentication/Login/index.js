@@ -11,9 +11,13 @@ import {
 
 import { AuthContext } from '~src/contexts';
 
+import useMounted from '~src/hooks/useMounted';
+
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import { RegularInput, SecureInput } from '~src/components/CustomInputs';
+
+import { verifyEmail } from '~src/components/FormVerification';
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ navigation }) {
@@ -24,23 +28,40 @@ export default function Login({ navigation }) {
 
   const { login } = authOptions;
 
+  const isMounted = useMounted();
+
   const [isLoading, setLoading] = useState(false);
 
   const [errorMsg, setErrorMsg] = useState({
     auth: null,
   });
 
-  const [values, setValues] = useState({
-    email: '',
-    password: '',
+  const [form, setFormValues] = useState({
+    email: {
+      value: '',
+      status: 'basic',
+      caption: 'Enter your email address to continue',
+    },
+    password: {
+      value: '',
+      status: 'basic',
+    },
   });
 
-  const updateEmailValue = (newValue) => {
-    setValues((prevState) => ({ ...prevState, email: newValue }));
+  const updateFormEmail = (inputEmail) => {
+    const currentState = verifyEmail(inputEmail);
+
+    setFormValues((prevState) => ({
+      ...prevState,
+      email: { ...currentState, value: inputEmail },
+    }));
   };
 
-  const updatePasswordValue = (newValue) => {
-    setValues((prevState) => ({ ...prevState, password: newValue }));
+  const updateFormPassword = (newPassword) => {
+    setFormValues((prevState) => ({
+      ...prevState,
+      password: { ...prevState.password, value: newPassword },
+    }));
   };
 
   const loginUser = async () => {
@@ -48,9 +69,13 @@ export default function Login({ navigation }) {
 
     try {
       await setLoading(true);
+      const formObj = {
+        email: form.email.value,
+        password: form.password.value,
+      };
 
-      if (values.email && values.password) {
-        loginError = await login(values);
+      if (formObj.email && formObj.password) {
+        loginError = await login(formObj);
       } else {
         loginError = 'Email and Password fields are required';
       }
@@ -62,25 +87,25 @@ export default function Login({ navigation }) {
         auth: loginError,
       }));
 
-      await setLoading(false);
+      if (isMounted) await setLoading(false);
     }
   };
 
   const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
   // eslint-disable-next-line react/prop-types
-  const routeRegisterMin = () => navigation.navigate('RegisterMin');
+  const routeRegister = () => navigation.navigate('Register');
 
   // eslint-disable-next-line react/prop-types
   const routeRecoverWithEmail = () => navigation.navigate('RecoverWithEmail');
 
   return (
-    <Layout level="2" style={{ flex: 1 }}>
+    <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
           title="Sign in"
           navigation={navigation}
-          screen="auth"
+          page="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}
@@ -113,21 +138,24 @@ export default function Login({ navigation }) {
               ) : null}
               <View style={{ paddingVertical: 10 }}>
                 <RegularInput
-                  value={values.email}
+                  value={form.email.value}
                   label="Email"
                   accessibilityLabel="Email"
                   placeholder="Enter your email address"
                   autoCapitalize="none"
                   autoCompleteType="email"
                   textContentType="emailAddress"
+                  caption={form.email.caption}
+                  captionIcon={form.email.status}
+                  status={form.email.status}
                   autoFocus
                   autoCorrect={false}
-                  onChangeText={updateEmailValue}
+                  onChangeText={updateFormEmail}
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>
                 <SecureInput
-                  value={values.password}
+                  value={form.password.value}
                   label="Password"
                   accessibilityLabel="Password"
                   placeholder="Enter your password"
@@ -135,7 +163,7 @@ export default function Login({ navigation }) {
                   autoCompleteType="password"
                   textContentType="password"
                   autoCorrect={false}
-                  onChangeText={updatePasswordValue}
+                  onChangeText={updateFormPassword}
                 />
                 <Button
                   size="tiny"
@@ -157,7 +185,7 @@ export default function Login({ navigation }) {
                   accessibilityLabel="Continue"
                   accessoryLeft={isLoading ? renderSpinner : null}
                   onPress={loginUser}
-                  disabled={isLoading}
+                  disabled={isLoading || form.email.status !== 'success'}
                 >
                   <Text style={{ color: 'white' }}>Continue</Text>
                 </Button>
@@ -173,11 +201,7 @@ export default function Login({ navigation }) {
                 }}
               >
                 <Text>Don&apos;t have an account?</Text>
-                <Button
-                  appearance="ghost"
-                  size="tiny"
-                  onPress={routeRegisterMin}
-                >
+                <Button appearance="ghost" size="tiny" onPress={routeRegister}>
                   <Text category="h6" status="primary">
                     Sign up
                   </Text>

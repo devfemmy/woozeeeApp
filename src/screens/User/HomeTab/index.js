@@ -23,22 +23,9 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import OverlayLoader from '~src/components/OverlayLoader';
 
-/* DATA */
-const woozeeeCategories = [
-  {
-    title: 'Woozeee Socials',
-    banner: require('~assets/images/woozeee-socials.jpg'),
-  },
-  {
-    title: 'Woozeee Marketplace',
-    banner: require('~assets/images/woozeee-marketplace.jpg'),
-  },
-  {
-    title: 'Woozeee Charity',
-    banner: require('~assets/images/woozeee-charity.jpg'),
-  },
-];
+import useToast from '~src/hooks/useToast';
 
+/* DATA */
 const woozeeeCards = [
   {
     balance: '150.25',
@@ -54,13 +41,31 @@ const woozeeeCards = [
   },
 ];
 
+const woozeeeCategories = [
+  {
+    title: 'woozeee Socials',
+    banner: require('~assets/images/banner/woozeee-socials.jpg'),
+    page: 'SocialsRoute',
+  },
+  {
+    title: 'woozeee Marketplace',
+    banner: require('~assets/images/banner/woozeee-marketplace.jpg'),
+    page: 'SocialsRoute',
+  },
+  {
+    title: 'woozeee Charity',
+    banner: require('~assets/images/banner/woozeee-charity.jpg'),
+    page: 'SocialsRoute',
+  },
+];
+
 const styles = StyleSheet.create({
   cardContent: {
     height: '100%',
     width: '95%',
     maxWidth: 600,
     position: 'absolute',
-    borderRadius: 10,
+    borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -102,11 +107,16 @@ export default function Home({ navigation }) {
 
   const { isLoading } = useContext(LoadingContext);
 
+  // eslint-disable-next-line react/prop-types
+  const routeSocialRoute = (route) => navigation.navigate(route);
+
+  useToast('Click again to exit');
+
   const renderCard = (data) => (
     <View
       style={{
-        height: 200,
-        width: width <= 600 ? width / 1.25 : width / 3,
+        height: 170,
+        width: width <= 600 ? width / 1.6 : width / 3,
         paddingHorizontal: 5,
         position: 'relative',
         alignItems: 'center',
@@ -118,9 +128,9 @@ export default function Home({ navigation }) {
       <Image
         source={data.item.banner}
         style={{
-          borderRadius: 10,
+          height: height <= 600 ? 70 : 140,
           width: '95%',
-          height: height <= 600 ? 70 : 170,
+          borderRadius: 5,
         }}
         resizeMode="contain"
       />
@@ -130,13 +140,15 @@ export default function Home({ navigation }) {
   const renderCategory = (data) => (
     <TouchableOpacity
       style={{
-        height: 150,
+        height: 250,
         width,
         marginVertical: 5,
         position: 'relative',
         alignItems: 'center',
       }}
-      key={data.item.key}
+      key={data.item.title}
+      /* eslint-disable-next-line react/prop-types */
+      onPress={() => routeSocialRoute(data.item.page)}
     >
       <Image
         source={data.item.banner}
@@ -152,16 +164,19 @@ export default function Home({ navigation }) {
   );
 
   return (
-    <Layout level="2" style={{ flex: 1 }}>
+    <Layout level="4" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
-          title="Woozeee"
+          title="woozeee"
           navigation={navigation}
           icon="logout"
+          page="user"
         />
-        <View style={{ flex: 1, paddingVertical: 5, maxHeight: 220 }}>
+
+        <View style={{ flex: 1, paddingTop: 5, maxHeight: 180 }}>
           <List
+            style={{ backgroundColor: 'transparent' }}
             alwaysBounceHorizontal
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -171,8 +186,9 @@ export default function Home({ navigation }) {
           />
         </View>
 
-        <View style={{ flex: 1, paddingVertical: 5 }}>
+        <View style={{ flex: 1, paddingBottom: 5 }}>
           <List
+            style={{ backgroundColor: 'transparent' }}
             alwaysBounceVertical
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}

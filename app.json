@@ -1,6 +1,6 @@
 {
   "name": "Woozeee",
-  "displayName": "Woozeee",
+  "displayName": "woozeee",
   "expo": {
     "name": "Woozeee",
     "slug": "Woozeee",
@@ -9,13 +9,16 @@
       "src/assets/*"
     ],
     "splash": {
-      "image": "src/assets/images/splash.png",
+      "image": "src/assets/images/drawable/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#043F7C"
     },
-    "icon": "src/assets/images/icon.png",
+    "icon": "src/assets/images/drawable/icon.png",
     "android": {
       "package": "com.econnectnp.woozeee"
+    },
+    "web": {
+      "favicon": "src/assets/images/drawable/favicon.png"
     }
   }
 }

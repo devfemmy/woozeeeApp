@@ -6,7 +6,7 @@ import { IconLogout } from '~src/components/CustomIcons';
 
 import { AuthContext, LoadingContext } from '~src/contexts';
 
-export default function LogoutAction(props) {
+export default function LogoutButton(props) {
   // eslint-disable-next-line react/prop-types
   const { navigation, icon, ...otherProps } = props;
 

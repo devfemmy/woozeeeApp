@@ -63,7 +63,8 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest": "~25.2.6",
     "prettier": "^2.2.1",
-    "react-test-renderer": "~16.13.1"
+    "react-test-renderer": "~16.13.1",
+    "sharp": "^0.27.0"
   },
   "resolutions": {
     "react-native/hermes-engine": "0.5.2-rc1"

@@ -10,45 +10,37 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import { RegularInput } from '~src/components/CustomInputs';
 
+import { verifyEmail } from '~src/components/FormVerification';
+
 // eslint-disable-next-line react/prop-types
 export default function RecoverWithEmail({ navigation }) {
-  const [values, setValues] = useState({
-    email: '',
+  const [form, setFormValues] = useState({
+    email: {
+      value: '',
+      status: 'basic',
+      caption: 'Enter your email address to continue',
+    },
   });
 
-  const [inputState, setInputState] = useState({
-    status: 'basic',
-    caption: 'Enter your email address to continue',
-  });
+  const updateFormEmail = (inputEmail) => {
+    const currentState = verifyEmail(inputEmail);
 
-  const updateEmailValue = (newValue) => {
-    setValues((prevState) => ({ ...prevState, email: newValue }));
-
-    const re = /\S+@\S+\.\S+/;
-
-    if (re.test(newValue)) {
-      setInputState((prevState) => ({
-        ...prevState,
-        ...{ status: 'success', caption: 'Click the button below to continue' },
-      }));
-    } else {
-      setInputState((prevState) => ({
-        ...prevState,
-        ...{ status: 'danger', caption: 'Please enter a valid email address' },
-      }));
-    }
+    setFormValues((prevState) => ({
+      ...prevState,
+      email: { ...currentState, value: inputEmail },
+    }));
   };
 
   // eslint-disable-next-line react/prop-types
-  const routeRegisterMin = () => navigation.navigate('RegisterMin');
+  const routeRegister = () => navigation.navigate('Register');
 
   return (
-    <Layout level="2" style={{ flex: 1 }}>
+    <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
           title="Account Recovery"
           navigation={navigation}
-          screen="auth"
+          page="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}
@@ -63,19 +55,19 @@ export default function RecoverWithEmail({ navigation }) {
             <View style={{ paddingBottom: 10 }}>
               <View style={{ paddingVertical: 10 }}>
                 <RegularInput
-                  value={values.email}
+                  value={form.email.value}
                   label="Email"
                   accessibilityLabel="Email"
                   placeholder="Enter your email address"
                   autoCapitalize="none"
                   autoCompleteType="email"
                   textContentType="emailAddress"
-                  caption={inputState.caption}
-                  captionIcon={inputState.status}
-                  status={inputState.status}
+                  caption={form.email.caption}
+                  captionIcon={form.email.status}
+                  status={form.email.status}
                   autoFocus
                   autoCorrect={false}
-                  onChangeText={updateEmailValue}
+                  onChangeText={updateFormEmail}
                 />
               </View>
               <View style={{ paddingVertical: 20 }}>
@@ -85,7 +77,7 @@ export default function RecoverWithEmail({ navigation }) {
                   accessibilityLiveRegion="assertive"
                   accessibilityComponentType="button"
                   accessibilityLabel="Continue"
-                  disabled={inputState.status !== 'success'}
+                  disabled={form.email.status !== 'success'}
                 >
                   <Text style={{ color: 'white' }}>Continue</Text>
                 </Button>
@@ -101,11 +93,7 @@ export default function RecoverWithEmail({ navigation }) {
                 }}
               >
                 <Text>Don&apos;t have an account?</Text>
-                <Button
-                  appearance="ghost"
-                  size="tiny"
-                  onPress={routeRegisterMin}
-                >
+                <Button appearance="ghost" size="tiny" onPress={routeRegister}>
                   <Text category="h6" status="primary">
                     Sign up
                   </Text>

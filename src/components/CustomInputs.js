@@ -136,6 +136,7 @@ function RegularInput(props) {
     caption,
     // eslint-disable-next-line react/prop-types
     captionIcon,
+    size,
     ...otherProps
   } = props;
 
@@ -145,7 +146,7 @@ function RegularInput(props) {
         /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...otherProps}
         value={value}
-        size="large"
+        size={size || 'large'}
         accessibilityLiveRegion="polite"
         maxFontSizeMultiplier={1.5}
         textStyle={fonts.fontRegular}

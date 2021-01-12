@@ -3,11 +3,12 @@ import React, { useMemo } from 'react';
 import { Divider, Layout, TopNavigation } from '@ui-kitten/components';
 
 // Components import
-import BackAction from './components/BackAction';
-import LogoutAction from './components/LogoutAction';
+import BackButton from './components/BackButton';
+import LogoutButton from './components/LogoutButton';
 // import TopNavigationMenu from './components/TopNavigationMenu';
 import Title from './components/Title';
 import Logo from './components/Logo';
+import SearchField from './components/SearchField';
 import SwitchTheme from './components/SwitchTheme';
 
 export default function TopNavigationArea(props) {
@@ -21,12 +22,12 @@ export default function TopNavigationArea(props) {
     // eslint-disable-next-line react/prop-types
     style,
     // eslint-disable-next-line react/prop-types
-    screen,
+    page,
   } = props;
 
   const TopNavigationAuth = useMemo(
     () => (
-      <Layout level="2">
+      <Layout level="4">
         <TopNavigation
           alignment="center"
           /* eslint-disable-next-line react/jsx-props-no-spreading */
@@ -34,7 +35,7 @@ export default function TopNavigationArea(props) {
           /* eslint-disable-next-line react/jsx-props-no-spreading */
           accessoryLeft={(evaProps) => (
             // eslint-disable-next-line react/jsx-props-no-spreading
-            <BackAction {...evaProps} navigation={navigation} icon={icon} />
+            <BackButton {...evaProps} navigation={navigation} icon={icon} />
           )}
           /* eslint-disable-next-line react/jsx-props-no-spreading */
           accessoryRight={(evaProps) => <SwitchTheme {...evaProps} />}
@@ -51,7 +52,7 @@ export default function TopNavigationArea(props) {
 
   const TopNavigationUser = useMemo(
     () => (
-      <Layout level="2">
+      <Layout level="4">
         <TopNavigation
           alignment="center"
           /* eslint-disable-next-line react/jsx-props-no-spreading */
@@ -59,10 +60,10 @@ export default function TopNavigationArea(props) {
           /* prettier-ignore */
           accessoryLeft={(evaProps) => (icon === 'logout' ? (
           /* eslint-disable-next-line react/jsx-props-no-spreading */
-            <LogoutAction {...evaProps} navigation={navigation} icon={icon} />
+            <LogoutButton {...evaProps} navigation={navigation} icon={icon} />
           ) : (
             // eslint-disable-next-line react/jsx-props-no-spreading
-            <BackAction {...evaProps} navigation={navigation} icon={icon} />
+            <BackButton {...evaProps} navigation={navigation} icon={icon} />
           ))}
           /* eslint-disable-next-line react/jsx-props-no-spreading */
           accessoryRight={(evaProps) => <SwitchTheme {...evaProps} />}
@@ -77,5 +78,31 @@ export default function TopNavigationArea(props) {
     [navigation, icon, style],
   );
 
-  return screen === 'auth' ? TopNavigationAuth : TopNavigationUser;
+  const TopNavigationSearch = useMemo(
+    () => (
+      <Layout level="4">
+        <TopNavigation
+          alignment="center"
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          title={(evaProps) => <SearchField {...evaProps} />}
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          accessoryRight={(evaProps) => <SwitchTheme {...evaProps} />}
+          // accessoryRight={() => <TopNavigationMenu />}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="screen navigation"
+          style={[style, { backgroundColor: 'transparent' }]}
+        />
+        <Divider />
+      </Layout>
+    ),
+    [style],
+  );
+
+  const navs = {
+    auth: TopNavigationAuth,
+    user: TopNavigationUser,
+    search: TopNavigationSearch,
+  };
+
+  return navs[page];
 }

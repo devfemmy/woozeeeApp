@@ -24,12 +24,12 @@ export default function VerifyWithCode({ navigation }) {
   const routeLogin = () => navigation.navigate('Login');
 
   return (
-    <Layout level="2" style={{ flex: 1 }}>
+    <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
           title="Account Verification"
           navigation={navigation}
-          screen="auth"
+          page="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}

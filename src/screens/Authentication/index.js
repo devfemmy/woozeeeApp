@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   uiContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     minHeight: '100%',
     zIndex: 9,
     paddingVertical: 25,
@@ -42,11 +42,13 @@ export default function OnboardingScreen({ navigation }) {
 
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
+  // eslint-disable-next-line react/prop-types
+  const routeRegister = () => navigation.navigate('Register');
 
   useToast('Click again to exit');
 
   return (
-    <Layout level="1" style={{ flex: 1 }}>
+    <Layout level="4" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
       {/* Onboarding screen background video */}
       <BackgroundVideo
@@ -57,7 +59,7 @@ export default function OnboardingScreen({ navigation }) {
         <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
           <View>
             <Image
-              source={require('~assets/images/logo.png')}
+              source={require('~assets/images/drawable/logo.png')}
               resizeMode="contain"
               style={{ width: 280 }}
             />
@@ -82,9 +84,9 @@ export default function OnboardingScreen({ navigation }) {
                 accessibilityLiveRegion="assertive"
                 accessibilityComponentType="button"
                 accessibilityLabel="Proceed"
-                onPress={routeLogin}
+                onPress={routeRegister}
               >
-                <Text style={{ color: 'white' }}>Proceed</Text>
+                <Text style={{ color: 'white' }}>Join now</Text>
               </Button>
             </View>
             <View style={{ paddingBottom: 25, alignItems: 'center' }}>

@@ -16,33 +16,25 @@ import {
   IconTwitter,
 } from '~src/components/CustomIcons';
 
+import { verifyEmail } from '~src/components/FormVerification';
+
 // eslint-disable-next-line react/prop-types
-export default function RegisterMin({ navigation }) {
-  const [values, setValues] = useState({
-    email: '',
+export default function Register({ navigation }) {
+  const [form, setFormValues] = useState({
+    email: {
+      value: '',
+      status: 'basic',
+      caption: 'Enter your email address to continue',
+    },
   });
 
-  const [inputState, setInputState] = useState({
-    status: 'basic',
-    caption: 'Enter your email address to continue',
-  });
+  const updateFormEmail = (newEmail) => {
+    const currentState = verifyEmail(newEmail);
 
-  const updateEmailValue = (newValue) => {
-    setValues((prevState) => ({ ...prevState, email: newValue }));
-
-    const re = /\S+@\S+\.\S+/;
-
-    if (re.test(newValue)) {
-      setInputState((prevState) => ({
-        ...prevState,
-        ...{ status: 'success', caption: 'Click the button below to continue' },
-      }));
-    } else {
-      setInputState((prevState) => ({
-        ...prevState,
-        ...{ status: 'danger', caption: 'Please enter a valid email address' },
-      }));
-    }
+    setFormValues((prevState) => ({
+      ...prevState,
+      email: { ...currentState, value: newEmail },
+    }));
   };
 
   // eslint-disable-next-line react/prop-types
@@ -52,13 +44,13 @@ export default function RegisterMin({ navigation }) {
   const routeRegisterFull = () => navigation.navigate('RegisterFull');
 
   return (
-    <Layout level="2" style={{ flex: 1 }}>
+    <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
-          title="Classic Registration"
+          title="Registration"
           navigation={navigation}
           icon="close"
-          screen="auth"
+          page="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}
@@ -73,19 +65,19 @@ export default function RegisterMin({ navigation }) {
             <View style={{ paddingBottom: 10 }}>
               <View style={{ paddingVertical: 10 }}>
                 <RegularInput
-                  value={values.email}
+                  value={form.email.value}
                   label="Email"
                   accessibilityLabel="Email"
                   placeholder="Enter email address"
                   autoCapitalize="none"
                   autoCompleteType="email"
                   textContentType="emailAddress"
-                  caption={inputState.caption}
-                  captionIcon={inputState.status}
-                  status={inputState.status}
+                  caption={form.email.caption}
+                  captionIcon={form.email.status}
+                  status={form.email.status}
                   autoFocus
                   autoCorrect={false}
-                  onChangeText={updateEmailValue}
+                  onChangeText={updateFormEmail}
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>
@@ -96,7 +88,7 @@ export default function RegisterMin({ navigation }) {
                   accessibilityComponentType="button"
                   accessibilityLabel="Continue"
                   onPress={routeRegisterFull}
-                  disabled={inputState.status !== 'success'}
+                  disabled={form.email.status !== 'success'}
                 >
                   <Text style={{ color: 'white' }}>Continue</Text>
                 </Button>
@@ -112,7 +104,7 @@ export default function RegisterMin({ navigation }) {
                 }}
               >
                 <Text category="p2">
-                  By Continuing, you agree to Woozeee&apos;s
+                  By Continuing, you agree to woozeee&apos;s
                 </Text>
                 <Button appearance="ghost" size="tiny">
                   <Text status="primary" category="s2">
@@ -120,7 +112,7 @@ export default function RegisterMin({ navigation }) {
                   </Text>
                 </Button>
                 <Text category="p2">
-                  and confirm that you have read Woozeee&apos;s
+                  and confirm that you have read woozeee&apos;s
                 </Text>
                 <Button appearance="ghost" size="tiny">
                   <Text status="primary" category="s2">

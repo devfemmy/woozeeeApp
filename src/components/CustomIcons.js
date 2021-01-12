@@ -81,6 +81,26 @@ export const IconHome = (props) => (
   <Icon {...props} name="home-outline" />
 );
 
+export const IconSearch = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="search-outline" />
+);
+
+export const IconPerson = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="person-outline" />
+);
+
+export const IconMic = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="mic-outline" />
+);
+
+export const IconRadio = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="radio-outline" />
+);
+
 export const IconLogout = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="log-out-outline" />

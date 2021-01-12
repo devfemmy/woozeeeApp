@@ -28,15 +28,22 @@ export default function usePreFetchResources() {
         });
 
         await Asset.loadAsync([
-          require('~assets/images/splash.png'),
-          require('~assets/images/logo.png'),
           require('~assets/images/onboarding-video-thumb.jpg'),
           require('~assets/images/card-insure.jpg'),
           require('~assets/images/card-wallet.jpg'),
           require('~assets/images/card-rewards.jpg'),
-          require('~assets/images/woozeee-socials.jpg'),
-          require('~assets/images/woozeee-marketplace.jpg'),
-          require('~assets/images/woozeee-charity.jpg'),
+          require('~assets/images/drawable/splash.png'),
+          require('~assets/images/drawable/logo.png'),
+          require('~assets/images/icon/upload.png'),
+          require('~assets/images/banner/woozeee-socials.jpg'),
+          require('~assets/images/banner/woozeee-marketplace.jpg'),
+          require('~assets/images/banner/woozeee-charity.jpg'),
+          require('~assets/images/banner/back1.jpg'),
+          require('~assets/images/banner/back2.jpg'),
+          require('~assets/images/banner/back3.jpg'),
+          require('~assets/images/user/user1.png'),
+          require('~assets/images/user/user2.png'),
+          require('~assets/images/user/user3.png'),
         ]);
       } catch (e) {
         const err = e;

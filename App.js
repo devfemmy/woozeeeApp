@@ -22,6 +22,8 @@ import {
 
 import mapping from '~src/constants/mapping.json';
 
+import mappingTheme from '~src/constants/mappingTheme';
+
 import useMounted from '~src/hooks/useMounted';
 
 import usePreFetchResources from '~src/hooks/usePreFetchResources';
@@ -88,7 +90,7 @@ export default function App() {
     preFetchData().then(() => {});
   }, [isMounted, fetchSettings, fetchToken]);
 
-  const theme = appState.darkMode ? 'dark' : 'light';
+  const themeMode = appState.darkMode ? 'dark' : 'light';
 
   return isPreloaded ? (
     <SafeAreaProvider>
@@ -96,7 +98,7 @@ export default function App() {
       <ApplicationProvider
         /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...eva}
-        theme={eva[theme]}
+        theme={{ ...eva[themeMode], ...mappingTheme[themeMode] }}
         customMapping={mapping}
       >
         <AppSettingsContext.Provider
@@ -112,7 +114,7 @@ export default function App() {
             }}
           >
             <LoadingContext.Provider value={{ isLoading, setLoading }}>
-              <Layout level="2" style={{ flex: 1 }}>
+              <Layout level="4" style={{ flex: 1 }}>
                 <Router />
               </Layout>
             </LoadingContext.Provider>
