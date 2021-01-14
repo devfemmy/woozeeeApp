@@ -46,8 +46,8 @@ const IconUpload = () => (
       <Image
         source={require('~assets/images/icon/upload.png')}
         style={{
-          width: 50,
-          height: 50,
+          width: 55,
+          height: 55,
           borderRadius: 100,
           resizeMode: 'contain',
         }}

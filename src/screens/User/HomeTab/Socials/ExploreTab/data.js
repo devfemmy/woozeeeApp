@@ -1,6 +1,6 @@
 const socialVideos = [
   {
-    user: 'DIY',
+    user: 'DRY',
     content: [
       {
         banner: require('~assets/images/banner/back1.jpg'),
@@ -35,7 +35,7 @@ const socialVideos = [
     ],
   },
   {
-    user: 'Sports',
+    user: 'Trends',
     content: [
       {
         banner: require('~assets/images/banner/back3.jpg'),
@@ -64,7 +64,7 @@ const socialVideos = [
     ],
   },
   {
-    user: 'Comedy',
+    user: 'Drama',
     content: [
       {
         banner: require('~assets/images/banner/back2.jpg'),
@@ -111,7 +111,7 @@ const socialVideos = [
     ],
   },
   {
-    user: 'Fireboy DML',
+    user: 'Passenger',
     content: [
       {
         banner: require('~assets/images/banner/back1.jpg'),

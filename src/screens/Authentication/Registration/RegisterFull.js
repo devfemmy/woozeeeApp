@@ -142,7 +142,7 @@ export default function RegisterFull({ navigation }) {
                   accessibilityLabel="Continue"
                   onPress={routeVerifyWithCode}
                 >
-                  <Text style={{ color: 'white' }}>Continue</Text>
+                  <Text status="control">Continue</Text>
                 </Button>
               </View>
             </View>

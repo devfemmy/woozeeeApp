@@ -90,7 +90,7 @@ export default function Register({ navigation }) {
                   onPress={routeRegisterFull}
                   disabled={form.email.status !== 'success'}
                 >
-                  <Text style={{ color: 'white' }}>Continue</Text>
+                  <Text status="control">Continue</Text>
                 </Button>
               </View>
             </View>

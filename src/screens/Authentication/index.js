@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { View, StyleSheet, Image } from 'react-native';
 
@@ -13,11 +13,13 @@ import {
 
 import { LoadingContext } from '~src/contexts';
 
+import useToast from '~src/hooks/useToast';
+
 import OverlayLoader from '~src/components/OverlayLoader';
 
 import BackgroundVideo from '~src/components/BackgroundVideo';
 
-import useToast from '~src/hooks/useToast';
+import { IconVolume } from '~src/components/CustomIcons';
 
 const styles = StyleSheet.create({
   uiContainer: {
@@ -40,10 +42,10 @@ const styles = StyleSheet.create({
 export default function OnboardingScreen({ navigation }) {
   const { isLoading } = useContext(LoadingContext);
 
+  const [isVolumeOpen, setVolumeOpen] = useState(false);
+
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
-  // eslint-disable-next-line react/prop-types
-  const routeRegister = () => navigation.navigate('Register');
 
   useToast('Click again to exit');
 
@@ -54,6 +56,7 @@ export default function OnboardingScreen({ navigation }) {
       <BackgroundVideo
         videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
         thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
+        isMuted={!isVolumeOpen}
       />
       <SafeAreaView style={{ flex: 1 }}>
         <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
@@ -66,15 +69,19 @@ export default function OnboardingScreen({ navigation }) {
           </View>
           <View>
             <View style={styles.brandMotto}>
-              <Text category="h6" style={{ color: 'white' }}>
+              <Text category="h6" status="control">
                 Have fun
               </Text>
-              <Text style={{ color: 'white', marginHorizontal: 10 }}>|</Text>
-              <Text category="h6" style={{ color: 'white' }}>
+              <Text status="control" style={{ marginHorizontal: 10 }}>
+                |
+              </Text>
+              <Text category="h6" status="control">
                 Make money
               </Text>
-              <Text style={{ color: 'white', marginHorizontal: 10 }}>|</Text>
-              <Text category="h6" style={{ color: 'white' }}>
+              <Text status="control" style={{ marginHorizontal: 10 }}>
+                |
+              </Text>
+              <Text category="h6" status="control">
                 Give back
               </Text>
             </View>
@@ -83,25 +90,27 @@ export default function OnboardingScreen({ navigation }) {
                 status="danger"
                 accessibilityLiveRegion="assertive"
                 accessibilityComponentType="button"
-                accessibilityLabel="Proceed"
-                onPress={routeRegister}
+                accessibilityHint="Sign in or Sign up"
+                onPress={routeLogin}
               >
-                <Text style={{ color: 'white' }}>Join now</Text>
+                <Text status="control">Sign in / Sign up</Text>
               </Button>
             </View>
             <View style={{ paddingBottom: 25, alignItems: 'center' }}>
               <Button
-                appearance="ghost"
-                size="small"
+                style={{ borderRadius: 100 }}
+                appearance="outline"
+                status="danger"
+                size="large"
                 accessibilityLiveRegion="polite"
                 accessibilityComponentType="button"
-                accessibilityHint="Sign in or Sign up"
-                onPress={routeLogin}
-              >
-                <Text category="h6" status="danger">
-                  Sign in / Sign up
-                </Text>
-              </Button>
+                accessibilityHint="Volume Toggle"
+                accessoryLeft={(evaProps) => (
+                  /* eslint-disable-next-line react/jsx-props-no-spreading */
+                  <IconVolume {...evaProps} isOpen={isVolumeOpen} />
+                )}
+                onPress={() => setVolumeOpen((prevState) => !prevState)}
+              />
             </View>
           </View>
         </BlurView>

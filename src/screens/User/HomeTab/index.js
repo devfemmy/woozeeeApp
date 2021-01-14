@@ -4,6 +4,7 @@ import {
   View,
   Image,
   TouchableOpacity,
+  ScrollView,
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
@@ -25,6 +26,8 @@ import OverlayLoader from '~src/components/OverlayLoader';
 
 import useToast from '~src/hooks/useToast';
 
+import BackgroundVideo from '~src/components/BackgroundVideo';
+
 /* DATA */
 const woozeeeCards = [
   {
@@ -36,7 +39,7 @@ const woozeeeCards = [
     banner: require('~assets/images/card-wallet.jpg'),
   },
   {
-    balance: '0.00',
+    balance: '0',
     banner: require('~assets/images/card-rewards.jpg'),
   },
 ];
@@ -45,16 +48,22 @@ const woozeeeCategories = [
   {
     title: 'woozeee Socials',
     banner: require('~assets/images/banner/woozeee-socials.jpg'),
+    video:
+      'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fsocial.mp4?alt=media&token=afc818c3-7857-4368-88b9-3d2d16baea09',
     page: 'SocialsRoute',
   },
   {
     title: 'woozeee Marketplace',
     banner: require('~assets/images/banner/woozeee-marketplace.jpg'),
+    video:
+      'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fmarket.mp4?alt=media&token=2709a1b4-8d3b-4d74-a364-63a276e94493',
     page: 'SocialsRoute',
   },
   {
     title: 'woozeee Charity',
     banner: require('~assets/images/banner/woozeee-charity.jpg'),
+    video:
+      'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fcharity.mp4?alt=media&token=c837385b-fef5-4df3-ad36-c36560fe0ee0',
     page: 'SocialsRoute',
   },
 ];
@@ -86,14 +95,13 @@ const Balance = (props) => {
           marginBottom: 5,
         }}
       >
-        <Text category="p2">N</Text>
+        <Text category="p2">{decimalNum ? 'N' : null}</Text>
         <Text category="h6" style={{ marginHorizontal: 5 }}>
           {wholeNum}
         </Text>
         {/* prettier-ignore */}
         <Text category="p2">
-          .
-          {decimalNum}
+          {decimalNum ? `.${decimalNum}` : 'point(s)' }
         </Text>
       </View>
     ),
@@ -105,6 +113,8 @@ const Balance = (props) => {
 export default function Home({ navigation }) {
   const { width, height } = useWindowDimensions();
 
+  const isPortrait = height > width;
+
   const { isLoading } = useContext(LoadingContext);
 
   // eslint-disable-next-line react/prop-types
@@ -115,8 +125,8 @@ export default function Home({ navigation }) {
   const renderCard = (data) => (
     <View
       style={{
-        height: 170,
-        width: width <= 600 ? width / 1.6 : width / 3,
+        height: isPortrait ? 170 : 140,
+        width: isPortrait ? width / 1.6 : width / 3,
         paddingHorizontal: 5,
         position: 'relative',
         alignItems: 'center',
@@ -128,7 +138,7 @@ export default function Home({ navigation }) {
       <Image
         source={data.item.banner}
         style={{
-          height: height <= 600 ? 70 : 140,
+          height: isPortrait ? 140 : 110,
           width: '95%',
           borderRadius: 5,
         }}
@@ -140,27 +150,46 @@ export default function Home({ navigation }) {
   const renderCategory = (data) => (
     <TouchableOpacity
       style={{
-        height: 250,
-        width,
+        height: isPortrait ? 250 : 220,
+        width: isPortrait ? width : width / 2,
         marginVertical: 5,
         position: 'relative',
         alignItems: 'center',
+        alignSelf: 'center',
       }}
       key={data.item.title}
       /* eslint-disable-next-line react/prop-types */
       onPress={() => routeSocialRoute(data.item.page)}
     >
-      <Image
-        source={data.item.banner}
-        style={styles.cardContent}
-        resizeMode="cover"
-      />
+      <View style={styles.cardContent}>
+        <BackgroundVideo
+          videoUri={data.item.video}
+          thumbUri={data.item.banner}
+          style={{ borderRadius: 5 }}
+          isMuted
+        />
+      </View>
       <BlurView intensity={25} tint="dark" style={styles.cardContent}>
         <Text category="h5" style={{ color: 'white' }}>
           {data.item.title}
         </Text>
       </BlurView>
     </TouchableOpacity>
+  );
+
+  const RenderCategoryHeader = () => (
+    <View style={{ flex: 1, paddingTop: 10, Height: 180 }}>
+      <List
+        style={{ backgroundColor: 'transparent' }}
+        alwaysBounceHorizontal
+        alwaysBounceVertical
+        horizontal={isPortrait}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        data={woozeeeCards}
+        renderItem={renderCard}
+      />
+    </View>
   );
 
   return (
@@ -174,21 +203,12 @@ export default function Home({ navigation }) {
           page="user"
         />
 
-        <View style={{ flex: 1, paddingTop: 5, maxHeight: 180 }}>
+        <View style={{ flex: 1, paddingVertical: 5 }}>
           <List
+            ListHeaderComponent={RenderCategoryHeader}
             style={{ backgroundColor: 'transparent' }}
+            horizontal={!isPortrait}
             alwaysBounceHorizontal
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            data={woozeeeCards}
-            renderItem={renderCard}
-          />
-        </View>
-
-        <View style={{ flex: 1, paddingBottom: 5 }}>
-          <List
-            style={{ backgroundColor: 'transparent' }}
             alwaysBounceVertical
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}

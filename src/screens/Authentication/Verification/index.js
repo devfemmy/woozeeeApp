@@ -73,7 +73,7 @@ export default function VerifyWithCode({ navigation }) {
                   accessibilityComponentType="button"
                   accessibilityLabel="Continue"
                 >
-                  <Text style={{ color: 'white' }}>Submit</Text>
+                  <Text status="control">Submit</Text>
                 </Button>
               </View>
             </View>

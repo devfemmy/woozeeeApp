@@ -21,7 +21,10 @@ const styles = StyleSheet.create({
 
 export default function BackgroundVideo(props) {
   // eslint-disable-next-line react/prop-types
-  const { videoUri, thumbUri } = props;
+  // prettier-ignore
+  const {
+    videoUri, thumbUri, style, isMuted, resizeMode,
+  } = props;
 
   const isFocused = useIsFocused();
 
@@ -47,30 +50,35 @@ export default function BackgroundVideo(props) {
 
   return useMemo(
     () => (
-      <Layout style={styles.background}>
-        <Animated.View
-          style={[styles.backgroundViewWrapper, { opacity: thumbOpacity }]}
-        >
-          <Image
-            source={thumbUri}
-            style={{
-              resizeMode: 'cover',
-              width: '100%',
-              height: '100%',
-            }}
-            onLoadStart={() => {
-              Animated.timing(thumbOpacity, {
-                toValue: 1,
-                useNativeDriver: true,
-                duration: 1000,
-              }).start();
-            }}
-          />
-        </Animated.View>
+      <Layout level="1" style={styles.background}>
+        {thumbUri ? (
+          <Animated.View
+            style={[styles.backgroundViewWrapper, { opacity: thumbOpacity }]}
+          >
+            <Image
+              source={thumbUri}
+              style={[
+                style,
+                {
+                  resizeMode: 'cover',
+                  width: '100%',
+                  height: '100%',
+                },
+              ]}
+              onLoadStart={() => {
+                Animated.timing(thumbOpacity, {
+                  toValue: 1,
+                  useNativeDriver: true,
+                  duration: 1000,
+                }).start();
+              }}
+            />
+          </Animated.View>
+        ) : null}
         <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
           <Video
             isLooping
-            isMuted
+            isMuted={isMuted}
             positionMillis={500}
             onLoadStart={() => {
               Animated.timing(opacity, {
@@ -79,14 +87,24 @@ export default function BackgroundVideo(props) {
                 duration: 1000,
               }).start();
             }}
-            resizeMode="cover"
+            resizeMode={resizeMode || 'cover'}
+            autoPlay
             shouldPlay={isFocused || isFocused === undefined}
             source={{ uri: cachedUri }}
-            style={{ flex: 1 }}
+            style={[style, { flex: 1 }]}
           />
         </Animated.View>
       </Layout>
     ),
-    [isFocused, opacity, cachedUri, thumbUri, thumbOpacity],
+    [
+      isFocused,
+      opacity,
+      cachedUri,
+      thumbUri,
+      thumbOpacity,
+      isMuted,
+      style,
+      resizeMode,
+    ],
   );
 }

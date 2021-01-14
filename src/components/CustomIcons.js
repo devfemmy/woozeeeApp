@@ -5,8 +5,58 @@ import { Icon } from '@ui-kitten/components';
 export const IconEye = (props) => {
   // eslint-disable-next-line react/prop-types
   const { isOpen, ...otherProps } = props;
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <Icon {...otherProps} name={isOpen ? 'eye' : 'eye-off'} />;
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Icon {...otherProps} name={isOpen ? 'eye-outline' : 'eye-off-outline'} />
+  );
+};
+
+export const IconVolume = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { isOpen, ...otherProps } = props;
+  return (
+    <Icon
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...otherProps}
+      name={isOpen ? 'volume-up-outline' : 'volume-off-outline'}
+    />
+  );
+};
+
+export const IconVideo = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { isOpen, ...otherProps } = props;
+  return (
+    <Icon
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...otherProps}
+      name={isOpen ? 'video-outline' : 'video-off-outline'}
+    />
+  );
+};
+
+export const IconHeart = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { isLiked, ...otherProps } = props;
+  return (
+    <Icon
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...otherProps}
+      name={isLiked ? 'heart' : 'heart-outline'}
+    />
+  );
+};
+
+export const IconPlayPause = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { isPaused, ...otherProps } = props;
+  return (
+    <Icon
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...otherProps}
+      name={isPaused ? 'play-circle-outline' : 'pause-circle-outline'}
+    />
+  );
 };
 
 export const IconInputState = (props) => {
@@ -18,14 +68,16 @@ export const IconInputState = (props) => {
 };
 
 // eslint-disable-next-line react/jsx-props-no-spreading
-export const IconBack = (props) => <Icon {...props} name="arrow-back" />;
+export const IconBack = (props) => (
+  <Icon {...props} name="arrow-back-outline" />
+);
 
 // eslint-disable-next-line react/jsx-props-no-spreading
-export const IconMenu = (props) => <Icon {...props} name="menu" />;
+export const IconMenu = (props) => <Icon {...props} name="menu-2-outline" />;
 
 export const IconMoreVertical = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
-  <Icon {...props} name="more-vertical" />
+  <Icon {...props} name="more-vertical-outline" />
 );
 
 export const IconQuestionMarkCircle = (props) => (
@@ -104,6 +156,36 @@ export const IconRadio = (props) => (
 export const IconLogout = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="log-out-outline" />
+);
+
+export const IconForward = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="arrow-ios-forward-outline" />
+);
+
+export const IconMsgSquare = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="message-square-outline" />
+);
+
+export const IconShare = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="share-outline" />
+);
+
+export const IconClipboard = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="clipboard-outline" />
+);
+
+export const IconMap = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="map-outline" />
+);
+
+export const IconGift = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="gift-outline" />
 );
 
 export const IconFacebook = (props) => (

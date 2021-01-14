@@ -187,7 +187,7 @@ export default function Login({ navigation }) {
                   onPress={loginUser}
                   disabled={isLoading || form.email.status !== 'success'}
                 >
-                  <Text style={{ color: 'white' }}>Continue</Text>
+                  <Text status="control">Continue</Text>
                 </Button>
               </View>
             </View>

@@ -14,10 +14,10 @@ export default function UserRoute() {
       detachInactiveScreens /* eslint-disable-next-line react/jsx-props-no-spreading */
       tabBar={(props) => <BottomNavigationArea {...props} page="user" />}
     >
-      <Screen name="Home" component={HomeTab} />
-      <Screen name="MyWallet" component={HomeTab} />
-      <Screen name="BillPay" component={HomeTab} />
-      <Screen name="MyActivities" component={HomeTab} />
+      <Screen name="HomeTab" component={HomeTab} />
+      <Screen name="MyWalletTab" component={HomeTab} />
+      <Screen name="BillPayTab" component={HomeTab} />
+      <Screen name="MyActivitiesTab" component={HomeTab} />
     </Navigator>
   );
 }
