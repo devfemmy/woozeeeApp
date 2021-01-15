@@ -28,7 +28,7 @@ export default function Register({ navigation }) {
     },
   });
 
-  const updateFormEmail = (newEmail) => {
+  const handleChangeEmail = (newEmail) => {
     const currentState = verifyEmail(newEmail);
 
     setFormValues((prevState) => ({
@@ -77,7 +77,7 @@ export default function Register({ navigation }) {
                   status={form.email.status}
                   autoFocus
                   autoCorrect={false}
-                  onChangeText={updateFormEmail}
+                  onChangeText={handleChangeEmail}
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>

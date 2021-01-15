@@ -48,7 +48,7 @@ export default function Login({ navigation }) {
     },
   });
 
-  const updateFormEmail = (inputEmail) => {
+  const handleChangeEmail = (inputEmail) => {
     const currentState = verifyEmail(inputEmail);
 
     setFormValues((prevState) => ({
@@ -57,7 +57,7 @@ export default function Login({ navigation }) {
     }));
   };
 
-  const updateFormPassword = (newPassword) => {
+  const handleChangePassword = (newPassword) => {
     setFormValues((prevState) => ({
       ...prevState,
       password: { ...prevState.password, value: newPassword },
@@ -127,9 +127,12 @@ export default function Login({ navigation }) {
                     flexDirection: 'row',
                   }}
                 >
-                  <Text status="danger" category="label">
+                  <Text
+                    status="danger"
+                    category="label"
+                    style={{ marginRight: 5 }}
+                  >
                     Error!
-                    {/* prettier-ignore */}{' '}
                   </Text>
                   <Text status="danger" category="p2">
                     {errorMsg.auth}
@@ -150,7 +153,7 @@ export default function Login({ navigation }) {
                   status={form.email.status}
                   autoFocus
                   autoCorrect={false}
-                  onChangeText={updateFormEmail}
+                  onChangeText={handleChangeEmail}
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>
@@ -163,7 +166,7 @@ export default function Login({ navigation }) {
                   autoCompleteType="password"
                   textContentType="password"
                   autoCorrect={false}
-                  onChangeText={updateFormPassword}
+                  onChangeText={handleChangePassword}
                 />
                 <Button
                   size="tiny"

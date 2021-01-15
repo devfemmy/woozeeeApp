@@ -45,7 +45,7 @@ export default function VideoView() {
 
   const isPortrait = height > width;
 
-  const [shouldPlay, setShouldPlay] = useState(false);
+  const [shouldPlay, setShouldPlay] = useState(true);
 
   const [isLiked, setLiked] = useState(false);
 

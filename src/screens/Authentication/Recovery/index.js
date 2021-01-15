@@ -22,7 +22,7 @@ export default function RecoverWithEmail({ navigation }) {
     },
   });
 
-  const updateFormEmail = (inputEmail) => {
+  const handleChangeEmail = (inputEmail) => {
     const currentState = verifyEmail(inputEmail);
 
     setFormValues((prevState) => ({
@@ -67,7 +67,7 @@ export default function RecoverWithEmail({ navigation }) {
                   status={form.email.status}
                   autoFocus
                   autoCorrect={false}
-                  onChangeText={updateFormEmail}
+                  onChangeText={handleChangeEmail}
                 />
               </View>
               <View style={{ paddingVertical: 20 }}>

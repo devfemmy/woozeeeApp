@@ -27,7 +27,9 @@ import OverlayLoader from '~src/components/OverlayLoader';
 
 // eslint-disable-next-line react/prop-types
 export default function Profile({ navigation }) {
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
+
+  const isPortrait = height > width;
 
   const { isLoading } = useContext(LoadingContext);
 

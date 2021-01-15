@@ -23,7 +23,7 @@ export default function RegisterFull({ navigation }) {
     confirmPassword: '',
   });
 
-  const updateInputValues = (newValue, name) => {
+  const handleChangeValue = (newValue, name) => {
     setValues((prevState) => ({ ...prevState, ...{ [name]: newValue } }));
   };
 
@@ -76,7 +76,7 @@ export default function RegisterFull({ navigation }) {
                   autoCorrect={false}
                   /* prettier-ignore */
                   onChangeText={
-                    (value) => updateInputValues(value, 'firstName')
+                    (value) => handleChangeValue(value, 'firstName')
                   }
                   style={{ flex: 1, marginRight: 5 }}
                 />
@@ -89,7 +89,7 @@ export default function RegisterFull({ navigation }) {
                   autoCompleteType="name"
                   textContentType="familyName"
                   autoCorrect={false}
-                  onChangeText={(value) => updateInputValues(value, 'lastName')}
+                  onChangeText={(value) => handleChangeValue(value, 'lastName')}
                   style={{ flex: 1, marginLeft: 5 }}
                 />
               </View>
@@ -103,7 +103,7 @@ export default function RegisterFull({ navigation }) {
                   autoCompleteType="username"
                   textContentType="username"
                   autoCorrect={false}
-                  onChangeText={(value) => updateInputValues(value, 'username')}
+                  onChangeText={(value) => handleChangeValue(value, 'username')}
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>
@@ -116,7 +116,7 @@ export default function RegisterFull({ navigation }) {
                   autoCompleteType="password"
                   textContentType="newPassword"
                   autoCorrect={false}
-                  onChangeText={(value) => updateInputValues(value, 'password')}
+                  onChangeText={(value) => handleChangeValue(value, 'password')}
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>
@@ -130,7 +130,7 @@ export default function RegisterFull({ navigation }) {
                   textContentType="newPassword"
                   autoCorrect={false}
                   /* prettier-ignore */
-                  onChangeText={(value) => updateInputValues(value, 'confirmPassword')}
+                  onChangeText={(value) => handleChangeValue(value, 'confirmPassword')}
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>

@@ -16,7 +16,7 @@ export default function VerifyWithCode({ navigation }) {
     code: '',
   });
 
-  const updateCodeValue = (newValue) => {
+  const handleChangeCode = (newValue) => {
     setValues((prevState) => ({ ...prevState, email: newValue }));
   };
 
@@ -53,7 +53,7 @@ export default function VerifyWithCode({ navigation }) {
                   textContentType="oneTimeCode"
                   autoFocus
                   autoCorrect={false}
-                  onChangeText={updateCodeValue}
+                  onChangeText={handleChangeCode}
                 />
                 <Button
                   size="tiny"
