@@ -50,7 +50,7 @@ export default function Register({ navigation }) {
           title="Registration"
           navigation={navigation}
           icon="close"
-          page="auth"
+          screen="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}

@@ -123,7 +123,7 @@ export default function Explore({ navigation }) {
           width: '100%',
         }}
       >
-        <Text category="c2" style={{ color: 'white', marginBottom: 5 }}>
+        <Text category="c1" style={{ color: 'white', marginBottom: 5 }}>
           {data.item.tag}
         </Text>
         <View style={{ marginBottom: 5 }}>
@@ -131,7 +131,7 @@ export default function Explore({ navigation }) {
             fromNow
             element={(momentProps) => (
               // eslint-disable-next-line react/jsx-props-no-spreading
-              <Text category="c2" {...momentProps} style={{ color: 'white' }} />
+              <Text category="c1" {...momentProps} style={{ color: 'white' }} />
             )}
           >
             {data.item.dateAdded}
@@ -148,7 +148,7 @@ export default function Explore({ navigation }) {
           title="woozeee"
           navigation={navigation}
           icon="logout"
-          page="search"
+          screen="search"
         />
         <ScrollView
           style={{ flex: 1, paddingVertical: 10 }}
@@ -201,7 +201,7 @@ export default function Explore({ navigation }) {
                     {item.user}
                   </Text>
                   {/* prettier-ignore */}
-                  <Text category="c2" style={{ marginBottom: 5 }}>
+                  <Text category="c1" style={{ marginBottom: 5 }}>
                     {item.content.length}
                     {' '}
                     Video(s)

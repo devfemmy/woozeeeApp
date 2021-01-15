@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 
 import { Animated, StyleSheet, Image } from 'react-native';
 
@@ -19,11 +19,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function BackgroundVideo(props) {
+export default function CustomVideo(props) {
   // eslint-disable-next-line react/prop-types
   // prettier-ignore
   const {
-    videoUri, thumbUri, style, isMuted,
+    videoUri, thumbUri, style, resizeMode, shouldPlay, currentProgress, setPlayProgress,
   } = props;
 
   const isFocused = useIsFocused();
@@ -33,6 +33,17 @@ export default function BackgroundVideo(props) {
   const thumbOpacity = React.useMemo(() => new Animated.Value(0.25), []);
 
   const [cachedUri, setCachedUri] = useState(null);
+
+  const handlePlaybackStatusUpdate = useCallback(
+    (status) => {
+      const { positionMillis, durationMillis } = status;
+
+      const currentPercent = (positionMillis / durationMillis) * 100;
+
+      setPlayProgress({ millis: positionMillis, width: `${currentPercent}%` });
+    },
+    [setPlayProgress],
+  );
 
   useMemo(() => {
     const getCachedUri = async () => {
@@ -58,7 +69,7 @@ export default function BackgroundVideo(props) {
         style={[
           style,
           {
-            resizeMode: 'cover',
+            resizeMode: resizeMode || 'cover',
             width: '100%',
             height: '100%',
           },
@@ -81,8 +92,7 @@ export default function BackgroundVideo(props) {
         <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
           <Video
             isLooping
-            isMuted={isMuted}
-            positionMillis={100}
+            positionMillis={currentProgress}
             onLoadStart={() => {
               Animated.timing(opacity, {
                 toValue: 1,
@@ -90,16 +100,26 @@ export default function BackgroundVideo(props) {
                 duration: 1000,
               }).start();
             }}
-            resizeMode="cover"
+            resizeMode={resizeMode || 'cover'}
             autoPlay
-            preload="auto"
-            shouldPlay={isFocused || isFocused === undefined}
+            progressUpdateIntervalMillis={1000}
+            onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+            shouldPlay={(shouldPlay && isFocused) || isFocused === undefined}
             source={{ uri: cachedUri }}
             style={[style, { flex: 1 }]}
           />
         </Animated.View>
       </Layout>
     ),
-    [isFocused, opacity, cachedUri, isMuted, style],
+    [
+      isFocused,
+      opacity,
+      cachedUri,
+      style,
+      resizeMode,
+      shouldPlay,
+      handlePlaybackStatusUpdate,
+      currentProgress,
+    ],
   );
 }

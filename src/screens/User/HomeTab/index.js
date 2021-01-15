@@ -4,7 +4,6 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ScrollView,
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
@@ -25,6 +24,8 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 import OverlayLoader from '~src/components/OverlayLoader';
 
 import useToast from '~src/hooks/useToast';
+
+import useMounted from '~src/hooks/useMounted';
 
 import BackgroundVideo from '~src/components/BackgroundVideo';
 
@@ -50,21 +51,21 @@ const woozeeeCategories = [
     banner: require('~assets/images/banner/woozeee-socials.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fsocial.mp4?alt=media&token=afc818c3-7857-4368-88b9-3d2d16baea09',
-    page: 'SocialsRoute',
+    screen: 'SocialsRoute',
   },
   {
     title: 'woozeee Marketplace',
     banner: require('~assets/images/banner/woozeee-marketplace.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fmarket.mp4?alt=media&token=2709a1b4-8d3b-4d74-a364-63a276e94493',
-    page: 'SocialsRoute',
+    screen: 'SocialsRoute',
   },
   {
     title: 'woozeee Charity',
     banner: require('~assets/images/banner/woozeee-charity.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fcharity.mp4?alt=media&token=c837385b-fef5-4df3-ad36-c36560fe0ee0',
-    page: 'SocialsRoute',
+    screen: 'SocialsRoute',
   },
 ];
 
@@ -117,6 +118,8 @@ export default function Home({ navigation }) {
 
   const { isLoading } = useContext(LoadingContext);
 
+  const isMounted = useMounted();
+
   // eslint-disable-next-line react/prop-types
   const routeSocialRoute = (route) => navigation.navigate(route);
 
@@ -159,16 +162,19 @@ export default function Home({ navigation }) {
       }}
       key={data.item.title}
       /* eslint-disable-next-line react/prop-types */
-      onPress={() => routeSocialRoute(data.item.page)}
+      onPress={() => routeSocialRoute(data.item.screen)}
     >
       <View style={styles.cardContent}>
-        <BackgroundVideo
-          videoUri={data.item.video}
-          thumbUri={data.item.banner}
-          style={{ borderRadius: 5 }}
-          isMuted
-        />
+        {isMounted ? (
+          <BackgroundVideo
+            videoUri={data.item.video}
+            thumbUri={data.item.banner}
+            style={{ borderRadius: 5 }}
+            isMuted
+          />
+        ) : null}
       </View>
+
       <BlurView intensity={25} tint="dark" style={styles.cardContent}>
         <Text category="h5" style={{ color: 'white' }}>
           {data.item.title}
@@ -200,7 +206,7 @@ export default function Home({ navigation }) {
           title="woozeee"
           navigation={navigation}
           icon="logout"
-          page="user"
+          screen="user"
         />
 
         <View style={{ flex: 1, paddingVertical: 5 }}>

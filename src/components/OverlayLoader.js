@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 99,
+    zIndex: 9999,
   },
 });
 

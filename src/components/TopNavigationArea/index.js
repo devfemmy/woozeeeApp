@@ -10,6 +10,7 @@ import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
 import SwitchTheme from './components/SwitchTheme';
+import TopNavigationMenu from './components/TopNavigationMenu';
 
 export default function TopNavigationArea(props) {
   const {
@@ -22,7 +23,7 @@ export default function TopNavigationArea(props) {
     // eslint-disable-next-line react/prop-types
     style,
     // eslint-disable-next-line react/prop-types
-    page,
+    screen,
   } = props;
 
   const TopNavigationAuth = useMemo(
@@ -98,11 +99,29 @@ export default function TopNavigationArea(props) {
     [style],
   );
 
+  const TopNavigationProfile = useMemo(
+    () => (
+      <Layout level="4">
+        <TopNavigation
+          alignment="center"
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          accessoryRight={(evaProps) => <TopNavigationMenu {...evaProps} />}
+          // accessoryRight={() => <TopNavigationMenu />}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="screen navigation"
+          style={[style, { backgroundColor: 'transparent' }]}
+        />
+      </Layout>
+    ),
+    [style],
+  );
+
   const navs = {
     auth: TopNavigationAuth,
     user: TopNavigationUser,
     search: TopNavigationSearch,
+    profile: TopNavigationProfile,
   };
 
-  return navs[page];
+  return navs[screen];
 }

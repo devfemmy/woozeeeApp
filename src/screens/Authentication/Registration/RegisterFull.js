@@ -44,7 +44,7 @@ export default function RegisterFull({ navigation }) {
         <TopNavigationArea
           title="Registration Details"
           navigation={navigation}
-          page="auth"
+          screen="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}

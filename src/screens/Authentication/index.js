@@ -15,6 +15,8 @@ import { LoadingContext } from '~src/contexts';
 
 import useToast from '~src/hooks/useToast';
 
+import useMounted from '~src/hooks/useMounted';
+
 import OverlayLoader from '~src/components/OverlayLoader';
 
 import BackgroundVideo from '~src/components/BackgroundVideo';
@@ -40,24 +42,28 @@ const styles = StyleSheet.create({
 
 // eslint-disable-next-line react/prop-types
 export default function OnboardingScreen({ navigation }) {
+  useToast('Click again to exit');
+
   const { isLoading } = useContext(LoadingContext);
+
+  const isMounted = useMounted();
 
   const [isVolumeOpen, setVolumeOpen] = useState(false);
 
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
 
-  useToast('Click again to exit');
-
   return (
     <Layout level="4" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
       {/* Onboarding screen background video */}
-      <BackgroundVideo
-        videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
-        thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
-        isMuted={!isVolumeOpen}
-      />
+      {isMounted ? (
+        <BackgroundVideo
+          videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
+          thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
+          isMuted={!isVolumeOpen}
+        />
+      ) : null}
       <SafeAreaView style={{ flex: 1 }}>
         <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
           <View>

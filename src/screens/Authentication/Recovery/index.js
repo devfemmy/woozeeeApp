@@ -40,7 +40,7 @@ export default function RecoverWithEmail({ navigation }) {
         <TopNavigationArea
           title="Account Recovery"
           navigation={navigation}
-          page="auth"
+          screen="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}

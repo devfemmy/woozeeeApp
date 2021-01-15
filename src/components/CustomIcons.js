@@ -49,12 +49,12 @@ export const IconHeart = (props) => {
 
 export const IconPlayPause = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { isPaused, ...otherProps } = props;
+  const { isPlaying, ...otherProps } = props;
   return (
     <Icon
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...otherProps}
-      name={isPaused ? 'play-circle-outline' : 'pause-circle-outline'}
+      name={isPlaying ? 'pause-circle-outline' : 'play-circle-outline'}
     />
   );
 };
@@ -186,6 +186,16 @@ export const IconMap = (props) => (
 export const IconGift = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="gift-outline" />
+);
+
+export const IconSettings = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="settings-2-outline" />
+);
+
+export const IconEdit = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="edit-outline" />
 );
 
 export const IconFacebook = (props) => (

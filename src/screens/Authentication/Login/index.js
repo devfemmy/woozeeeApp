@@ -105,7 +105,7 @@ export default function Login({ navigation }) {
         <TopNavigationArea
           title="Sign in"
           navigation={navigation}
-          page="auth"
+          screen="auth"
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}
