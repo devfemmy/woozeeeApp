@@ -112,13 +112,13 @@ const Balance = (props) => {
 
 // eslint-disable-next-line react/prop-types
 export default function Home({ navigation }) {
+  const isFocused = useIsFocused();
+
   const { width, height } = useWindowDimensions();
 
   const isPortrait = height > width;
 
   const { isLoading } = useContext(LoadingContext);
-
-  const isFocused = useIsFocused();
 
   // eslint-disable-next-line react/prop-types
   const routeSocialRoute = (route) => navigation.navigate(route);

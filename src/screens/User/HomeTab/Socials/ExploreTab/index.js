@@ -86,31 +86,33 @@ export default function Explore({ navigation }) {
         }}
         resizeMode="cover"
       />
-      <Layout
-        level="3"
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'absolute',
-          height: 43,
-          width: 43,
-          left: 10,
-          top: 5,
-          borderRadius: 100,
-        }}
-      >
-        <Image
-          source={data.item.userImg}
+      {data.item.userImg ? (
+        <Layout
+          level="3"
           style={{
-            height: 40,
-            width: 40,
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            height: 43,
+            width: 43,
+            left: 10,
+            top: 5,
             borderRadius: 100,
-            borderWidth: 3,
-            borderColor: 'white',
           }}
-        />
-      </Layout>
+        >
+          <Image
+            source={data.item.userImg}
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: 100,
+              borderWidth: 3,
+              borderColor: 'white',
+            }}
+          />
+        </Layout>
+      ) : null}
       <BlurView
         intensity={75}
         tint="dark"

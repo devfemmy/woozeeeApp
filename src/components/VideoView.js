@@ -10,7 +10,7 @@ import {
 
 import { Button, Text } from '@ui-kitten/components';
 
-import useMounted from '~src/hooks/useMounted';
+import { useIsFocused } from '@react-navigation/native';
 
 import CustomVideo from '~src/components/CustomVideo';
 
@@ -38,8 +38,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
 export default function VideoView() {
-  const isMounted = useMounted();
+  const isFocused = useIsFocused();
 
   const { width, height } = useWindowDimensions();
 
@@ -89,7 +90,7 @@ export default function VideoView() {
   return useMemo(
     () => (
       <View style={[StyleSheet.absoluteFillObject, { flex: 1, height }]}>
-        {isMounted ? (
+        {isFocused ? (
           <CustomVideo
             videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
             thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
@@ -215,7 +216,7 @@ export default function VideoView() {
     [
       height,
       isLiked,
-      isMounted,
+      isFocused,
       isPortrait,
       playPosition,
       shouldPlay,

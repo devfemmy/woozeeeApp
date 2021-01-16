@@ -198,6 +198,16 @@ export const IconEdit = (props) => (
   <Icon {...props} name="edit-outline" />
 );
 
+export const IconBookmark = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="bookmark-outline" />
+);
+
+export const IconGrid = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="grid-outline" />
+);
+
 export const IconFacebook = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="facebook-outline" />
