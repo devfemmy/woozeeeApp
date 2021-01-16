@@ -6,6 +6,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { BlurView } from 'expo-blur';
 
+import { useIsFocused } from '@react-navigation/native';
+
 // prettier-ignore
 import {
   Layout, Button, Text,
@@ -14,8 +16,6 @@ import {
 import { LoadingContext } from '~src/contexts';
 
 import useToast from '~src/hooks/useToast';
-
-import useMounted from '~src/hooks/useMounted';
 
 import OverlayLoader from '~src/components/OverlayLoader';
 
@@ -46,7 +46,7 @@ export default function OnboardingScreen({ navigation }) {
 
   const { isLoading } = useContext(LoadingContext);
 
-  const isMounted = useMounted();
+  const isFocused = useIsFocused();
 
   const [isVolumeOpen, setVolumeOpen] = useState(false);
 
@@ -57,7 +57,7 @@ export default function OnboardingScreen({ navigation }) {
     <Layout level="4" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
       {/* Onboarding screen background video */}
-      {isMounted ? (
+      {isFocused ? (
         <BackgroundVideo
           videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
           thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}

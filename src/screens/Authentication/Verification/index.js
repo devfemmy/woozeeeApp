@@ -8,18 +8,15 @@ import { Layout, Button, Text } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { RegularInput } from '~src/components/CustomInputs';
+import { OneTimeCodeField } from '~src/components/FormFields';
 
 // eslint-disable-next-line react/prop-types
 export default function VerifyWithCode({ navigation }) {
-  const [values, setValues] = useState({
+  const [isLoading, setLoading] = useState(false);
+
+  const [form, setFormValues] = useState({
     code: '',
   });
-
-  const handleChangeCode = (newValue) => {
-    setValues((prevState) => ({ ...prevState, email: newValue }));
-  };
-
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
 
@@ -43,18 +40,7 @@ export default function VerifyWithCode({ navigation }) {
           >
             <View style={{ paddingBottom: 10 }}>
               <View style={{ paddingVertical: 10 }}>
-                <RegularInput
-                  value={values.email}
-                  label="Code"
-                  accessibilityLabel="Code"
-                  placeholder="Enter Verification Code"
-                  autoCapitalize="none"
-                  autoCompleteType="off"
-                  textContentType="oneTimeCode"
-                  autoFocus
-                  autoCorrect={false}
-                  onChangeText={handleChangeCode}
-                />
+                <OneTimeCodeField setFormValues={setFormValues} />
                 <Button
                   size="tiny"
                   appearance="ghost"
@@ -72,6 +58,7 @@ export default function VerifyWithCode({ navigation }) {
                   accessibilityLiveRegion="assertive"
                   accessibilityComponentType="button"
                   accessibilityLabel="Continue"
+                  disabled={isLoading}
                 >
                   <Text status="control">Submit</Text>
                 </Button>

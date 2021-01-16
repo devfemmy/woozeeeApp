@@ -10,33 +10,27 @@ import useToast from '~src/hooks/useToast';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { RegularInput, SecureInput } from '~src/components/CustomInputs';
+import { PasswordField, GeneralTextField } from '~src/components/FormFields';
 
 // eslint-disable-next-line react/prop-types
 export default function RegisterFull({ navigation }) {
-  const [values, setValues] = useState({
+  useToast('Click again to go back');
+
+  const [isLoading, setLoading] = useState(false);
+
+  const [form, setFormValues] = useState({
     firstName: '',
     lastName: '',
     username: '',
-    email: '',
     password: '',
     confirmPassword: '',
   });
-
-  const handleChangeValue = (newValue, name) => {
-    setValues((prevState) => ({ ...prevState, ...{ [name]: newValue } }));
-  };
 
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
 
   // eslint-disable-next-line react/prop-types
   const routeVerifyWithCode = () => navigation.navigate('VerifyWithCode');
-
-  // Determines if any input field has been entered
-  // const isStartedTyping = Object.values(values).some((v) => v !== '');
-
-  useToast('Click again to go back');
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
@@ -64,76 +58,49 @@ export default function RegisterFull({ navigation }) {
                   justifyContent: 'space-between',
                 }}
               >
-                <RegularInput
-                  value={values.firstName}
-                  label="First name"
-                  accessibilityLabel="First name"
-                  placeholder="First name"
-                  autoCapitalize="words"
-                  autoCompleteType="name"
-                  textContentType="givenName"
-                  autoFocus
-                  autoCorrect={false}
-                  /* prettier-ignore */
-                  onChangeText={
-                    (value) => handleChangeValue(value, 'firstName')
-                  }
-                  style={{ flex: 1, marginRight: 5 }}
-                />
-                <RegularInput
-                  value={values.lastName}
-                  label="Last name"
-                  accessibilityLabel="Last name"
-                  placeholder="Last name"
-                  autoCapitalize="words"
-                  autoCompleteType="name"
-                  textContentType="familyName"
-                  autoCorrect={false}
-                  onChangeText={(value) => handleChangeValue(value, 'lastName')}
-                  style={{ flex: 1, marginLeft: 5 }}
-                />
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  <GeneralTextField
+                    setFormValues={setFormValues}
+                    label="First name"
+                    type="firstName"
+                    androidComplete="name"
+                    iosComplete="givenName"
+                  />
+                </View>
+                <View style={{ flex: 1, marginLeft: 5 }}>
+                  <GeneralTextField
+                    setFormValues={setFormValues}
+                    label="Last name"
+                    type="lastName"
+                    androidComplete="name"
+                    iosComplete="familyName"
+                  />
+                </View>
               </View>
               <View style={{ paddingVertical: 10 }}>
-                <RegularInput
-                  value={values.username}
+                <GeneralTextField
+                  setFormValues={setFormValues}
                   label="Username"
-                  accessibilityLabel="Username"
-                  placeholder="Enter Username"
-                  autoCapitalize="none"
-                  autoCompleteType="username"
-                  textContentType="username"
-                  autoCorrect={false}
-                  onChangeText={(value) => handleChangeValue(value, 'username')}
+                  type="username"
+                  androidComplete="username"
+                  iosComplete="username"
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>
-                <SecureInput
-                  value={values.password}
+                <PasswordField
+                  setFormValues={setFormValues}
                   label="Password"
-                  accessibilityLabel="Password"
-                  placeholder="Enter your password"
-                  autoCapitalize="none"
-                  autoCompleteType="password"
-                  textContentType="newPassword"
-                  autoCorrect={false}
-                  onChangeText={(value) => handleChangeValue(value, 'password')}
+                  type="password"
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>
-                <SecureInput
-                  value={values.confirmPassword}
+                <PasswordField
+                  setFormValues={setFormValues}
                   label="Confirm Password"
-                  accessibilityLabel="Confirm Password"
-                  placeholder="Confirm Password"
-                  autoCapitalize="none"
-                  autoCompleteType="password"
-                  textContentType="newPassword"
-                  autoCorrect={false}
-                  /* prettier-ignore */
-                  onChangeText={(value) => handleChangeValue(value, 'confirmPassword')}
+                  type="confirmPassword"
                 />
               </View>
-              <View style={{ paddingVertical: 10 }}>
+              <View style={{ paddingVertical: 20 }}>
                 <Button
                   status="danger"
                   size="large"
@@ -141,6 +108,7 @@ export default function RegisterFull({ navigation }) {
                   accessibilityComponentType="button"
                   accessibilityLabel="Continue"
                   onPress={routeVerifyWithCode}
+                  disabled={isLoading}
                 >
                   <Text status="control">Continue</Text>
                 </Button>

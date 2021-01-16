@@ -166,7 +166,7 @@ function RegularInput(props) {
         }
       />
     ),
-    [value, caption, captionIcon, label, otherProps],
+    [value, caption, captionIcon, label, otherProps, size],
   );
 }
 

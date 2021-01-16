@@ -1,37 +1,24 @@
-export const verifyEmail = (email) => {
-  const re = /\S+@\S+\.\S+/;
+const re = {
+  email: /\S+@\S+\.\S+/,
+  password: /\S+/,
+  required: /\S+/,
+};
 
-  if (re.test(email)) {
+export const verifyWithCaption = (term, type) => {
+  if (re[type].test(term)) {
     return {
       status: 'success',
-      caption: 'Email format is valid',
+      caption: 'Good!',
     };
   }
   return {
     status: 'danger',
-    caption: 'Email format is invalid',
+    caption: 'Format is invalid!',
   };
 };
 
-export const verifyNoEmpty = (term, title) => {
-  const re = /\S+/;
-
-  if (re.test(term)) {
-    return {
-      status: 'success',
-      caption: `${title} is valid`,
-    };
-  }
-  return {
-    status: 'danger',
-    caption: `${title} cannot be empty`,
-  };
-};
-
-export const verifySearch = (term) => {
-  const re = /\S+/;
-
-  if (re.test(term)) {
+export const verifyWithoutCaption = (term, type) => {
+  if (re[type].test(term)) {
     return {
       status: 'success',
     };

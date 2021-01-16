@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 
 export default function useMounted() {
   const [isMounted, setMounted] = useState(false);
 
-  useEffect(() => {
+  useMemo(() => {
     setMounted(true);
     return () => setMounted(false);
   }, []);

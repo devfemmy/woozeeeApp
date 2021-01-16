@@ -4,6 +4,8 @@ import { View, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useIsFocused } from '@react-navigation/native';
+
 // prettier-ignore
 import {
   Layout, Button, Text, Spinner,
@@ -11,13 +13,9 @@ import {
 
 import { AuthContext } from '~src/contexts';
 
-import useMounted from '~src/hooks/useMounted';
-
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { RegularInput, SecureInput } from '~src/components/CustomInputs';
-
-import { verifyEmail } from '~src/components/FormVerification';
+import { EmailField, PasswordField } from '~src/components/FormFields';
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ navigation }) {
@@ -28,7 +26,7 @@ export default function Login({ navigation }) {
 
   const { login } = authOptions;
 
-  const isMounted = useMounted();
+  const isFocused = useIsFocused();
 
   const [isLoading, setLoading] = useState(false);
 
@@ -37,57 +35,31 @@ export default function Login({ navigation }) {
   });
 
   const [form, setFormValues] = useState({
-    email: {
-      value: '',
-      status: 'basic',
-      caption: 'Enter your email address to continue',
-    },
-    password: {
-      value: '',
-      status: 'basic',
-    },
+    email: '',
+    password: '',
   });
-
-  const handleChangeEmail = (inputEmail) => {
-    const currentState = verifyEmail(inputEmail);
-
-    setFormValues((prevState) => ({
-      ...prevState,
-      email: { ...currentState, value: inputEmail },
-    }));
-  };
-
-  const handleChangePassword = (newPassword) => {
-    setFormValues((prevState) => ({
-      ...prevState,
-      password: { ...prevState.password, value: newPassword },
-    }));
-  };
 
   const loginUser = async () => {
     let loginError = null;
 
     try {
       await setLoading(true);
-      const formObj = {
-        email: form.email.value,
-        password: form.password.value,
-      };
 
-      if (formObj.email && formObj.password) {
-        loginError = await login(formObj);
+      if (form.email && form.password) {
+        loginError = await login(form);
       } else {
         loginError = 'Email and Password fields are required';
       }
     } catch (e) {
       loginError = e;
     } finally {
-      await setErrorMsg((prevState) => ({
-        ...prevState,
-        auth: loginError,
-      }));
-
-      if (isMounted) await setLoading(false);
+      if (loginError) {
+        await setErrorMsg((prevState) => ({
+          ...prevState,
+          auth: loginError,
+        }));
+      }
+      if (isFocused) await setLoading(false);
     }
   };
 
@@ -140,33 +112,13 @@ export default function Login({ navigation }) {
                 </View>
               ) : null}
               <View style={{ paddingVertical: 10 }}>
-                <RegularInput
-                  value={form.email.value}
-                  label="Email"
-                  accessibilityLabel="Email"
-                  placeholder="Enter your email address"
-                  autoCapitalize="none"
-                  autoCompleteType="email"
-                  textContentType="emailAddress"
-                  caption={form.email.caption}
-                  captionIcon={form.email.status}
-                  status={form.email.status}
-                  autoFocus
-                  autoCorrect={false}
-                  onChangeText={handleChangeEmail}
-                />
+                <EmailField setFormValues={setFormValues} />
               </View>
               <View style={{ paddingVertical: 10 }}>
-                <SecureInput
-                  value={form.password.value}
+                <PasswordField
+                  setFormValues={setFormValues}
                   label="Password"
-                  accessibilityLabel="Password"
-                  placeholder="Enter your password"
-                  autoCapitalize="none"
-                  autoCompleteType="password"
-                  textContentType="password"
-                  autoCorrect={false}
-                  onChangeText={handleChangePassword}
+                  type="password"
                 />
                 <Button
                   size="tiny"
@@ -188,7 +140,7 @@ export default function Login({ navigation }) {
                   accessibilityLabel="Continue"
                   accessoryLeft={isLoading ? renderSpinner : null}
                   onPress={loginUser}
-                  disabled={isLoading || form.email.status !== 'success'}
+                  disabled={isLoading}
                 >
                   <Text status="control">Continue</Text>
                 </Button>

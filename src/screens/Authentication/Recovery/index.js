@@ -8,28 +8,15 @@ import { Layout, Button, Text } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { RegularInput } from '~src/components/CustomInputs';
-
-import { verifyEmail } from '~src/components/FormVerification';
+import { EmailField } from '~src/components/FormFields';
 
 // eslint-disable-next-line react/prop-types
 export default function RecoverWithEmail({ navigation }) {
+  const [isLoading, setLoading] = useState(false);
+
   const [form, setFormValues] = useState({
-    email: {
-      value: '',
-      status: 'basic',
-      caption: 'Enter your email address to continue',
-    },
+    email: '',
   });
-
-  const handleChangeEmail = (inputEmail) => {
-    const currentState = verifyEmail(inputEmail);
-
-    setFormValues((prevState) => ({
-      ...prevState,
-      email: { ...currentState, value: inputEmail },
-    }));
-  };
 
   // eslint-disable-next-line react/prop-types
   const routeRegister = () => navigation.navigate('Register');
@@ -54,21 +41,7 @@ export default function RecoverWithEmail({ navigation }) {
           >
             <View style={{ paddingBottom: 10 }}>
               <View style={{ paddingVertical: 10 }}>
-                <RegularInput
-                  value={form.email.value}
-                  label="Email"
-                  accessibilityLabel="Email"
-                  placeholder="Enter your email address"
-                  autoCapitalize="none"
-                  autoCompleteType="email"
-                  textContentType="emailAddress"
-                  caption={form.email.caption}
-                  captionIcon={form.email.status}
-                  status={form.email.status}
-                  autoFocus
-                  autoCorrect={false}
-                  onChangeText={handleChangeEmail}
-                />
+                <EmailField setFormValues={setFormValues} />
               </View>
               <View style={{ paddingVertical: 20 }}>
                 <Button
@@ -77,7 +50,7 @@ export default function RecoverWithEmail({ navigation }) {
                   accessibilityLiveRegion="assertive"
                   accessibilityComponentType="button"
                   accessibilityLabel="Continue"
-                  disabled={form.email.status !== 'success'}
+                  disabled={isLoading}
                 >
                   <Text status="control">Continue</Text>
                 </Button>

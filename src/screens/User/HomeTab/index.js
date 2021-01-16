@@ -12,6 +12,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { BlurView } from 'expo-blur';
 
+import { useIsFocused } from '@react-navigation/native';
+
 // prettier-ignore
 import {
   Layout, Text, List,
@@ -24,8 +26,6 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 import OverlayLoader from '~src/components/OverlayLoader';
 
 import useToast from '~src/hooks/useToast';
-
-import useMounted from '~src/hooks/useMounted';
 
 import BackgroundVideo from '~src/components/BackgroundVideo';
 
@@ -118,7 +118,7 @@ export default function Home({ navigation }) {
 
   const { isLoading } = useContext(LoadingContext);
 
-  const isMounted = useMounted();
+  const isFocused = useIsFocused();
 
   // eslint-disable-next-line react/prop-types
   const routeSocialRoute = (route) => navigation.navigate(route);
@@ -165,7 +165,7 @@ export default function Home({ navigation }) {
       onPress={() => routeSocialRoute(data.item.screen)}
     >
       <View style={styles.cardContent}>
-        {isMounted ? (
+        {isFocused ? (
           <BackgroundVideo
             videoUri={data.item.video}
             thumbUri={data.item.banner}

@@ -8,7 +8,7 @@ import { Layout, Button, Text } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { RegularInput } from '~src/components/CustomInputs';
+import { EmailField } from '~src/components/FormFields';
 
 import {
   IconFacebook,
@@ -16,26 +16,13 @@ import {
   IconTwitter,
 } from '~src/components/CustomIcons';
 
-import { verifyEmail } from '~src/components/FormVerification';
-
 // eslint-disable-next-line react/prop-types
 export default function Register({ navigation }) {
+  const [isLoading, setLoading] = useState(false);
+
   const [form, setFormValues] = useState({
-    email: {
-      value: '',
-      status: 'basic',
-      caption: 'Enter your email address to continue',
-    },
+    email: '',
   });
-
-  const handleChangeEmail = (newEmail) => {
-    const currentState = verifyEmail(newEmail);
-
-    setFormValues((prevState) => ({
-      ...prevState,
-      email: { ...currentState, value: newEmail },
-    }));
-  };
 
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
@@ -64,23 +51,9 @@ export default function Register({ navigation }) {
           >
             <View style={{ paddingBottom: 10 }}>
               <View style={{ paddingVertical: 10 }}>
-                <RegularInput
-                  value={form.email.value}
-                  label="Email"
-                  accessibilityLabel="Email"
-                  placeholder="Enter email address"
-                  autoCapitalize="none"
-                  autoCompleteType="email"
-                  textContentType="emailAddress"
-                  caption={form.email.caption}
-                  captionIcon={form.email.status}
-                  status={form.email.status}
-                  autoFocus
-                  autoCorrect={false}
-                  onChangeText={handleChangeEmail}
-                />
+                <EmailField setFormValues={setFormValues} />
               </View>
-              <View style={{ paddingVertical: 10 }}>
+              <View style={{ paddingVertical: 20 }}>
                 <Button
                   status="danger"
                   size="large"
@@ -88,7 +61,7 @@ export default function Register({ navigation }) {
                   accessibilityComponentType="button"
                   accessibilityLabel="Continue"
                   onPress={routeRegisterFull}
-                  disabled={form.email.status !== 'success'}
+                  disabled={isLoading}
                 >
                   <Text status="control">Continue</Text>
                 </Button>
