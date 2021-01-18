@@ -1,0 +1,7 @@
+export const challengeUrl = 'b/600441b7f98f6e35d5fd9d20/3';
+
+export const trendingUrl = 'b/600478774f42973a289e12fb';
+
+export const exploreUrl = 'b/60047a08f98f6e35d5fdae6e';
+
+export const socialUrl = 'b/6005a2d0e31fbc3bdef53092';

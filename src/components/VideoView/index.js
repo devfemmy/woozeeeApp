@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 
 import {
   View,
@@ -8,11 +8,11 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import { Button, Text } from '@ui-kitten/components';
+import { Text } from '@ui-kitten/components';
 
-import { useIsFocused } from '@react-navigation/native';
+import CustomVideoPlayer from '~src/components/CustomVideoPlayer';
 
-import CustomVideo from '~src/components/CustomVideo';
+import InteractIcon from './InteractIcon';
 
 import {
   IconHeart,
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function VideoView() {
-  const isFocused = useIsFocused();
+export default function VideoView(props) {
+  const { data } = props;
 
   const { width, height } = useWindowDimensions();
 
@@ -51,61 +51,29 @@ export default function VideoView() {
   const [isLiked, setLiked] = useState(false);
 
   const [playProgress, setPlayProgress] = useState({
-    millis: 100,
     width: '0%',
   });
 
-  const [playPosition, setPlayPosition] = useState(100);
-
-  const togglePause = useCallback(() => {
-    setPlayPosition(playProgress.millis);
-    setShouldPlay((prevState) => !prevState);
-  }, [playProgress.millis]);
+  const togglePause = () => setShouldPlay((prevState) => !prevState);
 
   const toggleLike = () => setLiked((prevState) => !prevState);
 
-  const InteractIcon = (props) => {
-    // eslint-disable-next-line react/prop-types
-    const { accessory, textContent, onPress } = props;
-
-    return useMemo(
-      () => (
-        <View style={styles.interactIcons}>
-          <Button
-            appearance="ghost"
-            status={isPortrait ? 'control' : 'basic'}
-            size="large"
-            accessoryLeft={accessory}
-            onPress={onPress}
-          />
-          <Text status={isPortrait ? 'control' : 'basic'} category="label">
-            {textContent}
-          </Text>
-        </View>
-      ),
-      [accessory, textContent, onPress],
-    );
-  };
-
   return useMemo(
     () => (
-      <View style={[StyleSheet.absoluteFillObject, { flex: 1, height }]}>
-        {isFocused ? (
-          <CustomVideo
-            videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
-            thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
-            isMuted
-            shouldPlay={shouldPlay}
-            resizeMode={isPortrait ? 'cover' : 'contain'}
-            currentProgress={playPosition}
-            setPlayProgress={setPlayProgress}
-          />
-        ) : null}
+      <View style={{ flex: 1, height: isPortrait ? height - 25 : height - 50 }}>
+        <CustomVideoPlayer
+          videoUri={data.video}
+          thumbUri="thumb image"
+          isMuted
+          shouldPlay={shouldPlay}
+          resizeMode={isPortrait ? 'cover' : 'contain'}
+          setPlayProgress={setPlayProgress}
+        />
         <View style={styles.uiContainer}>
           <View
             style={{
               width: '100%',
-              paddingBottom: 55,
+              paddingBottom: 25,
             }}
           >
             <View
@@ -117,17 +85,17 @@ export default function VideoView() {
                 marginBottom: 10,
               }}
             >
-              <View style={{ paddingHorizontal: 10 }}>
+              <View style={{ paddingHorizontal: 10, maxWidth: width / 3 }}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text
                     status="primary"
                     category="h6"
                     style={{ marginRight: 5 }}
                   >
-                    Michelle
+                    {data.ownerFirstName}
                   </Text>
                   <Text status="danger" category="h6">
-                    Alabi
+                    {data.ownerLastName}
                   </Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
@@ -139,34 +107,47 @@ export default function VideoView() {
                       paddingHorizontal: 5,
                     }}
                   >
-                    Animals
+                    {data.category}
                   </Text>
                 </View>
               </View>
-              <View style={{ paddingTop: isPortrait ? 0 : 90 }}>
+              <View style={{ maxWidth: width / 3 }}>
                 <ScrollView
+                  horizontal={!isPortrait}
                   showsVerticalScrollIndicator={false}
                   showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={{
+                    alignItems: 'center',
+                  }}
                 >
                   <InteractIcon
                     accessory={(evaProps) => (
                       // eslint-disable-next-line react/jsx-props-no-spreading
                       <IconHeart {...evaProps} isLiked={isLiked} />
                     )}
-                    textContent="2.2k"
+                    textContent={data.likes}
                     onPress={toggleLike}
                   />
-                  <InteractIcon accessory={IconMsgSquare} textContent="7.2k" />
+                  <InteractIcon
+                    accessory={IconMsgSquare}
+                    textContent={data.comments}
+                  />
                   <InteractIcon
                     accessory={(evaProps) => (
                       // eslint-disable-next-line react/jsx-props-no-spreading
                       <IconEye {...evaProps} isOpen />
                     )}
-                    textContent="21.2k"
+                    textContent={data.views}
                   />
-                  <InteractIcon accessory={IconClipboard} textContent="22.2k" />
+                  <InteractIcon
+                    accessory={IconClipboard}
+                    textContent={data.votes}
+                  />
 
-                  <InteractIcon accessory={IconShare} textContent="12k" />
+                  <InteractIcon
+                    accessory={IconShare}
+                    textContent={data.shares}
+                  />
 
                   <InteractIcon
                     accessory={(evaProps) => (
@@ -214,14 +195,21 @@ export default function VideoView() {
       </View>
     ),
     [
+      width,
       height,
       isLiked,
-      isFocused,
       isPortrait,
-      playPosition,
       shouldPlay,
-      togglePause,
       playProgress.width,
+      data.video,
+      data.ownerFirstName,
+      data.ownerLastName,
+      data.category,
+      data.likes,
+      data.comments,
+      data.views,
+      data.votes,
+      data.shares,
     ],
   );
 }

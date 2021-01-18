@@ -1,14 +1,17 @@
 import React, { useMemo, useState, useCallback } from 'react';
 
-import { Animated, StyleSheet, Image } from 'react-native';
+// prettier-ignore
+import {
+  Animated, StyleSheet, View, useWindowDimensions,
+} from 'react-native';
 
 import { useIsFocused } from '@react-navigation/native';
 
 import { Video } from 'expo-av';
 
-import { Asset } from 'expo-asset';
-
 import { Layout } from '@ui-kitten/components';
+
+import { FullPlaceholder } from '~src/components/CustomPlaceholder';
 
 const styles = StyleSheet.create({
   background: {
@@ -19,20 +22,20 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function CustomVideo(props) {
+export default function CustomVideoPlayer(props) {
+  const { width, height } = useWindowDimensions();
+
   // eslint-disable-next-line react/prop-types
   // prettier-ignore
   const {
-    videoUri, thumbUri, style, resizeMode, shouldPlay, currentProgress, setPlayProgress,
+    videoUri, thumbUri, style, resizeMode, shouldPlay, setPlayProgress,
   } = props;
 
   const isFocused = useIsFocused();
 
-  const opacity = React.useMemo(() => new Animated.Value(0), []);
+  const opacity = React.useMemo(() => new Animated.Value(0.5), []);
 
-  const thumbOpacity = React.useMemo(() => new Animated.Value(0.25), []);
-
-  const [cachedUri, setCachedUri] = useState(null);
+  const [isVideoLoaded, setVideoLoaded] = useState(false);
 
   const handlePlaybackStatusUpdate = useCallback(
     (status) => {
@@ -40,49 +43,17 @@ export default function CustomVideo(props) {
 
       const currentPercent = (positionMillis / durationMillis) * 100;
 
-      setPlayProgress({ millis: positionMillis, width: `${currentPercent}%` });
+      setPlayProgress({ width: `${currentPercent}%` });
     },
     [setPlayProgress],
   );
 
-  useMemo(() => {
-    const getCachedUri = async () => {
-      try {
-        const [{ localUri }] = await Asset.loadAsync(videoUri);
-
-        await setCachedUri(localUri);
-      } catch (e) {
-        const err = e;
-      }
-    };
-
-    getCachedUri().then(() => {});
-  }, [videoUri]);
-
   // prettier-ignore
-  const VideoThumb = () => (thumbUri ? (
-    <Animated.View
-      style={[styles.backgroundViewWrapper, { opacity: thumbOpacity }]}
-    >
-      <Image
-        source={thumbUri}
-        style={[
-          style,
-          {
-            resizeMode: resizeMode || 'cover',
-            width: '100%',
-            height: '100%',
-          },
-        ]}
-        onLoadStart={() => {
-          Animated.timing(thumbOpacity, {
-            toValue: 1,
-            useNativeDriver: true,
-            duration: 1000,
-          }).start();
-        }}
-      />
-    </Animated.View>
+  const VideoThumb = () => (thumbUri && !isVideoLoaded ? (
+    <View style={{ paddingTop: 100 }}>
+      <FullPlaceholder width={width} height={height - 125} />
+    </View>
+
   ) : null);
 
   return useMemo(
@@ -92,8 +63,8 @@ export default function CustomVideo(props) {
         <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
           <Video
             isLooping
-            positionMillis={currentProgress}
             onLoadStart={() => {
+              setVideoLoaded(true);
               Animated.timing(opacity, {
                 toValue: 1,
                 useNativeDriver: true,
@@ -105,21 +76,20 @@ export default function CustomVideo(props) {
             progressUpdateIntervalMillis={1000}
             onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
             shouldPlay={(shouldPlay && isFocused) || isFocused === undefined}
-            source={{ uri: cachedUri }}
+            source={{ uri: videoUri }}
             style={[style, { flex: 1 }]}
           />
         </Animated.View>
       </Layout>
     ),
     [
+      videoUri,
       isFocused,
       opacity,
-      cachedUri,
       style,
       resizeMode,
       shouldPlay,
       handlePlaybackStatusUpdate,
-      currentProgress,
     ],
   );
 }

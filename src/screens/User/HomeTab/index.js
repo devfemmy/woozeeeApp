@@ -12,8 +12,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { BlurView } from 'expo-blur';
 
-import { useIsFocused } from '@react-navigation/native';
-
 // prettier-ignore
 import {
   Layout, Text, List,
@@ -112,23 +110,25 @@ const Balance = (props) => {
 
 // eslint-disable-next-line react/prop-types
 export default function Home({ navigation }) {
-  const isFocused = useIsFocused();
+  useToast('Click again to exit');
 
   const { width, height } = useWindowDimensions();
 
   const isPortrait = height > width;
+
+  const CARD_HEIGHT = isPortrait ? 170 : 140;
+
+  const CATEGORY_HEIGHT = isPortrait ? 250 : 220;
 
   const { isLoading } = useContext(LoadingContext);
 
   // eslint-disable-next-line react/prop-types
   const routeSocialRoute = (route) => navigation.navigate(route);
 
-  useToast('Click again to exit');
-
   const renderCard = (data) => (
     <View
       style={{
-        height: isPortrait ? 170 : 140,
+        height: CARD_HEIGHT,
         width: isPortrait ? width / 1.6 : width / 3,
         paddingHorizontal: 5,
         position: 'relative',
@@ -165,14 +165,12 @@ export default function Home({ navigation }) {
       onPress={() => routeSocialRoute(data.item.screen)}
     >
       <View style={styles.cardContent}>
-        {isFocused ? (
-          <BackgroundVideo
-            videoUri={data.item.video}
-            thumbUri={data.item.banner}
-            style={{ borderRadius: 5 }}
-            isMuted
-          />
-        ) : null}
+        <BackgroundVideo
+          videoUri={data.item.video}
+          thumbUri={data.item.banner}
+          style={{ borderRadius: 5 }}
+          isMuted
+        />
       </View>
 
       <BlurView intensity={25} tint="dark" style={styles.cardContent}>
@@ -194,6 +192,11 @@ export default function Home({ navigation }) {
         showsVerticalScrollIndicator={false}
         data={woozeeeCards}
         renderItem={renderCard}
+        getItemLayout={(data, index) => ({
+          length: CARD_HEIGHT,
+          offset: CARD_HEIGHT * index,
+          index,
+        })}
       />
     </View>
   );
@@ -209,7 +212,7 @@ export default function Home({ navigation }) {
           screen="user"
         />
 
-        <View style={{ flex: 1, paddingVertical: 5 }}>
+        <View style={{ flex: 1 }}>
           <List
             ListHeaderComponent={RenderCategoryHeader}
             style={{ backgroundColor: 'transparent' }}
@@ -220,6 +223,11 @@ export default function Home({ navigation }) {
             showsHorizontalScrollIndicator={false}
             data={woozeeeCategories}
             renderItem={renderCategory}
+            getItemLayout={(data, index) => ({
+              length: CATEGORY_HEIGHT,
+              offset: CATEGORY_HEIGHT * index,
+              index,
+            })}
           />
         </View>
       </SafeAreaView>

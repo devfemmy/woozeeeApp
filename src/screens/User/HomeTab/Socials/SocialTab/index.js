@@ -6,10 +6,21 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 // prettier-ignore
 import {
-  Layout, Button, Text, OverflowMenu, MenuItem,
+  Layout, Button, Text, OverflowMenu, MenuItem, List,
 } from '@ui-kitten/components';
 
+import { Get } from 'react-axios';
+
 import useToast from '~src/hooks/useToast';
+
+import VideoView from '~src/components/VideoView';
+
+import {
+  FullPlaceholder,
+  ListPlaceholder,
+} from '~src/components/CustomPlaceholder';
+
+import { socialUrl } from '~src/api/dummy';
 
 import {
   IconVideo,
@@ -19,8 +30,6 @@ import {
   IconRadio,
   IconHome,
 } from '~src/components/CustomIcons';
-
-import VideoView from '~src/components/VideoView';
 
 const styles = StyleSheet.create({
   uiContainer: {
@@ -53,6 +62,8 @@ export default function Social({ navigation }) {
   const { width, height } = useWindowDimensions();
 
   const isPortrait = height > width;
+
+  const ITEM_HEIGHT = isPortrait ? height - 25 : height - 50;
 
   const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
 
@@ -145,7 +156,101 @@ export default function Social({ navigation }) {
             />
           </View>
         </View>
-        <VideoView />
+        <Get url={socialUrl}>
+          {(error, response, isLoading, makeRequest) => {
+            if (error) {
+              return (
+                <View
+                  style={{
+                    flex: 1,
+                    padding: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Text style={{ marginBottom: 10 }}>
+                    Failed to fetch Videos, Please try again!
+                  </Text>
+                  <Button
+                    /* prettier-ignore */
+                    onPress={() => makeRequest({ params: { reload: true } })}
+                  >
+                    <Text status="control">Retry</Text>
+                  </Button>
+                </View>
+              );
+            }
+            if (isLoading) {
+              return (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    paddingVertical: 10,
+                    paddingBottom: 10,
+                  }}
+                >
+                  <ListPlaceholder width={width} height={height - 175} />
+                </View>
+              );
+            }
+            if (response !== null) {
+              if (response.data.length < 1) {
+                return (
+                  <View
+                    style={{
+                      flex: 1,
+                      padding: 10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Text style={{ marginBottom: 10 }}>
+                      No Videos available!
+                    </Text>
+                    <Button
+                      /* prettier-ignore */
+                      onPress={() => makeRequest({ params: { refresh: true } })}
+                    >
+                      <Text status="control">Refresh</Text>
+                    </Button>
+                  </View>
+                );
+              }
+              return (
+                <List
+                  style={{
+                    flex: 1,
+                    backgroundColor: 'blue',
+                    position: 'absolute',
+                    height: ITEM_HEIGHT,
+                  }}
+                  alwaysBounceVertical
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  data={response.data}
+                  renderItem={(renderData) => (
+                    <VideoView data={renderData.item} extraWidth={0.5} />
+                  )}
+                  snapToAlignment="start"
+                  decelerationRate="fast"
+                  snapToInterval={ITEM_HEIGHT}
+                  getItemLayout={(data, index) => ({
+                    length: ITEM_HEIGHT,
+                    offset: ITEM_HEIGHT * index,
+                    index,
+                  })}
+                  initialNumToRender={2}
+                />
+              );
+            }
+            return (
+              <View style={{ paddingBottom: 10 }}>
+                <FullPlaceholder width={width - 10} height={height - 150} />
+              </View>
+            );
+          }}
+        </Get>
       </SafeAreaView>
     </Layout>
   );

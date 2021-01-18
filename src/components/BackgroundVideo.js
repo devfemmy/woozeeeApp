@@ -28,9 +28,9 @@ export default function BackgroundVideo(props) {
 
   const isFocused = useIsFocused();
 
-  const opacity = React.useMemo(() => new Animated.Value(0), []);
+  const opacity = React.useMemo(() => new Animated.Value(0.5), []);
 
-  const thumbOpacity = React.useMemo(() => new Animated.Value(0.25), []);
+  const thumbOpacity = React.useMemo(() => new Animated.Value(0.75), []);
 
   const [cachedUri, setCachedUri] = useState(null);
 
@@ -82,7 +82,6 @@ export default function BackgroundVideo(props) {
           <Video
             isLooping
             isMuted={isMuted}
-            positionMillis={100}
             onLoadStart={() => {
               Animated.timing(opacity, {
                 toValue: 1,

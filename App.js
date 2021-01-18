@@ -20,6 +20,8 @@ import {
   Layout,
 } from '@ui-kitten/components';
 
+import axios from 'axios';
+
 import mapping from '~src/constants/mapping.json';
 
 import mappingTheme from '~src/constants/mappingTheme';
@@ -35,8 +37,21 @@ import useAppSettings from '~src/reducers/useAppSettings';
 import useAuth from '~src/reducers/useAuth';
 
 import Router from '~src/router';
+import { AxiosProvider } from 'react-axios';
 
 enableScreens();
+
+const axiosInstance = axios.create({
+  baseURL: 'https://api.jsonbin.io/',
+  timeout: 60000,
+  timeoutErrorMessage: 'Request took too long process',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json:charset=utf-8',
+    'secret-key':
+      '$2b$10$BifoVKHdKq1J9E8C1YK1nuvsaD4wY9dVW5jNPuy4/mvioQJ84wZ1O',
+  },
+});
 
 export default function App() {
   SplashScreen.preventAutoHideAsync()
@@ -101,25 +116,27 @@ export default function App() {
         theme={{ ...eva[themeMode], ...mappingTheme[themeMode] }}
         customMapping={mapping}
       >
-        <AppSettingsContext.Provider
-          value={{
-            appState,
-            appOptions,
-          }}
-        >
-          <AuthContext.Provider
+        <AxiosProvider instance={axiosInstance}>
+          <AppSettingsContext.Provider
             value={{
-              authState,
-              authOptions,
+              appState,
+              appOptions,
             }}
           >
-            <LoadingContext.Provider value={{ isLoading, setLoading }}>
-              <Layout level="4" style={{ flex: 1 }}>
-                <Router />
-              </Layout>
-            </LoadingContext.Provider>
-          </AuthContext.Provider>
-        </AppSettingsContext.Provider>
+            <AuthContext.Provider
+              value={{
+                authState,
+                authOptions,
+              }}
+            >
+              <LoadingContext.Provider value={{ isLoading, setLoading }}>
+                <Layout level="4" style={{ flex: 1 }}>
+                  <Router />
+                </Layout>
+              </LoadingContext.Provider>
+            </AuthContext.Provider>
+          </AppSettingsContext.Provider>
+        </AxiosProvider>
       </ApplicationProvider>
       <StatusBar barStyle="auto" />
     </SafeAreaProvider>

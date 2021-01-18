@@ -1,146 +1,34 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import {
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  useWindowDimensions,
-} from 'react-native';
+import { View, ScrollView, useWindowDimensions } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { BlurView } from 'expo-blur';
-
 // prettier-ignore
 import {
-  Layout, Text, Button, List,
+  Layout, Text, List, Button,
 } from '@ui-kitten/components';
 
-import Moment from 'react-moment';
+import { Get } from 'react-axios';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { IconForward } from '~src/components/CustomIcons';
+import VideoCard from '~src/components/Socials/VideoCard';
 
-/* DATA */
-import socialVideos from './data';
+import {
+  CustomPlaceholder,
+  FullPlaceholder,
+} from '~src/components/CustomPlaceholder';
 
-const trendingData = [
-  {
-    banner: require('~assets/images/banner/back1.jpg'),
-    userImg: require('~assets/images/user/user1.png'),
-    tag: '#woozeeeChallenge',
-    dateAdded: '2021-01-10',
-  },
-  {
-    banner: require('~assets/images/banner/back2.jpg'),
-    userImg: require('~assets/images/user/user2.png'),
-    tag: '#woozeeeChallenge',
-    dateAdded: '2021-01-11',
-  },
-  {
-    banner: require('~assets/images/banner/back1.jpg'),
-    userImg: require('~assets/images/user/user3.png'),
-    tag: '#woozeeeChallenge',
-    dateAdded: '2021-01-08',
-  },
-  {
-    banner: require('~assets/images/banner/back3.jpg'),
-    userImg: require('~assets/images/user/user1.png'),
-    tag: '#woozeeeChallenge',
-    dateAdded: '2021-01-10',
-  },
-  {
-    banner: require('~assets/images/banner/back2.jpg'),
-    userImg: require('~assets/images/user/user3.png'),
-    tag: '#woozeeeChallenge',
-    dateAdded: '2021-01-09',
-  },
-];
+import { exploreUrl, trendingUrl } from '~src/api/dummy';
 
 // eslint-disable-next-line react/prop-types
 export default function Explore({ navigation }) {
   const { width, height } = useWindowDimensions();
 
-  const isPortrait = height > width;
-
-  const renderCard = (data) => (
-    <TouchableOpacity
-      style={{
-        height: 170,
-        width: isPortrait ? width / 2.5 : width / 3.5,
-        paddingHorizontal: 5,
-        position: 'relative',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-      }}
-      key={data.item.key}
-    >
-      <Image
-        source={data.item.banner}
-        style={{
-          height: 160,
-          width: '100%',
-          borderRadius: 5,
-        }}
-        resizeMode="cover"
-      />
-      {data.item.userImg ? (
-        <Layout
-          level="3"
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            height: 43,
-            width: 43,
-            left: 10,
-            top: 5,
-            borderRadius: 100,
-          }}
-        >
-          <Image
-            source={data.item.userImg}
-            style={{
-              height: 40,
-              width: 40,
-              borderRadius: 100,
-              borderWidth: 3,
-              borderColor: 'white',
-            }}
-          />
-        </Layout>
-      ) : null}
-      <BlurView
-        intensity={75}
-        tint="dark"
-        style={{
-          position: 'absolute',
-          bottom: 10,
-          borderBottomLeftRadius: 5,
-          borderBottomRightRadius: 5,
-          paddingHorizontal: 5,
-          width: '100%',
-        }}
-      >
-        <Text category="c1" style={{ color: 'white', marginBottom: 5 }}>
-          {data.item.tag}
-        </Text>
-        <View style={{ marginBottom: 5 }}>
-          <Moment
-            fromNow
-            element={(momentProps) => (
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              <Text category="c1" {...momentProps} style={{ color: 'white' }} />
-            )}
-          >
-            {data.item.dateAdded}
-          </Moment>
-        </View>
-      </BlurView>
-    </TouchableOpacity>
+  const { plWidth, plHeight } = useMemo(
+    () => ({ plWidth: width / 2, plHeight: (height - 150) / 3 }),
+    [width, height],
   );
 
   return (
@@ -157,81 +45,229 @@ export default function Explore({ navigation }) {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         >
-          <View style={{ marginBottom: 10, paddingVertical: 5 }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+          <View style={{ paddingBottom: 20 }}>
+            <Get url={trendingUrl}>
+              {(error, response, isLoading, makeRequest) => {
+                if (error) {
+                  return (
+                    <View
+                      style={{
+                        flex: 1,
+                        padding: 10,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Text style={{ marginBottom: 10 }}>
+                        Failed to fetch Challenges, Please try again!
+                      </Text>
+                      <Button
+                        /* prettier-ignore */
+                        onPress={() => makeRequest({ params: { reload: true } })}
+                      >
+                        <Text status="control">Retry</Text>
+                      </Button>
+                    </View>
+                  );
+                }
+                if (isLoading) {
+                  return (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        paddingVertical: 10,
+                        paddingBottom: 10,
+                      }}
+                    >
+                      {[1, 2].map((val) => (
+                        <CustomPlaceholder
+                          width={plWidth}
+                          height={plHeight}
+                          key={val}
+                        />
+                      ))}
+                    </View>
+                  );
+                }
+                if (response !== null) {
+                  if (response.data.length < 1) {
+                    return (
+                      <View
+                        style={{
+                          flex: 1,
+                          padding: 10,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <Text style={{ marginBottom: 10 }}>
+                          No Challenges available!
+                        </Text>
+                        <Button
+                          /* prettier-ignore */
+                          onPress={() => makeRequest({ params: { refresh: true } })}
+                        >
+                          <Text status="control">Refresh</Text>
+                        </Button>
+                      </View>
+                    );
+                  }
+                  return (
+                    <View style={{ marginBottom: 20, paddingVertical: 5 }}>
+                      <View style={{ paddingHorizontal: 10 }}>
+                        <Text category="h6" style={{ marginBottom: 5 }}>
+                          Trending Challenges
+                        </Text>
+                      </View>
+                      <List
+                        style={{ backgroundColor: 'transparent' }}
+                        alwaysBounceHorizontal
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
+                        data={response.data}
+                        renderItem={(renderData) => (
+                          <VideoCard data={renderData.item} extraWidth={0.5} />
+                        )}
+                        getItemLayout={(data, index) => ({
+                          length: 170,
+                          offset: 170 * index,
+                          index,
+                        })}
+                      />
+                    </View>
+                  );
+                }
+                return (
+                  <View style={{ paddingBottom: 10 }}>
+                    <FullPlaceholder
+                      width={width - 10}
+                      height={(height - 150) / 3}
+                    />
+                  </View>
+                );
               }}
-            >
-              <View style={{ paddingHorizontal: 10 }}>
-                <Text category="h6" style={{ marginBottom: 5 }}>
-                  Trending Challenges
-                </Text>
-              </View>
-            </View>
-            <List
-              style={{ backgroundColor: 'transparent' }}
-              alwaysBounceHorizontal
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              data={trendingData}
-              renderItem={renderCard}
-            />
+            </Get>
+            <Get url={exploreUrl}>
+              {(error, response, isLoading, makeRequest) => {
+                if (error) {
+                  return (
+                    <View
+                      style={{
+                        flex: 1,
+                        padding: 10,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: height - 150,
+                      }}
+                    >
+                      <Text style={{ marginBottom: 10 }}>
+                        Failed to fetch Challenges, Please try again!
+                      </Text>
+                      <Button
+                        /* prettier-ignore */
+                        onPress={() => makeRequest({ params: { reload: true } })}
+                      >
+                        <Text status="control">Retry</Text>
+                      </Button>
+                    </View>
+                  );
+                }
+                if (isLoading) {
+                  return (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        paddingVertical: 10,
+                      }}
+                    >
+                      {[1, 2, 3, 4].map((val) => (
+                        <CustomPlaceholder
+                          width={plWidth}
+                          height={plHeight}
+                          key={val}
+                        />
+                      ))}
+                    </View>
+                  );
+                }
+                if (response !== null) {
+                  if (response.data.length < 1) {
+                    return (
+                      <View
+                        style={{
+                          flex: 1,
+                          padding: 10,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: height - 150,
+                        }}
+                      >
+                        <Text style={{ marginBottom: 10 }}>
+                          No Videos available!
+                        </Text>
+                        <Button
+                          /* prettier-ignore */
+                          onPress={() => makeRequest({ params: { refresh: true } })}
+                        >
+                          <Text status="control">Refresh</Text>
+                        </Button>
+                      </View>
+                    );
+                  }
+                  return response.data.map((item) => (
+                    <View
+                      style={{
+                        flex: 1,
+                        marginBottom: 10,
+                        paddingVertical: 5,
+                        maxHeight: 215,
+                      }}
+                      key={item.category}
+                    >
+                      <View style={{ paddingHorizontal: 10 }}>
+                        <Text category="h6" style={{ marginBottom: 5 }}>
+                          {item.category}
+                        </Text>
+                        {/* prettier-ignore */}
+                        <Text category="c1" style={{ marginBottom: 5 }}>
+                          {item.content.length}
+                          {' '}
+                          Video(s)
+                        </Text>
+                      </View>
+                      <List
+                        style={{ backgroundColor: 'transparent' }}
+                        alwaysBounceHorizontal
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
+                        data={item.content}
+                        renderItem={(renderData) => (
+                          <VideoCard data={renderData.item} extraWidth={0.5} />
+                        )}
+                        getItemLayout={(data, index) => ({
+                          length: 170,
+                          offset: 170 * index,
+                          index,
+                        })}
+                      />
+                    </View>
+                  ));
+                }
+                return (
+                  <View>
+                    <FullPlaceholder
+                      width={width - 10}
+                      height={(height - 150) / 2}
+                    />
+                  </View>
+                );
+              }}
+            </Get>
           </View>
-          {socialVideos.map((item) => (
-            <View
-              style={{
-                flex: 1,
-                marginBottom: 10,
-                paddingVertical: 5,
-                height: 215,
-              }}
-              key={item.user}
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <View style={{ paddingHorizontal: 10 }}>
-                  <Text category="h6" style={{ marginBottom: 5 }}>
-                    {item.user}
-                  </Text>
-                  {/* prettier-ignore */}
-                  <Text category="c1" style={{ marginBottom: 5 }}>
-                    {item.content.length}
-                    {' '}
-                    Video(s)
-                  </Text>
-                </View>
-                <View>
-                  <Button
-                    appearance="ghost"
-                    size="tiny"
-                    accessoryRight={IconForward}
-                  >
-                    <Text status="primary" category="p2">
-                      View all
-                    </Text>
-                  </Button>
-                </View>
-              </View>
-              <List
-                style={{ backgroundColor: 'transparent' }}
-                alwaysBounceHorizontal
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                data={item.content}
-                renderItem={renderCard}
-              />
-            </View>
-          ))}
         </ScrollView>
       </SafeAreaView>
     </Layout>

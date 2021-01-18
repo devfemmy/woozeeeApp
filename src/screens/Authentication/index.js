@@ -6,8 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { BlurView } from 'expo-blur';
 
-import { useIsFocused } from '@react-navigation/native';
-
 // prettier-ignore
 import {
   Layout, Button, Text,
@@ -46,8 +44,6 @@ export default function OnboardingScreen({ navigation }) {
 
   const { isLoading } = useContext(LoadingContext);
 
-  const isFocused = useIsFocused();
-
   const [isVolumeOpen, setVolumeOpen] = useState(false);
 
   // eslint-disable-next-line react/prop-types
@@ -57,13 +53,11 @@ export default function OnboardingScreen({ navigation }) {
     <Layout level="4" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
       {/* Onboarding screen background video */}
-      {isFocused ? (
-        <BackgroundVideo
-          videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
-          thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
-          isMuted={!isVolumeOpen}
-        />
-      ) : null}
+      <BackgroundVideo
+        videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
+        thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
+        isMuted={!isVolumeOpen}
+      />
       <SafeAreaView style={{ flex: 1 }}>
         <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
           <View>
