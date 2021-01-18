@@ -240,7 +240,14 @@ export default function Social({ navigation }) {
                     offset: ITEM_HEIGHT * index,
                     index,
                   })}
-                  initialNumToRender={2}
+                  initialNumToRender={1}
+                  viewabilityConfig={{
+                    minimumViewTime: 500,
+                    viewAreaCoveragePercentThreshold: 80,
+                  }}
+                  onViewableItemsChanged={(viewableItems) =>
+                    console.log(viewableItems.changed)
+                  }
                 />
               );
             }
