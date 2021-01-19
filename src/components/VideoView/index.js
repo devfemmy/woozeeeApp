@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import { Text } from '@ui-kitten/components';
+import { Button, Text } from '@ui-kitten/components';
 
 import CustomVideoPlayer from '~src/components/CustomVideoPlayer';
 
@@ -40,19 +40,25 @@ const styles = StyleSheet.create({
 });
 
 export default function VideoView(props) {
-  const { data } = props;
+  const { data, activeIndex } = props;
 
   const { width, height } = useWindowDimensions();
 
-  const isPortrait = height > width;
+  const { item, index } = data;
+
+  const IS_PORTRAIT = height > width;
+
+  const IS_ACTIVE = activeIndex === index;
+
+  const IS_PREV = activeIndex - index === 1;
+
+  const IS_NEXT = index - activeIndex === 1;
+
+  const IS_PRELOADED = IS_PREV || IS_NEXT;
 
   const [shouldPlay, setShouldPlay] = useState(true);
 
   const [isLiked, setLiked] = useState(false);
-
-  const [playProgress, setPlayProgress] = useState({
-    width: '0%',
-  });
 
   const togglePause = () => setShouldPlay((prevState) => !prevState);
 
@@ -60,15 +66,19 @@ export default function VideoView(props) {
 
   return useMemo(
     () => (
-      <View style={{ flex: 1, height: isPortrait ? height - 25 : height - 50 }}>
+      <View
+        style={{ flex: 1, height: IS_PORTRAIT ? height - 25 : height - 50 }}
+      >
         <CustomVideoPlayer
-          videoUri={data.video}
+          videoUri={item.video}
           thumbUri="thumb image"
-          isMuted
           shouldPlay={shouldPlay}
-          resizeMode={isPortrait ? 'cover' : 'contain'}
-          setPlayProgress={setPlayProgress}
+          shouldDisplay={IS_ACTIVE}
+          resizeMode={IS_PORTRAIT ? 'cover' : 'contain'}
+          isPreloaded={IS_PRELOADED}
+          togglePause={togglePause}
         />
+
         <View style={styles.uiContainer}>
           <View
             style={{
@@ -92,28 +102,28 @@ export default function VideoView(props) {
                     category="h6"
                     style={{ marginRight: 5 }}
                   >
-                    {data.ownerFirstName}
+                    {item.ownerFirstName}
                   </Text>
                   <Text status="danger" category="h6">
-                    {data.ownerLastName}
+                    {item.ownerLastName}
                   </Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                   <Text
-                    status={isPortrait ? 'control' : 'basic'}
+                    status={IS_PORTRAIT ? 'control' : 'basic'}
                     category="s2"
                     style={{
                       backgroundColor: 'rgba(0, 0, 0, 0.0125)',
                       paddingHorizontal: 5,
                     }}
                   >
-                    {data.category}
+                    {item.category}
                   </Text>
                 </View>
               </View>
               <View style={{ maxWidth: width / 3 }}>
                 <ScrollView
-                  horizontal={!isPortrait}
+                  horizontal={!IS_PORTRAIT}
                   showsVerticalScrollIndicator={false}
                   showsHorizontalScrollIndicator={false}
                   contentContainerStyle={{
@@ -125,38 +135,41 @@ export default function VideoView(props) {
                       // eslint-disable-next-line react/jsx-props-no-spreading
                       <IconHeart {...evaProps} isLiked={isLiked} />
                     )}
-                    textContent={data.likes}
+                    textContent={item.likes}
                     onPress={toggleLike}
                   />
                   <InteractIcon
                     accessory={IconMsgSquare}
-                    textContent={data.comments}
+                    textContent={item.comments}
                   />
                   <InteractIcon
                     accessory={(evaProps) => (
                       // eslint-disable-next-line react/jsx-props-no-spreading
                       <IconEye {...evaProps} isOpen />
                     )}
-                    textContent={data.views}
+                    textContent={item.views}
                   />
                   <InteractIcon
                     accessory={IconClipboard}
-                    textContent={data.votes}
+                    textContent={item.votes}
                   />
 
                   <InteractIcon
                     accessory={IconShare}
-                    textContent={data.shares}
+                    textContent={item.shares}
                   />
 
-                  <InteractIcon
-                    accessory={(evaProps) => (
-                      // eslint-disable-next-line react/jsx-props-no-spreading
-                      <IconPlayPause {...evaProps} isPlaying={shouldPlay} />
-                    )}
-                    textContent={shouldPlay ? 'Pause' : 'Play'}
-                    onPress={togglePause}
-                  />
+                  {/* <InteractIcon */}
+                  {/*  accessory={(evaProps) => ( */}
+                  {/*    <IconPlayPause */}
+                  {/*      // eslint-disable-next-line react/jsx-props-no-spreading */}
+                  {/*      {...evaProps} */}
+                  {/*      isPlaying={shouldPlay && IS_ACTIVE} */}
+                  {/*    /> */}
+                  {/*  )} */}
+                  {/*  textContent={shouldPlay && IS_ACTIVE ? 'Pause' : 'Play'} */}
+                  {/*  onPress={togglePause} */}
+                  {/* /> */}
 
                   <View style={{ alignItems: 'center', marginBottom: 0 }}>
                     <Image
@@ -173,43 +186,51 @@ export default function VideoView(props) {
                 </ScrollView>
               </View>
             </View>
-            <View style={{ paddingHorizontal: 10 }}>
-              <View
-                style={{
-                  height: 2,
-                  width: '100%',
-                  backgroundColor: 'white',
-                }}
-              >
-                <View
-                  style={{
-                    height: 2,
-                    width: playProgress.width,
-                    backgroundColor: '#ff5757',
-                  }}
-                />
-              </View>
-            </View>
           </View>
+          <Button
+            appearance="ghost"
+            activeOpacity={0}
+            status="control"
+            size="giant"
+            /* prettier-ignore */
+            accessoryLeft={(evaProps) => (!shouldPlay ? (
+              <IconPlayPause
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                {...evaProps}
+                isPlaying={shouldPlay && IS_ACTIVE}
+                height={100}
+                width={100}
+              />
+            ) : null)}
+            style={{
+              position: 'absolute',
+              height: height / 2,
+              width: IS_PORTRAIT ? width / 2 : width / 4,
+              top: height / 4,
+              left: IS_PORTRAIT ? width / 4 : width / 2.665,
+            }}
+            onPress={togglePause}
+          />
         </View>
       </View>
     ),
     [
+      IS_ACTIVE,
+      IS_PORTRAIT,
+      IS_PRELOADED,
       width,
       height,
       isLiked,
-      isPortrait,
       shouldPlay,
-      playProgress.width,
-      data.video,
-      data.ownerFirstName,
-      data.ownerLastName,
-      data.category,
-      data.likes,
-      data.comments,
-      data.views,
-      data.votes,
-      data.shares,
+      item.video,
+      item.ownerFirstName,
+      item.ownerLastName,
+      item.category,
+      item.likes,
+      item.comments,
+      item.views,
+      item.votes,
+      item.shares,
     ],
   );
 }

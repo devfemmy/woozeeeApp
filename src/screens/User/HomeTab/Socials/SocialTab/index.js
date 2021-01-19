@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { View, StyleSheet, useWindowDimensions } from 'react-native';
 
@@ -10,8 +10,6 @@ import {
 } from '@ui-kitten/components';
 
 import { Get } from 'react-axios';
-
-import useToast from '~src/hooks/useToast';
 
 import VideoView from '~src/components/VideoView';
 
@@ -57,15 +55,24 @@ const styles = StyleSheet.create({
 
 // eslint-disable-next-line react/prop-types
 export default function Social({ navigation }) {
-  useToast('Click again to go back');
-
   const { width, height } = useWindowDimensions();
 
-  const isPortrait = height > width;
-
-  const ITEM_HEIGHT = isPortrait ? height - 25 : height - 50;
-
   const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const IS_PORTRAIT = height > width;
+
+  const ITEM_HEIGHT = IS_PORTRAIT ? height - 25 : height - 50;
+
+  const VIEWABILITY_CONFIG = {
+    minimumViewTime: 500,
+    viewAreaCoveragePercentThreshold: 80,
+  };
+
+  const handleViewItemsChanged = useCallback((data) => {
+    setActiveIndex(data.changed[0].index);
+  }, []);
 
   const openMenu = () => {
     setNavigationMenuOpen(true);
@@ -85,7 +92,7 @@ export default function Social({ navigation }) {
     <View style={styles.interactIcons}>
       <Button
         appearance="ghost"
-        status={isPortrait ? 'control' : 'basic'}
+        status={IS_PORTRAIT ? 'control' : 'basic'}
         size="large"
         accessibilityLiveRegion="polite"
         accessibilityComponentType="button"
@@ -137,14 +144,14 @@ export default function Social({ navigation }) {
               Following
             </Text>
             <Text style={{ color: 'white', marginHorizontal: 10 }}>|</Text>
-            <Text category="label" status={isPortrait ? 'control' : 'basic'}>
+            <Text category="label" status={IS_PORTRAIT ? 'control' : 'basic'}>
               Versus
             </Text>
           </View>
           <View style={styles.interactIcons}>
             <Button
               appearance="ghost"
-              status={isPortrait ? 'control' : 'basic'}
+              status={IS_PORTRAIT ? 'control' : 'basic'}
               size="large"
               accessibilityLiveRegion="polite"
               accessibilityComponentType="button"
@@ -221,7 +228,7 @@ export default function Social({ navigation }) {
                 <List
                   style={{
                     flex: 1,
-                    backgroundColor: 'blue',
+                    backgroundColor: 'transparent',
                     position: 'absolute',
                     height: ITEM_HEIGHT,
                   }}
@@ -230,8 +237,13 @@ export default function Social({ navigation }) {
                   showsVerticalScrollIndicator={false}
                   data={response.data}
                   renderItem={(renderData) => (
-                    <VideoView data={renderData.item} extraWidth={0.5} />
+                    <VideoView
+                      data={renderData}
+                      extraWidth={0.5}
+                      activeIndex={activeIndex}
+                    />
                   )}
+                  extraData={activeIndex}
                   snapToAlignment="start"
                   decelerationRate="fast"
                   snapToInterval={ITEM_HEIGHT}
@@ -240,14 +252,9 @@ export default function Social({ navigation }) {
                     offset: ITEM_HEIGHT * index,
                     index,
                   })}
-                  initialNumToRender={1}
-                  viewabilityConfig={{
-                    minimumViewTime: 500,
-                    viewAreaCoveragePercentThreshold: 80,
-                  }}
-                  onViewableItemsChanged={(viewableItems) =>
-                    console.log(viewableItems.changed)
-                  }
+                  initialNumToRender={2}
+                  onViewableItemsChanged={handleViewItemsChanged}
+                  viewabilityConfig={VIEWABILITY_CONFIG}
                 />
               );
             }

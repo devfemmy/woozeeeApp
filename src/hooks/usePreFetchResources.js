@@ -36,6 +36,7 @@ export default function usePreFetchResources() {
           require('~assets/images/drawable/logo.png'),
           require('~assets/images/icon/upload.png'),
           require('~assets/images/icon/verified.png'),
+          require('~assets/images/icon/flag-ng.png'),
           require('~assets/images/banner/woozeee-socials.jpg'),
           require('~assets/images/banner/woozeee-marketplace.jpg'),
           require('~assets/images/banner/woozeee-charity.jpg'),

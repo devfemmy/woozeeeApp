@@ -16,6 +16,8 @@ import {
 } from '~src/components/CustomIcons';
 
 export default function TopNavigationMenu(props) {
+  const { navigation } = props;
+
   const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
 
   const { authOptions } = useContext(AuthContext);
@@ -28,6 +30,8 @@ export default function TopNavigationMenu(props) {
     const toggleMenu = () => setNavigationMenuOpen((prevState) => !prevState);
 
     const closeMenu = () => setNavigationMenuOpen(false);
+
+    const routeSettings = () => navigation.navigate('Settings');
 
     // eslint-disable-next-line react/prop-types
     const logoutUser = async () => {
@@ -62,10 +66,14 @@ export default function TopNavigationMenu(props) {
         onTouchEnd={closeMenu}
         backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.15)' }}
         accessibilityLiveRegion="polite"
-        accessibilityHint="Extras"
+        accessibilityHint="Navigation Menu"
       >
         <MenuItem accessoryLeft={IconEdit} title="Edit Profile" />
-        <MenuItem accessoryLeft={IconSettings} title="Settings" />
+        <MenuItem
+          accessoryLeft={IconSettings}
+          title="Settings"
+          onPress={routeSettings}
+        />
         <MenuItem
           accessoryLeft={IconLogout}
           title="Logout"
@@ -73,5 +81,5 @@ export default function TopNavigationMenu(props) {
         />
       </OverflowMenu>
     );
-  }, [isNavigationMenuOpen, logout, setLoading, props]);
+  }, [navigation, isNavigationMenuOpen, logout, setLoading, props]);
 }

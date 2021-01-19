@@ -1,15 +1,18 @@
-import React, { useMemo, useState, useCallback } from 'react';
+// prettier-ignore
+import React, {
+  useMemo, useState, useCallback, useEffect,
+} from 'react';
 
 // prettier-ignore
 import {
-  Animated, StyleSheet, View, useWindowDimensions,
+  StyleSheet, View, useWindowDimensions,
 } from 'react-native';
-
-import { useIsFocused } from '@react-navigation/native';
 
 import { Video } from 'expo-av';
 
 import { Layout } from '@ui-kitten/components';
+
+import { useIsFocused } from '@react-navigation/native';
 
 import { FullPlaceholder } from '~src/components/CustomPlaceholder';
 
@@ -23,19 +26,19 @@ const styles = StyleSheet.create({
 });
 
 export default function CustomVideoPlayer(props) {
-  const { width, height } = useWindowDimensions();
-
   // eslint-disable-next-line react/prop-types
   // prettier-ignore
   const {
-    videoUri, thumbUri, style, resizeMode, shouldPlay, setPlayProgress,
+    videoUri, style, resizeMode, shouldPlay, shouldDisplay, isPreloaded,
   } = props;
 
   const isFocused = useIsFocused();
 
-  const opacity = React.useMemo(() => new Animated.Value(0.5), []);
+  const { width, height } = useWindowDimensions();
 
   const [isVideoLoaded, setVideoLoaded] = useState(false);
+
+  const [playProgress, setPlayProgress] = useState('0%');
 
   const handlePlaybackStatusUpdate = useCallback(
     (status) => {
@@ -43,13 +46,15 @@ export default function CustomVideoPlayer(props) {
 
       const currentPercent = (positionMillis / durationMillis) * 100;
 
-      setPlayProgress({ width: `${currentPercent}%` });
+      setPlayProgress(`${currentPercent}%`);
     },
     [setPlayProgress],
   );
 
+  useEffect(() => () => setVideoLoaded(false));
+
   // prettier-ignore
-  const VideoThumb = () => (thumbUri && !isVideoLoaded ? (
+  const VideoThumb = () => (!shouldDisplay || !isVideoLoaded ? (
     <View style={{ paddingTop: 100 }}>
       <FullPlaceholder width={width} height={height - 125} />
     </View>
@@ -60,36 +65,62 @@ export default function CustomVideoPlayer(props) {
     () => (
       <Layout level="1" style={styles.background}>
         <VideoThumb />
-        <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
-          <Video
-            isLooping
-            onLoadStart={() => {
-              setVideoLoaded(true);
-              Animated.timing(opacity, {
-                toValue: 1,
-                useNativeDriver: true,
-                duration: 1000,
-              }).start();
-            }}
-            resizeMode={resizeMode || 'cover'}
-            autoPlay
-            progressUpdateIntervalMillis={1000}
-            onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-            shouldPlay={(shouldPlay && isFocused) || isFocused === undefined}
-            source={{ uri: videoUri }}
-            style={[style, { flex: 1 }]}
-          />
-        </Animated.View>
+        {shouldDisplay || isPreloaded ? (
+          <>
+            <View style={styles.backgroundViewWrapper}>
+              <Video
+                source={{ uri: videoUri }}
+                isLooping
+                shouldCorrectPitch
+                onLoadStart={() => {
+                  setVideoLoaded(true);
+                }}
+                resizeMode={resizeMode || 'cover'}
+                style={[style, { flex: 1 }]}
+                progressUpdateIntervalMillis={1000}
+                onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+                shouldPlay={shouldPlay && shouldDisplay && isFocused}
+              />
+            </View>
+            <View
+              style={{
+                paddingHorizontal: 10,
+                position: 'absolute',
+                zIndex: 39,
+                bottom: 30,
+                width: '100%',
+              }}
+            >
+              <View
+                style={{
+                  height: 2,
+                  width: '100%',
+                  backgroundColor: 'white',
+                }}
+              >
+                <View
+                  style={{
+                    height: 2,
+                    width: playProgress,
+                    backgroundColor: '#ff5757',
+                  }}
+                />
+              </View>
+            </View>
+          </>
+        ) : null}
       </Layout>
     ),
     [
       videoUri,
-      isFocused,
-      opacity,
       style,
       resizeMode,
       shouldPlay,
+      shouldDisplay,
       handlePlaybackStatusUpdate,
+      playProgress,
+      isPreloaded,
+      isFocused,
     ],
   );
 }

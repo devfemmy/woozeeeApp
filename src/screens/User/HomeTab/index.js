@@ -114,11 +114,11 @@ export default function Home({ navigation }) {
 
   const { width, height } = useWindowDimensions();
 
-  const isPortrait = height > width;
+  const IS_PORTRAIT = height > width;
 
-  const CARD_HEIGHT = isPortrait ? 170 : 140;
+  const CARD_HEIGHT = IS_PORTRAIT ? 170 : 140;
 
-  const CATEGORY_HEIGHT = isPortrait ? 250 : 220;
+  const CATEGORY_HEIGHT = IS_PORTRAIT ? 250 : 220;
 
   const { isLoading } = useContext(LoadingContext);
 
@@ -129,7 +129,7 @@ export default function Home({ navigation }) {
     <View
       style={{
         height: CARD_HEIGHT,
-        width: isPortrait ? width / 1.6 : width / 3,
+        width: IS_PORTRAIT ? width / 1.6 : width / 3,
         paddingHorizontal: 5,
         position: 'relative',
         alignItems: 'center',
@@ -141,7 +141,7 @@ export default function Home({ navigation }) {
       <Image
         source={data.item.banner}
         style={{
-          height: isPortrait ? 140 : 110,
+          height: IS_PORTRAIT ? 140 : 110,
           width: '95%',
           borderRadius: 5,
         }}
@@ -152,9 +152,10 @@ export default function Home({ navigation }) {
 
   const renderCategory = (data) => (
     <TouchableOpacity
+      activeOpacity={0.75}
       style={{
-        height: isPortrait ? 250 : 220,
-        width: isPortrait ? width : width / 2,
+        height: IS_PORTRAIT ? 250 : 220,
+        width: IS_PORTRAIT ? width : width / 2,
         marginVertical: 5,
         position: 'relative',
         alignItems: 'center',
@@ -187,7 +188,7 @@ export default function Home({ navigation }) {
         style={{ backgroundColor: 'transparent' }}
         alwaysBounceHorizontal
         alwaysBounceVertical
-        horizontal={isPortrait}
+        horizontal={IS_PORTRAIT}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         data={woozeeeCards}
@@ -216,7 +217,7 @@ export default function Home({ navigation }) {
           <List
             ListHeaderComponent={RenderCategoryHeader}
             style={{ backgroundColor: 'transparent' }}
-            horizontal={!isPortrait}
+            horizontal={!IS_PORTRAIT}
             alwaysBounceHorizontal
             alwaysBounceVertical
             showsVerticalScrollIndicator={false}

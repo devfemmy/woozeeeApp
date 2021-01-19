@@ -4,7 +4,7 @@ import { Toggle, TopNavigationAction } from '@ui-kitten/components';
 
 import { AppSettingsContext } from '~src/contexts';
 
-export default function GoBack(props) {
+export default function SwitchTheme(props) {
   const { appState, appOptions } = useContext(AppSettingsContext);
 
   const { darkMode } = appState;
@@ -14,7 +14,7 @@ export default function GoBack(props) {
   const [isError, setError] = useState(false);
 
   return useMemo(() => {
-    const useSwitchTheme = async () => {
+    const handleSwitchTheme = async () => {
       try {
         const settingsError = await updateSettings({
           darkMode: !darkMode,
@@ -29,7 +29,7 @@ export default function GoBack(props) {
     };
 
     const renderSwitch = () => (
-      <Toggle checked={darkMode} onChange={useSwitchTheme} />
+      <Toggle checked={darkMode} onChange={handleSwitchTheme} />
     );
 
     return (

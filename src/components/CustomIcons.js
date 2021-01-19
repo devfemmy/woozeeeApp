@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Image } from 'react-native';
+
 import { Icon } from '@ui-kitten/components';
 
 export const IconEye = (props) => {
@@ -207,6 +209,26 @@ export const IconGrid = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="grid-outline" />
 );
+
+export const IconMoon = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="moon-outline" />
+);
+
+export const IconFlag = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { width, height } = props;
+
+  return (
+    <Image
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      source={require('~assets/images/icon/flag-ng.png')}
+      resizeMode="contain"
+      style={{ width: width || 40, height: height || 40 }}
+    />
+  );
+};
 
 export const IconFacebook = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading

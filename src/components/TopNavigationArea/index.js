@@ -4,13 +4,13 @@ import { Divider, Layout, TopNavigation } from '@ui-kitten/components';
 
 // Components import
 import BackButton from './components/BackButton';
-import LogoutButton from './components/LogoutButton';
 // import TopNavigationMenu from './components/TopNavigationMenu';
 import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
-import SwitchTheme from './components/SwitchTheme';
 import TopNavigationMenu from './components/TopNavigationMenu';
+
+import { IconFlag } from '~src/components/CustomIcons';
 
 export default function TopNavigationArea(props) {
   const {
@@ -38,8 +38,6 @@ export default function TopNavigationArea(props) {
             // eslint-disable-next-line react/jsx-props-no-spreading
             <BackButton {...evaProps} navigation={navigation} icon={icon} />
           )}
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
-          accessoryRight={(evaProps) => <SwitchTheme {...evaProps} />}
           // accessoryRight={() => <TopNavigationMenu />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
@@ -58,16 +56,12 @@ export default function TopNavigationArea(props) {
           alignment="center"
           /* eslint-disable-next-line react/jsx-props-no-spreading */
           title={(evaProps) => <Logo {...evaProps} />}
-          /* prettier-ignore */
-          accessoryLeft={(evaProps) => (icon === 'logout' ? (
           /* eslint-disable-next-line react/jsx-props-no-spreading */
-            <LogoutButton {...evaProps} navigation={navigation} icon={icon} />
-          ) : (
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            <BackButton {...evaProps} navigation={navigation} icon={icon} />
-          ))}
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
-          accessoryRight={(evaProps) => <SwitchTheme {...evaProps} />}
+          accessoryLeft={IconFlag}
+          accessoryRight={(evaProps) => (
+            /* eslint-disable-next-line react/jsx-props-no-spreading */
+            <TopNavigationMenu {...evaProps} navigation={navigation} />
+          )}
           // accessoryRight={() => <TopNavigationMenu />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
@@ -76,7 +70,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [navigation, icon, style],
+    [navigation, style],
   );
 
   const TopNavigationSearch = useMemo(
@@ -86,8 +80,10 @@ export default function TopNavigationArea(props) {
           alignment="center"
           /* eslint-disable-next-line react/jsx-props-no-spreading */
           title={(evaProps) => <SearchField {...evaProps} />}
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
-          accessoryRight={(evaProps) => <SwitchTheme {...evaProps} />}
+          accessoryRight={(evaProps) => (
+            /* eslint-disable-next-line react/jsx-props-no-spreading */
+            <TopNavigationMenu {...evaProps} navigation={navigation} />
+          )}
           // accessoryRight={() => <TopNavigationMenu />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
@@ -96,7 +92,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style],
+    [style, navigation],
   );
 
   const TopNavigationProfile = useMemo(
@@ -104,8 +100,10 @@ export default function TopNavigationArea(props) {
       <Layout level="4">
         <TopNavigation
           alignment="center"
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
-          accessoryRight={(evaProps) => <TopNavigationMenu {...evaProps} />}
+          accessoryRight={(evaProps) => (
+            /* eslint-disable-next-line react/jsx-props-no-spreading */
+            <TopNavigationMenu {...evaProps} navigation={navigation} />
+          )}
           // accessoryRight={() => <TopNavigationMenu />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
@@ -113,7 +111,7 @@ export default function TopNavigationArea(props) {
         />
       </Layout>
     ),
-    [style],
+    [style, navigation],
   );
 
   const navs = {

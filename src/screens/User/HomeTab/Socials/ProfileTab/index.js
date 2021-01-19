@@ -12,7 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 // prettier-ignore
 import {
-  Layout, Text, Button,
+  Layout, Text, Button, List,
 } from '@ui-kitten/components';
 
 import { Get } from 'react-axios';
@@ -40,6 +40,8 @@ export default function Profile({ navigation }) {
 
   const { isLoading: loading } = useContext(LoadingContext);
 
+  const IS_PORTRAIT = height > width;
+
   const { plWidth, plHeight } = useMemo(
     () => ({ plWidth: width / 2, plHeight: (height - 150) / 3 }),
     [width, height],
@@ -61,7 +63,7 @@ export default function Profile({ navigation }) {
 
     return useMemo(
       () => (
-        <Layout level="2" style={{ paddingHorizontal: 20 }}>
+        <Layout level="2" style={{ paddingHorizontal: 20, borderRadius: 5 }}>
           <View
             style={{
               flexDirection: 'row',
@@ -100,7 +102,7 @@ export default function Profile({ navigation }) {
           </View>
         </Layout>
       ),
-      [activeTab, updateTab],
+      [updateTab],
     );
   };
 
@@ -114,215 +116,236 @@ export default function Profile({ navigation }) {
           icon="logout"
           screen="profile"
         />
-        <ScrollView
-          style={{ flex: 1 }}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
+        <View
+          style={{
+            flex: 1,
+            flexDirection: IS_PORTRAIT ? 'column' : 'row',
+            width: '100%',
+          }}
         >
-          <View>
-            <View
-              style={{
-                alignItems: 'center',
-                paddingHorizontal: 20,
-                marginBottom: 10,
-              }}
+          <View
+            style={{
+              height: IS_PORTRAIT ? 290 : '100%',
+              width: IS_PORTRAIT ? '100%' : '40%',
+            }}
+          >
+            <ScrollView
+              style={{ flex: 1 }}
+              alwaysBounceVertical
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
             >
-              <View style={{ marginBottom: 5, position: 'relative' }}>
-                <Image
-                  source={require('~assets/images/user/user2.png')}
-                  style={{
-                    height: 100,
-                    width: 100,
-                    borderRadius: 100,
-                    borderWidth: 3,
-                    borderColor: 'white',
-                  }}
-                />
-                <Image
-                  source={require('~assets/images/icon/verified.png')}
-                  style={{
-                    height: 20,
-                    width: 20,
-                    borderRadius: 100,
-                    position: 'absolute',
-                    right: 7,
-                    bottom: 7,
-                  }}
-                />
-              </View>
-              <View style={{ marginBottom: 10, alignItems: 'center' }}>
-                <Text category="h5">Bukola Daniel</Text>
-                <Text category="p2" appearance="hint">
-                  @Bukka101Official
-                </Text>
-              </View>
               <View
                 style={{
-                  maxWidth: 300,
-                  marginBottom: 10,
+                  alignItems: 'center',
+                  paddingHorizontal: 20,
+                  paddingBottom: 10,
                 }}
               >
-                <Text
-                  category="c2"
+                <View style={{ marginBottom: 5, position: 'relative' }}>
+                  <Image
+                    source={require('~assets/images/user/user2.png')}
+                    style={{
+                      height: 100,
+                      width: 100,
+                      borderRadius: 100,
+                      borderWidth: 3,
+                      borderColor: 'white',
+                    }}
+                  />
+                  <Image
+                    source={require('~assets/images/icon/verified.png')}
+                    style={{
+                      height: 20,
+                      width: 20,
+                      borderRadius: 100,
+                      position: 'absolute',
+                      right: 7,
+                      bottom: 7,
+                    }}
+                  />
+                </View>
+                <View style={{ marginBottom: 10, alignItems: 'center' }}>
+                  <Text category="h5">Bukola Daniel</Text>
+                  <Text category="p2" appearance="hint">
+                    @Bukka101Official
+                  </Text>
+                </View>
+                <View
                   style={{
-                    textAlign: 'center',
-                    lineHeight: 15,
+                    maxWidth: 300,
+                    marginBottom: 10,
                   }}
                 >
-                  Content writer with beautiful aesthetics, Face of woozeee (It
-                  seems).
-                </Text>
-              </View>
-              <View style={{ marginBottom: 10 }}>
-                <Button status="primary" size="small">
-                  <Text status="control" category="p2">
-                    Edit Profile
-                  </Text>
-                </Button>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  width: '100%',
-                }}
-              >
-                <View style={{ alignItems: 'center' }}>
-                  <Text category="h6">1.2m</Text>
-                  <Text category="p2" appearance="hint">
-                    Videos
+                  <Text
+                    category="c2"
+                    style={{
+                      textAlign: 'center',
+                      lineHeight: 15,
+                    }}
+                  >
+                    Content writer with beautiful aesthetics, Face of woozeee
+                    (It seems).
                   </Text>
                 </View>
-                <View style={{ alignItems: 'center' }}>
-                  <Text category="h6">12.3K</Text>
-                  <Text category="p2" appearance="hint">
-                    Followers
-                  </Text>
+                <View style={{ marginBottom: 10 }}>
+                  <Button status="primary" size="small">
+                    <Text status="control" category="p2">
+                      Edit Profile
+                    </Text>
+                  </Button>
                 </View>
-                <View style={{ alignItems: 'center' }}>
-                  <Text category="h6">1.9k</Text>
-                  <Text category="p2" appearance="hint">
-                    Following
-                  </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <View style={{ alignItems: 'center' }}>
+                    <Text category="h6">1.2m</Text>
+                    <Text category="p2" appearance="hint">
+                      Videos
+                    </Text>
+                  </View>
+                  <View style={{ alignItems: 'center' }}>
+                    <Text category="h6">12.3K</Text>
+                    <Text category="p2" appearance="hint">
+                      Followers
+                    </Text>
+                  </View>
+                  <View style={{ alignItems: 'center' }}>
+                    <Text category="h6">1.9k</Text>
+                    <Text category="p2" appearance="hint">
+                      Following
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-            <View>
-              <View>
-                <Get url={trendingUrl}>
-                  {(error, response, isLoading, makeRequest) => {
-                    if (error) {
-                      return (
-                        <>
-                          <TabsMenu makeRequest={makeRequest} />
-                          <View
-                            style={{
-                              flex: 1,
-                              padding: 10,
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              height: height / 3,
-                            }}
-                          >
-                            <Text style={{ marginBottom: 10 }}>
-                              Failed to fetch Videos, Please try again!
-                            </Text>
-                            <Button
-                              /* prettier-ignore */
-                              onPress={() => makeRequest({ params: { reload: true } })}
-                            >
-                              <Text status="control">Retry</Text>
-                            </Button>
-                          </View>
-                        </>
-                      );
-                    }
-                    if (isLoading) {
-                      return (
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            flexWrap: 'wrap',
-                            paddingVertical: 10,
-                          }}
+            </ScrollView>
+          </View>
+
+          <View
+            style={{
+              height: IS_PORTRAIT ? height - 403 : '100%',
+              width: IS_PORTRAIT ? '100%' : '60%',
+            }}
+          >
+            <Get url={trendingUrl}>
+              {(error, response, isLoading, makeRequest) => {
+                if (error) {
+                  return (
+                    <>
+                      <TabsMenu makeRequest={makeRequest} />
+                      <View
+                        style={{
+                          flex: 1,
+                          padding: 10,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          height: height / 3,
+                        }}
+                      >
+                        <Text style={{ marginBottom: 10 }}>
+                          Failed to fetch Videos, Please try again!
+                        </Text>
+                        <Button
+                          /* prettier-ignore */
+                          onPress={() => makeRequest({ params: { reload: true } })}
                         >
-                          {[1, 2, 3, 4].map((val) => (
-                            <CustomPlaceholder
-                              width={plWidth}
-                              height={plHeight}
-                              key={val}
-                            />
-                          ))}
-                        </View>
-                      );
-                    }
-                    if (response !== null) {
-                      if (response.data.length < 1) {
-                        return (
-                          <>
-                            <TabsMenu makeRequest={makeRequest} />
-                            <View
-                              style={{
-                                flex: 1,
-                                padding: 10,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                height: height / 3,
-                              }}
-                            >
-                              <Text style={{ marginBottom: 10 }}>
-                                No Videos available!
-                              </Text>
-                              <Button
-                                /* prettier-ignore */
-                                onPress={() => makeRequest({ params: { refresh: true } })}
-                              >
-                                <Text status="control">Refresh</Text>
-                              </Button>
-                            </View>
-                          </>
-                        );
-                      }
-                      return (
-                        <>
-                          <TabsMenu makeRequest={makeRequest} />
-                          <View
-                            style={{
-                              marginBottom: 20,
-                              paddingVertical: 5,
-                              flexDirection: 'row',
-                              flexWrap: 'wrap',
-                            }}
-                          >
-                            {response.data.map((item, index) => (
-                              <VideoCard
-                                data={item}
-                                extraWidth={0}
-                                key={index}
-                              />
-                            ))}
-                          </View>
-                        </>
-                      );
-                    }
+                          <Text status="control">Retry</Text>
+                        </Button>
+                      </View>
+                    </>
+                  );
+                }
+                if (isLoading) {
+                  return (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        paddingVertical: 10,
+                      }}
+                    >
+                      {[1, 2, 3, 4].map((val) => (
+                        <CustomPlaceholder
+                          width={plWidth}
+                          height={plHeight}
+                          key={val}
+                        />
+                      ))}
+                    </View>
+                  );
+                }
+                if (response !== null) {
+                  if (response.data.length < 1) {
                     return (
                       <>
-                        <TabsMenu />
-                        <View>
-                          <FullPlaceholder
-                            width={width - 10}
-                            height={height / 3}
-                          />
+                        <TabsMenu makeRequest={makeRequest} />
+                        <View
+                          style={{
+                            flex: 1,
+                            padding: 10,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: height / 3,
+                          }}
+                        >
+                          <Text style={{ marginBottom: 10 }}>
+                            No Videos available!
+                          </Text>
+                          <Button
+                            /* prettier-ignore */
+                            onPress={() => makeRequest({ params: { refresh: true } })}
+                          >
+                            <Text status="control">Refresh</Text>
+                          </Button>
                         </View>
                       </>
                     );
-                  }}
-                </Get>
-              </View>
-            </View>
+                  }
+                  return (
+                    <>
+                      <TabsMenu makeRequest={makeRequest} />
+                      <List
+                        style={{
+                          backgroundColor: 'transparent',
+                        }}
+                        contentContainerStyle={{
+                          paddingTop: 5,
+                          paddingBottom: 15,
+                        }}
+                        alwaysBounceVertical
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
+                        numColumns={2}
+                        data={response.data}
+                        renderItem={(renderData) => (
+                          <VideoCard data={renderData.item} extraWidth={0} />
+                        )}
+                        getItemLayout={(data, index) => ({
+                          length: 170,
+                          offset: 170 * index,
+                          index,
+                        })}
+                      />
+                    </>
+                  );
+                }
+                return (
+                  <>
+                    <TabsMenu />
+                    <View>
+                      <FullPlaceholder width={width - 10} height={height / 3} />
+                    </View>
+                  </>
+                );
+              }}
+            </Get>
           </View>
-        </ScrollView>
+        </View>
       </SafeAreaView>
     </Layout>
   );

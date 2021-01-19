@@ -15,6 +15,9 @@ import RegisterFull from '~src/screens/Authentication/Registration/RegisterFull'
 import VerifyWithCode from '~src/screens/Authentication/Verification';
 import RecoverWithEmail from '~src/screens/Authentication/Recovery';
 
+// Common screens
+import Settings from '~src/screens/Common/Settings';
+
 /* Routes import */
 import UserRoute from './User';
 import SocialsRoute from './User/HomeTab/Socials';
@@ -38,6 +41,10 @@ export default function Router() {
       UserRoute,
       SocialsRoute,
     },
+
+    Common: {
+      Settings,
+    },
   };
 
   useEffect(() => {
@@ -54,6 +61,7 @@ export default function Router() {
       <Navigator detachInactiveScreens headerMode="none">
         {Object.entries({
           ...(authState.loginToken ? screens.User : screens.Auth),
+          ...screens.Common,
         }).map(([name, component]) => (
           <Screen name={name} component={component} key={name} />
         ))}

@@ -18,14 +18,15 @@ export default function VideoCard(props) {
 
   const { width, height } = useWindowDimensions();
 
-  const isPortrait = height > width;
+  const IS_PORTRAIT = height > width;
 
   return useMemo(
     () => (
       <TouchableOpacity
+        activeOpacity={0.75}
         style={{
           height: 170,
-          width: isPortrait
+          width: IS_PORTRAIT
             ? width / (2 + extraWidth)
             : width / (3 + extraWidth),
           paddingHorizontal: 5,
@@ -111,8 +112,9 @@ export default function VideoCard(props) {
       data.tag,
       data.ownerImg,
       data.index,
-      isPortrait,
+      IS_PORTRAIT,
       width,
+      extraWidth,
     ],
   );
 }
