@@ -1,16 +1,12 @@
 import React, { useMemo } from 'react';
 
-import { View, useWindowDimensions } from 'react-native';
+import { View } from 'react-native';
 
 import { Button, Text } from '@ui-kitten/components';
 
 export default function InteractIcon(props) {
   // eslint-disable-next-line react/prop-types
   const { accessory, textContent, onPress } = props;
-
-  const { width, height } = useWindowDimensions();
-
-  const isPortrait = height > width;
 
   return useMemo(
     () => (
@@ -23,16 +19,16 @@ export default function InteractIcon(props) {
       >
         <Button
           appearance="ghost"
-          status={isPortrait ? 'control' : 'basic'}
+          status="control"
           size="large"
           accessoryLeft={accessory}
           onPress={onPress}
         />
-        <Text status={isPortrait ? 'control' : 'basic'} category="label">
+        <Text status="control" category="label">
           {textContent}
         </Text>
       </View>
     ),
-    [accessory, textContent, onPress, isPortrait],
+    [accessory, textContent, onPress],
   );
 }

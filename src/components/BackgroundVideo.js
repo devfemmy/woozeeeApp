@@ -78,23 +78,25 @@ export default function BackgroundVideo(props) {
     () => (
       <Layout level="1" style={styles.background}>
         <VideoThumb />
-        <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
-          <Video
-            isLooping
-            source={{ uri: cachedUri }}
-            onLoadStart={() => {
-              Animated.timing(opacity, {
-                toValue: 1,
-                useNativeDriver: true,
-                duration: 1000,
-              }).start();
-            }}
-            resizeMode="cover"
-            isMuted={isMuted}
-            shouldPlay={isFocused || isFocused === undefined}
-            style={[style, { flex: 1 }]}
-          />
-        </Animated.View>
+        {isFocused ? (
+          <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
+            <Video
+              isLooping
+              source={{ uri: cachedUri }}
+              onLoad={() => {
+                Animated.timing(opacity, {
+                  toValue: 1,
+                  useNativeDriver: true,
+                  duration: 1000,
+                }).start();
+              }}
+              resizeMode="cover"
+              isMuted={isMuted}
+              shouldPlay={isFocused || false}
+              style={[style, { flex: 1 }]}
+            />
+          </Animated.View>
+        ) : null}
       </Layout>
     ),
     [isFocused, opacity, cachedUri, isMuted, style],

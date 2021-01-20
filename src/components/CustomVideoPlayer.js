@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useMemo, useState, useCallback, useEffect,
+  useMemo, useState, useCallback,
 } from 'react';
 
 // prettier-ignore
@@ -10,8 +10,6 @@ import {
 
 import { Video } from 'expo-av';
 
-import { Layout } from '@ui-kitten/components';
-
 import { useIsFocused } from '@react-navigation/native';
 
 import { FullPlaceholder } from '~src/components/CustomPlaceholder';
@@ -19,6 +17,7 @@ import { FullPlaceholder } from '~src/components/CustomPlaceholder';
 const styles = StyleSheet.create({
   background: {
     ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#101426',
   },
   backgroundViewWrapper: {
     ...StyleSheet.absoluteFillObject,
@@ -29,7 +28,7 @@ export default function CustomVideoPlayer(props) {
   // eslint-disable-next-line react/prop-types
   // prettier-ignore
   const {
-    videoUri, style, resizeMode, shouldPlay, shouldDisplay, isPreloaded,
+    videoUri, style, shouldPlay, shouldDisplay, isPreloaded,
   } = props;
 
   const isFocused = useIsFocused();
@@ -51,70 +50,63 @@ export default function CustomVideoPlayer(props) {
     [setPlayProgress],
   );
 
-  useEffect(() => () => setVideoLoaded(false));
-
   // prettier-ignore
   const VideoThumb = () => (!shouldDisplay || !isVideoLoaded ? (
     <View style={{ paddingTop: 100 }}>
-      <FullPlaceholder width={width} height={height - 125} />
+      <FullPlaceholder width={width} height={height - 150} />
     </View>
 
   ) : null);
 
   return useMemo(
     () => (
-      <Layout level="1" style={styles.background}>
+      <View style={styles.background}>
         <VideoThumb />
-        {shouldDisplay || isPreloaded ? (
-          <>
-            <View style={styles.backgroundViewWrapper}>
-              <Video
-                source={{ uri: videoUri }}
-                isLooping
-                shouldCorrectPitch
-                onLoadStart={() => {
-                  setVideoLoaded(true);
-                }}
-                resizeMode={resizeMode || 'cover'}
-                style={[style, { flex: 1 }]}
-                progressUpdateIntervalMillis={1000}
-                onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-                shouldPlay={shouldPlay && shouldDisplay && isFocused}
-              />
-            </View>
+        <>
+          <View style={styles.backgroundViewWrapper}>
+            <Video
+              source={{ uri: shouldDisplay || isPreloaded ? videoUri : null }}
+              isLooping
+              shouldCorrectPitch
+              onReadyForDisplay={() => setVideoLoaded(true)}
+              resizeMode="contain"
+              style={[style, { flex: 1 }]}
+              progressUpdateIntervalMillis={1000}
+              onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+              shouldPlay={shouldPlay && shouldDisplay && isFocused}
+            />
+          </View>
+          <View
+            style={{
+              paddingHorizontal: 10,
+              position: 'absolute',
+              zIndex: 39,
+              bottom: 30,
+              width: '100%',
+            }}
+          >
             <View
               style={{
-                paddingHorizontal: 10,
-                position: 'absolute',
-                zIndex: 39,
-                bottom: 30,
+                height: 2,
                 width: '100%',
+                backgroundColor: 'white',
               }}
             >
               <View
                 style={{
                   height: 2,
-                  width: '100%',
-                  backgroundColor: 'white',
+                  width: playProgress,
+                  backgroundColor: '#ff5757',
                 }}
-              >
-                <View
-                  style={{
-                    height: 2,
-                    width: playProgress,
-                    backgroundColor: '#ff5757',
-                  }}
-                />
-              </View>
+              />
             </View>
-          </>
-        ) : null}
-      </Layout>
+          </View>
+        </>
+      </View>
     ),
     [
       videoUri,
       style,
-      resizeMode,
       shouldPlay,
       shouldDisplay,
       handlePlaybackStatusUpdate,

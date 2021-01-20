@@ -92,7 +92,7 @@ export default function Social({ navigation }) {
     <View style={styles.interactIcons}>
       <Button
         appearance="ghost"
-        status={IS_PORTRAIT ? 'control' : 'basic'}
+        status="control"
         size="large"
         accessibilityLiveRegion="polite"
         accessibilityComponentType="button"
@@ -140,18 +140,18 @@ export default function Social({ navigation }) {
             <NavigationMenu />
           </View>
           <View style={styles.header}>
-            <Text category="label" status="basic">
+            <Text category="label" status="control">
               Following
             </Text>
             <Text style={{ color: 'white', marginHorizontal: 10 }}>|</Text>
-            <Text category="label" status={IS_PORTRAIT ? 'control' : 'basic'}>
+            <Text category="label" status="control">
               Versus
             </Text>
           </View>
           <View style={styles.interactIcons}>
             <Button
               appearance="ghost"
-              status={IS_PORTRAIT ? 'control' : 'basic'}
+              status="control"
               size="large"
               accessibilityLiveRegion="polite"
               accessibilityComponentType="button"

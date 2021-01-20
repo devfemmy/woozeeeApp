@@ -10,6 +10,8 @@ import {
 
 import { Button, Text } from '@ui-kitten/components';
 
+import { useIsFocused } from '@react-navigation/native';
+
 import CustomVideoPlayer from '~src/components/CustomVideoPlayer';
 
 import InteractIcon from './InteractIcon';
@@ -44,6 +46,8 @@ export default function VideoView(props) {
 
   const { width, height } = useWindowDimensions();
 
+  const isFocused = useIsFocused();
+
   const { item, index } = data;
 
   const IS_PORTRAIT = height > width;
@@ -69,16 +73,16 @@ export default function VideoView(props) {
       <View
         style={{ flex: 1, height: IS_PORTRAIT ? height - 25 : height - 50 }}
       >
-        <CustomVideoPlayer
-          videoUri={item.video}
-          thumbUri="thumb image"
-          shouldPlay={shouldPlay}
-          shouldDisplay={IS_ACTIVE}
-          resizeMode={IS_PORTRAIT ? 'cover' : 'contain'}
-          isPreloaded={IS_PRELOADED}
-          togglePause={togglePause}
-        />
-
+        {isFocused ? (
+          <CustomVideoPlayer
+            videoUri={item.video}
+            thumbUri="thumb image uri"
+            shouldPlay={shouldPlay}
+            shouldDisplay={IS_ACTIVE}
+            isPreloaded={IS_PRELOADED}
+            togglePause={togglePause}
+          />
+        ) : null}
         <View style={styles.uiContainer}>
           <View
             style={{
@@ -95,7 +99,7 @@ export default function VideoView(props) {
                 marginBottom: 10,
               }}
             >
-              <View style={{ paddingHorizontal: 10, maxWidth: width / 3 }}>
+              <View style={{ padding: 10, maxWidth: width / 3 }}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text
                     status="primary"
@@ -110,7 +114,7 @@ export default function VideoView(props) {
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                   <Text
-                    status={IS_PORTRAIT ? 'control' : 'basic'}
+                    status="control"
                     category="s2"
                     style={{
                       backgroundColor: 'rgba(0, 0, 0, 0.0125)',
@@ -171,7 +175,7 @@ export default function VideoView(props) {
                   {/*  onPress={togglePause} */}
                   {/* /> */}
 
-                  <View style={{ alignItems: 'center', marginBottom: 0 }}>
+                  <View style={{ alignItems: 'center', padding: 10 }}>
                     <Image
                       source={require('~assets/images/drawable/icon.png')}
                       style={{
@@ -218,6 +222,7 @@ export default function VideoView(props) {
       IS_ACTIVE,
       IS_PORTRAIT,
       IS_PRELOADED,
+      isFocused,
       width,
       height,
       isLiked,
