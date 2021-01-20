@@ -41,6 +41,7 @@ export default function RegisterFull({ navigation }) {
           screen="auth"
         />
         <ScrollView
+          alwaysBounceVertical
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
@@ -95,7 +96,7 @@ export default function RegisterFull({ navigation }) {
                   label="Password"
                   androidComplete="password"
                   iosComplete="password"
-                  validate="required"
+                  validate="password"
                   secure
                   setFormValues={setFormValues}
                 />
@@ -106,7 +107,7 @@ export default function RegisterFull({ navigation }) {
                   label="Password"
                   androidComplete="password"
                   iosComplete="password"
-                  validate="required"
+                  validate="password"
                   secure
                   setFormValues={setFormValues}
                 />

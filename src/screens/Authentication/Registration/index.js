@@ -26,9 +26,12 @@ export default function Register({ navigation }) {
 
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
-
   // eslint-disable-next-line react/prop-types
   const routeRegisterFull = () => navigation.navigate('RegisterFull');
+  // eslint-disable-next-line react/prop-types
+  const routeTermsConditions = () => navigation.navigate('TermsConditions');
+  // eslint-disable-next-line react/prop-types
+  const routePrivacyPolicy = () => navigation.navigate('PrivacyPolicy');
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
@@ -40,6 +43,7 @@ export default function Register({ navigation }) {
           screen="auth"
         />
         <ScrollView
+          alwaysBounceVertical
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
@@ -86,7 +90,11 @@ export default function Register({ navigation }) {
                 <Text category="p2">
                   By Continuing, you agree to woozeee&apos;s
                 </Text>
-                <Button appearance="ghost" size="tiny">
+                <Button
+                  appearance="ghost"
+                  size="tiny"
+                  onPress={routeTermsConditions}
+                >
                   <Text status="primary" category="s2">
                     Terms and condition
                   </Text>
@@ -94,7 +102,11 @@ export default function Register({ navigation }) {
                 <Text category="p2">
                   and confirm that you have read woozeee&apos;s
                 </Text>
-                <Button appearance="ghost" size="tiny">
+                <Button
+                  appearance="ghost"
+                  size="tiny"
+                  onPress={routePrivacyPolicy}
+                >
                   <Text status="primary" category="s2">
                     Privacy policy
                   </Text>

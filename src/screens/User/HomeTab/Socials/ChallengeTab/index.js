@@ -42,6 +42,7 @@ export default function Challenge({ navigation }) {
         />
         <ScrollView
           style={{ flex: 1, paddingVertical: 10 }}
+          alwaysBounceVertical
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         >

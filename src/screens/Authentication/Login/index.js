@@ -80,6 +80,7 @@ export default function Login({ navigation }) {
           screen="auth"
         />
         <ScrollView
+          alwaysBounceVertical
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
@@ -127,7 +128,7 @@ export default function Login({ navigation }) {
                   label="Password"
                   androidComplete="password"
                   iosComplete="password"
-                  validate="required"
+                  validate="password"
                   secure
                   setFormValues={setFormValues}
                 />

@@ -30,6 +30,7 @@ export default function RecoverWithEmail({ navigation }) {
           screen="auth"
         />
         <ScrollView
+          alwaysBounceVertical
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >

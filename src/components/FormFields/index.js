@@ -2,12 +2,19 @@ import React, { useState, useMemo, useCallback } from 'react';
 
 import { Pressable } from 'react-native';
 
-// prettier-ignore
 import {
-  Radio, RadioGroup, Text, Input,
+  Radio,
+  RadioGroup,
+  Text,
+  Input,
+  Autocomplete,
+  AutocompleteItem,
+  Select,
+  SelectItem,
+  IndexPath,
 } from '@ui-kitten/components';
 
-import { verifyWithoutCaption } from '~src/components/FormVerification';
+import { verifyWithoutCaption } from '~src/constants/FormVerification';
 
 import { IconEye, IconInputState } from '~src/components/CustomIcons';
 
@@ -151,32 +158,133 @@ export function GeneralRadioGroup(props) {
     label, data, type, setFormValues,
   } = props;
 
-  const [selectedOption, setGender] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(0);
 
-  const handleChange = (index) => setGender(index);
+  const handleChange = useCallback(
+    (index) => {
+      setSelectedOption(index);
+      setFormValues((prevState) => ({
+        ...prevState,
+        [type]: data[index],
+      }));
+    },
+    [setFormValues, type, data],
+  );
 
-  const handleBlur = useCallback(() => {
-    setFormValues((prevState) => ({
-      ...prevState,
-      [type]: data[selectedOption],
-    }));
-  }, [setFormValues, type, data, selectedOption]);
+  return useMemo(
+    () => (
+      <>
+        <Text category="label" appearance="hint">
+          {label}
+        </Text>
+        <RadioGroup selectedIndex={selectedOption} onChange={handleChange}>
+          {/* eslint-disable-next-line react/prop-types */}
+          {data.map((option) => (
+            <Radio key={option}>{option}</Radio>
+          ))}
+        </RadioGroup>
+      </>
+    ),
+    [data, handleChange, label, selectedOption],
+  );
+}
 
-  return (
-    <>
-      <Text category="label" appearance="hint">
-        {label}
-      </Text>
-      <RadioGroup
+export function GeneralAutocomplete(props) {
+  // prettier-ignore
+  const {
+  // eslint-disable-next-line react/prop-types
+    label, data, type, setFormValues,
+  } = props;
+
+  const [value, setValue] = useState('');
+
+  const [list, setList] = useState(data);
+
+  // prettier-ignore
+  const filterData = (item, query) => item.title.toLowerCase().includes(query.toLowerCase());
+
+  const handleChange = useCallback(
+    (query) => {
+      setValue(query);
+      // eslint-disable-next-line react/prop-types
+      setList(() => data.filter((item) => filterData(item, query)));
+    },
+    [data],
+  );
+
+  const handleSelect = useCallback(
+    (index) => {
+      setValue(data[index].title);
+      setFormValues((prevState) => ({
+        ...prevState,
+        [type]: data[index].title,
+      }));
+    },
+    [setFormValues, type, data],
+  );
+
+  const renderOption = (item, index) => (
+    <AutocompleteItem key={index} title={item.title} />
+  );
+
+  return useMemo(
+    () => (
+      <Autocomplete
+        label={label}
+        placement="top start"
+        size="large"
+        placeholder={`Choose ${label}`}
+        value={value}
+        onSelect={handleSelect}
+        onChangeText={handleChange}
+      >
+        {list.map(renderOption)}
+      </Autocomplete>
+    ),
+    [handleChange, handleSelect, label, list, value],
+  );
+}
+
+export function GeneralSelect(props) {
+  // prettier-ignore
+  const {
+    // eslint-disable-next-line react/prop-types
+    label, data, type, setFormValues,
+  } = props;
+
+  const [selectedOption, setSelectedOption] = useState(new IndexPath(0));
+
+  const handleSelect = useCallback(
+    (index) => {
+      setSelectedOption(index);
+      setFormValues((prevState) => ({
+        ...prevState,
+        [type]: data[index.row].title,
+      }));
+    },
+    [setFormValues, type, data],
+  );
+
+  const renderOption = useMemo(
+    () => <Text>{data[selectedOption.row].title}</Text>,
+    [data, selectedOption.row],
+  );
+
+  return useMemo(
+    () => (
+      <Select
+        size="large"
+        label={label}
+        value={renderOption}
         selectedIndex={selectedOption}
-        onChange={handleChange}
-        onBlur={handleBlur}
+        onSelect={handleSelect}
       >
         {/* eslint-disable-next-line react/prop-types */}
         {data.map((option) => (
-          <Radio key={option}>{option}</Radio>
+          <SelectItem key={option.title} title={option.title} />
         ))}
-      </RadioGroup>
-    </>
+      </Select>
+    ),
+    [data, handleSelect, label, selectedOption, renderOption],
   );
 }

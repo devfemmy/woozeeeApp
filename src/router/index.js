@@ -18,6 +18,10 @@ import RecoverWithEmail from '~src/screens/Authentication/Recovery';
 // Common screens
 import Settings from '~src/screens/Common/Settings';
 
+import TermsConditions from '~src/screens/Common/Extras/TermsCondtitons';
+import PrivacyPolicy from '~src/screens/Common/Extras/PrivacyPolicy';
+import FAQs from '~src/screens/Common/Extras/FAQs';
+
 // Common User Screens
 import EditProfile from '~src/screens/User/Common/EditProfile';
 
@@ -48,6 +52,9 @@ export default function Router() {
 
     Common: {
       Settings,
+      TermsConditions,
+      PrivacyPolicy,
+      FAQs,
     },
   };
 

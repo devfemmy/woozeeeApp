@@ -61,7 +61,7 @@ export default function useAuth() {
           };
 
           // prettier-ignore
-          msg = await userData.email !== dev.email
+          msg = await userData.email.toLowerCase().trim() !== dev.email
             ? 'Email / password is incorrect'
             : null;
 

@@ -29,6 +29,7 @@ export default function VerifyWithCode({ navigation }) {
           screen="auth"
         />
         <ScrollView
+          alwaysBounceVertical
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >

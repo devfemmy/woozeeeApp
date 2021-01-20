@@ -4,7 +4,7 @@ import { Divider, Layout, TopNavigation } from '@ui-kitten/components';
 
 // Components import
 import BackButton from './components/BackButton';
-// import TopNavigationMenu from './components/TopNavigationMenu';
+import HelpButton from './components/HelpButton';
 import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
@@ -37,6 +37,10 @@ export default function TopNavigationArea(props) {
           accessoryLeft={(evaProps) => (
             // eslint-disable-next-line react/jsx-props-no-spreading
             <BackButton {...evaProps} navigation={navigation} icon={icon} />
+          )}
+          accessoryRight={(evaProps) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <HelpButton {...evaProps} navigation={navigation} />
           )}
           // accessoryRight={() => <TopNavigationMenu />}
           accessibilityLiveRegion="polite"

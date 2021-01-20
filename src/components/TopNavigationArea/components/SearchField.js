@@ -27,7 +27,7 @@ export default function SearchField(props) {
         style={{
           width: '100%',
           paddingLeft: 15,
-          paddingRight: 80,
+          paddingRight: 60,
         }}
       >
         <Input

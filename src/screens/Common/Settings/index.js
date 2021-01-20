@@ -45,10 +45,6 @@ export default function Settings({ navigation }) {
       }
     };
 
-    const renderSwitch = () => (
-      <Toggle checked={darkMode} onChange={handleSwitchTheme} />
-    );
-
     const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
     // eslint-disable-next-line react/prop-types
@@ -63,6 +59,7 @@ export default function Settings({ navigation }) {
             screen="auth"
           />
           <ScrollView
+            alwaysBounceVertical
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
           >
