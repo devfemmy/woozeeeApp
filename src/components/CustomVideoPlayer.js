@@ -65,7 +65,10 @@ export default function CustomVideoPlayer(props) {
         <>
           <View style={styles.backgroundViewWrapper}>
             <Video
-              source={{ uri: shouldDisplay || isPreloaded ? videoUri : null }}
+              source={{
+                uri:
+                  (shouldDisplay || isPreloaded) && isFocused ? videoUri : null,
+              }}
               isLooping
               shouldCorrectPitch
               onReadyForDisplay={() => setVideoLoaded(true)}

@@ -6,7 +6,7 @@ export default function usePreFetchResources() {
   const [isPreloaded, setPreloaded] = useState(false);
 
   useEffect(() => {
-    const loadPreloadedData = async () => {
+    (async () => {
       try {
         await Font.loadAsync({
           'montserrat-light': {
@@ -52,9 +52,7 @@ export default function usePreFetchResources() {
       } finally {
         await setPreloaded(true);
       }
-    };
-
-    loadPreloadedData().then(() => {});
+    })();
   }, []);
 
   return isPreloaded;

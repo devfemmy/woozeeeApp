@@ -175,7 +175,7 @@ export default function Home({ navigation }) {
       </View>
 
       <BlurView intensity={25} tint="dark" style={styles.cardContent}>
-        <Text category="h5" style={{ color: 'white' }}>
+        <Text category="h4" style={{ color: 'white' }}>
           {data.item.title}
         </Text>
       </BlurView>

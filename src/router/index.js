@@ -16,14 +16,16 @@ import VerifyWithCode from '~src/screens/Authentication/Verification';
 import RecoverWithEmail from '~src/screens/Authentication/Recovery';
 
 // Common screens
-import Settings from '~src/screens/Common/Settings';
-
 import TermsConditions from '~src/screens/Common/Extras/TermsCondtitons';
 import PrivacyPolicy from '~src/screens/Common/Extras/PrivacyPolicy';
 import FAQs from '~src/screens/Common/Extras/FAQs';
 
 // Common User Screens
+import Settings from '~src/screens/User/Common/Settings';
 import EditProfile from '~src/screens/User/Common/EditProfile';
+
+// Explore View all Screen
+import ViewAll from '~src/screens/User/HomeTab/Socials/ExploreTab/ViewAll';
 
 /* Routes import */
 import UserRoute from './User';
@@ -48,10 +50,10 @@ export default function Router() {
       UserRoute,
       SocialsRoute,
       EditProfile,
+      Settings,
     },
 
     Common: {
-      Settings,
       TermsConditions,
       PrivacyPolicy,
       FAQs,

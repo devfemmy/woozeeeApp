@@ -12,22 +12,16 @@ export default function BackButton(props) {
     // eslint-disable-next-line react/prop-types
     const routeBack = () => navigation.goBack();
 
-    const renderIcon = () => {
-      switch (icon) {
-        case 'false':
-          return null;
-        case 'close':
-          return IconClose;
-        default:
-          return IconBack;
-      }
+    const ICON = {
+      close: IconClose,
+      back: IconBack,
     };
 
     return (
       <TopNavigationAction
         /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...otherProps}
-        icon={renderIcon()}
+        icon={icon ? ICON[icon] : ICON.back}
         onPress={routeBack}
         accessibilityLiveRegion="polite"
         accessibilityLabel="Go back"

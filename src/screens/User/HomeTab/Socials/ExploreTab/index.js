@@ -31,6 +31,9 @@ export default function Explore({ navigation }) {
     [width, height],
   );
 
+  // eslint-disable-next-line react/prop-types
+  const routeViewAll = () => navigation.navigate('ViewAll');
+
   return (
     <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -228,16 +231,36 @@ export default function Explore({ navigation }) {
                       }}
                       key={item.category}
                     >
-                      <View style={{ paddingHorizontal: 10 }}>
-                        <Text category="h6" style={{ marginBottom: 5 }}>
-                          {item.category}
-                        </Text>
-                        {/* prettier-ignore */}
-                        <Text category="c1" style={{ marginBottom: 5 }}>
-                          {item.content.length}
-                          {' '}
-                          Video(s)
-                        </Text>
+                      <View
+                        style={{
+                          paddingHorizontal: 10,
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <View>
+                          <Text category="h6" style={{ marginBottom: 5 }}>
+                            {item.category}
+                          </Text>
+                          {/* prettier-ignore */}
+                          <Text category="c1" style={{ marginBottom: 5 }}>
+                            {item.content.length}
+                            {' '}
+                            Video(s)
+                          </Text>
+                        </View>
+                        <View>
+                          <Button
+                            appearance="ghost"
+                            size="small"
+                            onPress={routeViewAll}
+                          >
+                            <Text status="primary" category="label">
+                              View all
+                            </Text>
+                          </Button>
+                        </View>
                       </View>
                       <List
                         style={{ backgroundColor: 'transparent' }}

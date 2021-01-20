@@ -6,8 +6,8 @@ export default function useGeneratedThumb(videoUri) {
 
   const [imageUri, setImageUri] = useState(null);
 
-  useMemo(
-    () => async () => {
+  useMemo(() => {
+    (async () => {
       try {
         const { uri } = await VideoThumbnails.getThumbnailAsync(videoUri, {
           time: 1500,
@@ -17,9 +17,8 @@ export default function useGeneratedThumb(videoUri) {
       } catch (e) {
         console.log(e);
       }
-    },
-    [videoUri],
-  );
+    })();
+  }, [videoUri]);
 
   return imageUri;
 }

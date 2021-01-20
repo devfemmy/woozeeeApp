@@ -43,8 +43,11 @@ export default function Profile({ navigation }) {
   const IS_PORTRAIT = height > width;
 
   const { plWidth, plHeight } = useMemo(
-    () => ({ plWidth: width / 2, plHeight: (height - 150) / 3 }),
-    [width, height],
+    () => ({
+      plWidth: width / 2,
+      plHeight: IS_PORTRAIT ? (height - 403) / 2 : (height - 200) / 3,
+    }),
+    [width, height, IS_PORTRAIT],
   );
 
   const [activeTab, setActiveTab] = useState(0);
@@ -244,7 +247,7 @@ export default function Profile({ navigation }) {
                           padding: 10,
                           alignItems: 'center',
                           justifyContent: 'center',
-                          height: height / 3,
+                          height: IS_PORTRAIT ? height - 453 : height - 200,
                         }}
                       >
                         <Text style={{ marginBottom: 10 }}>
@@ -290,7 +293,7 @@ export default function Profile({ navigation }) {
                             padding: 10,
                             alignItems: 'center',
                             justifyContent: 'center',
-                            height: height / 3,
+                            height: IS_PORTRAIT ? height - 453 : height - 200,
                           }}
                         >
                           <Text style={{ marginBottom: 10 }}>
@@ -338,7 +341,10 @@ export default function Profile({ navigation }) {
                   <>
                     <TabsMenu />
                     <View>
-                      <FullPlaceholder width={width - 10} height={height / 3} />
+                      <FullPlaceholder
+                        width={width - 10}
+                        height={IS_PORTRAIT ? height - 453 : height - 200}
+                      />
                     </View>
                   </>
                 );

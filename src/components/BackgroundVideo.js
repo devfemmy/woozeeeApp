@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import { Animated, StyleSheet, Image } from 'react-native';
 
@@ -6,7 +6,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 import { Video } from 'expo-av';
 
-import { Asset } from 'expo-asset';
+// import { Asset } from 'expo-asset';
 
 import { Layout } from '@ui-kitten/components';
 
@@ -32,21 +32,19 @@ export default function BackgroundVideo(props) {
 
   const thumbOpacity = React.useMemo(() => new Animated.Value(0.75), []);
 
-  const [cachedUri, setCachedUri] = useState(null);
-
-  useMemo(() => {
-    const getCachedUri = async () => {
-      try {
-        const [{ localUri }] = await Asset.loadAsync(videoUri);
-
-        await setCachedUri(localUri);
-      } catch (e) {
-        const err = e;
-      }
-    };
-
-    getCachedUri().then(() => {});
-  }, [videoUri]);
+  // const [cachedUri, setCachedUri] = useState(null);
+  //
+  // useMemo(() => {
+  //   (async () => {
+  //     try {
+  //       const [{ localUri }] = await Asset.loadAsync(videoUri);
+  //
+  //       await setCachedUri(localUri);
+  //     } catch (e) {
+  //       const err = e;
+  //     }
+  //   })();
+  // }, [videoUri]);
 
   // prettier-ignore
   const VideoThumb = () => (thumbUri ? (
@@ -82,7 +80,7 @@ export default function BackgroundVideo(props) {
           <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
             <Video
               isLooping
-              source={{ uri: cachedUri }}
+              source={{ uri: videoUri }}
               onLoad={() => {
                 Animated.timing(opacity, {
                   toValue: 1,
@@ -99,6 +97,6 @@ export default function BackgroundVideo(props) {
         ) : null}
       </Layout>
     ),
-    [isFocused, opacity, cachedUri, isMuted, style],
+    [isFocused, opacity, videoUri, isMuted, style],
   );
 }
