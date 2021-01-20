@@ -2,69 +2,20 @@ import React, { useState, useMemo, useCallback } from 'react';
 
 import { Pressable } from 'react-native';
 
-import { Input, Text } from '@ui-kitten/components';
+import { Input } from '@ui-kitten/components';
 
 import { IconEye, IconInputState } from './CustomIcons';
 
-import fonts from '~src/constants/fonts';
-
-const iconType = (condition) => {
-  switch (condition) {
-    case 'success':
-      return 'checkmark-circle-outline';
-    case 'danger':
-      return 'alert-triangle-outline';
-    default:
-      return 'alert-circle-outline';
-  }
-};
-
-const InputLabel = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const { label, ...otherProps } = props;
-  return (
-    <Text
-      category="label"
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...otherProps}
-    >
-      {label}
-    </Text>
-  );
-};
-
-const InputCaption = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const { caption, ...otherProps } = props;
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <Text {...otherProps}>{caption}</Text>;
-};
-
-const CaptionIcon = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const { captionIcon, ...otherProps } = props;
-
-  return (
-    <IconInputState
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...otherProps}
-      iconType={iconType(captionIcon)}
-    />
-  );
+const CAPTION_ICON = {
+  basic: 'alert-circle-outline',
+  success: 'checkmark-circle-outline',
+  danger: 'alert-triangle-outline',
 };
 
 function SecureInput(props) {
+  // prettier-ignore
   const {
-    //  prettier-ignore
-    // eslint-disable-next-line react/prop-types
-    value,
-    // eslint-disable-next-line react/prop-types
-    label,
-    // eslint-disable-next-line react/prop-types
-    caption,
-    // eslint-disable-next-line react/prop-types
-    captionIcon,
-    ...otherProps
+    value, label, caption, captionIcon, size, ...otherProps
   } = props;
 
   const [isSecureEntry, setSecureEntry] = useState(true);
@@ -83,34 +34,27 @@ function SecureInput(props) {
     [isSecureEntry],
   );
 
-  // eslint-disable-next-line react/prop-types
-
   return useMemo(
     () => (
       <Input
         /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...otherProps}
         value={value}
-        size="large"
+        size={size || 'large'}
         accessibilityLiveRegion="polite"
         secureTextEntry={isSecureEntry}
         accessoryRight={secureToggleIcon}
         maxFontSizeMultiplier={1.5}
-        textStyle={fonts.fontRegular}
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
-        label={(evaProps) => <InputLabel {...evaProps} label={label} />}
-        caption={
-          /* prettier-ignore */
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
-          (evaProps) => (caption ? <InputCaption {...evaProps} caption={caption} /> : null)
-        }
-        captionIcon={
-          /* prettier-ignore */
-          (evaProps) => (
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
-            captionIcon ? <CaptionIcon {...evaProps} captionIcon={captionIcon} /> : null
-          )
-        }
+        label={label}
+        caption={caption}
+        /* prettier-ignore */
+        captionIcon={(evaProps) => (captionIcon ? (
+          <IconInputState
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...evaProps}
+            iconType={CAPTION_ICON[captionIcon]}
+          />
+        ) : null)}
       />
     ),
     [
@@ -121,23 +65,15 @@ function SecureInput(props) {
       captionIcon,
       label,
       otherProps,
+      size,
     ],
   );
 }
 
 function RegularInput(props) {
+  // prettier-ignore
   const {
-    //  prettier-ignore
-    // eslint-disable-next-line react/prop-types
-    value,
-    // eslint-disable-next-line react/prop-types
-    label,
-    // eslint-disable-next-line react/prop-types
-    caption,
-    // eslint-disable-next-line react/prop-types
-    captionIcon,
-    size,
-    ...otherProps
+    value, label, caption, captionIcon, size, multiline, ...otherProps
   } = props;
 
   return useMemo(
@@ -147,26 +83,22 @@ function RegularInput(props) {
         {...otherProps}
         value={value}
         size={size || 'large'}
+        multiline={multiline || false}
         accessibilityLiveRegion="polite"
         maxFontSizeMultiplier={1.5}
-        textStyle={fonts.fontRegular}
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
-        label={(evaProps) => <InputLabel {...evaProps} label={label} />}
-        caption={
-          /* prettier-ignore */
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
-          (evaProps) => (caption ? <InputCaption {...evaProps} caption={caption} /> : null)
-        }
-        captionIcon={
-          /* prettier-ignore */
-          (evaProps) => (
-            /* eslint-disable-next-line react/jsx-props-no-spreading */
-            captionIcon ? <CaptionIcon {...evaProps} captionIcon={captionIcon} /> : null
-          )
-        }
+        label={label}
+        caption={caption}
+        /* prettier-ignore */
+        captionIcon={(evaProps) => (captionIcon ? (
+          <IconInputState
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...evaProps}
+            iconType={CAPTION_ICON[captionIcon]}
+          />
+        ) : null)}
       />
     ),
-    [value, caption, captionIcon, label, otherProps, size],
+    [value, caption, captionIcon, label, otherProps, size, multiline],
   );
 }
 

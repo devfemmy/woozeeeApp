@@ -1,5 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 
+import { Radio, RadioGroup, Text } from '@ui-kitten/components';
+
 import { RegularInput, SecureInput } from '~src/components/CustomInputs';
 
 import {
@@ -181,5 +183,42 @@ export function GeneralTextField(props) {
       androidComplete,
       iosComplete,
     ],
+  );
+}
+
+export function GeneralRadioGroup(props) {
+  // prettier-ignore
+  const {
+  // eslint-disable-next-line react/prop-types
+    label, data, type, setFormValues,
+  } = props;
+
+  const [selectedOption, setGender] = useState(0);
+
+  const handleChange = (index) => setGender(index);
+
+  const handleBlur = useCallback(() => {
+    setFormValues((prevState) => ({
+      ...prevState,
+      [type]: data[selectedOption],
+    }));
+  }, [setFormValues, type, data, selectedOption]);
+
+  return (
+    <>
+      <Text category="label" appearance="hint">
+        {label}
+      </Text>
+      <RadioGroup
+        selectedIndex={selectedOption}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      >
+        {/* eslint-disable-next-line react/prop-types */}
+        {data.map((option) => (
+          <Radio key={option}>{option}</Radio>
+        ))}
+      </RadioGroup>
+    </>
   );
 }

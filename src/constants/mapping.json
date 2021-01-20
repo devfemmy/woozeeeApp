@@ -44,12 +44,27 @@
   },
   "components": {
     "BottomNavigationTab": {
-      "appearances": {
+      "meta": {
+        "scope": "mobile"
+      },
+        "appearances": {
         "default": {
           "mapping": {
             "textFontSize": "text-label-font-size",
             "textFontWeight": "text-label-font-weight",
             "textFontFamily": "text-label-font-family"
+          }
+        }
+      }
+    },
+    "Input": {
+      "meta": {
+        "scope": "all"
+      },
+      "appearances": {
+        "default": {
+          "mapping": {
+            "textFontFamily": "montserrat-regular"
           }
         }
       }

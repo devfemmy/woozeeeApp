@@ -33,6 +33,8 @@ export default function TopNavigationMenu(props) {
 
     const routeSettings = () => navigation.navigate('Settings');
 
+    const routeEditProfile = () => navigation.navigate('EditProfile');
+
     // eslint-disable-next-line react/prop-types
     const logoutUser = async () => {
       try {
@@ -68,7 +70,11 @@ export default function TopNavigationMenu(props) {
         accessibilityLiveRegion="polite"
         accessibilityHint="Navigation Menu"
       >
-        <MenuItem accessoryLeft={IconEdit} title="Edit Profile" />
+        <MenuItem
+          accessoryLeft={IconEdit}
+          title="Edit Profile"
+          onPress={routeEditProfile}
+        />
         <MenuItem
           accessoryLeft={IconSettings}
           title="Settings"

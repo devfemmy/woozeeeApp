@@ -18,6 +18,9 @@ import RecoverWithEmail from '~src/screens/Authentication/Recovery';
 // Common screens
 import Settings from '~src/screens/Common/Settings';
 
+// Common User Screens
+import EditProfile from '~src/screens/User/Common/EditProfile';
+
 /* Routes import */
 import UserRoute from './User';
 import SocialsRoute from './User/HomeTab/Socials';
@@ -40,6 +43,7 @@ export default function Router() {
     User: {
       UserRoute,
       SocialsRoute,
+      EditProfile,
     },
 
     Common: {
