@@ -8,7 +8,7 @@ import { Layout, Button, Text } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { EmailField } from '~src/components/FormFields';
+import { GeneralTextField } from '~src/components/FormFields';
 
 import {
   IconFacebook,
@@ -51,7 +51,14 @@ export default function Register({ navigation }) {
           >
             <View style={{ paddingBottom: 10 }}>
               <View style={{ paddingVertical: 10 }}>
-                <EmailField setFormValues={setFormValues} />
+                <GeneralTextField
+                  type="email"
+                  label="Email address"
+                  androidComplete="email"
+                  iosComplete="emailAddress"
+                  validate="email"
+                  setFormValues={setFormValues}
+                />
               </View>
               <View style={{ paddingVertical: 20 }}>
                 <Button

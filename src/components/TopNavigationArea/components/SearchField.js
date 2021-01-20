@@ -2,22 +2,20 @@ import React, { useMemo, useState } from 'react';
 
 import { View } from 'react-native';
 
-import { RegularInput } from '~src/components/CustomInputs';
+import { Input } from '@ui-kitten/components';
 
 import { IconSearch } from '~src/components/CustomIcons';
 
 export default function SearchField(props) {
   const [form, setFormValues] = useState({
-    search: {
-      value: '',
-      status: 'basic',
-    },
+    value: '',
+    status: 'basic',
   });
 
-  const updateFormSearch = (inputSearch) => {
+  const handleChange = (inputSearch) => {
     setFormValues((prevState) => ({
       ...prevState,
-      search: { ...prevState.search, value: inputSearch },
+      value: inputSearch,
     }));
   };
 
@@ -28,24 +26,21 @@ export default function SearchField(props) {
         {...props}
         style={{
           width: '100%',
-          top: -6,
-          alignSelf: 'flex-start',
           paddingLeft: 15,
           paddingRight: 80,
         }}
       >
-        <RegularInput
+        <Input
           size="medium"
-          value={form.search.value}
+          value={form.value}
           accessibilityLabel="Search"
           placeholder="Search interests"
-          autoCapitalize="none"
-          status={form.search.status}
-          onChangeText={updateFormSearch}
+          status={form.status}
+          onChangeText={handleChange}
           accessoryLeft={IconSearch}
         />
       </View>
     ),
-    [form.search.value, form.search.status, props],
+    [form.value, form.status, props],
   );
 }

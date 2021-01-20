@@ -15,7 +15,7 @@ import { AuthContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { EmailField, PasswordField } from '~src/components/FormFields';
+import { GeneralTextField } from '~src/components/FormFields';
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ navigation }) {
@@ -112,13 +112,24 @@ export default function Login({ navigation }) {
                 </View>
               ) : null}
               <View style={{ paddingVertical: 10 }}>
-                <EmailField setFormValues={setFormValues} />
+                <GeneralTextField
+                  type="email"
+                  label="Email address"
+                  androidComplete="email"
+                  iosComplete="emailAddress"
+                  validate="email"
+                  setFormValues={setFormValues}
+                />
               </View>
               <View style={{ paddingVertical: 10 }}>
-                <PasswordField
-                  setFormValues={setFormValues}
-                  label="Password"
+                <GeneralTextField
                   type="password"
+                  label="Password"
+                  androidComplete="password"
+                  iosComplete="password"
+                  validate="required"
+                  secure
+                  setFormValues={setFormValues}
                 />
                 <Button
                   size="tiny"

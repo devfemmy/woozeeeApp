@@ -10,7 +10,7 @@ import useToast from '~src/hooks/useToast';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { PasswordField, GeneralTextField } from '~src/components/FormFields';
+import { GeneralTextField } from '~src/components/FormFields';
 
 // eslint-disable-next-line react/prop-types
 export default function RegisterFull({ navigation }) {
@@ -60,44 +60,55 @@ export default function RegisterFull({ navigation }) {
               >
                 <View style={{ flex: 1, marginRight: 5 }}>
                   <GeneralTextField
-                    setFormValues={setFormValues}
-                    label="First name"
                     type="firstName"
+                    label="First name"
                     androidComplete="name"
                     iosComplete="givenName"
+                    validate="required"
+                    setFormValues={setFormValues}
                   />
                 </View>
                 <View style={{ flex: 1, marginLeft: 5 }}>
                   <GeneralTextField
-                    setFormValues={setFormValues}
-                    label="Last name"
                     type="lastName"
+                    label="Last name"
                     androidComplete="name"
                     iosComplete="familyName"
+                    validate="required"
+                    setFormValues={setFormValues}
                   />
                 </View>
               </View>
               <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
-                  setFormValues={setFormValues}
-                  label="Username"
                   type="username"
+                  label="Username"
                   androidComplete="username"
                   iosComplete="username"
+                  validate="required"
+                  setFormValues={setFormValues}
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>
-                <PasswordField
-                  setFormValues={setFormValues}
-                  label="Password"
+                <GeneralTextField
                   type="password"
+                  label="Password"
+                  androidComplete="password"
+                  iosComplete="password"
+                  validate="required"
+                  secure
+                  setFormValues={setFormValues}
                 />
               </View>
               <View style={{ paddingVertical: 10 }}>
-                <PasswordField
-                  setFormValues={setFormValues}
-                  label="Confirm Password"
+                <GeneralTextField
                   type="confirmPassword"
+                  label="Password"
+                  androidComplete="password"
+                  iosComplete="password"
+                  validate="required"
+                  secure
+                  setFormValues={setFormValues}
                 />
               </View>
               <View style={{ paddingVertical: 20 }}>

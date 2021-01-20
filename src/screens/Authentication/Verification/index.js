@@ -8,7 +8,7 @@ import { Layout, Button, Text } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { OneTimeCodeField } from '~src/components/FormFields';
+import { GeneralTextField } from '~src/components/FormFields';
 
 // eslint-disable-next-line react/prop-types
 export default function VerifyWithCode({ navigation }) {
@@ -40,7 +40,14 @@ export default function VerifyWithCode({ navigation }) {
           >
             <View style={{ paddingBottom: 10 }}>
               <View style={{ paddingVertical: 10 }}>
-                <OneTimeCodeField setFormValues={setFormValues} />
+                <GeneralTextField
+                  type="code"
+                  label="Verification Code"
+                  androidComplete="off"
+                  iosComplete="oneTimeCode"
+                  validate="required"
+                  setFormValues={setFormValues}
+                />
                 <Button
                   size="tiny"
                   appearance="ghost"

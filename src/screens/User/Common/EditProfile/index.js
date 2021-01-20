@@ -6,13 +6,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 // prettier-ignore
 import {
-  Layout, Button, Text, Radio, RadioGroup,
+  Layout, Button, Text,
 } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import {
-  PasswordField,
   GeneralTextField,
   GeneralRadioGroup,
 } from '~src/components/FormFields';
@@ -29,9 +28,6 @@ export default function EditProfile({ navigation }) {
     username: '',
     gender: '',
   });
-
-  // eslint-disable-next-line react/prop-types
-  const routeVerifyWithCode = () => navigation.navigate('VerifyWithCode');
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
@@ -95,6 +91,14 @@ export default function EditProfile({ navigation }) {
                   setFormValues={setFormValues}
                 />
               </View>
+              <View style={{ paddingVertical: 10 }}>
+                <GeneralTextField
+                  setFormValues={setFormValues}
+                  label="Bio"
+                  type="bio"
+                  multiline
+                />
+              </View>
               <View style={{ paddingVertical: 20 }}>
                 <Button
                   status="danger"
@@ -102,7 +106,6 @@ export default function EditProfile({ navigation }) {
                   accessibilityLiveRegion="assertive"
                   accessibilityComponentType="button"
                   accessibilityLabel="Continue"
-                  onPress={routeVerifyWithCode}
                   disabled={isLoading}
                 >
                   <Text status="control">Continue</Text>

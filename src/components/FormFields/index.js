@@ -1,144 +1,64 @@
 import React, { useState, useMemo, useCallback } from 'react';
 
-import { Radio, RadioGroup, Text } from '@ui-kitten/components';
+import { Pressable } from 'react-native';
 
-import { RegularInput, SecureInput } from '~src/components/CustomInputs';
-
+// prettier-ignore
 import {
-  verifyWithCaption,
-  verifyWithoutCaption,
-} from '~src/components/FormVerification';
+  Radio, RadioGroup, Text, Input,
+} from '@ui-kitten/components';
 
-export function EmailField(props) {
-  const { setFormValues } = props;
+import { verifyWithoutCaption } from '~src/components/FormVerification';
 
-  const [inputVal, setInputVal] = useState({
-    value: '',
-    status: 'basic',
-  });
+import { IconEye, IconInputState } from '~src/components/CustomIcons';
 
-  const handleChange = (input) => {
-    const currentState = verifyWithoutCaption(input, 'email');
+const CAPTION_ICON = {
+  basic: 'alert-circle-outline',
+  success: 'checkmark-circle-outline',
+  danger: 'alert-triangle-outline',
+};
 
-    setInputVal((prevState) => ({
-      ...prevState,
-      ...currentState,
-      value: input,
-    }));
+const CaptionIcon = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { icon, ...otherProps } = props;
+
+  return (
+    <IconInputState
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...otherProps}
+      iconType={CAPTION_ICON[icon]}
+    />
+  );
+};
+
+const SecureToggleIcon = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { isSecure, toggleSecure, ...otherProps } = props;
+
+  const handlePress = () => {
+    toggleSecure((prevState) => !prevState);
   };
 
-  const handleBlur = useCallback(() => {
-    setFormValues((prevState) => ({ ...prevState, email: inputVal.value }));
-  }, [inputVal.value, setFormValues]);
-
-  return useMemo(
-    () => (
-      <RegularInput
-        value={inputVal.value}
-        label="Email"
-        accessibilityLabel="Email"
-        placeholder="Enter your Email Address"
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        status={inputVal.status}
-        autoCorrect={false}
-        onChangeText={handleChange}
-        onBlur={handleBlur}
-      />
-    ),
-    [inputVal.value, inputVal.status, handleBlur],
+  return (
+    <Pressable onPress={handlePress}>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <IconEye {...otherProps} isOpen={isSecure} />
+    </Pressable>
   );
-}
-
-export function OneTimeCodeField(props) {
-  const { setFormValues } = props;
-
-  const [inputVal, setInputVal] = useState({
-    value: '',
-    status: 'basic',
-  });
-
-  const handleChange = (input) => {
-    const currentState = verifyWithoutCaption(input, 'required');
-
-    setInputVal((prevState) => ({
-      ...prevState,
-      ...currentState,
-      value: input,
-    }));
-  };
-
-  const handleBlur = useCallback(() => {
-    setFormValues((prevState) => ({ ...prevState, code: inputVal.value }));
-  }, [inputVal.value, setFormValues]);
-
-  return useMemo(
-    () => (
-      <RegularInput
-        value={inputVal.value}
-        label="Code"
-        accessibilityLabel="Code"
-        placeholder="Enter Verification Code"
-        autoCapitalize="none"
-        autoCompleteType="off"
-        textContentType="oneTimeCode"
-        status={inputVal.status}
-        autoCorrect={false}
-        onChangeText={handleChange}
-        onBlur={handleBlur}
-      />
-    ),
-    [inputVal.value, inputVal.status, handleBlur],
-  );
-}
-
-export function PasswordField(props) {
-  const { setFormValues, label, type } = props;
-
-  const [inputVal, setInputVal] = useState({
-    value: '',
-    status: 'basic',
-  });
-
-  const handleChange = (input) => {
-    const currentState = verifyWithCaption(input, 'required');
-
-    setInputVal((prevState) => ({
-      ...prevState,
-      ...currentState,
-      value: input,
-    }));
-  };
-
-  const handleBlur = useCallback(() => {
-    setFormValues((prevState) => ({ ...prevState, [type]: inputVal.value }));
-  }, [inputVal.value, setFormValues, type]);
-
-  return useMemo(
-    () => (
-      <SecureInput
-        value={inputVal.value}
-        label={label}
-        accessibilityLabel={label}
-        placeholder={`Enter ${label}`}
-        autoCapitalize="none"
-        autoCompleteType="password"
-        textContentType="password"
-        status={inputVal.status}
-        autoCorrect={false}
-        onChangeText={handleChange}
-        onBlur={handleBlur}
-      />
-    ),
-    [inputVal.value, inputVal.status, handleBlur, label],
-  );
-}
+};
 
 export function GeneralTextField(props) {
-  // prettier-ignore
   const {
-    setFormValues, label, type, androidComplete, iosComplete,
+    label,
+    type,
+    androidComplete,
+    iosComplete,
+    caption,
+    multiline,
+    size,
+    validate,
+    setFormValues,
+    secure,
+    ...otherProps
   } = props;
 
   const [inputVal, setInputVal] = useState({
@@ -146,15 +66,20 @@ export function GeneralTextField(props) {
     status: 'basic',
   });
 
-  const handleChange = (input) => {
-    const currentState = verifyWithoutCaption(input, 'required');
+  const [isSecureEntry, setSecureEntry] = useState(secure);
 
-    setInputVal((prevState) => ({
-      ...prevState,
-      ...currentState,
-      value: input,
-    }));
-  };
+  const handleChange = useCallback(
+    (input) => {
+      const currentState = verifyWithoutCaption(input, validate);
+
+      setInputVal((prevState) => ({
+        ...prevState,
+        ...currentState,
+        value: input,
+      }));
+    },
+    [validate],
+  );
 
   const handleBlur = useCallback(() => {
     setFormValues((prevState) => ({ ...prevState, [type]: inputVal.value }));
@@ -162,26 +87,59 @@ export function GeneralTextField(props) {
 
   return useMemo(
     () => (
-      <RegularInput
+      <Input
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
+        {...otherProps}
+        accessibilityLiveRegion="polite"
+        maxFontSizeMultiplier={1.5}
+        autoCorrect={false}
+        multiline={multiline || false}
+        size={size || 'large'}
+        caption={caption}
         value={inputVal.value}
         label={label}
+        secureTextEntry={isSecureEntry}
         accessibilityLabel={label}
         placeholder={`Enter ${label}`}
         autoCompleteType={androidComplete}
         textContentType={iosComplete}
         status={inputVal.status}
-        autoCorrect={false}
         onChangeText={handleChange}
         onBlur={handleBlur}
+        /* prettier-ignore */
+        accessoryRight={
+          secure
+            ? (evaProps) => (
+              <SecureToggleIcon
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                {...evaProps}
+                isSecure={isSecureEntry}
+                toggleSecure={setSecureEntry}
+              />
+            )
+            : null
+        }
+        /* prettier-ignore */
+        captionIcon={
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          (evaProps) => (caption ? <CaptionIcon {...evaProps} icon={inputVal.status} /> : null)
+        }
       />
     ),
     [
       inputVal.value,
       inputVal.status,
-      handleBlur,
       label,
       androidComplete,
       iosComplete,
+      caption,
+      multiline,
+      size,
+      secure,
+      otherProps,
+      handleChange,
+      handleBlur,
+      isSecureEntry,
     ],
   );
 }
