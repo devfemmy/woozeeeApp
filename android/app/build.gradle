@@ -209,6 +209,7 @@ dependencies {
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }
+    api "com.theartofdev.edmodo:android-image-cropper:2.8.+"
     addUnimodulesDependencies()
 
     if (enableHermes) {

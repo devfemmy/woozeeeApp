@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import {
-  View,
-  ScrollView,
-  Image,
-  Platform,
-  Alert,
-  TouchableOpacity,
-} from 'react-native';
+import { View, ScrollView, Image, TouchableOpacity } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-import * as ImagePicker from 'expo-image-picker';
 
 // prettier-ignore
 import {
   Layout, Button, Text,
 } from '@ui-kitten/components';
+
+import useImagePicker from '~src/hooks/useImagePicker';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -48,21 +41,6 @@ const STATES = [
   { title: 'Kaduna' },
 ];
 
-const pickImage = async (handleImage, aspect) => {
-  try {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect,
-      quality: 1,
-    });
-
-    if (!result.cancelled) handleImage(result.uri);
-  } catch (e) {
-    const msg = e;
-  }
-};
-
 // eslint-disable-next-line react/prop-types
 export default function EditProfile({ navigation }) {
   const [isLoading, setLoading] = useState(false);
@@ -80,32 +58,23 @@ export default function EditProfile({ navigation }) {
     lastName: '',
     username: '',
     gender: '',
-    bio: '',
+    dob: '',
     country: '',
     state: '',
+    bio: '',
   });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        if (Platform.OS !== 'web') {
-          const {
-            status,
-          } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  const libraryImagePicker = useImagePicker('Images');
 
-          if (status !== 'granted') {
-            Alert.alert(
-              'Permission Denied',
-              'Permission is required to access Library',
-              [{ text: 'Ok', style: 'default' }],
-            );
-          }
-        }
-      } catch (e) {
-        const msg = e;
-      }
-    })();
-  }, []);
+  const selectCoverImage = async () => {
+    const imageUri = await libraryImagePicker([4, 3]);
+    setCoverImage(imageUri);
+  };
+
+  const selectUserImage = async () => {
+    const imageUri = await libraryImagePicker([1, 1]);
+    setUserImage(imageUri);
+  };
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
@@ -136,12 +105,13 @@ export default function EditProfile({ navigation }) {
               <TouchableOpacity
                 activeOpacity={0.75}
                 style={{
+                  backgroundColor: '#EDF1F7',
                   height: 100,
                   position: 'absolute',
                   width: '100%',
                   zIndex: 1,
                 }}
-                onPress={() => pickImage(setCoverImage, [4, 3])}
+                onPress={() => selectCoverImage()}
               >
                 <Image
                   source={{ uri: coverImage }}
@@ -155,13 +125,15 @@ export default function EditProfile({ navigation }) {
               <TouchableOpacity
                 activeOpacity={0.75}
                 style={{
+                  backgroundColor: '#EDF1F7',
                   bottom: 0,
+                  borderRadius: 100,
                   height: 100,
                   position: 'absolute',
                   width: 100,
                   zIndex: 3,
                 }}
-                onPress={() => pickImage(setUserImage, [1, 1])}
+                onPress={() => selectUserImage()}
               >
                 <Image
                   source={{ uri: userImage }}
@@ -223,15 +195,6 @@ export default function EditProfile({ navigation }) {
                   setFormValues={setFormValues}
                 />
               </View>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="bio"
-                  label="Bio"
-                  multiline
-                  validate="required"
-                  setFormValues={setFormValues}
-                />
-              </View>
               <View
                 style={{
                   paddingVertical: 5,
@@ -255,6 +218,16 @@ export default function EditProfile({ navigation }) {
                     setFormValues={setFormValues}
                   />
                 </View>
+              </View>
+              <View style={{ paddingVertical: 5 }}>
+                <GeneralTextField
+                  type="bio"
+                  label="Bio"
+                  multiline
+                  height={50}
+                  validate="required"
+                  setFormValues={setFormValues}
+                />
               </View>
               <View style={{ paddingVertical: 20 }}>
                 <Button

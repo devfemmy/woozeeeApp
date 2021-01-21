@@ -12,6 +12,7 @@ import {
   Select,
   SelectItem,
   IndexPath,
+  Datepicker,
 } from '@ui-kitten/components';
 
 import { verifyWithoutCaption } from '~src/constants/FormVerification';
@@ -60,7 +61,6 @@ export function GeneralTextField(props) {
     androidComplete,
     iosComplete,
     caption,
-    multiline,
     size,
     validate,
     setFormValues,
@@ -97,10 +97,10 @@ export function GeneralTextField(props) {
       <Input
         /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...otherProps}
+        scrollEnabled
         accessibilityLiveRegion="polite"
         maxFontSizeMultiplier={1.5}
         autoCorrect={false}
-        multiline={multiline || false}
         size={size || 'large'}
         caption={caption}
         value={inputVal.value}
@@ -140,7 +140,6 @@ export function GeneralTextField(props) {
       androidComplete,
       iosComplete,
       caption,
-      multiline,
       size,
       secure,
       otherProps,
@@ -286,5 +285,33 @@ export function GeneralSelect(props) {
       </Select>
     ),
     [data, handleSelect, label, selectedOption, renderOption],
+  );
+}
+
+export function GeneralDataPicker(props) {
+  // prettier-ignore
+  const {
+    // eslint-disable-next-line react/prop-types
+    label, type, setFormValues,
+  } = props;
+
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleSelect = useCallback(
+    (newData) => {
+      setSelectedDate(newData);
+      setFormValues((prevState) => ({
+        ...prevState,
+        [type]: selectedDate.toLocaleDateString(),
+      }));
+    },
+    [setFormValues, type, selectedDate],
+  );
+
+  return useMemo(
+    () => (
+      <Datepicker label={label} date={selectedDate} onSelect={handleSelect} />
+    ),
+    [handleSelect, label, selectedDate],
   );
 }
