@@ -3,12 +3,17 @@ import { useEffect } from 'react';
 import { Alert, Platform } from 'react-native';
 
 import * as ImagePicker from 'expo-image-picker';
+import { UIImagePickerControllerQualityType } from 'expo-image-picker/build/ImagePicker.types';
 
 export default function useImagePicker(media) {
   useEffect(() => {
     (async () => {
       try {
         if (Platform.OS !== 'web') {
+          const checkPermission = await ImagePicker.getMediaLibraryPermissionsAsync();
+
+          if (checkPermission.status === 'granted') return;
+
           const {
             status,
           } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -36,6 +41,8 @@ export default function useImagePicker(media) {
         allowsEditing: true,
         aspect,
         quality: 1,
+        videoMaxDuration: 60000,
+        videoQuality: UIImagePickerControllerQualityType.Low,
       });
 
       if (!result.cancelled) fileUri = await result.uri;
