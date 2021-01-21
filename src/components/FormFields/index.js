@@ -248,7 +248,7 @@ export function GeneralSelect(props) {
   // prettier-ignore
   const {
     // eslint-disable-next-line react/prop-types
-    label, data, type, setFormValues,
+    label, data, type, size, setFormValues,
   } = props;
 
   const [selectedOption, setSelectedOption] = useState(new IndexPath(0));
@@ -272,7 +272,7 @@ export function GeneralSelect(props) {
   return useMemo(
     () => (
       <Select
-        size="large"
+        size={size || 'large'}
         label={label}
         value={renderOption}
         selectedIndex={selectedOption}
@@ -288,11 +288,11 @@ export function GeneralSelect(props) {
   );
 }
 
-export function GeneralDataPicker(props) {
+export function GeneralDatePicker(props) {
   // prettier-ignore
   const {
     // eslint-disable-next-line react/prop-types
-    label, type, setFormValues,
+    label, type, size, setFormValues,
   } = props;
 
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -310,8 +310,13 @@ export function GeneralDataPicker(props) {
 
   return useMemo(
     () => (
-      <Datepicker label={label} date={selectedDate} onSelect={handleSelect} />
+      <Datepicker
+        size={size || 'large'}
+        label={label}
+        date={selectedDate}
+        onSelect={handleSelect}
+      />
     ),
-    [handleSelect, label, selectedDate],
+    [handleSelect, label, size, selectedDate],
   );
 }

@@ -17,6 +17,7 @@ import {
   GeneralTextField,
   GeneralRadioGroup,
   GeneralSelect,
+  GeneralDatePicker,
 } from '~src/components/FormFields';
 
 const GENDER = ['Female', 'Male'];
@@ -187,13 +188,28 @@ export default function EditProfile({ navigation }) {
                   setFormValues={setFormValues}
                 />
               </View>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralRadioGroup
-                  type="gender"
-                  label="Gender"
-                  data={GENDER}
-                  setFormValues={setFormValues}
-                />
+              <View
+                style={{
+                  paddingVertical: 5,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  <GeneralRadioGroup
+                    type="gender"
+                    label="Gender"
+                    data={GENDER}
+                    setFormValues={setFormValues}
+                  />
+                </View>
+                <View style={{ flex: 1, marginLeft: 5 }}>
+                  <GeneralDatePicker
+                    type="dob"
+                    label="Date of birth"
+                    setFormValues={setFormValues}
+                  />
+                </View>
               </View>
               <View
                 style={{
