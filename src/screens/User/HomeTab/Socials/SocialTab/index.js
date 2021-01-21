@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 
 import { View, StyleSheet, useWindowDimensions } from 'react-native';
 
@@ -10,6 +10,8 @@ import {
 } from '@ui-kitten/components';
 
 import { Get } from 'react-axios';
+
+import { LocaleContext } from '~src/contexts';
 
 import VideoView from '~src/components/VideoView';
 
@@ -56,6 +58,8 @@ const styles = StyleSheet.create({
 // eslint-disable-next-line react/prop-types
 export default function Social({ navigation }) {
   const { width, height } = useWindowDimensions();
+
+  const t = useContext(LocaleContext);
 
   const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
 
@@ -113,14 +117,18 @@ export default function Social({ navigation }) {
       accessibilityLiveRegion="polite"
       accessibilityHint="Extras"
     >
-      <MenuItem accessoryLeft={IconHome} title="Home" onPress={routeHome} />
+      <MenuItem
+        accessoryLeft={IconHome}
+        title={t('home')}
+        onPress={routeHome}
+      />
       <MenuItem
         accessoryLeft={IconRadio}
-        title="Social"
+        title={t('socials')}
         onPress={routeSocial}
       />
-      <MenuItem accessoryLeft={IconMap} title="Marketplace" />
-      <MenuItem accessoryLeft={IconGift} title="Charity" />
+      <MenuItem accessoryLeft={IconMap} title={t('marketplace')} />
+      <MenuItem accessoryLeft={IconGift} title={t('charity')} />
     </OverflowMenu>
   );
 
@@ -141,11 +149,11 @@ export default function Social({ navigation }) {
           </View>
           <View style={styles.header}>
             <Text category="label" status="control">
-              Following
+              {t('following')}
             </Text>
             <Text style={{ color: 'white', marginHorizontal: 10 }}>|</Text>
             <Text category="label" status="control">
-              Versus
+              {t('versus')}
             </Text>
           </View>
           <View style={styles.interactIcons}>
@@ -175,14 +183,12 @@ export default function Social({ navigation }) {
                     justifyContent: 'center',
                   }}
                 >
-                  <Text style={{ marginBottom: 10 }}>
-                    Failed to fetch Videos, Please try again!
-                  </Text>
+                  <Text style={{ marginBottom: 10 }}>{t('networkError')}</Text>
                   <Button
                     /* prettier-ignore */
                     onPress={() => makeRequest({ params: { reload: true } })}
                   >
-                    <Text status="control">Retry</Text>
+                    <Text status="control">{t('retry')}</Text>
                   </Button>
                 </View>
               );
@@ -212,14 +218,12 @@ export default function Social({ navigation }) {
                       justifyContent: 'center',
                     }}
                   >
-                    <Text style={{ marginBottom: 10 }}>
-                      No Videos available!
-                    </Text>
+                    <Text style={{ marginBottom: 10 }}>{t('noVideos')}</Text>
                     <Button
                       /* prettier-ignore */
                       onPress={() => makeRequest({ params: { refresh: true } })}
                     >
-                      <Text status="control">Refresh</Text>
+                      <Text status="control">{t('refresh')}</Text>
                     </Button>
                   </View>
                 );

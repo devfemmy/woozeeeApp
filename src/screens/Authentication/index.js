@@ -11,7 +11,7 @@ import {
   Layout, Button, Text,
 } from '@ui-kitten/components';
 
-import { LoadingContext } from '~src/contexts';
+import { LoadingContext, LocaleContext } from '~src/contexts';
 
 import useToast from '~src/hooks/useToast';
 
@@ -28,12 +28,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     minHeight: '100%',
     zIndex: 9,
-    paddingVertical: 25,
+    padding: 25,
   },
   brandMotto: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    flexWrap: 'wrap',
     paddingBottom: 25,
   },
 });
@@ -43,6 +44,8 @@ export default function OnboardingScreen({ navigation }) {
   useToast('Click again to exit');
 
   const { isLoading } = useContext(LoadingContext);
+
+  const t = useContext(LocaleContext);
 
   const [isVolumeOpen, setVolumeOpen] = useState(false);
 
@@ -60,7 +63,7 @@ export default function OnboardingScreen({ navigation }) {
       />
       <SafeAreaView style={{ flex: 1 }}>
         <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
-          <View>
+          <View style={{ marginBottom: 10 }}>
             <Image
               source={require('~assets/images/drawable/logo.png')}
               resizeMode="contain"
@@ -70,19 +73,19 @@ export default function OnboardingScreen({ navigation }) {
           <View>
             <View style={styles.brandMotto}>
               <Text category="h6" status="control">
-                Have fun
+                {t('haveFun')}
               </Text>
               <Text status="control" style={{ marginHorizontal: 10 }}>
                 |
               </Text>
               <Text category="h6" status="control">
-                Make money
+                {t('makeMoney')}
               </Text>
               <Text status="control" style={{ marginHorizontal: 10 }}>
                 |
               </Text>
               <Text category="h6" status="control">
-                Give back
+                {t('giveBack')}
               </Text>
             </View>
             <View style={{ paddingBottom: 25 }}>
@@ -93,7 +96,9 @@ export default function OnboardingScreen({ navigation }) {
                 accessibilityHint="Sign in or Sign up"
                 onPress={routeLogin}
               >
-                <Text status="control">Sign in / Sign up</Text>
+                <Text status="control">
+                  {` ${t('signIn')} / ${t('signUp')}`}
+                </Text>
               </Button>
             </View>
             <View style={{ paddingBottom: 25, alignItems: 'center' }}>

@@ -11,7 +11,7 @@ import {
   Layout, Button, Text, Spinner,
 } from '@ui-kitten/components';
 
-import { AuthContext } from '~src/contexts';
+import { AuthContext, LocaleContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -23,6 +23,8 @@ export default function Login({ navigation }) {
   const {
     authOptions,
   } = useContext(AuthContext);
+
+  const t = useContext(LocaleContext);
 
   const { login } = authOptions;
 
@@ -48,7 +50,7 @@ export default function Login({ navigation }) {
       if (form.email && form.password) {
         loginError = await login(form);
       } else {
-        loginError = 'Email and Password fields are required';
+        loginError = 'loginRequired';
       }
     } catch (e) {
       loginError = e;
@@ -75,7 +77,7 @@ export default function Login({ navigation }) {
     <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
-          title="Sign in"
+          title={t('signIn')}
           navigation={navigation}
           screen="auth"
         />
@@ -103,19 +105,19 @@ export default function Login({ navigation }) {
                   <Text
                     status="danger"
                     category="label"
-                    style={{ marginRight: 5 }}
+                    style={{ marginRight: 2 }}
                   >
-                    Error!
+                    {` ${t('error')}! `}
                   </Text>
                   <Text status="danger" category="p2">
-                    {errorMsg.auth}
+                    {t(errorMsg.auth)}
                   </Text>
                 </View>
               ) : null}
               <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="email"
-                  label="Email address"
+                  label={t('emailAddress')}
                   androidComplete="email"
                   iosComplete="emailAddress"
                   validate="email"
@@ -125,7 +127,7 @@ export default function Login({ navigation }) {
               <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="password"
-                  label="Password"
+                  label={t('password')}
                   androidComplete="password"
                   iosComplete="password"
                   validate="password"
@@ -139,7 +141,7 @@ export default function Login({ navigation }) {
                   onPress={routeRecoverWithEmail}
                 >
                   <Text status="primary" category="s2">
-                    Forgot password?
+                    {` ${t('forgotPassword')}?`}
                   </Text>
                 </Button>
               </View>
@@ -154,7 +156,7 @@ export default function Login({ navigation }) {
                   onPress={loginUser}
                   disabled={isLoading}
                 >
-                  <Text status="control">Continue</Text>
+                  <Text status="control">{t('continue')}</Text>
                 </Button>
               </View>
             </View>
@@ -167,10 +169,10 @@ export default function Login({ navigation }) {
                   flexWrap: 'wrap',
                 }}
               >
-                <Text>Don&apos;t have an account?</Text>
+                <Text>{`${t('dontHaveAccount')}?`}</Text>
                 <Button appearance="ghost" size="tiny" onPress={routeRegister}>
                   <Text category="h6" status="primary">
-                    Sign up
+                    {t('signUp')}
                   </Text>
                 </Button>
               </View>

@@ -6,26 +6,39 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 // prettier-ignore
 import {
-  Layout, Button, Text, Spinner, Toggle, Divider,
+  Layout, Button, Text, Spinner, Toggle, Divider, Select, SelectItem, IndexPath,
 } from '@ui-kitten/components';
 
-import { AppSettingsContext } from '~src/contexts';
+import { AppSettingsContext, LocaleContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import { IconMoon } from '~src/components/CustomIcons';
+import { IconMoon, IconFlag } from '~src/components/CustomIcons';
+
+import locales from './locales.json';
+
+const LOCALES = locales;
 
 // eslint-disable-next-line react/prop-types
 export default function Settings({ navigation }) {
-  const [isLoading, setLoading] = useState(false);
-
   const { appState, appOptions } = useContext(AppSettingsContext);
 
-  const { darkMode } = appState;
+  const t = useContext(LocaleContext);
+
+  const { darkMode, locale } = appState;
 
   const { updateSettings } = appOptions;
 
+  // prettier-ignore
+  const getIndexOfLocale = () => LOCALES.findIndex((obj) => obj.code === locale);
+
+  const [isLoading, setLoading] = useState(false);
+
   const [isError, setError] = useState(false);
+
+  const [selectedLocale, setSelectedLocale] = useState(
+    new IndexPath(getIndexOfLocale()),
+  );
 
   return useMemo(() => {
     const handleSwitchTheme = async () => {
@@ -45,16 +58,38 @@ export default function Settings({ navigation }) {
       }
     };
 
+    const handleSwitchLocale = async (index) => {
+      try {
+        setLoading(true);
+        const settingsError = await updateSettings({
+          locale: LOCALES[index.row].code,
+        });
+
+        if (settingsError) {
+          await setError(true);
+        }
+      } catch (e) {
+        await setError(true);
+      } finally {
+        setLoading(false);
+      }
+      setSelectedLocale(index);
+    };
+
     const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
     // eslint-disable-next-line react/prop-types
     const routeBack = () => navigation.goBack();
 
+    const renderLocales = () => (
+      <Text>{LOCALES[selectedLocale.row].title}</Text>
+    );
+
     return (
       <Layout level="4" style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
           <TopNavigationArea
-            title="Settings"
+            title={t('settings')}
             navigation={navigation}
             screen="auth"
           />
@@ -69,48 +104,82 @@ export default function Settings({ navigation }) {
                 padding: 15,
               }}
             >
-              <View style={{ paddingBottom: 10 }}>
+              <View>
                 <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    alignItems: 'center',
                   }}
                 >
-                  <Button
-                    appearance="ghost"
-                    status="basic"
-                    size="large"
-                    accessibilityLiveRegion="polite"
-                    accessibilityComponentType="Toggle"
-                    accessibilityLabel="SwitchTheme"
-                    accessoryLeft={IconMoon}
-                    onPress={handleSwitchTheme}
-                    style={{ justifyContent: 'flex-start' }}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
                   >
-                    <Text category="s1">Dark Mode</Text>
-                  </Button>
+                    <IconMoon fill="#8F9BB3" height={24} width={24} />
+                    <Text category="s1" style={{ marginLeft: 10 }}>
+                      {t('darkMode')}
+                    </Text>
+                  </View>
                   <Toggle checked={darkMode} onChange={handleSwitchTheme} />
                 </View>
-                <Divider style={{ marginVertical: 5 }} />
-                <View style={{ paddingVertical: 20 }}>
-                  <Button
-                    status="danger"
-                    size="large"
-                    accessibilityLiveRegion="assertive"
-                    accessibilityComponentType="button"
-                    accessibilityLabel="Continue"
-                    accessoryLeft={isLoading ? renderSpinner : null}
-                    onPress={routeBack}
-                    disabled={isLoading}
+              </View>
+              <Divider style={{ marginVertical: 10 }} />
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
                   >
-                    <Text status="control">Close</Text>
-                  </Button>
+                    <IconFlag fill="#8F9BB3" height={24} width={24} />
+                    <Text category="s1" style={{ marginLeft: 10 }}>
+                      {t('language')}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Select
+                      value={renderLocales}
+                      selectedIndex={selectedLocale}
+                      onSelect={handleSwitchLocale}
+                    >
+                      {/* eslint-disable-next-line react/prop-types */}
+                      {LOCALES.map((option) => (
+                        <SelectItem key={option.title} title={option.title} />
+                      ))}
+                    </Select>
+                  </View>
                 </View>
+              </View>
+              <Divider style={{ marginVertical: 10 }} />
+              <View style={{ paddingVertical: 20 }}>
+                <Button
+                  status="danger"
+                  size="large"
+                  accessibilityLiveRegion="assertive"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Continue"
+                  accessoryLeft={isLoading ? renderSpinner : null}
+                  onPress={routeBack}
+                  disabled={isLoading}
+                >
+                  <Text status="control">{t('close')}</Text>
+                </Button>
               </View>
             </View>
           </ScrollView>
         </SafeAreaView>
       </Layout>
     );
-  }, [darkMode, isLoading, navigation, updateSettings]);
+  }, [selectedLocale, darkMode, isLoading, navigation, updateSettings, t]);
 }

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
+
+import { LocaleContext } from '~src/contexts';
 
 import useToast from '~src/hooks/useToast';
 
@@ -26,6 +28,8 @@ export default function RegisterFull({ navigation }) {
     confirmPassword: '',
   });
 
+  const t = useContext(LocaleContext);
+
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
 
@@ -36,7 +40,7 @@ export default function RegisterFull({ navigation }) {
     <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
-          title="Registration Details"
+          title={`${t('registration')} ${t('details')}`}
           navigation={navigation}
           screen="auth"
         />
@@ -62,7 +66,7 @@ export default function RegisterFull({ navigation }) {
                 <View style={{ flex: 1, marginRight: 5 }}>
                   <GeneralTextField
                     type="firstName"
-                    label="First name"
+                    label={t('firstName')}
                     androidComplete="name"
                     iosComplete="givenName"
                     validate="required"
@@ -72,7 +76,7 @@ export default function RegisterFull({ navigation }) {
                 <View style={{ flex: 1, marginLeft: 5 }}>
                   <GeneralTextField
                     type="lastName"
-                    label="Last name"
+                    label={t('lastName')}
                     androidComplete="name"
                     iosComplete="familyName"
                     validate="required"
@@ -83,7 +87,7 @@ export default function RegisterFull({ navigation }) {
               <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="username"
-                  label="Username"
+                  label={t('username')}
                   androidComplete="username"
                   iosComplete="username"
                   validate="required"
@@ -93,7 +97,7 @@ export default function RegisterFull({ navigation }) {
               <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="password"
-                  label="Password"
+                  label={t('password')}
                   androidComplete="password"
                   iosComplete="password"
                   validate="password"
@@ -104,7 +108,7 @@ export default function RegisterFull({ navigation }) {
               <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="confirmPassword"
-                  label="Password"
+                  label={`${t('confirm')} ${t('password')}`}
                   androidComplete="password"
                   iosComplete="password"
                   validate="password"
@@ -122,7 +126,7 @@ export default function RegisterFull({ navigation }) {
                   onPress={routeVerifyWithCode}
                   disabled={isLoading}
                 >
-                  <Text status="control">Continue</Text>
+                  <Text status="control">{t('continue')}</Text>
                 </Button>
               </View>
             </View>
@@ -136,10 +140,10 @@ export default function RegisterFull({ navigation }) {
                   paddingVertical: 10,
                 }}
               >
-                <Text>Already have an account?</Text>
+                <Text>{`${t('haveAccount')}?`}</Text>
                 <Button appearance="ghost" size="tiny" onPress={routeLogin}>
                   <Text category="h6" status="primary">
-                    Sign in
+                    {t('signIn')}
                   </Text>
                 </Button>
               </View>

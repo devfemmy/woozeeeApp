@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
+
+import { LocaleContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -17,6 +19,9 @@ export default function VerifyWithCode({ navigation }) {
   const [form, setFormValues] = useState({
     code: '',
   });
+
+  const t = useContext(LocaleContext);
+
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
 
@@ -24,7 +29,7 @@ export default function VerifyWithCode({ navigation }) {
     <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
-          title="Account Verification"
+          title={t('accountVerification')}
           navigation={navigation}
           screen="auth"
         />
@@ -43,7 +48,7 @@ export default function VerifyWithCode({ navigation }) {
               <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="code"
-                  label="Verification Code"
+                  label={t('verificationCode')}
                   androidComplete="off"
                   iosComplete="oneTimeCode"
                   validate="required"
@@ -55,7 +60,7 @@ export default function VerifyWithCode({ navigation }) {
                   style={{ alignSelf: 'flex-end' }}
                 >
                   <Text status="primary" category="s2">
-                    Resend Code
+                    {t('resendCode')}
                   </Text>
                 </Button>
               </View>
@@ -68,7 +73,7 @@ export default function VerifyWithCode({ navigation }) {
                   accessibilityLabel="Continue"
                   disabled={isLoading}
                 >
-                  <Text status="control">Submit</Text>
+                  <Text status="control">{t('submit')}</Text>
                 </Button>
               </View>
             </View>
@@ -81,10 +86,10 @@ export default function VerifyWithCode({ navigation }) {
                   flexWrap: 'wrap',
                 }}
               >
-                <Text>Already have an account?</Text>
+                <Text>{`${t('haveAccount')}?`}</Text>
                 <Button appearance="ghost" size="tiny" onPress={routeLogin}>
                   <Text category="h6" status="primary">
-                    Sign in
+                    {t('signIn')}
                   </Text>
                 </Button>
               </View>

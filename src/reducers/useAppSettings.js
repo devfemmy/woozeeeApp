@@ -46,19 +46,18 @@ export default function useAppSettings() {
         return msg;
       },
       // login user then set token (use login details) in storage
-      updateSettings: async (options) => {
+      updateSettings: async (settings) => {
         let msg = null;
-        let settings = null;
 
         try {
-          if (options) {
-            settings = await JSON.stringify(options);
-            await AsyncStorage.setItem('APP_SETTINGS', settings);
+          if (settings) {
+            const options = await JSON.stringify(settings);
+            await AsyncStorage.setItem('APP_SETTINGS', options);
           }
 
           await dispatch({
             type: 'UPDATE_SETTINGS',
-            settings: { ...options },
+            settings,
           });
         } catch (e) {
           msg = e;

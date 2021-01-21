@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
@@ -6,16 +6,20 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Layout, Text } from '@ui-kitten/components';
 
+import { LocaleContext } from '~src/contexts';
+
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
 // eslint-disable-next-line react/prop-types
 export default function PrivacyPolicy({ navigation }) {
+  const t = useContext(LocaleContext);
+
   return useMemo(
     () => (
       <Layout level="4" style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
           <TopNavigationArea
-            title="Privacy Policy"
+            title={t('privacyPolicy')}
             navigation={navigation}
             screen="auth"
           />
@@ -80,6 +84,6 @@ export default function PrivacyPolicy({ navigation }) {
         </SafeAreaView>
       </Layout>
     ),
-    [navigation],
+    [navigation, t],
   );
 }

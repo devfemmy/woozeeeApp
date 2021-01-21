@@ -22,22 +22,31 @@ import {
 
 import axios from 'axios';
 
+import { AxiosProvider } from 'react-axios';
+
+import i18n from 'i18n-js';
+
 import mapping from '~src/constants/mapping.json';
 
 import mappingTheme from '~src/constants/mappingTheme';
 
-import useMounted from '~src/hooks/useMounted';
-
 import usePreFetchResources from '~src/hooks/usePreFetchResources';
 
-import { AppSettingsContext, AuthContext, LoadingContext } from '~src/contexts';
+import {
+  AppSettingsContext,
+  AuthContext,
+  LoadingContext,
+  LocaleContext,
+} from '~src/contexts';
 
 import useAppSettings from '~src/reducers/useAppSettings';
 
 import useAuth from '~src/reducers/useAuth';
 
 import Router from '~src/router';
-import { AxiosProvider } from 'react-axios';
+
+import en from '~src/translations/en.json';
+import fr from '~src/translations/fr.json';
 
 enableScreens();
 
@@ -53,12 +62,14 @@ const axiosInstance = axios.create({
   },
 });
 
+i18n.translations = { en, fr };
+
+i18n.fallbacks = true;
+
 export default function App() {
   SplashScreen.preventAutoHideAsync()
     .then(() => {})
     .catch(() => {});
-
-  const isMounted = useMounted();
 
   const isPreloaded = usePreFetchResources();
 
@@ -79,8 +90,7 @@ export default function App() {
   });
 
   useMemo(() => {
-    async function preFetchData() {
-      if (isMounted) return;
+    (async () => {
       try {
         await setLoading(true);
 
@@ -100,10 +110,12 @@ export default function App() {
       } finally {
         await setLoading(false);
       }
-    }
+    })();
+  }, [fetchSettings, fetchToken]);
 
-    preFetchData().then(() => {});
-  }, [isMounted, fetchSettings, fetchToken]);
+  i18n.locale = appState.locale || 'en';
+
+  const t = (scope) => i18n.t(scope);
 
   const themeMode = appState.darkMode ? 'dark' : 'light';
 
@@ -129,11 +141,13 @@ export default function App() {
                 authOptions,
               }}
             >
-              <LoadingContext.Provider value={{ isLoading, setLoading }}>
-                <Layout level="4" style={{ flex: 1 }}>
-                  <Router />
-                </Layout>
-              </LoadingContext.Provider>
+              <LocaleContext.Provider value={t}>
+                <LoadingContext.Provider value={{ isLoading, setLoading }}>
+                  <Layout level="4" style={{ flex: 1 }}>
+                    <Router />
+                  </Layout>
+                </LoadingContext.Provider>
+              </LocaleContext.Provider>
             </AuthContext.Provider>
           </AppSettingsContext.Provider>
         </AxiosProvider>

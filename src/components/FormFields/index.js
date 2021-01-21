@@ -107,7 +107,7 @@ export function GeneralTextField(props) {
         label={label}
         secureTextEntry={isSecureEntry}
         accessibilityLabel={label}
-        placeholder={`Enter ${label}`}
+        placeholder={label}
         autoCompleteType={androidComplete}
         textContentType={iosComplete}
         status={inputVal.status}
@@ -232,7 +232,7 @@ export function GeneralAutocomplete(props) {
         label={label}
         placement="top start"
         size="large"
-        placeholder={`Choose ${label}`}
+        placeholder={label}
         value={value}
         onSelect={handleSelect}
         onChangeText={handleChange}
@@ -284,7 +284,7 @@ export function GeneralSelect(props) {
         ))}
       </Select>
     ),
-    [data, handleSelect, label, selectedOption, renderOption],
+    [data, handleSelect, label, size, selectedOption, renderOption],
   );
 }
 

@@ -62,7 +62,7 @@ export default function useAuth() {
 
           // prettier-ignore
           msg = await userData.email.toLowerCase().trim() !== dev.email
-            ? 'Email / password is incorrect'
+            ? 'loginNotFound'
             : null;
 
           if (!msg) {

@@ -24,9 +24,6 @@ import FAQs from '~src/screens/Common/Extras/FAQs';
 import Settings from '~src/screens/User/Common/Settings';
 import EditProfile from '~src/screens/User/Common/EditProfile';
 
-// Explore View all Screen
-import ViewAll from '~src/screens/User/HomeTab/Socials/ExploreTab/ViewAll';
-
 /* Routes import */
 import UserRoute from './User';
 import SocialsRoute from './User/HomeTab/Socials';

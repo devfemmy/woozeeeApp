@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
-import { View, ScrollView, Image, TouchableOpacity } from 'react-native';
+// prettier-ignore
+import {
+  View, ScrollView, Image, TouchableOpacity,
+} from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -9,9 +12,15 @@ import {
   Layout, Button, Text,
 } from '@ui-kitten/components';
 
+import { LocaleContext } from '~src/contexts';
+
 import useImagePicker from '~src/hooks/useImagePicker';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
+
+import genders from './genders.json';
+import countries from './countries.json';
+import states from './states.json';
 
 import {
   GeneralTextField,
@@ -20,27 +29,11 @@ import {
   GeneralDatePicker,
 } from '~src/components/FormFields';
 
-const GENDER = ['Female', 'Male'];
+const GENDERS = genders;
 
-const COUNTRIES = [
-  { title: 'Nigeria' },
-  { title: 'Japan' },
-  { title: 'India' },
-  { title: 'Korea' },
-  { title: 'United states' },
-];
+const COUNTRIES = countries;
 
-const STATES = [
-  { title: 'Lagos' },
-  { title: 'Imo' },
-  { title: 'Abuja' },
-  { title: 'Kaduna' },
-  { title: 'Adamawa' },
-  { title: 'Zamfara' },
-  { title: 'Zaria' },
-  { title: 'Sokoto' },
-  { title: 'Kaduna' },
-];
+const STATES = states;
 
 // eslint-disable-next-line react/prop-types
 export default function EditProfile({ navigation }) {
@@ -65,6 +58,8 @@ export default function EditProfile({ navigation }) {
     bio: '',
   });
 
+  const t = useContext(LocaleContext);
+
   const libraryImagePicker = useImagePicker('Images');
 
   const selectCoverImage = async () => {
@@ -81,7 +76,7 @@ export default function EditProfile({ navigation }) {
     <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
-          title="Update Profile"
+          title={t('updateProfile')}
           navigation={navigation}
           screen="auth"
         />
@@ -160,7 +155,7 @@ export default function EditProfile({ navigation }) {
                 <View style={{ flex: 1, marginRight: 5 }}>
                   <GeneralTextField
                     type="firstName"
-                    label="First name"
+                    label={t('firstName')}
                     androidComplete="name"
                     iosComplete="givenName"
                     validate="required"
@@ -170,7 +165,7 @@ export default function EditProfile({ navigation }) {
                 <View style={{ flex: 1, marginLeft: 5 }}>
                   <GeneralTextField
                     type="lastName"
-                    label="Last name"
+                    label={t('lastName')}
                     androidComplete="name"
                     iosComplete="familyName"
                     validate="required"
@@ -181,7 +176,7 @@ export default function EditProfile({ navigation }) {
               <View style={{ paddingVertical: 5 }}>
                 <GeneralTextField
                   type="username"
-                  label="Username"
+                  label={t('username')}
                   androidComplete="username"
                   iosComplete="username"
                   validate="required"
@@ -198,15 +193,15 @@ export default function EditProfile({ navigation }) {
                 <View style={{ flex: 1, marginRight: 5 }}>
                   <GeneralRadioGroup
                     type="gender"
-                    label="Gender"
-                    data={GENDER}
+                    label={t('gender')}
+                    data={GENDERS}
                     setFormValues={setFormValues}
                   />
                 </View>
                 <View style={{ flex: 1, marginLeft: 5 }}>
                   <GeneralDatePicker
                     type="dob"
-                    label="Date of birth"
+                    label={t('dob')}
                     setFormValues={setFormValues}
                   />
                 </View>
@@ -221,7 +216,7 @@ export default function EditProfile({ navigation }) {
                 <View style={{ flex: 1, marginRight: 5 }}>
                   <GeneralSelect
                     type="country"
-                    label="Country"
+                    label={t('country')}
                     data={COUNTRIES}
                     setFormValues={setFormValues}
                   />
@@ -229,7 +224,7 @@ export default function EditProfile({ navigation }) {
                 <View style={{ flex: 1, marginLeft: 5 }}>
                   <GeneralSelect
                     type="state"
-                    label="State"
+                    label={t('state')}
                     data={STATES}
                     setFormValues={setFormValues}
                   />
@@ -238,7 +233,7 @@ export default function EditProfile({ navigation }) {
               <View style={{ paddingVertical: 5 }}>
                 <GeneralTextField
                   type="bio"
-                  label="Bio"
+                  label={t('bio')}
                   multiline
                   height={50}
                   validate="required"
@@ -254,7 +249,7 @@ export default function EditProfile({ navigation }) {
                   accessibilityLabel="Continue"
                   disabled={isLoading}
                 >
-                  <Text status="control">Continue</Text>
+                  <Text status="control">{t('continue')}</Text>
                 </Button>
               </View>
             </View>

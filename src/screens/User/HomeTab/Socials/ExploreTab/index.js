@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import { View, ScrollView, useWindowDimensions } from 'react-native';
 
@@ -10,6 +10,8 @@ import {
 } from '@ui-kitten/components';
 
 import { Get } from 'react-axios';
+
+import { LocaleContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -25,6 +27,8 @@ import { exploreUrl, trendingUrl } from '~src/api/dummy';
 // eslint-disable-next-line react/prop-types
 export default function Explore({ navigation }) {
   const { width, height } = useWindowDimensions();
+
+  const t = useContext(LocaleContext);
 
   const { plWidth, plHeight } = useMemo(
     () => ({ plWidth: width / 2, plHeight: (height - 150) / 3 }),
@@ -63,13 +67,13 @@ export default function Explore({ navigation }) {
                       }}
                     >
                       <Text style={{ marginBottom: 10 }}>
-                        Failed to fetch Challenges, Please try again!
+                        {t('networkError')}
                       </Text>
                       <Button
                         /* prettier-ignore */
                         onPress={() => makeRequest({ params: { reload: true } })}
                       >
-                        <Text status="control">Retry</Text>
+                        <Text status="control">{t('retry')}</Text>
                       </Button>
                     </View>
                   );
@@ -106,13 +110,13 @@ export default function Explore({ navigation }) {
                         }}
                       >
                         <Text style={{ marginBottom: 10 }}>
-                          No Challenges available!
+                          {t('noVideos')}
                         </Text>
                         <Button
                           /* prettier-ignore */
                           onPress={() => makeRequest({ params: { refresh: true } })}
                         >
-                          <Text status="control">Refresh</Text>
+                          <Text status="control">{t('refresh')}</Text>
                         </Button>
                       </View>
                     );
@@ -121,7 +125,7 @@ export default function Explore({ navigation }) {
                     <View style={{ marginBottom: 20, paddingVertical: 5 }}>
                       <View style={{ paddingHorizontal: 10 }}>
                         <Text category="h6" style={{ marginBottom: 5 }}>
-                          Trending Challenges
+                          {t('trendingChallenges')}
                         </Text>
                       </View>
                       <List
@@ -163,17 +167,17 @@ export default function Explore({ navigation }) {
                         padding: 10,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        height: height - 150,
+                        height: height - 300,
                       }}
                     >
                       <Text style={{ marginBottom: 10 }}>
-                        Failed to fetch Challenges, Please try again!
+                        {t('networkError')}
                       </Text>
                       <Button
                         /* prettier-ignore */
                         onPress={() => makeRequest({ params: { reload: true } })}
                       >
-                        <Text status="control">Retry</Text>
+                        <Text status="control">{t('retry')}</Text>
                       </Button>
                     </View>
                   );
@@ -210,13 +214,13 @@ export default function Explore({ navigation }) {
                         }}
                       >
                         <Text style={{ marginBottom: 10 }}>
-                          No Videos available!
+                          {t('noVideos')}
                         </Text>
                         <Button
                           /* prettier-ignore */
                           onPress={() => makeRequest({ params: { refresh: true } })}
                         >
-                          <Text status="control">Refresh</Text>
+                          <Text status="control">{t('refresh')}</Text>
                         </Button>
                       </View>
                     );
@@ -245,9 +249,7 @@ export default function Explore({ navigation }) {
                           </Text>
                           {/* prettier-ignore */}
                           <Text category="c1" style={{ marginBottom: 5 }}>
-                            {item.content.length}
-                            {' '}
-                            Video(s)
+                            {`${item.content.length} ${t('video')}(s)`}
                           </Text>
                         </View>
                         <View>
@@ -257,7 +259,7 @@ export default function Explore({ navigation }) {
                             onPress={routeViewAll}
                           >
                             <Text status="primary" category="label">
-                              View all
+                              {t('viewAll')}
                             </Text>
                           </Button>
                         </View>

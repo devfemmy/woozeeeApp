@@ -17,7 +17,7 @@ import {
 
 import { Get } from 'react-axios';
 
-import { LoadingContext } from '~src/contexts';
+import { LoadingContext, LocaleContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -40,6 +40,8 @@ export default function Profile({ navigation }) {
 
   const { isLoading: loading } = useContext(LoadingContext);
 
+  const t = useContext(LocaleContext);
+
   const IS_PORTRAIT = height > width;
 
   const { plWidth, plHeight } = useMemo(
@@ -51,6 +53,9 @@ export default function Profile({ navigation }) {
   );
 
   const [activeTab, setActiveTab] = useState(0);
+
+  // eslint-disable-next-line react/prop-types
+  const routeEditProfile = () => navigation.navigate('EditProfile');
 
   const TabsMenu = (props) => {
     // eslint-disable-next-line react/prop-types
@@ -88,7 +93,7 @@ export default function Profile({ navigation }) {
               appearance="ghost"
               status={activeTab === 1 ? 'primary' : 'basic'}
               size="large"
-              accessibilityLabel="All"
+              accessibilityLabel="Saved"
               accessibilityLiveRegion="polite"
               accessoryLeft={IconBookmark}
               onPress={() => updateTab(1)}
@@ -97,7 +102,7 @@ export default function Profile({ navigation }) {
               appearance="ghost"
               status={activeTab === 2 ? 'primary' : 'basic'}
               size="large"
-              accessibilityLabel="All"
+              accessibilityLabel="Liked"
               accessibilityLiveRegion="polite"
               accessoryLeft={IconHeart}
               onPress={() => updateTab(2)}
@@ -192,9 +197,13 @@ export default function Profile({ navigation }) {
                   </Text>
                 </View>
                 <View style={{ marginBottom: 10 }}>
-                  <Button status="primary" size="small">
+                  <Button
+                    status="primary"
+                    size="small"
+                    onPress={routeEditProfile}
+                  >
                     <Text status="control" category="p2">
-                      Edit Profile
+                      {`${t('edit')} ${t('profile')}`}
                     </Text>
                   </Button>
                 </View>
@@ -209,19 +218,19 @@ export default function Profile({ navigation }) {
                   <View style={{ alignItems: 'center' }}>
                     <Text category="h6">1.2m</Text>
                     <Text category="p2" appearance="hint">
-                      Videos
+                      {`${t('video')}s`}
                     </Text>
                   </View>
                   <View style={{ alignItems: 'center' }}>
                     <Text category="h6">12.3K</Text>
                     <Text category="p2" appearance="hint">
-                      Followers
+                      {t('followers')}
                     </Text>
                   </View>
                   <View style={{ alignItems: 'center' }}>
                     <Text category="h6">1.9k</Text>
                     <Text category="p2" appearance="hint">
-                      Following
+                      {t('following')}
                     </Text>
                   </View>
                 </View>
@@ -251,13 +260,13 @@ export default function Profile({ navigation }) {
                         }}
                       >
                         <Text style={{ marginBottom: 10 }}>
-                          Failed to fetch Videos, Please try again!
+                          {t('networkError')}
                         </Text>
                         <Button
                           /* prettier-ignore */
                           onPress={() => makeRequest({ params: { reload: true } })}
                         >
-                          <Text status="control">Retry</Text>
+                          <Text status="control">{t('retry')}</Text>
                         </Button>
                       </View>
                     </>
@@ -297,13 +306,13 @@ export default function Profile({ navigation }) {
                           }}
                         >
                           <Text style={{ marginBottom: 10 }}>
-                            No Videos available!
+                            {t('noVideos')}
                           </Text>
                           <Button
                             /* prettier-ignore */
                             onPress={() => makeRequest({ params: { refresh: true } })}
                           >
-                            <Text status="control">Refresh</Text>
+                            <Text status="control">{t('refresh')}</Text>
                           </Button>
                         </View>
                       </>

@@ -17,7 +17,7 @@ import {
   Layout, Text, List,
 } from '@ui-kitten/components';
 
-import { LoadingContext } from '~src/contexts';
+import { LoadingContext, LocaleContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -45,21 +45,21 @@ const woozeeeCards = [
 
 const woozeeeCategories = [
   {
-    title: 'woozeee Socials',
+    title: 'socials',
     banner: require('~assets/images/banner/woozeee-socials.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fsocial.mp4?alt=media&token=afc818c3-7857-4368-88b9-3d2d16baea09',
     screen: 'SocialsRoute',
   },
   {
-    title: 'woozeee Marketplace',
+    title: 'marketplace',
     banner: require('~assets/images/banner/woozeee-marketplace.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fmarket.mp4?alt=media&token=2709a1b4-8d3b-4d74-a364-63a276e94493',
     screen: 'SocialsRoute',
   },
   {
-    title: 'woozeee Charity',
+    title: 'charity',
     banner: require('~assets/images/banner/woozeee-charity.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fcharity.mp4?alt=media&token=c837385b-fef5-4df3-ad36-c36560fe0ee0',
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
 
 const Balance = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { value } = props;
+  const { value, point } = props;
   // eslint-disable-next-line react/prop-types
   const [wholeNum, decimalNum] = value.split('.');
 
@@ -100,11 +100,11 @@ const Balance = (props) => {
         </Text>
         {/* prettier-ignore */}
         <Text category="p2">
-          {decimalNum ? `.${decimalNum}` : 'point(s)' }
+          {decimalNum ? `.${decimalNum}` : `${point}(s)` }
         </Text>
       </View>
     ),
-    [wholeNum, decimalNum],
+    [wholeNum, decimalNum, point],
   );
 };
 
@@ -119,6 +119,8 @@ export default function Home({ navigation }) {
   const CARD_HEIGHT = IS_PORTRAIT ? 170 : 140;
 
   const CATEGORY_HEIGHT = IS_PORTRAIT ? 250 : 220;
+
+  const t = useContext(LocaleContext);
 
   const { isLoading } = useContext(LoadingContext);
 
@@ -137,7 +139,7 @@ export default function Home({ navigation }) {
       }}
       key={data.item.key}
     >
-      <Balance value={data.item.balance} />
+      <Balance value={data.item.balance} point={t('point')} />
       <Image
         source={data.item.banner}
         style={{
@@ -176,7 +178,7 @@ export default function Home({ navigation }) {
 
       <BlurView intensity={25} tint="dark" style={styles.cardContent}>
         <Text category="h4" style={{ color: 'white' }}>
-          {data.item.title}
+          {` woozeee ${t(data.item.title)} `}
         </Text>
       </BlurView>
     </TouchableOpacity>

@@ -10,7 +10,7 @@ import Logo from './components/Logo';
 import SearchField from './components/SearchField';
 import TopNavigationMenu from './components/TopNavigationMenu';
 
-import { IconFlag } from '~src/components/CustomIcons';
+import { IconCFlag } from '~src/components/CustomIcons';
 
 export default function TopNavigationArea(props) {
   const {
@@ -61,7 +61,7 @@ export default function TopNavigationArea(props) {
           /* eslint-disable-next-line react/jsx-props-no-spreading */
           title={(evaProps) => <Logo {...evaProps} />}
           /* eslint-disable-next-line react/jsx-props-no-spreading */
-          accessoryLeft={IconFlag}
+          accessoryLeft={IconCFlag}
           accessoryRight={(evaProps) => (
             /* eslint-disable-next-line react/jsx-props-no-spreading */
             <TopNavigationMenu {...evaProps} navigation={navigation} />

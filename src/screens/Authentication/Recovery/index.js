@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
+
+import { LocaleContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -18,6 +20,8 @@ export default function RecoverWithEmail({ navigation }) {
     email: '',
   });
 
+  const t = useContext(LocaleContext);
+
   // eslint-disable-next-line react/prop-types
   const routeRegister = () => navigation.navigate('Register');
 
@@ -25,7 +29,7 @@ export default function RecoverWithEmail({ navigation }) {
     <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
-          title="Account Recovery"
+          title={t('accountRecovery')}
           navigation={navigation}
           screen="auth"
         />
@@ -44,7 +48,7 @@ export default function RecoverWithEmail({ navigation }) {
               <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="email"
-                  label="Email address"
+                  label={t('emailAddress')}
                   androidComplete="email"
                   iosComplete="emailAddress"
                   validate="email"
@@ -60,7 +64,7 @@ export default function RecoverWithEmail({ navigation }) {
                   accessibilityLabel="Continue"
                   disabled={isLoading}
                 >
-                  <Text status="control">Continue</Text>
+                  <Text status="control">{t('continue')}</Text>
                 </Button>
               </View>
             </View>
@@ -73,10 +77,10 @@ export default function RecoverWithEmail({ navigation }) {
                   flexWrap: 'wrap',
                 }}
               >
-                <Text>Don&apos;t have an account?</Text>
+                <Text>{`${t('dontHaveAccount')}?`}</Text>
                 <Button appearance="ghost" size="tiny" onPress={routeRegister}>
                   <Text category="h6" status="primary">
-                    Sign up
+                    {t('signUp')}
                   </Text>
                 </Button>
               </View>

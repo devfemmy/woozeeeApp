@@ -1,8 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 
 import { View } from 'react-native';
 
 import { Input } from '@ui-kitten/components';
+
+import { LocaleContext } from '~src/contexts';
 
 import { IconSearch } from '~src/components/CustomIcons';
 
@@ -11,6 +13,8 @@ export default function SearchField(props) {
     value: '',
     status: 'basic',
   });
+
+  const t = useContext(LocaleContext);
 
   const handleChange = (inputSearch) => {
     setFormValues((prevState) => ({
@@ -34,13 +38,13 @@ export default function SearchField(props) {
           size="medium"
           value={form.value}
           accessibilityLabel="Search"
-          placeholder="Search interests"
+          placeholder={`${t('search')} ${t('interests')}`}
           status={form.status}
           onChangeText={handleChange}
           accessoryLeft={IconSearch}
         />
       </View>
     ),
-    [form.value, form.status, props],
+    [form.value, form.status, props, t],
   );
 }

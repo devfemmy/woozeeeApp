@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
+
+import { LocaleContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -24,6 +26,8 @@ export default function Register({ navigation }) {
     email: '',
   });
 
+  const t = useContext(LocaleContext);
+
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
   // eslint-disable-next-line react/prop-types
@@ -37,7 +41,7 @@ export default function Register({ navigation }) {
     <Layout level="4" style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
-          title="Registration"
+          title={t('registration')}
           navigation={navigation}
           icon="close"
           screen="auth"
@@ -57,7 +61,7 @@ export default function Register({ navigation }) {
               <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="email"
-                  label="Email address"
+                  label={t('emailAddress')}
                   androidComplete="email"
                   iosComplete="emailAddress"
                   validate="email"
@@ -74,7 +78,7 @@ export default function Register({ navigation }) {
                   onPress={routeRegisterFull}
                   disabled={isLoading}
                 >
-                  <Text status="control">Continue</Text>
+                  <Text status="control">{t('continue')}</Text>
                 </Button>
               </View>
             </View>
@@ -87,28 +91,24 @@ export default function Register({ navigation }) {
                   flexWrap: 'wrap',
                 }}
               >
-                <Text category="p2">
-                  By Continuing, you agree to woozeee&apos;s
-                </Text>
+                <Text category="p2">{`${t('continueAgree')} woozeee's`}</Text>
                 <Button
                   appearance="ghost"
                   size="tiny"
                   onPress={routeTermsConditions}
                 >
                   <Text status="primary" category="s2">
-                    Terms and condition
+                    {t('termsConditions')}
                   </Text>
                 </Button>
-                <Text category="p2">
-                  and confirm that you have read woozeee&apos;s
-                </Text>
+                <Text category="p2">{`${t('confirmRead')} woozeee's`}</Text>
                 <Button
                   appearance="ghost"
                   size="tiny"
                   onPress={routePrivacyPolicy}
                 >
                   <Text status="primary" category="s2">
-                    Privacy policy
+                    {t('privacyPolicy')}
                   </Text>
                 </Button>
               </View>
@@ -119,7 +119,7 @@ export default function Register({ navigation }) {
                   paddingBottom: 10,
                 }}
               >
-                <Text>Or continue with</Text>
+                <Text>{t('orContinueWith')}</Text>
               </View>
               <View style={{ paddingVertical: 10 }}>
                 <Button
@@ -166,10 +166,10 @@ export default function Register({ navigation }) {
                   paddingVertical: 10,
                 }}
               >
-                <Text>Already have an account?</Text>
+                <Text>{`${t('haveAccount')}?`}</Text>
                 <Button appearance="ghost" size="tiny" onPress={routeLogin}>
                   <Text status="primary" category="h6">
-                    Sign in
+                    {t('signIn')}
                   </Text>
                 </Button>
               </View>

@@ -155,6 +155,11 @@ export const IconRadio = (props) => (
   <Icon {...props} name="radio-outline" />
 );
 
+export const IconFlag = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="flag-outline" />
+);
+
 export const IconLogout = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="log-out-outline" />
@@ -215,21 +220,6 @@ export const IconMoon = (props) => (
   <Icon {...props} name="moon-outline" />
 );
 
-export const IconFlag = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const { width, height } = props;
-
-  return (
-    <Image
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-      source={require('~assets/images/icon/flag-ng.png')}
-      resizeMode="contain"
-      style={{ width: width || 40, height: height || 40 }}
-    />
-  );
-};
-
 export const IconFacebook = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="facebook-outline" />
@@ -244,3 +234,18 @@ export const IconTwitter = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="twitter-outline" />
 );
+
+export const IconCFlag = (props) => {
+  // eslint-disable-next-line react/prop-types
+  const { width, height } = props;
+
+  return (
+    <Image
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      source={require('~assets/images/icon/flag-ng.png')}
+      resizeMode="contain"
+      style={{ width: width || 40, height: height || 40 }}
+    />
+  );
+};

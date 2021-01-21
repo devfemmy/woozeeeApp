@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import { View, useWindowDimensions } from 'react-native';
 
@@ -10,6 +10,8 @@ import {
 } from '@ui-kitten/components';
 
 import { Get } from 'react-axios';
+
+import { LocaleContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -25,6 +27,8 @@ import { trendingUrl } from '~src/api/dummy';
 // eslint-disable-next-line react/prop-types
 export default function ViewAll({ navigation }) {
   const { width, height } = useWindowDimensions();
+
+  const t = useContext(LocaleContext);
 
   const IS_PORTRAIT = height > width;
 
@@ -63,13 +67,13 @@ export default function ViewAll({ navigation }) {
                     }}
                   >
                     <Text style={{ marginBottom: 10 }}>
-                      Failed to fetch Videos, Please try again!
+                      {t('networkError')}
                     </Text>
                     <Button
                       /* prettier-ignore */
                       onPress={() => makeRequest({ params: { reload: true } })}
                     >
-                      <Text status="control">Retry</Text>
+                      <Text status="control">{t('retry')}</Text>
                     </Button>
                   </View>
                 );
@@ -105,14 +109,12 @@ export default function ViewAll({ navigation }) {
                         height: height - 150,
                       }}
                     >
-                      <Text style={{ marginBottom: 10 }}>
-                        No Videos available!
-                      </Text>
+                      <Text style={{ marginBottom: 10 }}>{t('noVideos')}</Text>
                       <Button
                         /* prettier-ignore */
                         onPress={() => makeRequest({ params: { refresh: true } })}
                       >
-                        <Text status="control">Refresh</Text>
+                        <Text status="control">{t('refresh')}</Text>
                       </Button>
                     </View>
                   );

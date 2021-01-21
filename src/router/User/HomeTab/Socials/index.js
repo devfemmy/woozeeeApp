@@ -16,7 +16,7 @@ export default function SocialsRoute() {
   return (
     <Navigator
       detachInactiveScreens /* eslint-disable-next-line react/jsx-props-no-spreading */
-      tabBar={(props) => <BottomNavigationArea {...props} page="socials" />}
+      tabBar={(props) => <BottomNavigationArea {...props} page="social" />}
     >
       <Screen name="SocialTab" component={SocialTab} />
       <Screen name="ExploreTab" component={ExploreTab} />

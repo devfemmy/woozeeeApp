@@ -1,6 +1,7 @@
 // initial state values
 const initialState = {
   darkMode: false,
+  locale: 'en',
 };
 
 // set initial state value in the reducer, keeping the original for reset features

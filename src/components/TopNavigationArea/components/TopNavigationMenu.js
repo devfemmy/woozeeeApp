@@ -6,7 +6,7 @@ import {
   MenuItem,
 } from '@ui-kitten/components';
 
-import { AuthContext, LoadingContext } from '~src/contexts';
+import { AuthContext, LoadingContext, LocaleContext } from '~src/contexts';
 
 import {
   IconMoreVertical,
@@ -25,6 +25,8 @@ export default function TopNavigationMenu(props) {
   const { logout } = authOptions;
 
   const { setLoading } = useContext(LoadingContext);
+
+  const t = useContext(LocaleContext);
 
   return useMemo(() => {
     const toggleMenu = () => setNavigationMenuOpen((prevState) => !prevState);
@@ -72,20 +74,20 @@ export default function TopNavigationMenu(props) {
       >
         <MenuItem
           accessoryLeft={IconEdit}
-          title="Edit Profile"
+          title={`${t('edit')} ${t('profile')}`}
           onPress={routeEditProfile}
         />
         <MenuItem
           accessoryLeft={IconSettings}
-          title="Settings"
+          title={t('settings')}
           onPress={routeSettings}
         />
         <MenuItem
           accessoryLeft={IconLogout}
-          title="Logout"
+          title={t('logout')}
           onPress={logoutUser}
         />
       </OverflowMenu>
     );
-  }, [navigation, isNavigationMenuOpen, logout, setLoading, props]);
+  }, [navigation, isNavigationMenuOpen, logout, setLoading, props, t]);
 }

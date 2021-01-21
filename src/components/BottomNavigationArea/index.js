@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { Image, TouchableOpacity } from 'react-native';
 
@@ -8,6 +8,8 @@ import {
   Layout,
   Divider,
 } from '@ui-kitten/components';
+
+import { LocaleContext } from '~src/contexts';
 
 import {
   IconHome,
@@ -59,17 +61,17 @@ const IconUpload = () => (
 // Screens
 const tabs = {
   user: {
-    Home: IconHome,
-    Wallet: IconCreditCard,
-    'Bill Pay': IconCalendar,
-    Activities: IconClock,
+    home: IconHome,
+    wallet: IconCreditCard,
+    billPay: IconCalendar,
+    activities: IconClock,
   },
-  socials: {
-    Social: IconRadio,
-    Explore: IconSearch,
+  social: {
+    socials: IconRadio,
+    explore: IconSearch,
     upload: IconUpload,
-    Challenge: IconMic,
-    Profile: IconPerson,
+    challenge: IconMic,
+    profile: IconPerson,
   },
 };
 
@@ -79,6 +81,8 @@ export default function BottomNavigationArea(props) {
   // eslint-disable-next-line react/prop-types
     navigation, state, style, page,
   } = props;
+
+  const t = useContext(LocaleContext);
 
   return (
     <Layout level="4">
@@ -93,7 +97,7 @@ export default function BottomNavigationArea(props) {
       >
         {Object.entries(tabs[page]).map(([title, icon]) => (
           <BottomNavigationTab
-            title={title === 'upload' ? null : title}
+            title={title === 'upload' ? null : t(title)}
             icon={icon}
             key={title}
           />
