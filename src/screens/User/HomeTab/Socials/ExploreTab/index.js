@@ -1,42 +1,25 @@
-import React, { useContext, useMemo } from 'react';
+import React from 'react';
 
-import { View, ScrollView, useWindowDimensions } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-// prettier-ignore
-import {
-  Layout, Text, List, Button,
-} from '@ui-kitten/components';
-
-import { Get } from 'react-axios';
-
-import { LocaleContext } from '~src/contexts';
+import { Layout } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import VideoCard from '~src/components/Socials/VideoCard';
+import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
 
-import {
-  CustomPlaceholder,
-  FullPlaceholder,
-} from '~src/components/CustomPlaceholder';
+import { TrendingChallenges, UsersPosts } from '~src/components/VideoPosts';
 
-import { exploreUrl, trendingUrl } from '~src/api/dummy';
+import { trendingUrl, challengeUrl } from '~src/api/dummy';
 
 // eslint-disable-next-line react/prop-types
 export default function Explore({ navigation }) {
-  const { width, height } = useWindowDimensions();
+  // prettier-ignore
+  const TrendingChallengesArea = () => WithVideoPosts(TrendingChallenges, trendingUrl, 2);
 
-  const t = useContext(LocaleContext);
-
-  const { plWidth, plHeight } = useMemo(
-    () => ({ plWidth: width / 2, plHeight: (height - 150) / 3 }),
-    [width, height],
-  );
-
-  // eslint-disable-next-line react/prop-types
-  const routeViewAll = () => navigation.navigate('ViewAll');
+  const UserPostsArea = () => WithVideoPosts(UsersPosts, challengeUrl, 4);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
@@ -54,245 +37,12 @@ export default function Explore({ navigation }) {
           showsHorizontalScrollIndicator={false}
         >
           <View style={{ paddingBottom: 20 }}>
-            <Get url={trendingUrl}>
-              {(error, response, isLoading, makeRequest) => {
-                if (error) {
-                  return (
-                    <View
-                      style={{
-                        flex: 1,
-                        padding: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <Text style={{ marginBottom: 10 }}>
-                        {t('networkError')}
-                      </Text>
-                      <Button
-                        /* prettier-ignore */
-                        onPress={() => makeRequest({ params: { reload: true } })}
-                      >
-                        <Text status="control">{t('retry')}</Text>
-                      </Button>
-                    </View>
-                  );
-                }
-                if (isLoading) {
-                  return (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        flexWrap: 'wrap',
-                        paddingVertical: 10,
-                        paddingBottom: 10,
-                      }}
-                    >
-                      {[1, 2].map((val) => (
-                        <CustomPlaceholder
-                          width={plWidth}
-                          height={plHeight}
-                          key={val}
-                        />
-                      ))}
-                    </View>
-                  );
-                }
-                if (response !== null) {
-                  if (response.data.length < 1) {
-                    return (
-                      <View
-                        style={{
-                          flex: 1,
-                          padding: 10,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <Text style={{ marginBottom: 10 }}>
-                          {t('noVideos')}
-                        </Text>
-                        <Button
-                          /* prettier-ignore */
-                          onPress={() => makeRequest({ params: { refresh: true } })}
-                        >
-                          <Text status="control">{t('refresh')}</Text>
-                        </Button>
-                      </View>
-                    );
-                  }
-                  return (
-                    <View style={{ marginBottom: 20, paddingVertical: 5 }}>
-                      <View style={{ paddingHorizontal: 10 }}>
-                        <Text category="h6" style={{ marginBottom: 5 }}>
-                          {t('trendingChallenges')}
-                        </Text>
-                      </View>
-                      <List
-                        style={{ backgroundColor: 'transparent' }}
-                        alwaysBounceHorizontal
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                        data={response.data}
-                        renderItem={(renderData) => (
-                          <VideoCard data={renderData.item} extraWidth={0.5} />
-                        )}
-                        getItemLayout={(data, index) => ({
-                          length: 170,
-                          offset: 170 * index,
-                          index,
-                        })}
-                      />
-                    </View>
-                  );
-                }
-                return (
-                  <View style={{ paddingBottom: 10 }}>
-                    <FullPlaceholder
-                      width={width - 10}
-                      height={(height - 150) / 3}
-                    />
-                  </View>
-                );
-              }}
-            </Get>
-            <Get url={exploreUrl}>
-              {(error, response, isLoading, makeRequest) => {
-                if (error) {
-                  return (
-                    <View
-                      style={{
-                        flex: 1,
-                        padding: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        height: height - 300,
-                      }}
-                    >
-                      <Text style={{ marginBottom: 10 }}>
-                        {t('networkError')}
-                      </Text>
-                      <Button
-                        /* prettier-ignore */
-                        onPress={() => makeRequest({ params: { reload: true } })}
-                      >
-                        <Text status="control">{t('retry')}</Text>
-                      </Button>
-                    </View>
-                  );
-                }
-                if (isLoading) {
-                  return (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        flexWrap: 'wrap',
-                        paddingVertical: 10,
-                      }}
-                    >
-                      {[1, 2, 3, 4].map((val) => (
-                        <CustomPlaceholder
-                          width={plWidth}
-                          height={plHeight}
-                          key={val}
-                        />
-                      ))}
-                    </View>
-                  );
-                }
-                if (response !== null) {
-                  if (response.data.length < 1) {
-                    return (
-                      <View
-                        style={{
-                          flex: 1,
-                          padding: 10,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          height: height - 150,
-                        }}
-                      >
-                        <Text style={{ marginBottom: 10 }}>
-                          {t('noVideos')}
-                        </Text>
-                        <Button
-                          /* prettier-ignore */
-                          onPress={() => makeRequest({ params: { refresh: true } })}
-                        >
-                          <Text status="control">{t('refresh')}</Text>
-                        </Button>
-                      </View>
-                    );
-                  }
-                  return response.data.map((item) => (
-                    <View
-                      style={{
-                        flex: 1,
-                        marginBottom: 10,
-                        paddingVertical: 5,
-                        maxHeight: 215,
-                      }}
-                      key={item.category}
-                    >
-                      <View
-                        style={{
-                          paddingHorizontal: 10,
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <View>
-                          <Text category="h6" style={{ marginBottom: 5 }}>
-                            {item.category}
-                          </Text>
-                          {/* prettier-ignore */}
-                          <Text category="c1" style={{ marginBottom: 5 }}>
-                            {`${item.content.length} ${t('video')}(s)`}
-                          </Text>
-                        </View>
-                        <View>
-                          <Button
-                            appearance="ghost"
-                            size="small"
-                            onPress={routeViewAll}
-                          >
-                            <Text status="primary" category="label">
-                              {t('viewAll')}
-                            </Text>
-                          </Button>
-                        </View>
-                      </View>
-                      <List
-                        style={{ backgroundColor: 'transparent' }}
-                        alwaysBounceHorizontal
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                        data={item.content}
-                        renderItem={(renderData) => (
-                          <VideoCard data={renderData.item} extraWidth={0.5} />
-                        )}
-                        getItemLayout={(data, index) => ({
-                          length: 170,
-                          offset: 170 * index,
-                          index,
-                        })}
-                      />
-                    </View>
-                  ));
-                }
-                return (
-                  <View>
-                    <FullPlaceholder
-                      width={width - 10}
-                      height={(height - 150) / 2}
-                    />
-                  </View>
-                );
-              }}
-            </Get>
+            <View>
+              <TrendingChallengesArea />
+            </View>
+            <View>
+              <UserPostsArea />
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>

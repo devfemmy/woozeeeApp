@@ -1,39 +1,22 @@
-import React, { useContext, useMemo } from 'react';
+import React from 'react';
 
-import { View, ScrollView, useWindowDimensions } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-// prettier-ignore
-import {
-  Layout, Text, List, Button,
-} from '@ui-kitten/components';
-
-import { Get } from 'react-axios';
-
-import { LocaleContext } from '~src/contexts';
+import { Layout } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import VideoCard from '~src/components/Socials/VideoCard';
+import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
 
-import {
-  CustomPlaceholder,
-  FullPlaceholder,
-} from '~src/components/CustomPlaceholder';
+import { UsersPosts } from '~src/components/VideoPosts';
 
 import { challengeUrl } from '~src/api/dummy';
 
 // eslint-disable-next-line react/prop-types
 export default function Challenge({ navigation }) {
-  const { width, height } = useWindowDimensions();
-
-  const t = useContext(LocaleContext);
-
-  const { plWidth, plHeight } = useMemo(
-    () => ({ plWidth: width / 2, plHeight: (height - 150) / 3 }),
-    [width, height],
-  );
+  const UserPostsArea = () => WithVideoPosts(UsersPosts, challengeUrl, 6);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
@@ -51,119 +34,9 @@ export default function Challenge({ navigation }) {
           showsHorizontalScrollIndicator={false}
         >
           <View style={{ paddingBottom: 20 }}>
-            <Get url={challengeUrl}>
-              {(error, response, isLoading, makeRequest) => {
-                if (error) {
-                  return (
-                    <View
-                      style={{
-                        flex: 1,
-                        padding: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        height: height - 150,
-                      }}
-                    >
-                      <Text style={{ marginBottom: 10 }}>
-                        {t('networkError')}
-                      </Text>
-                      <Button
-                        /* prettier-ignore */
-                        onPress={() => makeRequest({ params: { reload: true } })}
-                      >
-                        <Text status="control">{t('retry')}</Text>
-                      </Button>
-                    </View>
-                  );
-                }
-                if (isLoading) {
-                  return (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        flexWrap: 'wrap',
-                        paddingVertical: 10,
-                      }}
-                    >
-                      {[1, 2, 3, 4, 5, 6].map((val) => (
-                        <CustomPlaceholder
-                          width={plWidth}
-                          height={plHeight}
-                          key={val}
-                        />
-                      ))}
-                    </View>
-                  );
-                }
-                if (response !== null) {
-                  if (response.data.length < 1) {
-                    return (
-                      <View
-                        style={{
-                          flex: 1,
-                          padding: 10,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          height: height - 150,
-                        }}
-                      >
-                        <Text style={{ marginBottom: 10 }}>
-                          {t('noVideos')}
-                        </Text>
-                        <Button
-                          /* prettier-ignore */
-                          onPress={() => makeRequest({ params: { refresh: true } })}
-                        >
-                          <Text status="control">{t('refresh')}</Text>
-                        </Button>
-                      </View>
-                    );
-                  }
-                  return response.data.map((item) => (
-                    <View
-                      style={{
-                        flex: 1,
-                        marginBottom: 10,
-                        paddingVertical: 5,
-                        maxHeight: 215,
-                      }}
-                      key={item.category}
-                    >
-                      <View style={{ paddingHorizontal: 10 }}>
-                        <Text category="h6" style={{ marginBottom: 5 }}>
-                          {item.category}
-                        </Text>
-                        {/* prettier-ignore */}
-                        <Text category="c1" style={{ marginBottom: 5 }}>
-                          {`${item.content.length} ${t('video')}(s)`}
-                        </Text>
-                      </View>
-                      <List
-                        style={{ backgroundColor: 'transparent' }}
-                        alwaysBounceHorizontal
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                        data={item.content}
-                        renderItem={(renderData) => (
-                          <VideoCard data={renderData.item} extraWidth={0.5} />
-                        )}
-                        getItemLayout={(data, index) => ({
-                          length: 170,
-                          offset: 170 * index,
-                          index,
-                        })}
-                      />
-                    </View>
-                  ));
-                }
-                return (
-                  <View>
-                    <FullPlaceholder width={width - 10} height={height - 150} />
-                  </View>
-                );
-              }}
-            </Get>
+            <View>
+              <UserPostsArea />
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>

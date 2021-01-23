@@ -25,17 +25,16 @@ const styles = StyleSheet.create({
   uiContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    minHeight: '100%',
+    justifyContent: 'space-between',
     zIndex: 9,
-    padding: 25,
+    padding: 15,
   },
   brandMotto: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
-    paddingBottom: 25,
+    marginBottom: 25,
   },
 });
 
@@ -63,14 +62,29 @@ export default function OnboardingScreen({ navigation }) {
       />
       <SafeAreaView style={{ flex: 1 }}>
         <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
-          <View style={{ marginBottom: 10 }}>
-            <Image
-              source={require('~assets/images/drawable/logo.png')}
-              resizeMode="contain"
-              style={{ width: 280 }}
+          <View style={{ alignSelf: 'flex-end' }}>
+            <Button
+              appearance="ghost"
+              status="danger"
+              size="large"
+              accessibilityLiveRegion="polite"
+              accessibilityComponentType="button"
+              accessibilityHint="Volume Toggle"
+              accessoryLeft={(evaProps) => (
+                /* eslint-disable-next-line react/jsx-props-no-spreading */
+                <IconVolume {...evaProps} isOpen={isVolumeOpen} />
+              )}
+              onPress={() => setVolumeOpen((prevState) => !prevState)}
             />
           </View>
-          <View>
+          <View style={{ alignItems: 'center', paddingBottom: 50 }}>
+            <View style={{ marginBottom: 10 }}>
+              <Image
+                source={require('~assets/images/drawable/logo.png')}
+                resizeMode="contain"
+                style={{ width: 220 }}
+              />
+            </View>
             <View style={styles.brandMotto}>
               <Text category="h6" status="control">
                 {t('haveFun')}
@@ -88,7 +102,7 @@ export default function OnboardingScreen({ navigation }) {
                 {t('giveBack')}
               </Text>
             </View>
-            <View style={{ paddingBottom: 25 }}>
+            <View style={{ minWidth: '100%' }}>
               <Button
                 status="danger"
                 accessibilityLiveRegion="assertive"
@@ -100,22 +114,6 @@ export default function OnboardingScreen({ navigation }) {
                   {` ${t('signIn')} / ${t('signUp')}`}
                 </Text>
               </Button>
-            </View>
-            <View style={{ paddingBottom: 25, alignItems: 'center' }}>
-              <Button
-                style={{ borderRadius: 100 }}
-                appearance="outline"
-                status="danger"
-                size="large"
-                accessibilityLiveRegion="polite"
-                accessibilityComponentType="button"
-                accessibilityHint="Volume Toggle"
-                accessoryLeft={(evaProps) => (
-                  /* eslint-disable-next-line react/jsx-props-no-spreading */
-                  <IconVolume {...evaProps} isOpen={isVolumeOpen} />
-                )}
-                onPress={() => setVolumeOpen((prevState) => !prevState)}
-              />
             </View>
           </View>
         </BlurView>

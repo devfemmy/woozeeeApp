@@ -16,8 +16,6 @@ import VerifyWithCode from '~src/screens/Authentication/Verification';
 import RecoverWithEmail from '~src/screens/Authentication/Recovery';
 
 // Common screens
-import TermsConditions from '~src/screens/Common/Extras/TermsCondtitons';
-import PrivacyPolicy from '~src/screens/Common/Extras/PrivacyPolicy';
 import FAQs from '~src/screens/Common/Extras/FAQs';
 
 // Common User Screens
@@ -51,8 +49,6 @@ export default function Router() {
     },
 
     Common: {
-      TermsConditions,
-      PrivacyPolicy,
       FAQs,
     },
   };

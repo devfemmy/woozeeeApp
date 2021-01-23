@@ -17,6 +17,12 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import { GeneralTextField } from '~src/components/FormFields';
 
+import {
+  IconFacebook,
+  IconGoogle,
+  IconTwitter,
+} from '~src/components/CustomIcons';
+
 // eslint-disable-next-line react/prop-types
 export default function Login({ navigation }) {
   // prettier-ignore
@@ -157,6 +163,51 @@ export default function Login({ navigation }) {
                   disabled={isLoading}
                 >
                   <Text status="control">{t('continue')}</Text>
+                </Button>
+              </View>
+              <View
+                style={{
+                  alignItems: 'center',
+                  paddingTop: 50,
+                  paddingBottom: 10,
+                }}
+              >
+                <Text>{t('orContinueWith')}</Text>
+              </View>
+              <View style={{ paddingVertical: 10 }}>
+                <Button
+                  status="primary"
+                  size="medium"
+                  appearance="outline"
+                  accessoryLeft={IconGoogle}
+                  accessibilityLiveRegion="polite"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Login with Google"
+                  style={{ marginVertical: 5 }}
+                >
+                  <Text>Google</Text>
+                </Button>
+                <Button
+                  status="primary"
+                  size="medium"
+                  accessoryLeft={IconFacebook}
+                  accessibilityLiveRegion="polite"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Login with Facebook"
+                  style={{ marginVertical: 5 }}
+                >
+                  <Text appearance="alternative">Facebook</Text>
+                </Button>
+                <Button
+                  status="info"
+                  size="medium"
+                  accessoryLeft={IconTwitter}
+                  accessibilityLiveRegion="polite"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Login with Twitter"
+                  style={{ marginVertical: 5 }}
+                >
+                  <Text appearance="alternative">Twitter</Text>
                 </Button>
               </View>
             </View>

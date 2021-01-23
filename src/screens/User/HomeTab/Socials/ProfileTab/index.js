@@ -1,7 +1,4 @@
-// prettier-ignore
-import React, {
-  useContext, useMemo, useState, useCallback,
-} from 'react';
+import React, { useContext } from 'react';
 
 // prettier-ignore
 import {
@@ -12,10 +9,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 // prettier-ignore
 import {
-  Layout, Text, Button, List,
+  Layout, Text, Button,
 } from '@ui-kitten/components';
-
-import { Get } from 'react-axios';
 
 import { LoadingContext, LocaleContext } from '~src/contexts';
 
@@ -23,14 +18,9 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import OverlayLoader from '~src/components/OverlayLoader';
 
-import VideoCard from '~src/components/Socials/VideoCard';
+import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
 
-import { IconHeart, IconBookmark, IconGrid } from '~src/components/CustomIcons';
-
-import {
-  CustomPlaceholder,
-  FullPlaceholder,
-} from '~src/components/CustomPlaceholder';
+import { ProfilePosts } from '~src/components/VideoPosts';
 
 import { trendingUrl } from '~src/api/dummy';
 
@@ -38,85 +28,21 @@ import { trendingUrl } from '~src/api/dummy';
 export default function Profile({ navigation }) {
   const { width, height } = useWindowDimensions();
 
-  const { isLoading: loading } = useContext(LoadingContext);
+  const { isLoading } = useContext(LoadingContext);
 
   const t = useContext(LocaleContext);
 
   const IS_PORTRAIT = height > width;
 
-  const { plWidth, plHeight } = useMemo(
-    () => ({
-      plWidth: width / 2,
-      plHeight: IS_PORTRAIT ? (height - 403) / 2 : (height - 200) / 3,
-    }),
-    [width, height, IS_PORTRAIT],
-  );
-
-  const [activeTab, setActiveTab] = useState(0);
+  // prettier-ignore
+  const ProfilePostsArea = () => WithVideoPosts(ProfilePosts, trendingUrl, 4, true);
 
   // eslint-disable-next-line react/prop-types
   const routeEditProfile = () => navigation.navigate('EditProfile');
 
-  const TabsMenu = (props) => {
-    // eslint-disable-next-line react/prop-types
-    const { makeRequest } = props;
-
-    const updateTab = useCallback(
-      (index) => {
-        setActiveTab(index);
-        makeRequest({ params: { reload: true } });
-      },
-      [makeRequest],
-    );
-
-    return useMemo(
-      () => (
-        <Layout level="2" style={{ paddingHorizontal: 20, borderRadius: 5 }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              width: '100%',
-            }}
-          >
-            <Button
-              appearance="ghost"
-              status={activeTab === 0 ? 'primary' : 'basic'}
-              size="large"
-              accessibilityLabel="All"
-              accessibilityLiveRegion="polite"
-              accessoryLeft={IconGrid}
-              onPress={() => updateTab(0)}
-            />
-            <Button
-              appearance="ghost"
-              status={activeTab === 1 ? 'primary' : 'basic'}
-              size="large"
-              accessibilityLabel="Saved"
-              accessibilityLiveRegion="polite"
-              accessoryLeft={IconBookmark}
-              onPress={() => updateTab(1)}
-            />
-            <Button
-              appearance="ghost"
-              status={activeTab === 2 ? 'primary' : 'basic'}
-              size="large"
-              accessibilityLabel="Liked"
-              accessibilityLiveRegion="polite"
-              accessoryLeft={IconHeart}
-              onPress={() => updateTab(2)}
-            />
-          </View>
-        </Layout>
-      ),
-      [updateTab],
-    );
-  };
-
   return (
     <Layout level="4" style={{ flex: 1 }}>
-      <OverlayLoader isLoading={loading} />
+      <OverlayLoader isLoading={isLoading} />
       <SafeAreaView style={{ flex: 1 }}>
         <TopNavigationArea
           title="woozeee"
@@ -237,128 +163,8 @@ export default function Profile({ navigation }) {
               </View>
             </ScrollView>
           </View>
-
-          <View
-            style={{
-              height: IS_PORTRAIT ? height - 403 : '100%',
-              width: IS_PORTRAIT ? '100%' : '60%',
-            }}
-          >
-            <Get url={trendingUrl}>
-              {(error, response, isLoading, makeRequest) => {
-                if (error) {
-                  return (
-                    <>
-                      <TabsMenu makeRequest={makeRequest} />
-                      <View
-                        style={{
-                          flex: 1,
-                          padding: 10,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          height: IS_PORTRAIT ? height - 453 : height - 200,
-                        }}
-                      >
-                        <Text style={{ marginBottom: 10 }}>
-                          {t('networkError')}
-                        </Text>
-                        <Button
-                          /* prettier-ignore */
-                          onPress={() => makeRequest({ params: { reload: true } })}
-                        >
-                          <Text status="control">{t('retry')}</Text>
-                        </Button>
-                      </View>
-                    </>
-                  );
-                }
-                if (isLoading) {
-                  return (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        flexWrap: 'wrap',
-                        paddingVertical: 10,
-                      }}
-                    >
-                      {[1, 2, 3, 4].map((val) => (
-                        <CustomPlaceholder
-                          width={plWidth}
-                          height={plHeight}
-                          key={val}
-                        />
-                      ))}
-                    </View>
-                  );
-                }
-                if (response !== null) {
-                  if (response.data.length < 1) {
-                    return (
-                      <>
-                        <TabsMenu makeRequest={makeRequest} />
-                        <View
-                          style={{
-                            flex: 1,
-                            padding: 10,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            height: IS_PORTRAIT ? height - 453 : height - 200,
-                          }}
-                        >
-                          <Text style={{ marginBottom: 10 }}>
-                            {t('noVideos')}
-                          </Text>
-                          <Button
-                            /* prettier-ignore */
-                            onPress={() => makeRequest({ params: { refresh: true } })}
-                          >
-                            <Text status="control">{t('refresh')}</Text>
-                          </Button>
-                        </View>
-                      </>
-                    );
-                  }
-                  return (
-                    <>
-                      <TabsMenu makeRequest={makeRequest} />
-                      <List
-                        style={{
-                          backgroundColor: 'transparent',
-                        }}
-                        contentContainerStyle={{
-                          paddingTop: 5,
-                          paddingBottom: 15,
-                        }}
-                        alwaysBounceVertical
-                        showsHorizontalScrollIndicator={false}
-                        showsVerticalScrollIndicator={false}
-                        numColumns={2}
-                        data={response.data}
-                        renderItem={(renderData) => (
-                          <VideoCard data={renderData.item} extraWidth={0} />
-                        )}
-                        getItemLayout={(data, index) => ({
-                          length: 170,
-                          offset: 170 * index,
-                          index,
-                        })}
-                      />
-                    </>
-                  );
-                }
-                return (
-                  <>
-                    <TabsMenu />
-                    <View>
-                      <FullPlaceholder
-                        width={width - 10}
-                        height={IS_PORTRAIT ? height - 453 : height - 200}
-                      />
-                    </View>
-                  </>
-                );
-              }}
-            </Get>
+          <View style={{ flex: 1 }}>
+            <ProfilePostsArea />
           </View>
         </View>
       </SafeAreaView>
