@@ -1,20 +1,20 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 import * as VideoThumbnails from 'expo-video-thumbnails';
 
 export default function useVideoThumb(videoUri) {
   const [imageUri, setImageUri] = useState(null);
 
-  useMemo(() => {
+  useEffect(() => {
     (async () => {
       try {
         const { uri } = await VideoThumbnails.getThumbnailAsync(videoUri, {
-          time: 1500,
+          time: 1000,
         });
 
         setImageUri(uri);
       } catch (e) {
-        const msg = e;
+        console.log(e);
       }
     })();
   }, [videoUri]);

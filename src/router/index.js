@@ -54,12 +54,9 @@ export default function Router() {
   };
 
   useEffect(() => {
-    const hideSplash = async () => {
+    (async () => {
       await SplashScreen.hideAsync();
-    };
-    hideSplash()
-      .then(() => {})
-      .catch(() => {});
+    })();
   }, []);
 
   return (

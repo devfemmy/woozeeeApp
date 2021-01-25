@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+
 import * as Font from 'expo-font';
+
 import { Asset } from 'expo-asset';
 
 export default function usePreFetchResources() {

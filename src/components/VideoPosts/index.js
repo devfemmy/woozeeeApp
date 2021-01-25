@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
-import { View } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 
 import { List, Text } from '@ui-kitten/components';
 
 import VideoCard from '~src/components/Socials/VideoCard';
+
+import VideoView from '~src/components/VideoView';
 
 // prettier-ignore
 export const TrendingChallenges = ({ info }) => useMemo(
@@ -37,7 +39,7 @@ export const TrendingChallenges = ({ info }) => useMemo(
 );
 
 // prettier-ignore
-export const UsersPosts = ({ info, tVideo }) => useMemo(
+export const UsersPosts = ({ info }) => useMemo(
   // prettier-ignore
   () => info.map((item) => (
     <View
@@ -55,7 +57,7 @@ export const UsersPosts = ({ info, tVideo }) => useMemo(
         </Text>
         {/* prettier-ignore */}
         <Text category="c1" style={{ marginBottom: 5 }}>
-          {`${item.content.length} ${tVideo}(s)`}
+          {`${item.content.length} Videos(s)`}
         </Text>
       </View>
       <List
@@ -76,7 +78,7 @@ export const UsersPosts = ({ info, tVideo }) => useMemo(
       />
     </View>
   )),
-  [info, tVideo],
+  [info],
 );
 
 // prettier-ignore
@@ -107,3 +109,104 @@ export const ProfilePosts = ({ info }) => useMemo(
   ),
   [info],
 );
+
+// prettier-ignore
+export const SocialPosts = ({ info }) => {
+  const { width, height } = useWindowDimensions();
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const IS_PORTRAIT = height > width;
+
+  const ITEM_HEIGHT = IS_PORTRAIT ? height - 25 : height - 50;
+
+  const VIEWABILITY_CONFIG = useMemo(() => ({
+    minimumViewTime: 500,
+    viewAreaCoveragePercentThreshold: 80,
+  }), []);
+
+  // show currently viewing video
+  const handleViewItemsChanged = useCallback((data) => {
+    setActiveIndex(data.changed[0].index);
+  }, []);
+
+  return useMemo(
+    () => (
+      <List
+        style={{
+          flex: 1,
+          backgroundColor: 'transparent',
+          position: 'absolute',
+          height: ITEM_HEIGHT,
+        }}
+        alwaysBounceVertical
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        data={info}
+        renderItem={(renderData) => (
+          <VideoView
+            data={renderData}
+            extraWidth={0.5}
+            activeIndex={activeIndex}
+          />
+        )}
+        extraData={activeIndex}
+        snapToAlignment="start"
+        decelerationRate="fast"
+        snapToInterval={ITEM_HEIGHT}
+        getItemLayout={(data, index) => ({
+          length: ITEM_HEIGHT,
+          offset: ITEM_HEIGHT * index,
+          index,
+        })}
+        initialNumToRender={3}
+        onViewableItemsChanged={handleViewItemsChanged}
+        viewabilityConfig={VIEWABILITY_CONFIG}
+      />
+    ),
+    [info, activeIndex, handleViewItemsChanged, VIEWABILITY_CONFIG, ITEM_HEIGHT],
+  );
+};
+
+// prettier-ignore
+export const AllPosts = ({ info }) => {
+  const { width, height } = useWindowDimensions();
+
+  const IS_PORTRAIT = height > width;
+
+  const ListHeader = () => (
+    <View style={{ padding: 10 }}>
+      <Text category="h5">Summer Videos</Text>
+    </View>
+  );
+
+  return useMemo(
+    () => (
+      <List
+        style={{
+          backgroundColor: 'transparent',
+        }}
+        contentContainerStyle={{
+          paddingTop: 5,
+          paddingBottom: 15,
+        }}
+        alwaysBounceVertical
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={ListHeader}
+        numColumns={IS_PORTRAIT ? 2 : 3}
+        key={IS_PORTRAIT ? 2 : 3}
+        data={info}
+        renderItem={(renderData) => (
+          <VideoCard data={renderData.item} extraWidth={0} />
+        )}
+        getItemLayout={(data, index) => ({
+          length: 170,
+          offset: 170 * index,
+          index,
+        })}
+      />
+    ),
+    [info, IS_PORTRAIT],
+  );
+};

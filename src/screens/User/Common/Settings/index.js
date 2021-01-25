@@ -1,4 +1,7 @@
-import React, { useState, useContext, useMemo } from 'react';
+// prettier-ignore
+import React, {
+  useState, useContext, useMemo, useCallback,
+} from 'react';
 
 import { View, ScrollView } from 'react-native';
 
@@ -40,25 +43,25 @@ export default function Settings({ navigation }) {
     new IndexPath(getIndexOfLocale()),
   );
 
-  return useMemo(() => {
-    const handleSwitchTheme = async () => {
-      try {
-        setLoading(true);
-        const settingsError = await updateSettings({
-          darkMode: !darkMode,
-        });
+  const handleSwitchTheme = useCallback(async () => {
+    try {
+      setLoading(true);
+      const settingsError = await updateSettings({
+        darkMode: !darkMode,
+      });
 
-        if (settingsError) {
-          await setError(true);
-        }
-      } catch (e) {
+      if (settingsError) {
         await setError(true);
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (e) {
+      await setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }, [darkMode, updateSettings]);
 
-    const handleSwitchLocale = async (index) => {
+  const handleSwitchLocale = useCallback(
+    async (index) => {
       try {
         setLoading(true);
         const settingsError = await updateSettings({
@@ -72,20 +75,24 @@ export default function Settings({ navigation }) {
         await setError(true);
       } finally {
         setLoading(false);
+        setSelectedLocale(index);
       }
-      setSelectedLocale(index);
-    };
+    },
+    [updateSettings],
+  );
 
-    const renderSpinner = () => <Spinner size="tiny" status="danger" />;
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
-    // eslint-disable-next-line react/prop-types
-    const routeBack = () => navigation.goBack();
+  // eslint-disable-next-line react/prop-types
+  const routeBack = useCallback(() => navigation.goBack(), [navigation]);
 
-    const renderLocales = () => (
-      <Text>{LOCALES[selectedLocale.row].title}</Text>
-    );
+  const renderLocales = useCallback(
+    () => <Text>{LOCALES[selectedLocale.row].title}</Text>,
+    [selectedLocale.row],
+  );
 
-    return (
+  return useMemo(
+    () => (
       <Layout level="4" style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
           <TopNavigationArea
@@ -180,6 +187,17 @@ export default function Settings({ navigation }) {
           </ScrollView>
         </SafeAreaView>
       </Layout>
-    );
-  }, [selectedLocale, darkMode, isLoading, navigation, updateSettings, t]);
+    ),
+    [
+      t,
+      selectedLocale,
+      darkMode,
+      isLoading,
+      navigation,
+      handleSwitchTheme,
+      handleSwitchLocale,
+      renderLocales,
+      routeBack,
+    ],
+  );
 }

@@ -1,46 +1,34 @@
-import React, { useContext, useMemo } from 'react';
+import React from 'react';
 
-import { View, useWindowDimensions } from 'react-native';
+import { View } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // prettier-ignore
 import {
-  Layout, Text, List, Button,
+  Layout,
 } from '@ui-kitten/components';
-
-import { Get } from 'react-axios';
-
-import { LocaleContext } from '~src/contexts';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import VideoCard from '~src/components/Socials/VideoCard';
+import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
 
-import {
-  CustomPlaceholder,
-  FullPlaceholder,
-} from '~src/components/CustomPlaceholder';
+import { AllPosts } from '~src/components/VideoPosts';
 
 import { trendingUrl } from '~src/api/dummy';
 
+const PLACEHOLDER_CONFIG = {
+  count: 6,
+  numColumns: 2,
+  maxHeight: 180,
+  mediaLeft: true,
+};
+
 // eslint-disable-next-line react/prop-types
 export default function ViewAll({ navigation }) {
-  const { width, height } = useWindowDimensions();
-
-  const t = useContext(LocaleContext);
-
-  const IS_PORTRAIT = height > width;
-
-  const { plWidth, plHeight } = useMemo(
-    () => ({ plWidth: width / 2, plHeight: (height - 150) / 3 }),
-    [width, height],
-  );
-
-  const ListHeader = () => (
-    <View style={{ padding: 10 }}>
-      <Text category="h5">Summer Videos</Text>
-    </View>
+  // prettier-ignore
+  const AllPostsArea = () => (
+    WithVideoPosts(AllPosts, trendingUrl, PLACEHOLDER_CONFIG)
   );
 
   return (
@@ -53,106 +41,7 @@ export default function ViewAll({ navigation }) {
           screen="search"
         />
         <View style={{ paddingBottom: 20 }}>
-          <Get url={trendingUrl}>
-            {(error, response, isLoading, makeRequest) => {
-              if (error) {
-                return (
-                  <View
-                    style={{
-                      flex: 1,
-                      padding: 10,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      height: height - 150,
-                    }}
-                  >
-                    <Text style={{ marginBottom: 10 }}>
-                      {t('networkError')}
-                    </Text>
-                    <Button
-                      /* prettier-ignore */
-                      onPress={() => makeRequest({ params: { reload: true } })}
-                    >
-                      <Text status="control">{t('retry')}</Text>
-                    </Button>
-                  </View>
-                );
-              }
-              if (isLoading) {
-                return (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      flexWrap: 'wrap',
-                      paddingVertical: 10,
-                    }}
-                  >
-                    {[1, 2, 3, 4, 5, 6].map((val) => (
-                      <CustomPlaceholder
-                        width={plWidth}
-                        height={plHeight}
-                        key={val}
-                      />
-                    ))}
-                  </View>
-                );
-              }
-              if (response !== null) {
-                if (response.data.length < 1) {
-                  return (
-                    <View
-                      style={{
-                        flex: 1,
-                        padding: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        height: height - 150,
-                      }}
-                    >
-                      <Text style={{ marginBottom: 10 }}>{t('noVideos')}</Text>
-                      <Button
-                        /* prettier-ignore */
-                        onPress={() => makeRequest({ params: { refresh: true } })}
-                      >
-                        <Text status="control">{t('refresh')}</Text>
-                      </Button>
-                    </View>
-                  );
-                }
-                return (
-                  <List
-                    style={{
-                      backgroundColor: 'transparent',
-                    }}
-                    contentContainerStyle={{
-                      paddingTop: 5,
-                      paddingBottom: 15,
-                    }}
-                    alwaysBounceVertical
-                    showsHorizontalScrollIndicator={false}
-                    showsVerticalScrollIndicator={false}
-                    ListHeaderComponent={ListHeader}
-                    numColumns={IS_PORTRAIT ? 2 : 3}
-                    key={IS_PORTRAIT ? 2 : 3}
-                    data={response.data}
-                    renderItem={(renderData) => (
-                      <VideoCard data={renderData.item} extraWidth={0} />
-                    )}
-                    getItemLayout={(data, index) => ({
-                      length: 170,
-                      offset: 170 * index,
-                      index,
-                    })}
-                  />
-                );
-              }
-              return (
-                <View>
-                  <FullPlaceholder width={width - 10} height={height - 150} />
-                </View>
-              );
-            }}
-          </Get>
+          <AllPostsArea />
         </View>
       </SafeAreaView>
     </Layout>

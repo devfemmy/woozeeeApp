@@ -14,9 +14,17 @@ import { UsersPosts } from '~src/components/VideoPosts';
 
 import { challengeUrl } from '~src/api/dummy';
 
+const PLACEHOLDER_CONFIG = {
+  count: 6,
+  numColumns: 2,
+  maxHeight: 180,
+  mediaLeft: true,
+};
+
 // eslint-disable-next-line react/prop-types
 export default function Challenge({ navigation }) {
-  const UserPostsArea = () => WithVideoPosts(UsersPosts, challengeUrl, 6);
+  // prettier-ignore
+  const UserPostsArea = () => WithVideoPosts(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>

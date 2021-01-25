@@ -32,6 +32,7 @@ export default function Placeholders(props) {
   const {
     mediaLeft,
     mediaRight,
+    mediaCenter,
     row,
     count,
     numColumns,
@@ -91,7 +92,8 @@ export default function Placeholders(props) {
             key={item}
           >
             {mediaLeft ? <Media /> : null}
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, justifyContent: 'center' }}>
+              {mediaCenter ? <Media /> : null}
               {paragraph ? ParagraphLines : MediaLines}
             </View>
             {mediaRight ? <Media /> : null}
@@ -103,6 +105,7 @@ export default function Placeholders(props) {
       direction,
       mediaLeft,
       mediaRight,
+      mediaCenter,
       width,
       count,
       paragraph,

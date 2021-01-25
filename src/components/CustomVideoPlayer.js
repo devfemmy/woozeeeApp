@@ -12,12 +12,11 @@ import { Video } from 'expo-av';
 
 import { useIsFocused } from '@react-navigation/native';
 
-import { FullPlaceholder } from '~src/components/CustomPlaceholder';
+import Placeholders from './Placeholders';
 
 const styles = StyleSheet.create({
   background: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#101426',
   },
   backgroundViewWrapper: {
     ...StyleSheet.absoluteFillObject,
@@ -52,8 +51,8 @@ export default function CustomVideoPlayer(props) {
 
   // prettier-ignore
   const VideoThumb = () => (!shouldDisplay || !isVideoLoaded ? (
-    <View style={{ paddingTop: 100 }}>
-      <FullPlaceholder width={width} height={height - 150} />
+    <View style={{ paddingTop: 90, flex: 1 }}>
+      <Placeholders maxWidth={width} maxHeight={height - 200} count={1} numColumns={1} />
     </View>
 
   ) : null);

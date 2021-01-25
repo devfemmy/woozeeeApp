@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { enableScreens } from 'react-native-screens';
 
@@ -20,13 +20,11 @@ import {
   Layout,
 } from '@ui-kitten/components';
 
-import axios from 'axios';
-
-import { AxiosProvider } from 'react-axios';
-
 import i18n from 'i18n-js';
 
 import mapping from '~src/constants/mapping.json';
+
+import customTheme from '~src/constants/customTheme.json';
 
 import mappingTheme from '~src/constants/mappingTheme';
 
@@ -49,18 +47,6 @@ import en from '~src/translations/en.json';
 import fr from '~src/translations/fr.json';
 
 enableScreens();
-
-const axiosInstance = axios.create({
-  baseURL: 'https://api.jsonbin.io/',
-  timeout: 60000,
-  timeoutErrorMessage: 'Request took too long process',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json:charset=utf-8',
-    'secret-key':
-      '$2b$10$BifoVKHdKq1J9E8C1YK1nuvsaD4wY9dVW5jNPuy4/mvioQJ84wZ1O',
-  },
-});
 
 i18n.translations = { en, fr };
 
@@ -89,10 +75,10 @@ export default function App() {
     general: null,
   });
 
-  useMemo(() => {
+  useEffect(() => {
     (async () => {
       try {
-        await setLoading(true);
+        setLoading(true);
 
         const settingsError = await fetchSettings();
 
@@ -100,7 +86,7 @@ export default function App() {
 
         if (!settingsError && !authError) return;
 
-        await setErrorMsg((prevState) => ({
+        setErrorMsg((prevState) => ({
           ...prevState,
           settings: settingsError,
           auth: authError,
@@ -108,7 +94,7 @@ export default function App() {
       } catch (e) {
         setErrorMsg((prevState) => ({ ...prevState, general: e }));
       } finally {
-        await setLoading(false);
+        setLoading(false);
       }
     })();
   }, [fetchSettings, fetchToken]);
@@ -125,32 +111,34 @@ export default function App() {
       <ApplicationProvider
         /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...eva}
-        theme={{ ...eva[themeMode], ...mappingTheme[themeMode] }}
+        theme={{
+          ...eva[themeMode],
+          ...customTheme,
+          ...mappingTheme[themeMode],
+        }}
         customMapping={mapping}
       >
-        <AxiosProvider instance={axiosInstance}>
-          <AppSettingsContext.Provider
+        <AppSettingsContext.Provider
+          value={{
+            appState,
+            appOptions,
+          }}
+        >
+          <AuthContext.Provider
             value={{
-              appState,
-              appOptions,
+              authState,
+              authOptions,
             }}
           >
-            <AuthContext.Provider
-              value={{
-                authState,
-                authOptions,
-              }}
-            >
-              <LocaleContext.Provider value={t}>
-                <LoadingContext.Provider value={{ isLoading, setLoading }}>
-                  <Layout level="4" style={{ flex: 1 }}>
-                    <Router />
-                  </Layout>
-                </LoadingContext.Provider>
-              </LocaleContext.Provider>
-            </AuthContext.Provider>
-          </AppSettingsContext.Provider>
-        </AxiosProvider>
+            <LocaleContext.Provider value={t}>
+              <LoadingContext.Provider value={{ isLoading, setLoading }}>
+                <Layout level="4" style={{ flex: 1 }}>
+                  <Router />
+                </Layout>
+              </LoadingContext.Provider>
+            </LocaleContext.Provider>
+          </AuthContext.Provider>
+        </AppSettingsContext.Provider>
       </ApplicationProvider>
       <StatusBar barStyle="auto" />
     </SafeAreaProvider>

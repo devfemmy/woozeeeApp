@@ -13,17 +13,9 @@ import TopNavigationMenu from './components/TopNavigationMenu';
 import { IconCFlag } from '~src/components/CustomIcons';
 
 export default function TopNavigationArea(props) {
+  // prettier-ignore
   const {
-    // eslint-disable-next-line react/prop-types
-    navigation,
-    // eslint-disable-next-line react/prop-types
-    title,
-    // eslint-disable-next-line react/prop-types
-    icon,
-    // eslint-disable-next-line react/prop-types
-    style,
-    // eslint-disable-next-line react/prop-types
-    screen,
+    navigation, title, icon, style, screen,
   } = props;
 
   const TopNavigationAuth = useMemo(

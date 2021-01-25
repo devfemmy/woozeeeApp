@@ -22,7 +22,22 @@ import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
 
 import { ProfilePosts } from '~src/components/VideoPosts';
 
+import { IconGrid, IconBookmark, IconHeart } from '~src/components/CustomIcons';
+
 import { trendingUrl } from '~src/api/dummy';
+
+const TABS = [
+  { title: 'All', icon: IconGrid },
+  { title: 'Saved', icon: IconBookmark },
+  { title: 'Liked', icon: IconHeart },
+];
+
+const PLACEHOLDER_CONFIG = {
+  count: 4,
+  numColumns: 2,
+  maxHeight: 150,
+  mediaLeft: true,
+};
 
 // eslint-disable-next-line react/prop-types
 export default function Profile({ navigation }) {
@@ -35,7 +50,9 @@ export default function Profile({ navigation }) {
   const IS_PORTRAIT = height > width;
 
   // prettier-ignore
-  const ProfilePostsArea = () => WithVideoPosts(ProfilePosts, trendingUrl, 4, true);
+  const ProfilePostsArea = () => (
+    WithVideoPosts(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, TABS)
+  );
 
   // eslint-disable-next-line react/prop-types
   const routeEditProfile = () => navigation.navigate('EditProfile');

@@ -71,7 +71,10 @@ export default function VideoView(props) {
   return useMemo(
     () => (
       <View
-        style={{ flex: 1, height: IS_PORTRAIT ? height - 25 : height - 50 }}
+        style={{
+          flex: 1,
+          height: IS_PORTRAIT ? height - 25 : height - 50,
+        }}
       >
         {isFocused ? (
           <CustomVideoPlayer

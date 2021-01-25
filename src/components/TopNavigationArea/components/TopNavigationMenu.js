@@ -1,4 +1,7 @@
-import React, { useContext, useMemo, useState } from 'react';
+// prettier-ignore
+import React, {
+  useContext, useMemo, useState, useCallback,
+} from 'react';
 
 import {
   TopNavigationAction,
@@ -28,29 +31,34 @@ export default function TopNavigationMenu(props) {
 
   const t = useContext(LocaleContext);
 
-  return useMemo(() => {
-    const toggleMenu = () => setNavigationMenuOpen((prevState) => !prevState);
+  const toggleMenu = () => setNavigationMenuOpen((prevState) => !prevState);
 
-    const closeMenu = () => setNavigationMenuOpen(false);
+  const closeMenu = () => setNavigationMenuOpen(false);
 
-    const routeSettings = () => navigation.navigate('Settings');
+  // eslint-disable-next-line react/prop-types
+  const handleLogout = useCallback(async () => {
+    try {
+      closeMenu();
+      await setLoading(true);
+      await logout();
+    } catch (e) {
+      const err = e;
+    } finally {
+      await setLoading(false);
+    }
+  }, [logout, setLoading]);
 
-    const routeEditProfile = () => navigation.navigate('EditProfile');
+  const routeSettings = useCallback(() => navigation.navigate('Settings'), [
+    navigation,
+  ]);
 
-    // eslint-disable-next-line react/prop-types
-    const logoutUser = async () => {
-      try {
-        closeMenu();
-        await setLoading(true);
-        await logout();
-      } catch (e) {
-        const err = e;
-      } finally {
-        await setLoading(false);
-      }
-    };
+  const routeEditProfile = useCallback(
+    () => navigation.navigate('EditProfile'),
+    [navigation],
+  );
 
-    const TopNavigationMenuIcon = () => (
+  const TopNavigationMenuAnchor = useCallback(
+    () => (
       <TopNavigationAction
         /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...props}
@@ -60,11 +68,14 @@ export default function TopNavigationMenu(props) {
         accessibilityLabel="Open Menu"
         accessibilityActions={['onPress']}
       />
-    );
+    ),
+    [props],
+  );
 
-    return (
+  return useMemo(
+    () => (
       <OverflowMenu
-        anchor={TopNavigationMenuIcon}
+        anchor={TopNavigationMenuAnchor}
         visible={isNavigationMenuOpen}
         onBackdropPress={closeMenu}
         onTouchEnd={closeMenu}
@@ -85,9 +96,17 @@ export default function TopNavigationMenu(props) {
         <MenuItem
           accessoryLeft={IconLogout}
           title={t('logout')}
-          onPress={logoutUser}
+          onPress={handleLogout}
         />
       </OverflowMenu>
-    );
-  }, [navigation, isNavigationMenuOpen, logout, setLoading, props, t]);
+    ),
+    [
+      t,
+      isNavigationMenuOpen,
+      handleLogout,
+      TopNavigationMenuAnchor,
+      routeEditProfile,
+      routeSettings,
+    ],
+  );
 }
