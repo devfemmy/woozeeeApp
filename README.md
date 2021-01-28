@@ -1,2 +1,2 @@
-# Woozeee
-Woozeee mobile app
+# woozeee
+woozeee mobile app
