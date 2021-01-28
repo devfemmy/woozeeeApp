@@ -25,7 +25,6 @@ export default function BackButton(props) {
         onPress={routeBack}
         accessibilityLiveRegion="polite"
         accessibilityLabel="Go back"
-        accessibilityActions={['onPress']}
       />
     );
   }, [navigation, icon, otherProps]);

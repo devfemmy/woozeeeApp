@@ -20,7 +20,6 @@ export default function HelpButton(props) {
         onPress={routeHelp}
         accessibilityLiveRegion="polite"
         accessibilityLabel="Open Help"
-        accessibilityActions={['onPress']}
       />
     );
   }, [navigation, otherProps]);

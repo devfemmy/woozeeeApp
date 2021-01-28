@@ -65,8 +65,7 @@ export default function TopNavigationMenu(props) {
         icon={IconMoreVertical}
         onPress={toggleMenu}
         accessibilityLiveRegion="polite"
-        accessibilityLabel="Open Menu"
-        accessibilityActions={['onPress']}
+        accessibilityLabel="open menu"
       />
     ),
     [props],
