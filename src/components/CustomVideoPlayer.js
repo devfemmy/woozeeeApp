@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useMemo, useState, useCallback,
+  useMemo, useState,
 } from 'react';
 
 // prettier-ignore
@@ -36,18 +36,18 @@ export default function CustomVideoPlayer(props) {
 
   const [isVideoLoaded, setVideoLoaded] = useState(false);
 
-  const [playProgress, setPlayProgress] = useState('0%');
+  // const [playProgress, setPlayProgress] = useState('0%');
 
-  const handlePlaybackStatusUpdate = useCallback(
-    (status) => {
-      const { positionMillis, durationMillis } = status;
+  // const handlePlaybackStatusUpdate = useCallback(
+  //   (status) => {
+  //     const { positionMillis, durationMillis } = status;
 
-      const currentPercent = (positionMillis / durationMillis) * 100;
+  //     const currentPercent = (positionMillis / durationMillis) * 100;
 
-      setPlayProgress(`${currentPercent}%`);
-    },
-    [setPlayProgress],
-  );
+  //     setPlayProgress(`${currentPercent}%`);
+  //   },
+  //   [setPlayProgress],
+  // );
 
   // prettier-ignore
   const VideoThumb = () => (!shouldDisplay || !isVideoLoaded ? (
@@ -74,11 +74,11 @@ export default function CustomVideoPlayer(props) {
               resizeMode="contain"
               style={[style, { flex: 1 }]}
               progressUpdateIntervalMillis={1000}
-              onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+              // onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
               shouldPlay={shouldPlay && shouldDisplay && isFocused}
             />
           </View>
-          <View
+          {/* <View
             style={{
               paddingHorizontal: 10,
               position: 'absolute',
@@ -102,7 +102,7 @@ export default function CustomVideoPlayer(props) {
                 }}
               />
             </View>
-          </View>
+          </View> */}
         </>
       </View>
     ),
@@ -111,8 +111,8 @@ export default function CustomVideoPlayer(props) {
       style,
       shouldPlay,
       shouldDisplay,
-      handlePlaybackStatusUpdate,
-      playProgress,
+      // handlePlaybackStatusUpdate,
+      // playProgress,
       isPreloaded,
       isFocused,
     ],

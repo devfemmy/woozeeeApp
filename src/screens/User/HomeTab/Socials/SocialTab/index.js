@@ -4,6 +4,8 @@ import { View, StyleSheet } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { StatusBar } from 'expo-status-bar';
+
 // prettier-ignore
 import {
   Layout, Button, Text,
@@ -102,6 +104,7 @@ export default function Social({ navigation }) {
           <SocialPostsArea />
         </SafeAreaView>
       </View>
+      <StatusBar style="light" />
     </Layout>
   );
 }

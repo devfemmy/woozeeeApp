@@ -140,7 +140,10 @@ export default function App() {
           </AuthContext.Provider>
         </AppSettingsContext.Provider>
       </ApplicationProvider>
-      <StatusBar barStyle="auto" />
+      <StatusBar
+        barStyle="auto"
+        style={themeMode === 'light' ? 'dark' : 'light'}
+      />
     </SafeAreaProvider>
   ) : null;
 }

@@ -121,8 +121,8 @@ export const SocialPosts = ({ info }) => {
   const ITEM_HEIGHT = IS_PORTRAIT ? height - 25 : height - 50;
 
   const VIEWABILITY_CONFIG = useMemo(() => ({
-    minimumViewTime: 500,
-    viewAreaCoveragePercentThreshold: 80,
+    minimumViewTime: 100,
+    viewAreaCoveragePercentThreshold: 50,
   }), []);
 
   // show currently viewing video
@@ -159,7 +159,7 @@ export const SocialPosts = ({ info }) => {
           offset: ITEM_HEIGHT * index,
           index,
         })}
-        initialNumToRender={3}
+        initialNumToRender={4}
         onViewableItemsChanged={handleViewItemsChanged}
         viewabilityConfig={VIEWABILITY_CONFIG}
       />

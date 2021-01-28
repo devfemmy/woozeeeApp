@@ -50,13 +50,15 @@ export default function VideoView(props) {
 
   const { item, index } = data;
 
+  const INDEX_PRELOAD = [1, 2];
+
   const IS_PORTRAIT = height > width;
 
   const IS_ACTIVE = activeIndex === index;
 
-  const IS_PREV = activeIndex - index === 1;
+  const IS_PREV = INDEX_PRELOAD.includes(activeIndex - index);
 
-  const IS_NEXT = index - activeIndex === 1;
+  const IS_NEXT = INDEX_PRELOAD.includes(index - activeIndex);
 
   const IS_PRELOADED = IS_PREV || IS_NEXT;
 
@@ -90,7 +92,7 @@ export default function VideoView(props) {
           <View
             style={{
               width: '100%',
-              paddingBottom: 25,
+              paddingBottom: 50,
             }}
           >
             <View

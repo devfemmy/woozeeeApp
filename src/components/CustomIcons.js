@@ -243,9 +243,9 @@ export const IconCFlag = (props) => {
     <Image
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
-      source={require('~assets/images/icon/flag-ng.png')}
+      source={require('~assets/images/icon/flag-round-ng.png')}
       resizeMode="contain"
-      style={{ width: width || 40, height: height || 40 }}
+      style={{ width: width || 32, height: height || 32 }}
     />
   );
 };

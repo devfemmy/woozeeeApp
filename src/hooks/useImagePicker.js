@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { Alert, Platform } from 'react-native';
 
 import * as ImagePicker from 'expo-image-picker';
-import { UIImagePickerControllerQualityType } from 'expo-image-picker/build/ImagePicker.types';
 
 export default function useImagePicker(media) {
   useEffect(() => {
@@ -41,8 +40,6 @@ export default function useImagePicker(media) {
         allowsEditing: true,
         aspect,
         quality: 1,
-        videoMaxDuration: 60000,
-        videoQuality: UIImagePickerControllerQualityType.Low,
       });
 
       if (!result.cancelled) fileUri = await result.uri;

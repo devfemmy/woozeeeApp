@@ -37,21 +37,21 @@ export default function VideoPosts(
 
   const fetchPosts = useCallback(async () => {
     try {
-      await setIsLoading(true);
-      await setIsError(false);
+      setIsLoading(true);
+      setIsError(false);
 
       const { data } = await Api.getVideos(fetchUrl);
 
       if (isMounted.current) {
-        await setPosts(data);
+        setPosts(data);
       }
     } catch (e) {
       if (isMounted.current) {
-        await setIsError(true);
+        setIsError(true);
       }
     } finally {
       if (isMounted.current) {
-        await setIsLoading(false);
+        setIsLoading(false);
       }
     }
   }, [fetchUrl, isMounted]);
