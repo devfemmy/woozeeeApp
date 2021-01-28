@@ -80,8 +80,8 @@ import com.android.build.OutputFile
 project.ext.react = [
     entryFile: "index.js",
     enableHermes: true
-//    bundleCommand: "ram-bundle",
-//    extraPackagerArgs: ["--indexed-ram-bundle"]
+//  bundleCommand: "ram-bundle",
+//  extraPackagerArgs: ["--indexed-ram-bundle"]
 ]
 
 apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
@@ -102,7 +102,7 @@ def enableSeparateBuildPerCPUArchitecture = true
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -145,7 +145,7 @@ android {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
-            universalApk true  // If true, also generate a universal APK
+            universalApk false  // If true, also generate a universal APK
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }

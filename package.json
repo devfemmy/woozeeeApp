@@ -1,4 +1,7 @@
 {
+  "name": "woozeee",
+  "version": "1.0.0",
+  "description": "woozeee mobile app",
   "main": "index.js",
   "scripts": {
     "android": "react-native run-android",
@@ -79,5 +82,22 @@
   "jest": {
     "preset": "react-native"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thonyromes/woozeee.git"
+  },
+  "keywords": [
+    "woozeee",
+    "social",
+    "marketplace",
+    "charity",
+    "movies"
+  ],
+  "bugs": {
+    "url": "https://github.com/thonyromes/woozeee/issues"
+  },
+  "homepage": "https://github.com/thonyromes/woozeee#readme",
+  "author": "Romes",
+  "license": "ISC",
   "private": true
 }
