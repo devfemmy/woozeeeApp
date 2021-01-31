@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import { Button, Text } from '@ui-kitten/components';
+import { Text } from '@ui-kitten/components';
 
 import { useIsFocused } from '@react-navigation/native';
 
@@ -75,7 +75,7 @@ export default function VideoView(props) {
       <View
         style={{
           flex: 1,
-          height: IS_PORTRAIT ? height - 25 : height - 50,
+          height: height - 50,
         }}
       >
         {isFocused ? (
@@ -92,7 +92,7 @@ export default function VideoView(props) {
           <View
             style={{
               width: '100%',
-              paddingBottom: 50,
+              paddingBottom: 5,
             }}
           >
             <View
@@ -101,10 +101,14 @@ export default function VideoView(props) {
                 justifyContent: 'space-between',
                 alignItems: 'flex-end',
                 width: '100%',
-                marginBottom: 10,
               }}
             >
-              <View style={{ padding: 10, maxWidth: width / 3 }}>
+              <View
+                style={{
+                  paddingHorizontal: 10,
+                  maxWidth: width / 3,
+                }}
+              >
                 <View style={{ flexDirection: 'row' }}>
                   <Text
                     status="primary"
@@ -129,6 +133,18 @@ export default function VideoView(props) {
                     {item.category}
                   </Text>
                 </View>
+                <View style={{ flexDirection: 'row' }}>
+                  <InteractIcon
+                    Accessory={(evaProps) => (
+                      <IconPlayPause
+                        // eslint-disable-next-line react/jsx-props-no-spreading
+                        {...evaProps}
+                        isPlaying={shouldPlay && IS_ACTIVE}
+                      />
+                    )}
+                    onPress={togglePause}
+                  />
+                </View>
               </View>
               <View style={{ maxWidth: width / 3 }}>
                 <ScrollView
@@ -140,7 +156,7 @@ export default function VideoView(props) {
                   }}
                 >
                   <InteractIcon
-                    accessory={(evaProps) => (
+                    Accessory={(evaProps) => (
                       // eslint-disable-next-line react/jsx-props-no-spreading
                       <IconHeart {...evaProps} isLiked={isLiked} />
                     )}
@@ -148,37 +164,25 @@ export default function VideoView(props) {
                     onPress={toggleLike}
                   />
                   <InteractIcon
-                    accessory={IconMsgSquare}
+                    Accessory={IconMsgSquare}
                     textContent={item.comments}
                   />
                   <InteractIcon
-                    accessory={(evaProps) => (
+                    Accessory={(evaProps) => (
                       // eslint-disable-next-line react/jsx-props-no-spreading
                       <IconEye {...evaProps} isOpen />
                     )}
                     textContent={item.views}
                   />
                   <InteractIcon
-                    accessory={IconClipboard}
+                    Accessory={IconClipboard}
                     textContent={item.votes}
                   />
 
                   <InteractIcon
-                    accessory={IconShare}
+                    Accessory={IconShare}
                     textContent={item.shares}
                   />
-
-                  {/* <InteractIcon */}
-                  {/*  accessory={(evaProps) => ( */}
-                  {/*    <IconPlayPause */}
-                  {/*      // eslint-disable-next-line react/jsx-props-no-spreading */}
-                  {/*      {...evaProps} */}
-                  {/*      isPlaying={shouldPlay && IS_ACTIVE} */}
-                  {/*    /> */}
-                  {/*  )} */}
-                  {/*  textContent={shouldPlay && IS_ACTIVE ? 'Pause' : 'Play'} */}
-                  {/*  onPress={togglePause} */}
-                  {/* /> */}
 
                   <View style={{ alignItems: 'center', padding: 10 }}>
                     <Image
@@ -196,30 +200,6 @@ export default function VideoView(props) {
               </View>
             </View>
           </View>
-          <Button
-            appearance="ghost"
-            activeOpacity={0}
-            status="control"
-            size="giant"
-            /* prettier-ignore */
-            accessoryLeft={(evaProps) => (!shouldPlay ? (
-              <IconPlayPause
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                {...evaProps}
-                isPlaying={shouldPlay && IS_ACTIVE}
-                height={100}
-                width={100}
-              />
-            ) : null)}
-            style={{
-              position: 'absolute',
-              height: height / 2,
-              width: IS_PORTRAIT ? width / 2 : width / 4,
-              top: height / 4,
-              left: IS_PORTRAIT ? width / 4 : width / 2.665,
-            }}
-            onPress={togglePause}
-          />
         </View>
       </View>
     ),

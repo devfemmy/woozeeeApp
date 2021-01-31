@@ -1,13 +1,11 @@
+// prettier-ignore
 import React, {
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-  useEffect,
-  useRef,
+  useCallback, useContext, useMemo, useState,
 } from 'react';
 
 import { useWindowDimensions } from 'react-native';
+
+import { useQuery } from 'react-query';
 
 import Api from '~src/api';
 
@@ -19,64 +17,37 @@ import TabsMenu from './TabsMenu';
 
 import FetchFailed from './FetchFailed';
 
-export default function WithVideoPosts(
+export default function WithPaginatedVideoPosts(
   WrappedComponent,
   fetchUrl,
   placeholderProp,
   tabs = null,
 ) {
-  const isMounted = useRef(false);
-
   const { width, height } = useWindowDimensions();
 
   const t = useContext(LocaleContext);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [activePage, setPage] = useState('default');
 
-  const [isError, setIsError] = useState(false);
-
-  const [posts, setPosts] = useState(null);
-
-  const [activePage, setActiveTab] = useState('default');
-
-  const fetchPosts = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setIsError(false);
-
-      const { pageData } = await Api.getVideos(fetchUrl);
-
-      if (isMounted.current) {
-        setPosts(pageData.data);
-      }
-    } catch (e) {
-      if (isMounted.current) {
-        setIsError(true);
-      }
-    } finally {
-      if (isMounted.current) {
-        setIsLoading(false);
-      }
-    }
-  }, [fetchUrl, isMounted]);
-
-  const updateTab = useCallback(
-    (param) => {
-      setActiveTab(param);
-      fetchPosts();
+  // prettier-ignore
+  const {
+    isLoading, isError, data, refetch,
+  } = useQuery(
+    ['defaultVideos', activePage],
+    async () => {
+      const promise = await Api.getVideos(fetchUrl, activePage);
+      promise.cancel = () => Api.cancelRequest('Request aborted');
+      return promise;
     },
-    [fetchPosts],
+    {
+      keepPreviousData: true,
+      cacheTime: 1000 * 60 * 1,
+    },
   );
 
-  useEffect(() => {
-    isMounted.current = true;
-    fetchPosts();
-
-    return () => {
-      // Api.cancelRequest('Request aborted');
-      isMounted.current = false;
-    };
-  }, [fetchPosts]);
+  const updateTab = useCallback((param) => {
+    setPage(param);
+  }, []);
 
   return useMemo(() => {
     if (isLoading) {
@@ -98,25 +69,26 @@ export default function WithVideoPosts(
     if (isError) {
       return (
         <FetchFailed
-          onPress={fetchPosts}
+          onPress={refetch}
           info={t('networkError')}
           retry={t('retry')}
         />
       );
     }
-    if (posts && posts.length > 0) {
+    // prettier-ignore
+    if (!isLoading && !isError && data.pageData.data.length > 0) {
       return (
         <>
           {tabs ? (
             <TabsMenu tabs={tabs} tabInfo={{ activePage, updateTab }} />
           ) : null}
-          <WrappedComponent info={posts} />
+          <WrappedComponent info={data.pageData.data} />
         </>
       );
     }
     return (
       <FetchFailed
-        onPress={fetchPosts}
+        onPress={refetch}
         info={t('noVideos')}
         retry={t('refresh')}
       />
@@ -125,13 +97,13 @@ export default function WithVideoPosts(
     t,
     width,
     height,
-    fetchPosts,
-    posts,
-    isLoading,
-    isError,
+    refetch,
     activePage,
     updateTab,
     placeholderProp,
     tabs,
+    isLoading,
+    isError,
+    data,
   ]);
 }

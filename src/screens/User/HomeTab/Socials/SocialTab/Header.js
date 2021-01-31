@@ -57,7 +57,7 @@ export default function Header(props) {
           size="large"
           accessibilityLiveRegion="polite"
           accessibilityComponentType="button"
-          accessibilityHint="Record"
+          accessibilityHint="Menu"
           accessoryLeft={IconMenu}
           onPress={openMenu}
         />

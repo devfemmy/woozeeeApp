@@ -7,8 +7,6 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import { BlurView } from 'expo-blur';
-
 import { Layout, Text } from '@ui-kitten/components';
 
 import Moment from 'react-moment';
@@ -25,7 +23,7 @@ export default function VideoCard(props) {
       <TouchableOpacity
         activeOpacity={0.75}
         style={{
-          height: 170,
+          height: 175,
           width: IS_PORTRAIT
             ? width / (2 + extraWidth)
             : width / (3 + extraWidth),
@@ -39,7 +37,7 @@ export default function VideoCard(props) {
         <Image
           source={{ uri: `https://i.postimg.cc/${data.banner}` }}
           style={{
-            height: 160,
+            height: 165,
             width: '100%',
             borderRadius: 5,
           }}
@@ -72,22 +70,22 @@ export default function VideoCard(props) {
             />
           </Layout>
         ) : null}
-        <BlurView
-          intensity={75}
+        <View
           tint="dark"
           style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
             position: 'absolute',
             bottom: 10,
             borderBottomLeftRadius: 5,
             borderBottomRightRadius: 5,
-            paddingHorizontal: 5,
+            padding: 5,
             width: '100%',
           }}
         >
           <Text category="c1" style={{ color: 'white', marginBottom: 5 }}>
             {data.tag}
           </Text>
-          <View style={{ marginBottom: 5 }}>
+          <View>
             <Moment
               fromNow
               element={(momentProps) => (
@@ -103,7 +101,7 @@ export default function VideoCard(props) {
               {data.dateAdded}
             </Moment>
           </View>
-        </BlurView>
+        </View>
       </TouchableOpacity>
     ),
     [

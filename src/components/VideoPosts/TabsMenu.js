@@ -7,7 +7,7 @@ import { Button, Layout } from '@ui-kitten/components';
 export default function TabsMenu(props) {
   const { tabs, tabInfo } = props;
 
-  const { activeTab, updateTab } = tabInfo;
+  const { activePage, updateTab } = tabInfo;
 
   /* prettier-ignore */
   return useMemo(
@@ -22,21 +22,21 @@ export default function TabsMenu(props) {
           }}
         >
           {tabs
-            && tabs.map((tab, index) => (
+            && tabs.map((tab) => (
               <Button
                 appearance="ghost"
-                status={activeTab === index ? 'primary' : 'basic'}
+                status={activePage === tab.title ? 'primary' : 'basic'}
                 size="large"
                 accessibilityLabel={tab.title}
                 accessibilityLiveRegion="polite"
                 accessoryLeft={tab.icon}
-                onPress={() => updateTab(index)}
+                onPress={() => updateTab(tab.title)}
                 key={tab.title}
               />
             ))}
         </View>
       </Layout>
     ),
-    [activeTab, tabs, updateTab],
+    [activePage, tabs, updateTab],
   );
 }

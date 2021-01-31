@@ -22,6 +22,8 @@ import {
 
 import i18n from 'i18n-js';
 
+import { QueryClientProvider, QueryClient } from 'react-query';
+
 import mapping from '~src/constants/mapping.json';
 
 import customTheme from '~src/constants/customTheme.json';
@@ -74,6 +76,8 @@ export default function App() {
     auth: null,
     general: null,
   });
+
+  const queryClient = new QueryClient();
 
   useEffect(() => {
     (async () => {
@@ -131,11 +135,13 @@ export default function App() {
             }}
           >
             <LocaleContext.Provider value={t}>
-              <LoadingContext.Provider value={{ isLoading, setLoading }}>
-                <Layout level="4" style={{ flex: 1 }}>
-                  <Router />
-                </Layout>
-              </LoadingContext.Provider>
+              <QueryClientProvider client={queryClient}>
+                <LoadingContext.Provider value={{ isLoading, setLoading }}>
+                  <Layout level="4" style={{ flex: 1 }}>
+                    <Router />
+                  </Layout>
+                </LoadingContext.Provider>
+              </QueryClientProvider>
             </LocaleContext.Provider>
           </AuthContext.Provider>
         </AppSettingsContext.Provider>

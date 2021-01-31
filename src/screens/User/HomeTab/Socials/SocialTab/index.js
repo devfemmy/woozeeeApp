@@ -4,8 +4,6 @@ import { View, StyleSheet } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { StatusBar } from 'expo-status-bar';
-
 // prettier-ignore
 import {
   Layout, Button, Text,
@@ -15,7 +13,7 @@ import { LocaleContext } from '~src/contexts';
 
 import Header from './Header';
 
-import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
+import WithInfiniteVideoPosts from '~src/components/VideoPosts/WithInfiniteVideoPosts';
 
 import { SocialPosts } from '~src/components/VideoPosts';
 
@@ -59,7 +57,7 @@ export default function Social({ navigation }) {
   const t = useContext(LocaleContext);
 
   // prettier-ignore
-  const SocialPostsArea = () => WithVideoPosts(SocialPosts, socialUrl, PLACEHOLDER_CONFIG);
+  const SocialPostsArea = () => WithInfiniteVideoPosts(SocialPosts, socialUrl, PLACEHOLDER_CONFIG);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
@@ -104,7 +102,6 @@ export default function Social({ navigation }) {
           <SocialPostsArea />
         </SafeAreaView>
       </View>
-      <StatusBar style="light" />
     </Layout>
   );
 }

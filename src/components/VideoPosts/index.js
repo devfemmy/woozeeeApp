@@ -28,8 +28,8 @@ export const TrendingChallenges = ({ info }) => useMemo(
           <VideoCard data={renderData.item} extraWidth={0.5} />
         )}
         getItemLayout={(data, index) => ({
-          length: 170,
-          offset: 170 * index,
+          length: 175,
+          offset: 175 * index,
           index,
         })}
       />
@@ -47,7 +47,7 @@ export const UsersPosts = ({ info }) => useMemo(
         flex: 1,
         marginBottom: 10,
         paddingVertical: 5,
-        maxHeight: 215,
+        maxHeight: 225,
       }}
       key={item.category}
     >
@@ -71,8 +71,8 @@ export const UsersPosts = ({ info }) => useMemo(
           <VideoCard data={renderData.item} extraWidth={0.5} />
         )}
         getItemLayout={(data, index) => ({
-          length: 170,
-          offset: 170 * index,
+          length: 175,
+          offset: 175 * index,
           index,
         })}
       />
@@ -101,8 +101,8 @@ export const ProfilePosts = ({ info }) => useMemo(
         <VideoCard data={renderData.item} extraWidth={0} />
       )}
       getItemLayout={(data, index) => ({
-        length: 170,
-        offset: 170 * index,
+        length: 175,
+        offset: 175 * index,
         index,
       })}
     />
@@ -112,13 +112,11 @@ export const ProfilePosts = ({ info }) => useMemo(
 
 // prettier-ignore
 export const SocialPosts = ({ info }) => {
-  const { width, height } = useWindowDimensions();
+  const { height } = useWindowDimensions();
 
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const IS_PORTRAIT = height > width;
-
-  const ITEM_HEIGHT = IS_PORTRAIT ? height - 25 : height - 50;
+  const ITEM_HEIGHT = height - 50;
 
   const VIEWABILITY_CONFIG = useMemo(() => ({
     minimumViewTime: 100,
@@ -201,8 +199,8 @@ export const AllPosts = ({ info }) => {
           <VideoCard data={renderData.item} extraWidth={0} />
         )}
         getItemLayout={(data, index) => ({
-          length: 170,
-          offset: 170 * index,
+          length: 175,
+          offset: 175 * index,
           index,
         })}
       />

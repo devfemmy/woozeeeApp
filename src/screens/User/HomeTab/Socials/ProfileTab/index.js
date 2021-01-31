@@ -18,7 +18,7 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import OverlayLoader from '~src/components/OverlayLoader';
 
-import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
+import WithPaginatedVideoPosts from '~src/components/VideoPosts/WithPaginatedVideoPosts';
 
 import { ProfilePosts } from '~src/components/VideoPosts';
 
@@ -27,9 +27,9 @@ import { IconGrid, IconBookmark, IconHeart } from '~src/components/CustomIcons';
 import { trendingUrl } from '~src/api/dummy';
 
 const TABS = [
-  { title: 'All', icon: IconGrid },
-  { title: 'Saved', icon: IconBookmark },
-  { title: 'Liked', icon: IconHeart },
+  { title: 'default', icon: IconGrid },
+  { title: 'saved', icon: IconBookmark },
+  { title: 'liked', icon: IconHeart },
 ];
 
 const PLACEHOLDER_CONFIG = {
@@ -51,7 +51,7 @@ export default function Profile({ navigation }) {
 
   // prettier-ignore
   const ProfilePostsArea = () => (
-    WithVideoPosts(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, TABS)
+    WithPaginatedVideoPosts(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, TABS)
   );
 
   // eslint-disable-next-line react/prop-types

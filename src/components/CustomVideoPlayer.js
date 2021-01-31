@@ -70,7 +70,7 @@ export default function CustomVideoPlayer(props) {
               }}
               isLooping
               shouldCorrectPitch
-              onReadyForDisplay={() => setVideoLoaded(true)}
+              onLoad={() => setVideoLoaded(true)}
               resizeMode="contain"
               style={[style, { flex: 1 }]}
               progressUpdateIntervalMillis={1000}

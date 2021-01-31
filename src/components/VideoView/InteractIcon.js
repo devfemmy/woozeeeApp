@@ -6,7 +6,7 @@ import { Button, Text } from '@ui-kitten/components';
 
 export default function InteractIcon(props) {
   // eslint-disable-next-line react/prop-types
-  const { accessory, textContent, onPress } = props;
+  const { Accessory, textContent, onPress } = props;
 
   return useMemo(
     () => (
@@ -14,14 +14,18 @@ export default function InteractIcon(props) {
         style={{
           alignItems: 'center',
           backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-          marginBottom: 5,
+          marginVertical: 3,
         }}
       >
         <Button
+          style={{ height: 36, width: 36 }}
           appearance="ghost"
           status="control"
           size="large"
-          accessoryLeft={accessory}
+          accessoryLeft={(evaProps) => (
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            <Accessory {...evaProps} height={32} width={32} />
+          )}
           onPress={onPress}
         />
         <Text status="control" category="label">
@@ -29,6 +33,6 @@ export default function InteractIcon(props) {
         </Text>
       </View>
     ),
-    [accessory, textContent, onPress],
+    [textContent, onPress],
   );
 }
