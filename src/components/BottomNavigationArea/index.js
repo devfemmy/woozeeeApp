@@ -46,7 +46,7 @@ const IconUpload = () => (
   >
     <TouchableOpacity onPress={null}>
       <Image
-        source={require('~assets/images/icon/upload-2.png')}
+        source={require('~assets/images/icon/upload.png')}
         style={{
           width: 55,
           height: 55,

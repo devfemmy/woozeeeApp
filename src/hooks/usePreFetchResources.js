@@ -37,7 +37,6 @@ export default function usePreFetchResources() {
           require('~assets/images/drawable/splash.png'),
           require('~assets/images/drawable/logo.png'),
           require('~assets/images/icon/upload.png'),
-          require('~assets/images/icon/upload-2.png'),
           require('~assets/images/icon/verified.png'),
           require('~assets/images/icon/flag-ng.png'),
           require('~assets/images/icon/flag-round-ng.png'),
