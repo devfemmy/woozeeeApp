@@ -30,6 +30,10 @@ build/
 local.properties
 *.iml
 android/*.hprof
+**/.classpath"
+**/.project"
+**/.settings"
+**/.factorypath
 
 # node.js
 #
@@ -63,3 +67,6 @@ buck-out/
 # Expo
 .expo/*
 web-build/
+
+# Vs Code
+.vscode/
