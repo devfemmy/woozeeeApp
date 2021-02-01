@@ -73,7 +73,7 @@ export default function CustomVideoPlayer(props) {
               onLoad={() => setVideoLoaded(true)}
               resizeMode="contain"
               style={[style, { flex: 1 }]}
-              // progressUpdateIntervalMillis={1000}
+              progressUpdateIntervalMillis={1000}
               // onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
               shouldPlay={shouldPlay && shouldDisplay && isFocused}
             />

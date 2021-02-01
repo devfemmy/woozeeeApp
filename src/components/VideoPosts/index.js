@@ -126,7 +126,7 @@ export const SocialPosts = ({ info }) => {
 
   const VIEWABILITY_CONFIG = useMemo(() => ({
     minimumViewTime: 100,
-    viewAreaCoveragePercentThreshold: 25,
+    viewAreaCoveragePercentThreshold: 50,
   }), []);
 
   // show currently viewing video
