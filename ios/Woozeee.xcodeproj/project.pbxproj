@@ -38,6 +38,7 @@
 		EC33BC23DABF4ED3A9522681 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A46E6F0446DA860B26AC /* splash.png */; };
 		F8090E7B27E44B318610448B /* back1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1AB20E6A47964239BADE07EA /* back1.jpg */; };
 		F82DF7F102B246DC83A93C2E /* woozeee-charity.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 238AC8FED8794EC5984C245B /* woozeee-charity.jpg */; };
+		A88C723CB9864DA28BB917FB /* flag-round-ng.png in Resources */ = {isa = PBXBuildFile; fileRef = 09E7315CBDCB41AFBC86725F /* flag-round-ng.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FEAB29FDF95A4DC4A7A696FB /* montserrat-light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "montserrat-light.ttf"; path = "../src/assets/fonts/montserrat/montserrat-light.ttf"; sourceTree = "<group>"; };
+		09E7315CBDCB41AFBC86725F /* flag-round-ng.png */ = {isa = PBXFileReference; name = "flag-round-ng.png"; path = "../src/assets/images/icon/flag-round-ng.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +197,7 @@
 				CF5DCFEA166F4285B596FF62 /* montserrat-medium.ttf */,
 				473BE264CF7C4145A82E0CB9 /* montserrat-regular.ttf */,
 				68F8BA2D7D664DA2A8FEB113 /* montserrat-semibold.ttf */,
+				09E7315CBDCB41AFBC86725F /* flag-round-ng.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				CDB6DD0085374FB6BB470C4B /* montserrat-medium.ttf in Resources */,
 				7919EA0D80994024BF18975A /* montserrat-regular.ttf in Resources */,
 				22AA69E259B2407FBC9883B5 /* montserrat-semibold.ttf in Resources */,
+				A88C723CB9864DA28BB917FB /* flag-round-ng.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
