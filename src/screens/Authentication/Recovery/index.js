@@ -2,8 +2,6 @@ import React, { useContext, useState } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { Layout, Button, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from '~src/contexts';
@@ -27,67 +25,65 @@ export default function RecoverWithEmail({ navigation }) {
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea
-          title={t('accountRecovery')}
-          navigation={navigation}
-          screen="auth"
-        />
-        <ScrollView
-          alwaysBounceVertical
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
+      <TopNavigationArea
+        title={t('accountRecovery')}
+        navigation={navigation}
+        screen="auth"
+      />
+      <ScrollView
+        alwaysBounceVertical
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <View
+          style={{
+            flex: 1,
+            padding: 15,
+          }}
         >
-          <View
-            style={{
-              flex: 1,
-              padding: 15,
-            }}
-          >
-            <View style={{ paddingBottom: 10 }}>
-              <View style={{ paddingVertical: 10 }}>
-                <GeneralTextField
-                  type="email"
-                  label={t('emailAddress')}
-                  androidComplete="email"
-                  iosComplete="emailAddress"
-                  validate="email"
-                  setFormValues={setFormValues}
-                />
-              </View>
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  disabled={isLoading}
-                >
-                  <Text status="control">{t('continue')}</Text>
-                </Button>
-              </View>
+          <View style={{ paddingBottom: 10 }}>
+            <View style={{ paddingVertical: 10 }}>
+              <GeneralTextField
+                type="email"
+                label={t('emailAddress')}
+                androidComplete="email"
+                iosComplete="emailAddress"
+                validate="email"
+                setFormValues={setFormValues}
+              />
             </View>
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexWrap: 'wrap',
-                }}
+            <View style={{ paddingVertical: 20 }}>
+              <Button
+                status="danger"
+                size="large"
+                accessibilityLiveRegion="assertive"
+                accessibilityComponentType="button"
+                accessibilityLabel="Continue"
+                disabled={isLoading}
               >
-                <Text>{`${t('dontHaveAccount')}?`}</Text>
-                <Button appearance="ghost" size="tiny" onPress={routeRegister}>
-                  <Text category="h6" status="primary">
-                    {t('signUp')}
-                  </Text>
-                </Button>
-              </View>
+                <Text status="control">{t('continue')}</Text>
+              </Button>
             </View>
           </View>
-        </ScrollView>
-      </SafeAreaView>
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+              }}
+            >
+              <Text>{`${t('dontHaveAccount')}?`}</Text>
+              <Button appearance="ghost" size="tiny" onPress={routeRegister}>
+                <Text category="h6" status="primary">
+                  {t('signUp')}
+                </Text>
+              </Button>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     </Layout>
   );
 }

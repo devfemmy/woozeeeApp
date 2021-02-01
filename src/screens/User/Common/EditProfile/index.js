@@ -5,8 +5,6 @@ import {
   View, ScrollView, Image, TouchableOpacity,
 } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 // prettier-ignore
 import {
   Layout, Button, Text,
@@ -74,188 +72,186 @@ export default function EditProfile({ navigation }) {
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea
-          title={t('updateProfile')}
-          navigation={navigation}
-          screen="auth"
-        />
-        <ScrollView
-          alwaysBounceVertical
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
+      <TopNavigationArea
+        title={t('updateProfile')}
+        navigation={navigation}
+        screen="auth"
+      />
+      <ScrollView
+        alwaysBounceVertical
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <View
+          style={{
+            flex: 1,
+          }}
         >
           <View
             style={{
-              flex: 1,
+              position: 'relative',
+              height: 150,
+              width: '100%',
+              alignItems: 'center',
             }}
           >
+            <TouchableOpacity
+              activeOpacity={0.75}
+              style={{
+                backgroundColor: '#EDF1F7',
+                height: 100,
+                position: 'absolute',
+                width: '100%',
+                zIndex: 1,
+              }}
+              onPress={() => selectCoverImage()}
+            >
+              <Image
+                source={{ uri: coverImage }}
+                style={{
+                  height: '100%',
+                  resizeMode: 'cover',
+                  width: '100%',
+                }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.75}
+              style={{
+                backgroundColor: '#EDF1F7',
+                bottom: 0,
+                borderRadius: 100,
+                height: 100,
+                position: 'absolute',
+                width: 100,
+                zIndex: 3,
+              }}
+              onPress={() => selectUserImage()}
+            >
+              <Image
+                source={{ uri: userImage }}
+                style={{
+                  borderColor: 'white',
+                  borderWidth: 3,
+                  borderRadius: 100,
+                  height: '100%',
+                  resizeMode: 'cover',
+                  width: '100%',
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ padding: 15 }}>
             <View
               style={{
-                position: 'relative',
-                height: 150,
-                width: '100%',
-                alignItems: 'center',
+                paddingVertical: 5,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
               }}
             >
-              <TouchableOpacity
-                activeOpacity={0.75}
-                style={{
-                  backgroundColor: '#EDF1F7',
-                  height: 100,
-                  position: 'absolute',
-                  width: '100%',
-                  zIndex: 1,
-                }}
-                onPress={() => selectCoverImage()}
-              >
-                <Image
-                  source={{ uri: coverImage }}
-                  style={{
-                    height: '100%',
-                    resizeMode: 'cover',
-                    width: '100%',
-                  }}
+              <View style={{ flex: 1, marginRight: 5 }}>
+                <GeneralTextField
+                  type="firstName"
+                  label={t('firstName')}
+                  androidComplete="name"
+                  iosComplete="givenName"
+                  validate="required"
+                  setFormValues={setFormValues}
                 />
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.75}
-                style={{
-                  backgroundColor: '#EDF1F7',
-                  bottom: 0,
-                  borderRadius: 100,
-                  height: 100,
-                  position: 'absolute',
-                  width: 100,
-                  zIndex: 3,
-                }}
-                onPress={() => selectUserImage()}
-              >
-                <Image
-                  source={{ uri: userImage }}
-                  style={{
-                    borderColor: 'white',
-                    borderWidth: 3,
-                    borderRadius: 100,
-                    height: '100%',
-                    resizeMode: 'cover',
-                    width: '100%',
-                  }}
+              </View>
+              <View style={{ flex: 1, marginLeft: 5 }}>
+                <GeneralTextField
+                  type="lastName"
+                  label={t('lastName')}
+                  androidComplete="name"
+                  iosComplete="familyName"
+                  validate="required"
+                  setFormValues={setFormValues}
                 />
-              </TouchableOpacity>
+              </View>
             </View>
-            <View style={{ padding: 15 }}>
-              <View
-                style={{
-                  paddingVertical: 5,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <GeneralTextField
-                    type="firstName"
-                    label={t('firstName')}
-                    androidComplete="name"
-                    iosComplete="givenName"
-                    validate="required"
-                    setFormValues={setFormValues}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 5 }}>
-                  <GeneralTextField
-                    type="lastName"
-                    label={t('lastName')}
-                    androidComplete="name"
-                    iosComplete="familyName"
-                    validate="required"
-                    setFormValues={setFormValues}
-                  />
-                </View>
-              </View>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="username"
-                  label={t('username')}
-                  androidComplete="username"
-                  iosComplete="username"
-                  validate="required"
+            <View style={{ paddingVertical: 5 }}>
+              <GeneralTextField
+                type="username"
+                label={t('username')}
+                androidComplete="username"
+                iosComplete="username"
+                validate="required"
+                setFormValues={setFormValues}
+              />
+            </View>
+            <View
+              style={{
+                paddingVertical: 5,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <View style={{ flex: 1, marginRight: 5 }}>
+                <GeneralRadioGroup
+                  type="gender"
+                  label={t('gender')}
+                  data={GENDERS}
                   setFormValues={setFormValues}
                 />
               </View>
-              <View
-                style={{
-                  paddingVertical: 5,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <GeneralRadioGroup
-                    type="gender"
-                    label={t('gender')}
-                    data={GENDERS}
-                    setFormValues={setFormValues}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 5 }}>
-                  <GeneralDatePicker
-                    type="dob"
-                    label={t('dob')}
-                    setFormValues={setFormValues}
-                  />
-                </View>
-              </View>
-              <View
-                style={{
-                  paddingVertical: 5,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <GeneralSelect
-                    type="country"
-                    label={t('country')}
-                    data={COUNTRIES}
-                    setFormValues={setFormValues}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 5 }}>
-                  <GeneralSelect
-                    type="state"
-                    label={t('state')}
-                    data={STATES}
-                    setFormValues={setFormValues}
-                  />
-                </View>
-              </View>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="bio"
-                  label={t('bio')}
-                  multiline
-                  height={50}
-                  validate="required"
+              <View style={{ flex: 1, marginLeft: 5 }}>
+                <GeneralDatePicker
+                  type="dob"
+                  label={t('dob')}
                   setFormValues={setFormValues}
                 />
               </View>
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  disabled={isLoading}
-                >
-                  <Text status="control">{t('continue')}</Text>
-                </Button>
+            </View>
+            <View
+              style={{
+                paddingVertical: 5,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <View style={{ flex: 1, marginRight: 5 }}>
+                <GeneralSelect
+                  type="country"
+                  label={t('country')}
+                  data={COUNTRIES}
+                  setFormValues={setFormValues}
+                />
               </View>
+              <View style={{ flex: 1, marginLeft: 5 }}>
+                <GeneralSelect
+                  type="state"
+                  label={t('state')}
+                  data={STATES}
+                  setFormValues={setFormValues}
+                />
+              </View>
+            </View>
+            <View style={{ paddingVertical: 5 }}>
+              <GeneralTextField
+                type="bio"
+                label={t('bio')}
+                multiline
+                height={50}
+                validate="required"
+                setFormValues={setFormValues}
+              />
+            </View>
+            <View style={{ paddingVertical: 20 }}>
+              <Button
+                status="danger"
+                size="large"
+                accessibilityLiveRegion="assertive"
+                accessibilityComponentType="button"
+                accessibilityLabel="Continue"
+                disabled={isLoading}
+              >
+                <Text status="control">{t('continue')}</Text>
+              </Button>
             </View>
           </View>
-        </ScrollView>
-      </SafeAreaView>
+        </View>
+      </ScrollView>
     </Layout>
   );
 }

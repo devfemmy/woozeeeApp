@@ -2,6 +2,8 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { View, useWindowDimensions } from 'react-native';
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { List, Text } from '@ui-kitten/components';
 
 import VideoCard from '~src/components/Socials/VideoCard';
@@ -112,11 +114,15 @@ export const ProfilePosts = ({ info }) => useMemo(
 
 // prettier-ignore
 export const SocialPosts = ({ info }) => {
-  const { height } = useWindowDimensions();
+  const { bottom, top } = useSafeAreaInsets();
 
+  const { height } = useWindowDimensions();
+  
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const ITEM_HEIGHT = height - 50;
+  const CONTENT_SPACE = bottom + top + 56;
+
+  const ITEM_HEIGHT = height - CONTENT_SPACE;
 
   const VIEWABILITY_CONFIG = useMemo(() => ({
     minimumViewTime: 100,
@@ -146,6 +152,7 @@ export const SocialPosts = ({ info }) => {
             data={renderData}
             extraWidth={0.5}
             activeIndex={activeIndex}
+            viewHeight={ITEM_HEIGHT}
           />
         )}
         extraData={activeIndex}
@@ -162,7 +169,13 @@ export const SocialPosts = ({ info }) => {
         viewabilityConfig={VIEWABILITY_CONFIG}
       />
     ),
-    [info, activeIndex, handleViewItemsChanged, VIEWABILITY_CONFIG, ITEM_HEIGHT],
+    [
+      info,
+      activeIndex,
+      handleViewItemsChanged,
+      VIEWABILITY_CONFIG,
+      ITEM_HEIGHT,
+    ],
   );
 };
 

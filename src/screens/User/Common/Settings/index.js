@@ -5,8 +5,6 @@ import React, {
 
 import { View, ScrollView } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 // prettier-ignore
 import {
   Layout, Button, Text, Spinner, Toggle, Divider, Select, SelectItem, IndexPath,
@@ -94,98 +92,96 @@ export default function Settings({ navigation }) {
   return useMemo(
     () => (
       <Layout level="4" style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <TopNavigationArea
-            title={t('settings')}
-            navigation={navigation}
-            screen="auth"
-          />
-          <ScrollView
-            alwaysBounceVertical
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
+        <TopNavigationArea
+          title={t('settings')}
+          navigation={navigation}
+          screen="auth"
+        />
+        <ScrollView
+          alwaysBounceVertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
+          <View
+            style={{
+              flex: 1,
+              padding: 15,
+            }}
           >
-            <View
-              style={{
-                flex: 1,
-                padding: 15,
-              }}
-            >
-              <View>
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
                 <View
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
                     alignItems: 'center',
                   }}
                 >
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <IconMoon fill="#8F9BB3" height={24} width={24} />
-                    <Text category="s1" style={{ marginLeft: 10 }}>
-                      {t('darkMode')}
-                    </Text>
-                  </View>
-                  <Toggle checked={darkMode} onChange={handleSwitchTheme} />
+                  <IconMoon fill="#8F9BB3" height={24} width={24} />
+                  <Text category="s1" style={{ marginLeft: 10 }}>
+                    {t('darkMode')}
+                  </Text>
                 </View>
-              </View>
-              <Divider style={{ marginVertical: 10 }} />
-              <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <IconFlag fill="#8F9BB3" height={24} width={24} />
-                    <Text category="s1" style={{ marginLeft: 10 }}>
-                      {t('language')}
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Select
-                      value={renderLocales}
-                      selectedIndex={selectedLocale}
-                      onSelect={handleSwitchLocale}
-                    >
-                      {/* eslint-disable-next-line react/prop-types */}
-                      {LOCALES.map((option) => (
-                        <SelectItem key={option.title} title={option.title} />
-                      ))}
-                    </Select>
-                  </View>
-                </View>
-              </View>
-              <Divider style={{ marginVertical: 10 }} />
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  accessoryLeft={isLoading ? renderSpinner : null}
-                  onPress={routeBack}
-                  disabled={isLoading}
-                >
-                  <Text status="control">{t('close')}</Text>
-                </Button>
+                <Toggle checked={darkMode} onChange={handleSwitchTheme} />
               </View>
             </View>
-          </ScrollView>
-        </SafeAreaView>
+            <Divider style={{ marginVertical: 10 }} />
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <IconFlag fill="#8F9BB3" height={24} width={24} />
+                  <Text category="s1" style={{ marginLeft: 10 }}>
+                    {t('language')}
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Select
+                    value={renderLocales}
+                    selectedIndex={selectedLocale}
+                    onSelect={handleSwitchLocale}
+                  >
+                    {/* eslint-disable-next-line react/prop-types */}
+                    {LOCALES.map((option) => (
+                      <SelectItem key={option.title} title={option.title} />
+                    ))}
+                  </Select>
+                </View>
+              </View>
+            </View>
+            <Divider style={{ marginVertical: 10 }} />
+            <View style={{ paddingVertical: 20 }}>
+              <Button
+                status="danger"
+                size="large"
+                accessibilityLiveRegion="assertive"
+                accessibilityComponentType="button"
+                accessibilityLabel="Continue"
+                accessoryLeft={isLoading ? renderSpinner : null}
+                onPress={routeBack}
+                disabled={isLoading}
+              >
+                <Text status="control">{t('close')}</Text>
+              </Button>
+            </View>
+          </View>
+        </ScrollView>
       </Layout>
     ),
     [

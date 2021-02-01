@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 
 import { View, StyleSheet } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 // prettier-ignore
 import {
   Layout, Button, Text,
@@ -61,46 +59,49 @@ export default function Social({ navigation }) {
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
-      <View style={{ flex: 1, backgroundColor: '#101426' }}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '100%',
-              paddingTop: 5,
-              zIndex: 19,
-            }}
-          >
-            <View>
-              <Header navigation={navigation} />
-            </View>
-            <View style={styles.header}>
-              <Text category="label" status="control">
-                {t('following')}
-              </Text>
-              <Text style={{ color: 'white', marginHorizontal: 10 }}>|</Text>
-              <Text category="label" status="control">
-                {t('versus')}
-              </Text>
-            </View>
-            <View style={styles.interactIcons}>
-              <Button
-                appearance="ghost"
-                status="control"
-                size="large"
-                accessibilityLiveRegion="polite"
-                accessibilityComponentType="button"
-                accessibilityHint="Record"
-                accessoryLeft={(evaProps) => (
-                  /* eslint-disable-next-line react/jsx-props-no-spreading */
-                  <IconVideo {...evaProps} isOpen />
-                )}
-              />
-            </View>
+      <View
+        style={{
+          flex: 1,
+          // backgroundColor: '#101426',
+        }}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+            paddingTop: 5,
+            zIndex: 19,
+          }}
+        >
+          <View>
+            <Header navigation={navigation} />
           </View>
-          <SocialPostsArea />
-        </SafeAreaView>
+          <View style={styles.header}>
+            <Text category="label" status="control">
+              {t('following')}
+            </Text>
+            <Text style={{ color: 'white', marginHorizontal: 10 }}>|</Text>
+            <Text category="label" status="control">
+              {t('versus')}
+            </Text>
+          </View>
+          <View style={styles.interactIcons}>
+            <Button
+              appearance="ghost"
+              status="control"
+              size="large"
+              accessibilityLiveRegion="polite"
+              accessibilityComponentType="button"
+              accessibilityHint="Record"
+              accessoryLeft={(evaProps) => (
+                /* eslint-disable-next-line react/jsx-props-no-spreading */
+                <IconVideo {...evaProps} isOpen />
+              )}
+            />
+          </View>
+        </View>
+        <SocialPostsArea />
       </View>
     </Layout>
   );

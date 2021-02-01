@@ -2,8 +2,6 @@ import React, { useContext, useState } from 'react';
 
 import { View, StyleSheet, Image } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { BlurView } from 'expo-blur';
 
 // prettier-ignore
@@ -60,64 +58,60 @@ export default function OnboardingScreen({ navigation }) {
         thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
         isMuted={!isVolumeOpen}
       />
-      <SafeAreaView style={{ flex: 1 }}>
-        <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
-          <View style={{ alignSelf: 'flex-end' }}>
-            <Button
-              appearance="ghost"
-              status="danger"
-              size="large"
-              accessibilityLiveRegion="polite"
-              accessibilityComponentType="button"
-              accessibilityHint="Volume Toggle"
-              accessoryLeft={(evaProps) => (
-                /* eslint-disable-next-line react/jsx-props-no-spreading */
-                <IconVolume {...evaProps} isOpen={isVolumeOpen} />
-              )}
-              onPress={() => setVolumeOpen((prevState) => !prevState)}
+      <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
+        <View style={{ alignSelf: 'flex-end' }}>
+          <Button
+            appearance="ghost"
+            status="danger"
+            size="large"
+            accessibilityLiveRegion="polite"
+            accessibilityComponentType="button"
+            accessibilityHint="Volume Toggle"
+            accessoryLeft={(evaProps) => (
+              /* eslint-disable-next-line react/jsx-props-no-spreading */
+              <IconVolume {...evaProps} isOpen={isVolumeOpen} />
+            )}
+            onPress={() => setVolumeOpen((prevState) => !prevState)}
+          />
+        </View>
+        <View style={{ alignItems: 'center', paddingBottom: 50 }}>
+          <View style={{ marginBottom: 10 }}>
+            <Image
+              source={require('~assets/images/drawable/logo.png')}
+              resizeMode="contain"
+              style={{ width: 220 }}
             />
           </View>
-          <View style={{ alignItems: 'center', paddingBottom: 50 }}>
-            <View style={{ marginBottom: 10 }}>
-              <Image
-                source={require('~assets/images/drawable/logo.png')}
-                resizeMode="contain"
-                style={{ width: 220 }}
-              />
-            </View>
-            <View style={styles.brandMotto}>
-              <Text category="h6" status="control">
-                {t('haveFun')}
-              </Text>
-              <Text status="control" style={{ marginHorizontal: 10 }}>
-                |
-              </Text>
-              <Text category="h6" status="control">
-                {t('makeMoney')}
-              </Text>
-              <Text status="control" style={{ marginHorizontal: 10 }}>
-                |
-              </Text>
-              <Text category="h6" status="control">
-                {t('giveBack')}
-              </Text>
-            </View>
-            <View style={{ minWidth: '100%' }}>
-              <Button
-                status="danger"
-                accessibilityLiveRegion="assertive"
-                accessibilityComponentType="button"
-                accessibilityHint="Sign in or Sign up"
-                onPress={routeLogin}
-              >
-                <Text status="control">
-                  {` ${t('signIn')} / ${t('signUp')}`}
-                </Text>
-              </Button>
-            </View>
+          <View style={styles.brandMotto}>
+            <Text category="h6" status="control">
+              {t('haveFun')}
+            </Text>
+            <Text status="control" style={{ marginHorizontal: 10 }}>
+              |
+            </Text>
+            <Text category="h6" status="control">
+              {t('makeMoney')}
+            </Text>
+            <Text status="control" style={{ marginHorizontal: 10 }}>
+              |
+            </Text>
+            <Text category="h6" status="control">
+              {t('giveBack')}
+            </Text>
           </View>
-        </BlurView>
-      </SafeAreaView>
+          <View style={{ minWidth: '100%' }}>
+            <Button
+              status="danger"
+              accessibilityLiveRegion="assertive"
+              accessibilityComponentType="button"
+              accessibilityHint="Sign in or Sign up"
+              onPress={routeLogin}
+            >
+              <Text status="control">{` ${t('signIn')} / ${t('signUp')}`}</Text>
+            </Button>
+          </View>
+        </View>
+      </BlurView>
     </Layout>
   );
 }

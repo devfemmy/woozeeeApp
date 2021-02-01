@@ -51,8 +51,8 @@ export default function CustomVideoPlayer(props) {
 
   // prettier-ignore
   const VideoThumb = () => (!shouldDisplay || !isVideoLoaded ? (
-    <View style={{ paddingTop: 90, flex: 1 }}>
-      <Placeholders maxWidth={width} maxHeight={height - 200} count={1} numColumns={1} />
+    <View style={{ paddingTop: 65, flex: 1 }}>
+      <Placeholders maxWidth={width} maxHeight={height - 300} count={1} numColumns={1} />
     </View>
 
   ) : null);
@@ -73,7 +73,7 @@ export default function CustomVideoPlayer(props) {
               onLoad={() => setVideoLoaded(true)}
               resizeMode="contain"
               style={[style, { flex: 1 }]}
-              progressUpdateIntervalMillis={1000}
+              // progressUpdateIntervalMillis={1000}
               // onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
               shouldPlay={shouldPlay && shouldDisplay && isFocused}
             />

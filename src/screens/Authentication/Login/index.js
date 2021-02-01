@@ -2,8 +2,6 @@ import React, { useState, useContext } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { useIsFocused } from '@react-navigation/native';
 
 // prettier-ignore
@@ -81,156 +79,154 @@ export default function Login({ navigation }) {
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea
-          title={t('signIn')}
-          navigation={navigation}
-          screen="auth"
-        />
-        <ScrollView
-          alwaysBounceVertical
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
+      <TopNavigationArea
+        title={t('signIn')}
+        navigation={navigation}
+        screen="auth"
+      />
+      <ScrollView
+        alwaysBounceVertical
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <View
+          style={{
+            flex: 1,
+            padding: 15,
+          }}
         >
-          <View
-            style={{
-              flex: 1,
-              padding: 15,
-            }}
-          >
-            <View style={{ paddingBottom: 10 }}>
-              {errorMsg.auth ? (
-                <View
-                  style={{
-                    paddingVertical: 10,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'row',
-                  }}
-                >
-                  <Text
-                    status="danger"
-                    category="label"
-                    style={{ marginRight: 2 }}
-                  >
-                    {` ${t('error')}! `}
-                  </Text>
-                  <Text status="danger" category="p2">
-                    {t(errorMsg.auth)}
-                  </Text>
-                </View>
-              ) : null}
-              <View style={{ paddingVertical: 10 }}>
-                <GeneralTextField
-                  type="email"
-                  label={t('emailAddress')}
-                  androidComplete="email"
-                  iosComplete="emailAddress"
-                  validate="email"
-                  setFormValues={setFormValues}
-                />
-              </View>
-              <View style={{ paddingVertical: 10 }}>
-                <GeneralTextField
-                  type="password"
-                  label={t('password')}
-                  androidComplete="password"
-                  iosComplete="password"
-                  validate="password"
-                  secure
-                  setFormValues={setFormValues}
-                />
-                <Button
-                  size="tiny"
-                  appearance="ghost"
-                  style={{ alignSelf: 'flex-end' }}
-                  onPress={routeRecoverWithEmail}
-                >
-                  <Text status="primary" category="s2">
-                    {` ${t('forgotPassword')}?`}
-                  </Text>
-                </Button>
-              </View>
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  accessoryLeft={isLoading ? renderSpinner : null}
-                  onPress={loginUser}
-                  disabled={isLoading}
-                >
-                  <Text status="control">{t('continue')}</Text>
-                </Button>
-              </View>
+          <View style={{ paddingBottom: 10 }}>
+            {errorMsg.auth ? (
               <View
                 style={{
-                  alignItems: 'center',
-                  paddingTop: 50,
-                  paddingBottom: 10,
-                }}
-              >
-                <Text>{t('orContinueWith')}</Text>
-              </View>
-              <View style={{ paddingVertical: 10 }}>
-                <Button
-                  status="primary"
-                  size="medium"
-                  appearance="outline"
-                  accessoryLeft={IconGoogle}
-                  accessibilityLiveRegion="polite"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Login with Google"
-                  style={{ marginVertical: 5 }}
-                >
-                  <Text>Google</Text>
-                </Button>
-                <Button
-                  status="primary"
-                  size="medium"
-                  accessoryLeft={IconFacebook}
-                  accessibilityLiveRegion="polite"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Login with Facebook"
-                  style={{ marginVertical: 5 }}
-                >
-                  <Text appearance="alternative">Facebook</Text>
-                </Button>
-                <Button
-                  status="info"
-                  size="medium"
-                  accessoryLeft={IconTwitter}
-                  accessibilityLiveRegion="polite"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Login with Twitter"
-                  style={{ marginVertical: 5 }}
-                >
-                  <Text appearance="alternative">Twitter</Text>
-                </Button>
-              </View>
-            </View>
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
+                  paddingVertical: 10,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  flexWrap: 'wrap',
+                  flexDirection: 'row',
                 }}
               >
-                <Text>{`${t('dontHaveAccount')}?`}</Text>
-                <Button appearance="ghost" size="tiny" onPress={routeRegister}>
-                  <Text category="h6" status="primary">
-                    {t('signUp')}
-                  </Text>
-                </Button>
+                <Text
+                  status="danger"
+                  category="label"
+                  style={{ marginRight: 2 }}
+                >
+                  {` ${t('error')}! `}
+                </Text>
+                <Text status="danger" category="p2">
+                  {t(errorMsg.auth)}
+                </Text>
               </View>
+            ) : null}
+            <View style={{ paddingVertical: 10 }}>
+              <GeneralTextField
+                type="email"
+                label={t('emailAddress')}
+                androidComplete="email"
+                iosComplete="emailAddress"
+                validate="email"
+                setFormValues={setFormValues}
+              />
+            </View>
+            <View style={{ paddingVertical: 10 }}>
+              <GeneralTextField
+                type="password"
+                label={t('password')}
+                androidComplete="password"
+                iosComplete="password"
+                validate="password"
+                secure
+                setFormValues={setFormValues}
+              />
+              <Button
+                size="tiny"
+                appearance="ghost"
+                style={{ alignSelf: 'flex-end' }}
+                onPress={routeRecoverWithEmail}
+              >
+                <Text status="primary" category="s2">
+                  {` ${t('forgotPassword')}?`}
+                </Text>
+              </Button>
+            </View>
+            <View style={{ paddingVertical: 20 }}>
+              <Button
+                status="danger"
+                size="large"
+                accessibilityLiveRegion="assertive"
+                accessibilityComponentType="button"
+                accessibilityLabel="Continue"
+                accessoryLeft={isLoading ? renderSpinner : null}
+                onPress={loginUser}
+                disabled={isLoading}
+              >
+                <Text status="control">{t('continue')}</Text>
+              </Button>
+            </View>
+            <View
+              style={{
+                alignItems: 'center',
+                paddingTop: 50,
+                paddingBottom: 10,
+              }}
+            >
+              <Text>{t('orContinueWith')}</Text>
+            </View>
+            <View style={{ paddingVertical: 10 }}>
+              <Button
+                status="primary"
+                size="medium"
+                appearance="outline"
+                accessoryLeft={IconGoogle}
+                accessibilityLiveRegion="polite"
+                accessibilityComponentType="button"
+                accessibilityLabel="Login with Google"
+                style={{ marginVertical: 5 }}
+              >
+                <Text>Google</Text>
+              </Button>
+              <Button
+                status="primary"
+                size="medium"
+                accessoryLeft={IconFacebook}
+                accessibilityLiveRegion="polite"
+                accessibilityComponentType="button"
+                accessibilityLabel="Login with Facebook"
+                style={{ marginVertical: 5 }}
+              >
+                <Text appearance="alternative">Facebook</Text>
+              </Button>
+              <Button
+                status="info"
+                size="medium"
+                accessoryLeft={IconTwitter}
+                accessibilityLiveRegion="polite"
+                accessibilityComponentType="button"
+                accessibilityLabel="Login with Twitter"
+                style={{ marginVertical: 5 }}
+              >
+                <Text appearance="alternative">Twitter</Text>
+              </Button>
             </View>
           </View>
-        </ScrollView>
-      </SafeAreaView>
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+              }}
+            >
+              <Text>{`${t('dontHaveAccount')}?`}</Text>
+              <Button appearance="ghost" size="tiny" onPress={routeRegister}>
+                <Text category="h6" status="primary">
+                  {t('signUp')}
+                </Text>
+              </Button>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     </Layout>
   );
 }

@@ -8,8 +8,6 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { BlurView } from 'expo-blur';
 
 // prettier-ignore
@@ -207,33 +205,31 @@ export default function Home({ navigation }) {
   return (
     <Layout level="4" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
-      <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea
-          title="woozeee"
-          navigation={navigation}
-          icon="logout"
-          screen="user"
-        />
+      <TopNavigationArea
+        title="woozeee"
+        navigation={navigation}
+        icon="logout"
+        screen="user"
+      />
 
-        <View style={{ flex: 1 }}>
-          <List
-            ListHeaderComponent={RenderCategoryHeader}
-            style={{ backgroundColor: 'transparent' }}
-            horizontal={!IS_PORTRAIT}
-            alwaysBounceHorizontal
-            alwaysBounceVertical
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            data={woozeeeCategories}
-            renderItem={renderCategory}
-            getItemLayout={(data, index) => ({
-              length: CATEGORY_HEIGHT,
-              offset: CATEGORY_HEIGHT * index,
-              index,
-            })}
-          />
-        </View>
-      </SafeAreaView>
+      <View style={{ flex: 1 }}>
+        <List
+          ListHeaderComponent={RenderCategoryHeader}
+          style={{ backgroundColor: 'transparent' }}
+          horizontal={!IS_PORTRAIT}
+          alwaysBounceHorizontal
+          alwaysBounceVertical
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          data={woozeeeCategories}
+          renderItem={renderCategory}
+          getItemLayout={(data, index) => ({
+            length: CATEGORY_HEIGHT,
+            offset: CATEGORY_HEIGHT * index,
+            index,
+          })}
+        />
+      </View>
     </Layout>
   );
 }

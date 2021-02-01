@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 import { enableScreens } from 'react-native-screens';
 
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -138,7 +138,9 @@ export default function App() {
               <QueryClientProvider client={queryClient}>
                 <LoadingContext.Provider value={{ isLoading, setLoading }}>
                   <Layout level="4" style={{ flex: 1 }}>
-                    <Router />
+                    <SafeAreaView style={{ flex: 1 }}>
+                      <Router />
+                    </SafeAreaView>
                   </Layout>
                 </LoadingContext.Provider>
               </QueryClientProvider>

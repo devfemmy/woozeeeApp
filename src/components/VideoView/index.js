@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 });
 
 export default function VideoView(props) {
-  const { data, activeIndex } = props;
+  const { data, activeIndex, viewHeight } = props;
 
   const { width, height } = useWindowDimensions();
 
@@ -75,7 +75,7 @@ export default function VideoView(props) {
       <View
         style={{
           flex: 1,
-          height: height - 50,
+          height: viewHeight,
         }}
       >
         {isFocused ? (
@@ -209,7 +209,7 @@ export default function VideoView(props) {
       IS_PRELOADED,
       isFocused,
       width,
-      height,
+      viewHeight,
       isLiked,
       shouldPlay,
       item.video,

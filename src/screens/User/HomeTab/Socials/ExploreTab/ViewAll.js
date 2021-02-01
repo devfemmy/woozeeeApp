@@ -2,8 +2,6 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 // prettier-ignore
 import {
   Layout,
@@ -33,17 +31,15 @@ export default function ViewAll({ navigation }) {
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea
-          title="woozeee"
-          navigation={navigation}
-          icon="logout"
-          screen="search"
-        />
-        <View style={{ paddingBottom: 20 }}>
-          <AllPostsArea />
-        </View>
-      </SafeAreaView>
+      <TopNavigationArea
+        title="woozeee"
+        navigation={navigation}
+        icon="logout"
+        screen="search"
+      />
+      <View style={{ paddingBottom: 20 }}>
+        <AllPostsArea />
+      </View>
     </Layout>
   );
 }

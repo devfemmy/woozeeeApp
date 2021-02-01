@@ -70,7 +70,7 @@ export default function WithInfiniteVideoPosts(
           numColumns={placeholderProp.numColumns || 2}
           maxHeight={
             placeholderProp.maxHeight === '100%'
-              ? height - 200
+              ? height - 300
               : placeholderProp.maxHeight
           }
           maxWidth={width}

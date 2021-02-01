@@ -2,8 +2,6 @@ import React, { useContext, useState } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { Layout, Button, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from '~src/contexts';
@@ -38,119 +36,117 @@ export default function RegisterFull({ navigation }) {
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <TopNavigationArea
-          title={`${t('registration')} ${t('details')}`}
-          navigation={navigation}
-          screen="auth"
-        />
-        <ScrollView
-          alwaysBounceVertical
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
+      <TopNavigationArea
+        title={`${t('registration')} ${t('details')}`}
+        navigation={navigation}
+        screen="auth"
+      />
+      <ScrollView
+        alwaysBounceVertical
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <View
+          style={{
+            flex: 1,
+            padding: 15,
+          }}
         >
-          <View
-            style={{
-              flex: 1,
-              padding: 15,
-            }}
-          >
-            <View style={{ paddingBottom: 10 }}>
-              <View
-                style={{
-                  paddingVertical: 10,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <GeneralTextField
-                    type="firstName"
-                    label={t('firstName')}
-                    androidComplete="name"
-                    iosComplete="givenName"
-                    validate="required"
-                    setFormValues={setFormValues}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 5 }}>
-                  <GeneralTextField
-                    type="lastName"
-                    label={t('lastName')}
-                    androidComplete="name"
-                    iosComplete="familyName"
-                    validate="required"
-                    setFormValues={setFormValues}
-                  />
-                </View>
-              </View>
-              <View style={{ paddingVertical: 10 }}>
+          <View style={{ paddingBottom: 10 }}>
+            <View
+              style={{
+                paddingVertical: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <View style={{ flex: 1, marginRight: 5 }}>
                 <GeneralTextField
-                  type="username"
-                  label={t('username')}
-                  androidComplete="username"
-                  iosComplete="username"
+                  type="firstName"
+                  label={t('firstName')}
+                  androidComplete="name"
+                  iosComplete="givenName"
                   validate="required"
                   setFormValues={setFormValues}
                 />
               </View>
-              <View style={{ paddingVertical: 10 }}>
+              <View style={{ flex: 1, marginLeft: 5 }}>
                 <GeneralTextField
-                  type="password"
-                  label={t('password')}
-                  androidComplete="password"
-                  iosComplete="password"
-                  validate="password"
-                  secure
+                  type="lastName"
+                  label={t('lastName')}
+                  androidComplete="name"
+                  iosComplete="familyName"
+                  validate="required"
                   setFormValues={setFormValues}
                 />
-              </View>
-              <View style={{ paddingVertical: 10 }}>
-                <GeneralTextField
-                  type="confirmPassword"
-                  label={`${t('confirm')} ${t('password')}`}
-                  androidComplete="password"
-                  iosComplete="password"
-                  validate="password"
-                  secure
-                  setFormValues={setFormValues}
-                />
-              </View>
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  onPress={routeVerifyWithCode}
-                  disabled={isLoading}
-                >
-                  <Text status="control">{t('continue')}</Text>
-                </Button>
               </View>
             </View>
-            <View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexWrap: 'wrap',
-                  paddingVertical: 10,
-                }}
+            <View style={{ paddingVertical: 10 }}>
+              <GeneralTextField
+                type="username"
+                label={t('username')}
+                androidComplete="username"
+                iosComplete="username"
+                validate="required"
+                setFormValues={setFormValues}
+              />
+            </View>
+            <View style={{ paddingVertical: 10 }}>
+              <GeneralTextField
+                type="password"
+                label={t('password')}
+                androidComplete="password"
+                iosComplete="password"
+                validate="password"
+                secure
+                setFormValues={setFormValues}
+              />
+            </View>
+            <View style={{ paddingVertical: 10 }}>
+              <GeneralTextField
+                type="confirmPassword"
+                label={`${t('confirm')} ${t('password')}`}
+                androidComplete="password"
+                iosComplete="password"
+                validate="password"
+                secure
+                setFormValues={setFormValues}
+              />
+            </View>
+            <View style={{ paddingVertical: 20 }}>
+              <Button
+                status="danger"
+                size="large"
+                accessibilityLiveRegion="assertive"
+                accessibilityComponentType="button"
+                accessibilityLabel="Continue"
+                onPress={routeVerifyWithCode}
+                disabled={isLoading}
               >
-                <Text>{`${t('haveAccount')}?`}</Text>
-                <Button appearance="ghost" size="tiny" onPress={routeLogin}>
-                  <Text category="h6" status="primary">
-                    {t('signIn')}
-                  </Text>
-                </Button>
-              </View>
+                <Text status="control">{t('continue')}</Text>
+              </Button>
             </View>
           </View>
-        </ScrollView>
-      </SafeAreaView>
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+                paddingVertical: 10,
+              }}
+            >
+              <Text>{`${t('haveAccount')}?`}</Text>
+              <Button appearance="ghost" size="tiny" onPress={routeLogin}>
+                <Text category="h6" status="primary">
+                  {t('signIn')}
+                </Text>
+              </Button>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
     </Layout>
   );
 }
