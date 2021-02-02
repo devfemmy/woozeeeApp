@@ -49,6 +49,7 @@ export default function usePreFetchResources() {
           require('~assets/images/user/user1.png'),
           require('~assets/images/user/user2.png'),
           require('~assets/images/user/user3.png'),
+          require('~assets/audio/woozeee_Instrumental.mp3'),
         ]);
       } catch (e) {
         const err = e;

@@ -193,6 +193,15 @@ android {
 
         }
     }
+    // fix Hermes enabled bundle causes white screen when installed from Google Play
+    // configurations.all {
+    //     resolutionStrategy {
+    //         force "com.facebook.soloader:soloader:0.8.2"
+    //     }
+    // }
+    // packagingOptions {
+    //     exclude '**/libjscexecutor.so'
+    // }
 }
 
 dependencies {

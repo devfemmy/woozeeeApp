@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 
 import { View, StyleSheet, Image } from 'react-native';
 
+import { useIsFocused } from '@react-navigation/native';
+
 import { BlurView } from 'expo-blur';
 
 // prettier-ignore
@@ -16,6 +18,8 @@ import useToast from '~src/hooks/useToast';
 import OverlayLoader from '~src/components/OverlayLoader';
 
 import BackgroundVideo from '~src/components/BackgroundVideo';
+
+import useAudioPlayer from '~src/hooks/useAudioPlayer';
 
 import { IconVolume } from '~src/components/CustomIcons';
 
@@ -44,7 +48,20 @@ export default function OnboardingScreen({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const [isVolumeOpen, setVolumeOpen] = useState(false);
+  const [isVolumeOpen, setVolumeOpen] = useState(true);
+
+  const soundObj = useAudioPlayer(
+    require('~assets/audio/woozeee_Instrumental.mp3'),
+  );
+
+  const handleAudioMute = async () => {
+    try {
+      setVolumeOpen((prevState) => !prevState);
+      await soundObj.setIsMutedAsync(isVolumeOpen);
+    } catch (e) {
+      const msg = e;
+    }
+  };
 
   // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
@@ -62,16 +79,20 @@ export default function OnboardingScreen({ navigation }) {
         <View style={{ alignSelf: 'flex-end' }}>
           <Button
             appearance="ghost"
-            status="danger"
-            size="large"
+            size="tiny"
             accessibilityLiveRegion="polite"
             accessibilityComponentType="button"
             accessibilityHint="Volume Toggle"
             accessoryLeft={(evaProps) => (
               /* eslint-disable-next-line react/jsx-props-no-spreading */
-              <IconVolume {...evaProps} isOpen={isVolumeOpen} />
+              <IconVolume
+                {...evaProps}
+                height={32}
+                width={32}
+                isOpen={isVolumeOpen}
+              />
             )}
-            onPress={() => setVolumeOpen((prevState) => !prevState)}
+            onPress={handleAudioMute}
           />
         </View>
         <View style={{ alignItems: 'center', paddingBottom: 50 }}>
