@@ -73,7 +73,7 @@ export default function OnboardingScreen({ navigation }) {
       <BackgroundVideo
         videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
         thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
-        isMuted={!isVolumeOpen}
+        isMuted
       />
       <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
         <View style={{ alignSelf: 'flex-end' }}>
