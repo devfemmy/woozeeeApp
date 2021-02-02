@@ -109,6 +109,20 @@ export default function Register({ navigation }) {
             <View style={{ paddingVertical: 10 }}>
               <Button
                 status="primary"
+                appearance="outline"
+                size="medium"
+                accessoryLeft={IconFacebook}
+                accessibilityLiveRegion="polite"
+                accessibilityComponentType="button"
+                accessibilityLabel="Login with Facebook"
+                style={{ marginVertical: 5 }}
+              >
+                <Text status="primary" category="h6">
+                  Facebook
+                </Text>
+              </Button>
+              <Button
+                status="danger"
                 size="medium"
                 appearance="outline"
                 accessoryLeft={IconGoogle}
@@ -117,20 +131,11 @@ export default function Register({ navigation }) {
                 accessibilityLabel="Login with Google"
                 style={{ marginVertical: 5 }}
               >
-                <Text>Google</Text>
+                <Text status="danger" category="h6">
+                  Google
+                </Text>
               </Button>
-              <Button
-                status="primary"
-                size="medium"
-                accessoryLeft={IconFacebook}
-                accessibilityLiveRegion="polite"
-                accessibilityComponentType="button"
-                accessibilityLabel="Login with Facebook"
-                style={{ marginVertical: 5 }}
-              >
-                <Text appearance="alternative">Facebook</Text>
-              </Button>
-              <Button
+              {/* <Button
                 status="info"
                 size="medium"
                 accessoryLeft={IconTwitter}
@@ -140,7 +145,7 @@ export default function Register({ navigation }) {
                 style={{ marginVertical: 5 }}
               >
                 <Text appearance="alternative">Twitter</Text>
-              </Button>
+              </Button> */}
             </View>
             <View
               style={{

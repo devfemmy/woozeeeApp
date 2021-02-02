@@ -1,13 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { View, StyleSheet } from 'react-native';
 
-// prettier-ignore
-import {
-  Layout, Button, Text,
-} from '@ui-kitten/components';
+import { Layout, Button } from '@ui-kitten/components';
 
-import { LocaleContext } from '~src/contexts';
+// import { LocaleContext } from '~src/contexts';
 
 import Header from './Header';
 
@@ -52,7 +49,7 @@ const PLACEHOLDER_CONFIG = {
 
 // eslint-disable-next-line react/prop-types
 export default function Social({ navigation }) {
-  const t = useContext(LocaleContext);
+  // const t = useContext(LocaleContext);
 
   // prettier-ignore
   const SocialPostsArea = () => WithInfiniteVideoPosts(SocialPosts, socialUrl, PLACEHOLDER_CONFIG);
@@ -62,7 +59,7 @@ export default function Social({ navigation }) {
       <View
         style={{
           flex: 1,
-          // backgroundColor: '#101426',
+          backgroundColor: '#101426',
         }}
       >
         <View
@@ -77,7 +74,7 @@ export default function Social({ navigation }) {
           <View>
             <Header navigation={navigation} />
           </View>
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <Text category="label" status="control">
               {t('following')}
             </Text>
@@ -85,7 +82,7 @@ export default function Social({ navigation }) {
             <Text category="label" status="control">
               {t('versus')}
             </Text>
-          </View>
+          </View> */}
           <View style={styles.interactIcons}>
             <Button
               appearance="ghost"

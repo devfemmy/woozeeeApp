@@ -37,7 +37,7 @@ export const IconVideo = (props) => {
   );
 };
 
-export const IconHeart = (props) => {
+export const IconHeartToggle = (props) => {
   // eslint-disable-next-line react/prop-types
   const { isLiked, ...otherProps } = props;
   return (
@@ -56,10 +56,13 @@ export const IconPlayPause = (props) => {
     <Icon
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...otherProps}
-      name={isPlaying ? 'pause-circle-outline' : 'play-circle-outline'}
+      name={isPlaying ? 'pause-circle' : 'play-circle'}
     />
   );
 };
+
+// eslint-disable-next-line react/jsx-props-no-spreading
+export const IconHeart = (props) => <Icon {...props} name="heart" />;
 
 export const IconInputState = (props) => {
   // eslint-disable-next-line react/prop-types
@@ -69,8 +72,8 @@ export const IconInputState = (props) => {
   return <Icon {...otherProps} name={iconType} />;
 };
 
-// eslint-disable-next-line react/jsx-props-no-spreading
 export const IconBack = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="arrow-back-outline" />
 );
 
@@ -172,12 +175,12 @@ export const IconForward = (props) => (
 
 export const IconMsgSquare = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
-  <Icon {...props} name="message-square-outline" />
+  <Icon {...props} name="message-square" />
 );
 
 export const IconShare = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
-  <Icon {...props} name="share-outline" />
+  <Icon {...props} name="share" />
 );
 
 export const IconClipboard = (props) => (
@@ -207,12 +210,12 @@ export const IconEdit = (props) => (
 
 export const IconBookmark = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
-  <Icon {...props} name="bookmark-outline" />
+  <Icon {...props} name="bookmark" />
 );
 
 export const IconGrid = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
-  <Icon {...props} name="grid-outline" />
+  <Icon {...props} name="grid" />
 );
 
 export const IconMoon = (props) => (

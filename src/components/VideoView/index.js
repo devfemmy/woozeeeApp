@@ -17,12 +17,13 @@ import CustomVideoPlayer from '~src/components/CustomVideoPlayer';
 import InteractIcon from './InteractIcon';
 
 import {
-  IconHeart,
+  IconHeartToggle,
   IconShare,
   IconClipboard,
   IconEye,
   IconMsgSquare,
   IconPlayPause,
+  IconVolume,
 } from '~src/components/CustomIcons';
 
 const styles = StyleSheet.create({
@@ -31,13 +32,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     minHeight: '100%',
+    width: '100%',
     zIndex: 9,
-    paddingVertical: 5,
-  },
-  interactIcons: {
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-    marginBottom: 5,
+    paddingBottom: 15,
   },
 });
 
@@ -66,7 +63,11 @@ export default function VideoView(props) {
 
   const [isLiked, setLiked] = useState(false);
 
+  const [isMuted, setMuted] = useState(false);
+
   const togglePause = () => setShouldPlay((prevState) => !prevState);
+
+  const toggleVolume = () => setMuted((prevState) => !prevState);
 
   const toggleLike = () => setLiked((prevState) => !prevState);
 
@@ -85,119 +86,134 @@ export default function VideoView(props) {
             shouldPlay={shouldPlay}
             shouldDisplay={IS_ACTIVE}
             isPreloaded={IS_PRELOADED}
-            togglePause={togglePause}
+            isMuted={isMuted}
+            isLooping
           />
         ) : null}
         <View style={styles.uiContainer}>
           <View
             style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
               width: '100%',
-              paddingBottom: 5,
             }}
           >
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-                width: '100%',
+                paddingHorizontal: 10,
+                maxWidth: width / 3,
               }}
             >
-              <View
-                style={{
-                  paddingHorizontal: 10,
-                  maxWidth: width / 3,
-                }}
-              >
-                <View style={{ flexDirection: 'row' }}>
-                  <Text
-                    status="primary"
-                    category="h6"
-                    style={{ marginRight: 5 }}
-                  >
-                    {item.ownerFirstName}
-                  </Text>
-                  <Text status="danger" category="h6">
-                    {item.ownerLastName}
-                  </Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text
-                    status="control"
-                    category="s2"
-                    style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-                      paddingHorizontal: 5,
-                    }}
-                  >
-                    {item.category}
-                  </Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <InteractIcon
-                    Accessory={(evaProps) => (
-                      <IconPlayPause
-                        // eslint-disable-next-line react/jsx-props-no-spreading
-                        {...evaProps}
-                        isPlaying={shouldPlay && IS_ACTIVE}
-                      />
-                    )}
-                    onPress={togglePause}
-                  />
-                </View>
+              <View style={{ flexDirection: 'row' }}>
+                <Text status="primary" category="h6" style={{ marginRight: 5 }}>
+                  {item.ownerFirstName}
+                </Text>
+                <Text status="danger" category="h6">
+                  {item.ownerLastName}
+                </Text>
               </View>
-              <View style={{ maxWidth: width / 3 }}>
-                <ScrollView
-                  horizontal={!IS_PORTRAIT}
-                  showsVerticalScrollIndicator={false}
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={{
-                    alignItems: 'center',
+              <View style={{ flexDirection: 'row' }}>
+                <Text
+                  status="control"
+                  category="s2"
+                  style={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.0125)',
+                    paddingHorizontal: 5,
                   }}
                 >
-                  <InteractIcon
-                    Accessory={(evaProps) => (
+                  {item.category}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginTop: 5,
+                }}
+              >
+                <InteractIcon
+                  status={shouldPlay ? 'danger' : 'success'}
+                  Accessory={(evaProps) => (
+                    <IconPlayPause
                       // eslint-disable-next-line react/jsx-props-no-spreading
-                      <IconHeart {...evaProps} isLiked={isLiked} />
-                    )}
-                    textContent={item.likes}
-                    onPress={toggleLike}
-                  />
-                  <InteractIcon
-                    Accessory={IconMsgSquare}
-                    textContent={item.comments}
-                  />
-                  <InteractIcon
+                      {...evaProps}
+                      isPlaying={shouldPlay && IS_ACTIVE}
+                    />
+                  )}
+                  height={28}
+                  width={28}
+                  onPress={togglePause}
+                />
+                <InteractIcon
+                  Accessory={(evaProps) => (
+                    <IconVolume
+                      // eslint-disable-next-line react/jsx-props-no-spreading
+                      {...evaProps}
+                      isOpen={!isMuted}
+                    />
+                  )}
+                  height={28}
+                  width={28}
+                  isOpen={false}
+                  onPress={toggleVolume}
+                />
+              </View>
+            </View>
+            <View style={{ maxWidth: width / 3 }}>
+              <ScrollView
+                horizontal={!IS_PORTRAIT}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{
+                  alignItems: 'center',
+                  paddingHorizontal: 10,
+                }}
+              >
+                <InteractIcon
+                  style={{ marginBottom: 15 }}
+                  Accessory={(evaProps) => (
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    <IconHeartToggle {...evaProps} isLiked={isLiked} />
+                  )}
+                  textContent={item.likes}
+                  onPress={toggleLike}
+                />
+                <InteractIcon
+                  style={{ marginBottom: 15 }}
+                  Accessory={IconMsgSquare}
+                  textContent={item.comments}
+                />
+                {/* <InteractIcon
                     Accessory={(evaProps) => (
                       // eslint-disable-next-line react/jsx-props-no-spreading
                       <IconEye {...evaProps} isOpen />
                     )}
                     textContent={item.views}
-                  />
-                  <InteractIcon
+                  /> */}
+                {/* <InteractIcon
                     Accessory={IconClipboard}
                     textContent={item.votes}
-                  />
+                  /> */}
+                <InteractIcon
+                  style={{ marginBottom: 15 }}
+                  Accessory={IconShare}
+                  textContent={item.shares}
+                />
 
-                  <InteractIcon
-                    Accessory={IconShare}
-                    textContent={item.shares}
+                <View style={{ alignItems: 'center' }}>
+                  <Image
+                    source={require('~assets/images/drawable/icon.png')}
+                    style={{
+                      height: 40,
+                      width: 40,
+                      borderRadius: 100,
+                      borderWidth: 3,
+                      borderColor: 'white',
+                    }}
                   />
-
-                  <View style={{ alignItems: 'center', padding: 10 }}>
-                    <Image
-                      source={require('~assets/images/drawable/icon.png')}
-                      style={{
-                        height: 40,
-                        width: 40,
-                        borderRadius: 100,
-                        borderWidth: 3,
-                        borderColor: 'white',
-                      }}
-                    />
-                  </View>
-                </ScrollView>
-              </View>
+                </View>
+              </ScrollView>
             </View>
           </View>
         </View>
@@ -218,9 +234,10 @@ export default function VideoView(props) {
       item.category,
       item.likes,
       item.comments,
-      item.views,
-      item.votes,
+      // item.views,
+      // item.votes,
       item.shares,
+      isMuted,
     ],
   );
 }

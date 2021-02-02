@@ -2,8 +2,6 @@ import React, { useContext, useState } from 'react';
 
 import { View, StyleSheet, Image } from 'react-native';
 
-import { useIsFocused } from '@react-navigation/native';
-
 import { BlurView } from 'expo-blur';
 
 // prettier-ignore
@@ -84,8 +82,8 @@ export default function OnboardingScreen({ navigation }) {
             accessibilityComponentType="button"
             accessibilityHint="Volume Toggle"
             accessoryLeft={(evaProps) => (
-              /* eslint-disable-next-line react/jsx-props-no-spreading */
               <IconVolume
+                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...evaProps}
                 height={32}
                 width={32}

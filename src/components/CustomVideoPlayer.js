@@ -27,7 +27,7 @@ export default function CustomVideoPlayer(props) {
   // eslint-disable-next-line react/prop-types
   // prettier-ignore
   const {
-    videoUri, style, shouldPlay, shouldDisplay, isPreloaded,
+    videoUri, style, shouldPlay, shouldDisplay, isPreloaded, ...otherProps
   } = props;
 
   const isFocused = useIsFocused();
@@ -58,23 +58,22 @@ export default function CustomVideoPlayer(props) {
   ) : null);
 
   return useMemo(
-    () => (
+    // prettier-ignore
+    () => ((shouldDisplay || isPreloaded) && isFocused ? (
       <View style={styles.background}>
         <VideoThumb />
         <>
           <View style={styles.backgroundViewWrapper}>
             <Video
-              source={{
-                uri:
-                  (shouldDisplay || isPreloaded) && isFocused ? videoUri : null,
-              }}
-              isLooping
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...otherProps}
+              source={{ uri: videoUri }}
               shouldCorrectPitch
               onLoad={() => setVideoLoaded(true)}
               resizeMode="contain"
               style={[style, { flex: 1 }]}
               progressUpdateIntervalMillis={1000}
-              // onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+                // onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
               shouldPlay={shouldPlay && shouldDisplay && isFocused}
             />
           </View>
@@ -105,7 +104,7 @@ export default function CustomVideoPlayer(props) {
           </View> */}
         </>
       </View>
-    ),
+    ) : null),
     [
       videoUri,
       style,
@@ -115,6 +114,7 @@ export default function CustomVideoPlayer(props) {
       // playProgress,
       isPreloaded,
       isFocused,
+      otherProps,
     ],
   );
 }

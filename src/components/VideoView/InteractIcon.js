@@ -6,33 +6,52 @@ import { Button, Text } from '@ui-kitten/components';
 
 export default function InteractIcon(props) {
   // eslint-disable-next-line react/prop-types
-  const { Accessory, textContent, onPress } = props;
+  const {
+    Accessory,
+    textContent,
+    onPress,
+    status,
+    height,
+    width,
+    style,
+  } = props;
 
   return useMemo(
     () => (
       <View
-        style={{
-          alignItems: 'center',
-          backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-          marginVertical: 3,
-        }}
+        style={[
+          style,
+          {
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.0125)',
+          },
+        ]}
       >
         <Button
-          style={{ height: 36, width: 36 }}
           appearance="ghost"
-          status="control"
-          size="large"
+          status={status ?? 'control'}
+          size="tiny"
+          style={{
+            height: height ? height + 4 : 36,
+            width: width ? width + 4 : 36,
+          }}
           accessoryLeft={(evaProps) => (
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            <Accessory {...evaProps} height={32} width={32} />
+            <Accessory
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...evaProps}
+              height={height ?? 32}
+              width={width ?? 32}
+            />
           )}
           onPress={onPress}
         />
-        <Text status="control" category="label">
-          {textContent}
-        </Text>
+        {textContent ? (
+          <Text status="control" category="label">
+            {textContent}
+          </Text>
+        ) : null}
       </View>
     ),
-    [textContent, onPress],
+    [textContent, onPress, height, width, status, style],
   );
 }
