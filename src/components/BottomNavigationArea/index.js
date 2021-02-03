@@ -67,7 +67,7 @@ const tabs = {
     activities: IconClock,
   },
   social: {
-    socials: IconRadio,
+    social: IconRadio,
     wooz: IconArrowHeadUp,
     upload: IconUpload,
     challenge: IconMic,
