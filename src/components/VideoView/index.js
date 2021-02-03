@@ -148,7 +148,7 @@ export default function VideoView(props) {
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <InteractIcon
-            style={{ marginRight: 5 }}
+            style={{ marginHorizontal: 5 }}
             Accessory={(evaProps) => (
               // eslint-disable-next-line react/jsx-props-no-spreading
               <IconHeartToggle {...evaProps} isLiked={isLiked} />
@@ -156,10 +156,12 @@ export default function VideoView(props) {
             textContent={item.likes}
             direction="row"
             status="basic"
+            height={28}
+            width={28}
             onPress={toggleLike}
           />
           <InteractIcon
-            style={{ marginRight: 5 }}
+            style={{ marginHorizontal: 5 }}
             Accessory={(evaProps) => (
               // eslint-disable-next-line react/jsx-props-no-spreading
               <IconMsgSquareOutline {...evaProps} />
@@ -167,9 +169,11 @@ export default function VideoView(props) {
             textContent={item.comments}
             direction="row"
             status="basic"
+            height={28}
+            width={28}
           />
           <InteractIcon
-            style={{ marginRight: 5 }}
+            style={{ marginHorizontal: 5 }}
             Accessory={(evaProps) => (
               // eslint-disable-next-line react/jsx-props-no-spreading
               <IconEye {...evaProps} isOpen />
@@ -177,6 +181,8 @@ export default function VideoView(props) {
             textContent={item.views}
             direction="row"
             status="basic"
+            height={28}
+            width={28}
           />
         </View>
       </View>

@@ -26,7 +26,7 @@ export default function CustomVideoPlayer(props) {
         source={{ uri: videoUri }}
         shouldCorrectPitch
         resizeMode="contain"
-          // usePoster
+        usePoster
         posterSource={POSTER_IMAGE}
         posterStyle={{ resizeMode: 'contain', height: '100%', width: '100%' }}
         style={[style, { flex: 1 }]}

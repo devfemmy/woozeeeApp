@@ -82,7 +82,7 @@ export default function Explore({ navigation }) {
       {
         getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
         getNextPageParam: (lastPage) => lastPage.nextID ?? false,
-        keepPreviousData: true,
+        // keepPreviousData: true,
         cacheTime: 1000 * 60 * 1,
       },
     );
@@ -94,7 +94,7 @@ export default function Explore({ navigation }) {
             mediaLeft={false}
             count={1}
             numColumns={1}
-            maxHeight={height / 0.65}
+            maxHeight={height * 0.65}
             maxWidth={width}
           />
         );
