@@ -30,7 +30,6 @@ export default function usePreFetchResources() {
         });
 
         await Asset.loadAsync([
-          require('~assets/images/onboarding-video-thumb.jpg'),
           require('~assets/images/card-insure.jpg'),
           require('~assets/images/card-wallet.jpg'),
           require('~assets/images/card-rewards.jpg'),
@@ -38,11 +37,15 @@ export default function usePreFetchResources() {
           require('~assets/images/drawable/logo.png'),
           require('~assets/images/icon/upload.png'),
           require('~assets/images/icon/verified.png'),
+          require('~assets/images/icon/verified-1.png'),
           require('~assets/images/icon/flag-ng.png'),
           require('~assets/images/icon/flag-round-ng.png'),
+          require('~assets/images/banner/onboarding-video-thumb.jpg'),
           require('~assets/images/banner/woozeee-socials.jpg'),
           require('~assets/images/banner/woozeee-marketplace.jpg'),
           require('~assets/images/banner/woozeee-charity.jpg'),
+          require('~assets/images/banner/placeholder-dark.jpg'),
+          require('~assets/images/banner/placeholder-light.jpeg'),
           require('~assets/images/banner/back1.jpg'),
           require('~assets/images/banner/back2.jpg'),
           require('~assets/images/banner/back3.jpg'),

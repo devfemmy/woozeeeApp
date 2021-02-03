@@ -69,6 +69,11 @@ export const IconVideoOutline = (props) => (
   <Icon {...props} name="video-outline" />
 );
 
+export const IconPlusCircle = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="plus-circle" />
+);
+
 export const IconInputState = (props) => {
   // eslint-disable-next-line react/prop-types
   const { iconType, ...otherProps } = props;
@@ -196,6 +201,11 @@ export const IconForward = (props) => (
 export const IconMsgSquare = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="message-square" />
+);
+
+export const IconMsgSquareOutline = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="message-square-outline" />
 );
 
 export const IconShare = (props) => (

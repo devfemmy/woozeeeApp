@@ -4,8 +4,6 @@ import { View, StyleSheet } from 'react-native';
 
 import { Layout } from '@ui-kitten/components';
 
-// import { LocaleContext } from '~src/contexts';
-
 import WithInfiniteFetch from '~src/components/DataFetch/WithInfiniteFetch';
 
 import { WoozPosts } from '~src/components/VideoPosts';
@@ -42,16 +40,14 @@ const styles = StyleSheet.create({
 const PLACEHOLDER_CONFIG = {
   count: 1,
   numColumns: 1,
-  maxHeight: '100%',
+  maxHeight: 0.65,
   mediaLeft: false,
 };
 
 // eslint-disable-next-line react/prop-types
 export default function Wooz({ navigation }) {
-  // const t = useContext(LocaleContext);
-
   // prettier-ignore
-  const SocialPostsArea = () => WithInfiniteFetch(WoozPosts, socialUrl, PLACEHOLDER_CONFIG);
+  const WoozPostsArea = () => WithInfiniteFetch(WoozPosts, socialUrl, PLACEHOLDER_CONFIG);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
@@ -83,7 +79,7 @@ export default function Wooz({ navigation }) {
             />
           </View>
         </View>
-        <SocialPostsArea />
+        <WoozPostsArea />
       </View>
     </Layout>
   );

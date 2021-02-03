@@ -22,31 +22,23 @@ export default function useAudioPlayer(uri) {
   useEffect(() => {
     isMounted.current = true;
 
-    const currentSound = soundObj.current;
-
-    if (isMounted.current) {
-      (async () => {
-        try {
+    (async () => {
+      try {
+        if (isMounted.current) {
           if (isFocused && !soundObj.current._loaded) {
             await soundObj.current.loadAsync(uri, INITIAL_STATUS);
           }
-          if (!isFocused && soundObj.current._loaded) {
-            await soundObj.current.unloadAsync();
-          }
-        } catch (e) {
-          const msg = e;
         }
-      })();
-    }
+        if (!isFocused || !isMounted.current) {
+          await soundObj.current.unloadAsync();
+        }
+      } catch (e) {
+        const msg = e;
+      }
+    })();
+
     return () => {
       isMounted.current = false;
-      (async () => {
-        try {
-          await currentSound.unloadAsync();
-        } catch (e) {
-          const msg = e;
-        }
-      })();
     };
   }, [INITIAL_STATUS, isFocused, uri]);
 

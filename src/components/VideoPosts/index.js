@@ -1,65 +1,109 @@
-import React, { useCallback, useMemo, useState } from 'react';
+// prettier-ignore
+import React, {
+  useCallback, useMemo, useState, useContext,
+} from 'react';
 
-import { View, useWindowDimensions, Image } from 'react-native';
+import {
+  View,
+  useWindowDimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { List, Text } from '@ui-kitten/components';
 
+import { LocaleContext } from '~src/contexts';
+
 import VideoCard from '~src/components/VideoCard';
 
 import StoryCard from '~src/components/VideoCard/StoryCard';
 
+import VideoFullscreen from '~src/components/VideoFullscreen';
+
 import VideoView from '~src/components/VideoView';
 
-// prettier-ignore
-export const TrendingPosts = ({ info }) => useMemo(
-  () => (
-    <View style={{ marginBottom: 20, paddingVertical: 5 }}>
-      <View style={{ paddingHorizontal: 10 }}>
-        <Text category="h6" style={{ marginBottom: 5 }}>
-          Trending Challenges
-        </Text>
-      </View>
-      <List
-        style={{ backgroundColor: 'transparent' }}
-        alwaysBounceHorizontal
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        data={info}
-        renderItem={(renderData) => (
-          <VideoCard data={renderData.item} extraWidth={0.5} />
-        )}
-        getItemLayout={(data, index) => ({
-          length: 175,
-          offset: 175 * index,
-          index,
-        })}
-      />
-    </View>
-  ),
-  [info],
-);
+import { IconPlusCircle } from '~src/components/CustomIcons';
 
-// prettier-ignore
-export const StoryPosts = ({ info }) => {
-  const RenderCategoryHeader = () => (
-    <View>
-      <Image source={require('~assets/images/user/user1.png')} />
-    </View>
-  );
-
+export const TrendingPosts = ({ info }) => {
+  const t = useContext(LocaleContext);
   return useMemo(
     () => (
       <View style={{ marginBottom: 20, paddingVertical: 5 }}>
         <View style={{ paddingHorizontal: 10 }}>
           <Text category="h6" style={{ marginBottom: 5 }}>
-            Recent Stories
+            {t('trendingChallenges')}
           </Text>
         </View>
         <List
           style={{ backgroundColor: 'transparent' }}
+          alwaysBounceHorizontal
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          data={info}
+          renderItem={(renderData) => (
+            <VideoCard data={renderData.item} extraWidth={0.5} />
+          )}
+          getItemLayout={(data, index) => ({
+            length: 175,
+            offset: 175 * index,
+            index,
+          })}
+        />
+      </View>
+    ),
+    [t, info],
+  );
+};
+
+export const StoryPosts = ({ info }) => {
+  const t = useContext(LocaleContext);
+
+  const RenderCategoryHeader = useMemo(
+    () => (
+      <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
+        <TouchableOpacity activeOpacity={0.75} style={{ position: 'relative' }}>
+          <Image
+            source={require('~assets/images/user/user2.png')}
+            style={{
+              height: 100,
+              width: 100,
+              borderRadius: 100,
+            }}
+          />
+          <View
+            style={{
+              minHeight: 20,
+              minWidth: 20,
+              borderRadius: 100,
+              position: 'absolute',
+              backgroundColor: 'white',
+              right: 3,
+              bottom: 3,
+            }}
+          >
+            <IconPlusCircle height={28} width={28} fill="#043F7C" />
+          </View>
+        </TouchableOpacity>
+        <Text category="s2" style={{ marginTop: 10 }}>
+          {t('yourStory')}
+        </Text>
+      </View>
+    ),
+    [t],
+  );
+
+  return useMemo(
+    () => (
+      <View style={{ paddingVertical: 5 }}>
+        <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
+          <Text category="h6">{t('recentStories')}</Text>
+        </View>
+        <List
+          style={{ backgroundColor: 'transparent' }}
+          contentContainerStyle={{ alignItems: 'center' }}
           alwaysBounceHorizontal
           horizontal
           ListHeaderComponent={RenderCategoryHeader}
@@ -77,7 +121,7 @@ export const StoryPosts = ({ info }) => {
         />
       </View>
     ),
-    [info],
+    [t, info, RenderCategoryHeader],
   );
 };
 
@@ -153,22 +197,20 @@ export const ProfilePosts = ({ info }) => useMemo(
   [info],
 );
 
-// prettier-ignore
 export const SocialPosts = ({ info }) => {
-  const { bottom, top } = useSafeAreaInsets();
-
   const { height } = useWindowDimensions();
 
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const CONTENT_SPACE = bottom + top + 56;
+  const ITEM_HEIGHT = height / 2;
 
-  const ITEM_HEIGHT = height - CONTENT_SPACE;
-
-  const VIEWABILITY_CONFIG = useMemo(() => ({
-    minimumViewTime: 100,
-    viewAreaCoveragePercentThreshold: 50,
-  }), []);
+  const VIEWABILITY_CONFIG = useMemo(
+    () => ({
+      minimumViewTime: 100,
+      viewAreaCoveragePercentThreshold: 50,
+    }),
+    [],
+  );
 
   // show currently viewing video
   const handleViewItemsChanged = useCallback((data) => {
@@ -181,7 +223,6 @@ export const SocialPosts = ({ info }) => {
         style={{
           flex: 1,
           backgroundColor: 'transparent',
-          position: 'absolute',
           height: ITEM_HEIGHT,
         }}
         alwaysBounceVertical
@@ -191,7 +232,6 @@ export const SocialPosts = ({ info }) => {
         renderItem={(renderData) => (
           <VideoView
             data={renderData}
-            extraWidth={0.5}
             activeIndex={activeIndex}
             viewHeight={ITEM_HEIGHT}
           />
@@ -220,7 +260,6 @@ export const SocialPosts = ({ info }) => {
   );
 };
 
-// prettier-ignore
 export const WoozPosts = ({ info }) => {
   const { bottom, top } = useSafeAreaInsets();
 
@@ -232,21 +271,35 @@ export const WoozPosts = ({ info }) => {
 
   const ITEM_HEIGHT = height - CONTENT_SPACE;
 
-  const VIEWABILITY_CONFIG = useMemo(() => ({
-    minimumViewTime: 100,
-    viewAreaCoveragePercentThreshold: 50,
-  }), []);
+  const VIEWABILITY_CONFIG = useMemo(
+    () => ({
+      minimumViewTime: 100,
+      viewAreaCoveragePercentThreshold: 60,
+    }),
+    [],
+  );
 
   // show currently viewing video
   const handleViewItemsChanged = useCallback((data) => {
     setActiveIndex(data.changed[0].index);
   }, []);
 
+  const renderPost = useCallback(
+    (renderData) => (
+      <VideoFullscreen
+        data={renderData}
+        extraWidth={0.5}
+        activeIndex={activeIndex}
+        viewHeight={ITEM_HEIGHT}
+      />
+    ),
+    [ITEM_HEIGHT, activeIndex],
+  );
+
   return useMemo(
     () => (
       <List
         style={{
-          flex: 1,
           backgroundColor: 'transparent',
           position: 'absolute',
           height: ITEM_HEIGHT,
@@ -255,14 +308,7 @@ export const WoozPosts = ({ info }) => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         data={info}
-        renderItem={(renderData) => (
-          <VideoView
-            data={renderData}
-            extraWidth={0.5}
-            activeIndex={activeIndex}
-            viewHeight={ITEM_HEIGHT}
-          />
-        )}
+        renderItem={renderPost}
         extraData={activeIndex}
         snapToAlignment="start"
         decelerationRate="fast"
@@ -272,7 +318,7 @@ export const WoozPosts = ({ info }) => {
           offset: ITEM_HEIGHT * index,
           index,
         })}
-        initialNumToRender={4}
+        initialNumToRender={5}
         onViewableItemsChanged={handleViewItemsChanged}
         viewabilityConfig={VIEWABILITY_CONFIG}
       />
@@ -281,13 +327,13 @@ export const WoozPosts = ({ info }) => {
       info,
       activeIndex,
       handleViewItemsChanged,
+      renderPost,
       VIEWABILITY_CONFIG,
       ITEM_HEIGHT,
     ],
   );
 };
 
-// prettier-ignore
 export const AllPosts = ({ info }) => {
   const { width, height } = useWindowDimensions();
 

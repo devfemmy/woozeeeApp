@@ -39,6 +39,13 @@ export default function WithDefaultFetch(
 
   const [activePage, setActiveTab] = useState('default');
 
+  const getMaxHeight = useCallback(() => {
+    if (placeholderProp.maxHeight <= 1) {
+      return height * placeholderProp.maxHeight;
+    }
+    return placeholderProp.maxHeight;
+  }, [height, placeholderProp]);
+
   const fetchPosts = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -86,11 +93,7 @@ export default function WithDefaultFetch(
           row
           count={placeholderProp.count || 4}
           numColumns={placeholderProp.numColumns || 2}
-          maxHeight={
-            placeholderProp.maxHeight === '100%'
-              ? height - 200
-              : placeholderProp.maxHeight
-          }
+          maxHeight={getMaxHeight()}
           maxWidth={width}
         />
       );
@@ -124,13 +127,13 @@ export default function WithDefaultFetch(
   }, [
     t,
     width,
-    height,
     fetchPosts,
     posts,
     isLoading,
     isError,
     activePage,
     updateTab,
+    getMaxHeight,
     placeholderProp,
     tabs,
   ]);

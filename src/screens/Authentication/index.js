@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import { View, StyleSheet, Image } from 'react-native';
 
@@ -51,6 +51,19 @@ export default function OnboardingScreen({ navigation }) {
     require('~assets/audio/woozeee_Instrumental.mp3'),
   );
 
+  useEffect(
+    () => () => {
+      (async () => {
+        try {
+          await soundObj.unloadAsync();
+        } catch (e) {
+          const msg = e;
+        }
+      })();
+    },
+    [soundObj],
+  );
+
   const handleAudioMute = async () => {
     try {
       setVolumeOpen((prevState) => !prevState);
@@ -69,7 +82,7 @@ export default function OnboardingScreen({ navigation }) {
       {/* Onboarding screen background video */}
       <BackgroundVideo
         videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
-        thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
+        thumbUri={require('~assets/images/banner/onboarding-video-thumb.jpg')}
         isMuted
       />
       <View style={styles.uiContainer}>

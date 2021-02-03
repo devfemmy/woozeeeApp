@@ -88,6 +88,7 @@ export default function Placeholders(props) {
               paddingVertical: 10,
               paddingHorizontal: 5,
               width,
+              height: maxHeight + 20,
             }}
             key={item}
           >
@@ -107,6 +108,7 @@ export default function Placeholders(props) {
       mediaRight,
       mediaCenter,
       width,
+      maxHeight,
       count,
       paragraph,
       ParagraphLines,

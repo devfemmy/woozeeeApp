@@ -29,6 +29,13 @@ export default function WithPaginatedFetch(
 
   const [activePage, setPage] = useState('default');
 
+  const getMaxHeight = useCallback(() => {
+    if (placeholderProp.maxHeight <= 1) {
+      return height * placeholderProp.maxHeight;
+    }
+    return placeholderProp.maxHeight;
+  }, [height, placeholderProp]);
+
   // prettier-ignore
   const {
     isLoading, isError, data, refetch,
@@ -57,11 +64,7 @@ export default function WithPaginatedFetch(
           row
           count={placeholderProp.count || 4}
           numColumns={placeholderProp.numColumns || 2}
-          maxHeight={
-            placeholderProp.maxHeight === '100%'
-              ? height - 200
-              : placeholderProp.maxHeight
-          }
+          maxHeight={getMaxHeight()}
           maxWidth={width}
         />
       );
@@ -96,10 +99,10 @@ export default function WithPaginatedFetch(
   }, [
     t,
     width,
-    height,
     refetch,
     activePage,
     updateTab,
+    getMaxHeight,
     placeholderProp,
     tabs,
     isLoading,

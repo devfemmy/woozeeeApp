@@ -29,6 +29,13 @@ export default function WithInfiniteFetch(
 
   const [activePage, setPage] = useState('default');
 
+  const getMaxHeight = useCallback(() => {
+    if (placeholderProp.maxHeight <= 1) {
+      return height * placeholderProp.maxHeight;
+    }
+    return placeholderProp.maxHeight;
+  }, [height, placeholderProp]);
+
   const {
     status,
     data,
@@ -68,11 +75,7 @@ export default function WithInfiniteFetch(
           row
           count={placeholderProp.count || 4}
           numColumns={placeholderProp.numColumns || 2}
-          maxHeight={
-            placeholderProp.maxHeight === '100%'
-              ? height - 300
-              : placeholderProp.maxHeight
-          }
+          maxHeight={getMaxHeight()}
           maxWidth={width}
         />
       );
@@ -107,7 +110,6 @@ export default function WithInfiniteFetch(
   }, [
     t,
     width,
-    height,
     refetch,
     activePage,
     updateTab,
@@ -115,5 +117,6 @@ export default function WithInfiniteFetch(
     tabs,
     status,
     data,
+    getMaxHeight,
   ]);
 }

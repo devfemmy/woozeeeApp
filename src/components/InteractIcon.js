@@ -9,6 +9,7 @@ export default function InteractIcon(props) {
   const {
     Accessory,
     textContent,
+    direction,
     onPress,
     status,
     height,
@@ -22,6 +23,7 @@ export default function InteractIcon(props) {
         style={[
           style,
           {
+            flexDirection: direction ?? 'column',
             alignItems: 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.0125)',
           },
@@ -46,12 +48,12 @@ export default function InteractIcon(props) {
           onPress={onPress}
         />
         {textContent ? (
-          <Text status="control" category="label">
+          <Text status={status ?? 'control'} category="label">
             {textContent}
           </Text>
         ) : null}
       </View>
     ),
-    [textContent, onPress, height, width, status, style],
+    [textContent, onPress, height, width, status, style, direction],
   );
 }
