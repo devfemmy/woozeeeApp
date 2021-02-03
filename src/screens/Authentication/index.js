@@ -2,8 +2,6 @@ import React, { useContext, useState } from 'react';
 
 import { View, StyleSheet, Image } from 'react-native';
 
-import { BlurView } from 'expo-blur';
-
 // prettier-ignore
 import {
   Layout, Button, Text,
@@ -28,6 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     zIndex: 9,
     padding: 15,
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
   },
   brandMotto: {
     flexDirection: 'row',
@@ -73,7 +72,7 @@ export default function OnboardingScreen({ navigation }) {
         thumbUri={require('~assets/images/onboarding-video-thumb.jpg')}
         isMuted
       />
-      <BlurView intensity={25} tint="dark" style={styles.uiContainer}>
+      <View style={styles.uiContainer}>
         <View style={{ alignSelf: 'flex-end' }}>
           <Button
             appearance="ghost"
@@ -98,7 +97,7 @@ export default function OnboardingScreen({ navigation }) {
             <Image
               source={require('~assets/images/drawable/logo.png')}
               resizeMode="contain"
-              style={{ width: 220 }}
+              style={{ maxWidth: 200 }}
             />
           </View>
           <View style={styles.brandMotto}>
@@ -130,7 +129,7 @@ export default function OnboardingScreen({ navigation }) {
             </Button>
           </View>
         </View>
-      </BlurView>
+      </View>
     </Layout>
   );
 }

@@ -64,6 +64,11 @@ export const IconPlayPause = (props) => {
 // eslint-disable-next-line react/jsx-props-no-spreading
 export const IconHeart = (props) => <Icon {...props} name="heart" />;
 
+export const IconVideoOutline = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="video-outline" />
+);
+
 export const IconInputState = (props) => {
   // eslint-disable-next-line react/prop-types
   const { iconType, ...otherProps } = props;
@@ -75,6 +80,16 @@ export const IconInputState = (props) => {
 export const IconBack = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="arrow-back-outline" />
+);
+
+export const IconBell = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="bell-outline" />
+);
+
+export const IconShake = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="shake-outline" />
 );
 
 export const IconArrowHeadUp = (props) => (

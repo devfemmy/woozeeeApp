@@ -8,8 +8,6 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import { BlurView } from 'expo-blur';
-
 // prettier-ignore
 import {
   Layout, Text, List,
@@ -174,11 +172,16 @@ export default function Home({ navigation }) {
         />
       </View>
 
-      <BlurView intensity={25} tint="dark" style={styles.cardContent}>
+      <View
+        style={[
+          styles.cardContent,
+          { backgroundColor: 'rgba(0, 0, 0, 0, 0.25' },
+        ]}
+      >
         <Text category="h4" style={{ color: 'white' }}>
           {` woozeee ${t(data.item.title)} `}
         </Text>
-      </BlurView>
+      </View>
     </TouchableOpacity>
   );
 
@@ -208,7 +211,6 @@ export default function Home({ navigation }) {
       <TopNavigationArea
         title="woozeee"
         navigation={navigation}
-        icon="logout"
         screen="user"
       />
 

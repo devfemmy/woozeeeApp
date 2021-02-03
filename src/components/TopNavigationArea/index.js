@@ -1,6 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 
-import { Divider, Layout, TopNavigation } from '@ui-kitten/components';
+import {
+  Divider,
+  Layout,
+  TopNavigation,
+  TopNavigationAction,
+} from '@ui-kitten/components';
 
 // Components import
 import BackButton from './components/BackButton';
@@ -9,14 +14,41 @@ import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
 import TopNavigationMenu from './components/TopNavigationMenu';
+import TopNavigationRouteMenu from './components/TopNavigationRouteMenu';
 
-import { IconCFlag } from '~src/components/CustomIcons';
+import {
+  IconCFlag,
+  IconVideoOutline,
+  IconBell,
+} from '~src/components/CustomIcons';
 
 export default function TopNavigationArea(props) {
   // prettier-ignore
   const {
     navigation, title, icon, style, screen,
   } = props;
+
+  const renderRightAccessory = useCallback(
+    () => (
+      <>
+        <TopNavigationAction
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          {...props}
+          icon={IconVideoOutline}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="Record"
+        />
+        <TopNavigationAction
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          {...props}
+          icon={IconBell}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="Notification"
+        />
+      </>
+    ),
+    [props],
+  );
 
   const TopNavigationAuth = useMemo(
     () => (
@@ -34,7 +66,6 @@ export default function TopNavigationArea(props) {
             // eslint-disable-next-line react/jsx-props-no-spreading
             <HelpButton {...evaProps} navigation={navigation} />
           )}
-          // accessoryRight={() => <TopNavigationMenu />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -58,7 +89,6 @@ export default function TopNavigationArea(props) {
             /* eslint-disable-next-line react/jsx-props-no-spreading */
             <TopNavigationMenu {...evaProps} navigation={navigation} />
           )}
-          // accessoryRight={() => <TopNavigationMenu />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -80,7 +110,6 @@ export default function TopNavigationArea(props) {
             /* eslint-disable-next-line react/jsx-props-no-spreading */
             <TopNavigationMenu {...evaProps} navigation={navigation} />
           )}
-          // accessoryRight={() => <TopNavigationMenu />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -100,7 +129,6 @@ export default function TopNavigationArea(props) {
             /* eslint-disable-next-line react/jsx-props-no-spreading */
             <TopNavigationMenu {...evaProps} navigation={navigation} />
           )}
-          // accessoryRight={() => <TopNavigationMenu />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -110,11 +138,35 @@ export default function TopNavigationArea(props) {
     [style, navigation],
   );
 
+  const TopNavigationSocial = useMemo(
+    () => (
+      <Layout level="4">
+        <TopNavigation
+          alignment="center"
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          title={(evaProps) => <Logo {...evaProps} />}
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          accessoryLeft={(evaProps) => (
+            /* eslint-disable-next-line react/jsx-props-no-spreading */
+            <TopNavigationRouteMenu {...evaProps} navigation={navigation} />
+          )}
+          accessoryRight={renderRightAccessory}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="screen navigation"
+          style={[style, { backgroundColor: 'transparent' }]}
+        />
+        <Divider />
+      </Layout>
+    ),
+    [navigation, style],
+  );
+
   const navs = {
     auth: TopNavigationAuth,
     user: TopNavigationUser,
     search: TopNavigationSearch,
     profile: TopNavigationProfile,
+    social: TopNavigationSocial,
   };
 
   return navs[screen];

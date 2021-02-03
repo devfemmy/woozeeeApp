@@ -1,97 +1,61 @@
 import React from 'react';
 
-import { View, StyleSheet } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import { Layout } from '@ui-kitten/components';
 
-// import { LocaleContext } from '~src/contexts';
+import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import Header from './Header';
+import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
 
-import WithInfiniteVideoPosts from '~src/components/VideoPosts/WithInfiniteVideoPosts';
+import { TrendingPosts, UsersPosts } from '~src/components/VideoPosts';
 
-import { SocialPosts } from '~src/components/VideoPosts';
+import { trendingUrl, challengeUrl } from '~src/api/dummy';
 
-import InteractIcon from '~src/components/InteractIcon';
+const PLACEHOLDER_CONFIG1 = {
+  count: 2,
+  numColumns: 2,
+  maxHeight: 180,
+  mediaLeft: true,
+};
 
-import { socialUrl } from '~src/api/dummy';
-
-import { IconVideo } from '~src/components/CustomIcons';
-
-const styles = StyleSheet.create({
-  uiContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    minHeight: '100%',
-    zIndex: 9,
-    paddingVertical: 5,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-    paddingHorizontal: 10,
-    borderRadius: 5,
-  },
-  interactIcons: {
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-    marginBottom: 5,
-  },
-});
-
-const PLACEHOLDER_CONFIG = {
-  count: 1,
-  numColumns: 1,
-  maxHeight: '100%',
-  mediaLeft: false,
+const PLACEHOLDER_CONFIG2 = {
+  ...PLACEHOLDER_CONFIG1,
+  count: 4,
 };
 
 // eslint-disable-next-line react/prop-types
-export default function Social({ navigation }) {
-  // const t = useContext(LocaleContext);
+export default function Explore({ navigation }) {
+  // prettier-ignore
+  const TrendingPostsArea = () => (
+    WithVideoPosts(TrendingPosts, trendingUrl, PLACEHOLDER_CONFIG1)
+  );
 
   // prettier-ignore
-  const SocialPostsArea = () => WithInfiniteVideoPosts(SocialPosts, socialUrl, PLACEHOLDER_CONFIG);
+  const UserPostsArea = () => WithVideoPosts(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG2);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#101426',
-        }}
+      <TopNavigationArea
+        title="woozeee"
+        navigation={navigation}
+        screen="social"
+      />
+      <ScrollView
+        style={{ flex: 1, paddingVertical: 10 }}
+        alwaysBounceVertical
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '100%',
-            paddingTop: 20,
-            zIndex: 19,
-          }}
-        >
+        <View style={{ paddingBottom: 20 }}>
           <View>
-            <Header navigation={navigation} />
+            <TrendingPostsArea />
           </View>
-          <View style={styles.interactIcons}>
-            <InteractIcon
-              Accessory={(evaProps) => (
-                <IconVideo
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  {...evaProps}
-                  isOpen
-                />
-              )}
-              height={36}
-              width={36}
-            />
+          <View>
+            <UserPostsArea />
           </View>
         </View>
-        <SocialPostsArea />
-      </View>
+      </ScrollView>
     </Layout>
   );
 }

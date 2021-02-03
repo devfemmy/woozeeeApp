@@ -18,7 +18,7 @@ import {
   IconClock,
   IconPerson,
   IconArrowHeadUp,
-  IconRadio,
+  IconShake,
   IconMic,
 } from '../CustomIcons';
 
@@ -67,7 +67,7 @@ const tabs = {
     activities: IconClock,
   },
   social: {
-    social: IconRadio,
+    social: IconShake,
     wooz: IconArrowHeadUp,
     upload: IconUpload,
     challenge: IconMic,

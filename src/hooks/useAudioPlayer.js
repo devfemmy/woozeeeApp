@@ -19,7 +19,7 @@ export default function useAudioPlayer(uri) {
       if (isFocused && !soundObj.current._loaded) {
         await soundObj.current.loadAsync(uri, INITIAL_STATUS);
       }
-      if (!isFocused && soundObj.current._loaded) {
+      if (!isFocused) {
         await soundObj.current.unloadAsync();
       }
     } catch (e) {
