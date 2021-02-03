@@ -15,7 +15,7 @@ import { LocaleContext } from '~src/contexts';
 
 import Placeholders from '~src/components/Placeholders';
 
-import TabsMenu from './TabsMenu';
+import TabsMenu from '~src/components/TabsMenu';
 
 import FetchFailed from './FetchFailed';
 

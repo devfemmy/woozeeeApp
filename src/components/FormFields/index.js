@@ -54,7 +54,7 @@ const SecureToggleIcon = (props) => {
   );
 };
 
-export function GeneralTextField(props) {
+export const GeneralTextField = (props) => {
   const {
     label,
     type,
@@ -148,9 +148,9 @@ export function GeneralTextField(props) {
       isSecureEntry,
     ],
   );
-}
+};
 
-export function GeneralRadioGroup(props) {
+export const GeneralRadioGroup = (props) => {
   // prettier-ignore
   const {
   // eslint-disable-next-line react/prop-types
@@ -186,9 +186,9 @@ export function GeneralRadioGroup(props) {
     ),
     [data, handleChange, label, selectedOption],
   );
-}
+};
 
-export function GeneralAutocomplete(props) {
+export const GeneralAutocomplete = (props) => {
   // prettier-ignore
   const {
   // eslint-disable-next-line react/prop-types
@@ -242,9 +242,9 @@ export function GeneralAutocomplete(props) {
     ),
     [handleChange, handleSelect, label, list, value],
   );
-}
+};
 
-export function GeneralSelect(props) {
+export const GeneralSelect = (props) => {
   // prettier-ignore
   const {
     // eslint-disable-next-line react/prop-types
@@ -286,9 +286,9 @@ export function GeneralSelect(props) {
     ),
     [data, handleSelect, label, size, selectedOption, renderOption],
   );
-}
+};
 
-export function GeneralDatePicker(props) {
+export const GeneralDatePicker = (props) => {
   // prettier-ignore
   const {
     // eslint-disable-next-line react/prop-types
@@ -319,4 +319,4 @@ export function GeneralDatePicker(props) {
     ),
     [handleSelect, label, size, selectedDate],
   );
-}
+};
