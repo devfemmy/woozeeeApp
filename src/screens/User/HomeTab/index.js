@@ -1,4 +1,4 @@
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo, useContext, useCallback } from 'react';
 
 import {
   View,
@@ -121,117 +121,138 @@ export default function Home({ navigation }) {
   const { isLoading } = useContext(LoadingContext);
 
   // eslint-disable-next-line react/prop-types
-  const routeSocialRoute = (route) => navigation.navigate(route);
+  const routeSocialRoute = useCallback((route) => navigation.navigate(route), [
+    navigation,
+  ]);
 
-  const renderCard = (data) => (
-    <View
-      style={{
-        height: CARD_HEIGHT,
-        width: IS_PORTRAIT ? width / 1.6 : width / 3,
-        paddingHorizontal: 5,
-        position: 'relative',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-      }}
-      key={data.item.key}
-    >
-      <Balance value={data.item.balance} point={t('point')} />
-      <Image
-        source={data.item.banner}
+  const renderCard = useCallback(
+    (data) => (
+      <View
         style={{
-          height: IS_PORTRAIT ? 140 : 110,
-          width: '95%',
-          borderRadius: 5,
+          height: CARD_HEIGHT,
+          width: IS_PORTRAIT ? width / 1.6 : width / 3,
+          paddingHorizontal: 5,
+          position: 'relative',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
         }}
-        resizeMode="contain"
-      />
-    </View>
-  );
-
-  const renderCategory = (data) => (
-    <TouchableOpacity
-      activeOpacity={0.75}
-      style={{
-        height: IS_PORTRAIT ? 250 : 220,
-        width: IS_PORTRAIT ? width : width / 2,
-        marginVertical: 5,
-        position: 'relative',
-        alignItems: 'center',
-        alignSelf: 'center',
-      }}
-      key={data.item.title}
-      /* eslint-disable-next-line react/prop-types */
-      onPress={() => routeSocialRoute(data.item.screen)}
-    >
-      <View style={styles.cardContent}>
-        <BackgroundVideo
-          videoUri={data.item.video}
-          thumbUri={data.item.banner}
-          style={{ borderRadius: 5 }}
-          isMuted
+        key={data.item.key}
+      >
+        <Balance value={data.item.balance} point={t('point')} />
+        <Image
+          source={data.item.banner}
+          style={{
+            height: IS_PORTRAIT ? 140 : 110,
+            width: '95%',
+            borderRadius: 5,
+          }}
+          resizeMode="contain"
         />
       </View>
+    ),
+    [t, CARD_HEIGHT, IS_PORTRAIT, width],
+  );
 
-      <View
-        style={[
-          styles.cardContent,
-          { backgroundColor: 'rgba(0, 0, 0, 0, 0.25' },
-        ]}
+  const renderCategory = useCallback(
+    (data) => (
+      <TouchableOpacity
+        activeOpacity={0.75}
+        style={{
+          height: IS_PORTRAIT ? 250 : 220,
+          width: IS_PORTRAIT ? width : width / 2,
+          marginVertical: 5,
+          position: 'relative',
+          alignItems: 'center',
+          alignSelf: 'center',
+        }}
+        key={data.item.title}
+        /* eslint-disable-next-line react/prop-types */
+        onPress={() => routeSocialRoute(data.item.screen)}
       >
-        <Text category="h4" style={{ color: 'white' }}>
-          {` woozeee ${t(data.item.title)} `}
-        </Text>
-      </View>
-    </TouchableOpacity>
+        <View style={styles.cardContent}>
+          <BackgroundVideo
+            videoUri={data.item.video}
+            thumbUri={data.item.banner}
+            style={{ borderRadius: 5 }}
+            isMuted
+          />
+        </View>
+
+        <View
+          style={[
+            styles.cardContent,
+            { backgroundColor: 'rgba(0, 0, 0, 0, 0.25' },
+          ]}
+        >
+          <Text category="h4" style={{ color: 'white' }}>
+            {` woozeee ${t(data.item.title)} `}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    ),
+    [t, IS_PORTRAIT, routeSocialRoute, width],
   );
 
-  const RenderCategoryHeader = () => (
-    <View style={{ flex: 1, paddingTop: 10, Height: 180 }}>
-      <List
-        style={{ backgroundColor: 'transparent' }}
-        alwaysBounceHorizontal
-        alwaysBounceVertical
-        horizontal={IS_PORTRAIT}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        data={woozeeeCards}
-        renderItem={renderCard}
-        getItemLayout={(data, index) => ({
-          length: CARD_HEIGHT,
-          offset: CARD_HEIGHT * index,
-          index,
-        })}
-      />
-    </View>
-  );
-
-  return (
-    <Layout level="4" style={{ flex: 1 }}>
-      <OverlayLoader isLoading={isLoading} />
-      <TopNavigationArea
-        title="woozeee"
-        navigation={navigation}
-        screen="user"
-      />
-
-      <View style={{ flex: 1 }}>
+  const RenderCategoryHeader = useMemo(
+    () => (
+      <View style={{ flex: 1, paddingTop: 10, Height: 180 }}>
         <List
-          ListHeaderComponent={RenderCategoryHeader}
           style={{ backgroundColor: 'transparent' }}
-          horizontal={!IS_PORTRAIT}
           alwaysBounceHorizontal
           alwaysBounceVertical
-          showsVerticalScrollIndicator={false}
+          horizontal={IS_PORTRAIT}
           showsHorizontalScrollIndicator={false}
-          data={woozeeeCategories}
-          renderItem={renderCategory}
+          showsVerticalScrollIndicator={false}
+          data={woozeeeCards}
+          renderItem={renderCard}
           getItemLayout={(data, index) => ({
-            length: CATEGORY_HEIGHT,
-            offset: CATEGORY_HEIGHT * index,
+            length: CARD_HEIGHT,
+            offset: CARD_HEIGHT * index,
             index,
           })}
         />
       </View>
-    </Layout>
+    ),
+    [CARD_HEIGHT, IS_PORTRAIT, renderCard],
+  );
+
+  return useMemo(
+    () => (
+      <Layout level="4" style={{ flex: 1 }}>
+        <OverlayLoader isLoading={isLoading} />
+        <TopNavigationArea
+          title="woozeee"
+          navigation={navigation}
+          screen="user"
+        />
+
+        <View style={{ flex: 1 }}>
+          <List
+            ListHeaderComponent={RenderCategoryHeader}
+            style={{ backgroundColor: 'transparent' }}
+            horizontal={!IS_PORTRAIT}
+            alwaysBounceHorizontal
+            alwaysBounceVertical
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            data={woozeeeCategories}
+            renderItem={renderCategory}
+            getItemLayout={(data, index) => ({
+              length: CATEGORY_HEIGHT,
+              offset: CATEGORY_HEIGHT * index,
+              index,
+            })}
+          />
+        </View>
+      </Layout>
+    ),
+    [
+      CATEGORY_HEIGHT,
+      IS_PORTRAIT,
+      isLoading,
+      navigation,
+      RenderCategoryHeader,
+      renderCategory,
+    ],
   );
 }

@@ -158,7 +158,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [navigation, style],
+    [navigation, style, renderRightAccessory],
   );
 
   const navs = {

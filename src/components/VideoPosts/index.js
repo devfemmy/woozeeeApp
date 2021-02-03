@@ -1,12 +1,14 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
-import { View, useWindowDimensions } from 'react-native';
+import { View, useWindowDimensions, Image } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { List, Text } from '@ui-kitten/components';
 
-import VideoCard from '~src/components/Socials/VideoCard';
+import VideoCard from '~src/components/VideoCard';
+
+import StoryCard from '~src/components/VideoCard/StoryCard';
 
 import VideoView from '~src/components/VideoView';
 
@@ -41,34 +43,43 @@ export const TrendingPosts = ({ info }) => useMemo(
 );
 
 // prettier-ignore
-export const StoryPosts = ({ info }) => useMemo(
-  () => (
-    <View style={{ marginBottom: 20, paddingVertical: 5 }}>
-      <View style={{ paddingHorizontal: 10 }}>
-        <Text category="h6" style={{ marginBottom: 5 }}>
-          Recent Stories
-        </Text>
-      </View>
-      <List
-        style={{ backgroundColor: 'transparent' }}
-        alwaysBounceHorizontal
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        data={info}
-        renderItem={(renderData) => (
-          <VideoCard data={renderData.item} extraWidth={0.5} />
-        )}
-        getItemLayout={(data, index) => ({
-          length: 175,
-          offset: 175 * index,
-          index,
-        })}
-      />
+export const StoryPosts = ({ info }) => {
+  const RenderCategoryHeader = () => (
+    <View>
+      <Image source={require('~assets/images/user/user1.png')} />
     </View>
-  ),
-  [info],
-);
+  );
+
+  return useMemo(
+    () => (
+      <View style={{ marginBottom: 20, paddingVertical: 5 }}>
+        <View style={{ paddingHorizontal: 10 }}>
+          <Text category="h6" style={{ marginBottom: 5 }}>
+            Recent Stories
+          </Text>
+        </View>
+        <List
+          style={{ backgroundColor: 'transparent' }}
+          alwaysBounceHorizontal
+          horizontal
+          ListHeaderComponent={RenderCategoryHeader}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          data={info}
+          renderItem={(renderData) => (
+            <StoryCard data={renderData.item} extraWidth={0.5} />
+          )}
+          getItemLayout={(data, index) => ({
+            length: 175,
+            offset: 175 * index,
+            index,
+          })}
+        />
+      </View>
+    ),
+    [info],
+  );
+};
 
 // prettier-ignore
 export const UsersPosts = ({ info }) => useMemo(
@@ -147,7 +158,7 @@ export const SocialPosts = ({ info }) => {
   const { bottom, top } = useSafeAreaInsets();
 
   const { height } = useWindowDimensions();
-  
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   const CONTENT_SPACE = bottom + top + 56;
@@ -214,7 +225,7 @@ export const WoozPosts = ({ info }) => {
   const { bottom, top } = useSafeAreaInsets();
 
   const { height } = useWindowDimensions();
-  
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   const CONTENT_SPACE = bottom + top + 56;
