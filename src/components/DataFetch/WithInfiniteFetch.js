@@ -5,7 +5,7 @@ import React, {
 
 import { useWindowDimensions } from 'react-native';
 
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 
 import Api from '~src/api';
 
@@ -17,7 +17,7 @@ import TabsMenu from './TabsMenu';
 
 import FetchFailed from './FetchFailed';
 
-export default function WithPaginatedVideoPosts(
+export default function WithInfiniteFetch(
   WrappedComponent,
   fetchUrl,
   placeholderProp,
@@ -29,17 +29,28 @@ export default function WithPaginatedVideoPosts(
 
   const [activePage, setPage] = useState('default');
 
-  // prettier-ignore
   const {
-    isLoading, isError, data, refetch,
-  } = useQuery(
-    ['defaultVideos', activePage],
-    async () => {
-      const promise = await Api.getVideos(fetchUrl, activePage);
+    status,
+    data,
+    error,
+    isFetching,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    fetchNextPage,
+    fetchPreviousPage,
+    refetch,
+    hasNextPage,
+    hasPreviousPage,
+  } = useInfiniteQuery(
+    ['inFiniteVideos', activePage],
+    async ({ pageParam = 1 }) => {
+      const promise = await Api.getVideos(fetchUrl, activePage, pageParam);
       promise.cancel = () => Api.cancelRequest('Request aborted');
       return promise;
     },
     {
+      getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
+      getNextPageParam: (lastPage) => lastPage.nextID ?? false,
       keepPreviousData: true,
       cacheTime: 1000 * 60 * 1,
     },
@@ -50,7 +61,7 @@ export default function WithPaginatedVideoPosts(
   }, []);
 
   return useMemo(() => {
-    if (isLoading) {
+    if (status === 'loading') {
       return (
         <Placeholders
           mediaLeft={placeholderProp.mediaLeft}
@@ -59,14 +70,14 @@ export default function WithPaginatedVideoPosts(
           numColumns={placeholderProp.numColumns || 2}
           maxHeight={
             placeholderProp.maxHeight === '100%'
-              ? height - 200
+              ? height - 300
               : placeholderProp.maxHeight
           }
           maxWidth={width}
         />
       );
     }
-    if (isError) {
+    if (status === 'error') {
       return (
         <FetchFailed
           onPress={refetch}
@@ -76,15 +87,15 @@ export default function WithPaginatedVideoPosts(
       );
     }
     // prettier-ignore
-    if (!isLoading && !isError && data.pageData.data.length > 0) {
-      return (
-        <>
+    if (status !== 'loading' && status !== 'error' && data.pages[0].pageData.data.length > 0) {
+      return data.pages.map((page) => (
+        <React.Fragment key={page.nextID}>
           {tabs ? (
             <TabsMenu tabs={tabs} tabInfo={{ activePage, updateTab }} />
           ) : null}
-          <WrappedComponent info={data.pageData.data} />
-        </>
-      );
+          <WrappedComponent info={page.pageData.data} />
+        </React.Fragment>
+      ));
     }
     return (
       <FetchFailed
@@ -102,8 +113,7 @@ export default function WithPaginatedVideoPosts(
     updateTab,
     placeholderProp,
     tabs,
-    isLoading,
-    isError,
+    status,
     data,
   ]);
 }

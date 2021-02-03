@@ -6,7 +6,7 @@ import { Layout } from '@ui-kitten/components';
 
 // import { LocaleContext } from '~src/contexts';
 
-import WithInfiniteVideoPosts from '~src/components/VideoPosts/WithInfiniteVideoPosts';
+import WithInfiniteFetch from '~src/components/DataFetch/WithInfiniteFetch';
 
 import { WoozPosts } from '~src/components/VideoPosts';
 
@@ -51,7 +51,7 @@ export default function Wooz({ navigation }) {
   // const t = useContext(LocaleContext);
 
   // prettier-ignore
-  const SocialPostsArea = () => WithInfiniteVideoPosts(WoozPosts, socialUrl, PLACEHOLDER_CONFIG);
+  const SocialPostsArea = () => WithInfiniteFetch(WoozPosts, socialUrl, PLACEHOLDER_CONFIG);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>

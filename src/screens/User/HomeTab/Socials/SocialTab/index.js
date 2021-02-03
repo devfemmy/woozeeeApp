@@ -6,9 +6,9 @@ import { Layout } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
+import WithDefaultFetch from '~src/components/DataFetch';
 
-import { TrendingPosts, UsersPosts } from '~src/components/VideoPosts';
+import { StoryPosts, UsersPosts } from '~src/components/VideoPosts';
 
 import { trendingUrl, challengeUrl } from '~src/api/dummy';
 
@@ -27,12 +27,10 @@ const PLACEHOLDER_CONFIG2 = {
 // eslint-disable-next-line react/prop-types
 export default function Explore({ navigation }) {
   // prettier-ignore
-  const TrendingPostsArea = () => (
-    WithVideoPosts(TrendingPosts, trendingUrl, PLACEHOLDER_CONFIG1)
-  );
+  const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
   // prettier-ignore
-  const UserPostsArea = () => WithVideoPosts(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG2);
+  const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG2);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
@@ -49,7 +47,7 @@ export default function Explore({ navigation }) {
       >
         <View style={{ paddingBottom: 20 }}>
           <View>
-            <TrendingPostsArea />
+            <StoryPostsArea />
           </View>
           <View>
             <UserPostsArea />

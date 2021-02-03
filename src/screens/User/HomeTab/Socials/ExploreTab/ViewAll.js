@@ -9,7 +9,7 @@ import {
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
+import WithDefaultFetch from '~src/components/DataFetch';
 
 import { AllPosts } from '~src/components/VideoPosts';
 
@@ -26,7 +26,7 @@ const PLACEHOLDER_CONFIG = {
 export default function ViewAll({ navigation }) {
   // prettier-ignore
   const AllPostsArea = () => (
-    WithVideoPosts(AllPosts, trendingUrl, PLACEHOLDER_CONFIG)
+    WithDefaultFetch(AllPosts, trendingUrl, PLACEHOLDER_CONFIG)
   );
 
   return (

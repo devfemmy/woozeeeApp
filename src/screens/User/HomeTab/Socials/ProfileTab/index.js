@@ -16,7 +16,7 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import OverlayLoader from '~src/components/OverlayLoader';
 
-import WithPaginatedVideoPosts from '~src/components/VideoPosts/WithPaginatedVideoPosts';
+import WithPaginatedFetch from '~src/components/DataFetch/WithPaginatedFetch';
 
 import { ProfilePosts } from '~src/components/VideoPosts';
 
@@ -49,7 +49,7 @@ export default function Profile({ navigation }) {
 
   // prettier-ignore
   const ProfilePostsArea = () => (
-    WithPaginatedVideoPosts(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, TABS)
+    WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, TABS)
   );
 
   // eslint-disable-next-line react/prop-types

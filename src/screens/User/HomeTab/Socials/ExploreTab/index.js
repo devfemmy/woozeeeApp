@@ -6,7 +6,7 @@ import { Layout } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
+import WithDefaultFetch from '~src/components/DataFetch';
 
 import { TrendingPosts, UsersPosts } from '~src/components/VideoPosts';
 
@@ -28,11 +28,11 @@ const PLACEHOLDER_CONFIG2 = {
 export default function Explore({ navigation }) {
   // prettier-ignore
   const TrendingPostsArea = () => (
-    WithVideoPosts(TrendingPosts, trendingUrl, PLACEHOLDER_CONFIG1)
+    WithDefaultFetch(TrendingPosts, trendingUrl, PLACEHOLDER_CONFIG1)
   );
 
   // prettier-ignore
-  const UserPostsArea = () => WithVideoPosts(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG2);
+  const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG2);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>

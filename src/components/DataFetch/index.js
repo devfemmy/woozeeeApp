@@ -19,7 +19,7 @@ import TabsMenu from './TabsMenu';
 
 import FetchFailed from './FetchFailed';
 
-export default function WithVideoPosts(
+export default function WithDefaultFetch(
   WrappedComponent,
   fetchUrl,
   placeholderProp,

@@ -41,6 +41,36 @@ export const TrendingPosts = ({ info }) => useMemo(
 );
 
 // prettier-ignore
+export const StoryPosts = ({ info }) => useMemo(
+  () => (
+    <View style={{ marginBottom: 20, paddingVertical: 5 }}>
+      <View style={{ paddingHorizontal: 10 }}>
+        <Text category="h6" style={{ marginBottom: 5 }}>
+          Recent Stories
+        </Text>
+      </View>
+      <List
+        style={{ backgroundColor: 'transparent' }}
+        alwaysBounceHorizontal
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        data={info}
+        renderItem={(renderData) => (
+          <VideoCard data={renderData.item} extraWidth={0.5} />
+        )}
+        getItemLayout={(data, index) => ({
+          length: 175,
+          offset: 175 * index,
+          index,
+        })}
+      />
+    </View>
+  ),
+  [info],
+);
+
+// prettier-ignore
 export const UsersPosts = ({ info }) => useMemo(
   // prettier-ignore
   () => info.map((item) => (

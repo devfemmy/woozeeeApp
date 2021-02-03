@@ -6,7 +6,7 @@ import { Layout } from '@ui-kitten/components';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
-import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
+import WithDefaultFetch from '~src/components/DataFetch';
 
 import { UsersPosts } from '~src/components/VideoPosts';
 
@@ -22,7 +22,7 @@ const PLACEHOLDER_CONFIG = {
 // eslint-disable-next-line react/prop-types
 export default function Challenge({ navigation }) {
   // prettier-ignore
-  const UserPostsArea = () => WithVideoPosts(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
+  const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
