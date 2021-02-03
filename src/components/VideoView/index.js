@@ -8,13 +8,13 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import { Text } from '@ui-kitten/components';
+import { Text, Button } from '@ui-kitten/components';
 
 import { useIsFocused } from '@react-navigation/native';
 
 import CustomVideoPlayer from '~src/components/CustomVideoPlayer';
 
-import InteractIcon from './InteractIcon';
+import InteractIcon from '~src/components/InteractIcon';
 
 import {
   IconHeartToggle,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     minHeight: '100%',
     width: '100%',
     zIndex: 9,
-    paddingBottom: 15,
+    paddingBottom: 25,
   },
 });
 
@@ -67,9 +67,9 @@ export default function VideoView(props) {
 
   const togglePause = () => setShouldPlay((prevState) => !prevState);
 
-  const toggleVolume = () => setMuted((prevState) => !prevState);
-
   const toggleLike = () => setLiked((prevState) => !prevState);
+
+  const toggleVolume = () => setMuted((prevState) => !prevState);
 
   return useMemo(
     () => (
@@ -102,62 +102,100 @@ export default function VideoView(props) {
             <View
               style={{
                 paddingHorizontal: 10,
-                maxWidth: width / 3,
               }}
             >
               <View style={{ flexDirection: 'row' }}>
-                <Text status="primary" category="h6" style={{ marginRight: 5 }}>
-                  {item.ownerFirstName}
-                </Text>
-                <Text status="danger" category="h6">
-                  {item.ownerLastName}
-                </Text>
-              </View>
-              <View style={{ flexDirection: 'row' }}>
-                <Text
-                  status="control"
-                  category="s2"
-                  style={{
-                    backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-                    paddingHorizontal: 5,
-                  }}
-                >
-                  {item.category}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginTop: 5,
-                }}
-              >
-                <InteractIcon
-                  status={shouldPlay ? 'danger' : 'success'}
-                  Accessory={(evaProps) => (
-                    <IconPlayPause
-                      // eslint-disable-next-line react/jsx-props-no-spreading
-                      {...evaProps}
-                      isPlaying={shouldPlay && IS_ACTIVE}
+                <View style={{ position: 'relative' }}>
+                  <Image
+                    source={require('~assets/images/user/user2.png')}
+                    style={{
+                      height: 50,
+                      width: 50,
+                      borderRadius: 100,
+                      borderWidth: 2,
+                      borderColor: 'white',
+                    }}
+                  />
+                  <Image
+                    source={require('~assets/images/icon/verified.png')}
+                    style={{
+                      height: 15,
+                      width: 15,
+                      borderRadius: 100,
+                      position: 'absolute',
+                      right: 0,
+                      bottom: 25,
+                    }}
+                  />
+                </View>
+                <View style={{ paddingLeft: 5 }}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text
+                      status="primary"
+                      category="h6"
+                      style={{ marginRight: 5 }}
+                    >
+                      {item.ownerFirstName}
+                    </Text>
+                    <Text status="danger" category="h6">
+                      {item.ownerLastName}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginVertical: 5,
+                    }}
+                  >
+                    <Button
+                      status="danger"
+                      size="tiny"
+                      style={{ paddingVertical: 0, paddingHorizontal: 0 }}
+                    >
+                      <Text category="c2" status="control">
+                        Follow
+                      </Text>
+                    </Button>
+                    <InteractIcon
+                      status={shouldPlay ? 'danger' : 'success'}
+                      Accessory={(evaProps) => (
+                        <IconPlayPause
+                          // eslint-disable-next-line react/jsx-props-no-spreading
+                          {...evaProps}
+                          isPlaying={shouldPlay && IS_ACTIVE}
+                        />
+                      )}
+                      height={20}
+                      width={20}
+                      onPress={togglePause}
                     />
-                  )}
-                  height={28}
-                  width={28}
-                  onPress={togglePause}
-                />
-                <InteractIcon
-                  Accessory={(evaProps) => (
-                    <IconVolume
-                      // eslint-disable-next-line react/jsx-props-no-spreading
-                      {...evaProps}
-                      isOpen={!isMuted}
+                    <InteractIcon
+                      Accessory={(evaProps) => (
+                        <IconVolume
+                          // eslint-disable-next-line react/jsx-props-no-spreading
+                          {...evaProps}
+                          isOpen={!isMuted}
+                        />
+                      )}
+                      height={20}
+                      width={20}
+                      onPress={toggleVolume}
                     />
-                  )}
-                  height={28}
-                  width={28}
-                  isOpen={false}
-                  onPress={toggleVolume}
-                />
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text
+                      status="control"
+                      category="s2"
+                      style={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.0125)',
+                        paddingHorizontal: 5,
+                      }}
+                    >
+                      {item.category}
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
             <View style={{ maxWidth: width / 3 }}>
@@ -184,13 +222,14 @@ export default function VideoView(props) {
                   Accessory={IconMsgSquare}
                   textContent={item.comments}
                 />
-                {/* <InteractIcon
-                    Accessory={(evaProps) => (
-                      // eslint-disable-next-line react/jsx-props-no-spreading
-                      <IconEye {...evaProps} isOpen />
-                    )}
-                    textContent={item.views}
-                  /> */}
+                <InteractIcon
+                  style={{ marginBottom: 15 }}
+                  Accessory={(evaProps) => (
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    <IconEye {...evaProps} isOpen />
+                  )}
+                  textContent={item.views}
+                />
                 {/* <InteractIcon
                     Accessory={IconClipboard}
                     textContent={item.votes}
@@ -208,7 +247,7 @@ export default function VideoView(props) {
                       height: 40,
                       width: 40,
                       borderRadius: 100,
-                      borderWidth: 3,
+                      borderWidth: 2,
                       borderColor: 'white',
                     }}
                   />
@@ -234,7 +273,7 @@ export default function VideoView(props) {
       item.category,
       item.likes,
       item.comments,
-      // item.views,
+      item.views,
       // item.votes,
       item.shares,
       isMuted,

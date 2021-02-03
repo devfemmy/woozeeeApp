@@ -6,11 +6,9 @@ import { Layout } from '@ui-kitten/components';
 
 // import { LocaleContext } from '~src/contexts';
 
-import Header from './Header';
-
 import WithInfiniteVideoPosts from '~src/components/VideoPosts/WithInfiniteVideoPosts';
 
-import { SocialPosts } from '~src/components/VideoPosts';
+import { WoozPosts } from '~src/components/VideoPosts';
 
 import InteractIcon from '~src/components/InteractIcon';
 
@@ -38,7 +36,6 @@ const styles = StyleSheet.create({
   interactIcons: {
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-    marginBottom: 5,
   },
 });
 
@@ -50,11 +47,11 @@ const PLACEHOLDER_CONFIG = {
 };
 
 // eslint-disable-next-line react/prop-types
-export default function Social({ navigation }) {
+export default function Wooz({ navigation }) {
   // const t = useContext(LocaleContext);
 
   // prettier-ignore
-  const SocialPostsArea = () => WithInfiniteVideoPosts(SocialPosts, socialUrl, PLACEHOLDER_CONFIG);
+  const SocialPostsArea = () => WithInfiniteVideoPosts(WoozPosts, socialUrl, PLACEHOLDER_CONFIG);
 
   return (
     <Layout level="4" style={{ flex: 1 }}>
@@ -67,15 +64,13 @@ export default function Social({ navigation }) {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
             width: '100%',
-            paddingTop: 20,
+            paddingHorizontal: 10,
+            paddingVertical: 20,
             zIndex: 19,
           }}
         >
-          <View>
-            <Header navigation={navigation} />
-          </View>
           <View style={styles.interactIcons}>
             <InteractIcon
               Accessory={(evaProps) => (
@@ -85,8 +80,6 @@ export default function Social({ navigation }) {
                   isOpen
                 />
               )}
-              height={36}
-              width={36}
             />
           </View>
         </View>

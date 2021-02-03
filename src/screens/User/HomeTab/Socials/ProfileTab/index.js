@@ -90,7 +90,7 @@ export default function Profile({ navigation }) {
                 paddingBottom: 10,
               }}
             >
-              <View style={{ marginBottom: 5, position: 'relative' }}>
+              <View style={{ position: 'relative' }}>
                 <Image
                   source={require('~assets/images/user/user2.png')}
                   style={{
@@ -113,7 +113,9 @@ export default function Profile({ navigation }) {
                   }}
                 />
               </View>
-              <View style={{ marginBottom: 10, alignItems: 'center' }}>
+              <View
+                style={{ marginBottom: 10, marginTop: 5, alignItems: 'center' }}
+              >
                 <Text category="h5">Bukola Daniel</Text>
                 <Text category="p2" appearance="hint">
                   @Bukka101Official

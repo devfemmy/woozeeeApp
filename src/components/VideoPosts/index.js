@@ -11,7 +11,7 @@ import VideoCard from '~src/components/Socials/VideoCard';
 import VideoView from '~src/components/VideoView';
 
 // prettier-ignore
-export const TrendingChallenges = ({ info }) => useMemo(
+export const TrendingPosts = ({ info }) => useMemo(
   () => (
     <View style={{ marginBottom: 20, paddingVertical: 5 }}>
       <View style={{ paddingHorizontal: 10 }}>
@@ -114,6 +114,73 @@ export const ProfilePosts = ({ info }) => useMemo(
 
 // prettier-ignore
 export const SocialPosts = ({ info }) => {
+  const { bottom, top } = useSafeAreaInsets();
+
+  const { height } = useWindowDimensions();
+  
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const CONTENT_SPACE = bottom + top + 56;
+
+  const ITEM_HEIGHT = height - CONTENT_SPACE;
+
+  const VIEWABILITY_CONFIG = useMemo(() => ({
+    minimumViewTime: 100,
+    viewAreaCoveragePercentThreshold: 50,
+  }), []);
+
+  // show currently viewing video
+  const handleViewItemsChanged = useCallback((data) => {
+    setActiveIndex(data.changed[0].index);
+  }, []);
+
+  return useMemo(
+    () => (
+      <List
+        style={{
+          flex: 1,
+          backgroundColor: 'transparent',
+          position: 'absolute',
+          height: ITEM_HEIGHT,
+        }}
+        alwaysBounceVertical
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        data={info}
+        renderItem={(renderData) => (
+          <VideoView
+            data={renderData}
+            extraWidth={0.5}
+            activeIndex={activeIndex}
+            viewHeight={ITEM_HEIGHT}
+          />
+        )}
+        extraData={activeIndex}
+        snapToAlignment="start"
+        decelerationRate="fast"
+        snapToInterval={ITEM_HEIGHT}
+        getItemLayout={(data, index) => ({
+          length: ITEM_HEIGHT,
+          offset: ITEM_HEIGHT * index,
+          index,
+        })}
+        initialNumToRender={4}
+        onViewableItemsChanged={handleViewItemsChanged}
+        viewabilityConfig={VIEWABILITY_CONFIG}
+      />
+    ),
+    [
+      info,
+      activeIndex,
+      handleViewItemsChanged,
+      VIEWABILITY_CONFIG,
+      ITEM_HEIGHT,
+    ],
+  );
+};
+
+// prettier-ignore
+export const WoozPosts = ({ info }) => {
   const { bottom, top } = useSafeAreaInsets();
 
   const { height } = useWindowDimensions();

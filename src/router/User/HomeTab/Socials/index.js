@@ -6,7 +6,7 @@ import BottomNavigationArea from '~src/components/BottomNavigationArea';
 
 // Tabs
 import SocialTab from './SocialTab';
-import ExploreTab from './ExploreTab';
+import WoozTab from './WoozTab';
 import ChallengeTab from './ChallengeTab';
 import ProfileTab from './ProfileTab';
 
@@ -19,7 +19,7 @@ export default function SocialsRoute() {
       tabBar={(props) => <BottomNavigationArea {...props} page="social" />}
     >
       <Screen name="SocialTab" component={SocialTab} />
-      <Screen name="ExploreTab" component={ExploreTab} />
+      <Screen name="WoozTab" component={WoozTab} />
       <Screen name="UploadVideo" component={SocialTab} />
       <Screen name="ChallengeTab" component={ChallengeTab} />
       <Screen name="ProfileTab" component={ProfileTab} />

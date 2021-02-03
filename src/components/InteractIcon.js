@@ -32,8 +32,8 @@ export default function InteractIcon(props) {
           status={status ?? 'control'}
           size="tiny"
           style={{
-            height: height ? height + 4 : 36,
-            width: width ? width + 4 : 36,
+            paddingVertical: 0,
+            paddingHorizontal: 0,
           }}
           accessoryLeft={(evaProps) => (
             <Accessory

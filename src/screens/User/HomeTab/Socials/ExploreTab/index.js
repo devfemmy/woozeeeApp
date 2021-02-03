@@ -8,7 +8,7 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import WithVideoPosts from '~src/components/VideoPosts/WithVideoPosts';
 
-import { TrendingChallenges, UsersPosts } from '~src/components/VideoPosts';
+import { TrendingPosts, UsersPosts } from '~src/components/VideoPosts';
 
 import { trendingUrl, challengeUrl } from '~src/api/dummy';
 
@@ -27,8 +27,8 @@ const PLACEHOLDER_CONFIG2 = {
 // eslint-disable-next-line react/prop-types
 export default function Explore({ navigation }) {
   // prettier-ignore
-  const TrendingChallengesArea = () => (
-    WithVideoPosts(TrendingChallenges, trendingUrl, PLACEHOLDER_CONFIG1)
+  const TrendingPostsArea = () => (
+    WithVideoPosts(TrendingPosts, trendingUrl, PLACEHOLDER_CONFIG1)
   );
 
   // prettier-ignore
@@ -50,7 +50,7 @@ export default function Explore({ navigation }) {
       >
         <View style={{ paddingBottom: 20 }}>
           <View>
-            <TrendingChallengesArea />
+            <TrendingPostsArea />
           </View>
           <View>
             <UserPostsArea />

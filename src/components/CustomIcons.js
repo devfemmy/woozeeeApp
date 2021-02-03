@@ -32,7 +32,7 @@ export const IconVideo = (props) => {
     <Icon
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...otherProps}
-      name={isOpen ? 'video-outline' : 'video-off-outline'}
+      name={isOpen ? 'video' : 'video-off'}
     />
   );
 };
@@ -75,6 +75,11 @@ export const IconInputState = (props) => {
 export const IconBack = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="arrow-back-outline" />
+);
+
+export const IconArrowHeadUp = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="arrowhead-up" />
 );
 
 // eslint-disable-next-line react/jsx-props-no-spreading
