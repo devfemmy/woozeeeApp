@@ -7,9 +7,9 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-import { LinearGradient } from 'expo-linear-gradient';
+import { Layout, Text } from '@ui-kitten/components';
 
-import { Text } from '@ui-kitten/components';
+import Moment from 'react-moment';
 
 export default function VideoCard(props) {
   const { data, extraWidth } = props;
@@ -44,17 +44,18 @@ export default function VideoCard(props) {
           resizeMode="cover"
         />
         {data.ownerImg ? (
-          <LinearGradient
-            colors={['#043F7C', '#FF5757']}
+          <Layout
+            level="3"
             style={{
-              height: 44,
-              width: 44,
-              borderRadius: 22,
-              alignItems: 'center',
+              flex: 1,
               justifyContent: 'center',
+              alignItems: 'center',
               position: 'absolute',
+              height: 43,
+              width: 43,
               left: 10,
               top: 5,
+              borderRadius: 100,
             }}
           >
             <Image
@@ -63,33 +64,44 @@ export default function VideoCard(props) {
                 height: 40,
                 width: 40,
                 borderRadius: 100,
+                borderWidth: 2,
                 borderColor: 'white',
               }}
             />
-          </LinearGradient>
+          </Layout>
         ) : null}
-        {data.tag ? (
-          <View
-            style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              position: 'absolute',
-              bottom: 10,
-              borderBottomLeftRadius: 5,
-              borderBottomRightRadius: 5,
-              padding: 5,
-              width: '100%',
-            }}
-          >
-            <Text category="c2" style={{ color: 'white', marginBottom: 5 }}>
-              {data.tag}
-            </Text>
-            <View>
-              <Text category="c1" status="control">
-                12.5 Entries
-              </Text>
-            </View>
+        <View
+          tint="dark"
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            position: 'absolute',
+            bottom: 10,
+            borderBottomLeftRadius: 5,
+            borderBottomRightRadius: 5,
+            padding: 5,
+            width: '100%',
+          }}
+        >
+          <Text category="c1" style={{ color: 'white', marginBottom: 5 }}>
+            {data.tag}
+          </Text>
+          <View>
+            <Moment
+              fromNow
+              element={(momentProps) => (
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                <Text
+                  category="c1"
+                  /* eslint-disable-next-line react/jsx-props-no-spreading */
+                  {...momentProps}
+                  style={{ color: 'white' }}
+                />
+              )}
+            >
+              {data.dateAdded}
+            </Moment>
           </View>
-        ) : null}
+        </View>
       </TouchableOpacity>
     ),
     [data, IS_PORTRAIT, width, extraWidth],

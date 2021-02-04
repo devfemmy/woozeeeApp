@@ -1,15 +1,23 @@
 import React from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import Challenge from '~src/screens/User/HomeTab/Socials/ChallengeTab';
+import TopTabsArea from '~src/components/TopTabsArea';
 
-const { Navigator, Screen } = createStackNavigator();
+// Tabs
+import ExploreTab from './ExploreTab';
+import VersusTab from './VersusTab';
 
-export default function ChallengeTab() {
+const { Navigator, Screen } = createMaterialTopTabNavigator();
+
+export default function ChallengeRoute() {
   return (
-    <Navigator detachInactiveScreens headerMode="none">
-      <Screen name="Challenge" component={Challenge} />
+    <Navigator
+      detachInactiveScreens /* eslint-disable-next-line react/jsx-props-no-spreading */
+      tabBar={(props) => <TopTabsArea {...props} page="challenge" />}
+    >
+      <Screen name="VersusTab" component={VersusTab} />
+      <Screen name="ExploreTab" component={ExploreTab} />
     </Navigator>
   );
 }

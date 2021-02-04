@@ -54,7 +54,7 @@ export default function Wooz({ navigation }) {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#050716',
+          backgroundColor: '#04070C',
         }}
       >
         <View

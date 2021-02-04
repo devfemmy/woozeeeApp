@@ -21,6 +21,7 @@ import FAQs from '~src/screens/Common/Extras/FAQs';
 // Common User Screens
 import Settings from '~src/screens/User/Common/Settings';
 import EditProfile from '~src/screens/User/Common/EditProfile';
+import Search from '~src/screens/User/Common/Search';
 
 /* Routes import */
 import UserRoute from './User';
@@ -46,6 +47,7 @@ export default function Router() {
       SocialsRoute,
       EditProfile,
       Settings,
+      Search,
     },
 
     Common: {

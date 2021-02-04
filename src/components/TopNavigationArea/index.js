@@ -20,6 +20,7 @@ import {
   IconCFlag,
   IconVideoOutline,
   IconBell,
+  IconSearch,
 } from '~src/components/CustomIcons';
 
 export default function TopNavigationArea(props) {
@@ -28,7 +29,11 @@ export default function TopNavigationArea(props) {
     navigation, title, icon, style, screen,
   } = props;
 
-  const renderRightAccessory = useCallback(
+  const routeSearch = useCallback(() => navigation.navigate('Search'), [
+    navigation,
+  ]);
+
+  const renderToolsOptions = useCallback(
     () => (
       <>
         <TopNavigationAction
@@ -48,6 +53,20 @@ export default function TopNavigationArea(props) {
       </>
     ),
     [props],
+  );
+
+  const renderSearchIcon = useCallback(
+    () => (
+      <TopNavigationAction
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
+        {...props}
+        icon={IconSearch}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel="Search"
+        onPress={routeSearch}
+      />
+    ),
+    [props, routeSearch],
   );
 
   const TopNavigationAuth = useMemo(
@@ -150,7 +169,7 @@ export default function TopNavigationArea(props) {
             /* eslint-disable-next-line react/jsx-props-no-spreading */
             <TopNavigationRouteMenu {...evaProps} navigation={navigation} />
           )}
-          accessoryRight={renderRightAccessory}
+          accessoryRight={renderToolsOptions}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -158,7 +177,28 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [navigation, style, renderRightAccessory],
+    [navigation, style, renderToolsOptions],
+  );
+
+  const TopNavigationToolbar = useMemo(
+    () => (
+      <Layout level="5">
+        <TopNavigation
+          alignment="center"
+          /* eslint-disable-next-line react/jsx-props-no-spreading */
+          accessoryLeft={(evaProps) => (
+            /* eslint-disable-next-line react/jsx-props-no-spreading */
+            <TopNavigationMenu {...evaProps} navigation={navigation} />
+          )}
+          accessoryRight={renderSearchIcon}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="screen navigation"
+          style={[style, { backgroundColor: 'transparent' }]}
+        />
+        <Divider />
+      </Layout>
+    ),
+    [style, navigation, renderSearchIcon],
   );
 
   const navs = {
@@ -167,6 +207,7 @@ export default function TopNavigationArea(props) {
     search: TopNavigationSearch,
     profile: TopNavigationProfile,
     social: TopNavigationSocial,
+    toolbar: TopNavigationToolbar,
   };
 
   return navs[screen];

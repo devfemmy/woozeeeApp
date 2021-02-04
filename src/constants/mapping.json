@@ -54,7 +54,19 @@
           "mapping": {
             "textFontSize": "text-label-font-size",
             "textFontWeight": "text-label-font-weight",
-            "textFontFamily": "text-label-font-family"
+            "textFontFamily": "text-label-font-family",
+            "textColor": "text-hint-color",
+            "iconTintColor": "text-hint-color",
+            "state": {
+              "hover": {
+                "textColor": "text-primary-hover-color",
+                "iconTintColor": "text-primary-hover-color"
+              },
+              "selected": {
+                "textColor": "text-primary-color",
+                "iconTintColor": "text-primary-color"
+              }
+            }
           }
         }
       }
@@ -108,7 +120,32 @@
       "appearances": {
         "default": {
           "mapping": {
-            "backgroundColor": "background-basic-color-5"
+            "backgroundColor": "border-basic-color-5"
+          }
+        }
+      }
+    },
+    "Tab": {
+      "meta": {
+        "scope": "all"
+      },
+      "appearances": {
+        "default": {
+          "mapping": {
+            "textFontSize": 14,
+            "textFontWeight": "text-label-font-weight",
+            "textColor": "text-hint-color",
+            "iconTintColor": "text-hint-color",
+            "state": {
+              "hover": {
+                "textColor": "text-primary-hover-color",
+                "iconTintColor": "text-primary-hover-color"
+              },
+              "selected": {
+                "textColor": "text-primary-color",
+                "iconTintColor": "text-primary-color"
+              }
+            }
           }
         }
       }

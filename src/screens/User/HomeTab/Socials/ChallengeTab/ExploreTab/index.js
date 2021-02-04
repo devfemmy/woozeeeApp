@@ -8,39 +8,28 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import WithDefaultFetch from '~src/components/DataFetch';
 
-import { TrendingPosts, UsersPosts } from '~src/components/VideoPosts';
+import { UsersPosts } from '~src/components/VideoPosts';
 
-import { trendingUrl, challengeUrl } from '~src/api/dummy';
+import { challengeUrl } from '~src/api/dummy';
 
-const PLACEHOLDER_CONFIG1 = {
-  count: 2,
+const PLACEHOLDER_CONFIG = {
+  count: 6,
   numColumns: 2,
   maxHeight: 180,
   mediaLeft: true,
 };
 
-const PLACEHOLDER_CONFIG2 = {
-  ...PLACEHOLDER_CONFIG1,
-  count: 4,
-};
-
 // eslint-disable-next-line react/prop-types
-export default function Explore({ navigation }) {
+export default function Versus({ navigation }) {
   // prettier-ignore
-  const TrendingPostsArea = () => (
-    WithDefaultFetch(TrendingPosts, trendingUrl, PLACEHOLDER_CONFIG1)
-  );
-
-  // prettier-ignore
-  const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG2);
+  const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
         title="woozeee"
         navigation={navigation}
-        icon="logout"
-        screen="search"
+        screen="toolbar"
       />
       <ScrollView
         style={{ flex: 1, paddingVertical: 10 }}
@@ -49,9 +38,6 @@ export default function Explore({ navigation }) {
         showsHorizontalScrollIndicator={false}
       >
         <View style={{ paddingBottom: 20 }}>
-          <View>
-            <TrendingPostsArea />
-          </View>
           <View>
             <UserPostsArea />
           </View>

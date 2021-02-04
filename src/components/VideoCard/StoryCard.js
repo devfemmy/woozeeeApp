@@ -56,6 +56,6 @@ export default function VideoCard(props) {
         </View>
       </TouchableOpacity>
     ),
-    [data.banner, data.tag, data.index, IS_PORTRAIT, width, extraWidth],
+    [data, IS_PORTRAIT, width, extraWidth],
   );
 }

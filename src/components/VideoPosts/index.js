@@ -139,7 +139,7 @@ export const UsersPosts = ({ info }) => useMemo(
       key={item.category}
     >
       <View style={{ paddingHorizontal: 10 }}>
-        <Text category="h6" style={{ marginBottom: 5 }}>
+        <Text category="h6" status="danger" style={{ marginBottom: 5 }}>
           {item.category}
         </Text>
         {/* prettier-ignore */}
@@ -197,69 +197,6 @@ export const ProfilePosts = ({ info }) => useMemo(
   ),
   [info],
 );
-
-// export const SocialPosts = ({ info }) => {
-//   const { height } = useWindowDimensions();
-
-//   const [activeIndex, setActiveIndex] = useState(0);
-
-//   const ITEM_HEIGHT = height / 2;
-
-//   const VIEWABILITY_CONFIG = useMemo(
-//     () => ({
-//       minimumViewTime: 100,
-//       viewAreaCoveragePercentThreshold: 50,
-//     }),
-//     [],
-//   );
-
-//   // show currently viewing video
-//   const handleViewItemsChanged = useCallback((data) => {
-//     setActiveIndex(data.changed[0].index);
-//   }, []);
-
-//   return useMemo(
-//     () => (
-//       <List
-//         style={{
-//           flex: 1,
-//           backgroundColor: 'transparent',
-//           height: ITEM_HEIGHT,
-//         }}
-//         alwaysBounceVertical
-//         showsHorizontalScrollIndicator={false}
-//         showsVerticalScrollIndicator={false}
-//         data={info}
-//         renderItem={(renderData) => (
-//           <VideoView
-//             data={renderData}
-//             activeIndex={activeIndex}
-//             viewHeight={ITEM_HEIGHT}
-//           />
-//         )}
-//         extraData={activeIndex}
-//         snapToAlignment="start"
-//         decelerationRate="fast"
-//         snapToInterval={ITEM_HEIGHT}
-//         getItemLayout={(data, index) => ({
-//           length: ITEM_HEIGHT,
-//           offset: ITEM_HEIGHT * index,
-//           index,
-//         })}
-//         initialNumToRender={4}
-//         onViewableItemsChanged={handleViewItemsChanged}
-//         viewabilityConfig={VIEWABILITY_CONFIG}
-//       />
-//     ),
-//     [
-//       info,
-//       activeIndex,
-//       handleViewItemsChanged,
-//       VIEWABILITY_CONFIG,
-//       ITEM_HEIGHT,
-//     ],
-//   );
-// };
 
 export const WoozPosts = ({ info }) => {
   const { bottom, top } = useSafeAreaInsets();
@@ -333,6 +270,69 @@ export const WoozPosts = ({ info }) => {
     ],
   );
 };
+
+// export const SocialPosts = ({ info }) => {
+//   const { height } = useWindowDimensions();
+
+//   const [activeIndex, setActiveIndex] = useState(0);
+
+//   const ITEM_HEIGHT = height / 2;
+
+//   const VIEWABILITY_CONFIG = useMemo(
+//     () => ({
+//       minimumViewTime: 100,
+//       viewAreaCoveragePercentThreshold: 50,
+//     }),
+//     [],
+//   );
+
+//   // show currently viewing video
+//   const handleViewItemsChanged = useCallback((data) => {
+//     setActiveIndex(data.changed[0].index);
+//   }, []);
+
+//   return useMemo(
+//     () => (
+//       <List
+//         style={{
+//           flex: 1,
+//           backgroundColor: 'transparent',
+//           height: ITEM_HEIGHT,
+//         }}
+//         alwaysBounceVertical
+//         showsHorizontalScrollIndicator={false}
+//         showsVerticalScrollIndicator={false}
+//         data={info}
+//         renderItem={(renderData) => (
+//           <VideoView
+//             data={renderData}
+//             activeIndex={activeIndex}
+//             viewHeight={ITEM_HEIGHT}
+//           />
+//         )}
+//         extraData={activeIndex}
+//         snapToAlignment="start"
+//         decelerationRate="fast"
+//         snapToInterval={ITEM_HEIGHT}
+//         getItemLayout={(data, index) => ({
+//           length: ITEM_HEIGHT,
+//           offset: ITEM_HEIGHT * index,
+//           index,
+//         })}
+//         initialNumToRender={4}
+//         onViewableItemsChanged={handleViewItemsChanged}
+//         viewabilityConfig={VIEWABILITY_CONFIG}
+//       />
+//     ),
+//     [
+//       info,
+//       activeIndex,
+//       handleViewItemsChanged,
+//       VIEWABILITY_CONFIG,
+//       ITEM_HEIGHT,
+//     ],
+//   );
+// };
 
 // export const AllPosts = ({ info }) => {
 //   const { width, height } = useWindowDimensions();
