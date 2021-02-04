@@ -61,7 +61,7 @@ export default function BackgroundVideo(props) {
             height: '100%',
           },
         ]}
-        onLoadStart={() => {
+        onLoad={() => {
           Animated.timing(thumbOpacity, {
             toValue: 1,
             useNativeDriver: true,
@@ -88,6 +88,13 @@ export default function BackgroundVideo(props) {
                   duration: 1000,
                 }).start();
               }}
+              // usePoster
+              // posterSource={thumbUri}
+              // posterStyle={{
+              //   resizeMode: 'cover',
+              //   height: '100%',
+              //   width: '100%',
+              // }}
               resizeMode="cover"
               isMuted={isMuted}
               shouldPlay={isFocused || false}

@@ -85,7 +85,7 @@ export default function App() {
     (async () => {
       try {
         await ScreenOrientation.lockAsync(
-          ScreenOrientation.OrientationLock.LANDSCAPE_LEFT,
+          ScreenOrientation.OrientationLock.PORTRAIT_UP,
         );
 
         setLoading(true);
