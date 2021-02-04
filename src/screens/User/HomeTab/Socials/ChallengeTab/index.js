@@ -25,7 +25,7 @@ export default function Challenge({ navigation }) {
   const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
 
   return (
-    <Layout level="4" style={{ flex: 1 }}>
+    <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
         title="woozeee"
         navigation={navigation}

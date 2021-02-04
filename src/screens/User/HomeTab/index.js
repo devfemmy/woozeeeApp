@@ -218,7 +218,7 @@ export default function Home({ navigation }) {
 
   return useMemo(
     () => (
-      <Layout level="4" style={{ flex: 1 }}>
+      <Layout level="6" style={{ flex: 1 }}>
         <OverlayLoader isLoading={isLoading} />
         <TopNavigationArea
           title="woozeee"

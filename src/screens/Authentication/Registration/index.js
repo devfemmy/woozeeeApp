@@ -32,7 +32,7 @@ export default function Register({ navigation }) {
   const routeRegisterFull = () => navigation.navigate('RegisterFull');
 
   return (
-    <Layout level="4" style={{ flex: 1 }}>
+    <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
         title={t('registration')}
         navigation={navigation}

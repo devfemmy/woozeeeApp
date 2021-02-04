@@ -30,7 +30,7 @@ export default function ViewAll({ navigation }) {
   );
 
   return (
-    <Layout level="4" style={{ flex: 1 }}>
+    <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
         title="woozeee"
         navigation={navigation}

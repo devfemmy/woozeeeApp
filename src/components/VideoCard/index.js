@@ -25,8 +25,8 @@ export default function VideoCard(props) {
         style={{
           height: 175,
           width: IS_PORTRAIT
-            ? width / (2 + extraWidth)
-            : width / (3 + extraWidth),
+            ? (width - 10) / (2 + extraWidth)
+            : width - 10 / (3 + extraWidth),
           paddingHorizontal: 5,
           position: 'relative',
           alignItems: 'center',

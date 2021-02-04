@@ -52,7 +52,7 @@ export default function TopNavigationArea(props) {
 
   const TopNavigationAuth = useMemo(
     () => (
-      <Layout level="4">
+      <Layout level="5">
         <TopNavigation
           alignment="center"
           /* eslint-disable-next-line react/jsx-props-no-spreading */
@@ -78,7 +78,7 @@ export default function TopNavigationArea(props) {
 
   const TopNavigationUser = useMemo(
     () => (
-      <Layout level="4">
+      <Layout level="5">
         <TopNavigation
           alignment="center"
           /* eslint-disable-next-line react/jsx-props-no-spreading */
@@ -101,7 +101,7 @@ export default function TopNavigationArea(props) {
 
   const TopNavigationSearch = useMemo(
     () => (
-      <Layout level="4">
+      <Layout level="5">
         <TopNavigation
           alignment="center"
           /* eslint-disable-next-line react/jsx-props-no-spreading */
@@ -122,7 +122,7 @@ export default function TopNavigationArea(props) {
 
   const TopNavigationProfile = useMemo(
     () => (
-      <Layout level="4">
+      <Layout level="5">
         <TopNavigation
           alignment="center"
           accessoryRight={(evaProps) => (
@@ -140,7 +140,7 @@ export default function TopNavigationArea(props) {
 
   const TopNavigationSocial = useMemo(
     () => (
-      <Layout level="4">
+      <Layout level="5">
         <TopNavigation
           alignment="center"
           /* eslint-disable-next-line react/jsx-props-no-spreading */

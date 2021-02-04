@@ -14,7 +14,7 @@ export default function FAQs({ navigation }) {
 
   return useMemo(
     () => (
-      <Layout level="4" style={{ flex: 1 }}>
+      <Layout level="6" style={{ flex: 1 }}>
         <TopNavigationArea
           title={t('faqs')}
           navigation={navigation}

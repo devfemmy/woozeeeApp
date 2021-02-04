@@ -12,7 +12,7 @@ export default function TabsMenu(props) {
   /* prettier-ignore */
   return useMemo(
     () => (
-      <Layout level="2" style={{ paddingHorizontal: 20, borderRadius: 5 }}>
+      <Layout level="3" style={{ paddingHorizontal: 20 }}>
         <View
           style={{
             flexDirection: 'row',

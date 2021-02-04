@@ -46,23 +46,23 @@ export default function Explore({ navigation }) {
 
   const LIST_HEIGHT = height - CONTENT_SPACE;
 
-  const ITEM_HEIGHT = LIST_HEIGHT;
+  const ITEM_HEIGHT = LIST_HEIGHT * 0.75;
 
   const t = useContext(LocaleContext);
+
+  const VIEWABILITY_CONFIG = useMemo(
+    () => ({
+      minimumViewTime: 500,
+      viewAreaCoveragePercentThreshold: 60,
+    }),
+    [],
+  );
 
   // prettier-ignore
   const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
   const SocialPostsArea = () => {
     const [activeIndex, setActiveIndex] = useState(0);
-
-    const VIEWABILITY_CONFIG = useMemo(
-      () => ({
-        minimumViewTime: 100,
-        viewAreaCoveragePercentThreshold: 60,
-      }),
-      [],
-    );
 
     const handleViewItemsChanged = useCallback((data) => {
       setActiveIndex(data.changed[0].index);
@@ -90,7 +90,7 @@ export default function Explore({ navigation }) {
       {
         getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
         getNextPageParam: (lastPage) => lastPage.nextID ?? false,
-        // keepPreviousData: true,
+        keepPreviousData: true,
         cacheTime: 1000 * 60 * 1,
       },
     );
@@ -130,17 +130,15 @@ export default function Explore({ navigation }) {
                   flex: 1,
                   backgroundColor: 'transparent',
                   height: LIST_HEIGHT,
-                  paddingBottom: 20,
-                  paddingTop: 10,
                 }}
                 alwaysBounceVertical
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={StoryPostsArea}
                 ListHeaderComponentStyle={{
-                  paddingBottom: 10,
+                  paddingVertical: 10,
                   borderBottomWidth: 1,
-                  borderColor: 'rgba(0, 0, 0, 0.05)',
+                  borderColor: 'rgba(143, 155, 179, 0.08)',
                 }}
                 data={page.pageData.data}
                 renderItem={(renderData) => (
@@ -150,13 +148,11 @@ export default function Explore({ navigation }) {
                     viewHeight={ITEM_HEIGHT}
                   />
                 )}
-                snapToAlignment="start"
                 decelerationRate="fast"
-                snapToInterval={ITEM_HEIGHT}
                 extraData={activeIndex}
                 getItemLayout={(data, index) => ({
                   length: ITEM_HEIGHT,
-                  offset: ITEM_HEIGHT * index,
+                  offset: ITEM_HEIGHT * index + (ITEM_HEIGHT / 2),
                   index,
                 })}
                 initialNumToRender={4}
@@ -174,19 +170,12 @@ export default function Explore({ navigation }) {
           retry={t('refresh')}
         />
       );
-    }, [
-      refetch,
-      status,
-      data,
-      handleViewItemsChanged,
-      activeIndex,
-      VIEWABILITY_CONFIG,
-    ]);
+    }, [refetch, status, data, handleViewItemsChanged, activeIndex]);
   };
 
   return useMemo(
     () => (
-      <Layout level="4" style={{ flex: 1 }}>
+      <Layout level="6" style={{ flex: 1 }}>
         <TopNavigationArea
           title="woozeee"
           navigation={navigation}

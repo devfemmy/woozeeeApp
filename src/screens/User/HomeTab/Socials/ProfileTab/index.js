@@ -56,7 +56,7 @@ export default function Profile({ navigation }) {
   const routeEditProfile = () => navigation.navigate('EditProfile');
 
   return (
-    <Layout level="4" style={{ flex: 1 }}>
+    <Layout level="6" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
       <TopNavigationArea
         title="woozeee"

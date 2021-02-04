@@ -143,7 +143,7 @@ export default function App() {
             <LocaleContext.Provider value={t}>
               <QueryClientProvider client={queryClient}>
                 <LoadingContext.Provider value={{ isLoading, setLoading }}>
-                  <Layout level="4" style={{ flex: 1 }}>
+                  <Layout level="5" style={{ flex: 1 }}>
                     <SafeAreaView style={{ flex: 1 }}>
                       <Router />
                     </SafeAreaView>

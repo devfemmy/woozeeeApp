@@ -1,14 +1,12 @@
 import React, { useMemo } from 'react';
 
-import { Animated, StyleSheet, Image } from 'react-native';
+import { Animated, StyleSheet, Image, View } from 'react-native';
 
 import { useIsFocused } from '@react-navigation/native';
 
 import { Video } from 'expo-av';
 
 // import { Asset } from 'expo-asset';
-
-import { Layout } from '@ui-kitten/components';
 
 const styles = StyleSheet.create({
   background: {
@@ -74,7 +72,7 @@ export default function BackgroundVideo(props) {
 
   return useMemo(
     () => (
-      <Layout level="1" style={styles.background}>
+      <View style={styles.background}>
         <VideoThumb />
         {isFocused ? (
           <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
@@ -102,7 +100,7 @@ export default function BackgroundVideo(props) {
             />
           </Animated.View>
         ) : null}
-      </Layout>
+      </View>
     ),
     [isFocused, opacity, videoUri, isMuted, style],
   );

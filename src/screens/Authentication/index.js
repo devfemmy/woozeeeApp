@@ -45,11 +45,11 @@ export default function OnboardingScreen({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const [isVolumeOpen, setVolumeOpen] = useState(true);
+  const [isMuted, setisMuted] = useState(false);
 
   const soundObj = useAudioPlayer(
     require('~assets/audio/woozeee_Instrumental.mp3'),
-    isVolumeOpen,
+    isMuted,
   );
 
   useEffect(
@@ -67,8 +67,8 @@ export default function OnboardingScreen({ navigation }) {
 
   const handleAudioMute = async () => {
     try {
-      setVolumeOpen((prevState) => !prevState);
-      await soundObj.setIsMutedAsync(isVolumeOpen);
+      setisMuted((prevState) => !prevState);
+      await soundObj.setIsMutedAsync(isMuted);
     } catch (e) {
       const msg = e;
     }
@@ -78,7 +78,7 @@ export default function OnboardingScreen({ navigation }) {
   const routeLogin = () => navigation.navigate('Login');
 
   return (
-    <Layout level="4" style={{ flex: 1 }}>
+    <Layout level="6" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
       {/* Onboarding screen background video */}
       <BackgroundVideo
@@ -100,7 +100,7 @@ export default function OnboardingScreen({ navigation }) {
                 {...evaProps}
                 height={32}
                 width={32}
-                isOpen={isVolumeOpen}
+                isOpen={!isMuted}
               />
             )}
             onPress={handleAudioMute}

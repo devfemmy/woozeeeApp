@@ -78,7 +78,7 @@ export default function Login({ navigation }) {
   const routeRecoverWithEmail = () => navigation.navigate('RecoverWithEmail');
 
   return (
-    <Layout level="4" style={{ flex: 1 }}>
+    <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
         title={t('signIn')}
         navigation={navigation}

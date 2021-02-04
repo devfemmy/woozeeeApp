@@ -85,7 +85,7 @@ export default function BottomNavigationArea(props) {
   const t = useContext(LocaleContext);
 
   return (
-    <Layout level="4">
+    <Layout level="5">
       <Divider />
       <BottomNavigation
         appearance="noIndicator"

@@ -50,11 +50,11 @@ export default function Wooz({ navigation }) {
   const WoozPostsArea = () => WithInfiniteFetch(WoozPosts, socialUrl, PLACEHOLDER_CONFIG);
 
   return (
-    <Layout level="4" style={{ flex: 1 }}>
+    <Layout level="6" style={{ flex: 1 }}>
       <View
         style={{
           flex: 1,
-          backgroundColor: '#101426',
+          backgroundColor: '#050716',
         }}
       >
         <View

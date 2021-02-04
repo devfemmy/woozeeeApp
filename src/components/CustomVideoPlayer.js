@@ -4,8 +4,6 @@ import { Video } from 'expo-av';
 
 import { useIsFocused } from '@react-navigation/native';
 
-import PlaceholderImage from '~src/constants/PlaceholderImage';
-
 export default function CustomVideoPlayer(props) {
   // eslint-disable-next-line react/prop-types
   // prettier-ignore
@@ -14,8 +12,6 @@ export default function CustomVideoPlayer(props) {
   } = props;
 
   const isFocused = useIsFocused();
-
-  const POSTER_IMAGE = PlaceholderImage();
 
   return useMemo(
     // prettier-ignore
@@ -27,21 +23,13 @@ export default function CustomVideoPlayer(props) {
         shouldCorrectPitch
         resizeMode="contain"
         usePoster
-        posterSource={POSTER_IMAGE}
+        posterSource={require('~assets/images/banner/placeholder-image.png')}
         posterStyle={{ resizeMode: 'contain', height: '100%', width: '100%' }}
         style={{ flex: 1 }}
         progressUpdateIntervalMillis={1000}
         shouldPlay={shouldPlay && shouldDisplay && isFocused}
       />
     ) : null),
-    [
-      videoUri,
-      shouldPlay,
-      shouldDisplay,
-      isPreloaded,
-      isFocused,
-      otherProps,
-      POSTER_IMAGE,
-    ],
+    [videoUri, shouldPlay, shouldDisplay, isPreloaded, isFocused, otherProps],
   );
 }

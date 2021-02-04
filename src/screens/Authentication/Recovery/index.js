@@ -24,7 +24,7 @@ export default function RecoverWithEmail({ navigation }) {
   const routeRegister = () => navigation.navigate('Register');
 
   return (
-    <Layout level="4" style={{ flex: 1 }}>
+    <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
         title={t('accountRecovery')}
         navigation={navigation}

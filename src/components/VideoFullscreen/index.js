@@ -4,7 +4,7 @@ import { View, StyleSheet, Image } from 'react-native';
 
 import { Text, Button } from '@ui-kitten/components';
 
-import CustomVideoPlayer from './CustomVideoPlayer';
+import CustomVideoPlayer from '~src/components/CustomVideoPlayer';
 
 import InteractIcon from '~src/components/InteractIcon';
 
