@@ -5,9 +5,7 @@
     "name": "woozeee",
     "slug": "woozeee",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "splash": {
       "image": "src/assets/images/drawable/splash.png",
       "resizeMode": "contain",
@@ -16,6 +14,9 @@
     "icon": "src/assets/images/drawable/icon.png",
     "android": {
       "package": "com.econnectnp.woozeee"
+    },
+    "ios": {
+      "requireFullScreen": true
     },
     "web": {
       "favicon": "src/assets/images/drawable/favicon.png"

@@ -82,7 +82,6 @@ export default function VideoView(props) {
         {isFocused ? (
           <CustomVideoPlayer
             videoUri={item.video}
-            thumbUri="thumb image uri"
             shouldPlay={shouldPlay}
             shouldDisplay={IS_ACTIVE}
             isPreloaded={IS_PRELOADED}

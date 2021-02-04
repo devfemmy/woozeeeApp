@@ -131,14 +131,13 @@ export default function VideoView(props) {
         <View
           style={{
             position: 'relative',
-            height: viewHeight - 120,
+            height: viewHeight,
             marginVertical: 5,
           }}
         >
           {isFocused ? (
             <CustomVideoPlayer
               videoUri={item.video}
-              thumbUri="thumb image uri"
               shouldPlay={shouldPlay}
               shouldDisplay={IS_ACTIVE}
               isPreloaded={IS_PRELOADED}

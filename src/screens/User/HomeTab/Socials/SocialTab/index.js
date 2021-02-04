@@ -5,7 +5,7 @@ import React, {
 
 import { View, useWindowDimensions } from 'react-native';
 
-import { Layout, Divider, List } from '@ui-kitten/components';
+import { Layout, List } from '@ui-kitten/components';
 
 import { useInfiniteQuery } from 'react-query';
 

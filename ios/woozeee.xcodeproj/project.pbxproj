@@ -7,31 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		000CFC8340764662ADA5E209 /* placeholder-dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F013A54E7A054518A26AA439 /* placeholder-dark.jpg */; };
 		02B9AB9996C7419B89BD878E /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B3953DA22B84022AB00F9A1 /* logo.png */; };
 		035A1AE7BA11404782DF4721 /* verified.png in Resources */ = {isa = PBXBuildFile; fileRef = B04030E619BE4307AA71BF52 /* verified.png */; };
 		05E1A4F6944B40C5949B60CA /* woozeee-marketplace.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A589F1A432874B9A98469E96 /* woozeee-marketplace.jpg */; };
 		0650634CA9B348CD99E7B25D /* card-wallet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 95F0501644DD495FA74ED006 /* card-wallet.jpg */; };
-		13813AC7F0FF45F89D9BBA03 /* onboarding-video-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 94E36C4DECC84159A512AA79 /* onboarding-video-thumb.jpg */; };
+		0E60E38EEEC84C8496791D9B /* verified-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 119F66F00A2E4670898539EC /* verified-2.png */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		19C6AB330D0B4BBDA1302CCA /* shome_after.svg in Resources */ = {isa = PBXBuildFile; fileRef = F08C4CADA5EC49DE83FEAD2C /* shome_after.svg */; };
+		1E055E3306E8411D8C58BAF6 /* wooz.svg in Resources */ = {isa = PBXBuildFile; fileRef = 37BCE41EE48C41F9BC8B9D5E /* wooz.svg */; };
 		22AA69E259B2407FBC9883B5 /* montserrat-semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 68F8BA2D7D664DA2A8FEB113 /* montserrat-semibold.ttf */; };
+		27EA34E1BA094888AE550370 /* placeholder-light.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 6E3BCBF6DB414AE595191FBD /* placeholder-light.jpeg */; };
 		2A47A8D99A1F46398E561288 /* user3.png in Resources */ = {isa = PBXBuildFile; fileRef = DF9EE288D1FC4D8EB0C2AB10 /* user3.png */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		4085E9B77BF342CDA9DBA361 /* user2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8926A6AAC7BF44C6B8440410 /* user2.png */; };
+		4F1B3576F0B54B4AA97305C0 /* verified-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 88A631CE73E9482F9CEB3EEF /* verified-1.png */; };
+		52F6EDF783B948E398F783AC /* super_cup_a.png in Resources */ = {isa = PBXBuildFile; fileRef = 6815C3011ED842DF83F1AAF2 /* super_cup_a.png */; };
 		553EA2C5325C40D292EB3F9B /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4028759BAE2B4D74A4A5FD0C /* icon.png */; };
+		57318C16ECF4450CB1163EF4 /* onboarding-video-thumb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 302D1D3760D94A83BAE1AB7E /* onboarding-video-thumb.jpg */; };
 		60AD1B55767B407584E01285 /* user1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C3EFE14BFF7406C9A6F108F /* user1.png */; };
 		69F21F91BF03490B9F8ECECC /* flag-ng.png in Resources */ = {isa = PBXBuildFile; fileRef = 5801CDAA1E9F4A8ABF440B57 /* flag-ng.png */; };
 		7919EA0D80994024BF18975A /* montserrat-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 473BE264CF7C4145A82E0CB9 /* montserrat-regular.ttf */; };
 		7A06F0C4871F407BA01B1569 /* woozeee-socials.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5871BC7B138F4A5B9B06420F /* woozeee-socials.jpg */; };
 		8A1DDA883CC74F93BFD80B77 /* card-insure.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C1E91A10A7548E793ABA17D /* card-insure.jpg */; };
 		8E4A70F6711647FAB6C88C0C /* favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94A42DBD1D3744C8A6A78ED5 /* favicon.png */; };
+		9077A670030A4CFB9D6D7DBB /* shome_before.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6F6C8D3A61D14B5A9DB63D1C /* shome_before.svg */; };
 		95BD105DCEE14689A3A94494 /* montserrat-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FEAB29FDF95A4DC4A7A696FB /* montserrat-light.ttf */; };
 		96905EF65AED1B983A6B3ABC /* libPods-woozeee.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-woozeee.a */; };
 		A233B71061404C84A4F97DFA /* card-rewards.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7B3B929D5805471BA1054230 /* card-rewards.jpg */; };
+		A577932881254634BB7378A7 /* sprofile_before.svg in Resources */ = {isa = PBXBuildFile; fileRef = EC1A86DFE4564100BDD50F48 /* sprofile_before.svg */; };
 		A88C723CB9864DA28BB917FB /* flag-round-ng.png in Resources */ = {isa = PBXBuildFile; fileRef = 09E7315CBDCB41AFBC86725F /* flag-round-ng.png */; };
 		AB17F3AB53254FB0A389808C /* upload.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A75B0C53DFF4087821C1CAE /* upload.png */; };
+		AB2C1FCB2DD9493F881893D5 /* sprofile_after.svg in Resources */ = {isa = PBXBuildFile; fileRef = BF5D7CA8004E410F8B14D760 /* sprofile_after.svg */; };
+		AD37949B700848A3B339EAAE /* wooz_outline.svg in Resources */ = {isa = PBXBuildFile; fileRef = A9418BBA9E114D99B2AC9A6B /* wooz_outline.svg */; };
+		ADB6801FAEEA48BEB0661364 /* super_cup.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EF4D4DC571440BA8CD9ABAE /* super_cup.png */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		C6484A0F6917419FB1280FD1 /* back3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ABE7883A9A38497DADB999D0 /* back3.jpg */; };
 		CDB6DD0085374FB6BB470C4B /* montserrat-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF5DCFEA166F4285B596FF62 /* montserrat-medium.ttf */; };
@@ -45,6 +57,7 @@
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		09E7315CBDCB41AFBC86725F /* flag-round-ng.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "flag-round-ng.png"; path = "../src/assets/images/icon/flag-round-ng.png"; sourceTree = "<group>"; };
 		0C3EFE14BFF7406C9A6F108F /* user1.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = user1.png; path = ../src/assets/images/user/user1.png; sourceTree = "<group>"; };
+		119F66F00A2E4670898539EC /* verified-2.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "verified-2.png"; path = "../src/assets/images/icon/verified-2.png"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* woozeee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = woozeee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = woozeee/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = woozeee/AppDelegate.m; sourceTree = "<group>"; };
@@ -54,33 +67,45 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = woozeee/main.m; sourceTree = "<group>"; };
 		1AB20E6A47964239BADE07EA /* back1.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = back1.jpg; path = ../src/assets/images/banner/back1.jpg; sourceTree = "<group>"; };
 		238AC8FED8794EC5984C245B /* woozeee-charity.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "woozeee-charity.jpg"; path = "../src/assets/images/banner/woozeee-charity.jpg"; sourceTree = "<group>"; };
+		302D1D3760D94A83BAE1AB7E /* onboarding-video-thumb.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "onboarding-video-thumb.jpg"; path = "../src/assets/images/banner/onboarding-video-thumb.jpg"; sourceTree = "<group>"; };
 		3422A46E6F0446DA860B26AC /* splash.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = splash.png; path = ../src/assets/images/drawable/splash.png; sourceTree = "<group>"; };
+		37BCE41EE48C41F9BC8B9D5E /* wooz.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = wooz.svg; path = ../src/assets/images/svg/wooz.svg; sourceTree = "<group>"; };
 		4028759BAE2B4D74A4A5FD0C /* icon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icon.png; path = ../src/assets/images/drawable/icon.png; sourceTree = "<group>"; };
 		473BE264CF7C4145A82E0CB9 /* montserrat-regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "montserrat-regular.ttf"; path = "../src/assets/fonts/montserrat/montserrat-regular.ttf"; sourceTree = "<group>"; };
 		5801CDAA1E9F4A8ABF440B57 /* flag-ng.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "flag-ng.png"; path = "../src/assets/images/icon/flag-ng.png"; sourceTree = "<group>"; };
 		5871BC7B138F4A5B9B06420F /* woozeee-socials.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "woozeee-socials.jpg"; path = "../src/assets/images/banner/woozeee-socials.jpg"; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-woozeee.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-woozeee.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EF4D4DC571440BA8CD9ABAE /* super_cup.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = super_cup.png; path = ../src/assets/images/icon/super_cup.png; sourceTree = "<group>"; };
+		6815C3011ED842DF83F1AAF2 /* super_cup_a.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = super_cup_a.png; path = ../src/assets/images/icon/super_cup_a.png; sourceTree = "<group>"; };
 		68F8BA2D7D664DA2A8FEB113 /* montserrat-semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "montserrat-semibold.ttf"; path = "../src/assets/fonts/montserrat/montserrat-semibold.ttf"; sourceTree = "<group>"; };
 		6B3953DA22B84022AB00F9A1 /* logo.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = logo.png; path = ../src/assets/images/drawable/logo.png; sourceTree = "<group>"; };
 		6C1E91A10A7548E793ABA17D /* card-insure.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "card-insure.jpg"; path = "../src/assets/images/card-insure.jpg"; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-woozeee.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-woozeee.debug.xcconfig"; path = "Target Support Files/Pods-woozeee/Pods-woozeee.debug.xcconfig"; sourceTree = "<group>"; };
+		6E3BCBF6DB414AE595191FBD /* placeholder-light.jpeg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "placeholder-light.jpeg"; path = "../src/assets/images/banner/placeholder-light.jpeg"; sourceTree = "<group>"; };
+		6F6C8D3A61D14B5A9DB63D1C /* shome_before.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = shome_before.svg; path = ../src/assets/images/svg/shome_before.svg; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-woozeee.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-woozeee.release.xcconfig"; path = "Target Support Files/Pods-woozeee/Pods-woozeee.release.xcconfig"; sourceTree = "<group>"; };
 		7AE99079783C470690E79863 /* back2.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = back2.jpg; path = ../src/assets/images/banner/back2.jpg; sourceTree = "<group>"; };
 		7B3B929D5805471BA1054230 /* card-rewards.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "card-rewards.jpg"; path = "../src/assets/images/card-rewards.jpg"; sourceTree = "<group>"; };
+		88A631CE73E9482F9CEB3EEF /* verified-1.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "verified-1.png"; path = "../src/assets/images/icon/verified-1.png"; sourceTree = "<group>"; };
 		8926A6AAC7BF44C6B8440410 /* user2.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = user2.png; path = ../src/assets/images/user/user2.png; sourceTree = "<group>"; };
 		94A42DBD1D3744C8A6A78ED5 /* favicon.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = favicon.png; path = ../src/assets/images/drawable/favicon.png; sourceTree = "<group>"; };
 		94E36C4DECC84159A512AA79 /* onboarding-video-thumb.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "onboarding-video-thumb.jpg"; path = "../src/assets/images/onboarding-video-thumb.jpg"; sourceTree = "<group>"; };
 		95F0501644DD495FA74ED006 /* card-wallet.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "card-wallet.jpg"; path = "../src/assets/images/card-wallet.jpg"; sourceTree = "<group>"; };
 		9A75B0C53DFF4087821C1CAE /* upload.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = upload.png; path = ../src/assets/images/icon/upload.png; sourceTree = "<group>"; };
 		A589F1A432874B9A98469E96 /* woozeee-marketplace.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "woozeee-marketplace.jpg"; path = "../src/assets/images/banner/woozeee-marketplace.jpg"; sourceTree = "<group>"; };
+		A9418BBA9E114D99B2AC9A6B /* wooz_outline.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = wooz_outline.svg; path = ../src/assets/images/svg/wooz_outline.svg; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = woozeee/SplashScreen.storyboard; sourceTree = "<group>"; };
 		ABE7883A9A38497DADB999D0 /* back3.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = back3.jpg; path = ../src/assets/images/banner/back3.jpg; sourceTree = "<group>"; };
 		B04030E619BE4307AA71BF52 /* verified.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = verified.png; path = ../src/assets/images/icon/verified.png; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		BF5D7CA8004E410F8B14D760 /* sprofile_after.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = sprofile_after.svg; path = ../src/assets/images/svg/sprofile_after.svg; sourceTree = "<group>"; };
 		CF5DCFEA166F4285B596FF62 /* montserrat-medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "montserrat-medium.ttf"; path = "../src/assets/fonts/montserrat/montserrat-medium.ttf"; sourceTree = "<group>"; };
 		DF9EE288D1FC4D8EB0C2AB10 /* user3.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = user3.png; path = ../src/assets/images/user/user3.png; sourceTree = "<group>"; };
+		EC1A86DFE4564100BDD50F48 /* sprofile_before.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = sprofile_before.svg; path = ../src/assets/images/svg/sprofile_before.svg; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F013A54E7A054518A26AA439 /* placeholder-dark.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "placeholder-dark.jpg"; path = "../src/assets/images/banner/placeholder-dark.jpg"; sourceTree = "<group>"; };
+		F08C4CADA5EC49DE83FEAD2C /* shome_after.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = shome_after.svg; path = ../src/assets/images/svg/shome_after.svg; sourceTree = "<group>"; };
 		FEAB29FDF95A4DC4A7A696FB /* montserrat-light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "montserrat-light.ttf"; path = "../src/assets/fonts/montserrat/montserrat-light.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,6 +223,19 @@
 				473BE264CF7C4145A82E0CB9 /* montserrat-regular.ttf */,
 				68F8BA2D7D664DA2A8FEB113 /* montserrat-semibold.ttf */,
 				09E7315CBDCB41AFBC86725F /* flag-round-ng.png */,
+				302D1D3760D94A83BAE1AB7E /* onboarding-video-thumb.jpg */,
+				F013A54E7A054518A26AA439 /* placeholder-dark.jpg */,
+				6E3BCBF6DB414AE595191FBD /* placeholder-light.jpeg */,
+				6815C3011ED842DF83F1AAF2 /* super_cup_a.png */,
+				5EF4D4DC571440BA8CD9ABAE /* super_cup.png */,
+				88A631CE73E9482F9CEB3EEF /* verified-1.png */,
+				119F66F00A2E4670898539EC /* verified-2.png */,
+				F08C4CADA5EC49DE83FEAD2C /* shome_after.svg */,
+				6F6C8D3A61D14B5A9DB63D1C /* shome_before.svg */,
+				BF5D7CA8004E410F8B14D760 /* sprofile_after.svg */,
+				EC1A86DFE4564100BDD50F48 /* sprofile_before.svg */,
+				A9418BBA9E114D99B2AC9A6B /* wooz_outline.svg */,
+				37BCE41EE48C41F9BC8B9D5E /* wooz.svg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -282,7 +320,6 @@
 				69F21F91BF03490B9F8ECECC /* flag-ng.png in Resources */,
 				AB17F3AB53254FB0A389808C /* upload.png in Resources */,
 				035A1AE7BA11404782DF4721 /* verified.png in Resources */,
-				13813AC7F0FF45F89D9BBA03 /* onboarding-video-thumb.jpg in Resources */,
 				60AD1B55767B407584E01285 /* user1.png in Resources */,
 				4085E9B77BF342CDA9DBA361 /* user2.png in Resources */,
 				2A47A8D99A1F46398E561288 /* user3.png in Resources */,
@@ -291,6 +328,19 @@
 				7919EA0D80994024BF18975A /* montserrat-regular.ttf in Resources */,
 				22AA69E259B2407FBC9883B5 /* montserrat-semibold.ttf in Resources */,
 				A88C723CB9864DA28BB917FB /* flag-round-ng.png in Resources */,
+				57318C16ECF4450CB1163EF4 /* onboarding-video-thumb.jpg in Resources */,
+				000CFC8340764662ADA5E209 /* placeholder-dark.jpg in Resources */,
+				27EA34E1BA094888AE550370 /* placeholder-light.jpeg in Resources */,
+				52F6EDF783B948E398F783AC /* super_cup_a.png in Resources */,
+				ADB6801FAEEA48BEB0661364 /* super_cup.png in Resources */,
+				4F1B3576F0B54B4AA97305C0 /* verified-1.png in Resources */,
+				0E60E38EEEC84C8496791D9B /* verified-2.png in Resources */,
+				19C6AB330D0B4BBDA1302CCA /* shome_after.svg in Resources */,
+				9077A670030A4CFB9D6D7DBB /* shome_before.svg in Resources */,
+				AB2C1FCB2DD9493F881893D5 /* sprofile_after.svg in Resources */,
+				A577932881254634BB7378A7 /* sprofile_before.svg in Resources */,
+				AD37949B700848A3B339EAAE /* wooz_outline.svg in Resources */,
+				1E055E3306E8411D8C58BAF6 /* wooz.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,10 +468,11 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.woozeee;
+				PRODUCT_BUNDLE_IDENTIFIER = org.econnectnp.woozeee;
 				PRODUCT_NAME = woozeee;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -442,9 +493,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.name.woozeee;
+				PRODUCT_BUNDLE_IDENTIFIER = org.econnectnp.woozeee;
 				PRODUCT_NAME = woozeee;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

@@ -10,6 +10,8 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import { StatusBar } from 'expo-status-bar';
 
+import * as ScreenOrientation from 'expo-screen-orientation';
+
 import * as eva from '@eva-design/eva';
 
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -82,6 +84,10 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
+        await ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.LANDSCAPE_LEFT,
+        );
+
         setLoading(true);
 
         const settingsError = await fetchSettings();
