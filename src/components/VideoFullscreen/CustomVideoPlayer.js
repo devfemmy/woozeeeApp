@@ -1,12 +1,6 @@
-// prettier-ignore
-import React, {
-  useMemo, useState,
-} from 'react';
+import React, { useMemo, useState } from 'react';
 
-// prettier-ignore
-import {
-  StyleSheet, View, useWindowDimensions,
-} from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 
 import { Video } from 'expo-av';
 
@@ -14,20 +8,11 @@ import { useIsFocused } from '@react-navigation/native';
 
 import Placeholders from '../Placeholders';
 
-const styles = StyleSheet.create({
-  background: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  backgroundViewWrapper: {
-    ...StyleSheet.absoluteFillObject,
-  },
-});
-
 export default function CustomVideoPlayer(props) {
   // eslint-disable-next-line react/prop-types
   // prettier-ignore
   const {
-    videoUri, style, shouldPlay, shouldDisplay, isPreloaded, ...otherProps
+    videoUri, shouldPlay, shouldDisplay, isPreloaded, ...otherProps
   } = props;
 
   const isFocused = useIsFocused();
@@ -51,7 +36,10 @@ export default function CustomVideoPlayer(props) {
 
   // prettier-ignore
   const VideoThumb = () => (!shouldDisplay || !isVideoLoaded ? (
-    <View style={{ paddingTop: 75, flex: 1 }}>
+    <View style={{
+      flex: 1, position: 'absolute', top: 0, left: 0,
+    }}
+    >
       <Placeholders maxWidth={width} maxHeight={height * 0.65} count={1} numColumns={1} />
     </View>
 
@@ -60,24 +48,21 @@ export default function CustomVideoPlayer(props) {
   return useMemo(
     // prettier-ignore
     () => ((shouldDisplay || isPreloaded) && isFocused ? (
-      <View style={styles.background}>
+      <>
         <VideoThumb />
-        <>
-          <View style={styles.backgroundViewWrapper}>
-            <Video
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              {...otherProps}
-              source={{ uri: videoUri }}
-              shouldCorrectPitch
-              onLoad={() => setVideoLoaded(true)}
-              resizeMode="contain"
-              style={[style, { flex: 1 }]}
-              progressUpdateIntervalMillis={1000}
-                // onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-              shouldPlay={shouldPlay && shouldDisplay && isFocused}
-            />
-          </View>
-          {/* <View
+        <Video
+            // eslint-disable-next-line react/jsx-props-no-spreading
+          {...otherProps}
+          source={{ uri: videoUri }}
+          shouldCorrectPitch
+          onLoad={() => setVideoLoaded(true)}
+          resizeMode="contain"
+          style={{ flex: 1 }}
+          progressUpdateIntervalMillis={1000}
+            // onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+          shouldPlay={shouldPlay && shouldDisplay && isFocused}
+        />
+        {/* <View
             style={{
               paddingHorizontal: 10,
               position: 'absolute',
@@ -102,12 +87,10 @@ export default function CustomVideoPlayer(props) {
               />
             </View>
           </View> */}
-        </>
-      </View>
+      </>
     ) : null),
     [
       videoUri,
-      style,
       shouldPlay,
       shouldDisplay,
       // handlePlaybackStatusUpdate,

@@ -301,7 +301,6 @@ export const WoozPosts = ({ info }) => {
       <List
         style={{
           backgroundColor: 'transparent',
-          position: 'absolute',
           height: ITEM_HEIGHT,
         }}
         alwaysBounceVertical

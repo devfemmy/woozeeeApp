@@ -49,6 +49,7 @@ export default function OnboardingScreen({ navigation }) {
 
   const soundObj = useAudioPlayer(
     require('~assets/audio/woozeee_Instrumental.mp3'),
+    isVolumeOpen,
   );
 
   useEffect(
@@ -77,17 +78,7 @@ export default function OnboardingScreen({ navigation }) {
   const routeLogin = () => navigation.navigate('Login');
 
   return (
-    <Layout
-      level="4"
-      style={{
-        flex: 1,
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-      }}
-    >
+    <Layout level="4" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
       {/* Onboarding screen background video */}
       <BackgroundVideo

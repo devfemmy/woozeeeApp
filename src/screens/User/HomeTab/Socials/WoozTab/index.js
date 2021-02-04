@@ -59,12 +59,12 @@ export default function Wooz({ navigation }) {
       >
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            width: '100%',
             paddingHorizontal: 10,
             paddingVertical: 20,
             zIndex: 19,
+            position: 'absolute',
+            top: 0,
+            right: 0,
           }}
         >
           <View style={styles.interactIcons}>

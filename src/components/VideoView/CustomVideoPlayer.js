@@ -10,7 +10,7 @@ export default function CustomVideoPlayer(props) {
   // eslint-disable-next-line react/prop-types
   // prettier-ignore
   const {
-    videoUri, style, shouldPlay, shouldDisplay, isPreloaded, ...otherProps
+    videoUri, shouldPlay, shouldDisplay, isPreloaded, ...otherProps
   } = props;
 
   const isFocused = useIsFocused();
@@ -29,14 +29,13 @@ export default function CustomVideoPlayer(props) {
         usePoster
         posterSource={POSTER_IMAGE}
         posterStyle={{ resizeMode: 'contain', height: '100%', width: '100%' }}
-        style={[style, { flex: 1 }]}
+        style={{ flex: 1 }}
         progressUpdateIntervalMillis={1000}
         shouldPlay={shouldPlay && shouldDisplay && isFocused}
       />
     ) : null),
     [
       videoUri,
-      style,
       shouldPlay,
       shouldDisplay,
       isPreloaded,

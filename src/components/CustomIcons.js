@@ -110,6 +110,11 @@ export const IconMoreVertical = (props) => (
   <Icon {...props} name="more-vertical-outline" />
 );
 
+export const IconMoreHorizontal = (props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <Icon {...props} name="more-horizontal-outline" />
+);
+
 export const IconQuestionMarkCircle = (props) => (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <Icon {...props} name="question-mark-circle-outline" />

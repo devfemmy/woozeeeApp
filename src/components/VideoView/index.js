@@ -8,8 +8,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { Text, Button } from '@ui-kitten/components';
 
-import { useIsFocused } from '@react-navigation/native';
-
 import CustomVideoPlayer from './CustomVideoPlayer';
 
 import InteractIcon from '~src/components/InteractIcon';
@@ -18,12 +16,11 @@ import {
   IconHeartToggle,
   IconEye,
   IconMsgSquareOutline,
+  IconMoreHorizontal,
 } from '~src/components/CustomIcons';
 
 export default function VideoView(props) {
   const { data, activeIndex, viewHeight } = props;
-
-  const isFocused = useIsFocused();
 
   const { item, index } = data;
 
@@ -49,11 +46,12 @@ export default function VideoView(props) {
         style={{
           flex: 1,
           height: viewHeight,
+          paddingVertical: 20,
+          paddingHorizontal: 10,
         }}
       >
         <View
           style={{
-            paddingHorizontal: 10,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -130,62 +128,73 @@ export default function VideoView(props) {
         </View>
         <View
           style={{
-            position: 'relative',
-            height: viewHeight,
-            marginVertical: 5,
+            flex: 1,
+            marginVertical: 10,
           }}
         >
-          {isFocused ? (
-            <CustomVideoPlayer
-              videoUri={item.video}
-              shouldPlay={shouldPlay}
-              shouldDisplay={IS_ACTIVE}
-              isPreloaded={IS_PRELOADED}
-              isLooping
-            />
-          ) : null}
+          <CustomVideoPlayer
+            videoUri={item.video}
+            shouldPlay={shouldPlay}
+            shouldDisplay={IS_ACTIVE}
+            isPreloaded={IS_PRELOADED}
+            isLooping
+          />
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <InteractIcon
-            style={{ marginHorizontal: 5 }}
-            Accessory={(evaProps) => (
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              <IconHeartToggle {...evaProps} isLiked={isLiked} />
-            )}
-            textContent={item.likes}
-            direction="row"
-            status="basic"
-            height={28}
-            width={28}
-            onPress={toggleLike}
-          />
-          <InteractIcon
-            style={{ marginHorizontal: 5 }}
-            Accessory={(evaProps) => (
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              <IconMsgSquareOutline {...evaProps} />
-            )}
-            textContent={item.comments}
-            direction="row"
-            status="basic"
-            height={28}
-            width={28}
-          />
-          <InteractIcon
-            style={{ marginHorizontal: 5 }}
-            Accessory={(evaProps) => (
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              <IconEye {...evaProps} isOpen />
-            )}
-            textContent={item.views}
-            direction="row"
-            status="basic"
-            height={28}
-            width={28}
-          />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <InteractIcon
+              style={{ marginHorizontal: 5 }}
+              Accessory={(evaProps) => (
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                <IconHeartToggle {...evaProps} isLiked={isLiked} />
+              )}
+              textContent={item.likes}
+              direction="row"
+              status="basic"
+              height={28}
+              width={28}
+              onPress={toggleLike}
+            />
+            <InteractIcon
+              style={{ marginHorizontal: 5 }}
+              Accessory={IconMsgSquareOutline}
+              textContent={item.comments}
+              direction="row"
+              status="basic"
+              height={28}
+              width={28}
+            />
+            <InteractIcon
+              style={{ marginHorizontal: 5 }}
+              Accessory={(evaProps) => (
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                <IconEye {...evaProps} isOpen />
+              )}
+              textContent={item.views}
+              direction="row"
+              status="basic"
+              height={28}
+              width={28}
+            />
+          </View>
+          <View style={{}}>
+            <InteractIcon
+              style={{ marginHorizontal: 5 }}
+              Accessory={IconMoreHorizontal}
+              status="basic"
+              height={28}
+              width={28}
+            />
+          </View>
         </View>
       </View>
     ),
-    [IS_ACTIVE, IS_PRELOADED, isFocused, viewHeight, isLiked, shouldPlay, item],
+    [IS_ACTIVE, IS_PRELOADED, viewHeight, isLiked, shouldPlay, item],
   );
 }

@@ -4,7 +4,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 import { Audio } from 'expo-av';
 
-export default function useAudioPlayer(uri) {
+export default function useAudioPlayer(uri, isMuted) {
   const isMounted = useRef(false);
 
   const soundObj = useRef(new Audio.Sound());
@@ -15,8 +15,9 @@ export default function useAudioPlayer(uri) {
     () => ({
       shouldPlay: true,
       isLooping: true,
+      isMuted,
     }),
-    [],
+    [isMuted],
   );
 
   useEffect(() => {

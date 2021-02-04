@@ -5,9 +5,11 @@ import React, {
 
 import { View, useWindowDimensions } from 'react-native';
 
-import { Layout, List } from '@ui-kitten/components';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useInfiniteQuery } from 'react-query';
+
+import { Layout, List } from '@ui-kitten/components';
 
 import Api from '~src/api';
 
@@ -38,7 +40,13 @@ const PLACEHOLDER_CONFIG1 = {
 export default function Explore({ navigation }) {
   const { width, height } = useWindowDimensions();
 
-  const ITEM_HEIGHT = height / 1.5;
+  const { bottom, top } = useSafeAreaInsets();
+
+  const CONTENT_SPACE = bottom + top + 100;
+
+  const LIST_HEIGHT = height - CONTENT_SPACE;
+
+  const ITEM_HEIGHT = LIST_HEIGHT;
 
   const t = useContext(LocaleContext);
 
@@ -116,19 +124,20 @@ export default function Explore({ navigation }) {
       ) {
         return data.pages.map((page) => (
           <React.Fragment key={page.nextID}>
-            <View style={{ paddingBottom: 20, paddingTop: 10, flex: 1 }}>
+            <View style={{ flex: 1 }}>
               <List
                 style={{
                   flex: 1,
                   backgroundColor: 'transparent',
-                  height: ITEM_HEIGHT,
+                  height: LIST_HEIGHT,
+                  paddingBottom: 20,
+                  paddingTop: 10,
                 }}
                 alwaysBounceVertical
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={StoryPostsArea}
                 ListHeaderComponentStyle={{
-                  marginBottom: 10,
                   paddingBottom: 10,
                   borderBottomWidth: 1,
                   borderColor: 'rgba(0, 0, 0, 0.05)',
@@ -141,6 +150,9 @@ export default function Explore({ navigation }) {
                     viewHeight={ITEM_HEIGHT}
                   />
                 )}
+                snapToAlignment="start"
+                decelerationRate="fast"
+                snapToInterval={ITEM_HEIGHT}
                 extraData={activeIndex}
                 getItemLayout={(data, index) => ({
                   length: ITEM_HEIGHT,
