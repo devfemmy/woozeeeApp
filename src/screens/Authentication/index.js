@@ -1,4 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react';
 
 import { View, StyleSheet, Image } from 'react-native';
 
@@ -9,7 +15,7 @@ import {
 
 import { LoadingContext, LocaleContext } from '~src/contexts';
 
-import useToast from '~src/hooks/useToast';
+import useDisableBackAction from '~src/hooks/useDisableBackAction';
 
 import OverlayLoader from '~src/components/OverlayLoader';
 
@@ -39,39 +45,65 @@ const styles = StyleSheet.create({
 
 // eslint-disable-next-line react/prop-types
 export default function OnboardingScreen({ navigation }) {
-  useToast('Click again to exit');
+  useDisableBackAction();
 
   const { isLoading } = useContext(LoadingContext);
 
   const t = useContext(LocaleContext);
 
-  const [isMuted, setisMuted] = useState(false);
+  const VolumeButton = () => {
+    const [isMuted, setIsMuted] = useState(false);
 
-  const soundObj = useAudioPlayer(
-    require('~assets/audio/woozeee_Instrumental.mp3'),
-    isMuted,
-  );
+    const soundObj = useAudioPlayer(
+      require('~assets/audio/woozeee_Instrumental.mp3'),
+      isMuted,
+    );
 
-  useEffect(
-    () => () => {
-      (async () => {
-        try {
-          await soundObj.unloadAsync();
-        } catch (e) {
-          const msg = e;
-        }
-      })();
-    },
-    [soundObj],
-  );
+    useEffect(
+      () => () => {
+        (async () => {
+          try {
+            await soundObj.unloadAsync();
+          } catch (e) {
+            const msg = e;
+          }
+        })();
+      },
+      [soundObj],
+    );
 
-  const handleAudioMute = async () => {
-    try {
-      setisMuted((prevState) => !prevState);
-      await soundObj.setIsMutedAsync(isMuted);
-    } catch (e) {
-      const msg = e;
-    }
+    const handleAudioMute = useCallback(async () => {
+      try {
+        const muteState = !isMuted;
+        await soundObj.setIsMutedAsync(muteState);
+        setIsMuted(muteState);
+      } catch (e) {
+        const msg = e;
+      }
+    }, [isMuted, soundObj]);
+
+    return useMemo(
+      () => (
+        <Button
+          appearance="ghost"
+          size="tiny"
+          accessibilityLiveRegion="polite"
+          accessibilityComponentType="button"
+          accessibilityHint="Volume Toggle"
+          accessoryLeft={(evaProps) => (
+            <IconVolume
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...evaProps}
+              height={32}
+              width={32}
+              isOpen={!isMuted}
+            />
+          )}
+          onPress={handleAudioMute}
+        />
+      ),
+      [handleAudioMute, isMuted],
+    );
   };
 
   // eslint-disable-next-line react/prop-types
@@ -88,23 +120,7 @@ export default function OnboardingScreen({ navigation }) {
       />
       <View style={styles.uiContainer}>
         <View style={{ alignSelf: 'flex-end' }}>
-          <Button
-            appearance="ghost"
-            size="tiny"
-            accessibilityLiveRegion="polite"
-            accessibilityComponentType="button"
-            accessibilityHint="Volume Toggle"
-            accessoryLeft={(evaProps) => (
-              <IconVolume
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...evaProps}
-                height={32}
-                width={32}
-                isOpen={!isMuted}
-              />
-            )}
-            onPress={handleAudioMute}
-          />
+          <VolumeButton />
         </View>
         <View style={{ alignItems: 'center', paddingBottom: 50 }}>
           <View style={{ marginBottom: 10 }}>
@@ -139,7 +155,9 @@ export default function OnboardingScreen({ navigation }) {
               accessibilityHint="Sign in or Sign up"
               onPress={routeLogin}
             >
-              <Text status="control">{` ${t('signIn')} / ${t('signUp')}`}</Text>
+              <Text status="control" category="h6">
+                {` ${t('signIn')} / ${t('signUp')}`}
+              </Text>
             </Button>
           </View>
         </View>

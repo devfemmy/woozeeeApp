@@ -71,7 +71,7 @@ export default function App() {
 
   const { fetchToken } = authOptions;
 
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const [errorMsg, setErrorMsg] = useState({
     settings: null,
@@ -88,19 +88,17 @@ export default function App() {
           ScreenOrientation.OrientationLock.PORTRAIT_UP,
         );
 
-        setLoading(true);
-
         const settingsError = await fetchSettings();
 
         const authError = await fetchToken();
 
-        if (!settingsError && !authError) return;
-
-        setErrorMsg((prevState) => ({
-          ...prevState,
-          settings: settingsError,
-          auth: authError,
-        }));
+        if (settingsError || authError) {
+          setErrorMsg((prevState) => ({
+            ...prevState,
+            settings: settingsError,
+            auth: authError,
+          }));
+        }
       } catch (e) {
         setErrorMsg((prevState) => ({ ...prevState, general: e }));
       } finally {

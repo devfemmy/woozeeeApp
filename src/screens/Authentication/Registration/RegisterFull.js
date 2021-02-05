@@ -6,7 +6,7 @@ import { Layout, Button, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from '~src/contexts';
 
-import useToast from '~src/hooks/useToast';
+import useNotifyBackAction from '~src/hooks/useNotifyBackAction';
 
 import TopNavigationArea from '~src/components/TopNavigationArea';
 
@@ -14,7 +14,7 @@ import { GeneralTextField } from '~src/components/FormFields';
 
 // eslint-disable-next-line react/prop-types
 export default function RegisterFull({ navigation }) {
-  useToast('Click again to go back');
+  useNotifyBackAction(navigation, 'Click again to go back');
 
   const [isLoading, setLoading] = useState(false);
 

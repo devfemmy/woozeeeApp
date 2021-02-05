@@ -186,10 +186,10 @@ export default function TopNavigationArea(props) {
         <TopNavigation
           alignment="center"
           /* eslint-disable-next-line react/jsx-props-no-spreading */
-          accessoryLeft={(evaProps) => (
-            /* eslint-disable-next-line react/jsx-props-no-spreading */
-            <TopNavigationMenu {...evaProps} navigation={navigation} />
-          )}
+          // accessoryLeft={(evaProps) => (
+          //   /* eslint-disable-next-line react/jsx-props-no-spreading */
+          //   <TopNavigationMenu {...evaProps} navigation={navigation} />
+          // )}
           accessoryRight={renderSearchIcon}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
@@ -198,7 +198,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style, navigation, renderSearchIcon],
+    [style, renderSearchIcon],
   );
 
   const navs = {

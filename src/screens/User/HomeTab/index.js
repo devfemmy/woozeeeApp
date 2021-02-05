@@ -19,7 +19,7 @@ import TopNavigationArea from '~src/components/TopNavigationArea';
 
 import OverlayLoader from '~src/components/OverlayLoader';
 
-import useToast from '~src/hooks/useToast';
+import useDisableBackAction from '~src/hooks/useDisableBackAction';
 
 import BackgroundVideo from '~src/components/BackgroundVideo';
 
@@ -34,14 +34,14 @@ const woozeeeCards = [
     banner: require('~assets/images/card-wallet.jpg'),
   },
   {
-    balance: '0',
+    balance: '0.00',
     banner: require('~assets/images/card-rewards.jpg'),
   },
 ];
 
 const woozeeeCategories = [
   {
-    title: 'socials',
+    title: 'social',
     banner: require('~assets/images/banner/woozeee-socials.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fsocial.mp4?alt=media&token=afc818c3-7857-4368-88b9-3d2d16baea09',
@@ -87,7 +87,7 @@ const Balance = (props) => {
         style={{
           flexDirection: 'row',
           alignItems: 'flex-end',
-          marginBottom: 5,
+          marginBottom: 10,
         }}
       >
         <Text category="p2">{decimalNum ? 'N' : null}</Text>
@@ -106,7 +106,7 @@ const Balance = (props) => {
 
 // eslint-disable-next-line react/prop-types
 export default function Home({ navigation }) {
-  useToast('Click again to exit');
+  useDisableBackAction();
 
   const { width, height } = useWindowDimensions();
 
@@ -130,7 +130,7 @@ export default function Home({ navigation }) {
       <View
         style={{
           height: CARD_HEIGHT,
-          width: IS_PORTRAIT ? width / 1.6 : width / 3,
+          width: IS_PORTRAIT ? width / 1.75 : width / 3,
           paddingHorizontal: 5,
           position: 'relative',
           alignItems: 'center',
@@ -195,7 +195,7 @@ export default function Home({ navigation }) {
 
   const RenderCategoryHeader = useMemo(
     () => (
-      <View style={{ flex: 1, paddingTop: 10, Height: 180 }}>
+      <View style={{ flex: 1, paddingTop: 15, Height: 180 }}>
         <List
           style={{ backgroundColor: 'transparent' }}
           alwaysBounceHorizontal
@@ -229,6 +229,7 @@ export default function Home({ navigation }) {
         <View style={{ flex: 1 }}>
           <List
             ListHeaderComponent={RenderCategoryHeader}
+            ListHeaderComponentStyle={{ marginBottom: 10 }}
             style={{ backgroundColor: 'transparent' }}
             horizontal={!IS_PORTRAIT}
             alwaysBounceHorizontal

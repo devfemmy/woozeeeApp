@@ -72,6 +72,7 @@ export default function VideoView(props) {
           isPreloaded={IS_PRELOADED}
           isMuted={isMuted}
           isLooping
+          resizeMode="cover"
         />
         <View style={styles.uiContainer}>
           <View

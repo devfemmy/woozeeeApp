@@ -47,7 +47,8 @@ export default function VideoView(props) {
           flex: 1,
           height: viewHeight,
           paddingVertical: 20,
-          paddingHorizontal: 10,
+          borderBottomWidth: 1,
+          borderColor: 'rgba(143, 155, 179, 0.08)',
         }}
       >
         <View
@@ -55,6 +56,7 @@ export default function VideoView(props) {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
+            paddingHorizontal: 10,
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -138,6 +140,7 @@ export default function VideoView(props) {
             shouldDisplay={IS_ACTIVE}
             isPreloaded={IS_PRELOADED}
             isLooping
+            resizeMode="cover"
           />
         </View>
         <View
