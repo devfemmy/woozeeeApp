@@ -128,7 +128,7 @@ export default function VideoView(props) {
                     marginVertical: 5,
                   }}
                 >
-                  <Button
+                  {/* <Button
                     status="danger"
                     size="tiny"
                     style={{ paddingVertical: 0, paddingHorizontal: 0 }}
@@ -136,7 +136,7 @@ export default function VideoView(props) {
                     <Text category="c2" status="control">
                       Follow
                     </Text>
-                  </Button>
+                  </Button> */}
                   <InteractIcon
                     status={shouldPlay ? 'danger' : 'success'}
                     Accessory={(evaProps) => (
