@@ -11,23 +11,23 @@ import { useInfiniteQuery } from 'react-query';
 
 import { Layout, List } from '@ui-kitten/components';
 
-import Api from '~src/api';
+import Api from 'src/api';
 
-import { LocaleContext } from '~src/contexts';
+import { LocaleContext } from 'src/contexts';
 
-import TopNavigationArea from '~src/components/TopNavigationArea';
+import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import WithDefaultFetch from '~src/components/DataFetch';
+import WithDefaultFetch from 'src/components/DataFetch';
 
-import FetchFailed from '~src/components/DataFetch/FetchFailed';
+import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
-import Placeholders from '~src/components/Placeholders';
+import Placeholders from 'src/components/Placeholders';
 
-import { StoryPosts } from '~src/components/VideoPosts';
+import { StoryPosts } from 'src/components/VideoPosts';
 
-import VideoView from '~src/components/VideoView';
+import VideoView from 'src/components/VideoView';
 
-import { trendingUrl, socialUrl } from '~src/api/dummy';
+import { trendingUrl, socialUrl } from 'src/api/dummy';
 
 const PLACEHOLDER_CONFIG1 = {
   count: 2,

@@ -13,50 +13,50 @@ import {
   Layout, Text, List,
 } from '@ui-kitten/components';
 
-import { LoadingContext, LocaleContext } from '~src/contexts';
+import { LoadingContext, LocaleContext } from 'src/contexts';
 
-import TopNavigationArea from '~src/components/TopNavigationArea';
+import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import OverlayLoader from '~src/components/OverlayLoader';
+import OverlayLoader from 'src/components/OverlayLoader';
 
-import useDisableBackAction from '~src/hooks/useDisableBackAction';
+import useDisableBackAction from 'src/hooks/useDisableBackAction';
 
-import BackgroundVideo from '~src/components/BackgroundVideo';
+import BackgroundVideo from 'src/components/BackgroundVideo';
 
 /* DATA */
 const woozeeeCards = [
   {
     balance: '150.25',
-    banner: require('~assets/images/card-insure.jpg'),
+    banner: require('assets/images/card-insure.jpg'),
   },
   {
     balance: '350,152.83',
-    banner: require('~assets/images/card-wallet.jpg'),
+    banner: require('assets/images/card-wallet.jpg'),
   },
   {
     balance: '0.00',
-    banner: require('~assets/images/card-rewards.jpg'),
+    banner: require('assets/images/card-rewards.jpg'),
   },
 ];
 
 const woozeeeCategories = [
   {
     title: 'social',
-    banner: require('~assets/images/banner/woozeee-socials.jpg'),
+    banner: require('assets/images/banner/woozeee-socials.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fsocial.mp4?alt=media&token=afc818c3-7857-4368-88b9-3d2d16baea09',
     screen: 'SocialsRoute',
   },
   {
     title: 'marketplace',
-    banner: require('~assets/images/banner/woozeee-marketplace.jpg'),
+    banner: require('assets/images/banner/woozeee-marketplace.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fmarket.mp4?alt=media&token=2709a1b4-8d3b-4d74-a364-63a276e94493',
     screen: 'SocialsRoute',
   },
   {
     title: 'charity',
-    banner: require('~assets/images/banner/woozeee-charity.jpg'),
+    banner: require('assets/images/banner/woozeee-charity.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fcharity.mp4?alt=media&token=c837385b-fef5-4df3-ad36-c36560fe0ee0',
     screen: 'SocialsRoute',
@@ -91,7 +91,7 @@ const Balance = (props) => {
         }}
       >
         <Text category="p2">{decimalNum ? 'N' : null}</Text>
-        <Text category="h6" style={{ marginHorizontal: 5 }}>
+        <Text category="h5" style={{ marginHorizontal: 5 }}>
           {wholeNum}
         </Text>
         {/* prettier-ignore */}

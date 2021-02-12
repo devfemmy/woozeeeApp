@@ -9,8 +9,10 @@
     "web": "expo start --web",
     "start": "react-native start",
     "test": "jest",
-    "android:bundle": "cd android && ./gradlew clean && ./gradlew bundleRelease",
-    "android:assemble": "cd android && ./gradlew clean && ./gradlew assembleRelease"
+    "bundle": "cd android && ./gradlew bundleRelease",
+    "assemble": "cd android &&./gradlew assembleRelease",
+    "prebundle": "cd android && ./gradlew clean",
+    "preassemble": "cd android && ./gradlew clean"
   },
   "dependencies": {
     "@eva-design/eva": "^2.0.0",

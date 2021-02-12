@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import { TopNavigationAction } from '@ui-kitten/components';
 
-import { IconBack, IconClose } from '~src/components/CustomIcons';
+import { IconBack, IconClose } from 'src/components/CustomIcons';
 
 export default function BackButton(props) {
   // eslint-disable-next-line react/prop-types

@@ -9,7 +9,7 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 
-import { LocaleContext } from '~src/contexts';
+import { LocaleContext } from 'src/contexts';
 
 import {
   IconMenu,
@@ -17,7 +17,7 @@ import {
   IconMap,
   IconRadio,
   IconHome,
-} from '~src/components/CustomIcons';
+} from 'src/components/CustomIcons';
 
 export default function TopNavigationRouteMenu(props) {
   const { navigation } = props;

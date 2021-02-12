@@ -8,16 +8,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { Text, Button } from '@ui-kitten/components';
 
-import CustomVideoPlayer from '~src/components/CustomVideoPlayer';
+import CustomVideoPlayer from 'src/components/CustomVideoPlayer';
 
-import InteractIcon from '~src/components/InteractIcon';
+import InteractIcon from 'src/components/InteractIcon';
 
 import {
   IconHeartToggle,
   IconEye,
   IconMsgSquareOutline,
   IconMoreHorizontal,
-} from '~src/components/CustomIcons';
+} from 'src/components/CustomIcons';
 
 export default function VideoView(props) {
   const { data, activeIndex, viewHeight } = props;
@@ -71,7 +71,7 @@ export default function VideoView(props) {
               }}
             >
               <Image
-                source={require('~assets/images/user/user2.png')}
+                source={require('assets/images/user/user2.png')}
                 style={{
                   height: 40,
                   width: 40,
@@ -89,7 +89,7 @@ export default function VideoView(props) {
               <Text category="label">{item.ownerLastName}</Text>
             </View>
             <Image
-              source={require('~assets/images/icon/verified-1.png')}
+              source={require('assets/images/icon/verified-1.png')}
               style={{
                 height: 15,
                 width: 15,

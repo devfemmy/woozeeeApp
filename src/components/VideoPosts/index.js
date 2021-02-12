@@ -14,17 +14,17 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { List, Text } from '@ui-kitten/components';
 
-import { LocaleContext } from '~src/contexts';
+import { LocaleContext } from 'src/contexts';
 
-import VideoCard from '~src/components/VideoCard';
+import VideoCard from 'src/components/VideoCard';
 
-import StoryCard from '~src/components/VideoCard/StoryCard';
+import StoryCard from 'src/components/VideoCard/StoryCard';
 
-import VideoFullscreen from '~src/components/VideoFullscreen';
+import VideoFullscreen from 'src/components/VideoFullscreen';
 
-// import VideoView from '~src/components/VideoView';
+// import VideoView from 'src/components/VideoView';
 
-import { IconPlusCircle } from '~src/components/CustomIcons';
+import { IconPlusCircle } from 'src/components/CustomIcons';
 
 export const TrendingPosts = ({ info }) => {
   const t = useContext(LocaleContext);
@@ -66,7 +66,7 @@ export const StoryPosts = ({ info }) => {
       <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
         <TouchableOpacity activeOpacity={0.75} style={{ position: 'relative' }}>
           <Image
-            source={require('~assets/images/user/user2.png')}
+            source={require('assets/images/user/user2.png')}
             style={{
               height: 100,
               width: 100,

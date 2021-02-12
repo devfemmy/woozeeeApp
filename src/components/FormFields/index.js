@@ -15,9 +15,9 @@ import {
   Datepicker,
 } from '@ui-kitten/components';
 
-import { verifyWithoutCaption } from '~src/constants/FormVerification';
+import { verifyWithoutCaption } from 'src/constants/FormVerification';
 
-import { IconEye, IconInputState } from '~src/components/CustomIcons';
+import { IconEye, IconInputState } from 'src/components/CustomIcons';
 
 const CAPTION_ICON = {
   basic: 'alert-circle-outline',

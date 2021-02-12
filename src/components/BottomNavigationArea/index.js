@@ -9,7 +9,7 @@ import {
   Divider,
 } from '@ui-kitten/components';
 
-import { LocaleContext } from '~src/contexts';
+import { LocaleContext } from 'src/contexts';
 
 import {
   IconHome,
@@ -46,7 +46,7 @@ const IconUpload = () => (
   >
     <TouchableOpacity onPress={null}>
       <Image
-        source={require('~assets/images/icon/upload.png')}
+        source={require('assets/images/icon/upload.png')}
         style={{
           width: 55,
           height: 55,

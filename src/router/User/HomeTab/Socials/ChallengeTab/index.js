@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import TopTabsArea from '~src/components/TopTabsArea';
+import TopTabsArea from 'src/components/TopTabsArea';
 
 // Tabs
 import ExploreTab from './ExploreTab';

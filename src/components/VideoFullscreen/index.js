@@ -4,9 +4,9 @@ import { View, StyleSheet, Image } from 'react-native';
 
 import { Text, Button } from '@ui-kitten/components';
 
-import CustomVideoPlayer from '~src/components/CustomVideoPlayer';
+import CustomVideoPlayer from 'src/components/CustomVideoPlayer';
 
-import InteractIcon from '~src/components/InteractIcon';
+import InteractIcon from 'src/components/InteractIcon';
 
 import {
   IconHeartToggle,
@@ -16,7 +16,7 @@ import {
   IconMsgSquare,
   IconPlayPause,
   IconVolume,
-} from '~src/components/CustomIcons';
+} from 'src/components/CustomIcons';
 
 const styles = StyleSheet.create({
   uiContainer: {
@@ -87,7 +87,7 @@ export default function VideoView(props) {
             <View style={{ flexDirection: 'row' }}>
               <View style={{ position: 'relative' }}>
                 <Image
-                  source={require('~assets/images/user/user2.png')}
+                  source={require('assets/images/user/user2.png')}
                   style={{
                     height: 50,
                     width: 50,
@@ -97,7 +97,7 @@ export default function VideoView(props) {
                   }}
                 />
                 <Image
-                  source={require('~assets/images/icon/verified.png')}
+                  source={require('assets/images/icon/verified.png')}
                   style={{
                     height: 15,
                     width: 15,
@@ -212,7 +212,7 @@ export default function VideoView(props) {
 
               <View style={{ alignItems: 'center' }}>
                 <Image
-                  source={require('~assets/images/drawable/icon.png')}
+                  source={require('assets/images/drawable/icon.png')}
                   style={{
                     height: 40,
                     width: 40,

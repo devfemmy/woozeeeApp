@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import BottomNavigationArea from '~src/components/BottomNavigationArea';
+import BottomNavigationArea from 'src/components/BottomNavigationArea';
 
 import HomeTab from './HomeTab';
 

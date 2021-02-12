@@ -23,7 +23,7 @@ export default function CustomVideoPlayer(props) {
         shouldCorrectPitch
         resizeMode={resizeMode}
         usePoster
-        posterSource={require('~assets/images/banner/placeholder-image.png')}
+        posterSource={require('assets/images/banner/placeholder-image.png')}
         posterStyle={{ resizeMode, height: '100%', width: '100%' }}
         style={{ flex: 1 }}
         progressUpdateIntervalMillis={1000}

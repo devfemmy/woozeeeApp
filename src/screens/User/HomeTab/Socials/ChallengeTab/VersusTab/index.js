@@ -4,13 +4,13 @@ import { View, ScrollView } from 'react-native';
 
 import { Layout } from '@ui-kitten/components';
 
-import TopNavigationArea from '~src/components/TopNavigationArea';
+import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import WithDefaultFetch from '~src/components/DataFetch';
+import WithDefaultFetch from 'src/components/DataFetch';
 
-import { UsersPosts } from '~src/components/VideoPosts';
+import { UsersPosts } from 'src/components/VideoPosts';
 
-import { challengeUrl } from '~src/api/dummy';
+import { challengeUrl } from 'src/api/dummy';
 
 const PLACEHOLDER_CONFIG = {
   count: 6,

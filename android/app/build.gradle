@@ -79,9 +79,9 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     entryFile: "index.js",
-    enableHermes: true
-//  bundleCommand: "ram-bundle",
-//  extraPackagerArgs: ["--indexed-ram-bundle"]
+    enableHermes: true,
+    // bundleCommand: "ram-bundle",
+    // extraPackagerArgs: ["--indexed-ram-bundle"]
 ]
 
 apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
@@ -174,8 +174,8 @@ android {
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
-            shrinkResources enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
 

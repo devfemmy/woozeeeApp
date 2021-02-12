@@ -4,15 +4,15 @@ import { View, StyleSheet } from 'react-native';
 
 import { Layout } from '@ui-kitten/components';
 
-import WithInfiniteFetch from '~src/components/DataFetch/WithInfiniteFetch';
+import WithInfiniteFetch from 'src/components/DataFetch/WithInfiniteFetch';
 
-import { WoozPosts } from '~src/components/VideoPosts';
+import { WoozPosts } from 'src/components/VideoPosts';
 
-import InteractIcon from '~src/components/InteractIcon';
+import InteractIcon from 'src/components/InteractIcon';
 
-import { socialUrl } from '~src/api/dummy';
+import { socialUrl } from 'src/api/dummy';
 
-import { IconVideo } from '~src/components/CustomIcons';
+import { IconVideo } from 'src/components/CustomIcons';
 
 const styles = StyleSheet.create({
   uiContainer: {

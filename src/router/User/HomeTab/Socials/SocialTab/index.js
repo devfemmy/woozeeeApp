@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Social from '~src/screens/User/HomeTab/Socials/SocialTab';
+import Social from 'src/screens/User/HomeTab/Socials/SocialTab';
 
 const { Navigator, Screen } = createStackNavigator();
 

@@ -9,17 +9,17 @@ import {
   Layout, Button, Text, Spinner,
 } from '@ui-kitten/components';
 
-import { AuthContext, LocaleContext } from '~src/contexts';
+import { AuthContext, LocaleContext } from 'src/contexts';
 
-import TopNavigationArea from '~src/components/TopNavigationArea';
+import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import { GeneralTextField } from '~src/components/FormFields';
+import { GeneralTextField } from 'src/components/FormFields';
 
 import {
   IconFacebook,
   IconGoogle,
   IconTwitter,
-} from '~src/components/CustomIcons';
+} from 'src/components/CustomIcons';
 
 // eslint-disable-next-line react/prop-types
 export default function Login({ navigation }) {

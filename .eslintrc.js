@@ -4,10 +4,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: [
-    'plugin:react/recommended',
-    'airbnb',
-  ],
+  extends: ['plugin:react/recommended', 'airbnb'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -41,8 +38,8 @@ module.exports = {
     'import/resolver': {
       alias: {
         map: [
-          ['~src', './src'],
-          ['~assets', './src/assets'],
+          ['src', './src'],
+          ['assets', './src/assets'],
         ],
         extensions: ['.ts', '.js', '.jsx', '.json'],
       },

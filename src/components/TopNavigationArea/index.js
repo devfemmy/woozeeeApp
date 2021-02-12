@@ -21,7 +21,7 @@ import {
   IconVideoOutline,
   IconBell,
   IconSearch,
-} from '~src/components/CustomIcons';
+} from 'src/components/CustomIcons';
 
 export default function TopNavigationArea(props) {
   // prettier-ignore

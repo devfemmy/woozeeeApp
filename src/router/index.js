@@ -6,23 +6,23 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import * as SplashScreen from 'expo-splash-screen';
 
-import { AuthContext } from '~src/contexts';
+import { AuthContext } from 'src/contexts';
 
 /* Screens import */
-import Onboarding from '~src/screens/Authentication';
-import Login from '~src/screens/Authentication/Login';
-import Register from '~src/screens/Authentication/Registration';
-import RegisterFull from '~src/screens/Authentication/Registration/RegisterFull';
-import VerifyWithCode from '~src/screens/Authentication/Verification';
-import RecoverWithEmail from '~src/screens/Authentication/Recovery';
+import Onboarding from 'src/screens/Authentication';
+import Login from 'src/screens/Authentication/Login';
+import Register from 'src/screens/Authentication/Registration';
+import RegisterFull from 'src/screens/Authentication/Registration/RegisterFull';
+import VerifyWithCode from 'src/screens/Authentication/Verification';
+import RecoverWithEmail from 'src/screens/Authentication/Recovery';
 
 // Common screens
-import FAQs from '~src/screens/Common/Extras/FAQs';
+import FAQs from 'src/screens/Common/Extras/FAQs';
 
 // Common User Screens
-import Settings from '~src/screens/User/Common/Settings';
-import EditProfile from '~src/screens/User/Common/EditProfile';
-import Search from '~src/screens/User/Common/Search';
+import Settings from 'src/screens/User/Common/Settings';
+import EditProfile from 'src/screens/User/Common/EditProfile';
+import Search from 'src/screens/User/Common/Search';
 
 /* Routes import */
 import UserRoute from './User';

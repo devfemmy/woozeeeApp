@@ -8,7 +8,7 @@ export default function Logo(props) {
       /* eslint-disable-next-line react/jsx-props-no-spreading */
       <View {...props}>
         <Image
-          source={require('~assets/images/drawable/logo.png')}
+          source={require('assets/images/drawable/logo.png')}
           resizeMode="contain"
           style={{ maxWidth: 150 }}
         />

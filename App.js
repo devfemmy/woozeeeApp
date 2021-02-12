@@ -26,29 +26,29 @@ import i18n from 'i18n-js';
 
 import { QueryClientProvider, QueryClient } from 'react-query';
 
-import mapping from '~src/constants/mapping.json';
+import mapping from 'src/constants/mapping.json';
 
-import customTheme from '~src/constants/customTheme.json';
+import customTheme from 'src/constants/customTheme.json';
 
-import mappingTheme from '~src/constants/mappingTheme';
+import mappingTheme from 'src/constants/mappingTheme';
 
-import usePreFetchResources from '~src/hooks/usePreFetchResources';
+import usePreFetchResources from 'src/hooks/usePreFetchResources';
 
 import {
   AppSettingsContext,
   AuthContext,
   LoadingContext,
   LocaleContext,
-} from '~src/contexts';
+} from 'src/contexts';
 
-import useAppSettings from '~src/reducers/useAppSettings';
+import useAppSettings from 'src/reducers/useAppSettings';
 
-import useAuth from '~src/reducers/useAuth';
+import useAuth from 'src/reducers/useAuth';
 
-import Router from '~src/router';
+import Router from 'src/router';
 
-import en from '~src/translations/en.json';
-import fr from '~src/translations/fr.json';
+import en from 'src/translations/en.json';
+import fr from 'src/translations/fr.json';
 
 enableScreens();
 

@@ -4,13 +4,13 @@ import { View, ScrollView } from 'react-native';
 
 import { Layout, Text } from '@ui-kitten/components';
 
-import TopNavigationArea from '~src/components/TopNavigationArea';
+import TopNavigationArea from 'src/components/TopNavigationArea';
 
-// import WithDefaultFetch from '~src/components/DataFetch';
+// import WithDefaultFetch from 'src/components/DataFetch';
 
-// import { UsersPosts } from '~src/components/VideoPosts';
+// import { UsersPosts } from 'src/components/VideoPosts';
 
-// import { challengeUrl } from '~src/api/dummy';
+// import { challengeUrl } from 'src/api/dummy';
 
 // const PLACEHOLDER_CONFIG = {
 //   count: 6,
@@ -39,8 +39,8 @@ export default function Search({ navigation }) {
         showsHorizontalScrollIndicator={false}
       >
         <View style={{ paddingBottom: 20 }}>
-          <View style={{paddingTop: 10, paddingHorizontal: 15}}>
-            <Text category="h4" appearance="hint" style={{textAlign: 'center'}}>Search available content</Text>
+          <View style={{ paddingTop: 10, paddingHorizontal: 15 }}>
+            <Text category="h4" appearance="hint" style={{ textAlign: 'center' }}>Search available content</Text>
           </View>
         </View>
       </ScrollView>

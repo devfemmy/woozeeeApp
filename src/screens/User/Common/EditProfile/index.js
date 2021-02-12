@@ -10,11 +10,11 @@ import {
   Layout, Button, Text,
 } from '@ui-kitten/components';
 
-import { LocaleContext } from '~src/contexts';
+import { LocaleContext } from 'src/contexts';
 
-import useImagePicker from '~src/hooks/useImagePicker';
+import useImagePicker from 'src/hooks/useImagePicker';
 
-import TopNavigationArea from '~src/components/TopNavigationArea';
+import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import genders from './genders.json';
 import countries from './countries.json';
@@ -25,7 +25,7 @@ import {
   GeneralRadioGroup,
   GeneralSelect,
   GeneralDatePicker,
-} from '~src/components/FormFields';
+} from 'src/components/FormFields';
 
 const GENDERS = genders;
 

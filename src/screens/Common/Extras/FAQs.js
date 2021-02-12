@@ -4,9 +4,9 @@ import { View, ScrollView } from 'react-native';
 
 import { Layout, Text } from '@ui-kitten/components';
 
-import { LocaleContext } from '~src/contexts';
+import { LocaleContext } from 'src/contexts';
 
-import TopNavigationArea from '~src/components/TopNavigationArea';
+import TopNavigationArea from 'src/components/TopNavigationArea';
 
 // eslint-disable-next-line react/prop-types
 export default function FAQs({ navigation }) {

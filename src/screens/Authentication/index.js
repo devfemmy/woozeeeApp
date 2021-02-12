@@ -13,17 +13,17 @@ import {
   Layout, Button, Text,
 } from '@ui-kitten/components';
 
-import { LoadingContext, LocaleContext } from '~src/contexts';
+import { LoadingContext, LocaleContext } from 'src/contexts';
 
-import useDisableBackAction from '~src/hooks/useDisableBackAction';
+import useDisableBackAction from 'src/hooks/useDisableBackAction';
 
-import OverlayLoader from '~src/components/OverlayLoader';
+import OverlayLoader from 'src/components/OverlayLoader';
 
-import BackgroundVideo from '~src/components/BackgroundVideo';
+import BackgroundVideo from 'src/components/BackgroundVideo';
 
-import useAudioPlayer from '~src/hooks/useAudioPlayer';
+import useAudioPlayer from 'src/hooks/useAudioPlayer';
 
-import { IconVolume } from '~src/components/CustomIcons';
+import { IconVolume } from 'src/components/CustomIcons';
 
 const styles = StyleSheet.create({
   uiContainer: {
@@ -55,7 +55,7 @@ export default function OnboardingScreen({ navigation }) {
     const [isMuted, setIsMuted] = useState(false);
 
     const soundObj = useAudioPlayer(
-      require('~assets/audio/woozeee_Instrumental.mp3'),
+      require('assets/audio/woozeee_Instrumental.mp3'),
       isMuted,
     );
 
@@ -115,7 +115,7 @@ export default function OnboardingScreen({ navigation }) {
       {/* Onboarding screen background video */}
       <BackgroundVideo
         videoUri="https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/app-assets/intro.mp4"
-        thumbUri={require('~assets/images/banner/onboarding-video-thumb.jpg')}
+        thumbUri={require('assets/images/banner/onboarding-video-thumb.jpg')}
         isMuted
       />
       <View style={styles.uiContainer}>
@@ -125,7 +125,7 @@ export default function OnboardingScreen({ navigation }) {
         <View style={{ alignItems: 'center', paddingBottom: 50 }}>
           <View style={{ marginBottom: 10 }}>
             <Image
-              source={require('~assets/images/drawable/logo.png')}
+              source={require('assets/images/drawable/logo.png')}
               resizeMode="contain"
               style={{ maxWidth: 200 }}
             />

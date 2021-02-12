@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import { TopNavigationAction } from '@ui-kitten/components';
 
-import { IconQuestionMarkCircle } from '~src/components/CustomIcons';
+import { IconQuestionMarkCircle } from 'src/components/CustomIcons';
 
 export default function HelpButton(props) {
   // eslint-disable-next-line react/prop-types

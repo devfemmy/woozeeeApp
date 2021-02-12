@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Home from '~src/screens/User/HomeTab';
+import Home from 'src/screens/User/HomeTab';
 
 const { Navigator, Screen } = createStackNavigator();
 

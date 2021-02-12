@@ -10,11 +10,11 @@ import {
   Layout, Button, Text, Spinner, Toggle, Divider, Select, SelectItem, IndexPath,
 } from '@ui-kitten/components';
 
-import { AppSettingsContext, LocaleContext } from '~src/contexts';
+import { AppSettingsContext, LocaleContext } from 'src/contexts';
 
-import TopNavigationArea from '~src/components/TopNavigationArea';
+import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import { IconMoon, IconFlag } from '~src/components/CustomIcons';
+import { IconMoon, IconFlag } from 'src/components/CustomIcons';
 
 import locales from './locales.json';
 

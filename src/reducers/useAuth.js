@@ -9,7 +9,7 @@ import {
   reducer,
   initialState,
   initializeState,
-} from '~src/store/Authentication';
+} from 'src/store/Authentication';
 
 export default function useAuth() {
   const [authState, dispatch] = useReducer(

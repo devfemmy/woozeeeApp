@@ -9,7 +9,7 @@ import {
   reducer,
   initialState,
   initializeState,
-} from '~src/store/AppSettings';
+} from 'src/store/AppSettings';
 
 export default function useAppSettings() {
   const [appState, dispatch] = useReducer(

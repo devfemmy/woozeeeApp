@@ -4,9 +4,9 @@ import { View } from 'react-native';
 
 import { Input } from '@ui-kitten/components';
 
-import { LocaleContext } from '~src/contexts';
+import { LocaleContext } from 'src/contexts';
 
-import { IconSearch } from '~src/components/CustomIcons';
+import { IconSearch } from 'src/components/CustomIcons';
 
 export default function SearchField(props) {
   const [form, setFormValues] = useState({

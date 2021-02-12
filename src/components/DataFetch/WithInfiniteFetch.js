@@ -7,13 +7,13 @@ import { useWindowDimensions } from 'react-native';
 
 import { useInfiniteQuery } from 'react-query';
 
-import Api from '~src/api';
+import Api from 'src/api';
 
-import { LocaleContext } from '~src/contexts';
+import { LocaleContext } from 'src/contexts';
 
-import Placeholders from '~src/components/Placeholders';
+import Placeholders from 'src/components/Placeholders';
 
-import TabsMenu from '~src/components/TabsMenu';
+import TabsMenu from 'src/components/TabsMenu';
 
 import FetchFailed from './FetchFailed';
 

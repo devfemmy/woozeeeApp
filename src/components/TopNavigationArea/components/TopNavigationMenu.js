@@ -9,14 +9,14 @@ import {
   MenuItem,
 } from '@ui-kitten/components';
 
-import { AuthContext, LoadingContext, LocaleContext } from '~src/contexts';
+import { AuthContext, LoadingContext, LocaleContext } from 'src/contexts';
 
 import {
   IconMoreVertical,
   IconSettings,
   IconEdit,
   IconLogout,
-} from '~src/components/CustomIcons';
+} from 'src/components/CustomIcons';
 
 export default function TopNavigationMenu(props) {
   const { navigation } = props;

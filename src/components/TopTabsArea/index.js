@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { TabBar, Tab, Layout, Divider } from '@ui-kitten/components';
 
-import { LocaleContext } from '~src/contexts';
+import { LocaleContext } from 'src/contexts';
 
 // Screens
 const tabs = {

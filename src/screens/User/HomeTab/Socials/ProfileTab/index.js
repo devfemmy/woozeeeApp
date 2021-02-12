@@ -10,19 +10,19 @@ import {
   Layout, Text, Button,
 } from '@ui-kitten/components';
 
-import { LoadingContext, LocaleContext } from '~src/contexts';
+import { LoadingContext, LocaleContext } from 'src/contexts';
 
-import TopNavigationArea from '~src/components/TopNavigationArea';
+import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import OverlayLoader from '~src/components/OverlayLoader';
+import OverlayLoader from 'src/components/OverlayLoader';
 
-import WithPaginatedFetch from '~src/components/DataFetch/WithPaginatedFetch';
+import WithPaginatedFetch from 'src/components/DataFetch/WithPaginatedFetch';
 
-import { ProfilePosts } from '~src/components/VideoPosts';
+import { ProfilePosts } from 'src/components/VideoPosts';
 
-import { IconGrid, IconBookmark, IconHeart } from '~src/components/CustomIcons';
+import { IconGrid, IconBookmark, IconHeart } from 'src/components/CustomIcons';
 
-import { trendingUrl } from '~src/api/dummy';
+import { trendingUrl } from 'src/api/dummy';
 
 const TABS = [
   { title: 'default', icon: IconGrid },
@@ -92,7 +92,7 @@ export default function Profile({ navigation }) {
             >
               <View style={{ position: 'relative' }}>
                 <Image
-                  source={require('~assets/images/user/user2.png')}
+                  source={require('assets/images/user/user2.png')}
                   style={{
                     height: 100,
                     width: 100,
@@ -102,7 +102,7 @@ export default function Profile({ navigation }) {
                   }}
                 />
                 <Image
-                  source={require('~assets/images/icon/verified.png')}
+                  source={require('assets/images/icon/verified.png')}
                   style={{
                     height: 20,
                     width: 20,
