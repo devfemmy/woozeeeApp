@@ -4,25 +4,27 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import BottomNavigationArea from 'src/components/BottomNavigationArea';
 
+// Screens
+import Social from 'src/screens/User/HomeTab/Socials/SocialTab';
+import Wooz from 'src/screens/User/HomeTab/Socials/WoozTab';
+import Profile from 'src/screens/User/HomeTab/Socials/ProfileTab';
+
 // Tabs
-import SocialTab from './SocialTab';
-import WoozTab from './WoozTab';
 import ChallengeTab from './ChallengeTab';
-import ProfileTab from './ProfileTab';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-export default function SocialsRoute() {
+export default function SocialRoute() {
   return (
     <Navigator
-      detachInactiveScreens /* eslint-disable-next-line react/jsx-props-no-spreading */
+      detachInactiveScreens
       tabBar={(props) => <BottomNavigationArea {...props} page="social" />}
     >
-      <Screen name="SocialTab" component={SocialTab} />
-      <Screen name="WoozTab" component={WoozTab} />
-      <Screen name="UploadVideo" component={SocialTab} />
+      <Screen name="SocialTab" component={Social} />
+      <Screen name="WoozTab" component={Wooz} />
+      <Screen name="UploadVideo" component={Social} />
       <Screen name="ChallengeTab" component={ChallengeTab} />
-      <Screen name="ProfileTab" component={ProfileTab} />
+      <Screen name="ProfileTab" component={Profile} />
     </Navigator>
   );
 }

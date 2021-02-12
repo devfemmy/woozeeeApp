@@ -4,20 +4,19 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import TopTabsArea from 'src/components/TopTabsArea';
 
-// Tabs
-import ExploreTab from './ExploreTab';
-import VersusTab from './VersusTab';
+import Versus from 'src/screens/User/HomeTab/Socials/ChallengeTab/VersusTab';
+import Explore from 'src/screens/User/HomeTab/Socials/ChallengeTab/ExploreTab';
 
 const { Navigator, Screen } = createMaterialTopTabNavigator();
 
 export default function ChallengeRoute() {
   return (
     <Navigator
-      detachInactiveScreens /* eslint-disable-next-line react/jsx-props-no-spreading */
+      detachInactiveScreens
       tabBar={(props) => <TopTabsArea {...props} page="challenge" />}
     >
-      <Screen name="VersusTab" component={VersusTab} />
-      <Screen name="ExploreTab" component={ExploreTab} />
+      <Screen name="VersusTab" component={Versus} />
+      <Screen name="ExploreTab" component={Explore} />
     </Navigator>
   );
 }

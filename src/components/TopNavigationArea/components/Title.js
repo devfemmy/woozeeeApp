@@ -7,7 +7,6 @@ export default function Title(props) {
 
   return useMemo(
     () => (
-      /* eslint-disable-next-line react/jsx-props-no-spreading */
       <Text category="h6" {...otherProps}>
         {title}
       </Text>

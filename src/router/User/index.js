@@ -4,20 +4,20 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import BottomNavigationArea from 'src/components/BottomNavigationArea';
 
-import HomeTab from './HomeTab';
+import Home from 'src/screens/User/HomeTab';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export default function UserRoute() {
   return (
     <Navigator
-      detachInactiveScreens /* eslint-disable-next-line react/jsx-props-no-spreading */
+      detachInactiveScreens
       tabBar={(props) => <BottomNavigationArea {...props} page="user" />}
     >
-      <Screen name="HomeTab" component={HomeTab} />
-      <Screen name="MyWalletTab" component={HomeTab} />
-      <Screen name="BillPayTab" component={HomeTab} />
-      <Screen name="MyActivitiesTab" component={HomeTab} />
+      <Screen name="HomeTab" component={Home} />
+      <Screen name="MyWalletTab" component={Home} />
+      <Screen name="BillPayTab" component={Home} />
+      <Screen name="MyActivitiesTab" component={Home} />
     </Navigator>
   );
 }
