@@ -4,19 +4,6 @@ import { Image } from 'react-native';
 
 import { Icon } from '@ui-kitten/components';
 
-const IconFromImg = (props) => {
-  const { width, height, src } = props;
-
-  return (
-    <Image
-      {...props}
-      source={src}
-      resizeMode="contain"
-      style={{ width: width || 32, height: height || 32 }}
-    />
-  );
-};
-
 export const IconEye = (props) => {
   const { isOpen, ...otherProps } = props;
   return (
@@ -178,12 +165,179 @@ export const IconTwitter = (props) => (
 );
 
 export const IconCFlag = (props) => {
-  const { width, height } = props;
+  const { width, height, ...otherProps } = props;
 
   return (
     <Image
-      {...props}
+      {...otherProps}
       source={require('assets/images/icon/flag-ng.png')}
+      resizeMode="contain"
+      style={{ width: width || 32, height: height || 32 }}
+    />
+  );
+};
+
+export const IconCHome = (props) => {
+  // prettier-ignore
+  const {
+    width, height, type, ...otherProps
+  } = props;
+
+  const iconType = {
+    filled: require('assets/images/icon/home.png'),
+    outline: require('assets/images/icon/home-outline.png'),
+  };
+
+  return (
+    <Image
+      {...otherProps}
+      source={iconType[type]}
+      resizeMode="contain"
+      style={{ width: width || 32, height: height || 32 }}
+    />
+  );
+};
+
+export const IconCWallet = (props) => {
+  // prettier-ignore
+  const {
+    width, height, type, ...otherProps
+  } = props;
+
+  const iconType = {
+    filled: require('assets/images/icon/wallet.png'),
+    outline: require('assets/images/icon/wallet-outline.png'),
+  };
+
+  return (
+    <Image
+      {...otherProps}
+      source={iconType[type]}
+      resizeMode="contain"
+      style={{ width: width || 32, height: height || 32 }}
+    />
+  );
+};
+export const IconCList = (props) => {
+  // prettier-ignore
+  const {
+    width, height, type, ...otherProps
+  } = props;
+
+  const iconType = {
+    filled: require('assets/images/icon/list.png'),
+    outline: require('assets/images/icon/list-outline.png'),
+  };
+
+  return (
+    <Image
+      {...otherProps}
+      source={iconType[type]}
+      resizeMode="contain"
+      style={{ width: width || 32, height: height || 32 }}
+    />
+  );
+};
+
+export const IconCClock = (props) => {
+  // prettier-ignore
+  const {
+    width, height, type, ...otherProps
+  } = props;
+
+  const iconType = {
+    filled: require('assets/images/icon/clock.png'),
+    outline: require('assets/images/icon/clock-outline.png'),
+  };
+
+  return (
+    <Image
+      {...otherProps}
+      source={iconType[type]}
+      resizeMode="contain"
+      style={{ width: width || 32, height: height || 32 }}
+    />
+  );
+};
+
+export const IconCSocial = (props) => {
+  // prettier-ignore
+  const {
+    width, height, type, ...otherProps
+  } = props;
+
+  const iconType = {
+    filled: require('assets/images/icon/social.png'),
+    outline: require('assets/images/icon/social-outline.png'),
+  };
+
+  return (
+    <Image
+      {...otherProps}
+      source={iconType[type]}
+      resizeMode="contain"
+      style={{ width: width || 32, height: height || 32 }}
+    />
+  );
+};
+
+export const IconCWooz = (props) => {
+  // prettier-ignore
+  const {
+    width, height, type, ...otherProps
+  } = props;
+
+  const iconType = {
+    filled: require('assets/images/icon/wooz.png'),
+    outline: require('assets/images/icon/wooz-outline.png'),
+  };
+
+  return (
+    <Image
+      {...otherProps}
+      source={iconType[type]}
+      resizeMode="contain"
+      style={{ width: width || 32, height: height || 32 }}
+    />
+  );
+};
+
+export const IconCCup = (props) => {
+  // prettier-ignore
+  const {
+    width, height, type, ...otherProps
+  } = props;
+
+  const iconType = {
+    filled: require('assets/images/icon/supercup.png'),
+    outline: require('assets/images/icon/supercup-outline.png'),
+  };
+
+  return (
+    <Image
+      {...otherProps}
+      source={iconType[type]}
+      resizeMode="contain"
+      style={{ width: width || 32, height: height || 32 }}
+    />
+  );
+};
+
+export const IconCUser = (props) => {
+  // prettier-ignore
+  const {
+    width, height, type, ...otherProps
+  } = props;
+
+  const iconType = {
+    filled: require('assets/images/icon/user.png'),
+    outline: require('assets/images/icon/user-outline.png'),
+  };
+
+  return (
+    <Image
+      {...otherProps}
+      source={iconType[type]}
       resizeMode="contain"
       style={{ width: width || 32, height: height || 32 }}
     />

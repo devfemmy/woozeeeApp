@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useState, useContext, useMemo, useCallback,
+  useState, useContext, useCallback,
 } from 'react';
 
 import { View, ScrollView } from 'react-native';

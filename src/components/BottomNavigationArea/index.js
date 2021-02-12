@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 
 import { Image, TouchableOpacity } from 'react-native';
 
@@ -12,14 +12,14 @@ import {
 import { LocaleContext } from 'src/contexts';
 
 import {
-  IconHome,
-  IconCreditCard,
-  IconCalendar,
-  IconClock,
-  IconPerson,
-  IconArrowHeadUp,
-  IconShake,
-  IconMic,
+  IconCHome,
+  IconCWallet,
+  IconCList,
+  IconCClock,
+  IconCUser,
+  IconCWooz,
+  IconCSocial,
+  IconCCup,
 } from '../CustomIcons';
 
 const IconUpload = () => (
@@ -61,17 +61,17 @@ const IconUpload = () => (
 // Screens
 const tabs = {
   user: {
-    home: IconHome,
-    wallet: IconCreditCard,
-    billPay: IconCalendar,
-    activities: IconClock,
+    home: IconCHome,
+    wallet: IconCWallet,
+    billPay: IconCList,
+    activities: IconCClock,
   },
   social: {
-    social: IconShake,
-    wooz: IconArrowHeadUp,
+    social: IconCSocial,
+    wooz: IconCWooz,
     upload: IconUpload,
-    challenge: IconMic,
-    profile: IconPerson,
+    challenge: IconCCup,
+    profile: IconCUser,
   },
 };
 
@@ -83,6 +83,18 @@ export default function BottomNavigationArea(props) {
 
   const t = useContext(LocaleContext);
 
+  const renderIcon = useCallback(
+    (Icon, otherProps, active) => (
+      <Icon
+        {...otherProps}
+        width={24}
+        height={24}
+        type={active ? 'filled' : 'outline'}
+      />
+    ),
+    [],
+  );
+
   return (
     <Layout level="5">
       <Divider />
@@ -92,10 +104,10 @@ export default function BottomNavigationArea(props) {
         selectedIndex={state.index}
         onSelect={(index) => navigation.navigate(state.routeNames[index])}
       >
-        {Object.entries(tabs[page]).map(([title, icon]) => (
+        {Object.entries(tabs[page]).map(([title, icon], id) => (
           <BottomNavigationTab
             title={title === 'upload' ? null : t(title)}
-            icon={icon}
+            icon={(evaProps) => renderIcon(icon, evaProps, state.index === id)}
             key={title}
           />
         ))}

@@ -63,8 +63,8 @@
                 "iconTintColor": "text-primary-hover-color"
               },
               "selected": {
-                "textColor": "text-primary-color",
-                "iconTintColor": "text-primary-color"
+                "textColor": "text-basic-color",
+                "iconTintColor": "text-basic-color"
               }
             }
           }
