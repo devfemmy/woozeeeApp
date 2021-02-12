@@ -19,7 +19,7 @@ import {
   IconHome,
 } from 'src/components/CustomIcons';
 
-export default function TopNavigationRouteMenu(props) {
+export default function TopNavigationUserMenu(props) {
   const { navigation } = props;
 
   const t = useContext(LocaleContext);

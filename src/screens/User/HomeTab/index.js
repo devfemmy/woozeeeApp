@@ -117,7 +117,7 @@ export default function Home({ navigation }) {
 
   const { isLoading } = useContext(LoadingContext);
 
-  const routeSocialRoute = useCallback((route) => navigation.navigate(route), [
+  const routeSocialRoute = useCallback((route) => navigation.replace(route), [
     navigation,
   ]);
 

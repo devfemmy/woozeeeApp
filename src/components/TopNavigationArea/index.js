@@ -21,7 +21,7 @@ import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
 import TopNavigationMenu from './components/TopNavigationMenu';
-import TopNavigationRouteMenu from './components/TopNavigationRouteMenu';
+import TopNavigationUserMenu from './components/TopNavigationUserMenu';
 
 export default function TopNavigationArea(props) {
   // prettier-ignore
@@ -151,7 +151,7 @@ export default function TopNavigationArea(props) {
           alignment="center"
           title={(evaProps) => <Logo {...evaProps} />}
           accessoryLeft={(evaProps) => (
-            <TopNavigationRouteMenu {...evaProps} navigation={navigation} />
+            <TopNavigationUserMenu {...evaProps} navigation={navigation} />
           )}
           accessoryRight={renderToolsOptions}
           accessibilityLiveRegion="polite"

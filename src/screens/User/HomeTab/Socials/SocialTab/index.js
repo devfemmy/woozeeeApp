@@ -15,6 +15,8 @@ import Api from 'src/api';
 
 import { LocaleContext } from 'src/contexts';
 
+import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
+
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import WithDefaultFetch from 'src/components/DataFetch';
@@ -37,6 +39,8 @@ const PLACEHOLDER_CONFIG1 = {
 };
 
 export default function Explore({ navigation }) {
+  useDisableAndroidExit();
+
   const { width, height } = useWindowDimensions();
 
   const { bottom, top } = useSafeAreaInsets();
