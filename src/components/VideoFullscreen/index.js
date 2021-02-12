@@ -63,6 +63,7 @@ export default function VideoView(props) {
         style={{
           flex: 1,
           height: viewHeight,
+          paddingBottom: 36,
         }}
       >
         <CustomVideoPlayer
@@ -72,7 +73,7 @@ export default function VideoView(props) {
           isPreloaded={IS_PRELOADED}
           isMuted={isMuted}
           isLooping
-          resizeMode="cover"
+          resizeMode="contain"
         />
         <View style={styles.uiContainer}>
           <View
@@ -82,6 +83,7 @@ export default function VideoView(props) {
               alignItems: 'flex-end',
               width: '100%',
               paddingHorizontal: 10,
+              paddingBottom: 56,
             }}
           >
             <View style={{ flexDirection: 'row' }}>

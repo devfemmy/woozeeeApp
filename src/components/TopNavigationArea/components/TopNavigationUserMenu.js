@@ -15,8 +15,8 @@ import {
   IconMenu,
   IconGift,
   IconMap,
-  IconRadio,
-  IconHome,
+  IconCWooz,
+  IconCHome,
 } from 'src/components/CustomIcons';
 
 export default function TopNavigationUserMenu(props) {
@@ -67,17 +67,17 @@ export default function TopNavigationUserMenu(props) {
         accessibilityHint="Extras"
       >
         <MenuItem
-          accessoryLeft={IconHome}
+          accessoryLeft={IconCHome}
           title={t('home')}
           onPress={routeHome}
         />
         <MenuItem
-          accessoryLeft={IconRadio}
+          accessoryLeft={IconCWooz}
           title={t('social')}
           onPress={routeSocial}
         />
-        <MenuItem accessoryLeft={IconMap} title={t('marketplace')} />
-        <MenuItem accessoryLeft={IconGift} title={t('charity')} />
+        {/* <MenuItem accessoryLeft={IconMap} title={t('marketplace')} />
+        <MenuItem accessoryLeft={IconGift} title={t('charity')} /> */}
       </OverflowMenu>
     ),
     [t, NavigationAnchor, isNavigationMenuOpen, routeHome, routeSocial],

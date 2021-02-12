@@ -205,7 +205,7 @@ export const WoozPosts = ({ info }) => {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const CONTENT_SPACE = bottom + top + 56;
+  const CONTENT_SPACE = bottom + top;
 
   const ITEM_HEIGHT = height - CONTENT_SPACE;
 

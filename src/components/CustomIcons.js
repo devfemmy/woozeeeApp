@@ -172,7 +172,7 @@ export const IconCFlag = (props) => {
       {...otherProps}
       source={require('assets/images/icon/flag-ng.png')}
       resizeMode="contain"
-      style={{ width: width || 32, height: height || 32 }}
+      style={{ width: width || 28, height: height || 28 }}
     />
   );
 };
@@ -183,6 +183,8 @@ export const IconCHome = (props) => {
     width, height, type, ...otherProps
   } = props;
 
+  const defultType = type ?? 'outline';
+
   const iconType = {
     filled: require('assets/images/icon/home.png'),
     outline: require('assets/images/icon/home-outline.png'),
@@ -191,9 +193,9 @@ export const IconCHome = (props) => {
   return (
     <Image
       {...otherProps}
-      source={iconType[type]}
+      source={iconType[defultType]}
       resizeMode="contain"
-      style={{ width: width || 32, height: height || 32 }}
+      style={{ width: width || 20, height: height || 20 }}
     />
   );
 };
@@ -204,6 +206,8 @@ export const IconCWallet = (props) => {
     width, height, type, ...otherProps
   } = props;
 
+  const defultType = type ?? 'outline';
+
   const iconType = {
     filled: require('assets/images/icon/wallet.png'),
     outline: require('assets/images/icon/wallet-outline.png'),
@@ -212,9 +216,9 @@ export const IconCWallet = (props) => {
   return (
     <Image
       {...otherProps}
-      source={iconType[type]}
+      source={iconType[defultType]}
       resizeMode="contain"
-      style={{ width: width || 32, height: height || 32 }}
+      style={{ width: width || 20, height: height || 20 }}
     />
   );
 };
@@ -224,6 +228,8 @@ export const IconCList = (props) => {
     width, height, type, ...otherProps
   } = props;
 
+  const defultType = type ?? 'outline';
+
   const iconType = {
     filled: require('assets/images/icon/list.png'),
     outline: require('assets/images/icon/list-outline.png'),
@@ -232,9 +238,9 @@ export const IconCList = (props) => {
   return (
     <Image
       {...otherProps}
-      source={iconType[type]}
+      source={iconType[defultType]}
       resizeMode="contain"
-      style={{ width: width || 32, height: height || 32 }}
+      style={{ width: width || 20, height: height || 20 }}
     />
   );
 };
@@ -245,6 +251,8 @@ export const IconCClock = (props) => {
     width, height, type, ...otherProps
   } = props;
 
+  const defultType = type ?? 'outline';
+
   const iconType = {
     filled: require('assets/images/icon/clock.png'),
     outline: require('assets/images/icon/clock-outline.png'),
@@ -253,9 +261,9 @@ export const IconCClock = (props) => {
   return (
     <Image
       {...otherProps}
-      source={iconType[type]}
+      source={iconType[defultType]}
       resizeMode="contain"
-      style={{ width: width || 32, height: height || 32 }}
+      style={{ width: width || 20, height: height || 20 }}
     />
   );
 };
@@ -266,6 +274,8 @@ export const IconCSocial = (props) => {
     width, height, type, ...otherProps
   } = props;
 
+  const defultType = type ?? 'outline';
+
   const iconType = {
     filled: require('assets/images/icon/social.png'),
     outline: require('assets/images/icon/social-outline.png'),
@@ -274,9 +284,9 @@ export const IconCSocial = (props) => {
   return (
     <Image
       {...otherProps}
-      source={iconType[type]}
+      source={iconType[defultType]}
       resizeMode="contain"
-      style={{ width: width || 32, height: height || 32 }}
+      style={{ width: width || 20, height: height || 20 }}
     />
   );
 };
@@ -287,6 +297,8 @@ export const IconCWooz = (props) => {
     width, height, type, ...otherProps
   } = props;
 
+  const defultType = type ?? 'outline';
+
   const iconType = {
     filled: require('assets/images/icon/wooz.png'),
     outline: require('assets/images/icon/wooz-outline.png'),
@@ -295,9 +307,9 @@ export const IconCWooz = (props) => {
   return (
     <Image
       {...otherProps}
-      source={iconType[type]}
+      source={iconType[defultType]}
       resizeMode="contain"
-      style={{ width: width || 32, height: height || 32 }}
+      style={{ width: width || 20, height: height || 20 }}
     />
   );
 };
@@ -308,6 +320,8 @@ export const IconCCup = (props) => {
     width, height, type, ...otherProps
   } = props;
 
+  const defultType = type ?? 'outline';
+
   const iconType = {
     filled: require('assets/images/icon/supercup.png'),
     outline: require('assets/images/icon/supercup-outline.png'),
@@ -316,9 +330,9 @@ export const IconCCup = (props) => {
   return (
     <Image
       {...otherProps}
-      source={iconType[type]}
+      source={iconType[defultType]}
       resizeMode="contain"
-      style={{ width: width || 32, height: height || 32 }}
+      style={{ width: width || 20, height: height || 20 }}
     />
   );
 };
@@ -329,6 +343,8 @@ export const IconCUser = (props) => {
     width, height, type, ...otherProps
   } = props;
 
+  const defultType = type ?? 'outline';
+
   const iconType = {
     filled: require('assets/images/icon/user.png'),
     outline: require('assets/images/icon/user-outline.png'),
@@ -337,9 +353,9 @@ export const IconCUser = (props) => {
   return (
     <Image
       {...otherProps}
-      source={iconType[type]}
+      source={iconType[defultType]}
       resizeMode="contain"
-      style={{ width: width || 32, height: height || 32 }}
+      style={{ width: width || 20, height: height || 20 }}
     />
   );
 };

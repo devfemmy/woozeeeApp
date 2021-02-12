@@ -85,12 +85,7 @@ export default function BottomNavigationArea(props) {
 
   const renderIcon = useCallback(
     (Icon, otherProps, active) => (
-      <Icon
-        {...otherProps}
-        width={24}
-        height={24}
-        type={active ? 'filled' : 'outline'}
-      />
+      <Icon {...otherProps} type={active ? 'filled' : 'outline'} />
     ),
     [],
   );
