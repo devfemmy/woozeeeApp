@@ -141,7 +141,6 @@ export default function VideoView(props) {
                     status={shouldPlay ? 'danger' : 'success'}
                     Accessory={(evaProps) => (
                       <IconPlayPause
-                        // eslint-disable-next-line react/jsx-props-no-spreading
                         {...evaProps}
                         isPlaying={shouldPlay && IS_ACTIVE}
                       />
@@ -153,11 +152,7 @@ export default function VideoView(props) {
                   <InteractIcon
                     status="primary"
                     Accessory={(evaProps) => (
-                      <IconVolume
-                        // eslint-disable-next-line react/jsx-props-no-spreading
-                        {...evaProps}
-                        isOpen={!isMuted}
-                      />
+                      <IconVolume {...evaProps} isOpen={!isMuted} />
                     )}
                     height={20}
                     width={20}
@@ -181,7 +176,6 @@ export default function VideoView(props) {
               <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={(evaProps) => (
-                  // eslint-disable-next-line react/jsx-props-no-spreading
                   <IconHeartToggle {...evaProps} isLiked={isLiked} />
                 )}
                 textContent={item.likes}
@@ -194,10 +188,7 @@ export default function VideoView(props) {
               />
               <InteractIcon
                 style={{ marginBottom: 15 }}
-                Accessory={(evaProps) => (
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  <IconEye {...evaProps} isOpen />
-                )}
+                Accessory={(evaProps) => <IconEye {...evaProps} isOpen />}
                 textContent={item.views}
               />
               {/* <InteractIcon

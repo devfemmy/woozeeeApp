@@ -10,7 +10,6 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
-// eslint-disable-next-line react/prop-types
 export default function RecoverWithEmail({ navigation }) {
   const [isLoading, setLoading] = useState(false);
 
@@ -20,7 +19,6 @@ export default function RecoverWithEmail({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  // eslint-disable-next-line react/prop-types
   const routeRegister = () => navigation.navigate('Register');
 
   return (

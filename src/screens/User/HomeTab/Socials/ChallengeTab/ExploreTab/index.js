@@ -2,6 +2,8 @@ import React from 'react';
 
 import { View, ScrollView } from 'react-native';
 
+import useDisableAndroidBackAction from 'src/hooks/useDisableAndroidBackAction';
+
 import { Layout } from '@ui-kitten/components';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
@@ -19,8 +21,9 @@ const PLACEHOLDER_CONFIG = {
   mediaLeft: true,
 };
 
-// eslint-disable-next-line react/prop-types
 export default function Versus({ navigation }) {
+  useDisableAndroidBackAction(navigation, 'SocialRoute');
+
   // prettier-ignore
   const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
 

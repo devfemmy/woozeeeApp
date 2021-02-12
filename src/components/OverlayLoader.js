@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
 });
 
 export default function OverlayLoader(props) {
-  // eslint-disable-next-line react/prop-types
   const { isLoading } = props;
 
   return isLoading ? (

@@ -36,7 +36,6 @@ const PLACEHOLDER_CONFIG1 = {
   mediaLeft: false,
 };
 
-// eslint-disable-next-line react/prop-types
 export default function Explore({ navigation }) {
   const { width, height } = useWindowDimensions();
 

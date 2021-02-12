@@ -15,7 +15,7 @@ import {
 
 import { LoadingContext, LocaleContext } from 'src/contexts';
 
-import useDisableBackAction from 'src/hooks/useDisableBackAction';
+import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
 import OverlayLoader from 'src/components/OverlayLoader';
 
@@ -43,9 +43,8 @@ const styles = StyleSheet.create({
   },
 });
 
-// eslint-disable-next-line react/prop-types
 export default function OnboardingScreen({ navigation }) {
-  useDisableBackAction();
+  useDisableAndroidExit();
 
   const { isLoading } = useContext(LoadingContext);
 
@@ -92,7 +91,6 @@ export default function OnboardingScreen({ navigation }) {
           accessibilityHint="Volume Toggle"
           accessoryLeft={(evaProps) => (
             <IconVolume
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...evaProps}
               height={32}
               width={32}
@@ -106,7 +104,6 @@ export default function OnboardingScreen({ navigation }) {
     );
   };
 
-  // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
 
   return (

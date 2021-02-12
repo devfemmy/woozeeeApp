@@ -26,7 +26,6 @@ export default function SearchField(props) {
   return useMemo(
     () => (
       <View
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
         style={{
           width: '100%',

@@ -8,7 +8,6 @@ import { LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
-// eslint-disable-next-line react/prop-types
 export default function FAQs({ navigation }) {
   const t = useContext(LocaleContext);
 

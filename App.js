@@ -117,7 +117,6 @@ export default function App() {
     <SafeAreaProvider>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...eva}
         theme={{
           ...eva[themeMode],

@@ -12,6 +12,8 @@ import {
 
 import { LoadingContext, LocaleContext } from 'src/contexts';
 
+import useDisableAndroidBackAction from 'src/hooks/useDisableAndroidBackAction';
+
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import OverlayLoader from 'src/components/OverlayLoader';
@@ -37,8 +39,9 @@ const PLACEHOLDER_CONFIG = {
   mediaLeft: true,
 };
 
-// eslint-disable-next-line react/prop-types
 export default function Profile({ navigation }) {
+  useDisableAndroidBackAction(navigation, 'SocialRoute');
+
   const { width, height } = useWindowDimensions();
 
   const { isLoading } = useContext(LoadingContext);
@@ -52,7 +55,6 @@ export default function Profile({ navigation }) {
     WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, TABS)
   );
 
-  // eslint-disable-next-line react/prop-types
   const routeEditProfile = () => navigation.navigate('EditProfile');
 
   return (

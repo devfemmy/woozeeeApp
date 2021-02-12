@@ -16,7 +16,6 @@ import {
   IconTwitter,
 } from 'src/components/CustomIcons';
 
-// eslint-disable-next-line react/prop-types
 export default function Register({ navigation }) {
   const [isLoading, setLoading] = useState(false);
 
@@ -26,9 +25,7 @@ export default function Register({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
-  // eslint-disable-next-line react/prop-types
   const routeRegisterFull = () => navigation.navigate('RegisterFull');
 
   return (

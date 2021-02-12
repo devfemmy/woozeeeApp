@@ -39,7 +39,23 @@ export default function usePreFetchResources() {
           require('assets/images/icon/verified.png'),
           require('assets/images/icon/verified-1.png'),
           require('assets/images/icon/flag-ng.png'),
-          require('assets/images/icon/flag-round-ng.png'),
+          require('assets/images/icon/home.png'),
+          require('assets/images/icon/home-outline.png'),
+          require('assets/images/icon/wallet.png'),
+          require('assets/images/icon/wallet-outline.png'),
+          require('assets/images/icon/list.png'),
+          require('assets/images/icon/list-outline.png'),
+          require('assets/images/icon/clock.png'),
+          require('assets/images/icon/clock-outline.png'),
+          require('assets/images/icon/wallet.png'),
+          require('assets/images/icon/social.png'),
+          require('assets/images/icon/social-outline.png'),
+          require('assets/images/icon/wooz.png'),
+          require('assets/images/icon/wooz-outline.png'),
+          require('assets/images/icon/supercup.png'),
+          require('assets/images/icon/supercup-outline.png'),
+          require('assets/images/icon/user.png'),
+          require('assets/images/icon/user-outline.png'),
           require('assets/images/banner/onboarding-video-thumb.jpg'),
           require('assets/images/banner/woozeee-socials.jpg'),
           require('assets/images/banner/woozeee-marketplace.jpg'),
@@ -56,7 +72,7 @@ export default function usePreFetchResources() {
       } catch (e) {
         const err = e;
       } finally {
-        await setPreloaded(true);
+        setPreloaded(true);
       }
     })();
   }, []);

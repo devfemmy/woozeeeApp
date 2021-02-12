@@ -33,7 +33,6 @@ const COUNTRIES = countries;
 
 const STATES = states;
 
-// eslint-disable-next-line react/prop-types
 export default function EditProfile({ navigation }) {
   const [isLoading, setLoading] = useState(false);
 

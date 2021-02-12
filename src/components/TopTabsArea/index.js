@@ -15,7 +15,6 @@ const tabs = {
 export default function BottomNavigationArea(props) {
   // prettier-ignore
   const {
-  // eslint-disable-next-line react/prop-types
     navigation, state, style, page,
   } = props;
 
@@ -25,9 +24,7 @@ export default function BottomNavigationArea(props) {
     <Layout level="5">
       <TabBar
         style={[style, { backgroundColor: 'transparent' }]}
-        /* eslint-disable-next-line react/prop-types */
         selectedIndex={state.index}
-        /* eslint-disable-next-line react/prop-types */
         onSelect={(index) => navigation.navigate(state.routeNames[index])}
       >
         {Object.entries(tabs[page]).map(([title]) => (

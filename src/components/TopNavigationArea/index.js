@@ -7,6 +7,13 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 
+import {
+  IconCFlag,
+  IconVideoOutline,
+  IconBell,
+  IconSearch,
+} from 'src/components/CustomIcons';
+
 // Components import
 import BackButton from './components/BackButton';
 import HelpButton from './components/HelpButton';
@@ -15,13 +22,6 @@ import Logo from './components/Logo';
 import SearchField from './components/SearchField';
 import TopNavigationMenu from './components/TopNavigationMenu';
 import TopNavigationRouteMenu from './components/TopNavigationRouteMenu';
-
-import {
-  IconCFlag,
-  IconVideoOutline,
-  IconBell,
-  IconSearch,
-} from 'src/components/CustomIcons';
 
 export default function TopNavigationArea(props) {
   // prettier-ignore
@@ -37,14 +37,12 @@ export default function TopNavigationArea(props) {
     () => (
       <>
         <TopNavigationAction
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
           {...props}
           icon={IconVideoOutline}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Record"
         />
         <TopNavigationAction
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
           {...props}
           icon={IconBell}
           accessibilityLiveRegion="polite"
@@ -58,7 +56,6 @@ export default function TopNavigationArea(props) {
   const renderSearchIcon = useCallback(
     () => (
       <TopNavigationAction
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...props}
         icon={IconSearch}
         accessibilityLiveRegion="polite"
@@ -74,15 +71,11 @@ export default function TopNavigationArea(props) {
       <Layout level="5">
         <TopNavigation
           alignment="center"
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
           title={(evaProps) => <Title {...evaProps} title={title} />}
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
           accessoryLeft={(evaProps) => (
-            // eslint-disable-next-line react/jsx-props-no-spreading
             <BackButton {...evaProps} navigation={navigation} icon={icon} />
           )}
           accessoryRight={(evaProps) => (
-            // eslint-disable-next-line react/jsx-props-no-spreading
             <HelpButton {...evaProps} navigation={navigation} />
           )}
           accessibilityLiveRegion="polite"
@@ -100,12 +93,9 @@ export default function TopNavigationArea(props) {
       <Layout level="5">
         <TopNavigation
           alignment="center"
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
           title={(evaProps) => <Logo {...evaProps} />}
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
           accessoryLeft={IconCFlag}
           accessoryRight={(evaProps) => (
-            /* eslint-disable-next-line react/jsx-props-no-spreading */
             <TopNavigationMenu {...evaProps} navigation={navigation} />
           )}
           accessibilityLiveRegion="polite"
@@ -123,10 +113,8 @@ export default function TopNavigationArea(props) {
       <Layout level="5">
         <TopNavigation
           alignment="center"
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
           title={(evaProps) => <SearchField {...evaProps} />}
           accessoryRight={(evaProps) => (
-            /* eslint-disable-next-line react/jsx-props-no-spreading */
             <TopNavigationMenu {...evaProps} navigation={navigation} />
           )}
           accessibilityLiveRegion="polite"
@@ -145,7 +133,6 @@ export default function TopNavigationArea(props) {
         <TopNavigation
           alignment="center"
           accessoryRight={(evaProps) => (
-            /* eslint-disable-next-line react/jsx-props-no-spreading */
             <TopNavigationMenu {...evaProps} navigation={navigation} />
           )}
           accessibilityLiveRegion="polite"
@@ -162,11 +149,8 @@ export default function TopNavigationArea(props) {
       <Layout level="5">
         <TopNavigation
           alignment="center"
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
           title={(evaProps) => <Logo {...evaProps} />}
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
           accessoryLeft={(evaProps) => (
-            /* eslint-disable-next-line react/jsx-props-no-spreading */
             <TopNavigationRouteMenu {...evaProps} navigation={navigation} />
           )}
           accessoryRight={renderToolsOptions}
@@ -185,9 +169,7 @@ export default function TopNavigationArea(props) {
       <Layout level="5">
         <TopNavigation
           alignment="center"
-          /* eslint-disable-next-line react/jsx-props-no-spreading */
           // accessoryLeft={(evaProps) => (
-          //   /* eslint-disable-next-line react/jsx-props-no-spreading */
           //   <TopNavigationMenu {...evaProps} navigation={navigation} />
           // )}
           accessoryRight={renderSearchIcon}

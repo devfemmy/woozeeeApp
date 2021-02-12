@@ -116,12 +116,7 @@ export default function VideoView(props) {
             <Moment
               fromNow
               element={(momentProps) => (
-                <Text
-                  category="c1"
-                  /* eslint-disable-next-line react/jsx-props-no-spreading */
-                  {...momentProps}
-                  style={{ fontSize: 10 }}
-                />
+                <Text category="c1" {...momentProps} style={{ fontSize: 10 }} />
               )}
             >
               {item.dateAdded}
@@ -154,7 +149,6 @@ export default function VideoView(props) {
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={(evaProps) => (
-                // eslint-disable-next-line react/jsx-props-no-spreading
                 <IconHeartToggle {...evaProps} isLiked={isLiked} />
               )}
               textContent={item.likes}
@@ -175,10 +169,7 @@ export default function VideoView(props) {
             />
             <InteractIcon
               style={{ marginHorizontal: 5 }}
-              Accessory={(evaProps) => (
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                <IconEye {...evaProps} isOpen />
-              )}
+              Accessory={(evaProps) => <IconEye {...evaProps} isOpen />}
               textContent={item.views}
               direction="row"
               status="basic"

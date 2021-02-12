@@ -12,7 +12,6 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
-// eslint-disable-next-line react/prop-types
 export default function RegisterFull({ navigation }) {
   useNotifyBackAction(navigation, 'Click again to go back');
 
@@ -28,10 +27,8 @@ export default function RegisterFull({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
 
-  // eslint-disable-next-line react/prop-types
   const routeVerifyWithCode = () => navigation.navigate('VerifyWithCode');
 
   return (

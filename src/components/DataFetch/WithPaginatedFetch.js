@@ -29,6 +29,7 @@ export default function WithPaginatedFetch(
 
   const [activePage, setPage] = useState('default');
 
+  // get placeholder max height based on received props
   const getMaxHeight = useCallback(() => {
     if (placeholderProp.maxHeight <= 1) {
       return height * placeholderProp.maxHeight;

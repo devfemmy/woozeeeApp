@@ -34,20 +34,17 @@ export default function TopNavigationRouteMenu(props) {
     setNavigationMenuOpen(false);
   };
 
-  // eslint-disable-next-line react/prop-types
-  const routeHome = useCallback(() => navigation.navigate('UserRoute'), [
+  const routeHome = useCallback(() => navigation.replace('UserRoute'), [
     navigation,
   ]);
 
-  // eslint-disable-next-line react/prop-types
-  const routeSocial = useCallback(() => navigation.navigate('SocialsRoute'), [
+  const routeSocial = useCallback(() => navigation.replace('SocialRoute'), [
     navigation,
   ]);
 
   const NavigationAnchor = useCallback(
     () => (
       <TopNavigationAction
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...props}
         icon={IconMenu}
         onPress={openMenu}
@@ -76,7 +73,7 @@ export default function TopNavigationRouteMenu(props) {
         />
         <MenuItem
           accessoryLeft={IconRadio}
-          title={t('socials')}
+          title={t('social')}
           onPress={routeSocial}
         />
         <MenuItem accessoryLeft={IconMap} title={t('marketplace')} />

@@ -19,7 +19,6 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 //   mediaLeft: true,
 // };
 
-// eslint-disable-next-line react/prop-types
 export default function Search({ navigation }) {
   // prettier-ignore
   // const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);

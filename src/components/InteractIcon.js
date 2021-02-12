@@ -5,7 +5,6 @@ import { View } from 'react-native';
 import { Button, Text } from '@ui-kitten/components';
 
 export default function InteractIcon(props) {
-  // eslint-disable-next-line react/prop-types
   const {
     Accessory,
     textContent,
@@ -39,7 +38,6 @@ export default function InteractIcon(props) {
           }}
           accessoryLeft={(evaProps) => (
             <Accessory
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...evaProps}
               height={height ?? 32}
               width={width ?? 32}

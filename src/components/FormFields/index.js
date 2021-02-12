@@ -15,7 +15,7 @@ import {
   Datepicker,
 } from '@ui-kitten/components';
 
-import { verifyWithoutCaption } from 'src/constants/FormVerification';
+import { verifyWithoutCaption } from 'src/utilities/FormVerification';
 
 import { IconEye, IconInputState } from 'src/components/CustomIcons';
 
@@ -26,20 +26,12 @@ const CAPTION_ICON = {
 };
 
 const CaptionIcon = (props) => {
-  // eslint-disable-next-line react/prop-types
   const { icon, ...otherProps } = props;
 
-  return (
-    <IconInputState
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...otherProps}
-      iconType={CAPTION_ICON[icon]}
-    />
-  );
+  return <IconInputState {...otherProps} iconType={CAPTION_ICON[icon]} />;
 };
 
 const SecureToggleIcon = (props) => {
-  // eslint-disable-next-line react/prop-types
   const { isSecure, toggleSecure, ...otherProps } = props;
 
   const handlePress = () => {
@@ -95,7 +87,6 @@ export const GeneralTextField = (props) => {
   return useMemo(
     () => (
       <Input
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...otherProps}
         scrollEnabled
         accessibilityLiveRegion="polite"
@@ -118,8 +109,7 @@ export const GeneralTextField = (props) => {
           secure
             ? (evaProps) => (
               <SecureToggleIcon
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                {...evaProps}
+                              {...evaProps}
                 isSecure={isSecureEntry}
                 toggleSecure={setSecureEntry}
               />
@@ -128,8 +118,7 @@ export const GeneralTextField = (props) => {
         }
         /* prettier-ignore */
         captionIcon={
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          (evaProps) => (caption ? <CaptionIcon {...evaProps} icon={inputVal.status} /> : null)
+                (evaProps) => (caption ? <CaptionIcon {...evaProps} icon={inputVal.status} /> : null)
         }
       />
     ),
@@ -153,7 +142,6 @@ export const GeneralTextField = (props) => {
 export const GeneralRadioGroup = (props) => {
   // prettier-ignore
   const {
-  // eslint-disable-next-line react/prop-types
     label, data, type, setFormValues,
   } = props;
 
@@ -191,7 +179,6 @@ export const GeneralRadioGroup = (props) => {
 export const GeneralAutocomplete = (props) => {
   // prettier-ignore
   const {
-  // eslint-disable-next-line react/prop-types
     label, data, type, setFormValues,
   } = props;
 
@@ -205,7 +192,6 @@ export const GeneralAutocomplete = (props) => {
   const handleChange = useCallback(
     (query) => {
       setValue(query);
-      // eslint-disable-next-line react/prop-types
       setList(() => data.filter((item) => filterData(item, query)));
     },
     [data],
@@ -247,8 +233,7 @@ export const GeneralAutocomplete = (props) => {
 export const GeneralSelect = (props) => {
   // prettier-ignore
   const {
-    // eslint-disable-next-line react/prop-types
-    label, data, type, size, setFormValues,
+      label, data, type, size, setFormValues,
   } = props;
 
   const [selectedOption, setSelectedOption] = useState(new IndexPath(0));
@@ -291,8 +276,7 @@ export const GeneralSelect = (props) => {
 export const GeneralDatePicker = (props) => {
   // prettier-ignore
   const {
-    // eslint-disable-next-line react/prop-types
-    label, type, size, setFormValues,
+      label, type, size, setFormValues,
   } = props;
 
   const [selectedDate, setSelectedDate] = useState(new Date());

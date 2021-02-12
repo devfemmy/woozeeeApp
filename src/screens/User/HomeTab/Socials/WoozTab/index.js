@@ -4,6 +4,8 @@ import { View, StyleSheet } from 'react-native';
 
 import { Layout } from '@ui-kitten/components';
 
+import useDisableAndroidBackAction from 'src/hooks/useDisableAndroidBackAction';
+
 import WithInfiniteFetch from 'src/components/DataFetch/WithInfiniteFetch';
 
 import { WoozPosts } from 'src/components/VideoPosts';
@@ -44,8 +46,8 @@ const PLACEHOLDER_CONFIG = {
   mediaLeft: false,
 };
 
-// eslint-disable-next-line react/prop-types
 export default function Wooz({ navigation }) {
+  useDisableAndroidBackAction(navigation, 'SocialRoute');
   // prettier-ignore
   const WoozPostsArea = () => WithInfiniteFetch(WoozPosts, socialUrl, PLACEHOLDER_CONFIG);
 
@@ -69,13 +71,7 @@ export default function Wooz({ navigation }) {
         >
           <View style={styles.interactIcons}>
             <InteractIcon
-              Accessory={(evaProps) => (
-                <IconVideo
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  {...evaProps}
-                  isOpen
-                />
-              )}
+              Accessory={(evaProps) => <IconVideo {...evaProps} isOpen />}
             />
           </View>
         </View>

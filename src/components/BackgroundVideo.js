@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
 });
 
 export default function BackgroundVideo(props) {
-  // eslint-disable-next-line react/prop-types
   // prettier-ignore
   const {
     videoUri, thumbUri, style, isMuted,
@@ -37,7 +36,7 @@ export default function BackgroundVideo(props) {
   //     try {
   //       const [{ localUri }] = await Asset.loadAsync(videoUri);
   //
-  //       await setCachedUri(localUri);
+  //       setCachedUri(localUri);
   //     } catch (e) {
   //       const err = e;
   //     }

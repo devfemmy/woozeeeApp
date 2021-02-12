@@ -26,7 +26,7 @@ import Search from 'src/screens/User/Common/Search';
 
 /* Routes import */
 import UserRoute from './User';
-import SocialsRoute from './User/HomeTab/Socials';
+import SocialRoute from './User/HomeTab/Socials';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -45,7 +45,7 @@ export default function Router() {
 
     User: {
       UserRoute,
-      SocialsRoute,
+      SocialRoute,
       EditProfile,
       Settings,
       Search,

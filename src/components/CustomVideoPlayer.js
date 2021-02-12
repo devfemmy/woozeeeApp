@@ -5,7 +5,6 @@ import { Video } from 'expo-av';
 import { useIsFocused } from '@react-navigation/native';
 
 export default function CustomVideoPlayer(props) {
-  // eslint-disable-next-line react/prop-types
   // prettier-ignore
   const {
     videoUri, shouldPlay, shouldDisplay, isPreloaded, resizeMode, ...otherProps
@@ -17,7 +16,6 @@ export default function CustomVideoPlayer(props) {
     // prettier-ignore
     () => ((shouldDisplay || isPreloaded) && isFocused ? (
       <Video
-          // eslint-disable-next-line react/jsx-props-no-spreading
         {...otherProps}
         source={{ uri: videoUri }}
         shouldCorrectPitch

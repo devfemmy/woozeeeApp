@@ -19,7 +19,7 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import OverlayLoader from 'src/components/OverlayLoader';
 
-import useDisableBackAction from 'src/hooks/useDisableBackAction';
+import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
 import BackgroundVideo from 'src/components/BackgroundVideo';
 
@@ -45,21 +45,21 @@ const woozeeeCategories = [
     banner: require('assets/images/banner/woozeee-socials.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fsocial.mp4?alt=media&token=afc818c3-7857-4368-88b9-3d2d16baea09',
-    screen: 'SocialsRoute',
+    screen: 'SocialRoute',
   },
   {
     title: 'marketplace',
     banner: require('assets/images/banner/woozeee-marketplace.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fmarket.mp4?alt=media&token=2709a1b4-8d3b-4d74-a364-63a276e94493',
-    screen: 'SocialsRoute',
+    screen: 'SocialRoute',
   },
   {
     title: 'charity',
     banner: require('assets/images/banner/woozeee-charity.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fcharity.mp4?alt=media&token=c837385b-fef5-4df3-ad36-c36560fe0ee0',
-    screen: 'SocialsRoute',
+    screen: 'SocialRoute',
   },
 ];
 
@@ -76,9 +76,7 @@ const styles = StyleSheet.create({
 });
 
 const Balance = (props) => {
-  // eslint-disable-next-line react/prop-types
   const { value, point } = props;
-  // eslint-disable-next-line react/prop-types
   const [wholeNum, decimalNum] = value.split('.');
 
   return useMemo(
@@ -87,7 +85,7 @@ const Balance = (props) => {
         style={{
           flexDirection: 'row',
           alignItems: 'flex-end',
-          marginBottom: 10,
+          marginBottom: 5,
         }}
       >
         <Text category="p2">{decimalNum ? 'N' : null}</Text>
@@ -104,9 +102,8 @@ const Balance = (props) => {
   );
 };
 
-// eslint-disable-next-line react/prop-types
 export default function Home({ navigation }) {
-  useDisableBackAction();
+  useDisableAndroidExit();
 
   const { width, height } = useWindowDimensions();
 
@@ -120,7 +117,6 @@ export default function Home({ navigation }) {
 
   const { isLoading } = useContext(LoadingContext);
 
-  // eslint-disable-next-line react/prop-types
   const routeSocialRoute = useCallback((route) => navigation.navigate(route), [
     navigation,
   ]);
@@ -166,7 +162,6 @@ export default function Home({ navigation }) {
           alignSelf: 'center',
         }}
         key={data.item.title}
-        /* eslint-disable-next-line react/prop-types */
         onPress={() => routeSocialRoute(data.item.screen)}
       >
         <View style={styles.cardContent}>

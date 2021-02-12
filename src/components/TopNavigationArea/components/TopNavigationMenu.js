@@ -35,16 +35,15 @@ export default function TopNavigationMenu(props) {
 
   const closeMenu = () => setNavigationMenuOpen(false);
 
-  // eslint-disable-next-line react/prop-types
   const handleLogout = useCallback(async () => {
     try {
       closeMenu();
-      await setLoading(true);
+      setLoading(true);
       await logout();
     } catch (e) {
       const err = e;
     } finally {
-      await setLoading(false);
+      setLoading(false);
     }
   }, [logout, setLoading]);
 
@@ -60,7 +59,6 @@ export default function TopNavigationMenu(props) {
   const TopNavigationMenuAnchor = useCallback(
     () => (
       <TopNavigationAction
-        /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...props}
         icon={IconMoreVertical}
         onPress={toggleMenu}

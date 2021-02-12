@@ -15,13 +15,8 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
-import {
-  IconFacebook,
-  IconGoogle,
-  IconTwitter,
-} from 'src/components/CustomIcons';
+import { IconFacebook, IconGoogle } from 'src/components/CustomIcons';
 
-// eslint-disable-next-line react/prop-types
 export default function Login({ navigation }) {
   // prettier-ignore
   const {
@@ -49,7 +44,7 @@ export default function Login({ navigation }) {
     let loginError = null;
 
     try {
-      await setLoading(true);
+      setLoading(true);
 
       if (form.email && form.password) {
         loginError = await login(form);
@@ -60,21 +55,19 @@ export default function Login({ navigation }) {
       loginError = e;
     } finally {
       if (loginError) {
-        await setErrorMsg((prevState) => ({
+        setErrorMsg((prevState) => ({
           ...prevState,
           auth: loginError,
         }));
       }
-      if (isFocused) await setLoading(false);
+      if (isFocused) setLoading(false);
     }
   };
 
   const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
-  // eslint-disable-next-line react/prop-types
   const routeRegister = () => navigation.navigate('Register');
 
-  // eslint-disable-next-line react/prop-types
   const routeRecoverWithEmail = () => navigation.navigate('RecoverWithEmail');
 
   return (

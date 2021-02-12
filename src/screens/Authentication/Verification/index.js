@@ -10,7 +10,6 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
-// eslint-disable-next-line react/prop-types
 export default function VerifyWithCode({ navigation }) {
   const [isLoading, setLoading] = useState(false);
 
@@ -20,7 +19,6 @@ export default function VerifyWithCode({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  // eslint-disable-next-line react/prop-types
   const routeLogin = () => navigation.navigate('Login');
 
   return (
