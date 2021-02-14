@@ -21,11 +21,11 @@ const PLACEHOLDER_CONFIG = {
   mediaLeft: true,
 };
 
+// prettier-ignore
+const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
+
 export default function Versus({ navigation }) {
   useDisableAndroidBackAction(navigation, 'SocialRoute');
-
-  // prettier-ignore
-  const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
 
   return (
     <Layout level="6" style={{ flex: 1 }}>

@@ -39,6 +39,11 @@ const PLACEHOLDER_CONFIG = {
   mediaLeft: true,
 };
 
+// prettier-ignore
+const ProfilePostsArea = () => (
+  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, TABS)
+);
+
 export default function Profile({ navigation }) {
   useDisableAndroidBackAction(navigation, 'SocialRoute');
 
@@ -49,11 +54,6 @@ export default function Profile({ navigation }) {
   const t = useContext(LocaleContext);
 
   const IS_PORTRAIT = height > width;
-
-  // prettier-ignore
-  const ProfilePostsArea = () => (
-    WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, TABS)
-  );
 
   const routeEditProfile = () => navigation.navigate('EditProfile');
 

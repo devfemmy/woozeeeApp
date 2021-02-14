@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react';
 
-import { Animated, StyleSheet, Image, View } from 'react-native';
+// prettier-ignore
+import {
+  Animated, StyleSheet, Image, View,
+} from 'react-native';
 
 import { useIsFocused } from '@react-navigation/native';
 

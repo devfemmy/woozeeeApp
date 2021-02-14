@@ -27,6 +27,10 @@ export default function usePreFetchResources() {
             uri: require('assets/fonts/montserrat/montserrat-semibold.ttf'),
             display: Font.FontDisplay.FALLBACK,
           },
+          fontello: {
+            uri: require('assets/fonts/fontello/fontello.ttf'),
+            display: Font.FontDisplay.FALLBACK,
+          },
         });
 
         await Asset.loadAsync([

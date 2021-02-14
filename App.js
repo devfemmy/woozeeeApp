@@ -6,6 +6,8 @@ import { enableScreens } from 'react-native-screens';
 
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
+import { QueryClientProvider, QueryClient } from 'react-query';
+
 import * as SplashScreen from 'expo-splash-screen';
 
 import { StatusBar } from 'expo-status-bar';
@@ -24,7 +26,7 @@ import {
 
 import i18n from 'i18n-js';
 
-import { QueryClientProvider, QueryClient } from 'react-query';
+import FontelloIconsPack from 'src/components/IconSet/Fontello';
 
 import mapping from 'src/constants/mapping.json';
 
@@ -115,7 +117,7 @@ export default function App() {
 
   return isPreloaded ? (
     <SafeAreaProvider>
-      <IconRegistry icons={EvaIconsPack} />
+      <IconRegistry icons={[EvaIconsPack, FontelloIconsPack]} />
       <ApplicationProvider
         {...eva}
         theme={{

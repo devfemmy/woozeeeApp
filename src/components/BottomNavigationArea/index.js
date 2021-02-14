@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 
 import { Image, TouchableOpacity } from 'react-native';
 
@@ -83,11 +83,8 @@ export default function BottomNavigationArea(props) {
 
   const t = useContext(LocaleContext);
 
-  const renderIcon = useCallback(
-    (Icon, otherProps, active) => (
-      <Icon {...otherProps} type={active ? 'filled' : 'outline'} />
-    ),
-    [],
+  const renderIcon = (Icon, otherProps, active) => (
+    <Icon {...otherProps} type={active ? 'filled' : 'outline'} />
   );
 
   return (

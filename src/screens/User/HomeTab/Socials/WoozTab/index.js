@@ -46,10 +46,11 @@ const PLACEHOLDER_CONFIG = {
   mediaLeft: false,
 };
 
+// prettier-ignore
+const WoozPostsArea = () => WithInfiniteFetch(WoozPosts, socialUrl, PLACEHOLDER_CONFIG);
+
 export default function Wooz({ navigation }) {
   useDisableAndroidBackAction(navigation, 'SocialRoute');
-  // prettier-ignore
-  const WoozPostsArea = () => WithInfiniteFetch(WoozPosts, socialUrl, PLACEHOLDER_CONFIG);
 
   return (
     <Layout level="6" style={{ flex: 1 }}>

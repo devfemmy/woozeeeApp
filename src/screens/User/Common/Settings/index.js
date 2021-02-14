@@ -1,7 +1,4 @@
-// prettier-ignore
-import React, {
-  useState, useContext, useCallback,
-} from 'react';
+import React, { useState, useContext } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
@@ -40,44 +37,35 @@ export default function Settings({ navigation }) {
     new IndexPath(getIndexOfLocale()),
   );
 
-  const changeAppSettings = useCallback(
-    async (option) => {
-      try {
-        setLoading(true);
-        const settingsError = await updateSettings({
-          ...option,
-        });
+  const changeAppSettings = async (option) => {
+    try {
+      setLoading(true);
+      const settingsError = await updateSettings({
+        ...option,
+      });
 
-        if (settingsError) {
-          setError(true);
-        }
-      } catch (e) {
+      if (settingsError) {
         setError(true);
-      } finally {
-        setLoading(false);
       }
-    },
-    [updateSettings],
-  );
+    } catch (e) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const handleSwitchTheme = useCallback(async () => {
+  const handleSwitchTheme = async () => {
     await changeAppSettings({ darkMode: !darkMode });
-  }, [changeAppSettings, darkMode]);
+  };
 
-  const handleSwitchLocale = useCallback(
-    async (index) => {
-      await changeAppSettings({ locale: LOCALES[index.row].code });
-      setSelectedLocale(index);
-    },
-    [changeAppSettings],
-  );
+  const handleSwitchLocale = async (index) => {
+    await changeAppSettings({ locale: LOCALES[index.row].code });
+    setSelectedLocale(index);
+  };
 
   const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
-  const renderLocales = useCallback(
-    () => <Text>{LOCALES[selectedLocale.row].title}</Text>,
-    [selectedLocale.row],
-  );
+  const renderLocales = () => <Text>{LOCALES[selectedLocale.row].title}</Text>;
 
   const routeBack = () => navigation.goBack();
 

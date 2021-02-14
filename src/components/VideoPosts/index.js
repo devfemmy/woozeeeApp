@@ -61,67 +61,61 @@ export const TrendingPosts = ({ info }) => {
 export const StoryPosts = ({ info }) => {
   const t = useContext(LocaleContext);
 
-  const RenderCategoryHeader = useMemo(
-    () => (
-      <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-        <TouchableOpacity activeOpacity={0.75} style={{ position: 'relative' }}>
-          <Image
-            source={require('assets/images/user/user2.png')}
-            style={{
-              height: 100,
-              width: 100,
-              borderRadius: 100,
-            }}
-          />
-          <View
-            style={{
-              minHeight: 20,
-              minWidth: 20,
-              borderRadius: 100,
-              position: 'absolute',
-              backgroundColor: 'white',
-              right: 3,
-              bottom: 3,
-            }}
-          >
-            <IconPlusCircle height={28} width={28} fill="#043F7C" />
-          </View>
-        </TouchableOpacity>
-        <Text category="s2" style={{ marginTop: 10 }}>
-          {t('yourStory')}
-        </Text>
-      </View>
-    ),
-    [t],
+  const RenderCategoryHeader = () => (
+    <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
+      <TouchableOpacity activeOpacity={0.75} style={{ position: 'relative' }}>
+        <Image
+          source={require('assets/images/user/user2.png')}
+          style={{
+            height: 100,
+            width: 100,
+            borderRadius: 100,
+          }}
+        />
+        <View
+          style={{
+            minHeight: 20,
+            minWidth: 20,
+            borderRadius: 100,
+            position: 'absolute',
+            backgroundColor: 'white',
+            right: 3,
+            bottom: 3,
+          }}
+        >
+          <IconPlusCircle height={28} width={28} fill="#043F7C" />
+        </View>
+      </TouchableOpacity>
+      <Text category="s2" style={{ marginTop: 10 }}>
+        {t('yourStory')}
+      </Text>
+    </View>
   );
 
-  return useMemo(
-    () => (
-      <View style={{ paddingVertical: 5 }}>
-        <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
-          <Text category="h6">{t('recentStories')}</Text>
-        </View>
-        <List
-          style={{ backgroundColor: 'transparent' }}
-          contentContainerStyle={{ alignItems: 'center' }}
-          alwaysBounceHorizontal
-          horizontal
-          ListHeaderComponent={RenderCategoryHeader}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          data={info}
-          renderItem={(renderData) => (
-            <StoryCard data={renderData.item} extraWidth={0.5} />
-          )}
-          getItemLayout={(data, index) => ({
-            length: 175,
-            offset: 175 * index,
-            index,
-          })}
-        />
+  return (
+    <View style={{ paddingVertical: 5 }}>
+      <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
+        <Text category="h6">{t('recentStories')}</Text>
       </View>
-    ),
-    [t, info, RenderCategoryHeader],
+      <List
+        style={{ backgroundColor: 'transparent' }}
+        contentContainerStyle={{ alignItems: 'center' }}
+        alwaysBounceHorizontal
+        horizontal
+        ListHeaderComponent={RenderCategoryHeader}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        data={info}
+        renderItem={(renderData) => (
+          <StoryCard data={renderData.item} extraWidth={0.5} />
+        )}
+        getItemLayout={(data, index) => ({
+          length: 175,
+          offset: 175 * index,
+          index,
+        })}
+      />
+    </View>
   );
 };
 

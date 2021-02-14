@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useState, useMemo, useCallback, useContext,
+  useState, useCallback, useContext,
 } from 'react';
 
 import { View, useWindowDimensions } from 'react-native';
@@ -38,6 +38,14 @@ const PLACEHOLDER_CONFIG1 = {
   mediaLeft: false,
 };
 
+const VIEWABILITY_CONFIG = {
+  minimumViewTime: 500,
+  viewAreaCoveragePercentThreshold: 60,
+};
+
+// prettier-ignore
+const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
+
 export default function Explore({ navigation }) {
   useDisableAndroidExit();
 
@@ -52,17 +60,6 @@ export default function Explore({ navigation }) {
   const ITEM_HEIGHT = LIST_HEIGHT * 0.75;
 
   const t = useContext(LocaleContext);
-
-  const VIEWABILITY_CONFIG = useMemo(
-    () => ({
-      minimumViewTime: 500,
-      viewAreaCoveragePercentThreshold: 60,
-    }),
-    [],
-  );
-
-  // prettier-ignore
-  const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
   const SocialPostsArea = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -98,95 +95,90 @@ export default function Explore({ navigation }) {
       },
     );
 
-    return useMemo(() => {
-      if (status === 'loading') {
-        return (
-          <Placeholders
-            mediaLeft={false}
-            count={1}
-            numColumns={1}
-            maxHeight={height * 0.65}
-            maxWidth={width}
-          />
-        );
-      }
-      if (status === 'error') {
-        return (
-          <FetchFailed
-            onPress={refetch}
-            info={t('networkError')}
-            retry={t('retry')}
-          />
-        );
-      }
-      // prettier-ignore
-      if (
-        status !== 'loading'
-        && status !== 'error'
-        && data.pages[0].pageData.data.length > 0
-      ) {
-        return data.pages.map((page) => (
-          <React.Fragment key={page.nextID}>
-            <View style={{ flex: 1 }}>
-              <List
-                style={{
-                  flex: 1,
-                  backgroundColor: 'transparent',
-                  height: LIST_HEIGHT,
-                }}
-                alwaysBounceVertical
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                ListHeaderComponent={StoryPostsArea}
-                ListHeaderComponentStyle={{
-                  paddingVertical: 10,
-                  borderBottomWidth: 1,
-                  borderColor: 'rgba(143, 155, 179, 0.08)',
-                }}
-                data={page.pageData.data}
-                renderItem={(renderData) => (
-                  <VideoView
-                    data={renderData}
-                    activeIndex={activeIndex}
-                    viewHeight={ITEM_HEIGHT}
-                  />
-                )}
-                decelerationRate="fast"
-                extraData={activeIndex}
-                getItemLayout={(data, index) => ({
-                  length: ITEM_HEIGHT,
-                  offset: ITEM_HEIGHT * index + (ITEM_HEIGHT / 2),
-                  index,
-                })}
-                initialNumToRender={4}
-                onViewableItemsChanged={handleViewItemsChanged}
-                viewabilityConfig={VIEWABILITY_CONFIG}
-              />
-            </View>
-          </React.Fragment>
-        ));
-      }
+    if (status === 'loading') {
+      return (
+        <Placeholders
+          mediaLeft={false}
+          count={1}
+          numColumns={1}
+          maxHeight={height * 0.65}
+          maxWidth={width}
+        />
+      );
+    }
+    if (status === 'error') {
       return (
         <FetchFailed
           onPress={refetch}
-          info={t('noVideos')}
-          retry={t('refresh')}
+          info={t('networkError')}
+          retry={t('retry')}
         />
       );
-    }, [refetch, status, data, handleViewItemsChanged, activeIndex]);
+    }
+    if (
+      // prettier-ignore
+      status !== 'loading'
+      && status !== 'error'
+      && data.pages[0].pageData.data.length > 0
+    ) {
+      return data.pages.map((page) => (
+        <React.Fragment key={page.nextID}>
+          <View style={{ flex: 1 }}>
+            <List
+              style={{
+                flex: 1,
+                backgroundColor: 'transparent',
+                height: LIST_HEIGHT,
+              }}
+              alwaysBounceVertical
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              ListHeaderComponent={StoryPostsArea}
+              ListHeaderComponentStyle={{
+                paddingVertical: 10,
+                borderBottomWidth: 1,
+                borderColor: 'rgba(143, 155, 179, 0.08)',
+              }}
+              data={page.pageData.data}
+              renderItem={(renderData) => (
+                <VideoView
+                  data={renderData}
+                  activeIndex={activeIndex}
+                  viewHeight={ITEM_HEIGHT}
+                />
+              )}
+              decelerationRate="fast"
+              extraData={activeIndex}
+              getItemLayout={(data, index) => ({
+                length: ITEM_HEIGHT,
+                offset: ITEM_HEIGHT * index + ITEM_HEIGHT / 2,
+                index,
+              })}
+              initialNumToRender={4}
+              onViewableItemsChanged={handleViewItemsChanged}
+              viewabilityConfig={VIEWABILITY_CONFIG}
+            />
+          </View>
+        </React.Fragment>
+      ));
+    }
+    return (
+      <FetchFailed
+        onPress={refetch}
+        info={t('noVideos')}
+        retry={t('refresh')}
+      />
+    );
   };
 
-  return useMemo(
-    () => (
-      <Layout level="6" style={{ flex: 1 }}>
-        <TopNavigationArea
-          title="woozeee"
-          navigation={navigation}
-          screen="social"
-        />
-        <SocialPostsArea />
-      </Layout>
-    ),
-    [navigation],
+  return (
+    <Layout level="6" style={{ flex: 1 }}>
+      <TopNavigationArea
+        title="woozeee"
+        navigation={navigation}
+        screen="social"
+      />
+      <SocialPostsArea />
+    </Layout>
   );
 }

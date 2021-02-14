@@ -16,16 +16,16 @@ import useImagePicker from 'src/hooks/useImagePicker';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import genders from './genders.json';
-import countries from './countries.json';
-import states from './states.json';
-
 import {
   GeneralTextField,
   GeneralRadioGroup,
   GeneralSelect,
   GeneralDatePicker,
 } from 'src/components/FormFields';
+
+import genders from './genders.json';
+import countries from './countries.json';
+import states from './states.json';
 
 const GENDERS = genders;
 
