@@ -84,7 +84,7 @@ export default function BottomNavigationArea(props) {
   const t = useContext(LocaleContext);
 
   const renderIcon = (Icon, otherProps, active) => (
-    <Icon {...otherProps} type={active ? 'filled' : 'outline'} />
+    <Icon {...otherProps} style={{ height: 24, width: 24 }} active={active} />
   );
 
   return (

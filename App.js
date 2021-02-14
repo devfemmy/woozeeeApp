@@ -26,7 +26,7 @@ import {
 
 import i18n from 'i18n-js';
 
-import FontelloIconsPack from 'src/components/IconSet/Fontello';
+import AssetIconsPack from 'src/components/IconPacks/AssetIcon';
 
 import mapping from 'src/constants/mapping.json';
 
@@ -117,7 +117,7 @@ export default function App() {
 
   return isPreloaded ? (
     <SafeAreaProvider>
-      <IconRegistry icons={[EvaIconsPack, FontelloIconsPack]} />
+      <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
       <ApplicationProvider
         {...eva}
         theme={{

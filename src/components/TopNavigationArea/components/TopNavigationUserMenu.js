@@ -56,12 +56,12 @@ export default function TopNavigationUserMenu(props) {
       accessibilityHint="Extras"
     >
       <MenuItem
-        accessoryLeft={IconCHome}
+        accessoryLeft={() => <IconCHome style={{ height: 20, width: 20 }} />}
         title={t('home')}
         onPress={routeHome}
       />
       <MenuItem
-        accessoryLeft={IconCWooz}
+        accessoryLeft={() => <IconCWooz style={{ height: 20, width: 20 }} />}
         title={t('social')}
         onPress={routeSocial}
       />

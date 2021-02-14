@@ -51,7 +51,6 @@ export default function usePreFetchResources() {
           require('assets/images/icon/list-outline.png'),
           require('assets/images/icon/clock.png'),
           require('assets/images/icon/clock-outline.png'),
-          require('assets/images/icon/wallet.png'),
           require('assets/images/icon/social.png'),
           require('assets/images/icon/social-outline.png'),
           require('assets/images/icon/wooz.png'),

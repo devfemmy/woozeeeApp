@@ -178,184 +178,64 @@ export const IconCFlag = (props) => {
 };
 
 export const IconCHome = (props) => {
-  // prettier-ignore
-  const {
-    width, height, type, ...otherProps
-  } = props;
+  const { active, ...otherProps } = props;
 
-  const defultType = type ?? 'outline';
+  const type = active ? 'home' : 'home-outline';
 
-  const iconType = {
-    filled: require('assets/images/icon/home.png'),
-    outline: require('assets/images/icon/home-outline.png'),
-  };
-
-  return (
-    <Image
-      {...otherProps}
-      source={iconType[defultType]}
-      resizeMode="contain"
-      style={{ width: width || 20, height: height || 20 }}
-    />
-  );
+  return <Icon {...otherProps} name={type} pack="assets" />;
 };
 
 export const IconCWallet = (props) => {
-  // prettier-ignore
-  const {
-    width, height, type, ...otherProps
-  } = props;
+  const { active, ...otherProps } = props;
 
-  const defultType = type ?? 'outline';
+  const type = active ? 'wallet' : 'wallet-outline';
 
-  const iconType = {
-    filled: require('assets/images/icon/wallet.png'),
-    outline: require('assets/images/icon/wallet-outline.png'),
-  };
-
-  return (
-    <Image
-      {...otherProps}
-      source={iconType[defultType]}
-      resizeMode="contain"
-      style={{ width: width || 20, height: height || 20 }}
-    />
-  );
+  return <Icon {...otherProps} name={type} pack="assets" />;
 };
 export const IconCList = (props) => {
-  // prettier-ignore
-  const {
-    width, height, type, ...otherProps
-  } = props;
+  const { active, ...otherProps } = props;
 
-  const defultType = type ?? 'outline';
+  const type = active ? 'list' : 'list-outline';
 
-  const iconType = {
-    filled: require('assets/images/icon/list.png'),
-    outline: require('assets/images/icon/list-outline.png'),
-  };
-
-  return (
-    <Image
-      {...otherProps}
-      source={iconType[defultType]}
-      resizeMode="contain"
-      style={{ width: width || 20, height: height || 20 }}
-    />
-  );
+  return <Icon {...otherProps} name={type} pack="assets" />;
 };
 
 export const IconCClock = (props) => {
-  // prettier-ignore
-  const {
-    width, height, type, ...otherProps
-  } = props;
+  const { active, ...otherProps } = props;
 
-  const defultType = type ?? 'outline';
+  const type = active ? 'clock' : 'clock-outline';
 
-  const iconType = {
-    filled: require('assets/images/icon/clock.png'),
-    outline: require('assets/images/icon/clock-outline.png'),
-  };
-
-  return (
-    <Image
-      {...otherProps}
-      source={iconType[defultType]}
-      resizeMode="contain"
-      style={{ width: width || 20, height: height || 20 }}
-    />
-  );
+  return <Icon {...otherProps} name={type} pack="assets" />;
 };
 
 export const IconCSocial = (props) => {
-  // prettier-ignore
-  const {
-    width, height, type, ...otherProps
-  } = props;
+  const { active, ...otherProps } = props;
 
-  const defultType = type ?? 'outline';
+  const type = active ? 'social' : 'social-outline';
 
-  const iconType = {
-    filled: require('assets/images/icon/social.png'),
-    outline: require('assets/images/icon/social-outline.png'),
-  };
-
-  return (
-    <Image
-      {...otherProps}
-      source={iconType[defultType]}
-      resizeMode="contain"
-      style={{ width: width || 20, height: height || 20 }}
-    />
-  );
+  return <Icon {...otherProps} name={type} pack="assets" />;
 };
 
 export const IconCWooz = (props) => {
-  // prettier-ignore
-  const {
-    width, height, type, ...otherProps
-  } = props;
+  const { active, ...otherProps } = props;
 
-  const defultType = type ?? 'outline';
+  const type = active ? 'wooz' : 'wooz-outline';
 
-  const iconType = {
-    filled: require('assets/images/icon/wooz.png'),
-    outline: require('assets/images/icon/wooz-outline.png'),
-  };
-
-  return (
-    <Image
-      {...otherProps}
-      source={iconType[defultType]}
-      resizeMode="contain"
-      style={{ width: width || 20, height: height || 20 }}
-    />
-  );
+  return <Icon {...otherProps} name={type} pack="assets" />;
 };
 
 export const IconCCup = (props) => {
-  // prettier-ignore
-  const {
-    width, height, type, ...otherProps
-  } = props;
+  const { active, ...otherProps } = props;
 
-  const defultType = type ?? 'outline';
+  const type = active ? 'supercup' : 'supercup-outline';
 
-  const iconType = {
-    filled: require('assets/images/icon/supercup.png'),
-    outline: require('assets/images/icon/supercup-outline.png'),
-  };
-
-  return (
-    <Image
-      {...otherProps}
-      source={iconType[defultType]}
-      resizeMode="contain"
-      style={{ width: width || 20, height: height || 20 }}
-    />
-  );
+  return <Icon {...otherProps} name={type} pack="assets" />;
 };
 
 export const IconCUser = (props) => {
-  // prettier-ignore
-  const {
-    width, height, type, ...otherProps
-  } = props;
+  const { active, ...otherProps } = props;
 
-  const defultType = type ?? 'outline';
+  const type = active ? 'user' : 'user-outline';
 
-  const iconType = {
-    filled: require('assets/images/icon/user.png'),
-    outline: require('assets/images/icon/user-outline.png'),
-  };
-
-  return (
-    <Image
-      {...otherProps}
-      source={iconType[defultType]}
-      resizeMode="contain"
-      style={{ width: width || 20, height: height || 20 }}
-    />
-  );
+  return <Icon {...otherProps} name={type} pack="assets" />;
 };
