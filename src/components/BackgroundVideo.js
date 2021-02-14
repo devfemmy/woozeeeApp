@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 // prettier-ignore
 import {
@@ -72,38 +72,35 @@ export default function BackgroundVideo(props) {
     </Animated.View>
   ) : null);
 
-  return useMemo(
-    () => (
-      <View style={styles.background}>
-        <VideoThumb />
-        {isFocused ? (
-          <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
-            <Video
-              isLooping
-              source={{ uri: videoUri }}
-              onLoad={() => {
-                Animated.timing(opacity, {
-                  toValue: 1,
-                  useNativeDriver: true,
-                  duration: 1000,
-                }).start();
-              }}
-              // usePoster
-              // posterSource={thumbUri}
-              // posterStyle={{
-              //   resizeMode: 'cover',
-              //   height: '100%',
-              //   width: '100%',
-              // }}
-              resizeMode="cover"
-              isMuted={isMuted}
-              shouldPlay={isFocused || false}
-              style={[style, { flex: 1 }]}
-            />
-          </Animated.View>
-        ) : null}
-      </View>
-    ),
-    [isFocused, opacity, videoUri, isMuted, style],
+  return (
+    <View style={styles.background}>
+      <VideoThumb />
+      {isFocused ? (
+        <Animated.View style={[styles.backgroundViewWrapper, { opacity }]}>
+          <Video
+            isLooping
+            source={{ uri: videoUri }}
+            onLoad={() => {
+              Animated.timing(opacity, {
+                toValue: 1,
+                useNativeDriver: true,
+                duration: 1000,
+              }).start();
+            }}
+            // usePoster
+            // posterSource={thumbUri}
+            // posterStyle={{
+            //   resizeMode: 'cover',
+            //   height: '100%',
+            //   width: '100%',
+            // }}
+            resizeMode="cover"
+            isMuted={isMuted}
+            shouldPlay={isFocused || false}
+            style={[style, { flex: 1 }]}
+          />
+        </Animated.View>
+      ) : null}
+    </View>
   );
 }

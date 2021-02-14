@@ -1,7 +1,4 @@
-// prettier-ignore
-import React, {
-  useCallback, useContext, useMemo, useState,
-} from 'react';
+import React, { useContext, useState } from 'react';
 
 import { useWindowDimensions } from 'react-native';
 
@@ -29,12 +26,12 @@ export default function WithInfiniteFetch(
 
   const [activePage, setPage] = useState('default');
 
-  const getMaxHeight = useCallback(() => {
+  const getMaxHeight = () => {
     if (placeholderProp.maxHeight <= 1) {
       return height * placeholderProp.maxHeight;
     }
     return placeholderProp.maxHeight;
-  }, [height, placeholderProp]);
+  };
 
   const {
     status,
@@ -63,60 +60,47 @@ export default function WithInfiniteFetch(
     },
   );
 
-  const updateTab = useCallback((param) => {
+  const updateTab = (param) => {
     setPage(param);
-  }, []);
+  };
 
-  return useMemo(() => {
-    if (status === 'loading') {
-      return (
-        <Placeholders
-          mediaLeft={placeholderProp.mediaLeft}
-          row
-          count={placeholderProp.count || 4}
-          numColumns={placeholderProp.numColumns || 2}
-          maxHeight={getMaxHeight()}
-          maxWidth={width}
-        />
-      );
-    }
-    if (status === 'error') {
-      return (
-        <FetchFailed
-          onPress={refetch}
-          info={t('networkError')}
-          retry={t('retry')}
-        />
-      );
-    }
-    // prettier-ignore
-    if (status !== 'loading' && status !== 'error' && data.pages[0].pageData.data.length > 0) {
-      return data.pages.map((page) => (
-        <React.Fragment key={page.nextID}>
-          {tabs ? (
-            <TabsMenu tabs={tabs} tabInfo={{ activePage, updateTab }} />
-          ) : null}
-          <WrappedComponent info={page.pageData.data} />
-        </React.Fragment>
-      ));
-    }
+  if (status === 'loading') {
+    return (
+      <Placeholders
+        mediaLeft={placeholderProp.mediaLeft}
+        row
+        count={placeholderProp.count || 4}
+        numColumns={placeholderProp.numColumns || 2}
+        maxHeight={getMaxHeight()}
+        maxWidth={width}
+      />
+    );
+  }
+  if (status === 'error') {
     return (
       <FetchFailed
         onPress={refetch}
-        info={t('noVideos')}
-        retry={t('refresh')}
+        info={t('networkError')}
+        retry={t('retry')}
       />
     );
-  }, [
-    t,
-    width,
-    refetch,
-    activePage,
-    updateTab,
-    placeholderProp,
-    tabs,
-    status,
-    data,
-    getMaxHeight,
-  ]);
+  }
+  // prettier-ignore
+  if (
+    status !== 'loading'
+    && status !== 'error'
+    && data.pages[0].pageData.data.length > 0
+  ) {
+    return data.pages.map((page) => (
+      <React.Fragment key={page.nextID}>
+        {tabs ? (
+          <TabsMenu tabs={tabs} tabInfo={{ activePage, updateTab }} />
+        ) : null}
+        <WrappedComponent info={page.pageData.data} />
+      </React.Fragment>
+    ));
+  }
+  return (
+    <FetchFailed onPress={refetch} info={t('noVideos')} retry={t('refresh')} />
+  );
 }

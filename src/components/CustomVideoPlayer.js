@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { Video } from 'expo-av';
 
@@ -12,30 +12,18 @@ export default function CustomVideoPlayer(props) {
 
   const isFocused = useIsFocused();
 
-  return useMemo(
-    // prettier-ignore
-    () => ((shouldDisplay || isPreloaded) && isFocused ? (
-      <Video
-        {...otherProps}
-        source={{ uri: videoUri }}
-        shouldCorrectPitch
-        resizeMode={resizeMode}
-        usePoster
-        posterSource={require('assets/images/banner/placeholder-image.png')}
-        posterStyle={{ resizeMode, height: '100%', width: '100%' }}
-        style={{ flex: 1 }}
-        progressUpdateIntervalMillis={1000}
-        shouldPlay={shouldPlay && shouldDisplay && isFocused}
-      />
-    ) : null),
-    [
-      videoUri,
-      shouldPlay,
-      shouldDisplay,
-      isPreloaded,
-      isFocused,
-      resizeMode,
-      otherProps,
-    ],
-  );
+  return (shouldDisplay || isPreloaded) && isFocused ? (
+    <Video
+      {...otherProps}
+      source={{ uri: videoUri }}
+      shouldCorrectPitch
+      resizeMode={resizeMode}
+      usePoster
+      posterSource={require('assets/images/banner/placeholder-image.png')}
+      posterStyle={{ resizeMode, height: '100%', width: '100%' }}
+      style={{ flex: 1 }}
+      progressUpdateIntervalMillis={1000}
+      shouldPlay={shouldPlay && shouldDisplay && isFocused}
+    />
+  ) : null;
 }

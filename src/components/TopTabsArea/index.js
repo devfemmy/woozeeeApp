@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { TabBar, Tab, Layout, Divider } from '@ui-kitten/components';
+import { TabBar, Tab, Layout } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 

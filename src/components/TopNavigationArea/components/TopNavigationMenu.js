@@ -1,7 +1,4 @@
-// prettier-ignore
-import React, {
-  useContext, useMemo, useState, useCallback,
-} from 'react';
+import React, { useContext, useState } from 'react';
 
 import {
   TopNavigationAction,
@@ -35,7 +32,7 @@ export default function TopNavigationMenu(props) {
 
   const closeMenu = () => setNavigationMenuOpen(false);
 
-  const handleLogout = useCallback(async () => {
+  const handleLogout = async () => {
     try {
       closeMenu();
       setLoading(true);
@@ -45,65 +42,47 @@ export default function TopNavigationMenu(props) {
     } finally {
       setLoading(false);
     }
-  }, [logout, setLoading]);
+  };
 
-  const routeSettings = useCallback(() => navigation.navigate('Settings'), [
-    navigation,
-  ]);
+  const routeSettings = () => navigation.navigate('Settings');
 
-  const routeEditProfile = useCallback(
-    () => navigation.navigate('EditProfile'),
-    [navigation],
+  const routeEditProfile = () => navigation.navigate('EditProfile');
+
+  const TopNavigationMenuAnchor = () => (
+    <TopNavigationAction
+      {...props}
+      icon={IconMoreVertical}
+      onPress={toggleMenu}
+      accessibilityLiveRegion="polite"
+      accessibilityLabel="open menu"
+    />
   );
 
-  const TopNavigationMenuAnchor = useCallback(
-    () => (
-      <TopNavigationAction
-        {...props}
-        icon={IconMoreVertical}
-        onPress={toggleMenu}
-        accessibilityLiveRegion="polite"
-        accessibilityLabel="open menu"
+  return (
+    <OverflowMenu
+      anchor={TopNavigationMenuAnchor}
+      visible={isNavigationMenuOpen}
+      onBackdropPress={closeMenu}
+      onTouchEnd={closeMenu}
+      backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.15)' }}
+      accessibilityLiveRegion="polite"
+      accessibilityHint="Navigation Menu"
+    >
+      <MenuItem
+        accessoryLeft={IconEdit}
+        title={`${t('edit')} ${t('profile')}`}
+        onPress={routeEditProfile}
       />
-    ),
-    [props],
-  );
-
-  return useMemo(
-    () => (
-      <OverflowMenu
-        anchor={TopNavigationMenuAnchor}
-        visible={isNavigationMenuOpen}
-        onBackdropPress={closeMenu}
-        onTouchEnd={closeMenu}
-        backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.15)' }}
-        accessibilityLiveRegion="polite"
-        accessibilityHint="Navigation Menu"
-      >
-        <MenuItem
-          accessoryLeft={IconEdit}
-          title={`${t('edit')} ${t('profile')}`}
-          onPress={routeEditProfile}
-        />
-        <MenuItem
-          accessoryLeft={IconSettings}
-          title={t('settings')}
-          onPress={routeSettings}
-        />
-        <MenuItem
-          accessoryLeft={IconLogout}
-          title={t('logout')}
-          onPress={handleLogout}
-        />
-      </OverflowMenu>
-    ),
-    [
-      t,
-      isNavigationMenuOpen,
-      handleLogout,
-      TopNavigationMenuAnchor,
-      routeEditProfile,
-      routeSettings,
-    ],
+      <MenuItem
+        accessoryLeft={IconSettings}
+        title={t('settings')}
+        onPress={routeSettings}
+      />
+      <MenuItem
+        accessoryLeft={IconLogout}
+        title={t('logout')}
+        onPress={handleLogout}
+      />
+    </OverflowMenu>
   );
 }

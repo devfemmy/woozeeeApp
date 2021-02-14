@@ -109,7 +109,7 @@ export const GeneralTextField = (props) => {
           secure
             ? (evaProps) => (
               <SecureToggleIcon
-                              {...evaProps}
+                {...evaProps}
                 isSecure={isSecureEntry}
                 toggleSecure={setSecureEntry}
               />
@@ -117,9 +117,9 @@ export const GeneralTextField = (props) => {
             : null
         }
         /* prettier-ignore */
-        captionIcon={
-                (evaProps) => (caption ? <CaptionIcon {...evaProps} icon={inputVal.status} /> : null)
-        }
+        captionIcon={(evaProps) => (
+          caption ? <CaptionIcon {...evaProps} icon={inputVal.status} /> : null
+        )}
       />
     ),
     [
@@ -165,7 +165,6 @@ export const GeneralRadioGroup = (props) => {
           {label}
         </Text>
         <RadioGroup selectedIndex={selectedOption} onChange={handleChange}>
-          {/* eslint-disable-next-line react/prop-types */}
           {data.map((option) => (
             <Radio key={option}>{option}</Radio>
           ))}
@@ -233,7 +232,7 @@ export const GeneralAutocomplete = (props) => {
 export const GeneralSelect = (props) => {
   // prettier-ignore
   const {
-      label, data, type, size, setFormValues,
+    label, data, type, size, setFormValues,
   } = props;
 
   const [selectedOption, setSelectedOption] = useState(new IndexPath(0));
@@ -263,7 +262,6 @@ export const GeneralSelect = (props) => {
         selectedIndex={selectedOption}
         onSelect={handleSelect}
       >
-        {/* eslint-disable-next-line react/prop-types */}
         {data.map((option) => (
           <SelectItem key={option.title} title={option.title} />
         ))}
@@ -276,7 +274,7 @@ export const GeneralSelect = (props) => {
 export const GeneralDatePicker = (props) => {
   // prettier-ignore
   const {
-      label, type, size, setFormValues,
+    label, type, size, setFormValues,
   } = props;
 
   const [selectedDate, setSelectedDate] = useState(new Date());

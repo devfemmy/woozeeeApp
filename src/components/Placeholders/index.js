@@ -69,50 +69,36 @@ export default function Placeholders(props) {
     [maxHeight],
   );
 
-  return useMemo(
-    () => (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: direction,
-          flexWrap: 'wrap',
-          width: '100%',
-        }}
-      >
-        {Array.from(Array(count).keys()).map((item) => (
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-              paddingVertical: 10,
-              paddingHorizontal: 5,
-              width,
-              height: maxHeight + 20,
-            }}
-            key={item}
-          >
-            {mediaLeft ? <Media /> : null}
-            <View style={{ flex: 1, justifyContent: 'center' }}>
-              {mediaCenter ? <Media /> : null}
-              {paragraph ? ParagraphLines : MediaLines}
-            </View>
-            {mediaRight ? <Media /> : null}
+  return (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: direction,
+        flexWrap: 'wrap',
+        width: '100%',
+      }}
+    >
+      {Array.from(Array(count).keys()).map((item) => (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            paddingVertical: 10,
+            paddingHorizontal: 5,
+            width,
+            height: maxHeight + 20,
+          }}
+          key={item}
+        >
+          {mediaLeft ? <Media /> : null}
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            {mediaCenter ? <Media /> : null}
+            {paragraph ? ParagraphLines : MediaLines}
           </View>
-        ))}
-      </View>
-    ),
-    [
-      direction,
-      mediaLeft,
-      mediaRight,
-      mediaCenter,
-      width,
-      maxHeight,
-      count,
-      paragraph,
-      ParagraphLines,
-      MediaLines,
-    ],
+          {mediaRight ? <Media /> : null}
+        </View>
+      ))}
+    </View>
   );
 }

@@ -75,7 +75,7 @@ export default function Profile({ navigation }) {
       >
         <View
           style={{
-            height: IS_PORTRAIT ? 290 : '100%',
+            height: IS_PORTRAIT ? 300 : '100%',
             width: IS_PORTRAIT ? '100%' : '40%',
           }}
         >
@@ -89,7 +89,7 @@ export default function Profile({ navigation }) {
               style={{
                 alignItems: 'center',
                 paddingHorizontal: 20,
-                paddingBottom: 10,
+                paddingVertical: 10,
               }}
             >
               <View style={{ position: 'relative' }}>

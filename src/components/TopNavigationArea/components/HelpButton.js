@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { TopNavigationAction } from '@ui-kitten/components';
 
@@ -7,7 +7,6 @@ import { IconQuestionMarkCircle } from 'src/components/CustomIcons';
 export default function HelpButton(props) {
   const { navigation, icon, ...otherProps } = props;
 
-  return useMemo(() => {
     const routeHelp = () => navigation.navigate('FAQs');
 
     return (
@@ -19,5 +18,4 @@ export default function HelpButton(props) {
         accessibilityLabel="Open Help"
       />
     );
-  }, [navigation, otherProps]);
 }

@@ -1,7 +1,4 @@
-// prettier-ignore
-import React, {
-  useContext, useMemo, useState, useCallback,
-} from 'react';
+import React, { useContext, useState } from 'react';
 
 import {
   MenuItem,
@@ -34,52 +31,42 @@ export default function TopNavigationUserMenu(props) {
     setNavigationMenuOpen(false);
   };
 
-  const routeHome = useCallback(() => navigation.replace('UserRoute'), [
-    navigation,
-  ]);
+  const routeHome = () => navigation.replace('UserRoute');
 
-  const routeSocial = useCallback(() => navigation.replace('SocialRoute'), [
-    navigation,
-  ]);
+  const routeSocial = () => navigation.replace('SocialRoute');
 
-  const NavigationAnchor = useCallback(
-    () => (
-      <TopNavigationAction
-        {...props}
-        icon={IconMenu}
-        onPress={openMenu}
-        accessibilityLiveRegion="polite"
-        accessibilityLabel="open menu"
-      />
-    ),
-    [props],
+  const NavigationAnchor = () => (
+    <TopNavigationAction
+      {...props}
+      icon={IconMenu}
+      onPress={openMenu}
+      accessibilityLiveRegion="polite"
+      accessibilityLabel="open menu"
+    />
   );
 
-  return useMemo(
-    () => (
-      <OverflowMenu
-        anchor={NavigationAnchor}
-        visible={isNavigationMenuOpen}
-        onBackdropPress={closeMenu}
-        onTouchEnd={closeMenu}
-        backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
-        accessibilityLiveRegion="polite"
-        accessibilityHint="Extras"
-      >
-        <MenuItem
-          accessoryLeft={IconCHome}
-          title={t('home')}
-          onPress={routeHome}
-        />
-        <MenuItem
-          accessoryLeft={IconCWooz}
-          title={t('social')}
-          onPress={routeSocial}
-        />
-        {/* <MenuItem accessoryLeft={IconMap} title={t('marketplace')} />
+  return (
+    <OverflowMenu
+      anchor={NavigationAnchor}
+      visible={isNavigationMenuOpen}
+      onBackdropPress={closeMenu}
+      onTouchEnd={closeMenu}
+      backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
+      accessibilityLiveRegion="polite"
+      accessibilityHint="Extras"
+    >
+      <MenuItem
+        accessoryLeft={IconCHome}
+        title={t('home')}
+        onPress={routeHome}
+      />
+      <MenuItem
+        accessoryLeft={IconCWooz}
+        title={t('social')}
+        onPress={routeSocial}
+      />
+      {/* <MenuItem accessoryLeft={IconMap} title={t('marketplace')} />
         <MenuItem accessoryLeft={IconGift} title={t('charity')} /> */}
-      </OverflowMenu>
-    ),
-    [t, NavigationAnchor, isNavigationMenuOpen, routeHome, routeSocial],
+    </OverflowMenu>
   );
 }

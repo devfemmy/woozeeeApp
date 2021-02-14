@@ -1,7 +1,6 @@
 import React, {
   useCallback,
   useContext,
-  useMemo,
   useState,
   useEffect,
   useRef,
@@ -39,12 +38,12 @@ export default function WithDefaultFetch(
 
   const [activePage, setActiveTab] = useState('default');
 
-  const getMaxHeight = useCallback(() => {
+  const getMaxHeight = () => {
     if (placeholderProp.maxHeight <= 1) {
       return height * placeholderProp.maxHeight;
     }
     return placeholderProp.maxHeight;
-  }, [height, placeholderProp]);
+  };
 
   const fetchPosts = useCallback(async () => {
     try {
@@ -67,14 +66,10 @@ export default function WithDefaultFetch(
     }
   }, [fetchUrl, isMounted]);
 
-  const updateTab = useCallback(
-    (param) => {
-      setActiveTab(param);
-      fetchPosts();
-    },
-    [fetchPosts],
-  );
-
+  const updateTab = (param) => {
+    setActiveTab(param);
+    fetchPosts();
+  };
   useEffect(() => {
     isMounted.current = true;
     fetchPosts();
@@ -85,56 +80,42 @@ export default function WithDefaultFetch(
     };
   }, [fetchPosts]);
 
-  return useMemo(() => {
-    if (isLoading) {
-      return (
-        <Placeholders
-          mediaLeft={placeholderProp.mediaLeft}
-          row
-          count={placeholderProp.count || 4}
-          numColumns={placeholderProp.numColumns || 2}
-          maxHeight={getMaxHeight()}
-          maxWidth={width}
-        />
-      );
-    }
-    if (isError) {
-      return (
-        <FetchFailed
-          onPress={fetchPosts}
-          info={t('networkError')}
-          retry={t('retry')}
-        />
-      );
-    }
-    if (posts && posts.length > 0) {
-      return (
-        <>
-          {tabs ? (
-            <TabsMenu tabs={tabs} tabInfo={{ activePage, updateTab }} />
-          ) : null}
-          <WrappedComponent info={posts} />
-        </>
-      );
-    }
+  if (isLoading) {
+    return (
+      <Placeholders
+        mediaLeft={placeholderProp.mediaLeft}
+        row
+        count={placeholderProp.count || 4}
+        numColumns={placeholderProp.numColumns || 2}
+        maxHeight={getMaxHeight()}
+        maxWidth={width}
+      />
+    );
+  }
+  if (isError) {
     return (
       <FetchFailed
         onPress={fetchPosts}
-        info={t('noVideos')}
-        retry={t('refresh')}
+        info={t('networkError')}
+        retry={t('retry')}
       />
     );
-  }, [
-    t,
-    width,
-    fetchPosts,
-    posts,
-    isLoading,
-    isError,
-    activePage,
-    updateTab,
-    getMaxHeight,
-    placeholderProp,
-    tabs,
-  ]);
+  }
+  if (posts && posts.length > 0) {
+    return (
+      <>
+        {tabs ? (
+          <TabsMenu tabs={tabs} tabInfo={{ activePage, updateTab }} />
+        ) : null}
+        <WrappedComponent info={posts} />
+      </>
+    );
+  }
+  return (
+    <FetchFailed
+      onPress={fetchPosts}
+      info={t('noVideos')}
+      retry={t('refresh')}
+    />
+  );
 }
