@@ -1,17 +1,10 @@
 import React from 'react';
 
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  useWindowDimensions,
-} from 'react-native';
+import { Image, TouchableOpacity, useWindowDimensions } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { Text } from '@ui-kitten/components';
-
-export default function VideoCard(props) {
+export default function MovieCard(props) {
   const { data, extraWidth } = props;
 
   const { width, height } = useWindowDimensions();
@@ -22,7 +15,7 @@ export default function VideoCard(props) {
     <TouchableOpacity
       activeOpacity={0.75}
       style={{
-        height: 175,
+        height: 275,
         width: IS_PORTRAIT
           ? (width - 10) / (2 + extraWidth)
           : width - 10 / (3 + extraWidth),
@@ -36,7 +29,7 @@ export default function VideoCard(props) {
       <Image
         source={{ uri: `https://i.postimg.cc/${data.banner}` }}
         style={{
-          height: 165,
+          height: 265,
           width: '100%',
           borderRadius: 5,
         }}
@@ -52,8 +45,8 @@ export default function VideoCard(props) {
             alignItems: 'center',
             justifyContent: 'center',
             position: 'absolute',
-            left: 10,
-            top: 5,
+            left: 15,
+            bottom: 20,
           }}
         >
           <Image
@@ -66,28 +59,6 @@ export default function VideoCard(props) {
             }}
           />
         </LinearGradient>
-      ) : null}
-      {data.tag ? (
-        <View
-          style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            position: 'absolute',
-            bottom: 10,
-            borderBottomLeftRadius: 5,
-            borderBottomRightRadius: 5,
-            padding: 5,
-            width: '100%',
-          }}
-        >
-          <Text category="c2" style={{ color: 'white', marginBottom: 5 }}>
-            {data.tag}
-          </Text>
-          <View>
-            <Text category="c1" status="control">
-              12.5 Entries
-            </Text>
-          </View>
-        </View>
       ) : null}
     </TouchableOpacity>
   );

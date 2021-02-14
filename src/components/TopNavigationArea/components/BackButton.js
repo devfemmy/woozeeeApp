@@ -2,7 +2,7 @@ import React from 'react';
 
 import { TopNavigationAction } from '@ui-kitten/components';
 
-import { IconBack, IconClose } from 'src/components/CustomIcons';
+import { IconBackIos, IconClose } from 'src/components/CustomIcons';
 
 export default function BackButton(props) {
   const { navigation, icon, ...otherProps } = props;
@@ -11,7 +11,7 @@ export default function BackButton(props) {
 
   const ICON = {
     close: IconClose,
-    back: IconBack,
+    back: IconBackIos,
   };
 
   return (

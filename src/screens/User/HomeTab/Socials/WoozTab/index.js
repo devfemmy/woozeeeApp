@@ -52,6 +52,8 @@ const WoozPostsArea = () => WithInfiniteFetch(WoozPosts, socialUrl, PLACEHOLDER_
 export default function Wooz({ navigation }) {
   useDisableAndroidBackAction(navigation, 'SocialRoute');
 
+  const routeLiveStream = () => navigation.navigate('LiveStream');
+
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <View
@@ -72,6 +74,7 @@ export default function Wooz({ navigation }) {
         >
           <View style={styles.interactIcons}>
             <InteractIcon
+              onPress={routeLiveStream}
               Accessory={(evaProps) => <IconVideo {...evaProps} isOpen />}
             />
           </View>

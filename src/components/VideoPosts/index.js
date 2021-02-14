@@ -22,8 +22,6 @@ import StoryCard from 'src/components/VideoCard/StoryCard';
 
 import VideoFullscreen from 'src/components/VideoFullscreen';
 
-// import VideoView from 'src/components/VideoView';
-
 import { IconPlusCircle } from 'src/components/CustomIcons';
 
 export const TrendingPosts = ({ info }) => {
@@ -120,67 +118,33 @@ export const StoryPosts = ({ info }) => {
 };
 
 // prettier-ignore
-export const UsersPosts = ({ info }) => useMemo(
-  // prettier-ignore
-  () => info.map((item) => (
-    <View
-      style={{
-        flex: 1,
-        marginBottom: 10,
-        paddingVertical: 5,
-        maxHeight: 225,
-      }}
-      key={item.category}
-    >
-      <View style={{ paddingHorizontal: 10 }}>
-        <Text category="h6" status="danger" style={{ marginBottom: 5 }}>
-          {item.category}
-        </Text>
-        {/* prettier-ignore */}
-        <Text category="c1" style={{ marginBottom: 5 }}>
-          {`${item.content.length} Videos(s)`}
-        </Text>
-      </View>
-      <List
-        style={{ backgroundColor: 'transparent' }}
-        alwaysBounceHorizontal
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        data={item.content}
-        renderItem={(renderData) => (
-          <VideoCard data={renderData.item} extraWidth={0.5} />
-        )}
-        getItemLayout={(data, index) => ({
-          length: 175,
-          offset: 175 * index,
-          index,
-        })}
-      />
+export const UsersPosts = ({ info }) => info.map((item) => (
+  <View
+    style={{
+      flex: 1,
+      marginBottom: 10,
+      paddingVertical: 5,
+      maxHeight: 225,
+    }}
+    key={item.category}
+  >
+    <View style={{ paddingHorizontal: 10 }}>
+      <Text category="h6" status="danger" style={{ marginBottom: 5 }}>
+        {item.category}
+      </Text>
+      <Text category="c1" style={{ marginBottom: 5 }}>
+        {`${item.content.length} Videos(s)`}
+      </Text>
     </View>
-  )),
-  [info],
-);
-
-// prettier-ignore
-export const ProfilePosts = ({ info }) => useMemo(
-  () => (
     <List
-      style={{
-        backgroundColor: 'transparent',
-      }}
-      contentContainerStyle={{
-        paddingTop: 10,
-        paddingBottom: 20,
-        alignItems: 'center',
-      }}
-      alwaysBounceVertical
+      style={{ backgroundColor: 'transparent' }}
+      alwaysBounceHorizontal
+      horizontal
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
-      numColumns={2}
-      data={info}
+      data={item.content}
       renderItem={(renderData) => (
-        <VideoCard data={renderData.item} extraWidth={0} />
+        <VideoCard data={renderData.item} extraWidth={0.5} />
       )}
       getItemLayout={(data, index) => ({
         length: 175,
@@ -188,8 +152,34 @@ export const ProfilePosts = ({ info }) => useMemo(
         index,
       })}
     />
-  ),
-  [info],
+  </View>
+));
+
+// prettier-ignore
+export const ProfilePosts = ({ info }) => (
+  <List
+    style={{
+      backgroundColor: 'transparent',
+    }}
+    contentContainerStyle={{
+      paddingTop: 10,
+      paddingBottom: 20,
+      alignItems: 'center',
+    }}
+    alwaysBounceVertical
+    showsHorizontalScrollIndicator={false}
+    showsVerticalScrollIndicator={false}
+    numColumns={2}
+    data={info}
+    renderItem={(renderData) => (
+      <VideoCard data={renderData.item} extraWidth={0} />
+    )}
+    getItemLayout={(data, index) => ({
+      length: 175,
+      offset: 175 * index,
+      index,
+    })}
+  />
 );
 
 export const WoozPosts = ({ info }) => {
@@ -228,40 +218,30 @@ export const WoozPosts = ({ info }) => {
     [ITEM_HEIGHT, activeIndex],
   );
 
-  return useMemo(
-    () => (
-      <List
-        style={{
-          backgroundColor: 'transparent',
-          height: ITEM_HEIGHT,
-        }}
-        alwaysBounceVertical
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        data={info}
-        renderItem={renderPost}
-        extraData={activeIndex}
-        snapToAlignment="start"
-        decelerationRate="fast"
-        snapToInterval={ITEM_HEIGHT}
-        getItemLayout={(data, index) => ({
-          length: ITEM_HEIGHT,
-          offset: ITEM_HEIGHT * index,
-          index,
-        })}
-        initialNumToRender={4}
-        onViewableItemsChanged={handleViewItemsChanged}
-        viewabilityConfig={VIEWABILITY_CONFIG}
-      />
-    ),
-    [
-      info,
-      activeIndex,
-      handleViewItemsChanged,
-      renderPost,
-      VIEWABILITY_CONFIG,
-      ITEM_HEIGHT,
-    ],
+  return (
+    <List
+      style={{
+        backgroundColor: 'transparent',
+        height: ITEM_HEIGHT,
+      }}
+      alwaysBounceVertical
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      data={info}
+      renderItem={renderPost}
+      extraData={activeIndex}
+      snapToAlignment="start"
+      decelerationRate="fast"
+      snapToInterval={ITEM_HEIGHT}
+      getItemLayout={(data, index) => ({
+        length: ITEM_HEIGHT,
+        offset: ITEM_HEIGHT * index,
+        index,
+      })}
+      initialNumToRender={4}
+      onViewableItemsChanged={handleViewItemsChanged}
+      viewabilityConfig={VIEWABILITY_CONFIG}
+    />
   );
 };
 

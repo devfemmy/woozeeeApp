@@ -113,7 +113,7 @@ export default function Home({ navigation }) {
 
   const routeSocialRoute = (route) => navigation.replace(route);
 
-  const renderWoozeeeCards = (data) => (
+  const WoozeeeCards = (data) => (
     <View
       style={{
         height: CARD_HEIGHT,
@@ -174,7 +174,7 @@ export default function Home({ navigation }) {
     </TouchableOpacity>
   );
 
-  const RenderCategoryHeader = () => (
+  const renderWoozeeeCards = () => (
     <View style={{ flex: 1, paddingTop: 15, Height: 180 }}>
       <List
         style={{ backgroundColor: 'transparent' }}
@@ -184,7 +184,7 @@ export default function Home({ navigation }) {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         data={woozeeeCards}
-        renderItem={renderWoozeeeCards}
+        renderItem={WoozeeeCards}
         getItemLayout={(data, index) => ({
           length: CARD_HEIGHT,
           offset: CARD_HEIGHT * index,
@@ -205,7 +205,7 @@ export default function Home({ navigation }) {
 
       <View style={{ flex: 1 }}>
         <List
-          ListHeaderComponent={RenderCategoryHeader}
+          ListHeaderComponent={renderWoozeeeCards}
           ListHeaderComponentStyle={{ marginBottom: 10 }}
           style={{ backgroundColor: 'transparent' }}
           horizontal={!IS_PORTRAIT}

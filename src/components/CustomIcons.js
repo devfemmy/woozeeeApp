@@ -56,6 +56,16 @@ export const IconBack = (props) => (
   <Icon {...props} name="arrow-back-outline" />
 );
 
+export const IconBackIos = (props) => (
+  <Icon {...props} name="arrow-ios-back-outline" />
+);
+
+export const IconOptions = (props) => (
+  <Icon {...props} name="options-outline" />
+);
+
+export const IconFilm = (props) => <Icon {...props} name="film-outline" />;
+
 export const IconBell = (props) => <Icon {...props} name="bell-outline" />;
 
 export const IconShake = (props) => <Icon {...props} name="shake-outline" />;

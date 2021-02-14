@@ -9,9 +9,10 @@ import {
 
 import {
   IconCFlag,
-  IconVideoOutline,
   IconBell,
   IconSearch,
+  IconOptions,
+  IconFilm,
 } from 'src/components/CustomIcons';
 
 // Components import
@@ -33,14 +34,19 @@ export default function TopNavigationArea(props) {
     navigation,
   ]);
 
+  const routeMovies = useCallback(() => navigation.navigate('Movies'), [
+    navigation,
+  ]);
+
   const renderToolsOptions = useCallback(
     () => (
       <>
         <TopNavigationAction
           {...props}
-          icon={IconVideoOutline}
+          icon={IconFilm}
           accessibilityLiveRegion="polite"
-          accessibilityLabel="Record"
+          accessibilityLabel="Movies"
+          onPress={routeMovies}
         />
         <TopNavigationAction
           {...props}
@@ -50,7 +56,7 @@ export default function TopNavigationArea(props) {
         />
       </>
     ),
-    [props],
+    [props, routeMovies],
   );
 
   const renderSearchIcon = useCallback(
@@ -64,6 +70,18 @@ export default function TopNavigationArea(props) {
       />
     ),
     [props, routeSearch],
+  );
+
+  const renderOptionsIcon = useCallback(
+    () => (
+      <TopNavigationAction
+        {...props}
+        icon={IconOptions}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel="Options"
+      />
+    ),
+    [props],
   );
 
   const TopNavigationAuth = useMemo(
@@ -113,10 +131,11 @@ export default function TopNavigationArea(props) {
       <Layout level="5">
         <TopNavigation
           alignment="center"
-          title={(evaProps) => <SearchField {...evaProps} />}
-          accessoryRight={(evaProps) => (
-            <TopNavigationMenu {...evaProps} navigation={navigation} />
+          accessoryLeft={(evaProps) => (
+            <BackButton {...evaProps} navigation={navigation} icon="back" />
           )}
+          title={(evaProps) => <SearchField {...evaProps} />}
+          accessoryRight={renderOptionsIcon}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -124,7 +143,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style, navigation],
+    [style, navigation, renderOptionsIcon],
   );
 
   const TopNavigationProfile = useMemo(
