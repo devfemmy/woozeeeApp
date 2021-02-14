@@ -39,7 +39,7 @@ const PLACEHOLDER_CONFIG1 = {
 };
 
 const VIEWABILITY_CONFIG = {
-  minimumViewTime: 500,
+  minimumViewTime: 200,
   viewAreaCoveragePercentThreshold: 60,
 };
 
