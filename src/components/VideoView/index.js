@@ -138,7 +138,6 @@ export default function VideoView(props) {
           isPreloaded={IS_PRELOADED}
           isLooping
           resizeMode="cover"
-          controls
           repeat
         />
       </View>

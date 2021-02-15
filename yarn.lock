@@ -10340,11 +10340,6 @@ react-moment@^1.1.1:
   resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-1.1.1.tgz#5fe9fb257039590c804e2b3aedfc3ceb0a6ffb16"
   integrity sha512-WjwvxBSnmLMRcU33do0KixDB+9vP3e84eCse+rd+HNklAMNWyRgZTDEQlay/qK6lcXFPRuEIASJTpEt6pyK7Ww==
 
-react-native-create-thumbnail@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-create-thumbnail/-/react-native-create-thumbnail-1.2.2.tgz#4944e1e815dc494be8cb5864682a13c351c402ae"
-  integrity sha512-V5Ty3cfHnLRzP2xh4wZzMG4V1It+sqiK6weqRDIAGSKikABcB+Ho8koiidd6Bbqk0tZuBzW/WPwT/e6LsWC2nw==
-
 react-native-dotenv@^2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-2.5.1.tgz#2869f92f015d629eecd8a8586bc6b70160132bf2"
