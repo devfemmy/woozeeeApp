@@ -14,15 +14,12 @@ import { LocaleContext } from 'src/contexts';
 
 import Placeholders from 'src/components/Placeholders';
 
-import TabsMenu from 'src/components/TabsMenu';
-
 import FetchFailed from './FetchFailed';
 
 export default function WithDefaultFetch(
   WrappedComponent,
   fetchUrl,
   placeholderProp,
-  tabs = null,
 ) {
   const isMounted = useRef(false);
 
@@ -35,8 +32,6 @@ export default function WithDefaultFetch(
   const [isError, setIsError] = useState(false);
 
   const [posts, setPosts] = useState(null);
-
-  const [activePage, setActiveTab] = useState('default');
 
   const getMaxHeight = () => {
     if (placeholderProp.maxHeight <= 1) {
@@ -66,10 +61,6 @@ export default function WithDefaultFetch(
     }
   }, [fetchUrl, isMounted]);
 
-  const updateTab = (param) => {
-    setActiveTab(param);
-    fetchPosts();
-  };
   useEffect(() => {
     isMounted.current = true;
     fetchPosts();
@@ -104,9 +95,6 @@ export default function WithDefaultFetch(
   if (posts && posts.length > 0) {
     return (
       <>
-        {tabs ? (
-          <TabsMenu tabs={tabs} tabInfo={{ activePage, updateTab }} />
-        ) : null}
         <WrappedComponent info={posts} />
       </>
     );

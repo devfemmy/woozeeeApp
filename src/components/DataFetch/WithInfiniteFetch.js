@@ -10,15 +10,12 @@ import { LocaleContext } from 'src/contexts';
 
 import Placeholders from 'src/components/Placeholders';
 
-import TabsMenu from 'src/components/TabsMenu';
-
 import FetchFailed from './FetchFailed';
 
 export default function WithInfiniteFetch(
   WrappedComponent,
   fetchUrl,
   placeholderProp,
-  tabs = null,
 ) {
   const { width, height } = useWindowDimensions();
 
@@ -60,10 +57,6 @@ export default function WithInfiniteFetch(
     },
   );
 
-  const updateTab = (param) => {
-    setPage(param);
-  };
-
   if (status === 'loading') {
     return (
       <Placeholders
@@ -93,9 +86,6 @@ export default function WithInfiniteFetch(
   ) {
     return data.pages.map((page) => (
       <React.Fragment key={page.nextID}>
-        {tabs ? (
-          <TabsMenu tabs={tabs} tabInfo={{ activePage, updateTab }} />
-        ) : null}
         <WrappedComponent info={page.pageData.data} />
       </React.Fragment>
     ));

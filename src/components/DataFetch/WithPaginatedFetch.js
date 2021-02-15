@@ -10,15 +10,12 @@ import { LocaleContext } from 'src/contexts';
 
 import Placeholders from 'src/components/Placeholders';
 
-import TabsMenu from 'src/components/TabsMenu';
-
 import FetchFailed from './FetchFailed';
 
 export default function WithPaginatedFetch(
   WrappedComponent,
   fetchUrl,
   placeholderProp,
-  tabs = null,
 ) {
   const { width, height } = useWindowDimensions();
 
@@ -50,10 +47,6 @@ export default function WithPaginatedFetch(
     },
   );
 
-  const updateTab = (param) => {
-    setPage(param);
-  };
-
   if (isLoading) {
     return (
       <Placeholders
@@ -78,9 +71,6 @@ export default function WithPaginatedFetch(
   if (!isLoading && !isError && data.pageData.data.length > 0) {
     return (
       <>
-        {tabs ? (
-          <TabsMenu tabs={tabs} tabInfo={{ activePage, updateTab }} />
-        ) : null}
         <WrappedComponent info={data.pageData.data} />
       </>
     );

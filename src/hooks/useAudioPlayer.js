@@ -21,10 +21,9 @@ export default function useAudioPlayer(uri, isMuted) {
   );
 
   useEffect(() => {
-    isMounted.current = true;
-
     (async () => {
       try {
+        isMounted.current = true;
         if (isMounted.current) {
           if (isFocused && !soundObj.current._loaded) {
             await soundObj.current.loadAsync(uri, INITIAL_STATUS);
