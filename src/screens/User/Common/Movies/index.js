@@ -135,7 +135,7 @@ export default function Explore({ navigation }) {
       hasNextPage,
       hasPreviousPage,
     } = useInfiniteQuery(
-      ['inFiniteSocialVideos', 1],
+      ['infiniteMovies', 1],
       async ({ pageParam = 1 }) => {
         const promise = await Api.getVideos(trendingUrl, 1, pageParam);
         promise.cancel = () => Api.cancelRequest('Request aborted');
@@ -152,10 +152,11 @@ export default function Explore({ navigation }) {
     if (status === 'loading') {
       return (
         <Placeholders
-          mediaLeft={false}
-          count={1}
-          numColumns={1}
-          maxHeight={height * 0.65}
+          mediaLeft
+          row
+          count={4}
+          numColumns={2}
+          maxHeight={275}
           maxWidth={width}
         />
       );
