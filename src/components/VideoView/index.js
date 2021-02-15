@@ -37,7 +37,7 @@ export default function VideoView(props) {
 
   const [isLiked, setLiked] = useState(false);
 
-  const [hideText, setHideText] = useState(1);
+  const [hideText, setHideText] = useState(true);
 
   const toggleLike = () => setLiked((prevState) => !prevState);
 
@@ -138,7 +138,6 @@ export default function VideoView(props) {
           isPreloaded={IS_PRELOADED}
           isLooping
           resizeMode="cover"
-          repeat
         />
       </View>
       <View
@@ -198,7 +197,11 @@ export default function VideoView(props) {
             alignItems: 'center',
           }}
         >
-          <Text category="p2" style={{ flex: 1 }} numberOfLines={hideText}>
+          <Text
+            category="p2"
+            style={{ flex: 1 }}
+            numberOfLines={hideText ? 1 : 0}
+          >
             The love of woozeee is the beginning of wisdom, if you believe say
             I.
           </Text>
