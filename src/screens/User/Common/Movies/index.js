@@ -60,10 +60,10 @@ const MOVIE_CATEGORIES = [
 const MovieCategory = (props) => {
   const { data } = props;
   return (
-    <View
+    <Layout
+      level="2"
       style={{
         height: 40,
-        backgroundColor: '#F7F9FC',
         marginHorizontal: 5,
         borderRadius: 20,
       }}
@@ -79,12 +79,11 @@ const MovieCategory = (props) => {
           justifyContent: 'center',
           alignItems: 'center',
           height: '100%',
-          // borderBottomColor: '#FF5757',
         }}
       >
         <Text status="basic">{data.item.title}</Text>
       </TouchableOpacity>
-    </View>
+    </Layout>
   );
 };
 

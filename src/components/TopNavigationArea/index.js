@@ -112,7 +112,7 @@ export default function TopNavigationArea(props) {
         <TopNavigation
           alignment="center"
           title={(evaProps) => <Logo {...evaProps} />}
-          accessoryLeft={IconCFlag}
+          accessoryLeft={() => <IconCFlag style={{ height: 28, width: 28 }} />}
           accessoryRight={(evaProps) => (
             <TopNavigationMenu {...evaProps} navigation={navigation} />
           )}

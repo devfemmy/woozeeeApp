@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useState, useCallback, useContext,
+  useState, useCallback, useContext, useMemo,
 } from 'react';
 
 import { View, useWindowDimensions } from 'react-native';
@@ -38,11 +38,6 @@ const PLACEHOLDER_CONFIG1 = {
   mediaLeft: false,
 };
 
-const VIEWABILITY_CONFIG = {
-  minimumViewTime: 200,
-  viewAreaCoveragePercentThreshold: 60,
-};
-
 // prettier-ignore
 const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
@@ -60,6 +55,14 @@ export default function Explore({ navigation }) {
   const ITEM_HEIGHT = LIST_HEIGHT * 0.75;
 
   const t = useContext(LocaleContext);
+
+  const VIEWABILITY_CONFIG = useMemo(
+    () => ({
+      minimumViewTime: 200,
+      viewAreaCoveragePercentThreshold: 60,
+    }),
+    [],
+  );
 
   const SocialPostsArea = () => {
     const [activeIndex, setActiveIndex] = useState(0);

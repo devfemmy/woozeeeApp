@@ -51,8 +51,8 @@ const IconUpload = () => (
           width: 55,
           height: 55,
           borderRadius: 100,
-          resizeMode: 'contain',
         }}
+        resizeMode="cover"
       />
     </TouchableOpacity>
   </Layout>

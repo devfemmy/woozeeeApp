@@ -124,7 +124,7 @@ export default function OnboardingScreen({ navigation }) {
             <Image
               source={require('assets/images/drawable/logo.png')}
               resizeMode="contain"
-              style={{ maxWidth: 200 }}
+              style={{ maxWidth: 200, height: 30 }}
             />
           </View>
           <View style={styles.brandMotto}>

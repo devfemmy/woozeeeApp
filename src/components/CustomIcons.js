@@ -174,18 +174,9 @@ export const IconTwitter = (props) => (
   <Icon {...props} name="twitter-outline" />
 );
 
-export const IconCFlag = (props) => {
-  const { width, height, ...otherProps } = props;
-
-  return (
-    <Image
-      {...otherProps}
-      source={require('assets/images/icon/flag-ng.png')}
-      resizeMode="contain"
-      style={{ width: width || 28, height: height || 28 }}
-    />
-  );
-};
+export const IconCFlag = (props) => (
+  <Icon {...props} name="flag-ng" pack="assets" />
+);
 
 export const IconCHome = (props) => {
   const { active, ...otherProps } = props;

@@ -129,11 +129,11 @@ export default function Home({ navigation }) {
       <Image
         source={data.item.banner}
         style={{
-          height: IS_PORTRAIT ? 140 : 110,
+          height: IS_PORTRAIT ? 125 : 95,
           width: '95%',
           borderRadius: 5,
         }}
-        resizeMode="contain"
+        resizeMode="cover"
       />
     </View>
   );
@@ -206,7 +206,6 @@ export default function Home({ navigation }) {
       <View style={{ flex: 1 }}>
         <List
           ListHeaderComponent={renderWoozeeeCards}
-          ListHeaderComponentStyle={{ marginBottom: 10 }}
           style={{ backgroundColor: 'transparent' }}
           horizontal={!IS_PORTRAIT}
           alwaysBounceHorizontal

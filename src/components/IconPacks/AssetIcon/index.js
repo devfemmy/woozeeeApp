@@ -2,17 +2,9 @@ import React from 'react';
 import { Image } from 'react-native';
 
 const IconProvider = (source) => ({
-  toReactElement: ({ animation, ...props }) => {
-    const { style, ...otherProps } = props;
-
-    return (
-      <Image
-        {...otherProps}
-        source={source}
-        style={[style, { resizeMode: 'contain' }]}
-      />
-    );
-  },
+  toReactElement: ({ animation, ...props }) => (
+    <Image {...props} source={source} resizeMode="cover" />
+  ),
 });
 
 const AssetIconsPack = {
@@ -50,6 +42,7 @@ const AssetIconsPack = {
     'user-outline': IconProvider(
       require('assets/images/icon/user-outline.png'),
     ),
+    'flag-ng': IconProvider(require('assets/images/icon/flag-ng.png')),
   },
 };
 
