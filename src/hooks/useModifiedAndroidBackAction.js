@@ -4,7 +4,7 @@ import { BackHandler } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 
-export default function useDisableAndroidBackAction(navigation, screen) {
+export default function useModifiedAndroidBackAction(navigation, screen) {
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {

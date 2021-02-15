@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-import useDisableAndroidBackAction from 'src/hooks/useDisableAndroidBackAction';
+import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
 import { Layout } from '@ui-kitten/components';
 
@@ -25,7 +25,7 @@ const PLACEHOLDER_CONFIG = {
 const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
 
 export default function Versus({ navigation }) {
-  useDisableAndroidBackAction(navigation, 'SocialRoute');
+  useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>

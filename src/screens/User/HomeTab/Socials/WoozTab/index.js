@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 
 import { Layout } from '@ui-kitten/components';
 
-import useDisableAndroidBackAction from 'src/hooks/useDisableAndroidBackAction';
+import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
 import WithInfiniteFetch from 'src/components/DataFetch/WithInfiniteFetch';
 
@@ -50,7 +50,7 @@ const PLACEHOLDER_CONFIG = {
 const WoozPostsArea = () => WithInfiniteFetch(WoozPosts, socialUrl, PLACEHOLDER_CONFIG);
 
 export default function Wooz({ navigation }) {
-  useDisableAndroidBackAction(navigation, 'SocialRoute');
+  useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
   const routeLiveStream = () => navigation.navigate('LiveStream');
 

@@ -12,7 +12,7 @@ import {
 
 import { LoadingContext, LocaleContext } from 'src/contexts';
 
-import useDisableAndroidBackAction from 'src/hooks/useDisableAndroidBackAction';
+import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
@@ -45,7 +45,7 @@ const ProfilePostsArea = () => (
 );
 
 export default function Profile({ navigation }) {
-  useDisableAndroidBackAction(navigation, 'SocialRoute');
+  useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
   const { width, height } = useWindowDimensions();
 
