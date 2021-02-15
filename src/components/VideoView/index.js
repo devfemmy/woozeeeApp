@@ -24,7 +24,7 @@ export default function VideoView(props) {
 
   const { item, index } = data;
 
-  const INDEX_PRELOAD = [1, 2];
+  const INDEX_PRELOAD = [1];
 
   const IS_ACTIVE = activeIndex === index;
 
@@ -33,8 +33,6 @@ export default function VideoView(props) {
   const IS_NEXT = INDEX_PRELOAD.includes(index - activeIndex);
 
   const IS_PRELOADED = IS_PREV || IS_NEXT;
-
-  const [shouldPlay, setShouldPlay] = useState(true);
 
   const [isLiked, setLiked] = useState(false);
 
@@ -130,11 +128,13 @@ export default function VideoView(props) {
       >
         <CustomVideoPlayer
           videoUri={item.video}
-          shouldPlay={shouldPlay}
+          shouldPlay
           shouldDisplay={IS_ACTIVE}
           isPreloaded={IS_PRELOADED}
           isLooping
           resizeMode="cover"
+          controls
+          repeat
         />
       </View>
       <View

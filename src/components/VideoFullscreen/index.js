@@ -35,7 +35,7 @@ export default function VideoView(props) {
 
   const { item, index } = data;
 
-  const INDEX_PRELOAD = [1, 2];
+  const INDEX_PRELOAD = [1];
 
   const IS_ACTIVE = activeIndex === index;
 
@@ -73,6 +73,7 @@ export default function VideoView(props) {
         isMuted={isMuted}
         isLooping
         resizeMode="contain"
+        repeat
       />
       <View style={styles.uiContainer}>
         <View

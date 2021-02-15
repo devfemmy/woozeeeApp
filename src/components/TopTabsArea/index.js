@@ -12,7 +12,7 @@ const tabs = {
   },
 };
 
-export default function BottomNavigationArea(props) {
+export default function TopTabsArea(props) {
   // prettier-ignore
   const {
     navigation, state, style, page,
