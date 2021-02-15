@@ -6,15 +6,11 @@ import { Layout, Button, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 
-// import useNotifyBackAction from 'src/hooks/useNotifyBackAction';
-
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
 export default function RegisterFull({ navigation }) {
-  // useNotifyBackAction(navigation, 'Click again to go back');
-
   const [isLoading, setLoading] = useState(false);
 
   const [form, setFormValues] = useState({
