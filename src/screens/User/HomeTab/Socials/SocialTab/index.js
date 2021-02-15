@@ -104,7 +104,7 @@ export default function Explore({ navigation }) {
           mediaLeft={false}
           count={1}
           numColumns={1}
-          maxHeight={height * 0.65}
+          maxHeight={height * 0.75}
           maxWidth={width}
         />
       );

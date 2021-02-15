@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 const PLACEHOLDER_CONFIG = {
   count: 1,
   numColumns: 1,
-  maxHeight: 0.65,
+  maxHeight: 0.75,
   mediaLeft: false,
 };
 

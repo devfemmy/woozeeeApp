@@ -42,6 +42,7 @@ export default function VideoCard(props) {
         >
           <Image
             source={{ uri: `https://i.postimg.cc/${data.banner}` }}
+            defaultSource={require('assets/images/banner/placeholder-image.png')}
             style={{
               height: 100,
               width: 100,
