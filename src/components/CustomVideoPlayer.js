@@ -4,6 +4,8 @@ import { Video } from 'expo-av';
 
 import { useIsFocused } from '@react-navigation/native';
 
+import useVideoThumb from 'src/hooks/useVideoThumb';
+
 export default function CustomVideoPlayer(props) {
   // prettier-ignore
   const {
@@ -12,6 +14,10 @@ export default function CustomVideoPlayer(props) {
 
   const isFocused = useIsFocused();
 
+  const thumbUri = useVideoThumb(videoUri);
+
+  // const thumbUri = null;
+
   return (shouldDisplay || isPreloaded) && isFocused ? (
     <Video
       {...otherProps}
@@ -19,10 +25,13 @@ export default function CustomVideoPlayer(props) {
       shouldCorrectPitch
       resizeMode={resizeMode}
       usePoster
-      posterSource={require('assets/images/banner/placeholder-image.png')}
+      posterSource={
+        thumbUri
+          ? { uri: thumbUri }
+          : require('assets/images/banner/placeholder-image.png')
+      }
       posterStyle={{ resizeMode, height: '100%', width: '100%' }}
       style={{ flex: 1 }}
-      progressUpdateIntervalMillis={1000}
       shouldPlay={shouldPlay && shouldDisplay && isFocused}
     />
   ) : null;

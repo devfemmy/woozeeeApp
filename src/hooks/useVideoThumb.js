@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import * as VideoThumbnails from 'expo-video-thumbnails';
+import { createThumbnail } from 'react-native-create-thumbnail';
 
 export default function useVideoThumb(videoUri) {
   const [imageUri, setImageUri] = useState(null);
@@ -8,13 +8,14 @@ export default function useVideoThumb(videoUri) {
   useEffect(() => {
     (async () => {
       try {
-        const { uri } = await VideoThumbnails.getThumbnailAsync(videoUri, {
-          time: 1000,
+        const thumbUri = await createThumbnail({
+          url: videoUri,
+          timeStamp: 0,
         });
 
-        setImageUri(uri);
+        setImageUri(thumbUri.path);
       } catch (e) {
-        console.log(e);
+        const msg = e;
       }
     })();
   }, [videoUri]);

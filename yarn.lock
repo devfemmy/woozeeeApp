@@ -4782,6 +4782,11 @@ elliptic@^6.5.3:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+eme-encryption-scheme-polyfill@^2.0.1:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/eme-encryption-scheme-polyfill/-/eme-encryption-scheme-polyfill-2.0.2.tgz#6d3edb6d95951883a499f2d6dafbd84a5574f8c3"
+  integrity sha512-tZXuxVUCV1GmlQBGGVVNAt6lXBUxjDFqIAPAhz4F5Z/TvCi/coojxcZGEO5k+KMt/dWRFmXaK5pxKCMehue/oA==
+
 emoji-regex@^7.0.1:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
@@ -5461,11 +5466,6 @@ expo-updates@~0.4.0:
     "@expo/metro-config" "^0.1.16"
     fbemitter "^2.1.1"
     uuid "^3.4.0"
-
-expo-video-thumbnails@~4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/expo-video-thumbnails/-/expo-video-thumbnails-4.4.0.tgz#962763c31d7768823f3162574c7805ffe4e04240"
-  integrity sha512-eykJaV9zt/HruYYAiptDoXy9rBDgrLMe1Sok9hKeQycqQPzs0Go5mEuU08TO4fm+lhSgCVBkJUDhZecDIQFinQ==
 
 expo@~40.0.0:
   version "40.0.1"
@@ -7785,6 +7785,11 @@ jsprim@^1.2.2:
   dependencies:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
+
+keymirror@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+  integrity sha1-kYiJ6hP40KQufFVyUO7nE63JXDU=
 
 kind-of@^1.1.0:
   version "1.1.0"
@@ -10335,6 +10340,11 @@ react-moment@^1.1.1:
   resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-1.1.1.tgz#5fe9fb257039590c804e2b3aedfc3ceb0a6ffb16"
   integrity sha512-WjwvxBSnmLMRcU33do0KixDB+9vP3e84eCse+rd+HNklAMNWyRgZTDEQlay/qK6lcXFPRuEIASJTpEt6pyK7Ww==
 
+react-native-create-thumbnail@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-create-thumbnail/-/react-native-create-thumbnail-1.2.2.tgz#4944e1e815dc494be8cb5864682a13c351c402ae"
+  integrity sha512-V5Ty3cfHnLRzP2xh4wZzMG4V1It+sqiK6weqRDIAGSKikABcB+Ho8koiidd6Bbqk0tZuBzW/WPwT/e6LsWC2nw==
+
 react-native-dotenv@^2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-2.5.1.tgz#2869f92f015d629eecd8a8586bc6b70160132bf2"
@@ -10430,6 +10440,15 @@ react-native-vector-icons@^8.0.0:
     lodash.template "^4.5.0"
     prop-types "^15.7.2"
     yargs "^16.1.1"
+
+react-native-video@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-5.1.1.tgz#89a7989efeb8d404611c06154d1da227a745d7d8"
+  integrity sha512-zee8gRUrjPWRoZSEBiMebClqu1iAuCQNLjzqpmXFrRWEoJj7azM3BPqLQWJgsnfLiYUYGySeApC/G60THM5+tw==
+  dependencies:
+    keymirror "^0.1.1"
+    prop-types "^15.7.2"
+    shaka-player "^2.5.9"
 
 react-native-web@~0.13.12:
   version "0.13.18"
@@ -11137,6 +11156,13 @@ sha.js@^2.4.0, sha.js@^2.4.8:
   dependencies:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
+
+shaka-player@^2.5.9:
+  version "2.5.20"
+  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-2.5.20.tgz#0e0f761a23eea0aa7dd931c35e67c4becb4d010b"
+  integrity sha512-5HJ0PEzps9jJsy9fZlmUyXD74c+goxxe1ZtTQQo+6eohVm/+68NUUAPSu/nHJJKg5Jnk5TKL3oZ+dP8+aForPA==
+  dependencies:
+    eme-encryption-scheme-polyfill "^2.0.1"
 
 sharp@^0.27.0:
   version "0.27.1"
