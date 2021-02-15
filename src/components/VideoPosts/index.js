@@ -124,7 +124,7 @@ export const UsersPosts = ({ info }) => info.map((item) => (
       flex: 1,
       marginBottom: 10,
       paddingVertical: 5,
-      maxHeight: 225,
+      maxHeight: 235,
     }}
     key={item.category}
   >
@@ -147,8 +147,8 @@ export const UsersPosts = ({ info }) => info.map((item) => (
         <VideoCard data={renderData.item} extraWidth={0.5} />
       )}
       getItemLayout={(data, index) => ({
-        length: 175,
-        offset: 175 * index,
+        length: 180,
+        offset: 180 * index,
         index,
       })}
     />
@@ -169,14 +169,14 @@ export const ProfilePosts = ({ info }) => (
     alwaysBounceVertical
     showsHorizontalScrollIndicator={false}
     showsVerticalScrollIndicator={false}
-    numColumns={2}
+    numColumns={3}
     data={info}
     renderItem={(renderData) => (
-      <VideoCard data={renderData.item} extraWidth={0} />
+      <VideoCard data={renderData.item} extraWidth={0} numColumns={3} />
     )}
     getItemLayout={(data, index) => ({
-      length: 175,
-      offset: 175 * index,
+      length: 180,
+      offset: 180 * index,
       index,
     })}
   />

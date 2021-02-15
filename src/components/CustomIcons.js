@@ -60,6 +60,10 @@ export const IconBackIos = (props) => (
   <Icon {...props} name="arrow-ios-back-outline" />
 );
 
+export const IconForwardIos = (props) => (
+  <Icon {...props} name="arrow-ios-forward-outline" />
+);
+
 export const IconOptions = (props) => (
   <Icon {...props} name="options-outline" />
 );

@@ -15,11 +15,11 @@ export default function MovieCard(props) {
     <TouchableOpacity
       activeOpacity={0.75}
       style={{
-        height: 275,
+        height: 270,
         width: IS_PORTRAIT
-          ? (width - 10) / (2 + extraWidth)
+          ? (width - 5) / (2 + extraWidth)
           : width - 10 / (3 + extraWidth),
-        paddingHorizontal: 5,
+        paddingHorizontal: 2,
         position: 'relative',
         alignItems: 'center',
         justifyContent: 'flex-start',

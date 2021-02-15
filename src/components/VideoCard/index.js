@@ -12,21 +12,23 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Text } from '@ui-kitten/components';
 
 export default function VideoCard(props) {
-  const { data, extraWidth } = props;
+  const { data, extraWidth, numColumns } = props;
 
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;
 
+  const COLOUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 2 : 3);
+
   return (
     <TouchableOpacity
       activeOpacity={0.75}
       style={{
-        height: 175,
+        height: 180,
         width: IS_PORTRAIT
-          ? (width - 10) / (2 + extraWidth)
-          : width - 10 / (3 + extraWidth),
-        paddingHorizontal: 5,
+          ? (width - 5) / (COLOUMN_COUNT + extraWidth)
+          : width - 10 / (COLOUMN_COUNT + extraWidth),
+        paddingHorizontal: 2,
         position: 'relative',
         alignItems: 'center',
         justifyContent: 'flex-start',
@@ -37,7 +39,7 @@ export default function VideoCard(props) {
         source={{ uri: `https://i.postimg.cc/${data.banner}` }}
         defaultSource={require('assets/images/banner/placeholder-image.png')}
         style={{
-          height: 165,
+          height: 175,
           width: '100%',
           borderRadius: 5,
         }}
@@ -73,7 +75,7 @@ export default function VideoCard(props) {
           style={{
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             position: 'absolute',
-            bottom: 10,
+            bottom: 5,
             borderBottomLeftRadius: 5,
             borderBottomRightRadius: 5,
             padding: 5,

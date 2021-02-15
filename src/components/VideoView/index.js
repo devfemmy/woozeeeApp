@@ -17,6 +17,7 @@ import {
   IconEye,
   IconMsgSquareOutline,
   IconMoreHorizontal,
+  IconForwardIos,
 } from 'src/components/CustomIcons';
 
 export default function VideoView(props) {
@@ -36,7 +37,11 @@ export default function VideoView(props) {
 
   const [isLiked, setLiked] = useState(false);
 
+  const [hideText, setHideText] = useState(1);
+
   const toggleLike = () => setLiked((prevState) => !prevState);
+
+  const updateHiddenText = () => setHideText((prevState) => !prevState);
 
   return (
     <View
@@ -184,6 +189,65 @@ export default function VideoView(props) {
             height={28}
             width={28}
           />
+        </View>
+      </View>
+      <View style={{ marginTop: 10, paddingHorizontal: 15 }}>
+        <View
+          style={{
+            marginBottom: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          <Text category="p2" style={{ flex: 1 }} numberOfLines={hideText}>
+            The love of woozeee is the beginning of wisdom, if you believe say
+            I.
+          </Text>
+          <Button
+            size="tiny"
+            appearance="ghost"
+            style={{ width: 60 }}
+            onPress={updateHiddenText}
+          >
+            <Text appearance="hint" category="c2">
+              more
+            </Text>
+          </Button>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              flex: 1,
+            }}
+          >
+            <Text category="s2" status="primary">
+              Mathias Wisdom
+            </Text>
+            <Text category="s2" style={{ marginHorizontal: 2 }}>
+              :
+            </Text>
+            <Text category="p2">That&apos;s my boy</Text>
+          </View>
+          <View style={{ width: 125 }}>
+            <Button
+              size="tiny"
+              appearance="ghost"
+              accessoryRight={IconForwardIos}
+            >
+              <Text status="primary" category="s2">
+                Comments
+              </Text>
+            </Button>
+          </View>
         </View>
       </View>
     </View>

@@ -157,7 +157,7 @@ export default function Explore({ navigation }) {
           row
           count={4}
           numColumns={2}
-          maxHeight={275}
+          maxHeight={270}
           maxWidth={width}
         />
       );
@@ -198,8 +198,8 @@ export default function Explore({ navigation }) {
                 <MovieCard data={renderData.item} extraWidth={0} />
               )}
               getItemLayout={(data, index) => ({
-                length: 275,
-                offset: 275 * index,
+                length: 270,
+                offset: 270 * index,
                 index,
               })}
             />
