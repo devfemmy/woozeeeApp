@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Video from 'react-native-video';
+import { Video } from 'expo-av';
 
 import { useIsFocused } from '@react-navigation/native';
 
@@ -20,17 +20,13 @@ export default function CustomVideoPlayer(props) {
     <Video
       {...otherProps}
       source={{ uri: videoUri }}
+      shouldCorrectPitch
       resizeMode={resizeMode}
-      poster={'https://i.postimg.cc/x8Stv6cG/placeholder-image.png'}
-      posterResizeMode={resizeMode}
+      usePoster
+      posterSource={require('assets/images/banner/placeholder-image.png')}
+      posterStyle={{ resizeMode, height: '100%', width: '100%' }}
       style={{ flex: 1 }}
-      paused={!(shouldPlay && shouldDisplay && isFocused)}
-      bufferConfig={{
-        minBufferMs: 15000,
-        maxBufferMs: 30000,
-        bufferForPlaybackMs: 2500,
-        bufferForPlaybackAfterRebufferMs: 5000,
-      }}
+      shouldPlay={shouldPlay && shouldDisplay && isFocused}
     />
   ) : null;
 }
