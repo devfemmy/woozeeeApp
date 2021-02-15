@@ -29,11 +29,6 @@ export default function Versus({ navigation }) {
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title="woozeee"
-        navigation={navigation}
-        screen="toolbar"
-      />
       <ScrollView
         style={{ flex: 1, paddingVertical: 10 }}
         alwaysBounceVertical
