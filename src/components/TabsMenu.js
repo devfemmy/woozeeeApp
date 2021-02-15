@@ -19,8 +19,10 @@ export default function TabsMenu(props) {
           width: '100%',
         }}
       >
-        {tabs &&
-          tabs.map((tab) => (
+        {
+          /*  prettier-ignore */
+          tabs
+          && tabs.map((tab) => (
             <Button
               appearance="ghost"
               status={activePage === tab.title ? 'primary' : 'basic'}
@@ -31,7 +33,8 @@ export default function TabsMenu(props) {
               onPress={() => updateTab(tab.title)}
               key={tab.title}
             />
-          ))}
+          ))
+        }
       </View>
     </Layout>
   );

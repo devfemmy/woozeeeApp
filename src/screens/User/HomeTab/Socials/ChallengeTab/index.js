@@ -32,7 +32,7 @@ export default function Challenge({ navigation }) {
         <Tab title="Versus" style={{ paddingVertical: 10 }}>
           <Versus />
         </Tab>
-        <Tab title="Explore">
+        <Tab title="Explore" style={{ paddingVertical: 10 }}>
           <Explore />
         </Tab>
       </TabView>

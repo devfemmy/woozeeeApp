@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 // prettier-ignore
 import {
@@ -7,7 +7,7 @@ import {
 
 // prettier-ignore
 import {
-  Layout, Text, Button,
+  Layout, Text, Button, Tab, TabView, Divider,
 } from '@ui-kitten/components';
 
 import { LoadingContext, LocaleContext } from 'src/contexts';
@@ -26,12 +26,6 @@ import { IconGrid, IconBookmark, IconHeart } from 'src/components/CustomIcons';
 
 import { trendingUrl } from 'src/api/dummy';
 
-const TABS = [
-  { title: 'default', icon: IconGrid },
-  { title: 'saved', icon: IconBookmark },
-  { title: 'liked', icon: IconHeart },
-];
-
 const PLACEHOLDER_CONFIG = {
   count: 4,
   numColumns: 2,
@@ -41,7 +35,7 @@ const PLACEHOLDER_CONFIG = {
 
 // prettier-ignore
 const ProfilePostsArea = () => (
-  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, TABS)
+  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG)
 );
 
 export default function Profile({ navigation }) {
@@ -53,9 +47,13 @@ export default function Profile({ navigation }) {
 
   const t = useContext(LocaleContext);
 
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const shouldLoadComponent = (index) => index === selectedIndex;
+
   const IS_PORTRAIT = height > width;
 
-  const routeEditProfile = () => navigation.navigate('EditProfile');
+  // const routeEditProfile = () => navigation.navigate('EditProfile');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -75,7 +73,7 @@ export default function Profile({ navigation }) {
       >
         <View
           style={{
-            height: IS_PORTRAIT ? 300 : '100%',
+            height: IS_PORTRAIT ? 260 : '100%',
             width: IS_PORTRAIT ? '100%' : '40%',
           }}
         >
@@ -140,7 +138,7 @@ export default function Profile({ navigation }) {
                   seems).
                 </Text>
               </View>
-              <View style={{ marginBottom: 10 }}>
+              {/* <View style={{ marginBottom: 10 }}>
                 <Button
                   status="primary"
                   size="small"
@@ -150,7 +148,7 @@ export default function Profile({ navigation }) {
                     {`${t('edit')} ${t('profile')}`}
                   </Text>
                 </Button>
-              </View>
+              </View> */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -181,9 +179,24 @@ export default function Profile({ navigation }) {
             </View>
           </ScrollView>
         </View>
-        <View style={{ flex: 1 }}>
-          <ProfilePostsArea />
-        </View>
+        <Divider style={{ marginBottom: 5 }} />
+        <TabView
+          style={{ flex: 1 }}
+          indicatorStyle={{ backgroundColor: 'transparent' }}
+          selectedIndex={selectedIndex}
+          shouldLoadComponent={shouldLoadComponent}
+          onSelect={(index) => setSelectedIndex(index)}
+        >
+          <Tab title="All" icon={IconGrid}>
+            <ProfilePostsArea />
+          </Tab>
+          <Tab title="Saved" icon={IconBookmark}>
+            <ProfilePostsArea />
+          </Tab>
+          <Tab title="Liked" icon={IconHeart}>
+            <ProfilePostsArea />
+          </Tab>
+        </TabView>
       </View>
     </Layout>
   );
