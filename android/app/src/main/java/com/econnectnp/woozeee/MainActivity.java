@@ -1,4 +1,4 @@
-package com.woozeee;
+package com.econnectnp.woozeee;
 
 import android.os.Bundle;
 
