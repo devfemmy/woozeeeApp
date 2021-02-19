@@ -3,7 +3,12 @@ import { Image } from 'react-native';
 
 const IconProvider = (source) => ({
   toReactElement: ({ animation, ...props }) => (
-    <Image {...props} source={source} resizeMode="cover" />
+    <Image
+      {...props}
+      source={source}
+      defaultSource={source}
+      resizeMode="cover"
+    />
   ),
 });
 

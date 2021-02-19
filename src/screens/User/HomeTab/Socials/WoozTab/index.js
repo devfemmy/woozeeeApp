@@ -75,7 +75,7 @@ export default function Wooz({ navigation }) {
           <View style={styles.interactIcons}>
             <InteractIcon
               onPress={routeLiveStream}
-              Accessory={(evaProps) => <IconVideo {...evaProps} isOpen />}
+              Accessory={(evaProps) => <IconVideo {...evaProps} />}
             />
           </View>
         </View>

@@ -199,7 +199,7 @@ export default function VideoView(props) {
         >
           <Text
             category="p2"
-            style={{ flex: 1 }}
+            style={{ flex: 1, lineHeight: 24 }}
             numberOfLines={hideText ? 1 : 0}
           >
             The love of woozeee is the beginning of wisdom, if you believe say

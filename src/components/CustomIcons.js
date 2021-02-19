@@ -22,8 +22,18 @@ export const IconVolume = (props) => {
 };
 
 export const IconVideo = (props) => {
-  const { isOpen, ...otherProps } = props;
-  return <Icon {...otherProps} name={isOpen ? 'video' : 'video-off'} />;
+  const { isClosed, ...otherProps } = props;
+  return <Icon {...otherProps} name={isClosed ? 'video-off' : 'video'} />;
+};
+
+export const IconVideoOutline = (props) => {
+  const { isClosed, ...otherProps } = props;
+  return (
+    <Icon
+      {...otherProps}
+      name={isClosed ? 'video-off-outline' : 'video-outline'}
+    />
+  );
 };
 
 export const IconHeartToggle = (props) => {
@@ -39,10 +49,6 @@ export const IconPlayPause = (props) => {
 };
 
 export const IconHeart = (props) => <Icon {...props} name="heart" />;
-
-export const IconVideoOutline = (props) => (
-  <Icon {...props} name="video-outline" />
-);
 
 export const IconPlusCircle = (props) => <Icon {...props} name="plus-circle" />;
 

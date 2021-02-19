@@ -12,7 +12,7 @@ import {
   IconBell,
   IconSearch,
   IconOptions,
-  IconFilm,
+  IconVideoOutline,
 } from 'src/components/CustomIcons';
 
 // Components import
@@ -43,7 +43,7 @@ export default function TopNavigationArea(props) {
       <>
         <TopNavigationAction
           {...props}
-          icon={IconFilm}
+          icon={(evaProps) => <IconVideoOutline {...evaProps} />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Movies"
           onPress={routeMovies}

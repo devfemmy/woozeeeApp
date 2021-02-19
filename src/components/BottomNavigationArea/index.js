@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import { Image, TouchableOpacity } from 'react-native';
 
@@ -47,6 +47,7 @@ const IconUpload = () => (
     <TouchableOpacity onPress={null}>
       <Image
         source={require('assets/images/icon/upload.png')}
+        defaultSource={require('assets/images/icon/upload.png')}
         style={{
           width: 55,
           height: 55,
@@ -87,23 +88,27 @@ export default function BottomNavigationArea(props) {
     <Icon {...otherProps} style={{ height: 24, width: 24 }} active={active} />
   );
 
-  return (
-    <Layout level="5">
-      <Divider />
-      <BottomNavigation
-        appearance="noIndicator"
-        style={[style, { backgroundColor: 'transparent' }]}
-        selectedIndex={state.index}
-        onSelect={(index) => navigation.navigate(state.routeNames[index])}
-      >
-        {Object.entries(tabs[page]).map(([title, icon], id) => (
-          <BottomNavigationTab
-            title={title === 'upload' ? null : t(title)}
-            icon={(evaProps) => renderIcon(icon, evaProps, state.index === id)}
-            key={title}
-          />
-        ))}
-      </BottomNavigation>
-    </Layout>
+  return useMemo(
+    () => (
+      <Layout level="5">
+        <Divider />
+        <BottomNavigation
+          appearance="noIndicator"
+          style={[style, { backgroundColor: 'transparent' }]}
+          selectedIndex={state.index}
+          onSelect={(index) => navigation.navigate(state.routeNames[index])}
+        >
+          {Object.entries(tabs[page]).map(([title, icon], id) => (
+            <BottomNavigationTab
+              title={title === 'upload' ? null : t(title)}
+              // prettier-ignore
+              icon={(evaProps) => renderIcon(icon, evaProps, state.index === id)}
+              key={title}
+            />
+          ))}
+        </BottomNavigation>
+      </Layout>
+    ),
+    [t, navigation, page, state, style],
   );
 }
