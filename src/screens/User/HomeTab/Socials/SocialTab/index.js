@@ -52,14 +52,14 @@ export default function Explore({ navigation }) {
 
   const LIST_HEIGHT = height - CONTENT_SPACE;
 
-  const ITEM_HEIGHT = LIST_HEIGHT * 0.75;
+  const ITEM_HEIGHT = LIST_HEIGHT * 0.85;
 
   const t = useContext(LocaleContext);
 
   const VIEWABILITY_CONFIG = useMemo(
     () => ({
       minimumViewTime: 200,
-      viewAreaCoveragePercentThreshold: 60,
+      viewAreaCoveragePercentThreshold: 51,
     }),
     [],
   );

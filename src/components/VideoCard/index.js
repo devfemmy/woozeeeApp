@@ -26,9 +26,9 @@ export default function VideoCard(props) {
       style={{
         height: 180,
         width: IS_PORTRAIT
-          ? (width - 5) / (COLOUMN_COUNT + extraWidth)
-          : width - 10 / (COLOUMN_COUNT + extraWidth),
-        paddingHorizontal: 2,
+          ? width / (COLOUMN_COUNT + extraWidth)
+          : width / (COLOUMN_COUNT + extraWidth),
+        paddingHorizontal: 3,
         position: 'relative',
         alignItems: 'center',
         justifyContent: 'flex-start',

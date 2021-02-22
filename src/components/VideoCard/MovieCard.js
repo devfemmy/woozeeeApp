@@ -17,9 +17,9 @@ export default function MovieCard(props) {
       style={{
         height: 270,
         width: IS_PORTRAIT
-          ? (width - 5) / (2 + extraWidth)
-          : width - 10 / (3 + extraWidth),
-        paddingHorizontal: 2,
+          ? width / (2 + extraWidth)
+          : width / (3 + extraWidth),
+        paddingHorizontal: 3,
         position: 'relative',
         alignItems: 'center',
         justifyContent: 'flex-start',

@@ -185,7 +185,6 @@ export default function Explore({ navigation }) {
               }}
               contentContainerStyle={{
                 paddingVertical: 20,
-                alignItems: 'center',
               }}
               ListHeaderComponent={renderMovieCategories}
               alwaysBounceVertical
