@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 
 import { View, useWindowDimensions } from 'react-native';
 
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import { useQuery } from 'react-query';
 
-import { List, Text, Divider } from '@ui-kitten/components';
+// prettier-ignore
+import {
+  List, Text, Divider, Button,
+} from '@ui-kitten/components';
 
 import Api from 'src/api';
 
@@ -21,15 +22,11 @@ import { trendingUrl } from 'src/api/dummy';
 export default function MoviesSection(props) {
   const { t, navigation, viewHeight } = props;
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
-  const { bottom, top } = useSafeAreaInsets();
-
-  const CONTENT_SPACE = bottom + top + 100;
-
-  const LIST_HEIGHT = 200;
-
-  const ITEM_HEIGHT = LIST_HEIGHT * 0.85;
+  const routeMovies = useCallback(() => navigation.navigate('Movies'), [
+    navigation,
+  ]);
 
   const MoviesSectionArea = () => {
     const { status, data, refetch } = useQuery(
@@ -75,15 +72,26 @@ export default function MoviesSection(props) {
             justifyContent: 'center',
           }}
         >
-          <View style={{ paddingHorizontal: 10 }}>
-            <Text category="h6" style={{ marginBottom: 5 }}>
-              {t('movies')}
-            </Text>
+          <View
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Text category="h6">{t('movies')}</Text>
+            <Button appearance="ghost" size="tiny" onPress={routeMovies}>
+              <Text status="primary" category="s2">
+                {t('viewAll')}
+              </Text>
+            </Button>
           </View>
           <List
-            style={{ backgroundColor: 'red', height: viewHeight - 200 }}
+            style={{ backgroundColor: 'transparent', maxHeight: 360 }}
             contentContainerStyle={{
               alignItems: 'center',
+              paddingVertical: 5,
             }}
             alwaysBounceHorizontal
             horizontal
@@ -94,8 +102,8 @@ export default function MoviesSection(props) {
               <MovieSectionCard data={renderData.item} extraWidth={0.5} />
             )}
             getItemLayout={(data, index) => ({
-              length: 200,
-              offset: 200 * index,
+              length: 360,
+              offset: 360 * index,
               index,
             })}
           />
@@ -111,10 +119,13 @@ export default function MoviesSection(props) {
     );
   };
 
-  return (
-    <View style={{ flex: 1 }}>
-      <MoviesSectionArea />
-      <Divider />
-    </View>
+  return useMemo(
+    () => (
+      <View style={{ flex: 1 }}>
+        <MoviesSectionArea />
+        <Divider />
+      </View>
+    ),
+    [],
   );
 }

@@ -94,7 +94,7 @@ export default function OnboardingScreen({ navigation }) {
               {...evaProps}
               height={32}
               width={32}
-              isOpen={!isMuted}
+              isClosed={isMuted}
             />
           )}
           onPress={handleAudioMute}

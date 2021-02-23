@@ -41,7 +41,7 @@ const SecureToggleIcon = (props) => {
   return (
     <Pressable onPress={handlePress}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <IconEye {...otherProps} isOpen={isSecure} />
+      <IconEye {...otherProps} isClosed={isSecure} />
     </Pressable>
   );
 };

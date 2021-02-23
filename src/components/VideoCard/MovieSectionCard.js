@@ -1,8 +1,17 @@
 import React from 'react';
 
-import { Image, TouchableOpacity, useWindowDimensions } from 'react-native';
+import {
+  Image,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+
+import { Text } from '@ui-kitten/components';
 
 import { LinearGradient } from 'expo-linear-gradient';
+
+import { IconEye } from 'src/components/CustomIcons';
 
 export default function MovieCard(props) {
   const { data, extraWidth } = props;
@@ -12,55 +21,86 @@ export default function MovieCard(props) {
   const IS_PORTRAIT = height > width;
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.75}
+    <View
       style={{
-        height: 270,
         width: IS_PORTRAIT
           ? width / (2 + extraWidth)
           : width / (3 + extraWidth),
-        paddingHorizontal: 3,
-        position: 'relative',
+        paddingHorizontal: 5,
         alignItems: 'center',
         justifyContent: 'flex-start',
       }}
       key={data.index}
     >
-      <Image
-        source={{ uri: `https://i.postimg.cc/${data.banner}` }}
-        defaultSource={require('assets/images/banner/placeholder-image.png')}
+      <TouchableOpacity
+        activeOpacity={0.75}
         style={{
-          height: 265,
           width: '100%',
-          borderRadius: 5,
+          position: 'relative',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
         }}
-        resizeMode="cover"
-      />
-      {data.ownerImg ? (
-        <LinearGradient
-          colors={['#043F7C', '#FF5757']}
+      >
+        <Image
+          source={{ uri: `https://i.postimg.cc/${data.banner}` }}
+          defaultSource={require('assets/images/banner/placeholder-image.png')}
           style={{
-            height: 44,
-            width: 44,
-            borderRadius: 22,
-            alignItems: 'center',
-            justifyContent: 'center',
+            height: 245,
+            width: '100%',
+            borderRadius: 5,
+          }}
+          resizeMode="cover"
+        />
+        <View
+          style={{
             position: 'absolute',
-            left: 15,
-            bottom: 20,
+            top: 10,
+            right: 10,
+            backgroundColor: 'rgba(0, 0, 0, 0.25)',
+            paddingHorizontal: 6,
+            paddingVertical: 3,
+            borderRadius: 10,
+            flexDirection: 'row',
           }}
         >
-          <Image
-            source={{ uri: `https://i.postimg.cc/${data.ownerImg}` }}
-            style={{
-              height: 40,
-              width: 40,
-              borderRadius: 100,
-              borderColor: 'white',
-            }}
+          <IconEye
+            style={{ height: 20, width: 20, marginRight: 5 }}
+            fill="white"
           />
-        </LinearGradient>
-      ) : null}
-    </TouchableOpacity>
+          <Text category="c2" status="control">
+            11.5k
+          </Text>
+        </View>
+        {data.ownerImg ? (
+          <LinearGradient
+            colors={['#043F7C', '#FF5757']}
+            style={{
+              height: 60,
+              width: 60,
+              borderRadius: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              bottom: -30,
+            }}
+          >
+            <Image
+              source={{ uri: `https://i.postimg.cc/${data.ownerImg}` }}
+              style={{
+                height: 56,
+                width: 56,
+                borderRadius: 28,
+                borderColor: 'white',
+              }}
+            />
+          </LinearGradient>
+        ) : null}
+      </TouchableOpacity>
+      <View style={{ marginTop: 40 }}>
+        <Text category="p2" style={{ textAlign: 'center', lineHeight: 20 }}>
+          My name is Tayo, The best of the best
+        </Text>
+      </View>
+    </View>
   );
 }

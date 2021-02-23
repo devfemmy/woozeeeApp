@@ -5,18 +5,18 @@ import { Image } from 'react-native';
 import { Icon } from '@ui-kitten/components';
 
 export const IconEye = (props) => {
-  const { isOpen, ...otherProps } = props;
+  const { isClosed, ...otherProps } = props;
   return (
-    <Icon {...otherProps} name={isOpen ? 'eye-outline' : 'eye-off-outline'} />
+    <Icon {...otherProps} name={isClosed ? 'eye-off-outline' : 'eye-outline'} />
   );
 };
 
 export const IconVolume = (props) => {
-  const { isOpen, ...otherProps } = props;
+  const { isClosed, ...otherProps } = props;
   return (
     <Icon
       {...otherProps}
-      name={isOpen ? 'volume-up-outline' : 'volume-off-outline'}
+      name={isClosed ? 'volume-off-outline' : 'volume-up-outline'}
     />
   );
 };
