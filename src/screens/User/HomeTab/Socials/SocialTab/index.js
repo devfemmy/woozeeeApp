@@ -30,6 +30,7 @@ import { StoryPosts } from 'src/components/VideoPosts';
 import VideoView from 'src/components/VideoView';
 
 import { trendingUrl, socialUrl } from 'src/api/dummy';
+import MoviesSection from 'src/components/MoviesSection';
 
 const PLACEHOLDER_CONFIG1 = {
   count: 2,
@@ -52,7 +53,7 @@ export default function Explore({ navigation }) {
 
   const LIST_HEIGHT = height - CONTENT_SPACE;
 
-  const ITEM_HEIGHT = LIST_HEIGHT * 0.85;
+  const ITEM_HEIGHT = LIST_HEIGHT * 0.75;
 
   const t = useContext(LocaleContext);
 
@@ -143,14 +144,16 @@ export default function Explore({ navigation }) {
                 borderColor: 'rgba(143, 155, 179, 0.08)',
               }}
               data={page.pageData.data}
-              renderItem={(renderData) => (
+              // prettier-ignore
+              renderItem={({ item, index }) => ((index + 1) < 12 && (index + 1) % 4 === 0 ? (
+                <MoviesSection t={t} navigation={navigation} viewHeight={ITEM_HEIGHT} />
+              ) : (
                 <VideoView
-                  data={renderData}
+                  data={{ item, index }}
                   activeIndex={activeIndex}
                   viewHeight={ITEM_HEIGHT}
                 />
-              )}
-              decelerationRate="fast"
+              ))}
               extraData={activeIndex}
               getItemLayout={(data, index) => ({
                 length: ITEM_HEIGHT,

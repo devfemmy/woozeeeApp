@@ -6,8 +6,6 @@ import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction
 
 import { Layout } from '@ui-kitten/components';
 
-import TopNavigationArea from 'src/components/TopNavigationArea';
-
 import WithDefaultFetch from 'src/components/DataFetch';
 
 import { UsersPosts } from 'src/components/VideoPosts';

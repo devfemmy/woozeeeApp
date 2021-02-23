@@ -18,7 +18,7 @@ const instance = axios.create({
 });
 
 export default {
-  getVideos: async (url, page, cursor = 1) => ({
+  getVideos: async (url, page = 1, cursor = 1) => ({
     pageData: await instance({
       method: 'GET',
       url,

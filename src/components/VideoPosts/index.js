@@ -45,8 +45,8 @@ export const TrendingPosts = ({ info }) => {
             <VideoCard data={renderData.item} extraWidth={0.5} />
           )}
           getItemLayout={(data, index) => ({
-            length: 175,
-            offset: 175 * index,
+            length: 180,
+            offset: 180 * index,
             index,
           })}
         />
