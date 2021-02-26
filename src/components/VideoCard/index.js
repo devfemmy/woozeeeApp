@@ -64,7 +64,7 @@ export default function VideoCard(props) {
               style={{
                 height: 40,
                 width: 40,
-                borderRadius: 100,
+                borderRadius: 20,
                 borderColor: 'white',
               }}
             />

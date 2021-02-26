@@ -119,7 +119,7 @@ export default function EditProfile({ navigation }) {
               style={{
                 backgroundColor: '#EDF1F7',
                 bottom: 0,
-                borderRadius: 100,
+                borderRadius: 50,
                 height: 100,
                 position: 'absolute',
                 width: 100,
@@ -132,7 +132,7 @@ export default function EditProfile({ navigation }) {
                 style={{
                   borderColor: 'white',
                   borderWidth: 3,
-                  borderRadius: 100,
+                  borderRadius: 50,
                   height: '100%',
                   resizeMode: 'cover',
                   width: '100%',

@@ -96,7 +96,7 @@ export default function Profile({ navigation }) {
                   style={{
                     height: 100,
                     width: 100,
-                    borderRadius: 100,
+                    borderRadius: 50,
                     borderWidth: 3,
                     borderColor: 'white',
                   }}
@@ -106,7 +106,7 @@ export default function Profile({ navigation }) {
                   style={{
                     height: 20,
                     width: 20,
-                    borderRadius: 100,
+                    borderRadius: 10,
                     position: 'absolute',
                     right: 7,
                     bottom: 7,

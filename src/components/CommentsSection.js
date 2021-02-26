@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 
-import { View, Image, useWindowDimensions } from 'react-native';
+// prettier-ignore
+import {
+  View, Image, useWindowDimensions, ScrollView,
+} from 'react-native';
 
 // prettier-ignore
 import {
@@ -29,96 +32,162 @@ export default function CommentsSection(props) {
     comment: '',
   });
 
-  const closeModal = () => setIsVisible(false);
+  const closeModal = useCallback(() => setIsVisible(false), [setIsVisible]);
 
-  const CardHeader = () => (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 15,
-      }}
-    >
-      <Text category="h5">{t('comments')}</Text>
-      <View>
-        <InteractIcon
-          Accessory={IconClose}
-          status="primary"
-          height={32}
-          width={32}
-          onPress={closeModal}
-        />
-      </View>
-    </View>
-  );
-
-  const CardFooter = () => (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        padding: 15,
-        alignItems: 'center',
-      }}
-    >
-      <LinearGradient
-        colors={['#043F7C', '#FF5757']}
+  const renderCardHeader = useCallback(
+    () => (
+      <View
         style={{
-          height: 44,
-          width: 44,
-          borderRadius: 22,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
           alignItems: 'center',
-          justifyContent: 'center',
+          padding: 15,
         }}
       >
-        <Image
-          source={require('assets/images/user/user1.png')}
-          style={{
-            height: 40,
-            width: 40,
-            borderRadius: 100,
-            borderColor: 'white',
-          }}
-        />
-      </LinearGradient>
-      <View style={{ flex: 1, marginHorizontal: 5 }}>
-        <GeneralTextField
-          type="comment"
-          placeholder={t('writeComment')}
-          setFormValues={setFormValues}
-        />
+        <Text category="h5">{t('comments')}</Text>
+        <View>
+          <InteractIcon
+            Accessory={IconClose}
+            status="primary"
+            height={32}
+            width={32}
+            onPress={closeModal}
+          />
+        </View>
       </View>
-      <View>
-        <InteractIcon
-          Accessory={IconPaperPlane}
-          status="primary"
-          height={32}
-          width={32}
-        />
-      </View>
-    </View>
+    ),
+    [t, closeModal],
   );
 
-  return (
-    <Modal visible={isVisible} style={{ height: viewHeight, width }}>
-      <Layout level="5" style={{ flex: 1 }}>
-        <Card
+  const renderCardFooter = useCallback(
+    () => (
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          padding: 15,
+          alignItems: 'center',
+        }}
+      >
+        <LinearGradient
+          colors={['#043F7C', '#FF5757']}
           style={{
-            flex: 1,
-            justifyContent: 'space-between',
-            backgroundColor: 'transparent',
+            height: 44,
+            width: 44,
+            borderRadius: 22,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
-          header={CardHeader}
-          footer={CardFooter}
         >
-          <View
+          <Image
+            source={require('assets/images/user/user1.png')}
             style={{
-              height: height - (insets + 180),
+              height: 40,
+              width: 40,
+              borderRadius: 20,
+              borderColor: 'white',
             }}
           />
-        </Card>
-      </Layout>
-    </Modal>
+        </LinearGradient>
+        <View style={{ flex: 1, marginHorizontal: 5 }}>
+          <GeneralTextField
+            type="comment"
+            placeholder={t('writeComment')}
+            setFormValues={setFormValues}
+          />
+        </View>
+        <View>
+          <InteractIcon
+            Accessory={IconPaperPlane}
+            status="primary"
+            height={32}
+            width={32}
+          />
+        </View>
+      </View>
+    ),
+    [t],
+  );
+
+  return useMemo(
+    () => (
+      <Modal visible={isVisible} style={{ height: viewHeight, width }}>
+        <Layout level="5" style={{ flex: 1 }}>
+          <Card
+            style={{
+              flex: 1,
+              justifyContent: 'space-between',
+              backgroundColor: 'transparent',
+            }}
+            header={renderCardHeader}
+            footer={renderCardFooter}
+          >
+            <View
+              style={{
+                height: height - (insets + 180),
+              }}
+            >
+              <ScrollView style={{ flex: 1 }}>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <LinearGradient
+                    colors={['#043F7C', '#FF5757']}
+                    style={{
+                      height: 44,
+                      width: 44,
+                      borderRadius: 22,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: 5,
+                    }}
+                  >
+                    <Image
+                      source={require('assets/images/user/user1.png')}
+                      style={{
+                        height: 40,
+                        width: 40,
+                        borderRadius: 20,
+                        borderColor: 'white',
+                      }}
+                    />
+                  </LinearGradient>
+                  <Layout
+                    level="4"
+                    style={{
+                      flex: 1,
+                      paddingHorizontal: 10,
+                      paddingVertical: 5,
+                      borderRadius: 10,
+                    }}
+                  >
+                    <Text category="p2">
+                      Hello world, woozee, Testing the limit of this very long
+                      message
+                    </Text>
+                    <Text category="c1" style={{ alignSelf: 'flex-end' }}>
+                      9:15am
+                    </Text>
+                  </Layout>
+                </View>
+              </ScrollView>
+            </View>
+          </Card>
+        </Layout>
+      </Modal>
+    ),
+    [
+      isVisible,
+      viewHeight,
+      height,
+      insets,
+      width,
+      renderCardFooter,
+      renderCardHeader,
+    ],
   );
 }

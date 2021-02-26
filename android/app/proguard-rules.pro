@@ -12,3 +12,6 @@
 -keep class com.facebook.jni.** { *; }
 -keep public class com.horcrux.svg.** {*;}
 -keep class androidx.appcompat.widget.** { *; }
+
+# reanimated
+-keep class com.facebook.react.turbomodule.** { *; }

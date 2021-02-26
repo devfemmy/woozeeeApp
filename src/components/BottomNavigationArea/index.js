@@ -37,7 +37,7 @@ const IconUpload = (props) => {
         width: 60,
         height: 60,
         top: -25,
-        borderRadius: 100,
+        borderRadius: 30,
         shadowColor: '#000',
         shadowOffset: {
           width: 0,
@@ -55,7 +55,7 @@ const IconUpload = (props) => {
           style={{
             width: 55,
             height: 55,
-            borderRadius: 100,
+            borderRadius: 30,
           }}
           resizeMode="cover"
         />

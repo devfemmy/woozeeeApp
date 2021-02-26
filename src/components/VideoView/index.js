@@ -90,7 +90,7 @@ export default function VideoView(props) {
                   style={{
                     height: 40,
                     width: 40,
-                    borderRadius: 100,
+                    borderRadius: 20,
                     borderColor: 'white',
                   }}
                 />
@@ -110,9 +110,9 @@ export default function VideoView(props) {
               <Image
                 source={require('assets/images/icon/verified-1.png')}
                 style={{
-                  height: 15,
-                  width: 15,
-                  borderRadius: 100,
+                  height: 16,
+                  width: 16,
+                  borderRadius: 13,
                 }}
               />
               <Text appearance="hint" style={{ marginLeft: 5 }}>

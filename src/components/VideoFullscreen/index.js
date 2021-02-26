@@ -93,7 +93,7 @@ export default function VideoView(props) {
                   style={{
                     height: 50,
                     width: 50,
-                    borderRadius: 100,
+                    borderRadius: 25,
                     borderWidth: 2,
                     borderColor: 'white',
                   }}
@@ -101,9 +101,9 @@ export default function VideoView(props) {
                 <Image
                   source={require('assets/images/icon/verified.png')}
                   style={{
-                    height: 15,
-                    width: 15,
-                    borderRadius: 100,
+                    height: 16,
+                    width: 16,
+                    borderRadius: 13,
                     position: 'absolute',
                     right: 0,
                     bottom: 25,
@@ -209,7 +209,7 @@ export default function VideoView(props) {
                   style={{
                     height: 40,
                     width: 40,
-                    borderRadius: 100,
+                    borderRadius: 20,
                     borderWidth: 2,
                     borderColor: 'white',
                   }}

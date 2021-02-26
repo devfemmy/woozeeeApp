@@ -68,14 +68,14 @@ export const StoryPosts = ({ info }) => {
           style={{
             height: 100,
             width: 100,
-            borderRadius: 100,
+            borderRadius: 50,
           }}
         />
         <View
           style={{
             minHeight: 20,
             minWidth: 20,
-            borderRadius: 100,
+            borderRadius: 10,
             position: 'absolute',
             backgroundColor: 'white',
             right: 3,
