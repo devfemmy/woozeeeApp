@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import {
   View,
@@ -18,42 +18,44 @@ export default function VideoCard(props) {
 
   const IS_PORTRAIT = height > width;
 
-  return (
-    <TouchableOpacity
-      activeOpacity={0.75}
-      style={{
-        width: IS_PORTRAIT
-          ? width / (3 + extraWidth)
-          : width / (5 + extraWidth),
-        paddingHorizontal: 10,
-      }}
-      key={data.index}
-    >
-      <View style={{ alignItems: 'center' }}>
-        <LinearGradient
-          colors={['#043F7C', '#FF5757']}
-          style={{
-            height: 104,
-            width: 104,
-            borderRadius: 52,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Image
-            source={{ uri: `https://i.postimg.cc/${data.banner}` }}
-            defaultSource={require('assets/images/banner/placeholder-image.png')}
+  return useMemo(
+    () => (
+      <TouchableOpacity
+        activeOpacity={0.75}
+        style={{
+          width: IS_PORTRAIT
+            ? width / (3 + extraWidth)
+            : width / (5 + extraWidth),
+          paddingHorizontal: 10,
+        }}
+      >
+        <View style={{ alignItems: 'center' }}>
+          <LinearGradient
+            colors={['#043F7C', '#FF5757']}
             style={{
-              height: 100,
-              width: 100,
-              borderRadius: 100,
+              height: 104,
+              width: 104,
+              borderRadius: 52,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
-          />
-        </LinearGradient>
-        <Text category="c2" style={{ marginTop: 10 }}>
-          {data.tag}
-        </Text>
-      </View>
-    </TouchableOpacity>
+          >
+            <Image
+              source={{ uri: `https://i.postimg.cc/${data.banner}` }}
+              defaultSource={require('assets/images/banner/placeholder-image.png')}
+              style={{
+                height: 100,
+                width: 100,
+                borderRadius: 100,
+              }}
+            />
+          </LinearGradient>
+          <Text category="c2" style={{ marginTop: 10 }}>
+            {data.tag}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    ),
+    [IS_PORTRAIT, data, extraWidth, width],
   );
 }

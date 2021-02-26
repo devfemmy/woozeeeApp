@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import {
   Image,
@@ -24,101 +24,103 @@ export default function MovieCard(props) {
     ? width / (2 + extraWidth)
     : width / (3 + extraWidth);
 
-  return (
-    <TouchableOpacity
-      activeOpacity={0.75}
-      style={{
-        height: 270,
-        width: cardWith,
-        paddingHorizontal: 3,
-        position: 'relative',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-      }}
-      key={data.index}
-    >
-      <Image
-        source={{ uri: `https://i.postimg.cc/${data.banner}` }}
-        defaultSource={require('assets/images/banner/placeholder-image.png')}
+  return useMemo(
+    () => (
+      <TouchableOpacity
+        activeOpacity={0.75}
         style={{
-          height: 265,
-          width: '100%',
-          borderRadius: 5,
-        }}
-        resizeMode="cover"
-      />
-      <View
-        style={{
-          position: 'absolute',
-          top: 10,
-          right: 10,
-          flexDirection: 'row',
+          height: 270,
+          width: cardWith,
+          paddingHorizontal: 3,
+          position: 'relative',
           alignItems: 'center',
+          justifyContent: 'flex-start',
         }}
       >
-        <Button
-          status="danger"
-          size="tiny"
-          style={{ paddingHorizontal: 0, paddingVertical: 0, marginRight: 5 }}
-        >
-          <Text status="control" category="s2">
-            Live
-          </Text>
-        </Button>
+        <Image
+          source={{ uri: `https://i.postimg.cc/${data.banner}` }}
+          defaultSource={require('assets/images/banner/placeholder-image.png')}
+          style={{
+            height: 265,
+            width: '100%',
+            borderRadius: 5,
+          }}
+          resizeMode="cover"
+        />
         <View
           style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.25)',
-            paddingHorizontal: 6,
-            paddingVertical: 3,
-            borderRadius: 10,
+            position: 'absolute',
+            top: 10,
+            right: 10,
             flexDirection: 'row',
             alignItems: 'center',
           }}
         >
-          <IconEye
-            style={{ height: 20, width: 20, marginRight: 5 }}
-            fill="white"
-          />
-          <Text category="c2" status="control">
-            11.5k
-          </Text>
+          <Button
+            status="danger"
+            size="tiny"
+            style={{ paddingHorizontal: 0, paddingVertical: 0, marginRight: 5 }}
+          >
+            <Text status="control" category="s2">
+              Live
+            </Text>
+          </Button>
+          <View
+            style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.25)',
+              paddingHorizontal: 6,
+              paddingVertical: 3,
+              borderRadius: 10,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <IconEye
+              style={{ height: 20, width: 20, marginRight: 5 }}
+              fill="white"
+            />
+            <Text category="c2" status="control">
+              11.5k
+            </Text>
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          alignItems: 'center',
-          position: 'absolute',
-          left: 10,
-          bottom: 15,
-          flexDirection: 'row',
-          width: cardWith - 75,
-        }}
-      >
-        <LinearGradient
-          colors={['#043F7C', '#FF5757']}
+        <View
           style={{
-            height: 44,
-            width: 44,
-            borderRadius: 22,
-            marginRight: 5,
             alignItems: 'center',
-            justifyContent: 'center',
+            position: 'absolute',
+            left: 10,
+            bottom: 15,
+            flexDirection: 'row',
+            width: cardWith - 75,
           }}
         >
-          <Image
-            source={{ uri: `https://i.postimg.cc/${data.ownerImg}` }}
+          <LinearGradient
+            colors={['#043F7C', '#FF5757']}
             style={{
-              height: 40,
-              width: 40,
-              borderRadius: 100,
-              borderColor: 'white',
+              height: 44,
+              width: 44,
+              borderRadius: 22,
+              marginRight: 5,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
-          />
-        </LinearGradient>
-        <Text category="s2" status="control">
-          My name is Tayo, the best of the best
-        </Text>
-      </View>
-    </TouchableOpacity>
+          >
+            <Image
+              source={{ uri: `https://i.postimg.cc/${data.ownerImg}` }}
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: 100,
+                borderColor: 'white',
+              }}
+            />
+          </LinearGradient>
+          <Text category="s2" status="control">
+            My name is Tayo, the best of the best
+          </Text>
+        </View>
+      </TouchableOpacity>
+    ),
+    [cardWith, data],
   );
 }

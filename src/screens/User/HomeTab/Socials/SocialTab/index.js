@@ -34,8 +34,6 @@ import VideoView from 'src/components/VideoView';
 
 import MoviesSection from 'src/components/MoviesSection';
 
-import CommentsSection from 'src/components/CommentsSection';
-
 import { trendingUrl, socialUrl } from 'src/api/dummy';
 
 const PLACEHOLDER_CONFIG1 = {
@@ -55,13 +53,11 @@ export default function Explore({ navigation }) {
 
   const { bottom, top } = useSafeAreaInsets();
 
-  const [isCommentsVisible, setCommentsVisible] = useState(false);
+  const CONTENT_SPACE = 100;
 
-  const CONTENT_SPACE = bottom + top + 100;
+  const INSETS = bottom + top;
 
-  const INSET_HEIGHT = height - (bottom + top);
-
-  const LIST_HEIGHT = height - CONTENT_SPACE;
+  const LIST_HEIGHT = height - (CONTENT_SPACE + INSETS);
 
   const ITEM_HEIGHT = LIST_HEIGHT * 0.75;
 
@@ -137,13 +133,6 @@ export default function Explore({ navigation }) {
     ) {
       return data.pages.map((page) => (
         <React.Fragment key={page.nextID}>
-          <CommentsSection
-            width={width}
-            height={INSET_HEIGHT}
-            t={t}
-            isVisible={isCommentsVisible}
-            setIsVisible={setCommentsVisible}
-          />
           <View style={{ flex: 1 }}>
             <List
               style={{
@@ -161,6 +150,7 @@ export default function Explore({ navigation }) {
                 borderColor: 'rgba(143, 155, 179, 0.08)',
               }}
               data={page.pageData.data}
+              keyExtractor={(_, i) => i.toString()}
               // prettier-ignore
               renderItem={({ item, index }) => ((index + 1) < 12 && (index + 1) % 4 === 0 ? (
                 <MoviesSection t={t} navigation={navigation} viewHeight={ITEM_HEIGHT} />
@@ -169,7 +159,8 @@ export default function Explore({ navigation }) {
                   data={{ item, index }}
                   activeIndex={activeIndex}
                   viewHeight={ITEM_HEIGHT}
-                  setCommentsVisible={setCommentsVisible}
+                  insets={INSETS}
+                  t={t}
                 />
               ))}
               extraData={activeIndex}
@@ -178,7 +169,6 @@ export default function Explore({ navigation }) {
                 offset: ITEM_HEIGHT * index + ITEM_HEIGHT / 2,
                 index,
               })}
-              initialNumToRender={4}
               onViewableItemsChanged={handleViewItemsChanged}
               viewabilityConfig={VIEWABILITY_CONFIG}
             />

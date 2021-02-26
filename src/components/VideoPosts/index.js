@@ -41,6 +41,7 @@ export const TrendingPosts = ({ info }) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           data={info}
+          keyExtractor={(_, i) => i.toString()}
           renderItem={(renderData) => (
             <VideoCard data={renderData.item} extraWidth={0.5} />
           )}
@@ -104,6 +105,7 @@ export const StoryPosts = ({ info }) => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         data={info}
+        keyExtractor={(_, i) => i.toString()}
         renderItem={(renderData) => (
           <StoryCard data={renderData.item} extraWidth={0.5} />
         )}
@@ -143,6 +145,7 @@ export const UsersPosts = ({ info }) => info.map((item) => (
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       data={item.content}
+      keyExtractor={(_, i) => i.toString()}
       renderItem={(renderData) => (
         <VideoCard data={renderData.item} extraWidth={0.5} />
       )}
@@ -171,6 +174,7 @@ export const ProfilePosts = ({ info }) => (
     showsVerticalScrollIndicator={false}
     numColumns={3}
     data={info}
+    keyExtractor={(_, i) => i.toString()}
     renderItem={(renderData) => (
       <VideoCard data={renderData.item} extraWidth={0} numColumns={3} />
     )}
@@ -228,6 +232,7 @@ export const WoozPosts = ({ info }) => {
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       data={info}
+      keyExtractor={(_, i) => i.toString()}
       renderItem={renderPost}
       extraData={activeIndex}
       snapToAlignment="start"
@@ -238,7 +243,6 @@ export const WoozPosts = ({ info }) => {
         offset: ITEM_HEIGHT * index,
         index,
       })}
-      initialNumToRender={4}
       onViewableItemsChanged={handleViewItemsChanged}
       viewabilityConfig={VIEWABILITY_CONFIG}
     />

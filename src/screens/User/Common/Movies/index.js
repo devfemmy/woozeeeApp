@@ -102,6 +102,7 @@ const renderMovieCategories = () => (
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       data={MOVIE_CATEGORIES}
+      keyExtractor={(_, i) => i.toString()}
       renderItem={(renderData) => <MovieCategory data={renderData} />}
       getItemLayout={(data, index) => ({
         length: 50,
@@ -192,6 +193,7 @@ export default function Explore({ navigation }) {
               showsVerticalScrollIndicator={false}
               numColumns={2}
               data={page.pageData.data}
+              keyExtractor={(_, i) => i.toString()}
               renderItem={(renderData) => (
                 <MovieCard data={renderData.item} extraWidth={0} />
               )}

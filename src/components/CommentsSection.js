@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { View, Image } from 'react-native';
+import { View, Image, useWindowDimensions } from 'react-native';
 
 // prettier-ignore
 import {
@@ -18,8 +18,12 @@ import { IconClose, IconPaperPlane } from './CustomIcons';
 export default function CommentsSection(props) {
   // prettier-ignore
   const {
-    width, height, t, isVisible, setIsVisible,
+    t, isVisible, setIsVisible, insets,
   } = props;
+
+  const { width, height } = useWindowDimensions();
+
+  const viewHeight = height - insets ?? 0;
 
   const [form, setFormValues] = useState({
     comment: '',
@@ -52,6 +56,7 @@ export default function CommentsSection(props) {
   const CardFooter = () => (
     <View
       style={{
+        flex: 1,
         flexDirection: 'row',
         padding: 15,
         alignItems: 'center',
@@ -96,7 +101,7 @@ export default function CommentsSection(props) {
   );
 
   return (
-    <Modal visible={isVisible} style={{ height, width }}>
+    <Modal visible={isVisible} style={{ height: viewHeight, width }}>
       <Layout level="5" style={{ flex: 1 }}>
         <Card
           style={{
@@ -109,7 +114,7 @@ export default function CommentsSection(props) {
         >
           <View
             style={{
-              height: height - 180,
+              height: height - (insets + 180),
             }}
           />
         </Card>

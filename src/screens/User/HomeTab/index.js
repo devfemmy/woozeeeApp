@@ -123,7 +123,6 @@ export default function Home({ navigation }) {
         alignItems: 'center',
         justifyContent: 'flex-start',
       }}
-      key={data.item.key}
     >
       <Balance value={data.item.balance} point={t('point')} />
       <Image
@@ -149,7 +148,6 @@ export default function Home({ navigation }) {
         alignItems: 'center',
         alignSelf: 'center',
       }}
-      key={data.item.title}
       onPress={() => routeSocialRoute(data.item.screen)}
     >
       <View style={styles.cardContent}>
@@ -184,6 +182,7 @@ export default function Home({ navigation }) {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         data={woozeeeCards}
+        keyExtractor={(_, i) => i.toString()}
         renderItem={WoozeeeCards}
         getItemLayout={(data, index) => ({
           length: CARD_HEIGHT,
@@ -213,6 +212,7 @@ export default function Home({ navigation }) {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           data={woozeeeCategories}
+          keyExtractor={(_, i) => i.toString()}
           renderItem={renderWoozeeeCategory}
           getItemLayout={(data, index) => ({
             length: CATEGORY_HEIGHT,

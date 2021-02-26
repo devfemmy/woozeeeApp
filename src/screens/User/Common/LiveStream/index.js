@@ -57,36 +57,33 @@ const MOVIE_CATEGORIES = [
 
 // const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
-const MovieCategory = (props) => {
-  const { data } = props;
-  return (
-    <View
+const renderMovieCategory = (data) => (
+  <View
+    style={{
+      height: 40,
+      backgroundColor: '#F7F9FC',
+      marginHorizontal: 5,
+      borderRadius: 20,
+    }}
+  >
+    <TouchableOpacity
+      activeOpacity={0.75}
       style={{
-        height: 40,
-        backgroundColor: '#F7F9FC',
-        marginHorizontal: 5,
-        borderRadius: 20,
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        borderRadius: 0,
+        borderBottomWidth: 3,
+        paddingHorizontal: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
+        // borderBottomColor: '#FF5757',
       }}
     >
-      <TouchableOpacity
-        activeOpacity={0.75}
-        style={{
-          backgroundColor: 'transparent',
-          borderColor: 'transparent',
-          borderRadius: 0,
-          borderBottomWidth: 3,
-          paddingHorizontal: 15,
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100%',
-          // borderBottomColor: '#FF5757',
-        }}
-      >
-        <Text status="basic">{data.item.title}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+      <Text status="basic">{data.item.title}</Text>
+    </TouchableOpacity>
+  </View>
+);
 
 const renderMovieCategories = () => (
   <View style={{ marginBottom: 20, height: 45 }}>
@@ -103,7 +100,8 @@ const renderMovieCategories = () => (
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       data={MOVIE_CATEGORIES}
-      renderItem={(renderData) => <MovieCategory data={renderData} />}
+      keyExtractor={(_, i) => i.toString()}
+      renderItem={renderMovieCategory}
       getItemLayout={(data, index) => ({
         length: 50,
         offset: 50 * index,
@@ -193,6 +191,7 @@ export default function Explore({ navigation }) {
               showsVerticalScrollIndicator={false}
               numColumns={2}
               data={page.pageData.data}
+              keyExtractor={(_, i) => i.toString()}
               renderItem={(renderData) => (
                 <MovieCard data={renderData.item} extraWidth={0} />
               )}
