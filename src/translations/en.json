@@ -74,5 +74,8 @@
   "recentStories": "Recent Stories",
   "movies": "Movies",
   "comments": "Comments",
-  "writeComment": "Write your comment"
+  "writeComment": "Write your comment",
+  "message": "Message",
+  "chats": "Chats",
+  "writeMsg": "Write your message"
 }

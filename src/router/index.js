@@ -25,6 +25,7 @@ import EditProfile from 'src/screens/User/Common/EditProfile';
 import Search from 'src/screens/User/Common/Search';
 import Movies from 'src/screens/User/Common/Movies';
 import LiveStream from 'src/screens/User/Common/LiveStream';
+import Chats from 'src/screens/User/Common/Chats';
 
 /* Routes import */
 import UserRoute from './User';
@@ -53,6 +54,7 @@ export default function Router() {
       Search,
       Movies,
       LiveStream,
+      Chats,
     },
 
     Common: {

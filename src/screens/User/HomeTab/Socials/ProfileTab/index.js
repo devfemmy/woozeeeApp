@@ -53,7 +53,7 @@ export default function Profile({ navigation }) {
 
   const IS_PORTRAIT = height > width;
 
-  // const routeEditProfile = () => navigation.navigate('EditProfile');
+  const routeChats = () => navigation.navigate('Chats');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -73,7 +73,7 @@ export default function Profile({ navigation }) {
       >
         <View
           style={{
-            height: IS_PORTRAIT ? 260 : '100%',
+            height: IS_PORTRAIT ? 300 : '100%',
             width: IS_PORTRAIT ? '100%' : '40%',
           }}
         >
@@ -138,17 +138,27 @@ export default function Profile({ navigation }) {
                   seems).
                 </Text>
               </View>
-              {/* <View style={{ marginBottom: 10 }}>
+              <View style={{ marginBottom: 10, flexDirection: 'row' }}>
                 <Button
                   status="primary"
-                  size="small"
-                  onPress={routeEditProfile}
+                  size="tiny"
+                  style={{ marginHorizontal: 5 }}
                 >
                   <Text status="control" category="p2">
-                    {`${t('edit')} ${t('profile')}`}
+                    {t('follow')}
                   </Text>
                 </Button>
-              </View> */}
+                <Button
+                  status="primary"
+                  size="tiny"
+                  style={{ marginHorizontal: 5 }}
+                  onPress={routeChats}
+                >
+                  <Text status="control" category="p2">
+                    {t('message')}
+                  </Text>
+                </Button>
+              </View>
               <View
                 style={{
                   flexDirection: 'row',

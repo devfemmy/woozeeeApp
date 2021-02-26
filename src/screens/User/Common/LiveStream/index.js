@@ -58,10 +58,10 @@ const MOVIE_CATEGORIES = [
 // const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
 const renderMovieCategory = (data) => (
-  <View
+  <Layout
+    level="2"
     style={{
       height: 40,
-      backgroundColor: '#F7F9FC',
       marginHorizontal: 5,
       borderRadius: 20,
     }}
@@ -82,7 +82,7 @@ const renderMovieCategory = (data) => (
     >
       <Text status="basic">{data.item.title}</Text>
     </TouchableOpacity>
-  </View>
+  </Layout>
 );
 
 const renderMovieCategories = () => (
