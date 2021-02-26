@@ -49,9 +49,8 @@ const SecureToggleIcon = (props) => {
 export const GeneralTextField = (props) => {
   const {
     label,
+    placeholder,
     type,
-    androidComplete,
-    iosComplete,
     caption,
     size,
     validate,
@@ -80,6 +79,13 @@ export const GeneralTextField = (props) => {
     [validate],
   );
 
+  const handleChangeNoValidate = useCallback((input) => {
+    setInputVal((prevState) => ({
+      ...prevState,
+      value: input,
+    }));
+  }, []);
+
   const handleBlur = useCallback(() => {
     setFormValues((prevState) => ({ ...prevState, [type]: inputVal.value }));
   }, [inputVal.value, setFormValues, type]);
@@ -98,11 +104,9 @@ export const GeneralTextField = (props) => {
         label={label}
         secureTextEntry={isSecureEntry}
         accessibilityLabel={label}
-        placeholder={label}
-        autoCompleteType={androidComplete}
-        textContentType={iosComplete}
+        placeholder={placeholder || label}
         status={inputVal.status}
-        onChangeText={handleChange}
+        onChangeText={validate ? handleChange : handleChangeNoValidate}
         onBlur={handleBlur}
         /* prettier-ignore */
         accessoryRight={
@@ -123,18 +127,18 @@ export const GeneralTextField = (props) => {
       />
     ),
     [
-      inputVal.value,
-      inputVal.status,
+      inputVal,
       label,
-      androidComplete,
-      iosComplete,
       caption,
       size,
       secure,
       otherProps,
       handleChange,
+      handleChangeNoValidate,
       handleBlur,
       isSecureEntry,
+      validate,
+      placeholder,
     ],
   );
 };

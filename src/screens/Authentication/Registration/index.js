@@ -52,8 +52,8 @@ export default function Register({ navigation }) {
               <GeneralTextField
                 type="email"
                 label={t('emailAddress')}
-                androidComplete="email"
-                iosComplete="emailAddress"
+                autoCompleteType="email"
+                textContentType="emailAddress"
                 validate="email"
                 setFormValues={setFormValues}
               />

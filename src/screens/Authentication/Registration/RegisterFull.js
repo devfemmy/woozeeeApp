@@ -57,8 +57,8 @@ export default function RegisterFull({ navigation }) {
                 <GeneralTextField
                   type="firstName"
                   label={t('firstName')}
-                  androidComplete="name"
-                  iosComplete="givenName"
+                  autoCompleteType="name"
+                  textContentType="givenName"
                   validate="required"
                   setFormValues={setFormValues}
                 />
@@ -67,8 +67,8 @@ export default function RegisterFull({ navigation }) {
                 <GeneralTextField
                   type="lastName"
                   label={t('lastName')}
-                  androidComplete="name"
-                  iosComplete="familyName"
+                  autoCompleteType="name"
+                  textContentType="familyName"
                   validate="required"
                   setFormValues={setFormValues}
                 />
@@ -78,8 +78,8 @@ export default function RegisterFull({ navigation }) {
               <GeneralTextField
                 type="username"
                 label={t('username')}
-                androidComplete="username"
-                iosComplete="username"
+                autoCompleteType="username"
+                textContentType="username"
                 validate="required"
                 setFormValues={setFormValues}
               />
@@ -88,8 +88,8 @@ export default function RegisterFull({ navigation }) {
               <GeneralTextField
                 type="password"
                 label={t('password')}
-                androidComplete="password"
-                iosComplete="password"
+                autoCompleteType="password"
+                textContentType="password"
                 validate="password"
                 secure
                 setFormValues={setFormValues}
@@ -99,8 +99,8 @@ export default function RegisterFull({ navigation }) {
               <GeneralTextField
                 type="confirmPassword"
                 label={`${t('confirm')} ${t('password')}`}
-                androidComplete="password"
-                iosComplete="password"
+                autoCompleteType="password"
+                textContentType="password"
                 validate="password"
                 secure
                 setFormValues={setFormValues}

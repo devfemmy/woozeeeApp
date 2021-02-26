@@ -44,8 +44,8 @@ export default function VerifyWithCode({ navigation }) {
               <GeneralTextField
                 type="code"
                 label={t('verificationCode')}
-                androidComplete="off"
-                iosComplete="oneTimeCode"
+                autoCompleteType="off"
+                textContentType="oneTimeCode"
                 validate="required"
                 setFormValues={setFormValues}
               />

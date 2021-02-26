@@ -152,8 +152,8 @@ export default function EditProfile({ navigation }) {
                 <GeneralTextField
                   type="firstName"
                   label={t('firstName')}
-                  androidComplete="name"
-                  iosComplete="givenName"
+                  autoCompleteType="name"
+                  textContentType="givenName"
                   validate="required"
                   setFormValues={setFormValues}
                 />
@@ -162,8 +162,8 @@ export default function EditProfile({ navigation }) {
                 <GeneralTextField
                   type="lastName"
                   label={t('lastName')}
-                  androidComplete="name"
-                  iosComplete="familyName"
+                  autoCompleteType="name"
+                  textContentType="familyName"
                   validate="required"
                   setFormValues={setFormValues}
                 />
@@ -173,8 +173,8 @@ export default function EditProfile({ navigation }) {
               <GeneralTextField
                 type="username"
                 label={t('username')}
-                androidComplete="username"
-                iosComplete="username"
+                autoCompleteType="username"
+                textContentType="username"
                 validate="required"
                 setFormValues={setFormValues}
               />

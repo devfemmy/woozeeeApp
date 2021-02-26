@@ -9,7 +9,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useInfiniteQuery } from 'react-query';
 
-import { Layout, List } from '@ui-kitten/components';
+// prettier-ignore
+import {
+  Layout, List,
+} from '@ui-kitten/components';
 
 import Api from 'src/api';
 
@@ -29,8 +32,11 @@ import { StoryPosts } from 'src/components/VideoPosts';
 
 import VideoView from 'src/components/VideoView';
 
-import { trendingUrl, socialUrl } from 'src/api/dummy';
 import MoviesSection from 'src/components/MoviesSection';
+
+import CommentsSection from 'src/components/CommentsSection';
+
+import { trendingUrl, socialUrl } from 'src/api/dummy';
 
 const PLACEHOLDER_CONFIG1 = {
   count: 2,
@@ -49,7 +55,11 @@ export default function Explore({ navigation }) {
 
   const { bottom, top } = useSafeAreaInsets();
 
+  const [isCommentsVisible, setCommentsVisible] = useState(false);
+
   const CONTENT_SPACE = bottom + top + 100;
+
+  const INSET_HEIGHT = height - (bottom + top);
 
   const LIST_HEIGHT = height - CONTENT_SPACE;
 
@@ -127,6 +137,13 @@ export default function Explore({ navigation }) {
     ) {
       return data.pages.map((page) => (
         <React.Fragment key={page.nextID}>
+          <CommentsSection
+            width={width}
+            height={INSET_HEIGHT}
+            t={t}
+            isVisible={isCommentsVisible}
+            setIsVisible={setCommentsVisible}
+          />
           <View style={{ flex: 1 }}>
             <List
               style={{
@@ -152,6 +169,7 @@ export default function Explore({ navigation }) {
                   data={{ item, index }}
                   activeIndex={activeIndex}
                   viewHeight={ITEM_HEIGHT}
+                  setCommentsVisible={setCommentsVisible}
                 />
               ))}
               extraData={activeIndex}

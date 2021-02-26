@@ -114,8 +114,8 @@ export default function Login({ navigation }) {
               <GeneralTextField
                 type="email"
                 label={t('emailAddress')}
-                androidComplete="email"
-                iosComplete="emailAddress"
+                autoCompleteType="email"
+                textContentType="emailAddress"
                 validate="email"
                 setFormValues={setFormValues}
               />
@@ -124,8 +124,8 @@ export default function Login({ navigation }) {
               <GeneralTextField
                 type="password"
                 label={t('password')}
-                androidComplete="password"
-                iosComplete="password"
+                autoCompleteType="password"
+                textContentType="password"
                 validate="password"
                 secure
                 setFormValues={setFormValues}

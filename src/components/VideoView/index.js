@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 
 import { View, Image } from 'react-native';
 
@@ -21,7 +21,10 @@ import {
 } from 'src/components/CustomIcons';
 
 export default function VideoView(props) {
-  const { data, activeIndex, viewHeight } = props;
+  // prettier-ignore
+  const {
+    data, activeIndex, viewHeight, setCommentsVisible,
+  } = props;
 
   const { item, index } = data;
 
@@ -42,6 +45,10 @@ export default function VideoView(props) {
   const toggleLike = () => setLiked((prevState) => !prevState);
 
   const updateHiddenText = () => setHideText((prevState) => !prevState);
+
+  const openComments = useCallback(() => setCommentsVisible(true), [
+    setCommentsVisible,
+  ]);
 
   return useMemo(
     () => (
@@ -245,6 +252,7 @@ export default function VideoView(props) {
                 size="tiny"
                 appearance="ghost"
                 accessoryRight={IconForwardIos}
+                onPress={openComments}
               >
                 <Text status="primary" category="s2">
                   Comments
@@ -255,6 +263,14 @@ export default function VideoView(props) {
         </View>
       </View>
     ),
-    [IS_ACTIVE, IS_PRELOADED, hideText, isLiked, viewHeight, item],
+    [
+      IS_ACTIVE,
+      IS_PRELOADED,
+      hideText,
+      isLiked,
+      viewHeight,
+      item,
+      openComments,
+    ],
   );
 }
