@@ -48,6 +48,9 @@ const AssetIconsPack = {
       require('assets/images/icon/user-outline.png'),
     ),
     'flag-ng': IconProvider(require('assets/images/icon/flag-ng.png')),
+    'movie-outline': IconProvider(
+      require('assets/images/icon/movie-outline.png'),
+    ),
   },
 };
 

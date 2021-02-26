@@ -14,7 +14,7 @@ import InteractIcon from 'src/components/InteractIcon';
 
 import { socialUrl } from 'src/api/dummy';
 
-import { IconVideo } from 'src/components/CustomIcons';
+import { IconCMovie } from 'src/components/CustomIcons';
 
 const styles = StyleSheet.create({
   uiContainer: {
@@ -75,7 +75,7 @@ export default function Wooz({ navigation }) {
           <View style={styles.interactIcons}>
             <InteractIcon
               onPress={routeLiveStream}
-              Accessory={(evaProps) => <IconVideo {...evaProps} />}
+              Accessory={(evaProps) => <IconCMovie {...evaProps} />}
             />
           </View>
         </View>

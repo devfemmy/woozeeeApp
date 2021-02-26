@@ -59,6 +59,7 @@ export default function usePreFetchResources() {
           require('assets/images/icon/supercup-outline.png'),
           require('assets/images/icon/user.png'),
           require('assets/images/icon/user-outline.png'),
+          require('assets/images/icon/movie-outline.png'),
           require('assets/images/banner/onboarding-video-thumb.jpg'),
           require('assets/images/banner/woozeee-socials.jpg'),
           require('assets/images/banner/woozeee-marketplace.jpg'),

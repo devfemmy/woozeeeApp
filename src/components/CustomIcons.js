@@ -254,3 +254,11 @@ export const IconCUser = (props) => {
 
   return <Icon {...otherProps} name={type} pack="assets" />;
 };
+
+export const IconCMovie = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'movie' : 'movie-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
