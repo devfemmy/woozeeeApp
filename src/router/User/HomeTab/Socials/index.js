@@ -10,6 +10,8 @@ import Wooz from 'src/screens/User/HomeTab/Socials/WoozTab';
 import Profile from 'src/screens/User/HomeTab/Socials/ProfileTab';
 import Challenge from 'src/screens/User/HomeTab/Socials/ChallengeTab';
 
+import VideoUpload from 'src/screens/User/Common/VideoUpload';
+
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export default function SocialRoute() {
@@ -20,7 +22,7 @@ export default function SocialRoute() {
     >
       <Screen name="SocialTab" component={Social} />
       <Screen name="WoozTab" component={Wooz} />
-      <Screen name="UploadVideo" component={Social} />
+      <Screen name="VideoUpload" component={VideoUpload} />
       <Screen name="ChallengeTab" component={Challenge} />
       <Screen name="ProfileTab" component={Profile} />
     </Navigator>

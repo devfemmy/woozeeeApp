@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useCallback } from 'react';
 
 import { Image, TouchableOpacity } from 'react-native';
 
@@ -22,42 +22,47 @@ import {
   IconCCup,
 } from '../CustomIcons';
 
-const IconUpload = () => (
-  <Layout
-    level="3"
-    style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'absolute',
-      width: 60,
-      height: 60,
-      top: -25,
-      borderRadius: 100,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 3,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 3,
-      elevation: 6,
-    }}
-  >
-    <TouchableOpacity onPress={null}>
-      <Image
-        source={require('assets/images/icon/upload.png')}
-        defaultSource={require('assets/images/icon/upload.png')}
-        style={{
-          width: 55,
-          height: 55,
-          borderRadius: 100,
-        }}
-        resizeMode="cover"
-      />
-    </TouchableOpacity>
-  </Layout>
-);
+const IconUpload = (props) => {
+  const { navigation } = props;
+
+  const routeVideoUpload = () => navigation.navigate('VideoUpload');
+  return (
+    <Layout
+      level="3"
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        width: 60,
+        height: 60,
+        top: -25,
+        borderRadius: 100,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 6,
+      }}
+    >
+      <TouchableOpacity onPress={routeVideoUpload}>
+        <Image
+          source={require('assets/images/icon/upload.png')}
+          defaultSource={require('assets/images/icon/upload.png')}
+          style={{
+            width: 55,
+            height: 55,
+            borderRadius: 100,
+          }}
+          resizeMode="cover"
+        />
+      </TouchableOpacity>
+    </Layout>
+  );
+};
 
 // Screens
 const tabs = {
@@ -84,8 +89,16 @@ export default function BottomNavigationArea(props) {
 
   const t = useContext(LocaleContext);
 
-  const renderIcon = (Icon, otherProps, active) => (
-    <Icon {...otherProps} style={{ height: 24, width: 24 }} active={active} />
+  const renderIcon = useCallback(
+    (Icon, otherProps, active) => (
+      <Icon
+        {...otherProps}
+        style={{ height: 24, width: 24 }}
+        active={active}
+        navigation={navigation}
+      />
+    ),
+    [navigation],
   );
 
   return useMemo(
@@ -109,6 +122,6 @@ export default function BottomNavigationArea(props) {
         </BottomNavigation>
       </Layout>
     ),
-    [t, navigation, page, state, style],
+    [t, navigation, page, state, style, renderIcon],
   );
 }
