@@ -73,13 +73,13 @@ export const StoryPosts = ({ info }) => {
         />
         <View
           style={{
-            minHeight: 20,
-            minWidth: 20,
-            borderRadius: 10,
+            borderRadius: 15,
             position: 'absolute',
             backgroundColor: 'white',
-            right: 3,
-            bottom: 3,
+            right: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <IconPlusCircle height={28} width={28} fill="#043F7C" />

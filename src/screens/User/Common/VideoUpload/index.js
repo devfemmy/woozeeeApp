@@ -35,12 +35,12 @@ export default function VideoUpload({ navigation }) {
           </View>
           <View style={{ padding: 15 }}>
             <Button status="danger">
-              <Text>Choose from library</Text>
+              <Text status="control">Choose from library</Text>
             </Button>
           </View>
           <View style={{ padding: 15 }}>
             <Button status="primary">
-              <Text>Record something fresh</Text>
+              <Text status="control">Record something fresh</Text>
             </Button>
           </View>
         </View>

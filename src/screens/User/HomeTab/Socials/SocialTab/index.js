@@ -59,7 +59,7 @@ export default function Explore({ navigation }) {
 
   const LIST_HEIGHT = height - (CONTENT_SPACE + INSETS);
 
-  const ITEM_HEIGHT = LIST_HEIGHT * 0.75;
+  const ITEM_HEIGHT = LIST_HEIGHT * 0.8;
 
   const t = useContext(LocaleContext);
 
@@ -111,7 +111,7 @@ export default function Explore({ navigation }) {
           mediaLeft={false}
           count={1}
           numColumns={1}
-          maxHeight={height * 0.75}
+          maxHeight={height * 0.8}
           maxWidth={width}
         />
       );

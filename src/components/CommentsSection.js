@@ -72,9 +72,9 @@ export default function CommentsSection(props) {
         <LinearGradient
           colors={['#043F7C', '#FF5757']}
           style={{
-            height: 44,
-            width: 44,
-            borderRadius: 22,
+            height: 34,
+            width: 34,
+            borderRadius: 17,
             alignItems: 'center',
             justifyContent: 'center',
           }}
@@ -82,9 +82,9 @@ export default function CommentsSection(props) {
           <Image
             source={require('assets/images/user/user1.png')}
             style={{
-              height: 40,
-              width: 40,
-              borderRadius: 20,
+              height: 30,
+              width: 30,
+              borderRadius: 15,
               borderColor: 'white',
             }}
           />
@@ -109,6 +109,57 @@ export default function CommentsSection(props) {
     [t],
   );
 
+  // prettier-ignore
+  const Message = ({ sent, data }) => useMemo(
+    () => (
+      <View
+        style={{
+          flexDirection: sent ? 'row-reverse' : 'row',
+          alignItems: 'flex-start',
+          marginTop: 15,
+        }}
+      >
+        <LinearGradient
+          colors={['#043F7C', '#FF5757']}
+          style={{
+            height: 34,
+            width: 34,
+            borderRadius: 17,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Image
+            source={require('assets/images/user/user1.png')}
+            style={{
+              height: 30,
+              width: 30,
+              borderRadius: 15,
+              borderColor: 'white',
+            }}
+          />
+        </LinearGradient>
+        <Layout
+          level="4"
+          style={{
+            flex: 1,
+            paddingHorizontal: 10,
+            paddingVertical: 5,
+            borderRadius: 10,
+            marginHorizontal: 5,
+          }}
+        >
+          <Text category="s2">{data.user}</Text>
+          <Text category="p2">{data.msg}</Text>
+          <Text category="c1" style={{ alignSelf: 'flex-end' }}>
+            {data.time}
+          </Text>
+        </Layout>
+      </View>
+    ),
+    [sent, data],
+  );
+
   return useMemo(
     () => (
       <Modal visible={isVisible} style={{ height: viewHeight, width }}>
@@ -127,53 +178,38 @@ export default function CommentsSection(props) {
                 height: height - (insets + 180),
               }}
             >
-              <ScrollView style={{ flex: 1 }}>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    alignItems: 'center',
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={{ flex: 1 }}
+                contentContainerStyle={{
+                  flex: 1,
+                  justifyContent: 'flex-end',
+                }}
+              >
+                <Message
+                  data={{
+                    user: 'Jack mar',
+                    msg:
+                      'Hello world, woozeee, Testing the limit of this very long message',
+                    time: '9:15am',
                   }}
-                >
-                  <LinearGradient
-                    colors={['#043F7C', '#FF5757']}
-                    style={{
-                      height: 44,
-                      width: 44,
-                      borderRadius: 22,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginRight: 5,
-                    }}
-                  >
-                    <Image
-                      source={require('assets/images/user/user1.png')}
-                      style={{
-                        height: 40,
-                        width: 40,
-                        borderRadius: 20,
-                        borderColor: 'white',
-                      }}
-                    />
-                  </LinearGradient>
-                  <Layout
-                    level="4"
-                    style={{
-                      flex: 1,
-                      paddingHorizontal: 10,
-                      paddingVertical: 5,
-                      borderRadius: 10,
-                    }}
-                  >
-                    <Text category="p2">
-                      Hello world, woozee, Testing the limit of this very long
-                      message
-                    </Text>
-                    <Text category="c1" style={{ alignSelf: 'flex-end' }}>
-                      9:15am
-                    </Text>
-                  </Layout>
-                </View>
+                />
+                <Message
+                  data={{
+                    user: 'David Ogbenno',
+                    msg:
+                      'Hello world, woozeee, Testing the limit of this very long message',
+                    time: '9:15am',
+                  }}
+                />
+                <Message
+                  data={{
+                    user: 'Abraham wilson',
+                    msg:
+                      'Hello world, woozeee, Testing the limit of this very long message',
+                    time: '9:15am',
+                  }}
+                />
               </ScrollView>
             </View>
           </Card>

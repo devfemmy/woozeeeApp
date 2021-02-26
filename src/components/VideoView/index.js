@@ -215,7 +215,7 @@ export default function VideoView(props) {
               style={{
                 marginBottom: 10,
                 flexDirection: 'row',
-                alignItems: 'center',
+                alignItems: 'flex-start',
               }}
             >
               <Text
@@ -233,7 +233,7 @@ export default function VideoView(props) {
                 onPress={updateHiddenText}
               >
                 <Text appearance="hint" category="c2">
-                  more
+                  {hideText ? 'more' : 'less'}
                 </Text>
               </Button>
             </View>
