@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { SECRET_KEY } from '@env';
-
 const { CancelToken } = axios;
 
 const source = CancelToken.source();
@@ -13,7 +11,8 @@ const instance = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json:charset=utf-8',
-    'secret-key': SECRET_KEY,
+    'secret-key':
+      '$2b$10$BifoVKHdKq1J9E8C1YK1nuvsaD4wY9dVW5jNPuy4/mvioQJ84wZ1O',
   },
 });
 
