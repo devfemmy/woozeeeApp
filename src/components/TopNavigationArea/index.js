@@ -22,7 +22,7 @@ import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
 import TopNavigationMenu from './components/TopNavigationMenu';
-import TopNavigationUserMenu from './components/TopNavigationUserMenu';
+import TopNavigationSocialMenu from './components/TopNavigationSocialMenu';
 
 export default function TopNavigationArea(props) {
   // prettier-ignore
@@ -35,6 +35,10 @@ export default function TopNavigationArea(props) {
   ]);
 
   const routeMovies = useCallback(() => navigation.navigate('Movies'), [
+    navigation,
+  ]);
+
+  const routeMessaging = useCallback(() => navigation.navigate('Messaging'), [
     navigation,
   ]);
 
@@ -53,10 +57,11 @@ export default function TopNavigationArea(props) {
           icon={IconBell}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Notification"
+          onPress={routeMessaging}
         />
       </>
     ),
-    [props, routeMovies],
+    [props, routeMovies, routeMessaging],
   );
 
   const renderSearchIcon = useCallback(
@@ -170,7 +175,7 @@ export default function TopNavigationArea(props) {
           alignment="center"
           title={(evaProps) => <Logo {...evaProps} />}
           accessoryLeft={(evaProps) => (
-            <TopNavigationUserMenu {...evaProps} navigation={navigation} />
+            <TopNavigationSocialMenu {...evaProps} navigation={navigation} />
           )}
           accessoryRight={renderToolsOptions}
           accessibilityLiveRegion="polite"
@@ -202,7 +207,27 @@ export default function TopNavigationArea(props) {
     [style, renderSearchIcon],
   );
 
+  const TopNavigationDefault = useMemo(
+    () => (
+      <Layout level="5">
+        <TopNavigation
+          alignment="center"
+          title={(evaProps) => <Title {...evaProps} title={title} />}
+          accessoryLeft={(evaProps) => (
+            <BackButton {...evaProps} navigation={navigation} icon={icon} />
+          )}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="screen navigation"
+          style={[style, { backgroundColor: 'transparent' }]}
+        />
+        <Divider />
+      </Layout>
+    ),
+    [navigation, title, icon, style],
+  );
+
   const navs = {
+    default: TopNavigationDefault,
     auth: TopNavigationAuth,
     user: TopNavigationUser,
     search: TopNavigationSearch,

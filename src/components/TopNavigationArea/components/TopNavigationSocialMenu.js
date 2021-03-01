@@ -16,7 +16,7 @@ import {
   IconCHome,
 } from 'src/components/CustomIcons';
 
-export default function TopNavigationUserMenu(props) {
+export default function TopNavigationSocialMenu(props) {
   const { navigation } = props;
 
   const t = useContext(LocaleContext);

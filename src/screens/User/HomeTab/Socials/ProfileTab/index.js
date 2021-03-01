@@ -53,7 +53,7 @@ export default function Profile({ navigation }) {
 
   const IS_PORTRAIT = height > width;
 
-  const routeChats = () => navigation.navigate('Chats');
+  const routeMessaging = () => navigation.navigate('Messaging');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -152,7 +152,7 @@ export default function Profile({ navigation }) {
                   status="primary"
                   size="tiny"
                   style={{ marginHorizontal: 5 }}
-                  onPress={routeChats}
+                  onPress={routeMessaging}
                 >
                   <Text status="control" category="p2">
                     {t('message')}
