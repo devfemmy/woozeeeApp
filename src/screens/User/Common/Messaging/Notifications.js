@@ -35,7 +35,7 @@ const MESSAGES = [
 const renderItem = ({ index, item }) => (
   <>
     <Layout
-      level="5"
+      level="6"
       style={{
         marginVertical: 5,
       }}

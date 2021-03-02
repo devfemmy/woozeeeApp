@@ -159,8 +159,7 @@ export default function Explore({ navigation }) {
                   data={{ item, index }}
                   activeIndex={activeIndex}
                   viewHeight={ITEM_HEIGHT}
-                  insets={INSETS}
-                  t={t}
+                  navigation={navigation}
                 />
               ))}
               extraData={activeIndex}

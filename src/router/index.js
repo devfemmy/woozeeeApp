@@ -26,6 +26,7 @@ import Search from 'src/screens/User/Common/Search';
 import Movies from 'src/screens/User/Common/Movies';
 import LiveStream from 'src/screens/User/Common/LiveStream';
 import Messaging from 'src/screens/User/Common/Messaging';
+import Comments from 'src/screens/User/Common/Comments';
 import Chats from 'src/screens/User/Common/Chats';
 
 /* Routes import */
@@ -56,6 +57,7 @@ export default function Router() {
       Movies,
       LiveStream,
       Messaging,
+      Comments,
       Chats,
     },
 

@@ -38,7 +38,7 @@ export default function Inbox({ navigation }) {
   const renderItem = ({ index, item }) => (
     <>
       <Layout
-        level="5"
+        level="6"
         style={{
           marginVertical: 5,
         }}

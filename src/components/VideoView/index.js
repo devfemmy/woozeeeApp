@@ -10,8 +10,6 @@ import { Text, Button } from '@ui-kitten/components';
 
 import CustomVideoPlayer from 'src/components/CustomVideoPlayer';
 
-import CommentsSection from 'src/components/CommentsSection';
-
 import InteractIcon from 'src/components/InteractIcon';
 
 import {
@@ -25,7 +23,7 @@ import {
 export default function VideoView(props) {
   // prettier-ignore
   const {
-    data, activeIndex, viewHeight, t, insets,
+    data, activeIndex, viewHeight, navigation,
   } = props;
 
   const { item, index } = data;
@@ -44,14 +42,12 @@ export default function VideoView(props) {
 
   const [hideText, setHideText] = useState(true);
 
-  const [isCommentsVisible, setCommentsVisible] = useState(false);
-
   const toggleLike = () => setLiked((prevState) => !prevState);
 
   const updateHiddenText = () => setHideText((prevState) => !prevState);
 
-  const openComments = useCallback(() => setCommentsVisible(true), [
-    setCommentsVisible,
+  const routeComments = useCallback(() => navigation.navigate('Comments'), [
+    navigation,
   ]);
 
   return useMemo(
@@ -265,7 +261,7 @@ export default function VideoView(props) {
                   size="tiny"
                   appearance="ghost"
                   accessoryRight={IconForwardIos}
-                  onPress={openComments}
+                  onPress={routeComments}
                 >
                   <Text status="primary" category="s2">
                     Comments
@@ -275,25 +271,16 @@ export default function VideoView(props) {
             </View>
           </View>
         </View>
-        <CommentsSection
-          t={t}
-          isVisible={isCommentsVisible}
-          setIsVisible={setCommentsVisible}
-          insets={insets}
-        />
       </>
     ),
     [
-      t,
       IS_ACTIVE,
       IS_PRELOADED,
       hideText,
       isLiked,
       viewHeight,
       item,
-      insets,
-      isCommentsVisible,
-      openComments,
+      routeComments,
     ],
   );
 }

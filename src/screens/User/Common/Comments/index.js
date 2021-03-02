@@ -25,7 +25,7 @@ import InteractIcon from 'src/components/InteractIcon';
 
 import { IconClose, IconPaperPlane } from 'src/components/CustomIcons';
 
-export default function Chats({ navigation }) {
+export default function Comments({ navigation }) {
   const { height } = useWindowDimensions();
 
   const { bottom, top } = useSafeAreaInsets();
@@ -38,7 +38,7 @@ export default function Chats({ navigation }) {
     comment: '',
   });
 
-  const closeChat = useCallback(() => navigation.pop(), [navigation]);
+  const closeComments = useCallback(() => navigation.pop(), [navigation]);
 
   const renderCardHeader = useCallback(
     () => (
@@ -50,19 +50,19 @@ export default function Chats({ navigation }) {
           padding: 15,
         }}
       >
-        <Text category="h5">{t('chats')}</Text>
+        <Text category="h5">{t('comments')}</Text>
         <View>
           <InteractIcon
             Accessory={IconClose}
             status="primary"
             height={32}
             width={32}
-            onPress={closeChat}
+            onPress={closeComments}
           />
         </View>
       </View>
     ),
-    [t, closeChat],
+    [t, closeComments],
   );
 
   const renderCardFooter = useCallback(
@@ -125,7 +125,7 @@ export default function Chats({ navigation }) {
           marginTop: 15,
         }}
       >
-        {/* <LinearGradient
+        <LinearGradient
           colors={['#043F7C', '#FF5757']}
           style={{
             height: 34,
@@ -144,7 +144,7 @@ export default function Chats({ navigation }) {
               borderColor: 'white',
             }}
           />
-        </LinearGradient> */}
+        </LinearGradient>
         <Layout
           level="4"
           style={{

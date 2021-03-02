@@ -34,6 +34,9 @@ const MoviesSectionArea = (props) => {
       promise.cancel = () => Api.cancelRequest('Request aborted');
       return promise;
     },
+    {
+      cacheTime: 1000 * 60 * 1,
+    },
   );
 
   if (status === 'loading') {
