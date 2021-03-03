@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Layout } from '@ui-kitten/components';
 
@@ -33,10 +33,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
   },
-  interactIcons: {
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-  },
 });
 
 const PLACEHOLDER_CONFIG = {
@@ -64,20 +60,17 @@ export default function Wooz({ navigation }) {
       >
         <View
           style={{
-            paddingHorizontal: 10,
-            paddingVertical: 20,
+            paddingHorizontal: 15,
+            paddingVertical: 25,
             zIndex: 19,
             position: 'absolute',
             top: 0,
             right: 0,
           }}
         >
-          <View style={styles.interactIcons}>
-            <InteractIcon
-              onPress={routeLiveStream}
-              Accessory={(evaProps) => <IconCMovie {...evaProps} />}
-            />
-          </View>
+          <TouchableOpacity activeOpacity={0.75} onPress={routeLiveStream}>
+            <IconCMovie style={{ height: 28, width: 28 }} />
+          </TouchableOpacity>
         </View>
         <WoozPostsArea />
       </View>

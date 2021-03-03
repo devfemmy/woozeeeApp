@@ -1,12 +1,16 @@
 import React, { useContext, useMemo, useCallback } from 'react';
 
-import { Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
+
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 import {
   BottomNavigation,
   BottomNavigationTab,
   Layout,
   Divider,
+  Button,
+  Text,
 } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
@@ -20,10 +24,14 @@ import {
   IconCWooz,
   IconCSocial,
   IconCCup,
+  IconVideoOutline,
+  IconCloudUploadOutline,
 } from '../CustomIcons';
 
 const IconUpload = (props) => {
   const { navigation } = props;
+
+  const sheetRef = React.useRef(null);
 
   const routeVideoUpload = () => navigation.navigate('VideoUpload');
   return (
@@ -48,7 +56,7 @@ const IconUpload = (props) => {
         elevation: 6,
       }}
     >
-      <TouchableOpacity onPress={routeVideoUpload}>
+      <TouchableOpacity onPress={() => sheetRef.current.open()}>
         <Image
           source={require('assets/images/icon/upload.png')}
           defaultSource={require('assets/images/icon/upload.png')}
@@ -60,6 +68,58 @@ const IconUpload = (props) => {
           resizeMode="cover"
         />
       </TouchableOpacity>
+      <RBSheet
+        ref={sheetRef}
+        height={170}
+        closeOnDragDown
+        animationType="fade"
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            width: '100%',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-end',
+            paddingBottom: 10,
+          }}
+        >
+          <Button
+            appearance="ghost"
+            accessoryLeft={(evaProps) => (
+              <IconVideoOutline {...evaProps} height={36} width={36} />
+            )}
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <Text style={{ fontSize: 18 }} status="primary">
+              Record with camera
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 2, width: '100%' }} />
+          <Button
+            appearance="ghost"
+            accessoryLeft={(evaProps) => (
+              <IconCloudUploadOutline {...evaProps} height={36} width={36} />
+            )}
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <Text style={{ fontSize: 18 }} status="primary">
+              Upload from device
+            </Text>
+          </Button>
+        </View>
+      </RBSheet>
     </Layout>
   );
 };

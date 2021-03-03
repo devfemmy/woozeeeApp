@@ -36,6 +36,11 @@ export const IconVideoOutline = (props) => {
   );
 };
 
+export const IconCloudUploadOutline = (props) => {
+  const { isClosed, ...otherProps } = props;
+  return <Icon {...otherProps} name="cloud-upload-outline" />;
+};
+
 export const IconHeartToggle = (props) => {
   const { isLiked, ...otherProps } = props;
   return <Icon {...otherProps} name={isLiked ? 'heart' : 'heart-outline'} />;

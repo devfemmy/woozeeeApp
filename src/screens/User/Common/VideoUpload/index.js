@@ -4,9 +4,17 @@ import { View, ScrollView } from 'react-native';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
 
-import { Button, Layout, Text } from '@ui-kitten/components';
+// prettier-ignore
+import {
+  Button, Layout, Text, Divider,
+} from '@ui-kitten/components';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
+
+import {
+  IconVideoOutline,
+  IconCloudUploadOutline,
+} from 'src/components/CustomIcons';
 
 export default function VideoUpload({ navigation }) {
   const sheetRef = React.useRef(null);
@@ -58,23 +66,54 @@ export default function VideoUpload({ navigation }) {
         </ScrollView>
         <RBSheet
           ref={sheetRef}
-          height={300}
+          height={170}
           closeOnDragDown
+          animationType="fade"
           customStyles={{
             container: {
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: 'blue',
             },
           }}
         >
           <View
             style={{
               flex: 1,
-              backgroundColor: 'red',
+              width: '100%',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-end',
+              paddingBottom: 10,
             }}
           >
-            <Text>Swipe down to close</Text>
+            <Button
+              appearance="ghost"
+              accessoryLeft={(evaProps) => (
+                <IconVideoOutline {...evaProps} height={36} width={36} />
+              )}
+              style={{
+                width: '100%',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <Text style={{ fontSize: 18 }} status="primary">
+                Record with camera
+              </Text>
+            </Button>
+            <Divider style={{ marginVertical: 2, width: '100%' }} />
+            <Button
+              appearance="ghost"
+              accessoryLeft={(evaProps) => (
+                <IconCloudUploadOutline {...evaProps} height={36} width={36} />
+              )}
+              style={{
+                width: '100%',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <Text style={{ fontSize: 18 }} status="primary">
+                Upload from device
+              </Text>
+            </Button>
           </View>
         </RBSheet>
       </Layout>
