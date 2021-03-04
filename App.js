@@ -62,8 +62,6 @@ i18n.translations = { en, fr };
 
 i18n.fallbacks = true;
 
-console.log(Constants.platform);
-
 let VESDKLicense = null;
 
 if (Constants.platform.android) {

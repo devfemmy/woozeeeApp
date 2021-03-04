@@ -12,6 +12,7 @@ const MEDIA_OPTIONS = {
   },
   Videos: {
     mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+    videoMaxDuration: 30,
   },
 };
 
@@ -20,13 +21,11 @@ export default function useImageVideoCamera(media) {
     (async () => {
       try {
         if (Platform.OS !== 'web') {
-          const checkPermission = await ImagePicker.getMediaLibraryPermissionsAsync();
+          const checkPermission = await ImagePicker.getCameraPermissionsAsync();
 
           if (checkPermission.status === 'granted') return;
 
-          const {
-            status,
-          } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+          const { status } = await ImagePicker.requestCameraPermissionsAsync();
 
           if (status !== 'granted') {
             Alert.alert(
@@ -46,7 +45,7 @@ export default function useImageVideoCamera(media) {
     let fileUri = null;
 
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker.launchCameraAsync({
         ...MEDIA_OPTIONS[media],
         ...(aspect ?? { aspect }),
       });

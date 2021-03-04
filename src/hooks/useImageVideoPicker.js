@@ -43,7 +43,7 @@ export default function useImageVideoPicker(media) {
   }, []);
 
   return async (aspect) => {
-    let fileUri = null;
+    let file = null;
 
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -51,10 +51,10 @@ export default function useImageVideoPicker(media) {
         ...(aspect ?? { aspect }),
       });
 
-      if (!result.cancelled) fileUri = await result.uri;
+      if (!result.cancelled) file = await result;
     } catch (e) {
       const msg = e;
     }
-    return fileUri;
+    return file;
   };
 }

@@ -1,6 +1,6 @@
-import React, { useContext, useMemo, useCallback, useState } from 'react';
+import React, { useContext, useMemo, useCallback } from 'react';
 
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View, Alert } from 'react-native';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
 
@@ -18,6 +18,8 @@ import { VESDK } from 'react-native-videoeditorsdk';
 import { LocaleContext } from 'src/contexts';
 
 import useImageVideoPicker from 'src/hooks/useImageVideoPicker';
+
+import useImageVideoCamera from 'src/hooks/useImageVideoCamera';
 
 import {
   IconCHome,
@@ -39,12 +41,35 @@ const IconUpload = (props) => {
 
   const libraryVideoPicker = useImageVideoPicker('Videos');
 
+  const cameraVideoRecorder = useImageVideoCamera('Videos');
+
   const handleSelectVideo = async () => {
-    const videoUri = await libraryVideoPicker();
+    const videoFile = await libraryVideoPicker();
 
-    if (!videoUri) return;
+    if (!videoFile.uri) return;
 
-    const editorResult = await VESDK.openEditor(videoUri);
+    if (videoFile.duration > 30 * 1000) {
+      Alert.alert(
+        'Video too long',
+        'Video file should not be greater than 30secs',
+        [{ text: 'Ok', style: 'default' }],
+      );
+      return;
+    }
+
+    const editorResult = await VESDK.openEditor(videoFile.uri);
+
+    if (!editorResult) return;
+
+    navigation.navigate('VideoUpload', { editorResult });
+  };
+
+  const handleRecordVideo = async () => {
+    const videoFile = await cameraVideoRecorder();
+
+    if (!videoFile) return;
+
+    const editorResult = await VESDK.openEditor(videoFile);
 
     if (!editorResult) return;
 
@@ -131,7 +156,7 @@ const IconUpload = (props) => {
               width: '100%',
               justifyContent: 'flex-start',
             }}
-            disabled
+            onPress={handleRecordVideo}
           >
             <Text style={{ fontSize: 18 }} status="primary">
               Record with camera

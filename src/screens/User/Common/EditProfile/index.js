@@ -60,13 +60,13 @@ export default function EditProfile({ navigation }) {
   const libraryImagePicker = useImageVideoPicker('Images');
 
   const selectCoverImage = async () => {
-    const imageUri = await libraryImagePicker([4, 3]);
-    setCoverImage(imageUri);
+    const imageFile = await libraryImagePicker([4, 3]);
+    setCoverImage(imageFile.uri);
   };
 
   const selectUserImage = async () => {
-    const imageUri = await libraryImagePicker([1, 1]);
-    setUserImage(imageUri);
+    const imageFile = await libraryImagePicker([1, 1]);
+    setUserImage(imageFile.uri);
   };
 
   return (
