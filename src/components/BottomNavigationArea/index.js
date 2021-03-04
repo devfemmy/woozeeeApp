@@ -1,6 +1,9 @@
 import React, { useContext, useMemo, useCallback } from 'react';
 
-import { Image, TouchableOpacity, View, Alert } from 'react-native';
+// prettier-ignore
+import {
+  Image, TouchableOpacity, View, Alert,
+} from 'react-native';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
 
