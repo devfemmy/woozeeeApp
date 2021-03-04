@@ -87,61 +87,57 @@ export default function Settings({ navigation }) {
             padding: 15,
           }}
         >
-          <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-between',
                 alignItems: 'center',
               }}
             >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <IconMoon fill="#8F9BB3" height={24} width={24} />
-                <Text category="s1" style={{ marginLeft: 10 }}>
-                  {t('darkMode')}
-                </Text>
-              </View>
-              <Toggle checked={darkMode} onChange={handleSwitchTheme} />
+              <IconMoon fill="#8F9BB3" height={24} width={24} />
+              <Text category="s1" style={{ marginLeft: 10 }}>
+                {t('darkMode')}
+              </Text>
             </View>
+            <Toggle checked={darkMode} onChange={handleSwitchTheme} />
           </View>
           <Divider style={{ marginVertical: 10 }} />
-          <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
             <View
               style={{
+                flex: 1,
                 flexDirection: 'row',
-                justifyContent: 'space-between',
                 alignItems: 'center',
               }}
             >
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
+              <IconFlag fill="#8F9BB3" height={24} width={24} />
+              <Text category="s1" style={{ marginLeft: 10 }}>
+                {t('language')}
+              </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Select
+                value={renderLocales}
+                selectedIndex={selectedLocale}
+                onSelect={handleSwitchLocale}
               >
-                <IconFlag fill="#8F9BB3" height={24} width={24} />
-                <Text category="s1" style={{ marginLeft: 10 }}>
-                  {t('language')}
-                </Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Select
-                  value={renderLocales}
-                  selectedIndex={selectedLocale}
-                  onSelect={handleSwitchLocale}
-                >
-                  {/* eslint-disable-next-line react/prop-types */}
-                  {LOCALES.map((option) => (
-                    <SelectItem key={option.title} title={option.title} />
-                  ))}
-                </Select>
-              </View>
+                {/* eslint-disable-next-line react/prop-types */}
+                {LOCALES.map((option) => (
+                  <SelectItem key={option.title} title={option.title} />
+                ))}
+              </Select>
             </View>
           </View>
           <Divider style={{ marginVertical: 10 }} />

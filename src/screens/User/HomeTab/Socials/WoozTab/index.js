@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 
 import { Layout } from '@ui-kitten/components';
 
@@ -10,30 +10,9 @@ import WithInfiniteFetch from 'src/components/DataFetch/WithInfiniteFetch';
 
 import { WoozPosts } from 'src/components/VideoPosts';
 
-import InteractIcon from 'src/components/InteractIcon';
-
 import { socialUrl } from 'src/api/dummy';
 
 import { IconCMovie } from 'src/components/CustomIcons';
-
-const styles = StyleSheet.create({
-  uiContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    minHeight: '100%',
-    zIndex: 9,
-    paddingVertical: 5,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-    paddingHorizontal: 10,
-    borderRadius: 5,
-  },
-});
 
 const PLACEHOLDER_CONFIG = {
   count: 1,

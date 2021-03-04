@@ -1,23 +1,78 @@
-import React from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-import RBSheet from 'react-native-raw-bottom-sheet';
+import { Video } from 'expo-av';
 
 // prettier-ignore
 import {
-  Button, Layout, Text, Divider,
+  Button, Layout, Text, Divider, Toggle,
 } from '@ui-kitten/components';
+
+import { LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import {
-  IconVideoOutline,
-  IconCloudUploadOutline,
-} from 'src/components/CustomIcons';
+import { GeneralTextField } from 'src/components/FormFields';
 
-export default function VideoUpload({ navigation }) {
-  const sheetRef = React.useRef(null);
+export default function VideoUpload({ route, navigation }) {
+  const { editorResult } = route.params;
+
+  const t = useContext(LocaleContext);
+
+  const [uploadLocations, setUploadLocations] = useState({
+    stories: false,
+    feeds: false,
+    wooz: false,
+  });
+
+  const [form, setFormValues] = useState({
+    message: '',
+  });
+
+  const handleVideoRef = useCallback(
+    (ref) => {
+      const videoComp = ref;
+
+      (async () => {
+        try {
+          await videoComp?.loadAsync({ uri: editorResult.video });
+        } catch (e) {
+          const msg = e;
+        }
+      })();
+    },
+    [editorResult.video],
+  );
+
+  const handleUploadLoc = (loc) => {
+    setUploadLocations((prevState) => ({
+      ...prevState,
+      [loc]: !prevState[loc],
+    }));
+  };
+
+  // prettier-ignore
+  const VideoPreview = useCallback(
+    () => (
+      <View
+        style={{
+          flex: 1,
+          paddingTop: 10,
+          paddingHorizontal: 15,
+          marginBottom: 20,
+        }}
+      >
+        <Video
+          ref={handleVideoRef}
+          useNativeControls
+          resizeMode="contain"
+          style={{ height: 300, width: '100%' }}
+        />
+      </View>
+    ),
+    [handleVideoRef],
+  );
 
   return (
     <>
@@ -34,88 +89,117 @@ export default function VideoUpload({ navigation }) {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         >
-          <View style={{ paddingBottom: 20 }}>
+          <View style={{ paddingBottom: 40 }}>
+            <VideoPreview />
+            <Divider style={{ marginVertical: 10 }} />
             <View
               style={{
-                paddingTop: 10,
+                flex: 1,
                 paddingHorizontal: 15,
-                marginBottom: 20,
               }}
             >
               <Text
-                category="h4"
+                category="label"
                 appearance="hint"
-                style={{ textAlign: 'center' }}
+                style={{ marginBottom: 5, marginLeft: 10 }}
               >
-                Choose video upload method
+                {t('addTo')}
               </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: 10,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text category="s1" style={{ marginLeft: 10 }}>
+                    {t('stories')}
+                  </Text>
+                </View>
+                <Toggle
+                  checked={uploadLocations.stories}
+                  onChange={(e) => handleUploadLoc('stories')}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: 10,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text category="s1" style={{ marginLeft: 10 }}>
+                    {t('feeds')}
+                  </Text>
+                </View>
+                <Toggle
+                  checked={uploadLocations.feeds}
+                  onChange={(e) => handleUploadLoc('feeds')}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: 10,
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text category="s1" style={{ marginLeft: 10 }}>
+                    {t('wooz')}
+                  </Text>
+                </View>
+                <Toggle
+                  checked={uploadLocations.wooz}
+                  onChange={(e) => handleUploadLoc('wooz')}
+                />
+              </View>
+              <View style={{ flex: 1, marginHorizontal: 5 }}>
+                <GeneralTextField
+                  type="message"
+                  label={t('message')}
+                  placeholder={t('writeMsg')}
+                  setFormValues={setFormValues}
+                  multiline
+                  maxHeight={50}
+                />
+              </View>
             </View>
-            <View style={{ padding: 15 }}>
-              <Button status="danger">
-                <Text status="control" onPress={() => sheetRef.current.open()}>
-                  Choose from library
+            <Divider style={{ marginVertical: 10 }} />
+            <View style={{ paddingHorizontal: 15 }}>
+              <Button
+                status="danger"
+                disabled={Object.values(uploadLocations).every(
+                  (item) => item === false,
+                )}
+              >
+                <Text status="control" category="h6">
+                  {t('upload')}
                 </Text>
-              </Button>
-            </View>
-            <View style={{ padding: 15 }}>
-              <Button status="primary">
-                <Text status="control">Record something fresh</Text>
               </Button>
             </View>
           </View>
         </ScrollView>
-        <RBSheet
-          ref={sheetRef}
-          height={170}
-          closeOnDragDown
-          animationType="fade"
-          customStyles={{
-            container: {
-              justifyContent: 'center',
-              alignItems: 'center',
-            },
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              width: '100%',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-end',
-              paddingBottom: 10,
-            }}
-          >
-            <Button
-              appearance="ghost"
-              accessoryLeft={(evaProps) => (
-                <IconVideoOutline {...evaProps} height={36} width={36} />
-              )}
-              style={{
-                width: '100%',
-                justifyContent: 'flex-start',
-              }}
-            >
-              <Text style={{ fontSize: 18 }} status="primary">
-                Record with camera
-              </Text>
-            </Button>
-            <Divider style={{ marginVertical: 2, width: '100%' }} />
-            <Button
-              appearance="ghost"
-              accessoryLeft={(evaProps) => (
-                <IconCloudUploadOutline {...evaProps} height={36} width={36} />
-              )}
-              style={{
-                width: '100%',
-                justifyContent: 'flex-start',
-              }}
-            >
-              <Text style={{ fontSize: 18 }} status="primary">
-                Upload from device
-              </Text>
-            </Button>
-          </View>
-        </RBSheet>
       </Layout>
     </>
   );

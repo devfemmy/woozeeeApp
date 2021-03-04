@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 // prettier-ignore
 import {
@@ -28,9 +28,9 @@ export default function BackgroundVideo(props) {
 
   const isFocused = useIsFocused();
 
-  const opacity = React.useMemo(() => new Animated.Value(0.75), []);
+  const opacity = useMemo(() => new Animated.Value(0.75), []);
 
-  const thumbOpacity = React.useMemo(() => new Animated.Value(0.75), []);
+  const thumbOpacity = useMemo(() => new Animated.Value(0.75), []);
 
   // const [cachedUri, setCachedUri] = useState(null);
   //

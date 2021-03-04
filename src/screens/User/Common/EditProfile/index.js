@@ -12,7 +12,7 @@ import {
 
 import { LocaleContext } from 'src/contexts';
 
-import useImagePicker from 'src/hooks/useImagePicker';
+import useImageVideoPicker from 'src/hooks/useImageVideoPicker';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
@@ -57,7 +57,7 @@ export default function EditProfile({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const libraryImagePicker = useImagePicker('Images');
+  const libraryImagePicker = useImageVideoPicker('Images');
 
   const selectCoverImage = async () => {
     const imageUri = await libraryImagePicker([4, 3]);

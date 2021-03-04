@@ -74,6 +74,9 @@
   "movies": "cinéma",
   "comments": "commentaires",
   "writeComment": "écris ton commentaire",
-  "message": "Un messaging",
-  "chats": "Bavarder"
+  "messaging": "Un messaging",
+  "chats": "Bavarder",
+  "stories": "histoires",
+  "uploadTo": "télécharger sur",
+  "message": "Un message"
 }

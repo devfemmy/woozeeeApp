@@ -155,7 +155,7 @@ export default function Profile({ navigation }) {
                   onPress={routeMessaging}
                 >
                   <Text status="control" category="p2">
-                    {t('message')}
+                    {t('messaging')}
                   </Text>
                 </Button>
               </View>

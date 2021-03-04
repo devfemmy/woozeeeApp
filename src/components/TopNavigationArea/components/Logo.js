@@ -7,6 +7,7 @@ export default function Logo(props) {
     <View {...props}>
       <Image
         source={require('assets/images/drawable/logo.png')}
+        defaultSource={require('assets/images/drawable/logo.png')}
         resizeMode="cover"
         style={{ maxWidth: 150, height: 25 }}
       />

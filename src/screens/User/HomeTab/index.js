@@ -127,6 +127,7 @@ export default function Home({ navigation }) {
       <Balance value={data.item.balance} point={t('point')} />
       <Image
         source={data.item.banner}
+        defaultSource={data.item.banner}
         style={{
           height: IS_PORTRAIT ? 125 : 95,
           width: '95%',

@@ -11,6 +11,7 @@ export default function CustomVideoPlayer(props) {
     shouldDisplay,
     isPreloaded,
     resizeMode,
+    style,
     ...otherProps
   } = props;
 
@@ -25,7 +26,7 @@ export default function CustomVideoPlayer(props) {
       usePoster
       posterSource={require('assets/images/banner/placeholder-image.png')}
       posterStyle={{ resizeMode, height: '100%', width: '100%' }}
-      style={{ flex: 1 }}
+      style={[style, { flex: 1 }]}
       shouldPlay={shouldPlay && shouldDisplay && isFocused}
     />
   ) : null;

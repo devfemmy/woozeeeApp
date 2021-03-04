@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useCallback } from 'react';
+import React, { useContext, useMemo, useCallback, useState } from 'react';
 
 import { Image, TouchableOpacity, View } from 'react-native';
 
@@ -13,7 +13,11 @@ import {
   Text,
 } from '@ui-kitten/components';
 
+import { VESDK } from 'react-native-videoeditorsdk';
+
 import { LocaleContext } from 'src/contexts';
+
+import useImageVideoPicker from 'src/hooks/useImageVideoPicker';
 
 import {
   IconCHome,
@@ -33,7 +37,20 @@ const IconUpload = (props) => {
 
   const sheetRef = React.useRef(null);
 
-  const routeVideoUpload = () => navigation.navigate('VideoUpload');
+  const libraryVideoPicker = useImageVideoPicker('Videos');
+
+  const handleSelectVideo = async () => {
+    const videoUri = await libraryVideoPicker();
+
+    if (!videoUri) return;
+
+    const editorResult = await VESDK.openEditor(videoUri);
+
+    if (!editorResult) return;
+
+    navigation.navigate('VideoUpload', { editorResult });
+  };
+
   return (
     <Layout
       level="3"
@@ -70,7 +87,7 @@ const IconUpload = (props) => {
       </TouchableOpacity>
       <RBSheet
         ref={sheetRef}
-        height={170}
+        height={190}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -86,24 +103,9 @@ const IconUpload = (props) => {
             width: '100%',
             alignItems: 'flex-start',
             justifyContent: 'flex-end',
-            paddingBottom: 10,
+            paddingBottom: 30,
           }}
         >
-          <Button
-            appearance="ghost"
-            accessoryLeft={(evaProps) => (
-              <IconVideoOutline {...evaProps} height={36} width={36} />
-            )}
-            style={{
-              width: '100%',
-              justifyContent: 'flex-start',
-            }}
-          >
-            <Text style={{ fontSize: 18 }} status="primary">
-              Record with camera
-            </Text>
-          </Button>
-          <Divider style={{ marginVertical: 2, width: '100%' }} />
           <Button
             appearance="ghost"
             accessoryLeft={(evaProps) => (
@@ -113,9 +115,26 @@ const IconUpload = (props) => {
               width: '100%',
               justifyContent: 'flex-start',
             }}
+            onPress={handleSelectVideo}
           >
             <Text style={{ fontSize: 18 }} status="primary">
               Upload from device
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 2, width: '100%' }} />
+          <Button
+            appearance="ghost"
+            accessoryLeft={(evaProps) => (
+              <IconVideoOutline {...evaProps} height={36} width={36} />
+            )}
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+            }}
+            disabled
+          >
+            <Text style={{ fontSize: 18 }} status="primary">
+              Record with camera
             </Text>
           </Button>
         </View>

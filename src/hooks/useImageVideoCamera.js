@@ -4,7 +4,18 @@ import { Alert, Platform } from 'react-native';
 
 import * as ImagePicker from 'expo-image-picker';
 
-export default function useImagePicker(media) {
+const MEDIA_OPTIONS = {
+  Images: {
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing: true,
+    quality: 0.6,
+  },
+  Videos: {
+    mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+  },
+};
+
+export default function useImageVideoCamera(media) {
   useEffect(() => {
     (async () => {
       try {
@@ -36,10 +47,8 @@ export default function useImagePicker(media) {
 
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions[media],
-        allowsEditing: true,
-        aspect,
-        quality: 1,
+        ...MEDIA_OPTIONS[media],
+        ...(aspect ?? { aspect }),
       });
 
       if (!result.cancelled) fileUri = await result.uri;
