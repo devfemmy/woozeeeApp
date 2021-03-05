@@ -12,9 +12,10 @@ import {
 
 import { LocaleContext } from 'src/contexts';
 
-import useImageVideoPicker from 'src/hooks/useImageVideoPicker';
-
 import TopNavigationArea from 'src/components/TopNavigationArea';
+
+import ImageVideoPicker from 'src/utilities/ImageVideoPicker';
+import getLibraryPermission from 'src/utilities/getLibraryPermission';
 
 import {
   GeneralTextField,
@@ -32,6 +33,8 @@ const GENDERS = genders;
 const COUNTRIES = countries;
 
 const STATES = states;
+
+const libraryImagePicker = ImageVideoPicker('Images');
 
 export default function EditProfile({ navigation }) {
   const [isLoading, setLoading] = useState(false);
@@ -57,15 +60,23 @@ export default function EditProfile({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const libraryImagePicker = useImageVideoPicker('Images');
-
   const selectCoverImage = async () => {
+    await getLibraryPermission();
+
     const imageFile = await libraryImagePicker([4, 3]);
+
+    if (!imageFile?.uri) return;
+
     setCoverImage(imageFile.uri);
   };
 
   const selectUserImage = async () => {
+    await getLibraryPermission();
+
     const imageFile = await libraryImagePicker([1, 1]);
+
+    if (!imageFile?.uri) return;
+
     setUserImage(imageFile.uri);
   };
 

@@ -16,13 +16,16 @@ import {
   Text,
 } from '@ui-kitten/components';
 
-import { VESDK } from 'react-native-videoeditorsdk';
+import { VESDK, Configuration } from 'react-native-videoeditorsdk';
 
 import { LocaleContext } from 'src/contexts';
 
-import useImageVideoPicker from 'src/hooks/useImageVideoPicker';
+import ImageVideoPicker from 'src/utilities/ImageVideoPicker';
 
-import useImageVideoCamera from 'src/hooks/useImageVideoCamera';
+import getLibraryPermission from 'src/utilities/getLibraryPermission';
+import getCameraPermission from 'src/utilities/getCameraPermission';
+
+import ImageVideoCamera from 'src/utilities/ImageVideoCamera';
 
 import {
   IconCHome,
@@ -37,44 +40,53 @@ import {
   IconCloudUploadOutline,
 } from '../CustomIcons';
 
+const libraryVideoPicker = ImageVideoPicker('Videos');
+
+const cameraVideoRecorder = ImageVideoCamera('Videos');
+
+const configuration = {
+  ...Configuration,
+  // tools: ['filter'],
+};
+
 const IconUpload = (props) => {
   const { navigation } = props;
 
   const sheetRef = React.useRef(null);
 
-  const libraryVideoPicker = useImageVideoPicker('Videos');
-
-  const cameraVideoRecorder = useImageVideoCamera('Videos');
-
   const handleSelectVideo = async () => {
+    await getLibraryPermission();
+
     const videoFile = await libraryVideoPicker();
 
-    if (!videoFile.uri) return;
+    if (!videoFile?.uri) return;
 
-    if (videoFile.duration > 30 * 1000) {
+    if (videoFile.duration > 60 * 1000) {
       Alert.alert(
         'Video too long',
-        'Video file should not be greater than 30secs',
+        'Video file should not be greater than 60secs',
         [{ text: 'Ok', style: 'default' }],
       );
       return;
     }
 
-    const editorResult = await VESDK.openEditor(videoFile.uri);
+    const editorResult = await VESDK.openEditor(videoFile.uri, configuration);
 
-    if (!editorResult) return;
+    if (!editorResult?.video) return;
 
     navigation.navigate('VideoUpload', { editorResult });
   };
 
   const handleRecordVideo = async () => {
+    await getCameraPermission();
+
     const videoFile = await cameraVideoRecorder();
 
-    if (!videoFile) return;
+    if (!videoFile?.uri) return;
 
-    const editorResult = await VESDK.openEditor(videoFile);
+    const editorResult = await VESDK.openEditor(videoFile.uri, configuration);
 
-    if (!editorResult) return;
+    if (!editorResult?.video) return;
 
     navigation.navigate('VideoUpload', { editorResult });
   };
