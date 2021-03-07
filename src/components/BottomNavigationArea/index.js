@@ -82,9 +82,9 @@ const IconUpload = (props) => {
 
     const videoFile = await cameraVideoRecorder();
 
-    if (!videoFile?.uri) return;
+    if (!videoFile) return;
 
-    const editorResult = await VESDK.openEditor(videoFile.uri, configuration);
+    const editorResult = await VESDK.openEditor(videoFile, configuration);
 
     if (!editorResult?.video) return;
 
