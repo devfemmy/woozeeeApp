@@ -51,6 +51,16 @@ const AssetIconsPack = {
     'movie-outline': IconProvider(
       require('assets/images/icon/movie-outline.png'),
     ),
+    'chat-outline': IconProvider(
+      require('assets/images/icon/chat-outline.png'),
+    ),
+    'heart-outline': IconProvider(
+      require('assets/images/icon/heart-outline.png'),
+    ),
+    'eye-outline': IconProvider(require('assets/images/icon/eye-outline.png')),
+    'share-outline': IconProvider(
+      require('assets/images/icon/share-outline.png'),
+    ),
   },
 };
 

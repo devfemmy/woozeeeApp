@@ -11,7 +11,7 @@ import InteractIcon from 'src/components/InteractIcon';
 import {
   IconHeartToggle,
   IconShare,
-  IconClipboard,
+  // IconClipboard,
   IconEye,
   IconMsgSquare,
   IconPlayPause,

@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useContext } from 'react';
 
 import {
   Divider,
@@ -6,6 +6,8 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
+
+import { AppSettingsContext } from 'src/contexts';
 
 import {
   IconCFlag,
@@ -29,6 +31,10 @@ export default function TopNavigationArea(props) {
   const {
     navigation, title, icon, style, screen,
   } = props;
+
+  const { appState } = useContext(AppSettingsContext);
+
+  const ICON_THEME = appState.darkMode ? 'white' : '#0A143F';
 
   const routeSearch = useCallback(() => navigation.navigate('Search'), [
     navigation,

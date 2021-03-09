@@ -1,4 +1,7 @@
-import React, { useState, useMemo, useCallback } from 'react';
+// prettier-ignore
+import React, {
+  useState, useMemo, useCallback, useContext,
+} from 'react';
 
 import { View, Image } from 'react-native';
 
@@ -10,18 +13,19 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { Text, Button, Divider } from '@ui-kitten/components';
 
+import { AppSettingsContext } from 'src/contexts';
+
 import CustomVideoPlayer from 'src/components/CustomVideoPlayer';
 
 import InteractIcon from 'src/components/InteractIcon';
 
 import {
-  IconHeartToggle,
-  IconEye,
-  IconMsgSquareOutline,
+  IconCHeart,
+  IconCEye,
+  IconCChat,
+  IconCShare,
   IconMoreHorizontal,
   IconForwardIos,
-  IconVideoOutline,
-  IconCloudUploadOutline,
 } from 'src/components/CustomIcons';
 
 export default function VideoView(props) {
@@ -47,6 +51,10 @@ export default function VideoView(props) {
   const [isLiked, setLiked] = useState(false);
 
   const [hideText, setHideText] = useState(true);
+
+  const { appState } = useContext(AppSettingsContext);
+
+  const ICON_THEME = appState.darkMode ? 'white' : '#0A143F';
 
   const toggleLike = () => setLiked((prevState) => !prevState);
 
@@ -180,32 +188,40 @@ export default function VideoView(props) {
               <InteractIcon
                 style={{ marginHorizontal: 5 }}
                 Accessory={(evaProps) => (
-                  <IconHeartToggle {...evaProps} isLiked={isLiked} />
+                  <IconCHeart {...evaProps} isLiked={isLiked} />
                 )}
                 textContent={item.likes}
                 direction="row"
-                status="basic"
-                height={28}
-                width={28}
+                status="primary"
+                height={24}
+                width={24}
                 onPress={toggleLike}
               />
               <InteractIcon
                 style={{ marginHorizontal: 5 }}
-                Accessory={IconMsgSquareOutline}
+                Accessory={IconCChat}
                 textContent={item.comments}
                 direction="row"
-                status="basic"
-                height={28}
-                width={28}
+                status="primary"
+                height={24}
+                width={24}
               />
               <InteractIcon
                 style={{ marginHorizontal: 5 }}
-                Accessory={(evaProps) => <IconEye {...evaProps} />}
+                Accessory={(evaProps) => <IconCEye {...evaProps} />}
                 textContent={item.views}
                 direction="row"
-                status="basic"
-                height={28}
-                width={28}
+                status="primary"
+                height={24}
+                width={24}
+              />
+              <InteractIcon
+                style={{ marginHorizontal: 5 }}
+                Accessory={(evaProps) => <IconCShare {...evaProps} />}
+                direction="row"
+                status="primary"
+                height={24}
+                width={24}
               />
             </View>
             <View style={{}}>
@@ -349,7 +365,7 @@ export default function VideoView(props) {
               }}
             >
               <Text style={{ fontSize: 18 }} status="primary">
-                Share to...
+                Share
               </Text>
             </Button>
           </View>

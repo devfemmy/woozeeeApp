@@ -18,7 +18,7 @@ import {
 
 import { VESDK, Configuration } from 'react-native-videoeditorsdk';
 
-import { LocaleContext } from 'src/contexts';
+import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import ImageVideoPicker from 'src/utilities/ImageVideoPicker';
 
@@ -210,16 +210,20 @@ export default function BottomNavigationArea(props) {
 
   const t = useContext(LocaleContext);
 
+  const { appState } = useContext(AppSettingsContext);
+
+  const ICON_THEME = appState.darkMode ? 'white' : '#0A143F';
+
   const renderIcon = useCallback(
     (Icon, otherProps, active) => (
       <Icon
         {...otherProps}
-        style={{ height: 22, width: 22 }}
+        style={{ height: 22, width: 22, tintColor: ICON_THEME }}
         active={active}
         navigation={navigation}
       />
     ),
-    [navigation],
+    [navigation, ICON_THEME],
   );
 
   return useMemo(

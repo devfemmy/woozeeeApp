@@ -6,7 +6,7 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 
-import { LocaleContext } from 'src/contexts';
+import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import {
   IconMenu,
@@ -20,6 +20,10 @@ export default function TopNavigationSocialMenu(props) {
   const { navigation } = props;
 
   const t = useContext(LocaleContext);
+
+  const { appState } = useContext(AppSettingsContext);
+
+  const ICON_THEME = appState.darkMode ? 'white' : '#0A143F';
 
   const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
 
@@ -56,12 +60,16 @@ export default function TopNavigationSocialMenu(props) {
       accessibilityHint="Extras"
     >
       <MenuItem
-        accessoryLeft={() => <IconCHome style={{ height: 20, width: 20 }} />}
+        accessoryLeft={() => (
+          <IconCHome style={{ height: 20, width: 20, tintColor: ICON_THEME }} />
+        )}
         title={t('home')}
         onPress={routeHome}
       />
       <MenuItem
-        accessoryLeft={() => <IconCWooz style={{ height: 20, width: 20 }} />}
+        accessoryLeft={() => (
+          <IconCWooz style={{ height: 20, width: 20, tintColor: ICON_THEME }} />
+        )}
         title={t('social')}
         onPress={routeSocial}
       />

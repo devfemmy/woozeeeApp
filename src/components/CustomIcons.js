@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Image } from 'react-native';
-
 import { Icon } from '@ui-kitten/components';
 
 export const IconEye = (props) => {
@@ -264,6 +262,34 @@ export const IconCMovie = (props) => {
   const { active, ...otherProps } = props;
 
   const type = active ? 'movie' : 'movie-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCHeart = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'heart' : 'heart-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCChat = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'chat' : 'chat-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCShare = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'share' : 'share-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCEye = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'eye' : 'eye-outline';
 
   return <Icon {...otherProps} name={type} pack="assets" />;
 };
