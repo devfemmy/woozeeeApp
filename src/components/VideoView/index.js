@@ -1,4 +1,7 @@
-import React, { useState, useMemo, useCallback } from 'react';
+// prettier-ignore
+import React, {
+  useState, useMemo, useCallback, useContext,
+} from 'react';
 
 import { View, Image } from 'react-native';
 
@@ -8,7 +11,12 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { Text, Button, Divider } from '@ui-kitten/components';
+// prettier-ignore
+import {
+  Text, Button, Divider, Layout,
+} from '@ui-kitten/components';
+
+import { AppSettingsContext } from 'src/contexts';
 
 import CustomVideoPlayer from 'src/components/CustomVideoPlayer';
 
@@ -46,6 +54,10 @@ export default function VideoView(props) {
   const [isLiked, setLiked] = useState(false);
 
   const [hideText, setHideText] = useState(true);
+
+  const { appState } = useContext(AppSettingsContext);
+
+  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
   const toggleLike = () => setLiked((prevState) => !prevState);
 
@@ -300,10 +312,12 @@ export default function VideoView(props) {
             container: {
               justifyContent: 'center',
               alignItems: 'center',
+              backgroundColor: BG_THEME,
             },
           }}
         >
-          <View
+          <Layout
+            level="5"
             style={{
               flex: 1,
               width: '100%',
@@ -314,52 +328,56 @@ export default function VideoView(props) {
           >
             <Button
               appearance="ghost"
+              status="basic"
               style={{
                 width: '100%',
                 justifyContent: 'flex-start',
               }}
             >
-              <Text style={{ fontSize: 18 }} status="primary">
+              <Text style={{ fontSize: 18 }} status="basic">
                 Report...
               </Text>
             </Button>
             <Divider style={{ marginVertical: 2, width: '100%' }} />
             <Button
               appearance="ghost"
+              status="basic"
               style={{
                 width: '100%',
                 justifyContent: 'flex-start',
               }}
             >
-              <Text style={{ fontSize: 18 }} status="primary">
+              <Text style={{ fontSize: 18 }} status="basic">
                 Turn on post notifications
               </Text>
             </Button>
             <Divider style={{ marginVertical: 2, width: '100%' }} />
             <Button
               appearance="ghost"
+              status="basic"
               style={{
                 width: '100%',
                 justifyContent: 'flex-start',
               }}
             >
-              <Text style={{ fontSize: 18 }} status="primary">
+              <Text style={{ fontSize: 18 }} status="basic">
                 Copy link
               </Text>
             </Button>
             <Divider style={{ marginVertical: 2, width: '100%' }} />
             <Button
               appearance="ghost"
+              status="basic"
               style={{
                 width: '100%',
                 justifyContent: 'flex-start',
               }}
             >
-              <Text style={{ fontSize: 18 }} status="primary">
+              <Text style={{ fontSize: 18 }} status="basic">
                 Share
               </Text>
             </Button>
-          </View>
+          </Layout>
         </RBSheet>
       </>
     ),
@@ -371,6 +389,7 @@ export default function VideoView(props) {
       isLiked,
       viewHeight,
       item,
+      BG_THEME,
       routeComments,
       handleOpenSheet,
     ],

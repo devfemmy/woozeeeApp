@@ -7,7 +7,7 @@ const mappingTheme = {
   dark: {
     'background-basic-color-5': '#070A0F',
     'background-basic-color-6': '#04070C',
-    'border-basic-color-5': '#0C0F13',
+    'border-basic-color-5': '#11151A',
   },
 };
 

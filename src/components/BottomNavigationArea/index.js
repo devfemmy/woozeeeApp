@@ -50,7 +50,7 @@ const configuration = {
 };
 
 const IconUpload = (props) => {
-  const { navigation } = props;
+  const { navigation, theme } = props;
 
   const sheetRef = React.useRef(null);
 
@@ -136,10 +136,12 @@ const IconUpload = (props) => {
           container: {
             justifyContent: 'center',
             alignItems: 'center',
+            backgroundColor: theme,
           },
         }}
       >
-        <View
+        <Layout
+          level="5"
           style={{
             flex: 1,
             width: '100%',
@@ -150,6 +152,7 @@ const IconUpload = (props) => {
         >
           <Button
             appearance="ghost"
+            status="basic"
             accessoryLeft={(evaProps) => (
               <IconCloudUploadOutline {...evaProps} height={36} width={36} />
             )}
@@ -159,13 +162,14 @@ const IconUpload = (props) => {
             }}
             onPress={handleSelectVideo}
           >
-            <Text style={{ fontSize: 18 }} status="primary">
+            <Text style={{ fontSize: 18 }} status="basic">
               Upload from device
             </Text>
           </Button>
           <Divider style={{ marginVertical: 2, width: '100%' }} />
           <Button
             appearance="ghost"
+            status="basic"
             accessoryLeft={(evaProps) => (
               <IconVideoOutline {...evaProps} height={36} width={36} />
             )}
@@ -175,11 +179,11 @@ const IconUpload = (props) => {
             }}
             onPress={handleRecordVideo}
           >
-            <Text style={{ fontSize: 18 }} status="primary">
+            <Text style={{ fontSize: 18 }} status="basic">
               Record with camera
             </Text>
           </Button>
-        </View>
+        </Layout>
       </RBSheet>
     </Layout>
   );
@@ -214,6 +218,8 @@ export default function BottomNavigationArea(props) {
 
   const ICON_THEME = appState.darkMode ? '#FFFFFF' : '#0A143F';
 
+  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
+
   const renderIcon = useCallback(
     (Icon, otherProps, active) => (
       <Icon
@@ -221,9 +227,10 @@ export default function BottomNavigationArea(props) {
         style={{ height: 22, width: 22, tintColor: ICON_THEME }}
         active={active}
         navigation={navigation}
+        theme={BG_THEME}
       />
     ),
-    [navigation, ICON_THEME],
+    [navigation, ICON_THEME, BG_THEME],
   );
 
   return useMemo(
