@@ -27,7 +27,7 @@ const WoozPostsArea = () => WithInfiniteFetch(WoozPosts, socialUrl, PLACEHOLDER_
 export default function Wooz({ navigation }) {
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
-  const routeLiveStream = () => navigation.navigate('LiveStream');
+  const routeMovies = () => navigation.navigate('Movies');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -47,7 +47,7 @@ export default function Wooz({ navigation }) {
             right: 0,
           }}
         >
-          <TouchableOpacity activeOpacity={0.75} onPress={routeLiveStream}>
+          <TouchableOpacity activeOpacity={0.75} onPress={routeMovies}>
             <IconCMovie style={{ height: 28, width: 28 }} />
           </TouchableOpacity>
         </View>

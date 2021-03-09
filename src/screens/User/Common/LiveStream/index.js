@@ -12,8 +12,6 @@ import Api from 'src/api';
 
 import { LocaleContext } from 'src/contexts';
 
-import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
-
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
@@ -80,7 +78,9 @@ const renderMovieCategory = (data) => (
         // borderBottomColor: '#FF5757',
       }}
     >
-      <Text status="basic">{data.item.title}</Text>
+      <Text status="basic" category="c2">
+        {data.item.title}
+      </Text>
     </TouchableOpacity>
   </Layout>
 );
@@ -112,8 +112,6 @@ const renderMovieCategories = () => (
 );
 
 export default function Explore({ navigation }) {
-  useDisableAndroidExit();
-
   const { width, height } = useWindowDimensions();
 
   const { bottom, top } = useSafeAreaInsets();
@@ -184,6 +182,7 @@ export default function Explore({ navigation }) {
               }}
               contentContainerStyle={{
                 paddingVertical: 20,
+                paddingHorizontal: 7,
               }}
               ListHeaderComponent={renderMovieCategories}
               alwaysBounceVertical
@@ -196,8 +195,8 @@ export default function Explore({ navigation }) {
                 <MovieCard data={renderData.item} extraWidth={0} />
               )}
               getItemLayout={(data, index) => ({
-                length: 270,
-                offset: 270 * index,
+                length: 300,
+                offset: 300 * index,
                 index,
               })}
             />

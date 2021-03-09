@@ -12,8 +12,6 @@ import Api from 'src/api';
 
 import { LocaleContext } from 'src/contexts';
 
-import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
-
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
@@ -57,35 +55,35 @@ const MOVIE_CATEGORIES = [
 
 // const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
-const MovieCategory = (props) => {
-  const { data } = props;
-  return (
-    <Layout
-      level="2"
+const renderMovieCategory = (data) => (
+  <Layout
+    level="2"
+    style={{
+      height: 40,
+      marginHorizontal: 5,
+      borderRadius: 20,
+    }}
+  >
+    <TouchableOpacity
+      activeOpacity={0.75}
       style={{
-        height: 40,
-        marginHorizontal: 5,
-        borderRadius: 20,
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        borderRadius: 0,
+        borderBottomWidth: 3,
+        paddingHorizontal: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
+        // borderBottomColor: '#FF5757',
       }}
     >
-      <TouchableOpacity
-        activeOpacity={0.75}
-        style={{
-          backgroundColor: 'transparent',
-          borderColor: 'transparent',
-          borderRadius: 0,
-          borderBottomWidth: 3,
-          paddingHorizontal: 15,
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100%',
-        }}
-      >
-        <Text status="basic">{data.item.title}</Text>
-      </TouchableOpacity>
-    </Layout>
-  );
-};
+      <Text status="basic" category="c2">
+        {data.item.title}
+      </Text>
+    </TouchableOpacity>
+  </Layout>
+);
 
 const renderMovieCategories = () => (
   <View style={{ marginBottom: 20, height: 45 }}>
@@ -103,7 +101,7 @@ const renderMovieCategories = () => (
       showsVerticalScrollIndicator={false}
       data={MOVIE_CATEGORIES}
       keyExtractor={(_, i) => i.toString()}
-      renderItem={(renderData) => <MovieCategory data={renderData} />}
+      renderItem={renderMovieCategory}
       getItemLayout={(data, index) => ({
         length: 50,
         offset: 50 * index,
@@ -114,8 +112,6 @@ const renderMovieCategories = () => (
 );
 
 export default function Explore({ navigation }) {
-  useDisableAndroidExit();
-
   const { width, height } = useWindowDimensions();
 
   const { bottom, top } = useSafeAreaInsets();
@@ -186,6 +182,7 @@ export default function Explore({ navigation }) {
               }}
               contentContainerStyle={{
                 paddingVertical: 20,
+                paddingHorizontal: 7,
               }}
               ListHeaderComponent={renderMovieCategories}
               alwaysBounceVertical
@@ -198,8 +195,8 @@ export default function Explore({ navigation }) {
                 <MovieCard data={renderData.item} extraWidth={0} />
               )}
               getItemLayout={(data, index) => ({
-                length: 270,
-                offset: 270 * index,
+                length: 300,
+                offset: 300 * index,
                 index,
               })}
             />

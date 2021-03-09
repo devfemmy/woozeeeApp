@@ -34,7 +34,7 @@ export default function TopNavigationArea(props) {
     navigation,
   ]);
 
-  const routeMovies = useCallback(() => navigation.navigate('Movies'), [
+  const routeLiveStream = useCallback(() => navigation.navigate('LiveStream'), [
     navigation,
   ]);
 
@@ -49,8 +49,8 @@ export default function TopNavigationArea(props) {
           {...props}
           icon={(evaProps) => <IconVideoOutline {...evaProps} />}
           accessibilityLiveRegion="polite"
-          accessibilityLabel="Movies"
-          onPress={routeMovies}
+          accessibilityLabel="Livestream"
+          onPress={routeLiveStream}
         />
         <TopNavigationAction
           {...props}
@@ -61,7 +61,7 @@ export default function TopNavigationArea(props) {
         />
       </>
     ),
-    [props, routeMovies, routeMessaging],
+    [props, routeLiveStream, routeMessaging],
   );
 
   const renderSearchIcon = useCallback(
