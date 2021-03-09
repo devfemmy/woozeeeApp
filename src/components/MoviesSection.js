@@ -19,6 +19,8 @@ import MovieSectionCard from 'src/components/VideoCard/MovieSectionCard';
 
 import { trendingUrl } from 'src/api/dummy';
 
+import { IconForwardIos } from 'src/components/CustomIcons';
+
 const MoviesSectionArea = (props) => {
   const { t, navigation, viewHeight } = props;
   const { width } = useWindowDimensions();
@@ -82,17 +84,22 @@ const MoviesSectionArea = (props) => {
           }}
         >
           <Text category="h6">{t('movies')}</Text>
-          <Button appearance="ghost" size="tiny" onPress={routeMovies}>
+          <Button
+            size="tiny"
+            appearance="ghost"
+            accessoryRight={IconForwardIos}
+            onPress={routeMovies}
+          >
             <Text status="primary" category="s2">
               {t('viewAll')}
             </Text>
           </Button>
         </View>
         <List
-          style={{ backgroundColor: 'transparent', maxHeight: 360 }}
+          style={{ backgroundColor: 'transparent', maxHeight: 260 }}
           contentContainerStyle={{
             alignItems: 'center',
-            paddingVertical: 5,
+            padding: 5,
           }}
           alwaysBounceHorizontal
           horizontal

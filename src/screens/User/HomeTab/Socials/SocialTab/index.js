@@ -160,6 +160,7 @@ export default function Explore({ navigation }) {
                   activeIndex={activeIndex}
                   viewHeight={ITEM_HEIGHT}
                   navigation={navigation}
+                  t={t}
                 />
               ))}
               extraData={activeIndex}

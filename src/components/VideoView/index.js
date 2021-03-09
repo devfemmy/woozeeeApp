@@ -23,7 +23,7 @@ import {
 export default function VideoView(props) {
   // prettier-ignore
   const {
-    data, activeIndex, viewHeight, navigation,
+    data, activeIndex, viewHeight, navigation, t,
   } = props;
 
   const { item, index } = data;
@@ -264,7 +264,7 @@ export default function VideoView(props) {
                   onPress={routeComments}
                 >
                   <Text status="primary" category="s2">
-                    Comments
+                    {t('comments')}
                   </Text>
                 </Button>
               </View>

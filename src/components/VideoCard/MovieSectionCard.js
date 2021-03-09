@@ -26,7 +26,7 @@ export default function MovieCard(props) {
         style={{
           width: IS_PORTRAIT
             ? width / (2 + extraWidth)
-            : width / (3 + extraWidth),
+            : width / (4 + extraWidth),
           paddingHorizontal: 5,
           alignItems: 'center',
           justifyContent: 'flex-start',
@@ -45,7 +45,7 @@ export default function MovieCard(props) {
             source={{ uri: `https://i.postimg.cc/${data.banner}` }}
             defaultSource={require('assets/images/banner/placeholder-image.png')}
             style={{
-              height: 245,
+              height: 200,
               width: '100%',
               borderRadius: 5,
             }}
@@ -75,30 +75,30 @@ export default function MovieCard(props) {
             <LinearGradient
               colors={['#043F7C', '#FF5757']}
               style={{
-                height: 60,
-                width: 60,
-                borderRadius: 30,
+                height: 48,
+                width: 48,
+                borderRadius: 24,
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
-                bottom: -30,
+                bottom: -20,
               }}
             >
               <Image
                 source={{ uri: `https://i.postimg.cc/${data.ownerImg}` }}
                 style={{
-                  height: 56,
-                  width: 56,
-                  borderRadius: 28,
+                  height: 44,
+                  width: 44,
+                  borderRadius: 22,
                   borderColor: 'white',
                 }}
               />
             </LinearGradient>
           ) : null}
         </TouchableOpacity>
-        <View style={{ marginTop: 40 }}>
+        <View style={{ marginTop: 20 }}>
           <Text category="p2" style={{ textAlign: 'center', lineHeight: 20 }}>
-            My name is Tayo, The best of the best
+            My name is Tayo
           </Text>
         </View>
       </View>
