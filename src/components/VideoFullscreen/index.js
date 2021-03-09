@@ -160,6 +160,13 @@ export default function VideoView(props) {
                     width={20}
                     onPress={toggleVolume}
                   />
+                  <InteractIcon
+                    Accessory={(evaProps) => <IconEye {...evaProps} />}
+                    textContent={item.views}
+                    height={20}
+                    width={20}
+                    direction="row"
+                  />
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                   <Text
@@ -188,11 +195,11 @@ export default function VideoView(props) {
                 Accessory={IconMsgSquare}
                 textContent={item.comments}
               />
-              <InteractIcon
+              {/* <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={(evaProps) => <IconEye {...evaProps} />}
                 textContent={item.views}
-              />
+              /> */}
               {/* <InteractIcon
                     Accessory={IconClipboard}
                     textContent={item.votes}

@@ -91,6 +91,8 @@ const IconUpload = (props) => {
     navigation.navigate('VideoUpload', { editorResult });
   };
 
+  const handleOpenSheet = () => sheetRef.current.open();
+
   return (
     <Layout
       level="3"
@@ -113,7 +115,7 @@ const IconUpload = (props) => {
         elevation: 6,
       }}
     >
-      <TouchableOpacity onPress={() => sheetRef.current.open()}>
+      <TouchableOpacity onPress={handleOpenSheet}>
         <Image
           source={require('assets/images/icon/upload.png')}
           defaultSource={require('assets/images/icon/upload.png')}

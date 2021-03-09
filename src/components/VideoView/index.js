@@ -4,9 +4,11 @@ import { View, Image } from 'react-native';
 
 import Moment from 'react-moment';
 
+import RBSheet from 'react-native-raw-bottom-sheet';
+
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { Text, Button } from '@ui-kitten/components';
+import { Text, Button, Divider } from '@ui-kitten/components';
 
 import CustomVideoPlayer from 'src/components/CustomVideoPlayer';
 
@@ -18,6 +20,8 @@ import {
   IconMsgSquareOutline,
   IconMoreHorizontal,
   IconForwardIos,
+  IconVideoOutline,
+  IconCloudUploadOutline,
 } from 'src/components/CustomIcons';
 
 export default function VideoView(props) {
@@ -25,6 +29,8 @@ export default function VideoView(props) {
   const {
     data, activeIndex, viewHeight, navigation, t,
   } = props;
+
+  const sheetRef = React.useRef(null);
 
   const { item, index } = data;
 
@@ -49,6 +55,8 @@ export default function VideoView(props) {
   const routeComments = useCallback(() => navigation.navigate('Comments'), [
     navigation,
   ]);
+
+  const handleOpenSheet = useCallback(() => sheetRef.current.open(), []);
 
   return useMemo(
     () => (
@@ -207,6 +215,7 @@ export default function VideoView(props) {
                 status="basic"
                 height={28}
                 width={28}
+                onPress={handleOpenSheet}
               />
             </View>
           </View>
@@ -275,6 +284,76 @@ export default function VideoView(props) {
             </View>
           </View>
         </View>
+        <RBSheet
+          ref={sheetRef}
+          height={280}
+          closeOnDragDown
+          animationType="fade"
+          customStyles={{
+            container: {
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              width: '100%',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-end',
+              paddingBottom: 30,
+            }}
+          >
+            <Button
+              appearance="ghost"
+              style={{
+                width: '100%',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <Text style={{ fontSize: 18 }} status="primary">
+                Report...
+              </Text>
+            </Button>
+            <Divider style={{ marginVertical: 2, width: '100%' }} />
+            <Button
+              appearance="ghost"
+              style={{
+                width: '100%',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <Text style={{ fontSize: 18 }} status="primary">
+                Turn on post notifications
+              </Text>
+            </Button>
+            <Divider style={{ marginVertical: 2, width: '100%' }} />
+            <Button
+              appearance="ghost"
+              style={{
+                width: '100%',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <Text style={{ fontSize: 18 }} status="primary">
+                Copy link
+              </Text>
+            </Button>
+            <Divider style={{ marginVertical: 2, width: '100%' }} />
+            <Button
+              appearance="ghost"
+              style={{
+                width: '100%',
+                justifyContent: 'flex-start',
+              }}
+            >
+              <Text style={{ fontSize: 18 }} status="primary">
+                Share to...
+              </Text>
+            </Button>
+          </View>
+        </RBSheet>
       </>
     ),
     [
@@ -286,6 +365,7 @@ export default function VideoView(props) {
       viewHeight,
       item,
       routeComments,
+      handleOpenSheet,
     ],
   );
 }
