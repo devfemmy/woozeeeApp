@@ -74,9 +74,9 @@ export default function VideoView(props) {
               <LinearGradient
                 colors={['#043F7C', '#FF5757']}
                 style={{
-                  height: 44,
-                  width: 44,
-                  borderRadius: 22,
+                  height: 40,
+                  width: 40,
+                  borderRadius: 20,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
@@ -84,9 +84,9 @@ export default function VideoView(props) {
                 <Image
                   source={require('assets/images/user/user2.png')}
                   style={{
-                    height: 40,
-                    width: 40,
-                    borderRadius: 20,
+                    height: 36,
+                    width: 36,
+                    borderRadius: 28,
                     borderColor: 'white',
                   }}
                 />
@@ -94,14 +94,18 @@ export default function VideoView(props) {
               <View
                 style={{
                   flexDirection: 'row',
+                  flexWrap: 'wrap',
                   paddingRight: 5,
-                  paddingLeft: 10,
+                  paddingLeft: 5,
+                  maxWidth: 190,
                 }}
               >
-                <Text category="label" style={{ marginRight: 5 }}>
+                <Text status="primary" category="s2" style={{ marginRight: 5 }}>
                   {item.ownerFirstName}
                 </Text>
-                <Text category="label">{item.ownerLastName}</Text>
+                <Text status="danger" category="s2">
+                  {item.ownerLastName}
+                </Text>
               </View>
               <Image
                 source={require('assets/images/icon/verified-1.png')}
@@ -123,9 +127,9 @@ export default function VideoView(props) {
                   Follow
                 </Text>
               </Button>
-              <Text category="c1" style={{ fontSize: 10 }}>
+              {/* <Text category="c1" style={{ fontSize: 10 }}>
                 {item.category}
-              </Text>
+              </Text> */}
             </View>
             <View>
               <Moment
@@ -274,6 +278,7 @@ export default function VideoView(props) {
       </>
     ),
     [
+      t,
       IS_ACTIVE,
       IS_PRELOADED,
       hideText,

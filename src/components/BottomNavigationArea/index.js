@@ -99,10 +99,10 @@ const IconUpload = (props) => {
         alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
-        width: 60,
-        height: 60,
-        top: -25,
-        borderRadius: 30,
+        width: 58,
+        height: 58,
+        top: -30,
+        borderRadius: 29,
         shadowColor: '#000',
         shadowOffset: {
           width: 0,
@@ -118,9 +118,9 @@ const IconUpload = (props) => {
           source={require('assets/images/icon/upload.png')}
           defaultSource={require('assets/images/icon/upload.png')}
           style={{
-            width: 55,
-            height: 55,
-            borderRadius: 30,
+            width: 52,
+            height: 52,
+            borderRadius: 26,
           }}
           resizeMode="cover"
         />
@@ -212,7 +212,7 @@ export default function BottomNavigationArea(props) {
     (Icon, otherProps, active) => (
       <Icon
         {...otherProps}
-        style={{ height: 24, width: 24 }}
+        style={{ height: 22, width: 22 }}
         active={active}
         navigation={navigation}
       />

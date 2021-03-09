@@ -66,9 +66,9 @@ export const StoryPosts = ({ info }) => {
         <Image
           source={require('assets/images/user/user2.png')}
           style={{
-            height: 100,
-            width: 100,
-            borderRadius: 50,
+            height: 80,
+            width: 80,
+            borderRadius: 40,
           }}
         />
         <View
@@ -98,7 +98,7 @@ export const StoryPosts = ({ info }) => {
       </View>
       <List
         style={{ backgroundColor: 'transparent' }}
-        contentContainerStyle={{ alignItems: 'center' }}
+        contentContainerStyle={{ alignItems: 'flex-start' }}
         alwaysBounceHorizontal
         horizontal
         ListHeaderComponent={RenderCategoryHeader}

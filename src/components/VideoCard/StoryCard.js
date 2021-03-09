@@ -24,8 +24,8 @@ export default function VideoCard(props) {
         activeOpacity={0.75}
         style={{
           width: IS_PORTRAIT
-            ? width / (3 + extraWidth)
-            : width / (5 + extraWidth),
+            ? width / (4 + extraWidth)
+            : width / (6 + extraWidth),
           paddingHorizontal: 10,
         }}
       >
@@ -33,9 +33,9 @@ export default function VideoCard(props) {
           <LinearGradient
             colors={['#043F7C', '#FF5757']}
             style={{
-              height: 104,
-              width: 104,
-              borderRadius: 52,
+              height: 84,
+              width: 84,
+              borderRadius: 42,
               alignItems: 'center',
               justifyContent: 'center',
             }}
@@ -44,9 +44,9 @@ export default function VideoCard(props) {
               source={{ uri: `https://i.postimg.cc/${data.banner}` }}
               defaultSource={require('assets/images/banner/placeholder-image.png')}
               style={{
-                height: 100,
-                width: 100,
-                borderRadius: 50,
+                height: 80,
+                width: 80,
+                borderRadius: 40,
               }}
             />
           </LinearGradient>
