@@ -1,7 +1,4 @@
-// prettier-ignore
-import React, {
-  useState, useMemo, useCallback, useContext,
-} from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 
 import { View, Image } from 'react-native';
 
@@ -12,8 +9,6 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { Text, Button, Divider } from '@ui-kitten/components';
-
-import { AppSettingsContext } from 'src/contexts';
 
 import CustomVideoPlayer from 'src/components/CustomVideoPlayer';
 
@@ -51,10 +46,6 @@ export default function VideoView(props) {
   const [isLiked, setLiked] = useState(false);
 
   const [hideText, setHideText] = useState(true);
-
-  const { appState } = useContext(AppSettingsContext);
-
-  const ICON_THEME = appState.darkMode ? 'white' : '#0A143F';
 
   const toggleLike = () => setLiked((prevState) => !prevState);
 
@@ -192,7 +183,7 @@ export default function VideoView(props) {
                 )}
                 textContent={item.likes}
                 direction="row"
-                status="primary"
+                status="basic"
                 height={24}
                 width={24}
                 onPress={toggleLike}
@@ -202,7 +193,7 @@ export default function VideoView(props) {
                 Accessory={IconCChat}
                 textContent={item.comments}
                 direction="row"
-                status="primary"
+                status="basic"
                 height={24}
                 width={24}
               />
@@ -211,7 +202,7 @@ export default function VideoView(props) {
                 Accessory={(evaProps) => <IconCEye {...evaProps} />}
                 textContent={item.views}
                 direction="row"
-                status="primary"
+                status="basic"
                 height={24}
                 width={24}
               />
@@ -219,7 +210,7 @@ export default function VideoView(props) {
                 style={{ marginHorizontal: 5 }}
                 Accessory={(evaProps) => <IconCShare {...evaProps} />}
                 direction="row"
-                status="primary"
+                status="basic"
                 height={24}
                 width={24}
               />

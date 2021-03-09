@@ -11,10 +11,10 @@ import { AppSettingsContext } from 'src/contexts';
 
 import {
   IconCFlag,
-  IconBell,
+  IconCNotification,
   IconSearch,
   IconOptions,
-  IconVideoOutline,
+  IconCVideo,
 } from 'src/components/CustomIcons';
 
 // Components import
@@ -53,14 +53,14 @@ export default function TopNavigationArea(props) {
       <>
         <TopNavigationAction
           {...props}
-          icon={(evaProps) => <IconVideoOutline {...evaProps} />}
+          icon={(evaProps) => <IconCVideo {...evaProps} />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Livestream"
           onPress={routeLiveStream}
         />
         <TopNavigationAction
           {...props}
-          icon={IconBell}
+          icon={IconCNotification}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Notification"
           onPress={routeMessaging}

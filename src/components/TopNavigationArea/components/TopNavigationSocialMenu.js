@@ -9,7 +9,7 @@ import {
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import {
-  IconMenu,
+  IconCReorderLeft,
   IconGift,
   IconMap,
   IconCWooz,
@@ -23,7 +23,7 @@ export default function TopNavigationSocialMenu(props) {
 
   const { appState } = useContext(AppSettingsContext);
 
-  const ICON_THEME = appState.darkMode ? 'white' : '#0A143F';
+  const ICON_THEME = appState.darkMode ? '#FFFFFF' : '#0A143F';
 
   const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
 
@@ -42,7 +42,7 @@ export default function TopNavigationSocialMenu(props) {
   const NavigationAnchor = () => (
     <TopNavigationAction
       {...props}
-      icon={IconMenu}
+      icon={IconCReorderLeft}
       onPress={openMenu}
       accessibilityLiveRegion="polite"
       accessibilityLabel="open menu"

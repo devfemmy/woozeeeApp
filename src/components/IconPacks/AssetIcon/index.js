@@ -61,6 +61,18 @@ const AssetIconsPack = {
     'share-outline': IconProvider(
       require('assets/images/icon/share-outline.png'),
     ),
+    'reorder-left-outline': IconProvider(
+      require('assets/images/icon/reorder-left-outline.png'),
+    ),
+    'video-outline': IconProvider(
+      require('assets/images/icon/video-outline.png'),
+    ),
+    'notification-outline': IconProvider(
+      require('assets/images/icon/notification-new-outline.png'),
+    ),
+    'notification-new-outline': IconProvider(
+      require('assets/images/icon/notification-new-outline.png'),
+    ),
   },
 };
 

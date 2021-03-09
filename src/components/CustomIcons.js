@@ -293,3 +293,24 @@ export const IconCEye = (props) => {
 
   return <Icon {...otherProps} name={type} pack="assets" />;
 };
+export const IconCVideo = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'video' : 'video-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCNotification = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'notification-new-outline' : 'notification-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCReorderLeft = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'reorder-left' : 'reorder-left-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};

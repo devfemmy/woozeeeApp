@@ -212,7 +212,7 @@ export default function BottomNavigationArea(props) {
 
   const { appState } = useContext(AppSettingsContext);
 
-  const ICON_THEME = appState.darkMode ? 'white' : '#0A143F';
+  const ICON_THEME = appState.darkMode ? '#FFFFFF' : '#0A143F';
 
   const renderIcon = useCallback(
     (Icon, otherProps, active) => (
