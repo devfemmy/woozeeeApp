@@ -134,8 +134,8 @@
           "mapping": {
             "textFontSize": 14,
             "textFontWeight": "text-label-font-weight",
-            "textColor": "text-hint-color",
-            "iconTintColor": "text-hint-color",
+            "textColor": "text-basic-color",
+            "iconTintColor": "text-basic-color",
             "state": {
               "hover": {
                 "textColor": "text-primary-hover-color",
@@ -146,6 +146,18 @@
                 "iconTintColor": "text-primary-color"
               }
             }
+          }
+        }
+      }
+    },
+    "TabBar": {
+      "meta": {
+        "scope": "all"
+      },
+      "appearances": {
+        "default": {
+          "mapping": {
+            "backgroundColor": "background-basic-color-5"
           }
         }
       }

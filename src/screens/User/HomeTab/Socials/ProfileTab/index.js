@@ -189,7 +189,7 @@ export default function Profile({ navigation }) {
             </View>
           </ScrollView>
         </View>
-        <Divider style={{ marginBottom: 5 }} />
+        <Divider />
         <TabView
           style={{ flex: 1 }}
           indicatorStyle={{ backgroundColor: 'transparent' }}
