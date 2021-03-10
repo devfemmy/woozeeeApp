@@ -48,6 +48,7 @@ export default function VideoCard(props) {
                 width: 80,
                 borderRadius: 40,
               }}
+              resizeMode="cover"
             />
           </LinearGradient>
           <Text category="c2" style={{ marginTop: 10 }}>

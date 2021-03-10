@@ -65,11 +65,13 @@ export const StoryPosts = ({ info }) => {
       <TouchableOpacity activeOpacity={0.75} style={{ position: 'relative' }}>
         <Image
           source={require('assets/images/user/user2.png')}
+          defaultSource={require('assets/images/user/user2.png')}
           style={{
             height: 80,
             width: 80,
             borderRadius: 40,
           }}
+          resizeMode="cover"
         />
         <View
           style={{

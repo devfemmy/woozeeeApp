@@ -18,14 +18,14 @@ export default function VideoCard(props) {
 
   const IS_PORTRAIT = height > width;
 
-  const COLOUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 2 : 3);
+  const COLOUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
 
   return useMemo(
     () => (
       <TouchableOpacity
         activeOpacity={0.75}
         style={{
-          height: 180,
+          height: 160,
           width: IS_PORTRAIT
             ? width / (COLOUMN_COUNT + extraWidth)
             : width / (COLOUMN_COUNT + extraWidth),
@@ -39,7 +39,7 @@ export default function VideoCard(props) {
           source={{ uri: `https://i.postimg.cc/${data.banner}` }}
           defaultSource={require('assets/images/banner/placeholder-image.png')}
           style={{
-            height: 175,
+            height: 155,
             width: '100%',
             borderRadius: 5,
           }}
@@ -49,9 +49,9 @@ export default function VideoCard(props) {
           <LinearGradient
             colors={['#043F7C', '#FF5757']}
             style={{
-              height: 44,
-              width: 44,
-              borderRadius: 22,
+              height: 36,
+              width: 36,
+              borderRadius: 18,
               alignItems: 'center',
               justifyContent: 'center',
               position: 'absolute',
@@ -61,12 +61,14 @@ export default function VideoCard(props) {
           >
             <Image
               source={{ uri: `https://i.postimg.cc/${data.ownerImg}` }}
+              defaultSource={require('assets/images/banner/placeholder-image.png')}
               style={{
-                height: 40,
-                width: 40,
-                borderRadius: 20,
+                height: 32,
+                width: 32,
+                borderRadius: 16,
                 borderColor: 'white',
               }}
+              resizeMode="cover"
             />
           </LinearGradient>
         ) : null}
