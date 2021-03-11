@@ -69,6 +69,7 @@ export default function usePreFetchResources() {
           require('assets/images/icon/search-outline.png'),
           require('assets/images/icon/market-outline.png'),
           require('assets/images/icon/cart-outline.png'),
+          require('assets/images/icon/grid-outline.png'),
           require('assets/images/icon/tag-filled.png'),
           require('assets/images/icon/ball-filled.png'),
           require('assets/images/icon/doctor-filled.png'),

@@ -13,11 +13,9 @@ import {
   Layout, Text, List,
 } from '@ui-kitten/components';
 
-import { LoadingContext, LocaleContext } from 'src/contexts';
+import { LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
-
-import OverlayLoader from 'src/components/OverlayLoader';
 
 import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
@@ -33,6 +31,49 @@ const woozeeeCards = [
   },
   {
     banner: require('assets/images/banner/woozeee-ad.jpg'),
+  },
+];
+
+const marketPlaceItems = [
+  {
+    id: 1,
+    title: 'moneyMatters',
+    icon: require('assets/images/icon/atm-filled.png'),
+  },
+  {
+    id: 2,
+    title: 'moneyMatters',
+    icon: require('assets/images/icon/atm-filled.png'),
+  },
+  {
+    id: 3,
+    title: 'moneyMatters',
+    icon: require('assets/images/icon/atm-filled.png'),
+  },
+  {
+    id: 4,
+    title: 'moneyMatters',
+    icon: require('assets/images/icon/atm-filled.png'),
+  },
+  {
+    id: 5,
+    title: 'moneyMatters',
+    icon: require('assets/images/icon/atm-filled.png'),
+  },
+  {
+    id: 6,
+    title: 'moneyMatters',
+    icon: require('assets/images/icon/atm-filled.png'),
+  },
+  {
+    id: 7,
+    title: 'moneyMatters',
+    icon: require('assets/images/icon/atm-filled.png'),
+  },
+  {
+    id: 8,
+    title: 'moneyMatters',
+    icon: require('assets/images/icon/atm-filled.png'),
   },
 ];
 
@@ -79,15 +120,42 @@ export default function MarketPlace({ navigation }) {
 
   const IS_PORTRAIT = height > width;
 
-  const CARD_HEIGHT = IS_PORTRAIT ? 170 : 130;
+  const CARD_HEIGHT = IS_PORTRAIT ? 160 : 120;
 
   const CATEGORY_HEIGHT = IS_PORTRAIT ? 250 : 220;
 
   const t = useContext(LocaleContext);
 
-  const { isLoading } = useContext(LoadingContext);
-
   const routeTo = (route) => navigation.replace(route);
+
+  const MarketplaceItem = ({ data }) => (
+    <TouchableOpacity
+      activeOpacity={0.75}
+      style={{
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 5,
+        width: '25%',
+      }}
+    >
+      <Layout
+        level="5"
+        style={{
+          paddingVertical: 10,
+          paddingHorizontal: 15,
+          marginBottom: 5,
+        }}
+      >
+        <Image
+          source={data.icon}
+          defaultSource={data.icon}
+          resizeMode="cover"
+          style={{ height: 40, width: 40 }}
+        />
+      </Layout>
+      <Text category="c2">{t(data.title)}</Text>
+    </TouchableOpacity>
+  );
 
   const WoozeeeCards = (data) => (
     <View
@@ -104,7 +172,7 @@ export default function MarketPlace({ navigation }) {
         source={data.item.banner}
         defaultSource={data.item.banner}
         style={{
-          height: IS_PORTRAIT ? 140 : 95,
+          height: IS_PORTRAIT ? 140 : 100,
           width: '100%',
           borderRadius: 5,
         }}
@@ -148,25 +216,41 @@ export default function MarketPlace({ navigation }) {
     </TouchableOpacity>
   );
 
-  const renderWoozeeeCards = () => (
-    <View style={{ flex: 1, paddingTop: 10, Height: 180 }}>
-      <List
-        style={{ backgroundColor: 'transparent' }}
-        contentContainerStyle={{ paddingHorizontal: 5 }}
-        alwaysBounceHorizontal
-        alwaysBounceVertical
-        horizontal={IS_PORTRAIT}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        data={woozeeeCards}
-        keyExtractor={(_, i) => i.toString()}
-        renderItem={WoozeeeCards}
-        getItemLayout={(data, index) => ({
-          length: CARD_HEIGHT,
-          offset: CARD_HEIGHT * index,
-          index,
-        })}
-      />
+  const renderHeaderArea = () => (
+    <View style={{ flex: 1, paddingTop: 10, paddingBottom: 10 }}>
+      <View style={{ flex: 1, Height: 180 }}>
+        <List
+          style={{ backgroundColor: 'transparent' }}
+          contentContainerStyle={{ paddingHorizontal: 5 }}
+          alwaysBounceHorizontal
+          alwaysBounceVertical
+          horizontal={IS_PORTRAIT}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          data={woozeeeCards}
+          keyExtractor={(_, i) => i.toString()}
+          renderItem={WoozeeeCards}
+          getItemLayout={(data, index) => ({
+            length: CARD_HEIGHT,
+            offset: CARD_HEIGHT * index,
+            index,
+          })}
+        />
+      </View>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          alignItems: 'flex-start',
+          paddingVertical: 10,
+          paddingHorizontal: 5,
+        }}
+      >
+        {marketPlaceItems.map((data) => (
+          <MarketplaceItem data={data} key={data.id} />
+        ))}
+      </View>
     </View>
   );
 
@@ -180,7 +264,7 @@ export default function MarketPlace({ navigation }) {
 
       <View style={{ flex: 1 }}>
         <List
-          ListHeaderComponent={renderWoozeeeCards}
+          ListHeaderComponent={renderHeaderArea}
           style={{ backgroundColor: 'transparent' }}
           horizontal={!IS_PORTRAIT}
           alwaysBounceHorizontal

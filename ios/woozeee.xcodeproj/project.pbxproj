@@ -10,7 +10,6 @@
 		02B9AB9996C7419B89BD878E /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B3953DA22B84022AB00F9A1 /* logo.png */; };
 		035A1AE7BA11404782DF4721 /* verified.png in Resources */ = {isa = PBXBuildFile; fileRef = B04030E619BE4307AA71BF52 /* verified.png */; };
 		05E1A4F6944B40C5949B60CA /* woozeee-marketplace.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A589F1A432874B9A98469E96 /* woozeee-marketplace.jpg */; };
-		0650634CA9B348CD99E7B25D /* card-wallet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 95F0501644DD495FA74ED006 /* card-wallet.jpg */; };
 		0E60E38EEEC84C8496791D9B /* verified-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 119F66F00A2E4670898539EC /* verified-2.png */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
@@ -36,18 +35,19 @@
 		7919EA0D80994024BF18975A /* montserrat-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 473BE264CF7C4145A82E0CB9 /* montserrat-regular.ttf */; };
 		7A06F0C4871F407BA01B1569 /* woozeee-socials.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5871BC7B138F4A5B9B06420F /* woozeee-socials.jpg */; };
 		7F9CD86581D5429DA567835A /* social-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 040D91DB33BD4CC09770540C /* social-outline.png */; };
-		8A1DDA883CC74F93BFD80B77 /* card-insure.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6C1E91A10A7548E793ABA17D /* card-insure.jpg */; };
 		8E4A70F6711647FAB6C88C0C /* favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 94A42DBD1D3744C8A6A78ED5 /* favicon.png */; };
 		9470697CB26240F3919FC178 /* placeholder-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B05395DC18148DAA8C7C119 /* placeholder-image.png */; };
 		94EEF546FEF14891AF602CD5 /* wooz-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AB5A951DE444F3A80940001 /* wooz-outline.png */; };
 		95BD105DCEE14689A3A94494 /* montserrat-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FEAB29FDF95A4DC4A7A696FB /* montserrat-light.ttf */; };
 		96905EF65AED1B983A6B3ABC /* libPods-woozeee.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-woozeee.a */; };
 		9FD794FAC95A46D1A00E489E /* user-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C2D6EA2A2C47D4A162EF97 /* user-outline.png */; };
-		A233B71061404C84A4F97DFA /* card-rewards.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7B3B929D5805471BA1054230 /* card-rewards.jpg */; };
 		A88C723CB9864DA28BB917FB /* flag-round-ng.png in Resources */ = {isa = PBXBuildFile; fileRef = 09E7315CBDCB41AFBC86725F /* flag-round-ng.png */; };
 		AB17F3AB53254FB0A389808C /* upload.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A75B0C53DFF4087821C1CAE /* upload.png */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		BF1C6A420F4C4CD1824990E5 /* supercup.png in Resources */ = {isa = PBXBuildFile; fileRef = 759CF6437F48443FAB52BDA0 /* supercup.png */; };
+		C31D16D125FA54C6001E92CD /* wallet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C31D16D025FA54C6001E92CD /* wallet.jpg */; };
+		C31D16D525FA54CE001E92CD /* rewards.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C31D16D325FA54CE001E92CD /* rewards.jpg */; };
+		C31D16D625FA54CE001E92CD /* insure.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C31D16D425FA54CE001E92CD /* insure.jpg */; };
 		C6484A0F6917419FB1280FD1 /* back3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ABE7883A9A38497DADB999D0 /* back3.jpg */; };
 		C6D5CCCFA1E24381909994CE /* wallet.png in Resources */ = {isa = PBXBuildFile; fileRef = 7412B4CCE3764F30999194C9 /* wallet.png */; };
 		C8C4B2D3C8394C42BC74EFFB /* clock-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = A3D7654A362341219758181F /* clock-outline.png */; };
@@ -59,6 +59,31 @@
 		F0AFE7A72C1B44F99BC89847 /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CBC8D4F5C7145CB8E5775A6 /* fontello.ttf */; };
 		F8090E7B27E44B318610448B /* back1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1AB20E6A47964239BADE07EA /* back1.jpg */; };
 		F82DF7F102B246DC83A93C2E /* woozeee-charity.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 238AC8FED8794EC5984C245B /* woozeee-charity.jpg */; };
+		EB28D9E7F9654916A5E0A6EC /* mega-sale.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A79A6324FC594163BD53C2AD /* mega-sale.jpg */; };
+		E1814A4AE4FF42F896FE43BA /* valentine.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D306F06486494C729C9D45F0 /* valentine.jpg */; };
+		A6ECC437EA2D461DB0F46716 /* woozeee-ad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B299987EE3684387852470D9 /* woozeee-ad.jpg */; };
+		664703421C8345F8971291EF /* atm-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EE0EC837FC4DE8B81784D8 /* atm-filled.png */; };
+		C31D918B8B4D449092C59F1E /* bag-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 628EF450AA0142BFAE0E44CE /* bag-filled.png */; };
+		60BAC8776E36487C998C2665 /* balance-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D8BAC406D8747619C1AD856 /* balance-filled.png */; };
+		8B550257460446238CAAD3DB /* ball-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = AF808F760CD3450E96584C0A /* ball-filled.png */; };
+		3ACE943B7DEE40FCA5B1F25E /* bank-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 17BD668FE330478FA2C966C0 /* bank-filled.png */; };
+		14325AC9E793483E97506A54 /* cart-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = F350E31882D84776B67DF691 /* cart-outline.png */; };
+		453881273A344ED9A4107CB9 /* chat-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F69C2959C354910973746F2 /* chat-outline.png */; };
+		B44F46DE75204C17B9746BD5 /* doctor-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6D30F572E94ABDB2EA4968 /* doctor-filled.png */; };
+		3123C43DE748491DB1D2DA1F /* eye-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 61420B91FE4C47E18D4199BE /* eye-outline.png */; };
+		772C23440FC743B99FB19027 /* grid-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F022E6F3754D719C972CE6 /* grid-outline.png */; };
+		0B8D5D1A0AC34C6498A816D2 /* heart-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 63DFCF0D792849578BB66C4B /* heart-outline.png */; };
+		DD6320DA0B1345768B1D2869 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = B6F49223F87F4B98B52DBE54 /* heart.png */; };
+		151362EAD4B043B5A78E00EA /* map-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = FC29B5BA44044D508CA1AA72 /* map-filled.png */; };
+		41436113B0BC467885BB09E0 /* market-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 50116FFA8ED7483C9E5E4E72 /* market-outline.png */; };
+		15AAD79ED67B41C8A59D1D84 /* movie-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 54DD9714B3064958B4AA9340 /* movie-outline.png */; };
+		D66DFAC7015340EE8A8C8406 /* notification-new-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A823F5DF6E4A05AFC8DB98 /* notification-new-outline.png */; };
+		8FBE71FBD37343D1ADA9376A /* reorder-left-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = AE403C3242A44A8F9E649219 /* reorder-left-outline.png */; };
+		9A08C8805D2E4983834B574F /* search-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CDEBA8F9384049B60C48E7 /* search-outline.png */; };
+		00F0A6C7039D45E49582E33D /* share-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B879782242B4DD6B1CB4E10 /* share-outline.png */; };
+		5EEDF25FD5C84BA3BFAF2476 /* tag-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = EE2C04C1BF1F48979C57D09F /* tag-filled.png */; };
+		301A8FB7F0C942439FBBE8CE /* user-2-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 653D8AC88A964A608D7B0061 /* user-2-outline.png */; };
+		1763A7D2CF8A4BCFB00DD63D /* video-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = A29551CC493A404B8AC1AE2F /* video-outline.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +161,9 @@
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		BF5D7CA8004E410F8B14D760 /* sprofile_after.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = sprofile_after.svg; path = ../src/assets/images/svg/sprofile_after.svg; sourceTree = "<group>"; };
 		C093E780548744A4A4B6EBC3 /* wooz.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = wooz.png; path = ../src/assets/images/icon/wooz.png; sourceTree = "<group>"; };
+		C31D16D025FA54C6001E92CD /* wallet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = wallet.jpg; path = ../src/assets/images/card/wallet.jpg; sourceTree = "<group>"; };
+		C31D16D325FA54CE001E92CD /* rewards.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rewards.jpg; path = ../src/assets/images/card/rewards.jpg; sourceTree = "<group>"; };
+		C31D16D425FA54CE001E92CD /* insure.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = insure.jpg; path = ../src/assets/images/card/insure.jpg; sourceTree = "<group>"; };
 		C76EE94F1A7144E0B9AB7618 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		CCFD33ACCE5E4B39A4683CCF /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		CF5DCFEA166F4285B596FF62 /* montserrat-medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "montserrat-medium.ttf"; path = "../src/assets/fonts/montserrat/montserrat-medium.ttf"; sourceTree = "<group>"; };
@@ -150,6 +178,31 @@
 		FA9AE615BD03463BB6462C13 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		FBB302644AA0421E9AAB1AB1 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		FEAB29FDF95A4DC4A7A696FB /* montserrat-light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "montserrat-light.ttf"; path = "../src/assets/fonts/montserrat/montserrat-light.ttf"; sourceTree = "<group>"; };
+		A79A6324FC594163BD53C2AD /* mega-sale.jpg */ = {isa = PBXFileReference; name = "mega-sale.jpg"; path = "../src/assets/images/banner/mega-sale.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D306F06486494C729C9D45F0 /* valentine.jpg */ = {isa = PBXFileReference; name = "valentine.jpg"; path = "../src/assets/images/banner/valentine.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B299987EE3684387852470D9 /* woozeee-ad.jpg */ = {isa = PBXFileReference; name = "woozeee-ad.jpg"; path = "../src/assets/images/banner/woozeee-ad.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		84EE0EC837FC4DE8B81784D8 /* atm-filled.png */ = {isa = PBXFileReference; name = "atm-filled.png"; path = "../src/assets/images/icon/atm-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		628EF450AA0142BFAE0E44CE /* bag-filled.png */ = {isa = PBXFileReference; name = "bag-filled.png"; path = "../src/assets/images/icon/bag-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5D8BAC406D8747619C1AD856 /* balance-filled.png */ = {isa = PBXFileReference; name = "balance-filled.png"; path = "../src/assets/images/icon/balance-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AF808F760CD3450E96584C0A /* ball-filled.png */ = {isa = PBXFileReference; name = "ball-filled.png"; path = "../src/assets/images/icon/ball-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		17BD668FE330478FA2C966C0 /* bank-filled.png */ = {isa = PBXFileReference; name = "bank-filled.png"; path = "../src/assets/images/icon/bank-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F350E31882D84776B67DF691 /* cart-outline.png */ = {isa = PBXFileReference; name = "cart-outline.png"; path = "../src/assets/images/icon/cart-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7F69C2959C354910973746F2 /* chat-outline.png */ = {isa = PBXFileReference; name = "chat-outline.png"; path = "../src/assets/images/icon/chat-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0A6D30F572E94ABDB2EA4968 /* doctor-filled.png */ = {isa = PBXFileReference; name = "doctor-filled.png"; path = "../src/assets/images/icon/doctor-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		61420B91FE4C47E18D4199BE /* eye-outline.png */ = {isa = PBXFileReference; name = "eye-outline.png"; path = "../src/assets/images/icon/eye-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A9F022E6F3754D719C972CE6 /* grid-outline.png */ = {isa = PBXFileReference; name = "grid-outline.png"; path = "../src/assets/images/icon/grid-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		63DFCF0D792849578BB66C4B /* heart-outline.png */ = {isa = PBXFileReference; name = "heart-outline.png"; path = "../src/assets/images/icon/heart-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B6F49223F87F4B98B52DBE54 /* heart.png */ = {isa = PBXFileReference; name = "heart.png"; path = "../src/assets/images/icon/heart.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FC29B5BA44044D508CA1AA72 /* map-filled.png */ = {isa = PBXFileReference; name = "map-filled.png"; path = "../src/assets/images/icon/map-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		50116FFA8ED7483C9E5E4E72 /* market-outline.png */ = {isa = PBXFileReference; name = "market-outline.png"; path = "../src/assets/images/icon/market-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		54DD9714B3064958B4AA9340 /* movie-outline.png */ = {isa = PBXFileReference; name = "movie-outline.png"; path = "../src/assets/images/icon/movie-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		38A823F5DF6E4A05AFC8DB98 /* notification-new-outline.png */ = {isa = PBXFileReference; name = "notification-new-outline.png"; path = "../src/assets/images/icon/notification-new-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AE403C3242A44A8F9E649219 /* reorder-left-outline.png */ = {isa = PBXFileReference; name = "reorder-left-outline.png"; path = "../src/assets/images/icon/reorder-left-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		49CDEBA8F9384049B60C48E7 /* search-outline.png */ = {isa = PBXFileReference; name = "search-outline.png"; path = "../src/assets/images/icon/search-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2B879782242B4DD6B1CB4E10 /* share-outline.png */ = {isa = PBXFileReference; name = "share-outline.png"; path = "../src/assets/images/icon/share-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EE2C04C1BF1F48979C57D09F /* tag-filled.png */ = {isa = PBXFileReference; name = "tag-filled.png"; path = "../src/assets/images/icon/tag-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		653D8AC88A964A608D7B0061 /* user-2-outline.png */ = {isa = PBXFileReference; name = "user-2-outline.png"; path = "../src/assets/images/icon/user-2-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A29551CC493A404B8AC1AE2F /* video-outline.png */ = {isa = PBXFileReference; name = "video-outline.png"; path = "../src/assets/images/icon/video-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +253,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				C31D16D425FA54CE001E92CD /* insure.jpg */,
+				C31D16D325FA54CE001E92CD /* rewards.jpg */,
+				C31D16D025FA54C6001E92CD /* wallet.jpg */,
 				13B07FAE1A68108700A75B9A /* woozeee */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -314,6 +370,31 @@
 				1DFB0DFC3FAC40CEA601DD3F /* SimpleLineIcons.ttf */,
 				949FA8D23A8349E1A766A9DB /* Zocial.ttf */,
 				5CBC8D4F5C7145CB8E5775A6 /* fontello.ttf */,
+				A79A6324FC594163BD53C2AD /* mega-sale.jpg */,
+				D306F06486494C729C9D45F0 /* valentine.jpg */,
+				B299987EE3684387852470D9 /* woozeee-ad.jpg */,
+				84EE0EC837FC4DE8B81784D8 /* atm-filled.png */,
+				628EF450AA0142BFAE0E44CE /* bag-filled.png */,
+				5D8BAC406D8747619C1AD856 /* balance-filled.png */,
+				AF808F760CD3450E96584C0A /* ball-filled.png */,
+				17BD668FE330478FA2C966C0 /* bank-filled.png */,
+				F350E31882D84776B67DF691 /* cart-outline.png */,
+				7F69C2959C354910973746F2 /* chat-outline.png */,
+				0A6D30F572E94ABDB2EA4968 /* doctor-filled.png */,
+				61420B91FE4C47E18D4199BE /* eye-outline.png */,
+				A9F022E6F3754D719C972CE6 /* grid-outline.png */,
+				63DFCF0D792849578BB66C4B /* heart-outline.png */,
+				B6F49223F87F4B98B52DBE54 /* heart.png */,
+				FC29B5BA44044D508CA1AA72 /* map-filled.png */,
+				50116FFA8ED7483C9E5E4E72 /* market-outline.png */,
+				54DD9714B3064958B4AA9340 /* movie-outline.png */,
+				38A823F5DF6E4A05AFC8DB98 /* notification-new-outline.png */,
+				AE403C3242A44A8F9E649219 /* reorder-left-outline.png */,
+				49CDEBA8F9384049B60C48E7 /* search-outline.png */,
+				2B879782242B4DD6B1CB4E10 /* share-outline.png */,
+				EE2C04C1BF1F48979C57D09F /* tag-filled.png */,
+				653D8AC88A964A608D7B0061 /* user-2-outline.png */,
+				A29551CC493A404B8AC1AE2F /* video-outline.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -389,15 +470,15 @@
 				F82DF7F102B246DC83A93C2E /* woozeee-charity.jpg in Resources */,
 				05E1A4F6944B40C5949B60CA /* woozeee-marketplace.jpg in Resources */,
 				7A06F0C4871F407BA01B1569 /* woozeee-socials.jpg in Resources */,
-				8A1DDA883CC74F93BFD80B77 /* card-insure.jpg in Resources */,
-				A233B71061404C84A4F97DFA /* card-rewards.jpg in Resources */,
-				0650634CA9B348CD99E7B25D /* card-wallet.jpg in Resources */,
 				8E4A70F6711647FAB6C88C0C /* favicon.png in Resources */,
 				553EA2C5325C40D292EB3F9B /* icon.png in Resources */,
 				02B9AB9996C7419B89BD878E /* logo.png in Resources */,
 				EC33BC23DABF4ED3A9522681 /* splash.png in Resources */,
 				69F21F91BF03490B9F8ECECC /* flag-ng.png in Resources */,
+				C31D16D525FA54CE001E92CD /* rewards.jpg in Resources */,
+				C31D16D625FA54CE001E92CD /* insure.jpg in Resources */,
 				AB17F3AB53254FB0A389808C /* upload.png in Resources */,
+				C31D16D125FA54C6001E92CD /* wallet.jpg in Resources */,
 				035A1AE7BA11404782DF4721 /* verified.png in Resources */,
 				60AD1B55767B407584E01285 /* user1.png in Resources */,
 				4085E9B77BF342CDA9DBA361 /* user2.png in Resources */,
@@ -428,6 +509,31 @@
 				94EEF546FEF14891AF602CD5 /* wooz-outline.png in Resources */,
 				6C28E7FAF1674789B3A6408E /* wooz.png in Resources */,
 				F0AFE7A72C1B44F99BC89847 /* fontello.ttf in Resources */,
+				EB28D9E7F9654916A5E0A6EC /* mega-sale.jpg in Resources */,
+				E1814A4AE4FF42F896FE43BA /* valentine.jpg in Resources */,
+				A6ECC437EA2D461DB0F46716 /* woozeee-ad.jpg in Resources */,
+				664703421C8345F8971291EF /* atm-filled.png in Resources */,
+				C31D918B8B4D449092C59F1E /* bag-filled.png in Resources */,
+				60BAC8776E36487C998C2665 /* balance-filled.png in Resources */,
+				8B550257460446238CAAD3DB /* ball-filled.png in Resources */,
+				3ACE943B7DEE40FCA5B1F25E /* bank-filled.png in Resources */,
+				14325AC9E793483E97506A54 /* cart-outline.png in Resources */,
+				453881273A344ED9A4107CB9 /* chat-outline.png in Resources */,
+				B44F46DE75204C17B9746BD5 /* doctor-filled.png in Resources */,
+				3123C43DE748491DB1D2DA1F /* eye-outline.png in Resources */,
+				772C23440FC743B99FB19027 /* grid-outline.png in Resources */,
+				0B8D5D1A0AC34C6498A816D2 /* heart-outline.png in Resources */,
+				DD6320DA0B1345768B1D2869 /* heart.png in Resources */,
+				151362EAD4B043B5A78E00EA /* map-filled.png in Resources */,
+				41436113B0BC467885BB09E0 /* market-outline.png in Resources */,
+				15AAD79ED67B41C8A59D1D84 /* movie-outline.png in Resources */,
+				D66DFAC7015340EE8A8C8406 /* notification-new-outline.png in Resources */,
+				8FBE71FBD37343D1ADA9376A /* reorder-left-outline.png in Resources */,
+				9A08C8805D2E4983834B574F /* search-outline.png in Resources */,
+				00F0A6C7039D45E49582E33D /* share-outline.png in Resources */,
+				5EEDF25FD5C84BA3BFAF2476 /* tag-filled.png in Resources */,
+				301A8FB7F0C942439FBBE8CE /* user-2-outline.png in Resources */,
+				1763A7D2CF8A4BCFB00DD63D /* video-outline.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
