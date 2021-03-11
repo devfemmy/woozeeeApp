@@ -76,7 +76,7 @@ export default function MarketPlace({ navigation }) {
       <TopNavigationArea
         title="woozeee"
         navigation={navigation}
-        screen="social"
+        screen="marketPlace"
       />
     </Layout>
   );

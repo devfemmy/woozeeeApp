@@ -314,3 +314,31 @@ export const IconCReorderLeft = (props) => {
 
   return <Icon {...otherProps} name={type} pack="assets" />;
 };
+export const IconCSearch = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'search' : 'search-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCMarket = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'market' : 'market-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCCart = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'cart' : 'cart-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCGrid = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'grid' : 'grid-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};

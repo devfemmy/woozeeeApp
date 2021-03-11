@@ -73,6 +73,18 @@ const AssetIconsPack = {
     'notification-new-outline': IconProvider(
       require('assets/images/icon/notification-new-outline.png'),
     ),
+    'search-outline': IconProvider(
+      require('assets/images/icon/search-outline.png'),
+    ),
+    'market-outline': IconProvider(
+      require('assets/images/icon/market-outline.png'),
+    ),
+    'cart-outline': IconProvider(
+      require('assets/images/icon/cart-outline.png'),
+    ),
+    'grid-outline': IconProvider(
+      require('assets/images/icon/grid-outline.png'),
+    ),
   },
 };
 

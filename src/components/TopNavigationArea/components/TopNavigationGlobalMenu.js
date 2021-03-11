@@ -10,6 +10,7 @@ import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import {
   IconCReorderLeft,
+  IconCMarket,
   IconCSocial,
   IconCHome,
 } from 'src/components/CustomIcons';
@@ -61,7 +62,7 @@ export default function TopNavigationGlobalMenu(props) {
     >
       <MenuItem
         accessoryLeft={() => (
-          <IconCSocial
+          <IconCMarket
             style={{ height: 20, width: 20, tintColor: ICON_THEME }}
           />
         )}

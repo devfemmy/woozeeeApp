@@ -13,6 +13,7 @@ import {
   IconSearch,
   IconOptions,
   IconCVideo,
+  IconCSearch,
 } from 'src/components/CustomIcons';
 
 // Components import
@@ -43,12 +44,12 @@ export default function TopNavigationArea(props) {
     navigation,
   ]);
 
-  const renderToolsOptions = useCallback(
+  const renderSocialTools = useCallback(
     () => (
       <>
         <TopNavigationAction
           {...props}
-          icon={(evaProps) => <IconCVideo {...evaProps} />}
+          icon={IconCVideo}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Livestream"
           onPress={routeLiveStream}
@@ -63,6 +64,28 @@ export default function TopNavigationArea(props) {
       </>
     ),
     [props, routeLiveStream, routeMessaging],
+  );
+
+  const renderMarketPlaceTools = useCallback(
+    () => (
+      <>
+        <TopNavigationAction
+          {...props}
+          icon={IconCSearch}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="Search"
+          onPress={routeSearch}
+        />
+        <TopNavigationAction
+          {...props}
+          icon={IconCNotification}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="Notification"
+          onPress={routeMessaging}
+        />
+      </>
+    ),
+    [props, routeSearch, routeMessaging],
   );
 
   const renderSearchIcon = useCallback(
@@ -88,6 +111,15 @@ export default function TopNavigationArea(props) {
       />
     ),
     [props],
+  );
+
+  // render tools based on screen
+  const renderTools = useMemo(
+    () => ({
+      social: renderSocialTools,
+      marketPlace: renderMarketPlaceTools,
+    }),
+    [renderSocialTools, renderMarketPlaceTools],
   );
 
   const TopNavigationAuth = useMemo(
@@ -169,7 +201,7 @@ export default function TopNavigationArea(props) {
     [style, navigation],
   );
 
-  const TopNavigationSocial = useMemo(
+  const TopNavigationWithTools = useMemo(
     () => (
       <Layout level="5">
         <TopNavigation
@@ -178,7 +210,7 @@ export default function TopNavigationArea(props) {
           accessoryLeft={(evaProps) => (
             <TopNavigationGlobalMenu {...evaProps} navigation={navigation} />
           )}
-          accessoryRight={renderToolsOptions}
+          accessoryRight={renderTools[screen]}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -186,7 +218,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [navigation, style, renderToolsOptions],
+    [navigation, style, renderTools, screen],
   );
 
   const TopNavigationToolbar = useMemo(
@@ -233,7 +265,8 @@ export default function TopNavigationArea(props) {
     user: TopNavigationUser,
     search: TopNavigationSearch,
     profile: TopNavigationProfile,
-    social: TopNavigationSocial,
+    social: TopNavigationWithTools,
+    marketPlace: TopNavigationWithTools,
     toolbar: TopNavigationToolbar,
   };
 
