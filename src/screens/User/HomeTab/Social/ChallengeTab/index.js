@@ -4,8 +4,8 @@ import { Layout, Tab, TabView } from '@ui-kitten/components';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
-import Versus from 'src/screens/User/HomeTab/Socials/ChallengeTab/VersusTab';
-import Explore from 'src/screens/User/HomeTab/Socials/ChallengeTab/ExploreTab';
+import Versus from 'src/screens/User/HomeTab/Social/ChallengeTab/VersusTab';
+import Explore from 'src/screens/User/HomeTab/Social/ChallengeTab/ExploreTab';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 

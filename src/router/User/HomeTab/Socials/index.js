@@ -5,10 +5,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomNavigationArea from 'src/components/BottomNavigationArea';
 
 // Screens
-import Social from 'src/screens/User/HomeTab/Socials/SocialTab';
-import Wooz from 'src/screens/User/HomeTab/Socials/WoozTab';
-import Profile from 'src/screens/User/HomeTab/Socials/ProfileTab';
-import Challenge from 'src/screens/User/HomeTab/Socials/ChallengeTab';
+import Social from 'src/screens/User/HomeTab/Social/SocialTab';
+import Wooz from 'src/screens/User/HomeTab/Social/WoozTab';
+import Profile from 'src/screens/User/HomeTab/Social/ProfileTab';
+import Challenge from 'src/screens/User/HomeTab/Social/ChallengeTab';
 
 import VideoUpload from 'src/screens/User/Common/VideoUpload';
 
