@@ -38,6 +38,10 @@ import {
   IconCCup,
   IconVideoOutline,
   IconCloudUploadOutline,
+  IconCMarket,
+  IconCCart,
+  IconCGrid,
+  IconCUser2,
 } from '../CustomIcons';
 
 const libraryVideoPicker = ImageVideoPicker('Videos');
@@ -205,11 +209,11 @@ const tabs = {
     profile: IconCUser,
   },
   marketPlace: {
-    market: IconCSocial,
-    cart: IconCWooz,
+    market: IconCMarket,
+    cart: IconCCart,
     upload: IconUpload,
-    categories: IconCCup,
-    profile: IconCUser,
+    categories: IconCGrid,
+    profile: IconCUser2,
   },
 };
 

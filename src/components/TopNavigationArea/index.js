@@ -201,14 +201,18 @@ export default function TopNavigationArea(props) {
     [style, navigation],
   );
 
-  const TopNavigationWithTools = useMemo(
+  const TopNavigationGlobal = useMemo(
     () => (
       <Layout level="5">
         <TopNavigation
           alignment="center"
           title={(evaProps) => <Logo {...evaProps} />}
           accessoryLeft={(evaProps) => (
-            <TopNavigationGlobalMenu {...evaProps} navigation={navigation} />
+            <TopNavigationGlobalMenu
+              {...evaProps}
+              navigation={navigation}
+              selected={screen}
+            />
           )}
           accessoryRight={renderTools[screen]}
           accessibilityLiveRegion="polite"
@@ -265,8 +269,8 @@ export default function TopNavigationArea(props) {
     user: TopNavigationUser,
     search: TopNavigationSearch,
     profile: TopNavigationProfile,
-    social: TopNavigationWithTools,
-    marketPlace: TopNavigationWithTools,
+    social: TopNavigationGlobal,
+    marketPlace: TopNavigationGlobal,
     toolbar: TopNavigationToolbar,
   };
 

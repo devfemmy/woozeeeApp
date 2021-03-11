@@ -47,6 +47,10 @@ const AssetIconsPack = {
     'user-outline': IconProvider(
       require('assets/images/icon/user-outline.png'),
     ),
+    'user-2': IconProvider(require('assets/images/icon/user-2-outline.png')),
+    'user-2-outline': IconProvider(
+      require('assets/images/icon/user-2-outline.png'),
+    ),
     'flag-ng': IconProvider(require('assets/images/icon/flag-ng.png')),
     'movie-outline': IconProvider(
       require('assets/images/icon/movie-outline.png'),
@@ -79,12 +83,15 @@ const AssetIconsPack = {
     'market-outline': IconProvider(
       require('assets/images/icon/market-outline.png'),
     ),
+    market: IconProvider(require('assets/images/icon/market-outline.png')),
     'cart-outline': IconProvider(
       require('assets/images/icon/cart-outline.png'),
     ),
+    cart: IconProvider(require('assets/images/icon/cart-outline.png')),
     'grid-outline': IconProvider(
       require('assets/images/icon/grid-outline.png'),
     ),
+    grid: IconProvider(require('assets/images/icon/grid-outline.png')),
   },
 };
 

@@ -16,7 +16,7 @@ import {
 } from 'src/components/CustomIcons';
 
 export default function TopNavigationGlobalMenu(props) {
-  const { navigation } = props;
+  const { navigation, selected } = props;
 
   const t = useContext(LocaleContext);
 
@@ -61,6 +61,7 @@ export default function TopNavigationGlobalMenu(props) {
       accessibilityHint="Extras"
     >
       <MenuItem
+        selected={selected === 'marketPlace'}
         accessoryLeft={() => (
           <IconCMarket
             style={{ height: 20, width: 20, tintColor: ICON_THEME }}
@@ -70,6 +71,7 @@ export default function TopNavigationGlobalMenu(props) {
         onPress={routeMarketPlace}
       />
       <MenuItem
+        selected={selected === 'social'}
         accessoryLeft={() => (
           <IconCSocial
             style={{ height: 20, width: 20, tintColor: ICON_THEME }}

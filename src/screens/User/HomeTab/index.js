@@ -27,15 +27,15 @@ import BackgroundVideo from 'src/components/BackgroundVideo';
 const woozeeeCards = [
   {
     balance: '150.25',
-    banner: require('assets/images/card-insure.jpg'),
+    banner: require('assets/images/card/insure.jpg'),
   },
   {
     balance: '350,152.83',
-    banner: require('assets/images/card-wallet.jpg'),
+    banner: require('assets/images/card/wallet.jpg'),
   },
   {
     balance: '0.00',
-    banner: require('assets/images/card-rewards.jpg'),
+    banner: require('assets/images/card/rewards.jpg'),
   },
 ];
 
@@ -130,7 +130,7 @@ export default function Home({ navigation }) {
         defaultSource={data.item.banner}
         style={{
           height: IS_PORTRAIT ? 125 : 95,
-          width: '95%',
+          width: '100%',
           borderRadius: 5,
         }}
         resizeMode="cover"
@@ -177,6 +177,7 @@ export default function Home({ navigation }) {
     <View style={{ flex: 1, paddingTop: 15, Height: 180 }}>
       <List
         style={{ backgroundColor: 'transparent' }}
+        contentContainerStyle={{ paddingHorizontal: 5 }}
         alwaysBounceHorizontal
         alwaysBounceVertical
         horizontal={IS_PORTRAIT}

@@ -5,8 +5,8 @@
     "baseUrl": "./",
     "paths": {
       "src/*": ["./src/*"],
-      "assets/*": ["./src/assets/*"],
-      "@": ["./node_modules"]
+      "assets/*": ["./src/assets/*"]
+      // "@": ["./node_modules/*"]
     }
   },
   "exclude": ["node_modules", "dist"]
