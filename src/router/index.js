@@ -31,7 +31,8 @@ import Chats from 'src/screens/User/Common/Chats';
 
 /* Routes import */
 import UserRoute from './User';
-import SocialRoute from './User/HomeTab/Socials';
+import SocialRoute from './User/HomeTab/Social';
+import MarketPlaceRoute from './User/HomeTab/MarketPlace';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -59,6 +60,7 @@ export default function Router() {
       Messaging,
       Comments,
       Chats,
+      MarketPlaceRoute,
     },
 
     Common: {

@@ -46,7 +46,7 @@ const PLACEHOLDER_CONFIG1 = {
 // prettier-ignore
 const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
-export default function Explore({ navigation }) {
+export default function Social({ navigation }) {
   useDisableAndroidExit();
 
   const { width, height } = useWindowDimensions();

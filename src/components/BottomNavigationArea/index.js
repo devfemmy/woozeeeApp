@@ -204,6 +204,13 @@ const tabs = {
     challenge: IconCCup,
     profile: IconCUser,
   },
+  marketPlace: {
+    market: IconCSocial,
+    cart: IconCWooz,
+    upload: IconUpload,
+    categories: IconCCup,
+    profile: IconCUser,
+  },
 };
 
 export default function BottomNavigationArea(props) {

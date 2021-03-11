@@ -15,7 +15,7 @@ import {
   IconLogout,
 } from 'src/components/CustomIcons';
 
-export default function TopNavigationMenu(props) {
+export default function TopNavigationUserMenu(props) {
   const { navigation } = props;
 
   const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);

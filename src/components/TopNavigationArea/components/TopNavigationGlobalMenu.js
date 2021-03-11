@@ -10,13 +10,11 @@ import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import {
   IconCReorderLeft,
-  IconGift,
-  IconMap,
-  IconCWooz,
+  IconCSocial,
   IconCHome,
 } from 'src/components/CustomIcons';
 
-export default function TopNavigationSocialMenu(props) {
+export default function TopNavigationGlobalMenu(props) {
   const { navigation } = props;
 
   const t = useContext(LocaleContext);
@@ -38,6 +36,8 @@ export default function TopNavigationSocialMenu(props) {
   const routeHome = () => navigation.replace('UserRoute');
 
   const routeSocial = () => navigation.replace('SocialRoute');
+
+  const routeMarketPlace = () => navigation.replace('MarketPlaceRoute');
 
   const NavigationAnchor = () => (
     <TopNavigationAction
@@ -61,17 +61,28 @@ export default function TopNavigationSocialMenu(props) {
     >
       <MenuItem
         accessoryLeft={() => (
+          <IconCSocial
+            style={{ height: 20, width: 20, tintColor: ICON_THEME }}
+          />
+        )}
+        title={t('marketplace')}
+        onPress={routeMarketPlace}
+      />
+      <MenuItem
+        accessoryLeft={() => (
+          <IconCSocial
+            style={{ height: 20, width: 20, tintColor: ICON_THEME }}
+          />
+        )}
+        title={t('social')}
+        onPress={routeSocial}
+      />
+      <MenuItem
+        accessoryLeft={() => (
           <IconCHome style={{ height: 20, width: 20, tintColor: ICON_THEME }} />
         )}
         title={t('home')}
         onPress={routeHome}
-      />
-      <MenuItem
-        accessoryLeft={() => (
-          <IconCWooz style={{ height: 20, width: 20, tintColor: ICON_THEME }} />
-        )}
-        title={t('social')}
-        onPress={routeSocial}
       />
       {/* <MenuItem accessoryLeft={IconMap} title={t('marketplace')} />
         <MenuItem accessoryLeft={IconGift} title={t('charity')} /> */}

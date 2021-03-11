@@ -82,5 +82,8 @@
   "uploadTo": "Upload to",
   "feeds": "Feeds",
   "addTo": "Add to",
-  "message": "Message"
+  "message": "Message",
+  "cart": "Cart",
+  "categories": "Categories",
+  "market": "Market"
 }

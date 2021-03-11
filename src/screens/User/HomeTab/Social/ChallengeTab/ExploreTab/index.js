@@ -22,7 +22,7 @@ const PLACEHOLDER_CONFIG = {
 // prettier-ignore
 const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
 
-export default function Versus({ navigation }) {
+export default function Explore({ navigation }) {
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
   return (

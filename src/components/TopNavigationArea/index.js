@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useContext } from 'react';
+import React, { useMemo, useCallback } from 'react';
 
 import {
   Divider,
@@ -6,8 +6,6 @@ import {
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';
-
-import { AppSettingsContext } from 'src/contexts';
 
 import {
   IconCFlag,
@@ -23,18 +21,15 @@ import HelpButton from './components/HelpButton';
 import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
-import TopNavigationMenu from './components/TopNavigationMenu';
-import TopNavigationSocialMenu from './components/TopNavigationSocialMenu';
+
+import TopNavigationUserMenu from './components/TopNavigationUserMenu';
+import TopNavigationGlobalMenu from './components/TopNavigationGlobalMenu';
 
 export default function TopNavigationArea(props) {
   // prettier-ignore
   const {
     navigation, title, icon, style, screen,
   } = props;
-
-  const { appState } = useContext(AppSettingsContext);
-
-  const ICON_THEME = appState.darkMode ? 'white' : '#0A143F';
 
   const routeSearch = useCallback(() => navigation.navigate('Search'), [
     navigation,
@@ -125,7 +120,7 @@ export default function TopNavigationArea(props) {
           title={(evaProps) => <Logo {...evaProps} />}
           accessoryLeft={() => <IconCFlag style={{ height: 28, width: 28 }} />}
           accessoryRight={(evaProps) => (
-            <TopNavigationMenu {...evaProps} navigation={navigation} />
+            <TopNavigationUserMenu {...evaProps} navigation={navigation} />
           )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
@@ -163,7 +158,7 @@ export default function TopNavigationArea(props) {
         <TopNavigation
           alignment="center"
           accessoryRight={(evaProps) => (
-            <TopNavigationMenu {...evaProps} navigation={navigation} />
+            <TopNavigationUserMenu {...evaProps} navigation={navigation} />
           )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
@@ -181,7 +176,7 @@ export default function TopNavigationArea(props) {
           alignment="center"
           title={(evaProps) => <Logo {...evaProps} />}
           accessoryLeft={(evaProps) => (
-            <TopNavigationSocialMenu {...evaProps} navigation={navigation} />
+            <TopNavigationGlobalMenu {...evaProps} navigation={navigation} />
           )}
           accessoryRight={renderToolsOptions}
           accessibilityLiveRegion="polite"
@@ -200,7 +195,7 @@ export default function TopNavigationArea(props) {
         <TopNavigation
           alignment="center"
           // accessoryLeft={(evaProps) => (
-          //   <TopNavigationMenu {...evaProps} navigation={navigation} />
+          //   <TopNavigationUserMenu {...evaProps} navigation={navigation} />
           // )}
           accessoryRight={renderSearchIcon}
           accessibilityLiveRegion="polite"
