@@ -55,13 +55,19 @@ const AssetIconsPack = {
     'movie-outline': IconProvider(
       require('assets/images/icon/movie-outline.png'),
     ),
+    chat: IconProvider(require('assets/images/icon/chat.png')),
     'chat-outline': IconProvider(
       require('assets/images/icon/chat-outline.png'),
     ),
+    heart: IconProvider(require('assets/images/icon/heart.png')),
     'heart-outline': IconProvider(
       require('assets/images/icon/heart-outline.png'),
     ),
+    'heart-filled': IconProvider(
+      require('assets/images/icon/heart-filled.png'),
+    ),
     'eye-outline': IconProvider(require('assets/images/icon/eye-outline.png')),
+    share: IconProvider(require('assets/images/icon/share.png')),
     'share-outline': IconProvider(
       require('assets/images/icon/share-outline.png'),
     ),
@@ -92,6 +98,7 @@ const AssetIconsPack = {
       require('assets/images/icon/grid-outline.png'),
     ),
     grid: IconProvider(require('assets/images/icon/grid-outline.png')),
+    vote: IconProvider(require('assets/images/icon/vote.png')),
   },
 };
 

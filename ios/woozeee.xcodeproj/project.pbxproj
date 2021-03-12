@@ -84,6 +84,7 @@
 		5EEDF25FD5C84BA3BFAF2476 /* tag-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = EE2C04C1BF1F48979C57D09F /* tag-filled.png */; };
 		301A8FB7F0C942439FBBE8CE /* user-2-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 653D8AC88A964A608D7B0061 /* user-2-outline.png */; };
 		1763A7D2CF8A4BCFB00DD63D /* video-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = A29551CC493A404B8AC1AE2F /* video-outline.png */; };
+		F5E224A040354AD1852650B7 /* heart-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D01688DCC714288B7DFE4E1 /* heart-filled.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -203,6 +204,7 @@
 		EE2C04C1BF1F48979C57D09F /* tag-filled.png */ = {isa = PBXFileReference; name = "tag-filled.png"; path = "../src/assets/images/icon/tag-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		653D8AC88A964A608D7B0061 /* user-2-outline.png */ = {isa = PBXFileReference; name = "user-2-outline.png"; path = "../src/assets/images/icon/user-2-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		A29551CC493A404B8AC1AE2F /* video-outline.png */ = {isa = PBXFileReference; name = "video-outline.png"; path = "../src/assets/images/icon/video-outline.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6D01688DCC714288B7DFE4E1 /* heart-filled.png */ = {isa = PBXFileReference; name = "heart-filled.png"; path = "../src/assets/images/icon/heart-filled.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -395,6 +397,7 @@
 				EE2C04C1BF1F48979C57D09F /* tag-filled.png */,
 				653D8AC88A964A608D7B0061 /* user-2-outline.png */,
 				A29551CC493A404B8AC1AE2F /* video-outline.png */,
+				6D01688DCC714288B7DFE4E1 /* heart-filled.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				5EEDF25FD5C84BA3BFAF2476 /* tag-filled.png in Resources */,
 				301A8FB7F0C942439FBBE8CE /* user-2-outline.png in Resources */,
 				1763A7D2CF8A4BCFB00DD63D /* video-outline.png in Resources */,
+				F5E224A040354AD1852650B7 /* heart-filled.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -86,5 +86,12 @@
   "cart": "Cart",
   "categories": "Categories",
   "market": "Market",
-  "moneyMatters": "Money Matters"
+  "moneyMatters": "Money Matters",
+  "myBank": "My Bank",
+  "onTheGo": "On The Go",
+  "clickAndShop": "Click & Shop",
+  "askALawyer": "Ask a Lawyer",
+  "askADoc": "Ask a Doc",
+  "clickAndPlay": "Click & Play",
+  "otherServices": "Other Services"
 }

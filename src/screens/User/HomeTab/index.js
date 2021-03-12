@@ -103,7 +103,7 @@ export default function Home({ navigation }) {
 
   const IS_PORTRAIT = height > width;
 
-  const CARD_HEIGHT = IS_PORTRAIT ? 170 : 140;
+  const CARD_HEIGHT = IS_PORTRAIT ? 190 : 170;
 
   const CATEGORY_HEIGHT = IS_PORTRAIT ? 250 : 220;
 
@@ -129,7 +129,7 @@ export default function Home({ navigation }) {
         source={data.item.banner}
         defaultSource={data.item.banner}
         style={{
-          height: IS_PORTRAIT ? 125 : 95,
+          height: IS_PORTRAIT ? 140 : 120,
           width: '100%',
           borderRadius: 5,
         }}

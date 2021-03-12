@@ -9,11 +9,11 @@ import CustomVideoPlayer from 'src/components/CustomVideoPlayer';
 import InteractIcon from 'src/components/InteractIcon';
 
 import {
-  IconHeartToggle,
-  IconShare,
+  IconCHeartToggle,
+  IconCShare,
   // IconClipboard,
   IconEye,
-  IconMsgSquare,
+  IconCChat,
   IconPlayPause,
   IconVolume,
 } from 'src/components/CustomIcons';
@@ -185,14 +185,14 @@ export default function VideoView(props) {
               <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={(evaProps) => (
-                  <IconHeartToggle {...evaProps} isLiked={isLiked} />
+                  <IconCHeartToggle {...evaProps} isLiked={isLiked} />
                 )}
                 textContent={item.likes}
                 onPress={toggleLike}
               />
               <InteractIcon
                 style={{ marginBottom: 15 }}
-                Accessory={IconMsgSquare}
+                Accessory={(evaProps) => <IconCChat {...evaProps} active />}
                 textContent={item.comments}
               />
               {/* <InteractIcon
@@ -206,7 +206,7 @@ export default function VideoView(props) {
                   /> */}
               <InteractIcon
                 style={{ marginBottom: 15 }}
-                Accessory={IconShare}
+                Accessory={(evaProps) => <IconCShare {...evaProps} active />}
                 textContent={item.shares}
               />
 

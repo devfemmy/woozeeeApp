@@ -39,11 +39,6 @@ export const IconCloudUploadOutline = (props) => {
   return <Icon {...otherProps} name="cloud-upload-outline" />;
 };
 
-export const IconHeartToggle = (props) => {
-  const { isLiked, ...otherProps } = props;
-  return <Icon {...otherProps} name={isLiked ? 'heart' : 'heart-outline'} />;
-};
-
 export const IconPlayPause = (props) => {
   const { isPlaying, ...otherProps } = props;
   return (
@@ -190,6 +185,17 @@ export const IconGoogle = (props) => <Icon {...props} name="google-outline" />;
 export const IconTwitter = (props) => (
   <Icon {...props} name="twitter-outline" />
 );
+
+export const IconCHeartToggle = (props) => {
+  const { isLiked, ...otherProps } = props;
+  return (
+    <Icon
+      {...otherProps}
+      name={isLiked ? 'heart-filled' : 'heart'}
+      pack="assets"
+    />
+  );
+};
 
 export const IconCFlag = (props) => (
   <Icon {...props} name="flag-ng" pack="assets" />
@@ -346,6 +352,13 @@ export const IconCGrid = (props) => {
   const { active, ...otherProps } = props;
 
   const type = active ? 'grid' : 'grid-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCVote = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'vote' : 'vote-outline';
 
   return <Icon {...otherProps} name={type} pack="assets" />;
 };
