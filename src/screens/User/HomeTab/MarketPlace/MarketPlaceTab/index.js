@@ -112,7 +112,7 @@ export default function MarketPlace({ navigation }) {
       style={{
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingHorizontal: 5,
+        paddingHorizontal: 3,
         marginVertical: 10,
         width: '25%',
       }}
@@ -120,6 +120,7 @@ export default function MarketPlace({ navigation }) {
       <Layout
         level="1"
         style={{
+          borderRadius: 5,
           paddingVertical: 15,
           paddingHorizontal: 20,
           marginBottom: 10,
@@ -130,7 +131,7 @@ export default function MarketPlace({ navigation }) {
           },
           shadowOpacity: 0.05,
           shadowRadius: 3,
-          elevation: 5,
+          elevation: 3,
         }}
       >
         <Image
@@ -140,7 +141,9 @@ export default function MarketPlace({ navigation }) {
           style={{ height: 30, width: 30 }}
         />
       </Layout>
-      <Text category="c2">{t(data.title)}</Text>
+      <Text category="c2" style={{ textAlign: 'center' }}>
+        {t(data.title)}
+      </Text>
     </TouchableOpacity>
   );
 
