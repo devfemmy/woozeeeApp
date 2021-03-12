@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 
 import { View, StyleSheet, Image } from 'react-native';
 
@@ -11,11 +11,11 @@ import InteractIcon from 'src/components/InteractIcon';
 import {
   IconCHeartToggle,
   IconCShare,
-  // IconClipboard,
   IconEye,
   IconCChat,
   IconPlayPause,
   IconVolume,
+  IconCVote,
 } from 'src/components/CustomIcons';
 
 const styles = StyleSheet.create({
@@ -49,13 +49,23 @@ export default function VideoView(props) {
 
   const [isLiked, setLiked] = useState(false);
 
+  const [isVoted, setVoted] = useState(false);
+
   const [isMuted, setMuted] = useState(false);
 
-  const togglePause = () => setShouldPlay((prevState) => !prevState);
+  const togglePause = useCallback(
+    () => setShouldPlay((prevState) => !prevState),
+    [],
+  );
 
-  const toggleLike = () => setLiked((prevState) => !prevState);
+  const toggleLike = useCallback(() => setLiked((prevState) => !prevState), []);
 
-  const toggleVolume = () => setMuted((prevState) => !prevState);
+  const toggleVote = useCallback(() => setVoted((prevState) => !prevState), []);
+
+  const toggleVolume = useCallback(
+    () => setMuted((prevState) => !prevState),
+    [],
+  );
 
   return useMemo(
     () => (
@@ -185,13 +195,28 @@ export default function VideoView(props) {
               <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={(evaProps) => (
-                  <IconCHeartToggle {...evaProps} isLiked={isLiked} />
+                  <IconCVote
+                    {...evaProps}
+                    style={{ tintColor: isVoted ? '#FF5757' : 'white' }}
+                    active
+                  />
+                )}
+                textContent={item.likes}
+                onPress={toggleVote}
+              />
+              <InteractIcon
+                style={{ marginBottom: 15 }}
+                Accessory={(evaProps) => (
+                  <IconCHeartToggle
+                    {...evaProps}
+                    style={{ tintColor: isLiked ? '#FF5757' : 'white' }}
+                  />
                 )}
                 textContent={item.likes}
                 onPress={toggleLike}
               />
               <InteractIcon
-                style={{ marginBottom: 15 }}
+                style={{ marginBottom: 10 }}
                 Accessory={(evaProps) => <IconCChat {...evaProps} active />}
                 textContent={item.comments}
               />
@@ -227,6 +252,19 @@ export default function VideoView(props) {
         </View>
       </View>
     ),
-    [IS_ACTIVE, IS_PRELOADED, isMuted, shouldPlay, isLiked, viewHeight, item],
+    [
+      IS_ACTIVE,
+      IS_PRELOADED,
+      viewHeight,
+      item,
+      isMuted,
+      toggleVolume,
+      shouldPlay,
+      togglePause,
+      isLiked,
+      toggleLike,
+      isVoted,
+      toggleVote,
+    ],
   );
 }

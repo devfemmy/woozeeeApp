@@ -20,7 +20,7 @@ export default function ItemCard(props) {
 
   const IS_PORTRAIT = height > width;
 
-  const COLOUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
+  const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
 
   const toggleLike = useCallback(() => setLiked((prevState) => !prevState), []);
 
@@ -31,8 +31,8 @@ export default function ItemCard(props) {
         style={{
           height: 160,
           width: IS_PORTRAIT
-            ? width / (COLOUMN_COUNT + extraWidth)
-            : width / (COLOUMN_COUNT + extraWidth),
+            ? width / (COLUMN_COUNT + extraWidth)
+            : width / (COLUMN_COUNT + extraWidth),
           paddingHorizontal: 3,
           position: 'relative',
           alignItems: 'center',
@@ -49,16 +49,14 @@ export default function ItemCard(props) {
           }}
           resizeMode="cover"
         />
-        <View
-          style={{
-            position: 'absolute',
-            right: 10,
-            top: 5,
-          }}
-        >
+        <View style={{ position: 'absolute', right: 10, top: 5 }}>
           <InteractIcon
+            style={{ marginBottom: 15 }}
             Accessory={(evaProps) => (
-              <IconCHeartToggle {...evaProps} isLiked={isLiked} />
+              <IconCHeartToggle
+                {...evaProps}
+                style={{ tintColor: isLiked ? '#FF5757' : 'white' }}
+              />
             )}
             height={25}
             width={25}
@@ -67,6 +65,6 @@ export default function ItemCard(props) {
         </View>
       </TouchableOpacity>
     ),
-    [COLOUMN_COUNT, IS_PORTRAIT, extraWidth, width, data, isLiked, toggleLike],
+    [COLUMN_COUNT, IS_PORTRAIT, extraWidth, width, data, isLiked, toggleLike],
   );
 }

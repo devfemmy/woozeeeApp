@@ -99,6 +99,7 @@ const AssetIconsPack = {
     ),
     grid: IconProvider(require('assets/images/icon/grid-outline.png')),
     vote: IconProvider(require('assets/images/icon/vote.png')),
+    medal: IconProvider(require('assets/images/icon/medal.png')),
   },
 };
 

@@ -362,3 +362,10 @@ export const IconCVote = (props) => {
 
   return <Icon {...otherProps} name={type} pack="assets" />;
 };
+export const IconCMedal = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'medal' : 'medal-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
