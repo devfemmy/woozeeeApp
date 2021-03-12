@@ -89,6 +89,7 @@
 		0259E696F5E5499E98CB1F19 /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 0BAB48398395465F8D1CA534 /* eye.png */; };
 		E4798FEFEF7D4569B81B3253 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 8264811E2F16445F9BE2EB92 /* share.png */; };
 		251933AF599141328BA60468 /* vote.png in Resources */ = {isa = PBXBuildFile; fileRef = D1EF52A265D44193BD5AE5B2 /* vote.png */; };
+		ED4FDD72489C4E0A86F1178F /* medal.png in Resources */ = {isa = PBXBuildFile; fileRef = B69C17ED24FE453D8727C1F6 /* medal.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -213,6 +214,7 @@
 		0BAB48398395465F8D1CA534 /* eye.png */ = {isa = PBXFileReference; name = "eye.png"; path = "../src/assets/images/icon/eye.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		8264811E2F16445F9BE2EB92 /* share.png */ = {isa = PBXFileReference; name = "share.png"; path = "../src/assets/images/icon/share.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		D1EF52A265D44193BD5AE5B2 /* vote.png */ = {isa = PBXFileReference; name = "vote.png"; path = "../src/assets/images/icon/vote.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B69C17ED24FE453D8727C1F6 /* medal.png */ = {isa = PBXFileReference; name = "medal.png"; path = "../src/assets/images/icon/medal.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -410,6 +412,7 @@
 				0BAB48398395465F8D1CA534 /* eye.png */,
 				8264811E2F16445F9BE2EB92 /* share.png */,
 				D1EF52A265D44193BD5AE5B2 /* vote.png */,
+				B69C17ED24FE453D8727C1F6 /* medal.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				0259E696F5E5499E98CB1F19 /* eye.png in Resources */,
 				E4798FEFEF7D4569B81B3253 /* share.png in Resources */,
 				251933AF599141328BA60468 /* vote.png in Resources */,
+				ED4FDD72489C4E0A86F1178F /* medal.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
