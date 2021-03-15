@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 
-import { View, useWindowDimensions } from 'react-native';
+import { View } from 'react-native';
 
 import { useQuery } from 'react-query';
 
@@ -22,8 +22,7 @@ import { trendingUrl } from 'src/api/dummy';
 import { IconForwardIos } from 'src/components/CustomIcons';
 
 const MoviesSectionArea = (props) => {
-  const { t, navigation, viewHeight } = props;
-  const { width } = useWindowDimensions();
+  const { t, navigation, width } = props;
 
   const routeMovies = useCallback(() => navigation.navigate('Movies'), [
     navigation,
@@ -71,7 +70,6 @@ const MoviesSectionArea = (props) => {
       <View
         style={{
           paddingVertical: 5,
-          height: viewHeight,
           justifyContent: 'center',
         }}
       >

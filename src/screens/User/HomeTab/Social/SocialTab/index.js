@@ -1,11 +1,6 @@
-// prettier-ignore
-import React, {
-  useState, useCallback, useContext, useMemo,
-} from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 
 import { View, useWindowDimensions } from 'react-native';
-
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useInfiniteQuery } from 'react-query';
 
@@ -46,36 +41,36 @@ const PLACEHOLDER_CONFIG1 = {
 // prettier-ignore
 const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
+const _viewabilityConfig = {
+  minimumViewTime: 250,
+  itemVisiblePercentThreshold: 70,
+};
+
 export default function Social({ navigation }) {
   useDisableAndroidExit();
 
   const { width, height } = useWindowDimensions();
 
-  const { bottom, top } = useSafeAreaInsets();
-
-  const CONTENT_SPACE = 100;
-
-  const INSETS = bottom + top;
-
-  const LIST_HEIGHT = height - (CONTENT_SPACE + INSETS);
-
-  const ITEM_HEIGHT = LIST_HEIGHT * 0.8;
+  const ITEM_HEIGHT = height * 0.6;
 
   const t = useContext(LocaleContext);
 
-  const VIEWABILITY_CONFIG = useMemo(
-    () => ({
-      minimumViewTime: 200,
-      viewAreaCoveragePercentThreshold: 51,
-    }),
-    [],
-  );
-
   const SocialPostsArea = () => {
-    const [activeIndex, setActiveIndex] = useState(0);
+    const cellRefs = useRef({});
 
-    const handleViewItemsChanged = useCallback((data) => {
-      setActiveIndex(data.changed[0].index);
+    const _onViewableItemsChanged = useCallback((props) => {
+      const { changed } = props;
+
+      changed.forEach((item) => {
+        const cell = cellRefs.current[item.key];
+        if (cell) {
+          if (item.isViewable) {
+            cell.play();
+          } else {
+            cell.pause();
+          }
+        }
+      });
     }, []);
 
     const {
@@ -138,11 +133,16 @@ export default function Social({ navigation }) {
               style={{
                 flex: 1,
                 backgroundColor: 'transparent',
-                height: LIST_HEIGHT,
               }}
+              initialNumToRender={3}
+              maxToRenderPerBatch={3}
+              windowSize={5}
               alwaysBounceVertical
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
+              removeClippedSubviews
+              onViewableItemsChanged={_onViewableItemsChanged}
+              viewabilityConfig={_viewabilityConfig}
               ListHeaderComponent={StoryPostsArea}
               ListHeaderComponentStyle={{
                 paddingVertical: 10,
@@ -152,25 +152,28 @@ export default function Social({ navigation }) {
               data={page.pageData.data}
               keyExtractor={(_, i) => i.toString()}
               // prettier-ignore
-              renderItem={({ item, index }) => ((index + 1) < 12 && (index + 1) % 4 === 0 ? (
-                <MoviesSection t={t} navigation={navigation} viewHeight={ITEM_HEIGHT} />
+              renderItem={({ item, index }) => (index + 1 < 12 && (index + 1) % 4 === 0 ? (
+                <MoviesSection
+                  t={t}
+                  navigation={navigation}
+                  width={width}
+                />
               ) : (
                 <VideoView
+                  ref={(ref) => {
+                    cellRefs.current[index.toString()] = ref;
+                  }}
                   data={{ item, index }}
-                  activeIndex={activeIndex}
                   viewHeight={ITEM_HEIGHT}
                   navigation={navigation}
                   t={t}
                 />
               ))}
-              extraData={activeIndex}
               getItemLayout={(data, index) => ({
                 length: ITEM_HEIGHT,
-                offset: ITEM_HEIGHT * index + ITEM_HEIGHT / 2,
+                offset: ITEM_HEIGHT * index,
                 index,
               })}
-              onViewableItemsChanged={handleViewItemsChanged}
-              viewabilityConfig={VIEWABILITY_CONFIG}
             />
           </View>
         </React.Fragment>
