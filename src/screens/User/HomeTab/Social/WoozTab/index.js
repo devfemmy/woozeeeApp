@@ -57,8 +57,6 @@ export default function Wooz({ navigation }) {
   //   spacing = bottom + top;
   // }
 
-  console.log(bottom, top);
-
   const VIEW_HEIGHT = height - (57 + spacing);
 
   const t = useContext(LocaleContext);
@@ -77,7 +75,7 @@ export default function Wooz({ navigation }) {
     const videoLength = useRef(0);
 
     const onMomentumScrollEnd = ({ nativeEvent }) => {
-      const newIndex = Math.floor(nativeEvent.contentOffset.y / VIEW_HEIGHT);
+      const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
 
       if (
         // prettier-ignore
