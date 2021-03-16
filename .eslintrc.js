@@ -21,13 +21,14 @@ module.exports = {
       },
     ],
     'global-require': [0],
-    'no-underscore-dangle': [0],
-    'react/forbid-prop-types': [0],
-    'react/require-default-props': [0],
+    // 'no-underscore-dangle': [0],
+    // 'react/forbid-prop-types': [0],
+    // 'react/require-default-props': [0],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-props-no-spreading': [0],
     'react/prop-types': [0],
+    'no-unused-vars': 'warn',
   },
   settings: {
     react: {
