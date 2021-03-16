@@ -85,7 +85,6 @@ const VideoView = forwardRef((props, ref) => {
         style={{
           flex: 1,
           height,
-          paddingBottom: 36,
           zIndex: 95,
         }}
       >
@@ -97,7 +96,7 @@ const VideoView = forwardRef((props, ref) => {
               alignItems: 'flex-end',
               width: '100%',
               paddingHorizontal: 10,
-              paddingBottom: 56,
+              paddingBottom: 20,
             }}
           >
             <View style={{ flexDirection: 'row' }}>
@@ -120,7 +119,7 @@ const VideoView = forwardRef((props, ref) => {
                     borderRadius: 13,
                     position: 'absolute',
                     right: 0,
-                    bottom: 25,
+                    bottom: 20,
                   }}
                 />
               </View>
@@ -176,6 +175,7 @@ const VideoView = forwardRef((props, ref) => {
             </View>
             <View>
               <InteractIcon
+                size="large"
                 style={{ marginBottom: 15 }}
                 Accessory={(evaProps) => <IconCVote {...evaProps} active />}
                 status={isVoted ? 'danger' : 'control'}

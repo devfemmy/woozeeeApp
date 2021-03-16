@@ -1,4 +1,7 @@
-import React, { useState, useRef, useContext, useCallback } from 'react';
+// prettier-ignore
+import React, {
+  useState, useRef, useContext, useCallback,
+} from 'react';
 
 import {
   View,
@@ -16,6 +19,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useFocusEffect } from '@react-navigation/native';
 
+import Constants from 'expo-constants';
+
 import { Video } from 'expo-av';
 
 import { Layout } from '@ui-kitten/components';
@@ -30,9 +35,11 @@ import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
 import Placeholders from 'src/components/Placeholders';
 
-import Api from 'src/api';
+import InteractIcon from 'src/components/InteractIcon';
 
 import { IconCMovie } from 'src/components/CustomIcons';
+
+import Api from 'src/api';
 
 import { socialUrl } from 'src/api/dummy';
 
@@ -43,9 +50,13 @@ export default function Wooz({ navigation }) {
 
   const { bottom, top } = useSafeAreaInsets();
 
-  const SPACING = 57 + bottom + top;
+  let spacing = 0;
 
-  const VIEW_HEIGHT = height - SPACING;
+  if (Constants.platform.ios) {
+    spacing = bottom + top;
+  }
+
+  const VIEW_HEIGHT = height - (57 + spacing);
 
   const t = useContext(LocaleContext);
 
@@ -63,7 +74,7 @@ export default function Wooz({ navigation }) {
     const videoLength = useRef(0);
 
     const onMomentumScrollEnd = ({ nativeEvent }) => {
-      const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
+      const newIndex = Math.floor(nativeEvent.contentOffset.y / VIEW_HEIGHT);
 
       if (
         // prettier-ignore
@@ -260,9 +271,13 @@ export default function Wooz({ navigation }) {
             right: 0,
           }}
         >
-          <TouchableOpacity activeOpacity={0.75} onPress={routeMovies}>
-            <IconCMovie style={{ height: 28, width: 28 }} />
-          </TouchableOpacity>
+          <InteractIcon
+            Accessory={IconCMovie}
+            status="control"
+            height={28}
+            width={28}
+            onPress={routeMovies}
+          />
         </View>
         <WoozPostsArea />
       </View>

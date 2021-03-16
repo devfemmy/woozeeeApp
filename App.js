@@ -70,7 +70,7 @@ if (Constants.platform.android) {
   VESDKLicense = require('src/constants/vesdk_ios_license.json');
 }
 
-VESDK.unlockWithLicense(VESDKLicense);
+// VESDK.unlockWithLicense(VESDKLicense);
 
 export default function App() {
   SplashScreen.preventAutoHideAsync()

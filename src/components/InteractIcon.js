@@ -39,8 +39,10 @@ export default function InteractIcon(props) {
           accessoryLeft={(evaProps) => (
             <Accessory
               {...evaProps}
-              height={height ?? 32}
-              width={width ?? 32}
+              style={[
+                evaProps.style,
+                { height: height ?? 32, width: width ?? 32 },
+              ]}
             />
           )}
           onPress={onPress}
