@@ -222,9 +222,6 @@ const VideoView = forwardRef((props, ref) => {
         >
           <Video
             ref={videoRef}
-            // source={{
-            //   uri: item.video,
-            // }}
             isLooping
             resizeMode="cover"
             isMuted
@@ -246,11 +243,11 @@ const VideoView = forwardRef((props, ref) => {
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={(evaProps) => (
-                <IconCHeart {...evaProps} isLiked={isLiked} />
+                <IconCHeart {...evaProps} active={isLiked} />
               )}
               textContent={item.likes}
               direction="row"
-              status="basic"
+              status={isLiked ? 'danger' : 'basic'}
               height={24}
               width={24}
               onPress={toggleLike}

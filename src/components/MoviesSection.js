@@ -22,7 +22,7 @@ import { trendingUrl } from 'src/api/dummy';
 import { IconForwardIos } from 'src/components/CustomIcons';
 
 const MoviesSectionArea = (props) => {
-  const { t, navigation, width } = props;
+  const { t, navigation, width, height } = props;
 
   const routeMovies = useCallback(() => navigation.navigate('Movies'), [
     navigation,

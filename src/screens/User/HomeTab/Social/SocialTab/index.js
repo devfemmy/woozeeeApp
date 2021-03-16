@@ -4,6 +4,8 @@ import { View, useWindowDimensions } from 'react-native';
 
 import { useInfiniteQuery } from 'react-query';
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 // prettier-ignore
 import {
   Layout, List,
@@ -43,7 +45,7 @@ const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLD
 
 const _viewabilityConfig = {
   minimumViewTime: 250,
-  itemVisiblePercentThreshold: 70,
+  itemVisiblePercentThreshold: 65,
 };
 
 export default function Social({ navigation }) {
@@ -51,7 +53,13 @@ export default function Social({ navigation }) {
 
   const { width, height } = useWindowDimensions();
 
-  const ITEM_HEIGHT = height * 0.6;
+  const { bottom, top } = useSafeAreaInsets();
+
+  const SPACING = 57 + bottom + top;
+
+  const VIEW_HEIGHT = height - SPACING;
+
+  const ITEM_HEIGHT = VIEW_HEIGHT * 0.75;
 
   const t = useContext(LocaleContext);
 
@@ -151,29 +159,32 @@ export default function Social({ navigation }) {
               }}
               data={page.pageData.data}
               keyExtractor={(_, i) => i.toString()}
-              // prettier-ignore
-              renderItem={({ item, index }) => (index + 1 < 12 && (index + 1) % 4 === 0 ? (
-                <MoviesSection
-                  t={t}
-                  navigation={navigation}
-                  width={width}
-                />
-              ) : (
-                <VideoView
-                  ref={(ref) => {
-                    cellRefs.current[index.toString()] = ref;
-                  }}
-                  data={{ item, index }}
-                  viewHeight={ITEM_HEIGHT}
-                  navigation={navigation}
-                  t={t}
-                />
-              ))}
-              getItemLayout={(data, index) => ({
-                length: ITEM_HEIGHT,
-                offset: ITEM_HEIGHT * index,
-                index,
-              })}
+              renderItem={({ item, index }) => (
+                <>
+                  <VideoView
+                    ref={(ref) => {
+                      cellRefs.current[index.toString()] = ref;
+                    }}
+                    data={{ item, index }}
+                    viewHeight={ITEM_HEIGHT}
+                    navigation={navigation}
+                    t={t}
+                  />
+                  {index + 1 < 12 && (index + 1) % 4 === 0 ? (
+                    <MoviesSection
+                      t={t}
+                      navigation={navigation}
+                      width={width}
+                      height={ITEM_HEIGHT}
+                    />
+                  ) : null}
+                </>
+              )}
+              // getItemLayout={(data, index) => ({
+              //   length: ITEM_HEIGHT,
+              //   offset: ITEM_HEIGHT * index,
+              //   index,
+              // })}
             />
           </View>
         </React.Fragment>

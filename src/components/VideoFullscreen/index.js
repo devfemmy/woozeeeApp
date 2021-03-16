@@ -1,10 +1,14 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, {
+  useState,
+  useMemo,
+  useCallback,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 
 import { View, StyleSheet, Image } from 'react-native';
 
 import { Text } from '@ui-kitten/components';
-
-import CustomVideoPlayer from 'src/components/CustomVideoPlayer';
 
 import InteractIcon from 'src/components/InteractIcon';
 
@@ -14,7 +18,6 @@ import {
   IconEye,
   IconCChat,
   IconPlayPause,
-  IconVolume,
   IconCVote,
 } from 'src/components/CustomIcons';
 
@@ -25,25 +28,18 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     width: '100%',
-    zIndex: 9,
+    zIndex: 99,
     paddingBottom: 25,
   },
 });
 
-export default function VideoView(props) {
-  const { data, activeIndex, viewHeight } = props;
+const VideoView = forwardRef((props, ref) => {
+  // prettier-ignore
+  const {
+    data, height, videoRef,
+  } = props;
 
-  const { item, index } = data;
-
-  const INDEX_PRELOAD = [1];
-
-  const IS_ACTIVE = activeIndex === index;
-
-  const IS_PREV = INDEX_PRELOAD.includes(activeIndex - index);
-
-  const IS_NEXT = INDEX_PRELOAD.includes(index - activeIndex);
-
-  const IS_PRELOADED = IS_PREV || IS_NEXT;
+  const { item } = data;
 
   const [shouldPlay, setShouldPlay] = useState(true);
 
@@ -51,40 +47,48 @@ export default function VideoView(props) {
 
   const [isVoted, setVoted] = useState(false);
 
-  const [isMuted, setMuted] = useState(false);
+  const togglePause = useCallback(() => {
+    (async () => {
+      try {
+        if (videoRef) {
+          const status = await videoRef.current.getStatusAsync();
 
-  const togglePause = useCallback(
-    () => setShouldPlay((prevState) => !prevState),
-    [],
-  );
+          if (!status.isLoaded) return;
+
+          if (status.isPlaying) {
+            await videoRef.current.pauseAsync();
+            setShouldPlay(false);
+          } else {
+            await videoRef.current.playAsync();
+            setShouldPlay(true);
+          }
+        }
+      } catch (e) {
+        const msg = e;
+      }
+    })();
+  }, [videoRef]);
 
   const toggleLike = useCallback(() => setLiked((prevState) => !prevState), []);
 
   const toggleVote = useCallback(() => setVoted((prevState) => !prevState), []);
 
-  const toggleVolume = useCallback(
-    () => setMuted((prevState) => !prevState),
-    [],
-  );
+  useImperativeHandle(ref, () => ({
+    resetPlayState(playState) {
+      setShouldPlay(playState);
+    },
+  }));
 
   return useMemo(
     () => (
       <View
         style={{
           flex: 1,
-          height: viewHeight,
+          height,
           paddingBottom: 36,
+          zIndex: 95,
         }}
       >
-        <CustomVideoPlayer
-          videoUri={item.video}
-          shouldPlay={shouldPlay}
-          shouldDisplay={IS_ACTIVE}
-          isPreloaded={IS_PRELOADED}
-          isMuted={isMuted}
-          isLooping
-          resizeMode="contain"
-        />
         <View style={styles.uiContainer}>
           <View
             style={{
@@ -140,35 +144,14 @@ export default function VideoView(props) {
                     marginVertical: 5,
                   }}
                 >
-                  {/* <Button
-                    status="danger"
-                    size="tiny"
-                    style={{ paddingVertical: 0, paddingHorizontal: 0 }}
-                  >
-                    <Text category="c2" status="control">
-                      Follow
-                    </Text>
-                  </Button> */}
                   <InteractIcon
-                    status={shouldPlay ? 'danger' : 'success'}
+                    status={!shouldPlay ? 'danger' : 'success'}
                     Accessory={(evaProps) => (
-                      <IconPlayPause
-                        {...evaProps}
-                        isPlaying={shouldPlay && IS_ACTIVE}
-                      />
+                      <IconPlayPause {...evaProps} isPlaying={!shouldPlay} />
                     )}
                     height={20}
                     width={20}
                     onPress={togglePause}
-                  />
-                  <InteractIcon
-                    status="primary"
-                    Accessory={(evaProps) => (
-                      <IconVolume {...evaProps} isClosed={isMuted} />
-                    )}
-                    height={20}
-                    width={20}
-                    onPress={toggleVolume}
                   />
                   <InteractIcon
                     Accessory={(evaProps) => <IconEye {...evaProps} />}
@@ -194,24 +177,15 @@ export default function VideoView(props) {
             <View>
               <InteractIcon
                 style={{ marginBottom: 15 }}
-                Accessory={(evaProps) => (
-                  <IconCVote
-                    {...evaProps}
-                    style={{ tintColor: isVoted ? '#FF5757' : 'white' }}
-                    active
-                  />
-                )}
+                Accessory={(evaProps) => <IconCVote {...evaProps} active />}
+                status={isVoted ? 'danger' : 'control'}
                 textContent={item.likes}
                 onPress={toggleVote}
               />
               <InteractIcon
                 style={{ marginBottom: 15 }}
-                Accessory={(evaProps) => (
-                  <IconCHeartToggle
-                    {...evaProps}
-                    style={{ tintColor: isLiked ? '#FF5757' : 'white' }}
-                  />
-                )}
+                Accessory={IconCHeartToggle}
+                status={isLiked ? 'danger' : 'control'}
                 textContent={item.likes}
                 onPress={toggleLike}
               />
@@ -220,15 +194,6 @@ export default function VideoView(props) {
                 Accessory={(evaProps) => <IconCChat {...evaProps} active />}
                 textContent={item.comments}
               />
-              {/* <InteractIcon
-                style={{ marginBottom: 15 }}
-                Accessory={(evaProps) => <IconEye {...evaProps} />}
-                textContent={item.views}
-              /> */}
-              {/* <InteractIcon
-                    Accessory={IconClipboard}
-                    textContent={item.votes}
-                  /> */}
               <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={(evaProps) => <IconCShare {...evaProps} active />}
@@ -253,12 +218,8 @@ export default function VideoView(props) {
       </View>
     ),
     [
-      IS_ACTIVE,
-      IS_PRELOADED,
-      viewHeight,
+      height,
       item,
-      isMuted,
-      toggleVolume,
       shouldPlay,
       togglePause,
       isLiked,
@@ -267,4 +228,6 @@ export default function VideoView(props) {
       toggleVote,
     ],
   );
-}
+});
+
+export default VideoView;

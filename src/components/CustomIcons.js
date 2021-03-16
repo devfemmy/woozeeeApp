@@ -11,6 +11,7 @@ export const IconEye = (props) => {
 
 export const IconVolume = (props) => {
   const { isClosed, ...otherProps } = props;
+
   return (
     <Icon
       {...otherProps}
