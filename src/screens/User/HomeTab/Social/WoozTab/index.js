@@ -50,11 +50,14 @@ export default function Wooz({ navigation }) {
 
   const { bottom, top } = useSafeAreaInsets();
 
-  let spacing = 0;
+  // check for some odd devices like mine
+  const spacing = top % 1 === 0 ? bottom + top : 0;
 
-  if (Constants.platform.ios) {
-    spacing = bottom + top;
-  }
+  // if (Constants.platform.ios) {
+  //   spacing = bottom + top;
+  // }
+
+  console.log(bottom, top);
 
   const VIEW_HEIGHT = height - (57 + spacing);
 
