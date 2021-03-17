@@ -25,7 +25,7 @@ import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
 import Placeholders from 'src/components/Placeholders';
 
-import { StoryPosts } from 'src/components/VideoPosts';
+import { StoryPosts } from 'src/components/SocialPosts';
 
 import VideoView from 'src/components/VideoView';
 

@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { Text } from '@ui-kitten/components';
 
-export default function VideoCard(props) {
+export default function StoryCard(props) {
   const { data, extraWidth } = props;
 
   const { width, height } = useWindowDimensions();

@@ -20,7 +20,7 @@ import OverlayLoader from 'src/components/OverlayLoader';
 
 import WithPaginatedFetch from 'src/components/DataFetch/WithPaginatedFetch';
 
-import { ProfilePosts } from 'src/components/VideoPosts';
+import { ProfilePosts } from 'src/components/SocialPosts';
 
 import { IconGrid, IconBookmark, IconHeart } from 'src/components/CustomIcons';
 

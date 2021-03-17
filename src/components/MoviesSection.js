@@ -15,7 +15,7 @@ import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
 import Placeholders from 'src/components/Placeholders';
 
-import MovieSectionCard from 'src/components/VideoCard/MovieSectionCard';
+import MovieSectionCard from 'src/components/SocialCard/MovieSectionCard';
 
 import { trendingUrl } from 'src/api/dummy';
 

@@ -18,7 +18,7 @@ import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
 import Placeholders from 'src/components/Placeholders';
 
-import MovieCard from 'src/components/VideoCard/MovieCard';
+import MovieCard from 'src/components/SocialCard/MovieCard';
 
 import { trendingUrl } from 'src/api/dummy';
 

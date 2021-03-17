@@ -16,9 +16,9 @@ import { List, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 
-import VideoCard from 'src/components/VideoCard';
+import VideoCard from 'src/components/SocialCard';
 
-import StoryCard from 'src/components/VideoCard/StoryCard';
+import StoryCard from 'src/components/SocialCard/StoryCard';
 
 import VideoFullscreen from 'src/components/VideoFullscreen';
 

@@ -6,11 +6,9 @@ import { Layout } from '@ui-kitten/components';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
-import TopNavigationArea from 'src/components/TopNavigationArea';
-
 import WithDefaultFetch from 'src/components/DataFetch';
 
-import { UsersPosts } from 'src/components/VideoPosts';
+import { UsersPosts } from 'src/components/SocialPosts';
 
 import { challengeUrl } from 'src/api/dummy';
 
