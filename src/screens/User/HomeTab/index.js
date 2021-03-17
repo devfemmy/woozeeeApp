@@ -59,7 +59,7 @@ const woozeeeCategories = [
     banner: require('assets/images/banner/woozeee-charity.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fcharity.mp4?alt=media&token=c837385b-fef5-4df3-ad36-c36560fe0ee0',
-    screen: 'SocialRoute',
+    screen: 'CharityRoute',
   },
 ];
 

@@ -88,6 +88,21 @@ export default function TopNavigationArea(props) {
     [props, routeSearch, routeMessaging],
   );
 
+  const renderCharityTools = useCallback(
+    () => (
+      <>
+        <TopNavigationAction
+          {...props}
+          icon={IconCNotification}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="Notification"
+          onPress={routeMessaging}
+        />
+      </>
+    ),
+    [props, routeMessaging],
+  );
+
   const renderSearchIcon = useCallback(
     () => (
       <TopNavigationAction
@@ -118,8 +133,9 @@ export default function TopNavigationArea(props) {
     () => ({
       social: renderSocialTools,
       marketPlace: renderMarketPlaceTools,
+      charity: renderCharityTools,
     }),
-    [renderSocialTools, renderMarketPlaceTools],
+    [renderSocialTools, renderMarketPlaceTools, renderCharityTools],
   );
 
   const TopNavigationAuth = useMemo(
@@ -268,10 +284,11 @@ export default function TopNavigationArea(props) {
     auth: TopNavigationAuth,
     user: TopNavigationUser,
     search: TopNavigationSearch,
+    toolbar: TopNavigationToolbar,
     profile: TopNavigationProfile,
     social: TopNavigationGlobal,
     marketPlace: TopNavigationGlobal,
-    toolbar: TopNavigationToolbar,
+    charity: TopNavigationGlobal,
   };
 
   return navs[screen];

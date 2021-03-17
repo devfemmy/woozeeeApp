@@ -46,7 +46,9 @@ const VideoView = forwardRef((props, ref) => {
 
   const videoRef = useRef(null);
 
-  const sheetRef = React.useRef(null);
+  const sheetRef = useRef(null);
+
+  const isMounted = useRef(false);
 
   const [isLiked, setLiked] = useState(false);
 
@@ -69,9 +71,8 @@ const VideoView = forwardRef((props, ref) => {
       try {
         const status = await videoRef.current.getStatusAsync();
 
-        if (status.isPlaying) {
-          return;
-        }
+        if (status.isPlaying) return;
+
         await videoRef.current.playAsync();
       } catch (e) {
         const msg = e;
@@ -92,7 +93,9 @@ const VideoView = forwardRef((props, ref) => {
     useCallback(() => {
       const unloadVideoRef = videoRef.current;
 
-      if (videoRef.current) {
+      isMounted.current = true;
+
+      if (isMounted.current && videoRef.current) {
         (async () => {
           try {
             const status = await videoRef.current.getStatusAsync();
@@ -108,6 +111,8 @@ const VideoView = forwardRef((props, ref) => {
         })();
       }
       return () => {
+        isMounted.current = false;
+
         if (unloadVideoRef) {
           (async () => {
             try {
@@ -223,9 +228,8 @@ const VideoView = forwardRef((props, ref) => {
           <Video
             ref={videoRef}
             isLooping
-            resizeMode="cover"
-            isMuted
             shouldPlay={false}
+            resizeMode="cover"
             usePoster
             posterSource={require('assets/images/banner/placeholder-image.png')}
             posterStyle={{ height: '100%', width: '100%', resizeMode: 'cover' }}

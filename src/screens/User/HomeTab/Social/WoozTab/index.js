@@ -5,7 +5,6 @@ import React, {
 
 import {
   View,
-  TouchableOpacity,
   Animated,
   ScrollView,
   useWindowDimensions,
@@ -70,6 +69,8 @@ export default function Wooz({ navigation }) {
 
     const videoFullRef = useRef(null);
 
+    const isMounted = useRef(false);
+
     const opacity = useRef(new Animated.Value(0.5)).current;
 
     const videoLength = useRef(0);
@@ -91,7 +92,9 @@ export default function Wooz({ navigation }) {
 
     useFocusEffect(
       useCallback(() => {
-        if (videoRef) {
+        isMounted.current = true;
+
+        if (isMounted.current && videoRef) {
           (async () => {
             try {
               const status = await videoRef.current.getStatusAsync();
@@ -107,6 +110,8 @@ export default function Wooz({ navigation }) {
         }
 
         return () => {
+          isMounted.current = false;
+
           if (videoRef) {
             (async () => {
               try {
@@ -231,7 +236,7 @@ export default function Wooz({ navigation }) {
                   style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
                   source={{ uri: page.pageData.data[index].video }}
                   isLooping
-                  shouldPlay
+                  shouldPlay={false}
                   // prettier-ignore
                   onReadyForDisplay={() => Animated.timing(opacity, {
                     toValue: 1,

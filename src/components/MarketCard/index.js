@@ -52,14 +52,8 @@ export default function ItemCard(props) {
         <View style={{ position: 'absolute', right: 10, top: 5 }}>
           <InteractIcon
             style={{ marginBottom: 15 }}
-            Accessory={(evaProps) => (
-              <IconCHeartToggle
-                {...evaProps}
-                style={{ tintColor: isLiked ? '#FF5757' : 'white' }}
-              />
-            )}
-            height={25}
-            width={25}
+            Accessory={IconCHeartToggle}
+            status={isLiked ? 'danger' : 'control'}
             onPress={toggleLike}
           />
         </View>

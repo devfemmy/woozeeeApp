@@ -34,11 +34,11 @@ const woozeeeCards = [
   },
   {
     id: 2,
-    banner: require('assets/images/banner/woozeee-ad.jpg'),
+    banner: require('assets/images/banner/valentine.jpg'),
   },
   {
     id: 3,
-    banner: require('assets/images/banner/valentine.jpg'),
+    banner: require('assets/images/banner/woozeee-ad.jpg'),
   },
 ];
 
@@ -52,7 +52,7 @@ const PLACEHOLDER_CONFIG = {
 // prettier-ignore
 const DealsPostsArea = () => WithDefaultFetch(DealsPosts, marketDealsUrl, PLACEHOLDER_CONFIG);
 
-export default function MarketPlace({ navigation }) {
+export default function Charity({ navigation }) {
   useDisableAndroidExit();
 
   const { width, height } = useWindowDimensions();
@@ -173,7 +173,7 @@ export default function MarketPlace({ navigation }) {
       <TopNavigationArea
         title="woozeee"
         navigation={navigation}
-        screen="marketPlace"
+        screen="charity"
       />
 
       <View style={{ flex: 1 }}>

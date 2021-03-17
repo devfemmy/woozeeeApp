@@ -33,6 +33,7 @@ import Chats from 'src/screens/User/Common/Chats';
 import UserRoute from './User';
 import SocialRoute from './User/HomeTab/Social';
 import MarketPlaceRoute from './User/HomeTab/MarketPlace';
+import CharityRoute from './User/HomeTab/Charity';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -52,15 +53,16 @@ export default function Router() {
     User: {
       UserRoute,
       SocialRoute,
+      MarketPlaceRoute,
+      CharityRoute,
       EditProfile,
       Settings,
-      Search,
       Movies,
       LiveStream,
       Messaging,
       Comments,
       Chats,
-      MarketPlaceRoute,
+      Search,
     },
 
     Common: {

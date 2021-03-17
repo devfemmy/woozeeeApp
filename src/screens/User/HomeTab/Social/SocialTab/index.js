@@ -43,7 +43,7 @@ const PLACEHOLDER_CONFIG1 = {
 // prettier-ignore
 const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
-const _viewabilityConfig = {
+const VIEWABILITY_CONFIG = {
   minimumViewTime: 250,
   itemVisiblePercentThreshold: 65,
 };
@@ -66,7 +66,7 @@ export default function Social({ navigation }) {
   const SocialPostsArea = () => {
     const cellRefs = useRef({});
 
-    const _onViewableItemsChanged = useCallback((props) => {
+    const handleOnViewableItemsChanged = useCallback((props) => {
       const { changed } = props;
 
       changed.forEach((item) => {
@@ -149,8 +149,8 @@ export default function Social({ navigation }) {
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
               removeClippedSubviews
-              onViewableItemsChanged={_onViewableItemsChanged}
-              viewabilityConfig={_viewabilityConfig}
+              onViewableItemsChanged={handleOnViewableItemsChanged}
+              viewabilityConfig={VIEWABILITY_CONFIG}
               ListHeaderComponent={StoryPostsArea}
               ListHeaderComponentStyle={{
                 paddingVertical: 10,

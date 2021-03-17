@@ -40,6 +40,8 @@ export default function TopNavigationGlobalMenu(props) {
 
   const routeMarketPlace = () => navigation.replace('MarketPlaceRoute');
 
+  const routeCharity = () => navigation.replace('CharityRoute');
+
   const NavigationAnchor = () => (
     <TopNavigationAction
       {...props}
@@ -71,6 +73,16 @@ export default function TopNavigationGlobalMenu(props) {
         onPress={routeMarketPlace}
       />
       <MenuItem
+        selected={selected === 'charity'}
+        accessoryLeft={() => (
+          <IconCMarket
+            style={{ height: 20, width: 20, tintColor: ICON_THEME }}
+          />
+        )}
+        title={t('charity')}
+        onPress={routeCharity}
+      />
+      <MenuItem
         selected={selected === 'social'}
         accessoryLeft={() => (
           <IconCSocial
@@ -87,8 +99,6 @@ export default function TopNavigationGlobalMenu(props) {
         title={t('home')}
         onPress={routeHome}
       />
-      {/* <MenuItem accessoryLeft={IconMap} title={t('marketplace')} />
-        <MenuItem accessoryLeft={IconGift} title={t('charity')} /> */}
     </OverflowMenu>
   );
 }

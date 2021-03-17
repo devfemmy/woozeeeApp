@@ -93,5 +93,16 @@
   "askALawyer": "Ask a Lawyer",
   "askADoc": "Ask a Doc",
   "clickAndPlay": "Click & Play",
-  "otherServices": "Other Services"
+  "otherServices": "Other Services",
+  "uploadFromDevice": "Upload from device",
+  "recordWithCam": "Record with camera",
+  "animals": "Animals",
+  "healthCare": "Health care",
+  "education": "Education",
+  "community": "Community",
+  "sports": "Sports",
+  "disaster": "Disaster",
+  "events": "Events",
+  "campaigns": "Campaigns",
+  "heroes": "Heroes"
 }

@@ -78,5 +78,16 @@
   "chats": "Bavarder",
   "stories": "histoires",
   "uploadTo": "télécharger sur",
-  "message": "Un message"
+  "message": "Un message",
+  "uploadFromDevice": "Télécharger de l'appareil",
+  "recordWithCam": "Record avec la caméra",
+  "animals": "Animaux",
+  "healthCare": "Soins de santé",
+  "education": "Éducation",
+  "community": "Communauté",
+  "sports": "Des sports",
+  "disaster": "Catastrophe",
+  "events": "Événements",
+  "campaigns": "Campagnes",
+  "heroes": "Héros"
 }
