@@ -20,25 +20,25 @@ import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
 import WithDefaultFetch from 'src/components/DataFetch';
 
-import { DealsPosts } from 'src/components/MarketPosts';
+import { RecentPosts } from 'src/components/CharityPosts';
 
-import { marketDealsUrl } from 'src/api/dummy';
+import { charityUrl } from 'src/api/dummy';
 
-import marketPlaceItems from './data';
+import CharityItems from './data';
 
 /* DATA */
 const woozeeeCards = [
   {
     id: 1,
-    banner: require('assets/images/banner/mega-sale.jpg'),
-  },
-  {
-    id: 2,
     banner: require('assets/images/banner/valentine.jpg'),
   },
   {
-    id: 3,
+    id: 2,
     banner: require('assets/images/banner/woozeee-ad.jpg'),
+  },
+  {
+    id: 3,
+    banner: require('assets/images/banner/mega-sale.jpg'),
   },
 ];
 
@@ -50,7 +50,7 @@ const PLACEHOLDER_CONFIG = {
 };
 
 // prettier-ignore
-const DealsPostsArea = () => WithDefaultFetch(DealsPosts, marketDealsUrl, PLACEHOLDER_CONFIG);
+const DealsPostsArea = () => WithDefaultFetch(RecentPosts, charityUrl, PLACEHOLDER_CONFIG);
 
 export default function Charity({ navigation }) {
   useDisableAndroidExit();
@@ -65,7 +65,7 @@ export default function Charity({ navigation }) {
 
   const routeTo = (route) => navigation.replace(route);
 
-  const MarketplaceItem = ({ data }) => (
+  const CharityItem = ({ data }) => (
     <TouchableOpacity
       activeOpacity={0.75}
       style={{
@@ -161,8 +161,8 @@ export default function Charity({ navigation }) {
           paddingHorizontal: 5,
         }}
       >
-        {marketPlaceItems.map((data) => (
-          <MarketplaceItem data={data} key={data.id} />
+        {CharityItems.map((data) => (
+          <CharityItem data={data} key={data.id} />
         ))}
       </View>
     </View>

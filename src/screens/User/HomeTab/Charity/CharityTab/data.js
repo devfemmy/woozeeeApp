@@ -1,4 +1,4 @@
-const marketPlaceItems = [
+const CharityItems = [
   {
     id: 1,
     title: 'animals',
@@ -41,4 +41,4 @@ const marketPlaceItems = [
   },
 ];
 
-export default marketPlaceItems;
+export default CharityItems;
