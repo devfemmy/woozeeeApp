@@ -49,7 +49,7 @@ export default function ItemCard(props) {
             },
             shadowOpacity: 0.05,
             shadowRadius: 3,
-            elevation: 3,
+            elevation: 2,
           }}
         >
           <Image

@@ -90,7 +90,7 @@ export default function Charity({ navigation }) {
           },
           shadowOpacity: 0.05,
           shadowRadius: 3,
-          elevation: 3,
+          elevation: 2,
         }}
       >
         <Image
