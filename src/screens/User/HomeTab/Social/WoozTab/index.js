@@ -36,7 +36,7 @@ import Placeholders from 'src/components/Placeholders';
 
 import InteractIcon from 'src/components/InteractIcon';
 
-import { IconCMovie } from 'src/components/CustomIcons';
+import { IconCMovie, IconCMedal } from 'src/components/CustomIcons';
 
 import Api from 'src/api';
 
@@ -236,7 +236,7 @@ export default function Wooz({ navigation }) {
                   style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
                   source={{ uri: page.pageData.data[index].video }}
                   isLooping
-                  shouldPlay={false}
+                  shouldPlay
                   // prettier-ignore
                   onReadyForDisplay={() => Animated.timing(opacity, {
                     toValue: 1,
@@ -275,6 +275,10 @@ export default function Wooz({ navigation }) {
             position: 'absolute',
             top: 0,
             right: 0,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
           }}
         >
           <InteractIcon
@@ -283,6 +287,12 @@ export default function Wooz({ navigation }) {
             height={28}
             width={28}
             onPress={routeMovies}
+          />
+          <InteractIcon
+            Accessory={IconCMedal}
+            status="control"
+            height={28}
+            width={28}
           />
         </View>
         <WoozPostsArea />

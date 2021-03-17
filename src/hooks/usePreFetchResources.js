@@ -79,6 +79,7 @@ export default function usePreFetchResources() {
           require('assets/images/icon/charity.png'),
           require('assets/images/icon/hero-outline.png'),
           require('assets/images/icon/campaign-outline.png'),
+          require('assets/images/icon/medal.png'),
           require('assets/images/icon/tag-filled.png'),
           require('assets/images/icon/ball-filled.png'),
           require('assets/images/icon/doctor-filled.png'),

@@ -368,7 +368,7 @@ export const IconCMedal = (props) => {
 
   const type = active ? 'medal' : 'medal-outline';
 
-  return <Icon {...otherProps} name={type} pack="assets" />;
+  return <Icon {...otherProps} name="medal" pack="assets" />;
 };
 export const IconCCharity = (props) => {
   const { active, ...otherProps } = props;
