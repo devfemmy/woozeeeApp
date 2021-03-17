@@ -20,7 +20,7 @@ export default function ItemCard(props) {
 
   const IS_PORTRAIT = height > width;
 
-  const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
+  const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 2 : 5);
 
   const toggleLike = useCallback(() => setLiked((prevState) => !prevState), []);
 
@@ -29,7 +29,6 @@ export default function ItemCard(props) {
       <TouchableOpacity
         activeOpacity={0.75}
         style={{
-          height: 160,
           width: IS_PORTRAIT
             ? width / (COLUMN_COUNT + extraWidth)
             : width / (COLUMN_COUNT + extraWidth),
@@ -43,7 +42,7 @@ export default function ItemCard(props) {
           source={{ uri: `https://i.postimg.cc/${data.banner}` }}
           defaultSource={require('assets/images/banner/placeholder-image.png')}
           style={{
-            height: 155,
+            height: 180,
             width: '100%',
             borderRadius: 5,
           }}

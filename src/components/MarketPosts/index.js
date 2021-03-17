@@ -6,7 +6,7 @@ import { List, Text, Button } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 
-import MarketCard from 'src/components/MarketCard';
+import ItemCard from 'src/components/MarketCard';
 
 import { IconForwardIos } from 'src/components/CustomIcons';
 
@@ -19,7 +19,6 @@ export const DealsPosts = ({ info }) => {
         flex: 1,
         marginBottom: 10,
         paddingVertical: 5,
-        maxHeight: 235,
       }}
       key={item.category}
     >
@@ -45,6 +44,7 @@ export const DealsPosts = ({ info }) => {
       </View>
       <List
         style={{ backgroundColor: 'transparent' }}
+        contentContainerStyle={{ paddingHorizontal: 3 }}
         alwaysBounceHorizontal
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -52,7 +52,7 @@ export const DealsPosts = ({ info }) => {
         data={item.content}
         keyExtractor={(_, i) => i.toString()}
         renderItem={(renderData) => (
-          <MarketCard data={renderData.item} extraWidth={0.5} />
+          <ItemCard data={renderData.item} extraWidth={0.5} />
         )}
         getItemLayout={(data, index) => ({
           length: 180,
