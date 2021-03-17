@@ -24,6 +24,9 @@ import {
   IconCCart,
   IconCGrid,
   IconCUser2,
+  IconCCharity,
+  IconCCampaign,
+  IconCHero,
 } from '../CustomIcons';
 
 // Screens
@@ -49,11 +52,11 @@ const screens = {
     profile: IconCUser2,
   },
   charity: {
-    market: IconCMarket,
-    cart: IconCCart,
+    charity: IconCCharity,
+    campaigns: IconCCampaign,
     upload: SocialUpload,
-    categories: IconCGrid,
-    profile: IconCUser2,
+    heroes: IconCHero,
+    profile: IconCUser,
   },
 };
 

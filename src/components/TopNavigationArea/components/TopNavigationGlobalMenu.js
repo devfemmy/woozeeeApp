@@ -13,6 +13,7 @@ import {
   IconCMarket,
   IconCSocial,
   IconCHome,
+  IconCCharity,
 } from 'src/components/CustomIcons';
 
 export default function TopNavigationGlobalMenu(props) {
@@ -75,7 +76,7 @@ export default function TopNavigationGlobalMenu(props) {
       <MenuItem
         selected={selected === 'charity'}
         accessoryLeft={() => (
-          <IconCMarket
+          <IconCCharity
             style={{ height: 20, width: 20, tintColor: ICON_THEME }}
           />
         )}

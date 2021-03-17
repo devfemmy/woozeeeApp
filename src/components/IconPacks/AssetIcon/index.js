@@ -100,6 +100,16 @@ const AssetIconsPack = {
     grid: IconProvider(require('assets/images/icon/grid-outline.png')),
     vote: IconProvider(require('assets/images/icon/vote.png')),
     medal: IconProvider(require('assets/images/icon/medal.png')),
+    charity: IconProvider(require('assets/images/icon/charity.png')),
+    'charity-outline': IconProvider(require('assets/images/icon/charity.png')),
+    campaign: IconProvider(require('assets/images/icon/campaign-outline.png')),
+    'campaign-outline': IconProvider(
+      require('assets/images/icon/campaign-outline.png'),
+    ),
+    hero: IconProvider(require('assets/images/icon/hero-outline.png')),
+    'hero-outline': IconProvider(
+      require('assets/images/icon/hero-outline.png'),
+    ),
   },
 };
 

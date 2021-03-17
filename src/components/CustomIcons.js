@@ -370,3 +370,24 @@ export const IconCMedal = (props) => {
 
   return <Icon {...otherProps} name={type} pack="assets" />;
 };
+export const IconCCharity = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'charity' : 'charity-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCCampaign = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'campaign' : 'campaign-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCHero = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'hero' : 'hero-outline';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};

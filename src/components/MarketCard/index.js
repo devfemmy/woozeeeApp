@@ -55,6 +55,8 @@ export default function ItemCard(props) {
             Accessory={IconCHeartToggle}
             status={isLiked ? 'danger' : 'control'}
             onPress={toggleLike}
+            height={25}
+            width={25}
           />
         </View>
       </TouchableOpacity>
