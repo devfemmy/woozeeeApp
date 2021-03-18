@@ -103,6 +103,7 @@ const VideoView = forwardRef((props, ref) => {
               <View style={{ position: 'relative' }}>
                 <Image
                   source={require('assets/images/user/user2.png')}
+                  defaultSource={require('assets/images/user/user2.png')}
                   style={{
                     height: 50,
                     width: 50,
@@ -110,9 +111,11 @@ const VideoView = forwardRef((props, ref) => {
                     borderWidth: 2,
                     borderColor: 'white',
                   }}
+                  resizeMode="cover"
                 />
                 <Image
                   source={require('assets/images/icon/verified.png')}
+                  defaultSource={require('assets/images/icon/verified.png')}
                   style={{
                     height: 16,
                     width: 16,
@@ -121,6 +124,7 @@ const VideoView = forwardRef((props, ref) => {
                     right: 0,
                     bottom: 20,
                   }}
+                  resizeMode="cover"
                 />
               </View>
               <View style={{ paddingLeft: 5 }}>
@@ -203,6 +207,7 @@ const VideoView = forwardRef((props, ref) => {
               <View style={{ alignItems: 'center' }}>
                 <Image
                   source={require('assets/images/drawable/icon.png')}
+                  defaultSource={require('assets/images/drawable/icon.png')}
                   style={{
                     height: 40,
                     width: 40,
@@ -210,6 +215,7 @@ const VideoView = forwardRef((props, ref) => {
                     borderWidth: 2,
                     borderColor: 'white',
                   }}
+                  resizeMode="cover"
                 />
               </View>
             </View>

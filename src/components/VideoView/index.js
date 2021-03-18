@@ -162,12 +162,14 @@ const VideoView = forwardRef((props, ref) => {
             >
               <Image
                 source={require('assets/images/user/user2.png')}
+                defaultSource={require('assets/images/user/user2.png')}
                 style={{
                   height: 36,
                   width: 36,
-                  borderRadius: 28,
+                  borderRadius: 18,
                   borderColor: 'white',
                 }}
+                resizeMode="cover"
               />
             </LinearGradient>
             <View
@@ -188,11 +190,13 @@ const VideoView = forwardRef((props, ref) => {
             </View>
             <Image
               source={require('assets/images/icon/verified-1.png')}
+              defaultSource={require('assets/images/icon/verified-1.png')}
               style={{
                 height: 16,
                 width: 16,
-                borderRadius: 13,
+                borderRadius: 8,
               }}
+              resizeMode="cover"
             />
             <Text appearance="hint" style={{ marginLeft: 5 }}>
               |

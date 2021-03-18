@@ -73,6 +73,8 @@ export const IconOptions = (props) => (
   <Icon {...props} name="options-outline" />
 );
 
+export const IconStar = (props) => <Icon {...props} name="star" />;
+
 export const IconPaperPlane = (props) => (
   <Icon {...props} name="paper-plane-outline" />
 );
