@@ -28,6 +28,7 @@ import LiveStream from 'src/screens/User/Common/LiveStream';
 import Messaging from 'src/screens/User/Common/Messaging';
 import Comments from 'src/screens/User/Common/Comments';
 import Chats from 'src/screens/User/Common/Chats';
+import Rankings from 'src/screens/User/Common/Rankings';
 
 /* Routes import */
 import UserRoute from './User';
@@ -63,6 +64,7 @@ export default function Router() {
       Comments,
       Chats,
       Search,
+      Rankings,
     },
 
     Common: {

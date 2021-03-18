@@ -62,6 +62,8 @@ export default function Wooz({ navigation }) {
 
   const routeMovies = () => navigation.navigate('Movies');
 
+  const routeRanking = () => navigation.navigate('Rankings');
+
   const WoozPostsArea = () => {
     const [index, setIndex] = useState(0);
 
@@ -293,6 +295,7 @@ export default function Wooz({ navigation }) {
             status="control"
             height={28}
             width={28}
+            onPress={routeRanking}
           />
         </View>
         <WoozPostsArea />
