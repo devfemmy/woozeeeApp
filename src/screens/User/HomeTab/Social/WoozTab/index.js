@@ -16,7 +16,7 @@ import { useInfiniteQuery } from 'react-query';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
 import Constants from 'expo-constants';
 
@@ -65,11 +65,13 @@ export default function Wooz({ navigation }) {
   const routeRanking = () => navigation.navigate('Rankings');
 
   const WoozPostsArea = () => {
+    const isFocused = useIsFocused();
+
     const [index, setIndex] = useState(0);
 
     const videoRef = useRef(null);
 
-    const videoFullRef = useRef(null);
+    const videoViewRef = useRef(null);
 
     const isMounted = useRef(false);
 
@@ -88,48 +90,52 @@ export default function Wooz({ navigation }) {
       ) {
         opacity.setValue(0);
         setIndex(newIndex);
-        videoFullRef.current.resetPlayState(true);
+        videoViewRef.current?.resetPlayState(true);
       }
     };
+
+    // const startVideo = async () => {
+    //   try {
+    //     const status = await videoRef.current.getStatusAsync();
+
+    //     if (status.isLoaded) {
+    //       await videoRef.current.playAsync();
+    //       videoViewRef.current.resetPlayState(true);
+    //     }
+    //   } catch (e) {
+    //     const msg = e;
+    //   }
+    // };
+
+    // const stopVideo = async () => {
+    //   try {
+    //     const status = await videoRef.current.getStatusAsync();
+
+    //     if (status.isLoaded) {
+    //       await videoRef.current.stopAsync();
+    //       videoViewRef.current.resetPlayState(false);
+    //     }
+    //   } catch (e) {
+    //     const msg = e;
+    //   }
+    // };
 
     useFocusEffect(
       useCallback(() => {
         isMounted.current = true;
 
-        if (isMounted.current && videoRef) {
-          (async () => {
-            try {
-              const status = await videoRef.current.getStatusAsync();
-
-              if (status.isLoaded) {
-                await videoRef.current.playAsync();
-                videoFullRef.current.resetPlayState(true);
-              }
-            } catch (e) {
-              const msg = e;
-            }
-          })();
+        if (isMounted.current && videoViewRef.current) {
+          videoViewRef.current.resetPlayState(true);
         }
 
         return () => {
           isMounted.current = false;
 
-          if (videoRef) {
-            (async () => {
-              try {
-                const status = await videoRef.current.getStatusAsync();
-
-                if (status.isLoaded) {
-                  await videoRef.current.stopAsync();
-                  videoFullRef.current.resetPlayState(false);
-                }
-              } catch (e) {
-                const msg = e;
-              }
-            })();
+          if (videoViewRef.current) {
+            videoViewRef.current.resetPlayState(true);
           }
         };
-      }, [videoRef]),
+      }, [videoViewRef]),
     );
 
     const {
@@ -219,7 +225,7 @@ export default function Wooz({ navigation }) {
                     />
                   </View>
                   <VideoFullscreen
-                    ref={videoFullRef}
+                    ref={videoViewRef}
                     data={{ item, i }}
                     height={VIEW_HEIGHT}
                     videoRef={videoRef}
@@ -238,7 +244,7 @@ export default function Wooz({ navigation }) {
                   style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
                   source={{ uri: page.pageData.data[index].video }}
                   isLooping
-                  shouldPlay
+                  shouldPlay={isFocused}
                   // prettier-ignore
                   onReadyForDisplay={() => Animated.timing(opacity, {
                     toValue: 1,

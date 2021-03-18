@@ -10,6 +10,8 @@ import { View, StyleSheet, Image } from 'react-native';
 
 import { Text } from '@ui-kitten/components';
 
+import { LinearGradient } from 'expo-linear-gradient';
+
 import InteractIcon from 'src/components/InteractIcon';
 
 import {
@@ -101,18 +103,27 @@ const VideoView = forwardRef((props, ref) => {
           >
             <View style={{ flexDirection: 'row' }}>
               <View style={{ position: 'relative' }}>
-                <Image
-                  source={require('assets/images/user/user2.png')}
-                  defaultSource={require('assets/images/user/user2.png')}
+                <LinearGradient
+                  colors={['#043F7C', '#FF5757']}
                   style={{
                     height: 50,
                     width: 50,
                     borderRadius: 25,
-                    borderWidth: 2,
-                    borderColor: 'white',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
-                  resizeMode="cover"
-                />
+                >
+                  <Image
+                    source={require('assets/images/user/user2.png')}
+                    defaultSource={require('assets/images/user/user2.png')}
+                    style={{
+                      height: 46,
+                      width: 46,
+                      borderRadius: 23,
+                    }}
+                    resizeMode="cover"
+                  />
+                </LinearGradient>
                 <Image
                   source={require('assets/images/icon/verified.png')}
                   defaultSource={require('assets/images/icon/verified.png')}

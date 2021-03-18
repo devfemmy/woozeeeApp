@@ -67,8 +67,6 @@ const RANKINGS = [
 export default function MarketPlace({ navigation }) {
   const { width, height } = useWindowDimensions();
 
-  const IS_PORTRAIT = height > width;
-
   const t = useContext(LocaleContext);
 
   const getTopRanks = (ranks) => {
@@ -102,14 +100,14 @@ export default function MarketPlace({ navigation }) {
     <View
       style={{
         paddingHorizontal: 10,
-        maxWidth: '33%',
+        width: '30%',
         alignItems: 'center',
       }}
     >
       <View
         style={{
           position: 'relative',
-          marginBottom: 25,
+          marginBottom: 20,
         }}
       >
         <LinearGradient
@@ -149,7 +147,13 @@ export default function MarketPlace({ navigation }) {
         />
       </View>
       <View style={{ alignItems: 'center' }}>
-        <Text style={{ marginBottom: 10 }}>{item.data.fullName}</Text>
+        <Text
+          category="s2"
+          style={{ marginBottom: 10, textAlign: 'center' }}
+          numberOfLines={1}
+        >
+          {item.data.fullName}
+        </Text>
         <View
           style={{
             backgroundColor: item.pos === 1 ? '#FF5757' : '#FFFFFF',
@@ -162,7 +166,7 @@ export default function MarketPlace({ navigation }) {
             {item.data.votes}
           </Text>
           <Text status={item.pos === 1 ? 'control' : 'danger'} category="label">
-            Vote(s)
+            {t('vote(s)')}
           </Text>
         </View>
       </View>
@@ -175,7 +179,7 @@ export default function MarketPlace({ navigation }) {
         style={{
           flex: 1,
           flexDirection: 'row',
-          alignItems: 'flex-end',
+          alignItems: 'flex-start',
           justifyContent: 'center',
           paddingVertical: 10,
         }}
@@ -239,14 +243,16 @@ export default function MarketPlace({ navigation }) {
             marginLeft: 5,
           }}
         >
-          <Text style={{ marginRight: 5 }}>{data.item.fullName}</Text>
+          <Text category="s2" style={{ marginRight: 5 }}>
+            {data.item.fullName}
+          </Text>
         </View>
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text category="c2" style={{ marginRight: 5 }}>
           {data.item.votes}
         </Text>
-        <Text category="c1">Vote(s)</Text>
+        <Text category="c1">{t('vote(s)')}</Text>
       </View>
     </View>
   );

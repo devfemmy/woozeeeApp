@@ -235,7 +235,11 @@ const VideoView = forwardRef((props, ref) => {
             shouldPlay={false}
             resizeMode="cover"
             usePoster
-            posterSource={require('assets/images/banner/placeholder-image.png')}
+            posterSource={
+              item.poster
+                ? { uri: item.poster }
+                : require('assets/images/banner/placeholder-image.png')
+            }
             posterStyle={{ height: '100%', width: '100%', resizeMode: 'cover' }}
             style={{ flex: 1 }}
           />

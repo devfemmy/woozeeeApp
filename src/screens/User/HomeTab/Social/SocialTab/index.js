@@ -36,7 +36,7 @@ import { trendingUrl, socialUrl } from 'src/api/dummy';
 const PLACEHOLDER_CONFIG1 = {
   count: 2,
   numColumns: 2,
-  maxHeight: 150,
+  maxHeight: 147,
   mediaLeft: false,
 };
 
