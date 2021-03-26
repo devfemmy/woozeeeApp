@@ -9,7 +9,7 @@ export default function Logo(props) {
         source={require('assets/images/drawable/logo.png')}
         defaultSource={require('assets/images/drawable/logo.png')}
         resizeMode="cover"
-        style={{ maxWidth: 140, height: 25 }}
+        style={{ maxWidth: 135, height: 20 }}
       />
     </View>
   );
