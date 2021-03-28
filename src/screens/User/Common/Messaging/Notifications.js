@@ -13,20 +13,20 @@ import {
 
 const MESSAGES = [
   {
-    img: require('assets/images/user/user2.png'),
-    title: 'Hello world',
+    img: require('assets/images/drawable/icon.png'),
+    title: 'You got a bonus',
     details: 'Notification from below',
     date: '2020-05-10',
   },
   {
-    img: require('assets/images/user/user1.png'),
-    title: 'Hello world',
+    img: require('assets/images/drawable/icon.png'),
+    title: 'Complete Profile',
     details: 'Notification from below and above',
     date: '2020-05-10',
   },
   {
-    img: require('assets/images/user/user3.png'),
-    title: 'Hello world',
+    img: require('assets/images/drawable/icon.png'),
+    title: 'Welcome to woozeee',
     details: 'Notification from below and above and left and right and ok',
     date: '2020-05-10',
   },
@@ -38,9 +38,12 @@ const renderItem = ({ index, item }) => (
       level="6"
       style={{
         marginVertical: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
       }}
     >
       <View
+        activeOpacity={0.75}
         style={{
           flex: 1,
           flexDirection: 'row',
@@ -70,8 +73,10 @@ const renderItem = ({ index, item }) => (
           />
         </LinearGradient>
         <View style={{ flex: 1, marginHorizontal: 10 }}>
-          <Text category="s2">{item.title}</Text>
-          <Text category="p2">{item.details}</Text>
+          <Text category="s2" style={{ marginBottom: 5 }}>
+            {item.title}
+          </Text>
+          <Text category="c1">{item.details}</Text>
         </View>
         <View style={{ width: 60 }}>
           <Moment

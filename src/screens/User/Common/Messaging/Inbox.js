@@ -14,19 +14,19 @@ import {
 const MESSAGES = [
   {
     img: require('assets/images/user/user2.png'),
-    title: 'Hello world',
+    userName: 'Frank Wazobia',
     details: 'Chats from below',
-    date: '2020-05-10',
+    date: '2021-03-20',
   },
   {
     img: require('assets/images/user/user1.png'),
-    title: 'Hello world',
+    userName: 'Suzzy Sue',
     details: 'Chats from below and above',
-    date: '2020-05-10',
+    date: '2021-02-10',
   },
   {
     img: require('assets/images/user/user3.png'),
-    title: 'Hello world',
+    userName: 'Micheal Angelo',
     details: 'Chats from below and above and left and right and ok',
     date: '2020-05-10',
   },
@@ -41,6 +41,8 @@ export default function Inbox({ navigation }) {
         level="6"
         style={{
           marginVertical: 5,
+          paddingHorizontal: 10,
+          paddingVertical: 5,
         }}
       >
         <TouchableOpacity
@@ -48,7 +50,7 @@ export default function Inbox({ navigation }) {
           style={{
             flex: 1,
             flexDirection: 'row',
-            alignItems: 'flex-start',
+            alignItems: 'flex-end',
             paddingHorizontal: 5,
             paddingVertical: 5,
           }}
@@ -75,8 +77,12 @@ export default function Inbox({ navigation }) {
             />
           </LinearGradient>
           <View style={{ flex: 1, marginHorizontal: 10 }}>
-            <Text category="s2">{item.title}</Text>
-            <Text category="p2">{item.details}</Text>
+            <Text category="s2" style={{ marginBottom: 5 }}>
+              {item.userName}
+            </Text>
+            <Text category="c1" numberOfLines={1}>
+              {item.details}
+            </Text>
           </View>
           <View style={{ width: 60 }}>
             <Moment

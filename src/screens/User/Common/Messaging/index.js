@@ -21,11 +21,11 @@ export default function Messaging({ navigation }) {
         shouldLoadComponent={shouldLoadComponent}
         onSelect={(index) => setSelectedIndex(index)}
       >
-        <Tab title="Notifications" style={{ paddingVertical: 10 }}>
-          <Notifications navigation={navigation} />
-        </Tab>
-        <Tab title="Inbox" style={{ paddingVertical: 10 }}>
+        <Tab title="Message" style={{ paddingVertical: 10 }}>
           <Inbox navigation={navigation} />
+        </Tab>
+        <Tab title="Notification" style={{ paddingVertical: 10 }}>
+          <Notifications navigation={navigation} />
         </Tab>
       </TabView>
     </Layout>
