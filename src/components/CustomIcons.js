@@ -393,3 +393,23 @@ export const IconCHero = (props) => {
 
   return <Icon {...otherProps} name={type} pack="assets" />;
 };
+export const IconCGoogle = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="google" pack="assets" />;
+};
+export const IconCFacebook = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="facebook" pack="assets" />;
+};
+export const IconCTwitter = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="twitter" pack="assets" />;
+};
+export const IconCApple = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="apple" pack="assets" />;
+};

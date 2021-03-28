@@ -110,6 +110,10 @@ const AssetIconsPack = {
     'hero-outline': IconProvider(
       require('assets/images/icon/hero-outline.png'),
     ),
+    google: IconProvider(require('assets/images/icon/google-fill.png')),
+    facebook: IconProvider(require('assets/images/icon/facebook.png')),
+    twitter: IconProvider(require('assets/images/icon/twitter.png')),
+    apple: IconProvider(require('assets/images/icon/apple.png')),
   },
 };
 
