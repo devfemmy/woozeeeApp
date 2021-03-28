@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Layout, Tab, TabView } from '@ui-kitten/components';
+
+import { LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
@@ -9,6 +11,8 @@ import Inbox from './Inbox';
 
 export default function Messaging({ navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const t = useContext(LocaleContext);
 
   const shouldLoadComponent = (index) => index === selectedIndex;
 
@@ -21,10 +25,10 @@ export default function Messaging({ navigation }) {
         shouldLoadComponent={shouldLoadComponent}
         onSelect={(index) => setSelectedIndex(index)}
       >
-        <Tab title="Message" style={{ paddingVertical: 10 }}>
+        <Tab title={t('messages')} style={{ paddingVertical: 10 }}>
           <Inbox navigation={navigation} />
         </Tab>
-        <Tab title="Notification" style={{ paddingVertical: 10 }}>
+        <Tab title={t('notifications')} style={{ paddingVertical: 10 }}>
           <Notifications navigation={navigation} />
         </Tab>
       </TabView>

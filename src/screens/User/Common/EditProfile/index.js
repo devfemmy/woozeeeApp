@@ -83,7 +83,7 @@ export default function EditProfile({ navigation }) {
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
-        title={t('updateProfile')}
+        title={`${t('edit')} ${t('profile')}`}
         navigation={navigation}
         screen="auth"
       />

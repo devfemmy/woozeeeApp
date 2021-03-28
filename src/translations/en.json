@@ -110,5 +110,7 @@
   "posts": "Posts",
   "all": "All",
   "saved": "Saved",
-  "liked": "Liked"
+  "liked": "Liked",
+  "messages": "Messages",
+  "notifications": "Notifications"
 }

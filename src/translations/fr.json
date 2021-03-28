@@ -107,5 +107,10 @@
   "heroes": "Héros",
   "vote(s)": "Vote(s)",
   "referralCode": "Code de Parrainage",
-  "posts": "Des postes"
+  "posts": "Des postes",
+  "all": "Tout",
+  "saved": "Enregistré",
+  "liked": "Aimé",
+  "messages": "Messages",
+  "notifications": "Notifications"
 }

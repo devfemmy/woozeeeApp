@@ -55,6 +55,8 @@ export default function Profile({ navigation }) {
 
   const routeMessaging = () => navigation.navigate('Messaging');
 
+  const routeEditProfile = () => navigation.navigate('EditProfile');
+
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
@@ -147,6 +149,21 @@ export default function Profile({ navigation }) {
                   onPress={routeMessaging}
                 >
                   <Text status="control" category="c2">
+                    {t('messaging')}
+                  </Text>
+                </Button>
+                <Button
+                  status="primary"
+                  appearance="outline"
+                  size="tiny"
+                  style={{
+                    marginHorizontal: 5,
+                    width: 120,
+                    backgroundColor: 'white',
+                  }}
+                  onPress={routeEditProfile}
+                >
+                  <Text status="primary" category="c2">
                     {`${t('edit')} ${t('profile')}`}
                   </Text>
                 </Button>
