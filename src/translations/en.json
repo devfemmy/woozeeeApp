@@ -105,5 +105,6 @@
   "events": "Events",
   "campaigns": "Campaigns",
   "heroes": "Heroes",
-  "vote(s)": "Vote(s)"
+  "vote(s)": "Vote(s)",
+  "referralCode": "Referral Code"
 }

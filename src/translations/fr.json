@@ -105,5 +105,6 @@
   "events": "Événements",
   "campaigns": "Campagnes",
   "heroes": "Héros",
-  "vote(s)": "Vote(s)"
+  "vote(s)": "Vote(s)",
+  "referralCode": "Code de Parrainage"
 }

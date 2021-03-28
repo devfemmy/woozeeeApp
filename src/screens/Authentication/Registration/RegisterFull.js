@@ -76,11 +76,9 @@ export default function RegisterFull({ navigation }) {
             </View>
             <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
-                type="username"
-                label={t('username')}
-                autoCompleteType="username"
-                textContentType="username"
-                validate="required"
+                type="referralCode"
+                label={t('referralCode')}
+                // validate="required"
                 setFormValues={setFormValues}
               />
             </View>
