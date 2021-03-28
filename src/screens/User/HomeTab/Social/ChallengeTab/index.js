@@ -29,7 +29,7 @@ export default function Challenge({ navigation }) {
         shouldLoadComponent={shouldLoadComponent}
         onSelect={(index) => setSelectedIndex(index)}
       >
-        <Tab title="Versus" style={{ paddingVertical: 10 }}>
+        <Tab title="Challenge" style={{ paddingVertical: 10 }}>
           <Versus />
         </Tab>
         <Tab title="Explore" style={{ paddingVertical: 10 }}>

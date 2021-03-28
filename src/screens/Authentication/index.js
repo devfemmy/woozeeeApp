@@ -106,6 +106,8 @@ export default function OnboardingScreen({ navigation }) {
 
   const routeLogin = () => navigation.navigate('Login');
 
+  const routeRegister = () => navigation.navigate('Register');
+
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
@@ -120,7 +122,7 @@ export default function OnboardingScreen({ navigation }) {
           <VolumeButton />
         </View>
         <View style={{ alignItems: 'center', paddingBottom: 50 }}>
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginBottom: 30 }}>
             <Image
               source={require('assets/images/drawable/logo.png')}
               resizeMode="contain"
@@ -144,16 +146,35 @@ export default function OnboardingScreen({ navigation }) {
               {t('giveBack')}
             </Text>
           </View>
-          <View style={{ minWidth: '100%' }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <Button
               status="danger"
               accessibilityLiveRegion="assertive"
               accessibilityComponentType="button"
               accessibilityHint="Sign in or Sign up"
-              onPress={routeLogin}
+              onPress={routeRegister}
+              style={{ width: '45%', marginRight: '2.5%' }}
             >
               <Text status="control" category="h6">
-                {` ${t('signIn')} / ${t('signUp')}`}
+                {t('signUp')}
+              </Text>
+            </Button>
+            <Button
+              status="primary"
+              accessibilityLiveRegion="assertive"
+              accessibilityComponentType="button"
+              accessibilityHint="Sign in or Sign up"
+              onPress={routeLogin}
+              style={{ width: '45%', marginLeft: '2.5%' }}
+            >
+              <Text status="control" category="h6">
+                {t('signIn')}
               </Text>
             </Button>
           </View>
