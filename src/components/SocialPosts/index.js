@@ -46,8 +46,8 @@ export const TrendingPosts = ({ info }) => {
             <VideoCard data={renderData.item} extraWidth={0.5} />
           )}
           getItemLayout={(data, index) => ({
-            length: 180,
-            offset: 180 * index,
+            length: 200,
+            offset: 200 * index,
             index,
           })}
         />
@@ -152,8 +152,8 @@ export const UsersPosts = ({ info }) => info.map((item) => (
         <VideoCard data={renderData.item} extraWidth={0.5} />
       )}
       getItemLayout={(data, index) => ({
-        length: 180,
-        offset: 180 * index,
+        length: 200,
+        offset: 200 * index,
         index,
       })}
     />
@@ -167,9 +167,7 @@ export const ProfilePosts = ({ info }) => (
       backgroundColor: 'transparent',
     }}
     contentContainerStyle={{
-      paddingTop: 10,
-      paddingBottom: 20,
-      // alignItems: 'center',
+      paddingBottom: 25,
     }}
     alwaysBounceVertical
     showsHorizontalScrollIndicator={false}
@@ -181,8 +179,8 @@ export const ProfilePosts = ({ info }) => (
       <VideoCard data={renderData.item} extraWidth={0} numColumns={3} />
     )}
     getItemLayout={(data, index) => ({
-      length: 180,
-      offset: 180 * index,
+      length: 200,
+      offset: 200 * index,
       index,
     })}
   />

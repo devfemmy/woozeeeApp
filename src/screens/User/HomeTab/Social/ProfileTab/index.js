@@ -87,7 +87,7 @@ export default function Profile({ navigation }) {
               style={{
                 alignItems: 'center',
                 paddingHorizontal: 20,
-                paddingVertical: 10,
+                paddingBottom: 10,
               }}
             >
               <View style={{ position: 'relative' }}>
@@ -133,29 +133,40 @@ export default function Profile({ navigation }) {
                     textAlign: 'center',
                     lineHeight: 15,
                   }}
+                  numberOfLines={1}
                 >
                   Content writer with beautiful aesthetics, Face of woozeee (It
                   seems).
+                </Text>
+              </View>
+              <View style={{ marginBottom: 10, alignItems: 'center' }}>
+                <Text category="h6" status="primary">
+                  wooz8264LG
                 </Text>
               </View>
               <View style={{ marginBottom: 10, flexDirection: 'row' }}>
                 <Button
                   status="primary"
                   size="tiny"
-                  style={{ marginHorizontal: 5 }}
+                  style={{ marginHorizontal: 5, width: 120 }}
+                  onPress={routeMessaging}
                 >
-                  <Text status="control" category="p2">
-                    {t('follow')}
+                  <Text status="control" category="c2">
+                    {t('messaging')}
                   </Text>
                 </Button>
                 <Button
                   status="primary"
+                  appearance="outline"
                   size="tiny"
-                  style={{ marginHorizontal: 5 }}
-                  onPress={routeMessaging}
+                  style={{
+                    marginHorizontal: 5,
+                    width: 120,
+                    backgroundColor: 'white',
+                  }}
                 >
-                  <Text status="control" category="p2">
-                    {t('messaging')}
+                  <Text status="primary" category="c2">
+                    {t('follow')}
                   </Text>
                 </Button>
               </View>
@@ -168,20 +179,20 @@ export default function Profile({ navigation }) {
                 }}
               >
                 <View style={{ alignItems: 'center' }}>
-                  <Text category="h6">1.2m</Text>
-                  <Text category="p2" appearance="hint">
+                  <Text category="s2">1.2m</Text>
+                  <Text category="c2" appearance="hint">
                     {`${t('video')}s`}
                   </Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
-                  <Text category="h6">12.3K</Text>
-                  <Text category="p2" appearance="hint">
+                  <Text category="s2">12.3K</Text>
+                  <Text category="c2" appearance="hint">
                     {t('followers')}
                   </Text>
                 </View>
                 <View style={{ alignItems: 'center' }}>
-                  <Text category="h6">1.9k</Text>
-                  <Text category="p2" appearance="hint">
+                  <Text category="s2">1.9k</Text>
+                  <Text category="c2" appearance="hint">
                     {t('following')}
                   </Text>
                 </View>

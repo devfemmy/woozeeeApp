@@ -25,7 +25,7 @@ export default function VideoCard(props) {
       <TouchableOpacity
         activeOpacity={0.75}
         style={{
-          height: 160,
+          height: 180,
           width: IS_PORTRAIT
             ? width / (COLOUMN_COUNT + extraWidth)
             : width / (COLOUMN_COUNT + extraWidth),
@@ -39,7 +39,7 @@ export default function VideoCard(props) {
           source={{ uri: `https://i.postimg.cc/${data.banner}` }}
           defaultSource={require('assets/images/banner/placeholder-image.png')}
           style={{
-            height: 155,
+            height: 175,
             width: '100%',
             borderRadius: 5,
           }}
@@ -84,7 +84,11 @@ export default function VideoCard(props) {
               width: '100%',
             }}
           >
-            <Text category="c2" style={{ color: 'white', marginBottom: 5 }}>
+            <Text
+              category="c2"
+              style={{ color: 'white', marginBottom: 5 }}
+              numberOfLines={1}
+            >
               {data.tag}
             </Text>
             <View>
