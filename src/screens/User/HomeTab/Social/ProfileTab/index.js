@@ -144,16 +144,6 @@ export default function Profile({ navigation }) {
               <View style={{ marginBottom: 10, flexDirection: 'row' }}>
                 <Button
                   status="primary"
-                  size="tiny"
-                  style={{ marginHorizontal: 5, width: 120 }}
-                  onPress={routeMessaging}
-                >
-                  <Text status="control" category="c2">
-                    {t('messaging')}
-                  </Text>
-                </Button>
-                <Button
-                  status="primary"
                   appearance="outline"
                   size="tiny"
                   style={{
@@ -165,6 +155,16 @@ export default function Profile({ navigation }) {
                 >
                   <Text status="primary" category="c2">
                     {`${t('edit')} ${t('profile')}`}
+                  </Text>
+                </Button>
+                <Button
+                  status="primary"
+                  size="tiny"
+                  style={{ marginHorizontal: 5, width: 120 }}
+                  onPress={routeMessaging}
+                >
+                  <Text status="control" category="c2">
+                    {t('messaging')}
                   </Text>
                 </Button>
               </View>

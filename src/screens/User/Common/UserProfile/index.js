@@ -147,16 +147,6 @@ export default function UserProfile({ navigation }) {
               <View style={{ marginBottom: 10, flexDirection: 'row' }}>
                 <Button
                   status="primary"
-                  size="tiny"
-                  style={{ marginHorizontal: 5, width: 120 }}
-                  onPress={routeMessaging}
-                >
-                  <Text status="control" category="c2">
-                    {t('message')}
-                  </Text>
-                </Button>
-                <Button
-                  status="primary"
                   appearance="outline"
                   size="tiny"
                   style={{
@@ -167,6 +157,16 @@ export default function UserProfile({ navigation }) {
                 >
                   <Text status="primary" category="c2">
                     {t('follow')}
+                  </Text>
+                </Button>
+                <Button
+                  status="primary"
+                  size="tiny"
+                  style={{ marginHorizontal: 5, width: 120 }}
+                  onPress={routeMessaging}
+                >
+                  <Text status="control" category="c2">
+                    {t('message')}
                   </Text>
                 </Button>
               </View>
