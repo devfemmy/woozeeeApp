@@ -22,6 +22,7 @@ import HelpButton from './components/HelpButton';
 import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
+import SettingsButton from './components/SettingsButton';
 
 import TopNavigationUserMenu from './components/TopNavigationUserMenu';
 import TopNavigationGlobalMenu from './components/TopNavigationGlobalMenu';
@@ -205,8 +206,8 @@ export default function TopNavigationArea(props) {
       <Layout level="5">
         <TopNavigation
           alignment="center"
-          accessoryRight={(evaProps) => (
-            <TopNavigationUserMenu {...evaProps} navigation={navigation} />
+          accessoryLeft={(evaProps) => (
+            <SettingsButton {...evaProps} navigation={navigation} />
           )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"

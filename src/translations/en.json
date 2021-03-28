@@ -107,5 +107,8 @@
   "heroes": "Heroes",
   "vote(s)": "Vote(s)",
   "referralCode": "Referral Code",
-  "posts": "Posts"
+  "posts": "Posts",
+  "all": "All",
+  "saved": "Saved",
+  "liked": "Liked"
 }

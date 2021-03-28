@@ -208,13 +208,13 @@ export default function UserProfile({ navigation }) {
           shouldLoadComponent={shouldLoadComponent}
           onSelect={(index) => setSelectedIndex(index)}
         >
-          <Tab title="All" icon={IconGrid}>
+          <Tab title={t('all')} icon={IconGrid}>
             <ProfilePostsArea />
           </Tab>
-          <Tab title="Saved" icon={IconBookmark}>
+          <Tab title={t('saved')} icon={IconBookmark}>
             <ProfilePostsArea />
           </Tab>
-          <Tab title="Liked" icon={IconHeart}>
+          <Tab title={t('liked')} icon={IconHeart}>
             <ProfilePostsArea />
           </Tab>
         </TabView>
