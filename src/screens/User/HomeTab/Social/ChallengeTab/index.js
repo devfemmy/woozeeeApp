@@ -8,6 +8,7 @@ import Versus from 'src/screens/User/HomeTab/Social/ChallengeTab/VersusTab';
 import Explore from 'src/screens/User/HomeTab/Social/ChallengeTab/ExploreTab';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
+import { t } from 'i18n-js';
 
 export default function Challenge({ navigation }) {
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
@@ -29,10 +30,10 @@ export default function Challenge({ navigation }) {
         shouldLoadComponent={shouldLoadComponent}
         onSelect={(index) => setSelectedIndex(index)}
       >
-        <Tab title="Challenge" style={{ paddingVertical: 10 }}>
+        <Tab title={t('challenge')} style={{ paddingVertical: 10 }}>
           <Versus />
         </Tab>
-        <Tab title="Explore" style={{ paddingVertical: 10 }}>
+        <Tab title={t('explore')} style={{ paddingVertical: 10 }}>
           <Explore />
         </Tab>
       </TabView>
