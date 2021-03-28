@@ -84,7 +84,7 @@ export default function Inbox({ navigation }) {
               {item.details}
             </Text>
           </View>
-          <View style={{ width: 60 }}>
+          <View style={{ width: 80 }}>
             <Moment
               fromNow
               element={(momentProps) => (

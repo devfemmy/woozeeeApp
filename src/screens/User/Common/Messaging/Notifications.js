@@ -16,13 +16,13 @@ const MESSAGES = [
     img: require('assets/images/drawable/icon.png'),
     title: 'You got a bonus',
     details: 'Notification from below',
-    date: '2020-05-10',
+    date: '2021-03-10',
   },
   {
     img: require('assets/images/drawable/icon.png'),
     title: 'Complete Profile',
     details: 'Notification from below and above',
-    date: '2020-05-10',
+    date: '2021-01-10',
   },
   {
     img: require('assets/images/drawable/icon.png'),
@@ -78,7 +78,7 @@ const renderItem = ({ index, item }) => (
           </Text>
           <Text category="c1">{item.details}</Text>
         </View>
-        <View style={{ width: 60 }}>
+        <View style={{ width: 80 }}>
           <Moment
             fromNow
             element={(momentProps) => (
