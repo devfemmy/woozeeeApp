@@ -23,7 +23,12 @@ import { GeneralTextField } from 'src/components/FormFields';
 
 import InteractIcon from 'src/components/InteractIcon';
 
-import { IconClose, IconPaperPlane } from 'src/components/CustomIcons';
+import {
+  IconClose,
+  IconPaperPlane,
+  IconCCamera,
+  IconMic,
+} from 'src/components/CustomIcons';
 
 export default function Chats({ navigation }) {
   const { height } = useWindowDimensions();
@@ -38,7 +43,7 @@ export default function Chats({ navigation }) {
     comment: '',
   });
 
-  const closeChat = useCallback(() => navigation.pop(), [navigation]);
+  const closeChats = useCallback(() => navigation.goBack(), [navigation]);
 
   const renderCardHeader = useCallback(
     () => (
@@ -57,12 +62,12 @@ export default function Chats({ navigation }) {
             status="primary"
             height={32}
             width={32}
-            onPress={closeChat}
+            onPress={closeChats}
           />
         </View>
       </View>
     ),
-    [t, closeChat],
+    [t, closeChats],
   );
 
   const renderCardFooter = useCallback(
@@ -71,16 +76,16 @@ export default function Chats({ navigation }) {
         style={{
           flex: 1,
           flexDirection: 'row',
-          padding: 15,
+          padding: 5,
           alignItems: 'center',
         }}
       >
-        <LinearGradient
+        {/* <LinearGradient
           colors={['#043F7C', '#FF5757']}
           style={{
-            height: 34,
-            width: 34,
-            borderRadius: 17,
+            height: 28,
+            width: 28,
+            borderRadius: 14,
             alignItems: 'center',
             justifyContent: 'center',
           }}
@@ -88,13 +93,27 @@ export default function Chats({ navigation }) {
           <Image
             source={require('assets/images/user/user1.png')}
             style={{
-              height: 30,
-              width: 30,
-              borderRadius: 15,
+              height: 26,
+              width: 26,
+              borderRadius: 13,
               borderColor: 'white',
             }}
           />
-        </LinearGradient>
+        </LinearGradient> */}
+        <View style={{ flexDirection: 'row' }}>
+          <InteractIcon
+            Accessory={IconCCamera}
+            status="primary"
+            height={22}
+            width={22}
+          />
+          <InteractIcon
+            Accessory={IconMic}
+            status="primary"
+            height={22}
+            width={22}
+          />
+        </View>
         <View style={{ flex: 1, marginHorizontal: 5 }}>
           <GeneralTextField
             type="comment"
@@ -106,8 +125,8 @@ export default function Chats({ navigation }) {
           <InteractIcon
             Accessory={IconPaperPlane}
             status="primary"
-            height={32}
-            width={32}
+            height={28}
+            width={28}
           />
         </View>
       </View>
@@ -122,15 +141,16 @@ export default function Chats({ navigation }) {
         style={{
           flexDirection: sent ? 'row-reverse' : 'row',
           alignItems: 'flex-start',
-          marginTop: 15,
+          marginTop: 25,
         }}
       >
-        {/* <LinearGradient
+        {!sent && (
+        <LinearGradient
           colors={['#043F7C', '#FF5757']}
           style={{
-            height: 34,
-            width: 34,
-            borderRadius: 17,
+            height: 28,
+            width: 28,
+            borderRadius: 14,
             alignItems: 'center',
             justifyContent: 'center',
           }}
@@ -138,29 +158,44 @@ export default function Chats({ navigation }) {
           <Image
             source={require('assets/images/user/user1.png')}
             style={{
-              height: 30,
-              width: 30,
-              borderRadius: 15,
+              height: 26,
+              width: 26,
+              borderRadius: 13,
               borderColor: 'white',
             }}
           />
-        </LinearGradient> */}
+        </LinearGradient>
+        )}
         <Layout
           level="4"
           style={{
             flex: 1,
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-            borderRadius: 10,
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            borderRadius: 15,
             marginHorizontal: 5,
+            ...(sent
+              ? { borderBottomRightRadius: 0, backgroundColor: '#043F7C' }
+              : { borderTopLeftRadius: 0 }),
           }}
         >
-          <Text category="s2" style={{alignSelf: sent ? 'flex-end' : 'flex-start'}}>{data.user}</Text>
-          <Text category="p2">{data.msg}</Text>
-          <Text category="c1" style={{ alignSelf: 'flex-end' }}>
-            {data.time}
+          {/* {!sent && (
+          <Text
+            category="s2"
+            style={{ alignSelf: 'flex-start' }}
+          >
+            {data.user}
+          </Text>
+          )} */}
+          <Text category="p2" status={sent ? 'control' : 'basic'}>
+            {data.msg}
           </Text>
         </Layout>
+        <View style={{ alignSelf: 'center', paddingHorizontal: 5 }}>
+          <Text category="c1">
+            {data.time}
+          </Text>
+        </View>
       </View>
     ),
     [sent, data],
@@ -202,7 +237,7 @@ export default function Chats({ navigation }) {
               <Message
                 sent
                 data={{
-                  user: 'You',
+                  user: '',
                   msg:
                     'Hello world, woozeee, Testing the limit of this very long message',
                   time: '9:15am',

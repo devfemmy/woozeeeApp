@@ -114,6 +114,15 @@ const AssetIconsPack = {
     facebook: IconProvider(require('assets/images/icon/facebook.png')),
     twitter: IconProvider(require('assets/images/icon/twitter.png')),
     apple: IconProvider(require('assets/images/icon/apple.png')),
+    'camera-outline': IconProvider(
+      require('assets/images/icon/camera-outline.png'),
+    ),
+    'phone-outline': IconProvider(
+      require('assets/images/icon/phone-outline.png'),
+    ),
+    'microphone-outline': IconProvider(
+      require('assets/images/icon/microphone-outline.png'),
+    ),
   },
 };
 

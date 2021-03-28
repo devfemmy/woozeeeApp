@@ -413,3 +413,18 @@ export const IconCApple = (props) => {
 
   return <Icon {...otherProps} name="apple" pack="assets" />;
 };
+export const IconCCamera = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="camera-outline" pack="assets" />;
+};
+export const IconCPhone = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="phone-outline" pack="assets" />;
+};
+export const IconCMic = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="microphone-outline" pack="assets" />;
+};
