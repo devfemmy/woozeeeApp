@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
+import Constants from 'expo-constants';
+
 import { useIsFocused } from '@react-navigation/native';
 
 // prettier-ignore
@@ -15,7 +17,12 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
-import { IconFacebook, IconGoogle } from 'src/components/CustomIcons';
+import {
+  IconCGoogle,
+  IconCFacebook,
+  IconCTwitter,
+  IconCApple,
+} from 'src/components/CustomIcons';
 
 export default function Login({ navigation }) {
   // prettier-ignore
@@ -167,43 +174,64 @@ export default function Login({ navigation }) {
             <View style={{ paddingVertical: 10 }}>
               <Button
                 status="primary"
-                appearance="outline"
                 size="medium"
-                accessoryLeft={IconFacebook}
+                appearance="outline"
+                accessoryLeft={() => (
+                  <IconCGoogle style={{ height: 20, width: 20 }} />
+                )}
                 accessibilityLiveRegion="polite"
                 accessibilityComponentType="button"
-                accessibilityLabel="Login with Facebook"
+                accessibilityLabel="Sign up with Google"
+                style={{ marginVertical: 5, backgroundColor: 'white' }}
+              >
+                <Text category="s1">Google</Text>
+              </Button>
+              <Button
+                status="primary"
+                size="medium"
+                accessoryLeft={() => (
+                  <IconCFacebook style={{ height: 20, width: 20 }} />
+                )}
+                accessibilityLiveRegion="polite"
+                accessibilityComponentType="button"
+                accessibilityLabel="Sign up with Facebook"
                 style={{ marginVertical: 5 }}
               >
-                <Text status="primary" category="h6">
+                <Text category="s1" status="control">
                   Facebook
                 </Text>
               </Button>
               <Button
-                status="danger"
-                size="medium"
-                appearance="outline"
-                accessoryLeft={IconGoogle}
-                accessibilityLiveRegion="polite"
-                accessibilityComponentType="button"
-                accessibilityLabel="Login with Google"
-                style={{ marginVertical: 5 }}
-              >
-                <Text status="danger" category="h6">
-                  Google
-                </Text>
-              </Button>
-              {/* <Button
                 status="info"
                 size="medium"
-                accessoryLeft={IconTwitter}
+                accessoryLeft={() => (
+                  <IconCTwitter style={{ height: 20, width: 20 }} />
+                )}
                 accessibilityLiveRegion="polite"
                 accessibilityComponentType="button"
-                accessibilityLabel="Login with Twitter"
+                accessibilityLabel="Sign up with Twitter"
                 style={{ marginVertical: 5 }}
               >
-                <Text appearance="alternative">Twitter</Text>
-              </Button> */}
+                <Text category="s1" status="control">
+                  Twitter
+                </Text>
+              </Button>
+              {Constants.platform.ios && (
+                <Button
+                  size="medium"
+                  accessoryLeft={() => (
+                    <IconCApple style={{ height: 20, width: 20 }} />
+                  )}
+                  accessibilityLiveRegion="polite"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Sign up with Apple"
+                  style={{ marginVertical: 5, backgroundColor: 'black' }}
+                >
+                  <Text category="s1" status="control">
+                    Apple
+                  </Text>
+                </Button>
+              )}
             </View>
           </View>
           <View>
