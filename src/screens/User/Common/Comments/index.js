@@ -155,7 +155,7 @@ export default function Comments({ navigation }) {
             marginHorizontal: 5,
           }}
         >
-          <Text category="s2" style={{alignSelf: sent ? 'flex-end' : 'flex-start'}}>{data.user}</Text>
+          <Text category="s2" style={{ alignSelf: sent ? 'flex-end' : 'flex-start' }}>{data.user}</Text>
           <Text category="p2">{data.msg}</Text>
           <Text category="c1" style={{ alignSelf: 'flex-end' }}>
             {data.time}

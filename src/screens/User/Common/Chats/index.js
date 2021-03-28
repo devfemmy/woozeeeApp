@@ -24,10 +24,12 @@ import { GeneralTextField } from 'src/components/FormFields';
 import InteractIcon from 'src/components/InteractIcon';
 
 import {
-  IconClose,
   IconPaperPlane,
   IconCCamera,
   IconMic,
+  IconClose,
+  IconCPhone,
+  IconCVideo,
 } from 'src/components/CustomIcons';
 
 export default function Chats({ navigation }) {
@@ -35,7 +37,7 @@ export default function Chats({ navigation }) {
 
   const { bottom, top } = useSafeAreaInsets();
 
-  const INSETS = bottom + top + 180;
+  const INSETS = bottom + top + 155;
 
   const t = useContext(LocaleContext);
 
@@ -52,17 +54,82 @@ export default function Chats({ navigation }) {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: 15,
+          paddingHorizontal: 10,
+          paddingVertical: 5,
         }}
       >
-        <Text category="h5">{t('chats')}</Text>
         <View>
           <InteractIcon
             Accessory={IconClose}
             status="primary"
-            height={32}
-            width={32}
+            height={28}
+            width={28}
             onPress={closeChats}
+          />
+        </View>
+        <View
+          activeOpacity={0.75}
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            paddingHorizontal: 5,
+            paddingVertical: 5,
+          }}
+        >
+          <View style={{ position: 'relative' }}>
+            <LinearGradient
+              colors={['#043F7C', '#FF5757']}
+              style={{
+                height: 34,
+                width: 34,
+                borderRadius: 17,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Image
+                source={require('assets/images/user/user1.png')}
+                defaultSource={require('assets/images/user/user2.png')}
+                style={{
+                  height: 30,
+                  width: 30,
+                  borderRadius: 15,
+                }}
+                resizeMode="cover"
+              />
+            </LinearGradient>
+            <Image
+              source={require('assets/images/icon/online.png')}
+              defaultSource={require('assets/images/icon/online.png')}
+              style={{
+                height: 10,
+                width: 10,
+                borderRadius: 5,
+                position: 'absolute',
+                right: -1,
+                bottom: 1,
+              }}
+              resizeMode="cover"
+            />
+          </View>
+          <View style={{ flex: 1, marginHorizontal: 10 }}>
+            <Text category="s2">Jason Black</Text>
+            <Text category="c1">{t('activeNow')}</Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <InteractIcon
+            Accessory={IconCVideo}
+            status="primary"
+            height={26}
+            width={26}
+          />
+          <InteractIcon
+            Accessory={IconCPhone}
+            status="primary"
+            height={18}
+            width={18}
           />
         </View>
       </View>
@@ -76,7 +143,8 @@ export default function Chats({ navigation }) {
         style={{
           flex: 1,
           flexDirection: 'row',
-          padding: 5,
+          paddingHorizontal: 10,
+          paddingVertical: 5,
           alignItems: 'center',
         }}
       >
@@ -93,9 +161,9 @@ export default function Chats({ navigation }) {
           <Image
             source={require('assets/images/user/user1.png')}
             style={{
-              height: 26,
-              width: 26,
-              borderRadius: 13,
+              height: 24,
+              width: 24,
+              borderRadius: 12,
               borderColor: 'white',
             }}
           />
@@ -158,9 +226,9 @@ export default function Chats({ navigation }) {
           <Image
             source={require('assets/images/user/user1.png')}
             style={{
-              height: 26,
-              width: 26,
-              borderRadius: 13,
+              height: 24,
+              width: 24,
+              borderRadius: 12,
               borderColor: 'white',
             }}
           />

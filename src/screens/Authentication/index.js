@@ -122,7 +122,7 @@ export default function OnboardingScreen({ navigation }) {
           <VolumeButton />
         </View>
         <View style={{ alignItems: 'center', paddingBottom: 50 }}>
-          <View style={{ marginBottom: 30 }}>
+          <View style={{ marginBottom: 20 }}>
             <Image
               source={require('assets/images/drawable/logo.png')}
               resizeMode="contain"

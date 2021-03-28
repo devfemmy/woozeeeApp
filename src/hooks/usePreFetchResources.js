@@ -78,6 +78,7 @@ export default function usePreFetchResources() {
           require('assets/images/icon/cart-outline.png'),
           require('assets/images/icon/grid-outline.png'),
           require('assets/images/icon/charity.png'),
+          require('assets/images/icon/online.png'),
           require('assets/images/icon/hero-outline.png'),
           require('assets/images/icon/campaign-outline.png'),
           require('assets/images/icon/camera-outline.png'),

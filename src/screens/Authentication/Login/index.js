@@ -184,7 +184,9 @@ export default function Login({ navigation }) {
                 accessibilityLabel="Sign up with Google"
                 style={{ marginVertical: 5, backgroundColor: 'white' }}
               >
-                <Text category="s1">Google</Text>
+                <Text category="s1" style={{ color: 'black' }}>
+                  Google
+                </Text>
               </Button>
               <Button
                 status="primary"

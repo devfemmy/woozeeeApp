@@ -15,7 +15,7 @@ import { challengeUrl } from 'src/api/dummy';
 const PLACEHOLDER_CONFIG = {
   count: 6,
   numColumns: 2,
-  maxHeight: 180,
+  maxHeight: 200,
   mediaLeft: true,
 };
 

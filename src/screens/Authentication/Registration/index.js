@@ -39,7 +39,7 @@ export default function Register({ navigation }) {
       <TopNavigationArea
         title={t('signUp')}
         navigation={navigation}
-        icon="close"
+        icon="back"
         screen="auth"
       />
       <ScrollView
@@ -130,7 +130,9 @@ export default function Register({ navigation }) {
                 accessibilityLabel="Sign up with Google"
                 style={{ marginVertical: 5, backgroundColor: 'white' }}
               >
-                <Text category="s1">Google</Text>
+                <Text category="s1" style={{ color: 'black' }}>
+                  Google
+                </Text>
               </Button>
               <Button
                 status="primary"
