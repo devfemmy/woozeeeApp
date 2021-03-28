@@ -53,7 +53,7 @@ export default function UserProfile({ navigation }) {
 
   const IS_PORTRAIT = height > width;
 
-  const routeMessaging = () => navigation.navigate('Messaging');
+  const routeChats = () => navigation.navigate('Chats');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -163,7 +163,7 @@ export default function UserProfile({ navigation }) {
                   status="primary"
                   size="tiny"
                   style={{ marginHorizontal: 5, width: 120 }}
-                  onPress={routeMessaging}
+                  onPress={routeChats}
                 >
                   <Text status="control" category="c2">
                     {t('message')}
