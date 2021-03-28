@@ -31,6 +31,7 @@ import Messaging from 'src/screens/User/Common/Messaging';
 import Comments from 'src/screens/User/Common/Comments';
 import Chats from 'src/screens/User/Common/Chats';
 import Rankings from 'src/screens/User/Common/Rankings';
+import UserProfile from 'src/screens/User/Common/UserProfile';
 
 /* Routes import */
 import UserRoute from './User';
@@ -67,6 +68,7 @@ export default function Router() {
       Chats,
       Search,
       Rankings,
+      UserProfile,
     },
 
     Common: {

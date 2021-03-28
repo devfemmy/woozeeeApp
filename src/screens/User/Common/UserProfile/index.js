@@ -38,7 +38,7 @@ const ProfilePostsArea = () => (
   WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG)
 );
 
-export default function Profile({ navigation }) {
+export default function UserProfile({ navigation }) {
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
   const { width, height } = useWindowDimensions();
@@ -59,10 +59,10 @@ export default function Profile({ navigation }) {
     <Layout level="6" style={{ flex: 1 }}>
       <OverlayLoader isLoading={isLoading} />
       <TopNavigationArea
-        title="woozeee"
+        // title="woozeee"
         navigation={navigation}
         icon="back"
-        screen="profile"
+        screen="default"
       />
       <View
         style={{
@@ -133,10 +133,15 @@ export default function Profile({ navigation }) {
                     textAlign: 'center',
                     lineHeight: 15,
                   }}
-                  numberOfLines={3}
+                  numberOfLines={1}
                 >
                   Content writer with beautiful aesthetics, Face of woozeee (It
                   seems).
+                </Text>
+              </View>
+              <View style={{ marginBottom: 10, alignItems: 'center' }}>
+                <Text category="h6" status="primary">
+                  wooz8264LG
                 </Text>
               </View>
               <View style={{ marginBottom: 10, flexDirection: 'row' }}>
@@ -147,7 +152,21 @@ export default function Profile({ navigation }) {
                   onPress={routeMessaging}
                 >
                   <Text status="control" category="c2">
-                    {`${t('edit')} ${t('profile')}`}
+                    {t('message')}
+                  </Text>
+                </Button>
+                <Button
+                  status="primary"
+                  appearance="outline"
+                  size="tiny"
+                  style={{
+                    marginHorizontal: 5,
+                    width: 120,
+                    backgroundColor: 'white',
+                  }}
+                >
+                  <Text status="primary" category="c2">
+                    {t('follow')}
                   </Text>
                 </Button>
               </View>

@@ -168,6 +168,7 @@ export const ProfilePosts = ({ info }) => (
     }}
     contentContainerStyle={{
       paddingBottom: 25,
+      paddingTop: 5,
     }}
     alwaysBounceVertical
     showsHorizontalScrollIndicator={false}

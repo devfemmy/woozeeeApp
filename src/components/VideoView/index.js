@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 
-import { View, Image } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 
 import Moment from 'react-moment';
 
@@ -65,6 +65,8 @@ const VideoView = forwardRef((props, ref) => {
   const routeComments = () => navigation.navigate('Comments');
 
   const handleOpenSheet = () => sheetRef.current.open();
+
+  const routeUserProfile = () => navigation.navigate('UserProfile');
 
   useImperativeHandle(ref, () => ({
     async play() {
@@ -150,54 +152,60 @@ const VideoView = forwardRef((props, ref) => {
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <LinearGradient
-              colors={['#043F7C', '#FF5757']}
-              style={{
-                height: 40,
-                width: 40,
-                borderRadius: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+            <TouchableOpacity
+              activeOpacity={0.75}
+              style={{ flexDirection: 'row', alignItems: 'center' }}
+              onPress={routeUserProfile}
             >
-              <Image
-                source={require('assets/images/user/user2.png')}
-                defaultSource={require('assets/images/user/user2.png')}
+              <LinearGradient
+                colors={['#043F7C', '#FF5757']}
                 style={{
-                  height: 36,
-                  width: 36,
-                  borderRadius: 18,
-                  borderColor: 'white',
+                  height: 40,
+                  width: 40,
+                  borderRadius: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  source={require('assets/images/user/user2.png')}
+                  defaultSource={require('assets/images/user/user2.png')}
+                  style={{
+                    height: 36,
+                    width: 36,
+                    borderRadius: 18,
+                    borderColor: 'white',
+                  }}
+                  resizeMode="cover"
+                />
+              </LinearGradient>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  paddingRight: 5,
+                  paddingLeft: 5,
+                  maxWidth: 190,
+                }}
+              >
+                <Text status="primary" category="s2" style={{ marginRight: 5 }}>
+                  {item.ownerFirstName}
+                </Text>
+                <Text status="danger" category="s2">
+                  {item.ownerLastName}
+                </Text>
+              </View>
+              <Image
+                source={require('assets/images/icon/verified-1.png')}
+                defaultSource={require('assets/images/icon/verified-1.png')}
+                style={{
+                  height: 16,
+                  width: 16,
+                  borderRadius: 8,
                 }}
                 resizeMode="cover"
               />
-            </LinearGradient>
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                paddingRight: 5,
-                paddingLeft: 5,
-                maxWidth: 190,
-              }}
-            >
-              <Text status="primary" category="s2" style={{ marginRight: 5 }}>
-                {item.ownerFirstName}
-              </Text>
-              <Text status="danger" category="s2">
-                {item.ownerLastName}
-              </Text>
-            </View>
-            <Image
-              source={require('assets/images/icon/verified-1.png')}
-              defaultSource={require('assets/images/icon/verified-1.png')}
-              style={{
-                height: 16,
-                width: 16,
-                borderRadius: 8,
-              }}
-              resizeMode="cover"
-            />
+            </TouchableOpacity>
             <Text appearance="hint" style={{ marginLeft: 5 }}>
               |
             </Text>
