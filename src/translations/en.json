@@ -113,5 +113,13 @@
   "liked": "Liked",
   "messages": "Messages",
   "notifications": "Notifications",
-  "activeNow": "Active now"
+  "activeNow": "Active now",
+  "videoAutoPlay": "Video Auto Play",
+  "followingPostNotif": "Following Post Notifications",
+  "autoUpdate": "Auto Update",
+  "hideAccount": "Hide Account",
+  "disableAccount": "Disable Account",
+  "version": "Version",
+  "accountSettings": "Account Settings",
+  "appSettings": "App Settings"
 }

@@ -7,7 +7,12 @@ import {
   Layout, Button, Text, Spinner, Toggle, Divider, Select, SelectItem, IndexPath,
 } from '@ui-kitten/components';
 
-import { AppSettingsContext, LocaleContext } from 'src/contexts';
+import {
+  AuthContext,
+  LoadingContext,
+  LocaleContext,
+  AppSettingsContext,
+} from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
@@ -22,6 +27,10 @@ export default function Settings({ navigation }) {
 
   const t = useContext(LocaleContext);
 
+  const { authOptions } = useContext(AuthContext);
+
+  const { logout } = authOptions;
+
   const { darkMode, locale } = appState;
 
   const { updateSettings } = appOptions;
@@ -33,9 +42,26 @@ export default function Settings({ navigation }) {
 
   const [isError, setError] = useState(false);
 
+  const [autoPlay, setAutoPlay] = useState(true);
+  const [postNotif, setPostNotif] = useState(true);
+  const [autoUpdate, setAutoUpdate] = useState(false);
+  const [hideAccount, setHideAccount] = useState(false);
+  const [disableAccount, setDisableAccount] = useState(false);
+
   const [selectedLocale, setSelectedLocale] = useState(
     new IndexPath(getIndexOfLocale()),
   );
+
+  const handleLogout = async () => {
+    try {
+      setLoading(true);
+      await logout();
+    } catch (e) {
+      const err = e;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const changeAppSettings = async (option) => {
     try {
@@ -87,6 +113,131 @@ export default function Settings({ navigation }) {
             padding: 15,
           }}
         >
+          <View style={{ marginBottom: 10 }}>
+            <Text status="primary" category="c2">
+              {t('accountSettings')}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Text category="s2" style={{ marginLeft: 10 }}>
+                {t('videoAutoPlay')}
+              </Text>
+            </View>
+            <Toggle
+              checked={autoPlay}
+              onChange={() => setAutoPlay((prevState) => !prevState)}
+            />
+          </View>
+          <Divider style={{ marginVertical: 10 }} />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Text category="s2" style={{ marginLeft: 10 }}>
+                {t('followingPostNotif')}
+              </Text>
+            </View>
+            <Toggle
+              checked={postNotif}
+              onChange={() => setPostNotif((prevState) => !prevState)}
+            />
+          </View>
+          <Divider style={{ marginVertical: 10 }} />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Text category="s2" style={{ marginLeft: 10 }}>
+                {t('autoUpdate')}
+              </Text>
+            </View>
+            <Toggle
+              checked={autoUpdate}
+              onChange={() => setAutoUpdate((prevState) => !prevState)}
+            />
+          </View>
+          <Divider style={{ marginVertical: 10 }} />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Text category="s2" style={{ marginLeft: 10 }}>
+                {t('hideAccount')}
+              </Text>
+            </View>
+            <Toggle
+              checked={hideAccount}
+              onChange={() => setHideAccount((prevState) => !prevState)}
+            />
+          </View>
+          <Divider style={{ marginVertical: 10 }} />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Text category="s2" style={{ marginLeft: 10 }}>
+                {t('disableAccount')}
+              </Text>
+            </View>
+            <Toggle
+              checked={disableAccount}
+              onChange={() => setDisableAccount((prevState) => !prevState)}
+            />
+          </View>
+          <Divider style={{ marginVertical: 10 }} />
+          <View style={{ marginBottom: 10, marginTop: 20 }}>
+            <Text status="primary" category="c2">
+              {t('appSettings')}
+            </Text>
+          </View>
           <View
             style={{
               flexDirection: 'row',
@@ -101,7 +252,7 @@ export default function Settings({ navigation }) {
               }}
             >
               <IconMoon fill="#8F9BB3" height={24} width={24} />
-              <Text category="s1" style={{ marginLeft: 10 }}>
+              <Text category="s2" style={{ marginLeft: 10 }}>
                 {t('darkMode')}
               </Text>
             </View>
@@ -123,7 +274,7 @@ export default function Settings({ navigation }) {
               }}
             >
               <IconFlag fill="#8F9BB3" height={24} width={24} />
-              <Text category="s1" style={{ marginLeft: 10 }}>
+              <Text category="s2" style={{ marginLeft: 10 }}>
                 {t('language')}
               </Text>
             </View>
@@ -133,7 +284,6 @@ export default function Settings({ navigation }) {
                 selectedIndex={selectedLocale}
                 onSelect={handleSwitchLocale}
               >
-                {/* eslint-disable-next-line react/prop-types */}
                 {LOCALES.map((option) => (
                   <SelectItem key={option.title} title={option.title} />
                 ))}
@@ -141,7 +291,17 @@ export default function Settings({ navigation }) {
             </View>
           </View>
           <Divider style={{ marginVertical: 10 }} />
-          <View style={{ paddingVertical: 20 }}>
+          <View style={{ marginVertical: 20 }}>
+            <Button appearance="ghost" onPress={handleLogout}>
+              <Text status="danger" category="s1">
+                {t('logout')}
+              </Text>
+            </Button>
+            <Text category="c2" style={{ textAlign: 'center' }}>
+              {`${t('version')} 1.0.0`}
+            </Text>
+          </View>
+          {/* <View style={{ paddingVertical: 20 }}>
             <Button
               status="danger"
               size="large"
@@ -154,7 +314,7 @@ export default function Settings({ navigation }) {
             >
               <Text status="control">{t('close')}</Text>
             </Button>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </Layout>
