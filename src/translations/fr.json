@@ -126,5 +126,14 @@
   "Suggested": "Suggéré",
   "makeReport": "Faire un compte rendu",
   "downloadMedia": "Télécharger les médias",
-  "copyLink": "Copier le lien"
+  "copyLink": "Copier le lien",
+  "optional": "Optionnel",
+  "leaveComment": "laissez un commentaire",
+  "caption": "Légende",
+  "hashTag": "Hashtag",
+  "addCaption": "Add a caption",
+  "showOn": "Montrer sur",
+  "postVideo": "Post-vidéo",
+  "selectGroup": "Sélectionner un groupe",
+  "selectCategory": "Choisir une catégorie"
 }

@@ -126,5 +126,14 @@
   "Suggested": "Suggested",
   "makeReport": "Make a Report",
   "downloadMedia": "Download Media",
-  "copyLink": "Copy Link"
+  "copyLink": "Copy Link",
+  "optional": "Optional",
+  "leaveComment": "Leave a comment",
+  "caption": "Caption",
+  "hashTag": "Hashtag",
+  "addCaption": "Add a caption",
+  "showOn": "Show on",
+  "postVideo": "Post Video",
+  "selectGroup": "Select Group",
+  "selectCategory": "Select Category"
 }

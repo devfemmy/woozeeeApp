@@ -406,7 +406,7 @@ const VideoView = forwardRef((props, ref) => {
             <View style={{ flex: 1, marginHorizontal: 5 }}>
               <GeneralTextField
                 type="comment"
-                placeholder={t('writeComment')}
+                placeholder={t('leaveComment')}
                 setFormValues={setFormValues}
                 size="medium"
               />

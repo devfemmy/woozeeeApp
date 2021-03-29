@@ -2,9 +2,16 @@ import React, { useState, useContext } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-// prettier-ignore
 import {
-  Layout, Button, Text, Spinner, Toggle, Divider, Select, SelectItem, IndexPath,
+  Layout,
+  Button,
+  Text,
+  Spinner,
+  Toggle,
+  Divider,
+  Select,
+  SelectItem,
+  IndexPath,
 } from '@ui-kitten/components';
 
 import {
