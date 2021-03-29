@@ -113,5 +113,18 @@
   "liked": "Aimé",
   "messages": "Messages",
   "notifications": "Notifications",
-  "activeNow": "Actif maintenant"
+  "activeNow": "Actif maintenant",
+  "videoAutoPlay": "Autoplay vidéo",
+  "followingPostNotif": "Suivant Les Notifications Postes",
+  "autoUpdate": "Mise à jour automatique",
+  "hideAccount": "Cacher",
+  "disableAccount": "Désactiver le compte",
+  "version": "Version",
+  "accountSettings": "Paramètres du compte",
+  "appSettings": "Paramètres de l'application",
+  "followBack": "Suivre",
+  "Suggested": "Suggéré",
+  "makeReport": "Faire un compte rendu",
+  "downloadMedia": "Télécharger les médias",
+  "copyLink": "Copier le lien"
 }
