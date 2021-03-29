@@ -24,6 +24,8 @@ import {
   GeneralDatePicker,
 } from 'src/components/FormFields';
 
+import { IconCalendar } from 'src/components/CustomIcons';
+
 import genders from './genders.json';
 import countries from './countries.json';
 import states from './states.json';
@@ -100,7 +102,7 @@ export default function EditProfile({ navigation }) {
           <View
             style={{
               position: 'relative',
-              height: 150,
+              height: 165,
               width: '100%',
               alignItems: 'center',
             }}
@@ -109,7 +111,7 @@ export default function EditProfile({ navigation }) {
               activeOpacity={0.75}
               style={{
                 backgroundColor: '#EDF1F7',
-                height: 100,
+                height: 120,
                 position: 'absolute',
                 width: '100%',
                 zIndex: 1,
@@ -123,6 +125,7 @@ export default function EditProfile({ navigation }) {
                   resizeMode: 'cover',
                   width: '100%',
                 }}
+                resizeMode="cover"
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -148,6 +151,19 @@ export default function EditProfile({ navigation }) {
                   resizeMode: 'cover',
                   width: '100%',
                 }}
+                resizeMode="cover"
+              />
+              <Image
+                source={require('assets/images/icon/camera-outline.png')}
+                defaultSource={require('assets/images/icon/camera-outline.png')}
+                style={{
+                  position: 'absolute',
+                  height: 26,
+                  width: 26,
+                  top: 37,
+                  left: 37,
+                }}
+                resizeMode="cover"
               />
             </TouchableOpacity>
           </View>
@@ -210,6 +226,7 @@ export default function EditProfile({ navigation }) {
                   type="dob"
                   label={t('dob')}
                   setFormValues={setFormValues}
+                  accessoryRight={IconCalendar}
                 />
               </View>
             </View>
@@ -256,7 +273,7 @@ export default function EditProfile({ navigation }) {
                 accessibilityLabel="Continue"
                 disabled={isLoading}
               >
-                <Text status="control">{t('continue')}</Text>
+                <Text status="control">{t('updateProfile')}</Text>
               </Button>
             </View>
           </View>

@@ -277,7 +277,7 @@ export const GeneralSelect = (props) => {
 export const GeneralDatePicker = (props) => {
   // prettier-ignore
   const {
-    label, type, size, setFormValues,
+    label, type, size, setFormValues, ...otherProps
   } = props;
 
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -296,12 +296,13 @@ export const GeneralDatePicker = (props) => {
   return useMemo(
     () => (
       <Datepicker
+        {...otherProps}
         size={size || 'large'}
         label={label}
         date={selectedDate}
         onSelect={handleSelect}
       />
     ),
-    [handleSelect, label, size, selectedDate],
+    [handleSelect, label, size, selectedDate, otherProps],
   );
 };
