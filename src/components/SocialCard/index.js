@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 
 import {
   View,
@@ -7,18 +7,30 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { Text } from '@ui-kitten/components';
 
 export default function VideoCard(props) {
-  const { data, extraWidth, numColumns } = props;
+  // prettier-ignore
+  const {
+    data, extraWidth, numColumns,
+  } = props;
+
+  const navigation = useNavigation();
 
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;
 
-  const COLOUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
+  const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
+
+  const routeChallengeWooz = useCallback(
+    () => navigation.navigate('ChallengeWooz'),
+    [navigation],
+  );
 
   return useMemo(
     () => (
@@ -27,13 +39,14 @@ export default function VideoCard(props) {
         style={{
           height: 180,
           width: IS_PORTRAIT
-            ? width / (COLOUMN_COUNT + extraWidth)
-            : width / (COLOUMN_COUNT + extraWidth),
+            ? width / (COLUMN_COUNT + extraWidth)
+            : width / (COLUMN_COUNT + extraWidth),
           paddingHorizontal: 3,
           position: 'relative',
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
+        onPress={routeChallengeWooz}
       >
         <Image
           source={{ uri: `https://i.postimg.cc/${data.banner}` }}
@@ -100,6 +113,6 @@ export default function VideoCard(props) {
         ) : null}
       </TouchableOpacity>
     ),
-    [COLOUMN_COUNT, IS_PORTRAIT, extraWidth, width, data],
+    [COLUMN_COUNT, IS_PORTRAIT, extraWidth, width, data, routeChallengeWooz],
   );
 }

@@ -8,9 +8,11 @@ import BottomNavigationArea from 'src/components/BottomNavigationArea';
 import Social from 'src/screens/User/HomeTab/Social/SocialTab';
 import Wooz from 'src/screens/User/HomeTab/Social/WoozTab';
 import Profile from 'src/screens/User/HomeTab/Social/ProfileTab';
-import Challenge from 'src/screens/User/HomeTab/Social/ChallengeTab';
 
 import VideoUpload from 'src/screens/User/Common/VideoUpload';
+
+// Routes
+import Challenge from './Challenge';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 

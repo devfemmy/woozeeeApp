@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 const VideoView = forwardRef((props, ref) => {
   // prettier-ignore
   const {
-    data, height, videoRef,
+    data, height, videoRef, challenge,
   } = props;
 
   const { item } = data;
@@ -189,14 +189,16 @@ const VideoView = forwardRef((props, ref) => {
               </View>
             </View>
             <View>
-              <InteractIcon
-                size="large"
-                style={{ marginBottom: 15 }}
-                Accessory={(evaProps) => <IconCVote {...evaProps} active />}
-                status={isVoted ? 'danger' : 'control'}
-                textContent={item.likes}
-                onPress={toggleVote}
-              />
+              {challenge && (
+                <InteractIcon
+                  size="large"
+                  style={{ marginBottom: 15 }}
+                  Accessory={(evaProps) => <IconCVote {...evaProps} active />}
+                  status={isVoted ? 'danger' : 'control'}
+                  textContent={item.likes}
+                  onPress={toggleVote}
+                />
+              )}
               <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={IconCHeartToggle}
@@ -237,6 +239,7 @@ const VideoView = forwardRef((props, ref) => {
     [
       height,
       item,
+      challenge,
       shouldPlay,
       togglePause,
       isLiked,

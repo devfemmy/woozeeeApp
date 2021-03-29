@@ -36,7 +36,7 @@ import Placeholders from 'src/components/Placeholders';
 
 import InteractIcon from 'src/components/InteractIcon';
 
-import { IconCMovie, IconCMedal } from 'src/components/CustomIcons';
+import { IconBackIos, IconCMedal } from 'src/components/CustomIcons';
 
 import Api from 'src/api';
 
@@ -60,7 +60,9 @@ export default function Wooz({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const routeMovies = () => navigation.navigate('Movies');
+  const goBack = () => navigation.goBack();
+
+  const routeRanking = () => navigation.navigate('Rankings');
 
   const WoozPostsArea = () => {
     const isFocused = useIsFocused();
@@ -227,6 +229,7 @@ export default function Wooz({ navigation }) {
                     data={{ item, i }}
                     height={VIEW_HEIGHT}
                     videoRef={videoRef}
+                    challenge
                   />
                 </React.Fragment>
               ))}
@@ -282,17 +285,24 @@ export default function Wooz({ navigation }) {
             top: 0,
             right: 0,
             flexDirection: 'row',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             alignItems: 'center',
             width: '100%',
           }}
         >
           <InteractIcon
-            Accessory={IconCMovie}
+            Accessory={IconBackIos}
             status="control"
             height={28}
             width={28}
-            onPress={routeMovies}
+            onPress={goBack}
+          />
+          <InteractIcon
+            Accessory={IconCMedal}
+            status="control"
+            height={28}
+            width={28}
+            onPress={routeRanking}
           />
         </View>
         <WoozPostsArea />
