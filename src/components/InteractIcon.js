@@ -48,7 +48,11 @@ export default function InteractIcon(props) {
           onPress={onPress}
         />
         {textContent ? (
-          <Text status={status ?? 'control'} category="c2">
+          <Text
+            status={status ?? 'control'}
+            category="c2"
+            style={{ textAlign: 'center' }}
+          >
             {textContent}
           </Text>
         ) : null}

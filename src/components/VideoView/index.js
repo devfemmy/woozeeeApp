@@ -26,6 +26,8 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { AppSettingsContext } from 'src/contexts';
 
+import { GeneralTextField } from 'src/components/FormFields';
+
 import InteractIcon from 'src/components/InteractIcon';
 
 import {
@@ -33,7 +35,9 @@ import {
   IconCChat,
   IconCShare,
   IconMoreHorizontal,
-  IconForwardIos,
+  // IconForwardIos,
+  IconPaperPlane,
+  IconBookmark,
 } from 'src/components/CustomIcons';
 
 const VideoView = forwardRef((props, ref) => {
@@ -52,7 +56,13 @@ const VideoView = forwardRef((props, ref) => {
 
   const [isLiked, setLiked] = useState(false);
 
-  const [hideText, setHideText] = useState(true);
+  const [isBookmarked, setBookmarked] = useState(false);
+
+  // const [hideText, setHideText] = useState(true);
+
+  const [form, setFormValues] = useState({
+    comment: '',
+  });
 
   const { appState } = useContext(AppSettingsContext);
 
@@ -60,7 +70,9 @@ const VideoView = forwardRef((props, ref) => {
 
   const toggleLike = () => setLiked((prevState) => !prevState);
 
-  const updateHiddenText = () => setHideText((prevState) => !prevState);
+  const toggleBookmark = () => setBookmarked((prevState) => !prevState);
+
+  // const updateHiddenText = () => setHideText((prevState) => !prevState);
 
   const routeComments = () => navigation.navigate('Comments');
 
@@ -243,18 +255,24 @@ const VideoView = forwardRef((props, ref) => {
         <View
           style={{
             flexDirection: 'row',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             justifyContent: 'space-between',
           }}
         >
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              paddingHorizontal: 5,
+            }}
+          >
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={(evaProps) => (
                 <IconCHeart {...evaProps} active={isLiked} />
               )}
-              textContent={item.likes}
-              direction="row"
+              textContent={`${item.likes} like(s)`}
+              // direction="row"
               status={isLiked ? 'danger' : 'basic'}
               height={24}
               width={24}
@@ -263,15 +281,16 @@ const VideoView = forwardRef((props, ref) => {
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={IconCChat}
-              textContent={item.comments}
+              // textContent={item.comments}
               direction="row"
               status="basic"
               height={24}
               width={24}
+              onPress={routeComments}
             />
             <InteractIcon
               style={{ marginHorizontal: 5 }}
-              Accessory={(evaProps) => <IconCShare {...evaProps} />}
+              Accessory={IconCShare}
               direction="row"
               status="basic"
               height={24}
@@ -279,18 +298,21 @@ const VideoView = forwardRef((props, ref) => {
             />
           </View>
           <View style={{ paddingRight: 10 }}>
-            <Moment
-              fromNow
-              element={(momentProps) => (
-                <Text category="c1" {...momentProps} style={{ fontSize: 10 }} />
+            <InteractIcon
+              style={{ marginHorizontal: 5 }}
+              Accessory={(evaProps) => (
+                <IconBookmark {...evaProps} active={isBookmarked} />
               )}
-            >
-              {item.dateAdded}
-            </Moment>
+              direction="row"
+              status={isBookmarked ? 'danger' : 'basic'}
+              height={24}
+              width={24}
+              onPress={toggleBookmark}
+            />
           </View>
         </View>
-        <View style={{ marginTop: 10, paddingHorizontal: 15 }}>
-          <View
+        <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
+          {/* <View
             style={{
               marginBottom: 10,
               flexDirection: 'row',
@@ -315,8 +337,8 @@ const VideoView = forwardRef((props, ref) => {
                 {hideText ? 'more' : 'less'}
               </Text>
             </Button>
-          </View>
-          <View
+          </View> */}
+          {/* <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -351,12 +373,68 @@ const VideoView = forwardRef((props, ref) => {
                 </Text>
               </Button>
             </View>
+          </View> */}
+          <View
+            style={{
+              flexDirection: 'row',
+              // padding: 15,
+              alignItems: 'center',
+            }}
+          >
+            <LinearGradient
+              colors={['#043F7C', '#FF5757']}
+              style={{
+                height: 34,
+                width: 34,
+                borderRadius: 17,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Image
+                source={require('assets/images/user/user1.png')}
+                defaultSource={require('assets/images/user/user1.png')}
+                style={{
+                  height: 30,
+                  width: 30,
+                  borderRadius: 15,
+                  borderColor: 'white',
+                }}
+                resizeMode="cover"
+              />
+            </LinearGradient>
+            <View style={{ flex: 1, marginHorizontal: 5 }}>
+              <GeneralTextField
+                type="comment"
+                placeholder={t('writeComment')}
+                setFormValues={setFormValues}
+                size="medium"
+              />
+            </View>
+            <View style={{ alignSelf: 'flex-start', marginTop: 4 }}>
+              <InteractIcon
+                Accessory={IconPaperPlane}
+                status="primary"
+                height={28}
+                width={28}
+              />
+            </View>
+          </View>
+          <View style={{ marginTop: 5 }}>
+            <Moment
+              fromNow
+              element={(momentProps) => (
+                <Text category="c1" {...momentProps} style={{ fontSize: 10 }} />
+              )}
+            >
+              {item.dateAdded}
+            </Moment>
           </View>
         </View>
       </View>
       <RBSheet
         ref={sheetRef}
-        height={270}
+        height={265}
         closeOnDragDown
         animationType="fade"
         customStyles={{

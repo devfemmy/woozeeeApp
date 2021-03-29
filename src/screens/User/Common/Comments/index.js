@@ -87,22 +87,24 @@ export default function Comments({ navigation }) {
         >
           <Image
             source={require('assets/images/user/user1.png')}
+            defaultSource={require('assets/images/user/user1.png')}
             style={{
               height: 30,
               width: 30,
               borderRadius: 15,
               borderColor: 'white',
             }}
+            resizeMode="cover"
           />
         </LinearGradient>
         <View style={{ flex: 1, marginHorizontal: 5 }}>
           <GeneralTextField
             type="comment"
-            placeholder={t('writeMsg')}
+            placeholder={t('writeComment')}
             setFormValues={setFormValues}
           />
         </View>
-        <View>
+        <View style={{ alignSelf: 'flex-start', marginTop: 4 }}>
           <InteractIcon
             Accessory={IconPaperPlane}
             status="primary"
@@ -120,7 +122,7 @@ export default function Comments({ navigation }) {
     () => (
       <View
         style={{
-          flexDirection: sent ? 'row-reverse' : 'row',
+          flexDirection: 'row',
           alignItems: 'flex-start',
           marginTop: 15,
         }}
@@ -155,7 +157,7 @@ export default function Comments({ navigation }) {
             marginHorizontal: 5,
           }}
         >
-          <Text category="s2" style={{ alignSelf: sent ? 'flex-end' : 'flex-start' }}>{data.user}</Text>
+          <Text category="s2" style={{ alignSelf: 'flex-start' }}>{data.user}</Text>
           <Text category="p2">{data.msg}</Text>
           <Text category="c1" style={{ alignSelf: 'flex-end' }}>
             {data.time}
@@ -163,7 +165,7 @@ export default function Comments({ navigation }) {
         </Layout>
       </View>
     ),
-    [sent, data],
+    [data],
   );
 
   return useMemo(
