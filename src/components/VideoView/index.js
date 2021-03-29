@@ -206,18 +206,6 @@ const VideoView = forwardRef((props, ref) => {
                 resizeMode="cover"
               />
             </TouchableOpacity>
-            <Text appearance="hint" style={{ marginLeft: 5 }}>
-              |
-            </Text>
-            <Button
-              appearance="ghost"
-              size="tiny"
-              style={{ paddingVertical: 0, paddingHorizontal: 0 }}
-            >
-              <Text category="label" status="info">
-                Follow
-              </Text>
-            </Button>
           </View>
           <View>
             <InteractIcon
@@ -368,7 +356,7 @@ const VideoView = forwardRef((props, ref) => {
       </View>
       <RBSheet
         ref={sheetRef}
-        height={280}
+        height={270}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -397,8 +385,8 @@ const VideoView = forwardRef((props, ref) => {
               justifyContent: 'flex-start',
             }}
           >
-            <Text style={{ fontSize: 18 }} status="basic">
-              Report...
+            <Text style={{ fontSize: 16 }} status="basic">
+              {t('makeReport')}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 2, width: '100%' }} />
@@ -410,8 +398,8 @@ const VideoView = forwardRef((props, ref) => {
               justifyContent: 'flex-start',
             }}
           >
-            <Text style={{ fontSize: 18 }} status="basic">
-              Turn on post notifications
+            <Text style={{ fontSize: 16 }} status="basic">
+              {t('downloadMedia')}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 2, width: '100%' }} />
@@ -423,8 +411,8 @@ const VideoView = forwardRef((props, ref) => {
               justifyContent: 'flex-start',
             }}
           >
-            <Text style={{ fontSize: 18 }} status="basic">
-              Copy link
+            <Text style={{ fontSize: 16 }} status="basic">
+              {t('copyLink')}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 2, width: '100%' }} />
@@ -436,8 +424,8 @@ const VideoView = forwardRef((props, ref) => {
               justifyContent: 'flex-start',
             }}
           >
-            <Text style={{ fontSize: 18 }} status="basic">
-              Share
+            <Text style={{ fontSize: 16 }} status="basic">
+              {t('follow')}
             </Text>
           </Button>
         </Layout>

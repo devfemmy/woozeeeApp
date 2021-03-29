@@ -116,7 +116,7 @@ export default function SocialUpload(props) {
       </TouchableOpacity>
       <RBSheet
         ref={sheetRef}
-        height={190}
+        height={180}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -141,7 +141,7 @@ export default function SocialUpload(props) {
             appearance="ghost"
             status="basic"
             accessoryLeft={(evaProps) => (
-              <IconCloudUploadOutline {...evaProps} height={36} width={36} />
+              <IconCloudUploadOutline {...evaProps} height={32} width={32} />
             )}
             style={{
               width: '100%',
@@ -149,7 +149,7 @@ export default function SocialUpload(props) {
             }}
             onPress={handleSelectVideo}
           >
-            <Text style={{ fontSize: 18 }} status="basic">
+            <Text style={{ fontSize: 16 }} status="basic">
               {t('uploadFromDevice')}
             </Text>
           </Button>
@@ -158,7 +158,7 @@ export default function SocialUpload(props) {
             appearance="ghost"
             status="basic"
             accessoryLeft={(evaProps) => (
-              <IconVideoOutline {...evaProps} height={36} width={36} />
+              <IconVideoOutline {...evaProps} height={32} width={32} />
             )}
             style={{
               width: '100%',
@@ -166,7 +166,7 @@ export default function SocialUpload(props) {
             }}
             onPress={handleRecordVideo}
           >
-            <Text style={{ fontSize: 18 }} status="basic">
+            <Text style={{ fontSize: 16 }} status="basic">
               {t('recordWithCam')}
             </Text>
           </Button>

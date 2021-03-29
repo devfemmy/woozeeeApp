@@ -123,5 +123,8 @@
   "accountSettings": "Account Settings",
   "appSettings": "App Settings",
   "followBack": "Follow Back",
-  "Suggested": "Suggested"
+  "Suggested": "Suggested",
+  "makeReport": "Make a Report",
+  "downloadMedia": "Download Media",
+  "copyLink": "Copy Link"
 }
