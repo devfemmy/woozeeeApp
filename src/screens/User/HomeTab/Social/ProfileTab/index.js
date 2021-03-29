@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react';
 
-// prettier-ignore
 import {
-  View, Image, ScrollView, useWindowDimensions,
+  View,
+  Image,
+  ScrollView,
+  useWindowDimensions,
+  TouchableOpacity,
 } from 'react-native';
 
 // prettier-ignore
@@ -56,6 +59,8 @@ export default function Profile({ navigation }) {
   const routeMessaging = () => navigation.navigate('Messaging');
 
   const routeEditProfile = () => navigation.navigate('EditProfile');
+
+  const routeFollow = () => navigation.navigate('Follow');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -182,18 +187,26 @@ export default function Profile({ navigation }) {
                     {t('posts')}
                   </Text>
                 </View>
-                <View style={{ alignItems: 'center', width: '33%' }}>
+                <TouchableOpacity
+                  activeOpacity={0.75}
+                  style={{ alignItems: 'center', width: '33%' }}
+                  onPress={routeFollow}
+                >
                   <Text category="s2">12.3K</Text>
                   <Text category="c2" appearance="hint">
                     {t('followers')}
                   </Text>
-                </View>
-                <View style={{ alignItems: 'center', width: '33%' }}>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.75}
+                  style={{ alignItems: 'center', width: '33%' }}
+                  onPress={routeFollow}
+                >
                   <Text category="s2">1.9k</Text>
                   <Text category="c2" appearance="hint">
                     {t('following')}
                   </Text>
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
           </ScrollView>

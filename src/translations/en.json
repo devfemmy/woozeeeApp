@@ -121,5 +121,7 @@
   "disableAccount": "Disable Account",
   "version": "Version",
   "accountSettings": "Account Settings",
-  "appSettings": "App Settings"
+  "appSettings": "App Settings",
+  "followBack": "Follow Back",
+  "Suggested": "Suggested"
 }
