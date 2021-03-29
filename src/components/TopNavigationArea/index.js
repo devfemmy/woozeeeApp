@@ -24,7 +24,6 @@ import Logo from './components/Logo';
 import SearchField from './components/SearchField';
 import SettingsButton from './components/SettingsButton';
 
-import TopNavigationUserMenu from './components/TopNavigationUserMenu';
 import TopNavigationGlobalMenu from './components/TopNavigationGlobalMenu';
 
 export default function TopNavigationArea(props) {
@@ -167,10 +166,7 @@ export default function TopNavigationArea(props) {
         <TopNavigation
           alignment="center"
           title={(evaProps) => <Logo {...evaProps} />}
-          accessoryLeft={() => <IconCFlag style={{ height: 28, width: 28 }} />}
-          accessoryRight={(evaProps) => (
-            <TopNavigationUserMenu {...evaProps} navigation={navigation} />
-          )}
+          accessoryRight={() => <IconCFlag style={{ height: 28, width: 28 }} />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -178,7 +174,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [navigation, style],
+    [style],
   );
 
   const TopNavigationSearch = useMemo(
