@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function OnboardingScreen({ navigation }) {
+export default function Intro({ navigation }) {
   useDisableAndroidExit();
 
   const { isLoading } = useContext(LoadingContext);

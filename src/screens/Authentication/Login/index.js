@@ -77,6 +77,8 @@ export default function Login({ navigation }) {
 
   const routeRecoverWithEmail = () => navigation.navigate('RecoverWithEmail');
 
+  const routeOnboarding = () => navigation.navigate('Onboarding');
+
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
@@ -156,7 +158,7 @@ export default function Login({ navigation }) {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
                 accessoryLeft={isLoading ? renderSpinner : null}
-                onPress={loginUser}
+                onPress={routeOnboarding}
                 disabled={isLoading}
               >
                 <Text status="control">{t('continue')}</Text>

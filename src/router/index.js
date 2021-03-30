@@ -9,12 +9,14 @@ import * as SplashScreen from 'expo-splash-screen';
 import { AuthContext } from 'src/contexts';
 
 /* Screens import */
-import Onboarding from 'src/screens/Authentication';
+import Intro from 'src/screens/Authentication';
 import Login from 'src/screens/Authentication/Login';
 import Register from 'src/screens/Authentication/Registration';
 import RegisterFull from 'src/screens/Authentication/Registration/RegisterFull';
 import VerifyWithCode from 'src/screens/Authentication/Verification';
 import RecoverWithEmail from 'src/screens/Authentication/Recovery';
+
+import Onboarding from 'src/screens/Authentication/Onboarding';
 
 // Common screens
 import FAQs from 'src/screens/Common/FAQs';
@@ -47,12 +49,13 @@ export default function Router() {
 
   const screens = {
     Auth: {
-      Onboarding,
+      Intro,
       Login,
       Register,
       RegisterFull,
       VerifyWithCode,
       RecoverWithEmail,
+      Onboarding,
     },
 
     User: {
