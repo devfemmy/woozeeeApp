@@ -1,0 +1,165 @@
+import React, { useState, useContext } from 'react';
+
+import { View, Image, TouchableOpacity } from 'react-native';
+
+import Swiper from 'react-native-swiper';
+
+import { Layout, Text, Button } from '@ui-kitten/components';
+
+import { LocaleContext } from 'src/contexts';
+
+const SLIDE_CONTENT = [
+  {
+    id: 1,
+    banner: require('assets/images/onboarding/wallet.jpg'),
+    title: 'woozeee wallet',
+    description:
+      "Securely stores users' payment information and passwords and allows you to make and receive electronic payments. It is linked to a bank account.",
+    activateAction: 'activateWallet',
+  },
+  {
+    id: 2,
+    banner: require('assets/images/onboarding/care.jpg'),
+    title: 'woozeee care',
+    description:
+      'Opt-out insurance for all users covering, Legal consultation, Medical assurance, Travel insurance (air and road travel) and Road rescue).',
+    activateAction: 'activateCare',
+  },
+  {
+    id: 3,
+    banner: require('assets/images/onboarding/rewards.jpg'),
+    title: 'woozeee reward',
+    description:
+      'Earn money, points and gift cards for completing transactions in the woozeee ecosystem.',
+    activateAction: 'goHome',
+  },
+];
+
+const RenderImage = ({ src }) => (
+  <Image
+    source={src}
+    defaultSource={src}
+    resizeMode="cover"
+    style={{ height: '100%', width: '100%' }}
+  />
+);
+
+export default function Onboarding({ navigation }) {
+  const [lastIndex, setLastIndex] = useState(false);
+
+  const t = useContext(LocaleContext);
+
+  const checkLastIndex = (nextIndex) => {
+    setTimeout(() => {
+      if (nextIndex >= SLIDE_CONTENT.length - 1) {
+        setLastIndex(true);
+        return;
+      }
+
+      setLastIndex(false);
+    }, 0);
+  };
+
+  const routeHome = () => navigation.replace('UserRoute');
+
+  const NextButton = () => (
+    <Text status="danger" category="h6">
+      {t('skip')}
+    </Text>
+  );
+
+  return (
+    <Layout level="6" style={{ flex: 1 }}>
+      <Swiper
+        loop={false}
+        showsButtons
+        onIndexChanged={checkLastIndex}
+        paginationStyle={{ bottom: '45%' }}
+        activeDotColor="#043F7C"
+        activeDotStyle={{ width: 16 }}
+        buttonWrapperStyle={{
+          paddingBottom: 50,
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+        }}
+        nextButton={<NextButton />}
+        prevButton={<Text />}
+      >
+        {SLIDE_CONTENT.map((item) => (
+          <View
+            style={{
+              flex: 1,
+              position: 'relative',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}
+            key={item.id}
+          >
+            <RenderImage src={item.banner} />
+            <View
+              style={{
+                flex: 1,
+                position: 'absolute',
+                bottom: '10%',
+                paddingHorizontal: 20,
+              }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  paddingHorizontal: 25,
+                }}
+              >
+                <Text
+                  status="primary"
+                  category="h5"
+                  style={{ marginBottom: 15 }}
+                >
+                  {item.title}
+                </Text>
+                <Text
+                  status="primary"
+                  style={{
+                    textAlign: 'center',
+                    lineHeight: 24,
+                    marginBottom: 25,
+                  }}
+                >
+                  {item.description}
+                </Text>
+              </View>
+              <View style={{ flex: 1, width: '100%', position: 'relative' }}>
+                <Button status="danger" style={{ marginBottom: 10 }}>
+                  <Text status="control" category="h6">
+                    {t('activate')}
+                  </Text>
+                </Button>
+                {lastIndex && (
+                  <View
+                    style={{
+                      position: 'absolute',
+                      bottom: -30,
+                      alignSelf: 'center',
+                    }}
+                  >
+                    <TouchableOpacity
+                      activeOpacity={0.5}
+                      status="danger"
+                      appearance="ghost"
+                      onPress={routeHome}
+                    >
+                      <Text status="danger" category="h6">
+                        {t('getStarted')}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+            </View>
+          </View>
+        ))}
+      </Swiper>
+    </Layout>
+  );
+}

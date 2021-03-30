@@ -121,6 +121,9 @@ export default function usePreFetchResources() {
           require('assets/images/user/user1.png'),
           require('assets/images/user/user2.png'),
           require('assets/images/user/user3.png'),
+          require('assets/images/onboarding/care.jpg'),
+          require('assets/images/onboarding/rewards.jpg'),
+          require('assets/images/onboarding/wallet.jpg'),
           require('assets/audio/woozeee_Instrumental.mp3'),
         ]);
       } catch (e) {

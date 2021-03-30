@@ -135,5 +135,10 @@
   "showOn": "Show on",
   "postVideo": "Post Video",
   "selectGroup": "Select Group",
-  "selectCategory": "Select Category"
+  "selectCategory": "Select Category",
+  "skip": "Skip",
+  "activate": "Activate",
+  "care": "care",
+  "reward": "reward",
+  "getStarted": "Get Started"
 }

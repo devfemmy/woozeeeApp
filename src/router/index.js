@@ -16,8 +16,6 @@ import RegisterFull from 'src/screens/Authentication/Registration/RegisterFull';
 import VerifyWithCode from 'src/screens/Authentication/Verification';
 import RecoverWithEmail from 'src/screens/Authentication/Recovery';
 
-import Onboarding from 'src/screens/Authentication/Onboarding';
-
 // Common screens
 import FAQs from 'src/screens/Common/FAQs';
 import TermsConditions from 'src/screens/Common/TermsConditions';
@@ -35,6 +33,9 @@ import Chats from 'src/screens/User/Common/Chats';
 import Rankings from 'src/screens/User/Common/Rankings';
 import UserProfile from 'src/screens/User/Common/UserProfile';
 import Follow from 'src/screens/User/Common/Follow';
+
+// Onboarding
+import Onboarding from 'src/screens/User/Onboarding';
 
 /* Routes import */
 import UserRoute from './User';
@@ -55,10 +56,10 @@ export default function Router() {
       RegisterFull,
       VerifyWithCode,
       RecoverWithEmail,
-      Onboarding,
     },
 
     User: {
+      Onboarding,
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,

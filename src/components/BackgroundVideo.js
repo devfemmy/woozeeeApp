@@ -53,14 +53,15 @@ export default function BackgroundVideo(props) {
     >
       <Image
         source={thumbUri}
+        defaultSource={thumbUri}
         style={[
           style,
           {
-            resizeMode: 'cover',
             width: '100%',
             height: '100%',
           },
         ]}
+        resizeMode="cover"
         onLoad={() => {
           Animated.timing(thumbOpacity, {
             toValue: 1,

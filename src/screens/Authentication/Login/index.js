@@ -158,7 +158,7 @@ export default function Login({ navigation }) {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
                 accessoryLeft={isLoading ? renderSpinner : null}
-                onPress={routeOnboarding}
+                onPress={loginUser}
                 disabled={isLoading}
               >
                 <Text status="control">{t('continue')}</Text>
