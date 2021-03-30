@@ -154,7 +154,6 @@ export default function Profile({ navigation }) {
                   style={{
                     marginHorizontal: 5,
                     width: 120,
-                    backgroundColor: 'white',
                   }}
                   onPress={routeEditProfile}
                 >

@@ -152,7 +152,6 @@ export default function UserProfile({ navigation }) {
                   style={{
                     marginHorizontal: 5,
                     width: 120,
-                    backgroundColor: 'white',
                   }}
                 >
                   <Text status="primary" category="c2">
