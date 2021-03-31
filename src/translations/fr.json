@@ -140,5 +140,9 @@
   "activate": "Activer",
   "care": "se soucier",
   "reward": "récompense",
-  "getStarted": "Commencer"
+  "getStarted": "Commencer",
+  "mobileNum": "Numéro de portable",
+  "fillDetails": "Remplissez vos coordonnées",
+  "ifAny": "Si seulement",
+  "next": "Suivant"
 }

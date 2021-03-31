@@ -26,15 +26,14 @@ import {
 
 import { IconCalendar } from 'src/components/CustomIcons';
 
-import genders from './genders.json';
 import countries from './countries.json';
 import states from './states.json';
-
-const GENDERS = genders;
 
 const COUNTRIES = countries;
 
 const STATES = states;
+
+const GENDERS = ['Female', 'Male'];
 
 const libraryImagePicker = ImageVideoPicker('Images');
 

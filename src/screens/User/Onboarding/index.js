@@ -60,6 +60,11 @@ export default function Onboarding({ navigation }) {
     }, 0);
   };
 
+  const ACTIVATE_SCREENS = {
+    activateWallet: () => navigation.navigate('ActivateWallet'),
+    activateCare: () => navigation.navigate('ActivateCare'),
+  };
+
   const routeHome = () => navigation.replace('UserRoute');
 
   const NextButton = () => (
@@ -130,7 +135,11 @@ export default function Onboarding({ navigation }) {
                 </Text>
               </View>
               <View style={{ flex: 1, width: '100%', position: 'relative' }}>
-                <Button status="danger" style={{ marginBottom: 10 }}>
+                <Button
+                  status="danger"
+                  style={{ marginBottom: 10 }}
+                  onPress={ACTIVATE_SCREENS[item.activateAction]}
+                >
                   <Text status="control" category="h6">
                     {t('activate')}
                   </Text>

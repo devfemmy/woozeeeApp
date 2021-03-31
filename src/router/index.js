@@ -36,6 +36,7 @@ import Follow from 'src/screens/User/Common/Follow';
 
 // Onboarding
 import Onboarding from 'src/screens/User/Onboarding';
+import ActivateWallet from 'src/screens/User/Onboarding/ActivateWallet';
 
 /* Routes import */
 import UserRoute from './User';
@@ -60,6 +61,7 @@ export default function Router() {
 
     User: {
       Onboarding,
+      ActivateWallet,
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,

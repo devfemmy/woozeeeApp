@@ -60,6 +60,7 @@ export default function Register({ navigation }) {
                 label={t('emailAddress')}
                 autoCompleteType="email"
                 textContentType="emailAddress"
+                keyboardType="email-address"
                 validate="email"
                 setFormValues={setFormValues}
               />

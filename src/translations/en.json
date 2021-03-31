@@ -140,5 +140,9 @@
   "activate": "Activate",
   "care": "care",
   "reward": "reward",
-  "getStarted": "Get Started"
+  "getStarted": "Get Started",
+  "mobileNum": "Mobile number",
+  "fillDetails": "Fill in your Details",
+  "ifAny": "If any",
+  "next": "Next"
 }
