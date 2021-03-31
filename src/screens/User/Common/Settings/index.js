@@ -96,11 +96,11 @@ export default function Settings({ navigation }) {
     setSelectedLocale(index);
   };
 
-  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
+  // const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
   const renderLocales = () => <Text>{LOCALES[selectedLocale.row].title}</Text>;
 
-  const routeBack = () => navigation.goBack();
+  // const routeBack = () => navigation.goBack();
 
   return (
     <Layout level="6" style={{ flex: 1 }}>

@@ -34,7 +34,7 @@ export default function ActivateWallet({ navigation }) {
   const t = useContext(LocaleContext);
 
   // prettier-ignore
-  const routeUploadImage = () => navigation.navigate('ActivateWalletImageUpload');
+  const routePictureUpload = () => navigation.navigate('ActivateWalletPictureUpload');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -143,8 +143,8 @@ export default function ActivateWallet({ navigation }) {
                 accessibilityLiveRegion="assertive"
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
-                onPress={routeUploadImage}
                 disabled={isLoading}
+                onPress={routePictureUpload}
               >
                 <Text status="control">{t('next')}</Text>
               </Button>

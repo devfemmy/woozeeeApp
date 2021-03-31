@@ -55,12 +55,13 @@ export const GeneralTextField = (props) => {
     validate,
     setFormValues,
     secure,
+    status,
     ...otherProps
   } = props;
 
   const [inputVal, setInputVal] = useState({
     value: '',
-    status: 'basic',
+    status: status ?? 'basic',
   });
 
   const [isSecureEntry, setSecureEntry] = useState(secure);

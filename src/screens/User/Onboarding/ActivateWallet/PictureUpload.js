@@ -56,12 +56,15 @@ export default function PictureUpload({ navigation }) {
 
     const imageFile = await cameraImageTaker([1, 1]);
 
-    if (!imageFile?.uri) return;
+    if (!imageFile) return;
 
-    setUserImage(imageFile.uri);
+    setUserImage(imageFile);
   };
 
   const handleOpenSheet = () => sheetRef.current.open();
+
+  // prettier-ignore
+  const routeActivateWalletOTPVerify = () => navigation.navigate('ActivateWalletOTPVerification');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -133,6 +136,7 @@ export default function PictureUpload({ navigation }) {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
                 disabled={isLoading}
+                onPress={routeActivateWalletOTPVerify}
               >
                 <Text status="control">{t('next')}</Text>
               </Button>

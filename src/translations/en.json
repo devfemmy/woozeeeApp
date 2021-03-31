@@ -147,5 +147,15 @@
   "next": "Next",
   "chooseFromLibrary": "Choose from Library",
   "takePhoto": "Take Photo",
-  "uploadPicture": "Upload Picture"
+  "uploadPicture": "Upload Picture",
+  "accountNumber": "Account Number",
+  "pin": "PIN",
+  "digits": "Digits",
+  "yourAccountNumIs": "Your Account Number is",
+  "complete": "Complete",
+  "otpVerify": "OTP Verification",
+  "weSentACode": "We sent you a code",
+  "enterToVerify": "Enter it below for verification",
+  "didNotReceiveOtp": "Didn't receive the OTP",
+  "resend": "Resend in"
 }

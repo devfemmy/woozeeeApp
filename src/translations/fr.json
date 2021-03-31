@@ -147,5 +147,15 @@
   "next": "Suivant",
   "chooseFromLibrary": "Choisissez parmi la bibliothèque",
   "takePhoto": "Prendre une photo",
-  "uploadPicture": "Charger une photo"
+  "uploadPicture": "Charger une photo",
+  "accountNumber": "Numéro de compte",
+  "pin": "ÉPINGLER",
+  "digits": "Chiffre",
+  "yourAccountNumIs": "Votre numéro de compte est",
+  "complete": "Compléter",
+  "otpVerify": "Vérification OTP",
+  "weSentACode": "Nous vous avons envoyé un code",
+  "enterToVerify": "Entrez-le ci-dessous pour vérification",
+  "didNotReceiveOtp": "N'a pas reçu le OTP",
+  "resend": "Renvoyer dans"
 }
