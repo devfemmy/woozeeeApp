@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 
 // prettier-ignore
 import {
@@ -16,11 +16,10 @@ import { VESDK, Configuration } from 'react-native-videoeditorsdk';
 
 import { LocaleContext } from 'src/contexts';
 
-import ImageVideoPicker from 'src/utilities/ImageVideoPicker';
-
 import getLibraryPermission from 'src/utilities/getLibraryPermission';
 import getCameraPermission from 'src/utilities/getCameraPermission';
 
+import ImageVideoPicker from 'src/utilities/ImageVideoPicker';
 import ImageVideoCamera from 'src/utilities/ImageVideoCamera';
 
 import { IconVideoOutline, IconCloudUploadOutline } from '../CustomIcons';
@@ -37,7 +36,7 @@ const configuration = {
 export default function SocialUpload(props) {
   const { navigation, theme } = props;
 
-  const sheetRef = React.useRef(null);
+  const sheetRef = useRef(null);
 
   const t = useContext(LocaleContext);
 

@@ -144,5 +144,8 @@
   "mobileNum": "Mobile number",
   "fillDetails": "Fill in your Details",
   "ifAny": "If any",
-  "next": "Next"
+  "next": "Next",
+  "chooseFromLibrary": "Choose from Library",
+  "takePhoto": "Take Photo",
+  "uploadPicture": "Upload Picture"
 }

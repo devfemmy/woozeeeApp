@@ -144,5 +144,8 @@
   "mobileNum": "Numéro de portable",
   "fillDetails": "Remplissez vos coordonnées",
   "ifAny": "Si seulement",
-  "next": "Suivant"
+  "next": "Suivant",
+  "chooseFromLibrary": "Choisissez parmi la bibliothèque",
+  "takePhoto": "Prendre une photo",
+  "uploadPicture": "Charger une photo"
 }

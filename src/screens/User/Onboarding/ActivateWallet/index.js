@@ -24,16 +24,17 @@ export default function ActivateWallet({ navigation }) {
   const [form, setFormValues] = useState({
     firstName: '',
     lastName: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
+    mobileNumber: '',
+    gender: '',
+    dob: '',
+    email: '',
+    referralCode: '',
   });
 
   const t = useContext(LocaleContext);
 
-  const routeLogin = () => navigation.navigate('Login');
-
-  const routeVerifyWithCode = () => navigation.navigate('VerifyWithCode');
+  // prettier-ignore
+  const routeUploadImage = () => navigation.navigate('ActivateWalletImageUpload');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -142,7 +143,7 @@ export default function ActivateWallet({ navigation }) {
                 accessibilityLiveRegion="assertive"
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
-                onPress={routeVerifyWithCode}
+                onPress={routeUploadImage}
                 disabled={isLoading}
               >
                 <Text status="control">{t('next')}</Text>

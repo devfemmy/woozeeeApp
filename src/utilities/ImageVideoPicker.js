@@ -4,7 +4,7 @@ const MEDIA_OPTIONS = {
   Images: {
     mediaTypes: ImagePicker.MediaTypeOptions.Images,
     allowsEditing: true,
-    quality: 0.6,
+    quality: 0.8,
   },
   Videos: {
     mediaTypes: ImagePicker.MediaTypeOptions.Videos,
