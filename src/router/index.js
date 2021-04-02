@@ -64,11 +64,11 @@ export default function Router() {
 
     User: {
       Onboarding,
+      UserRoute,
       ActivateWallet,
       ActivateWalletPictureUpload,
-      ActivateWalletAccountNumber,
       ActivateWalletOTPVerification,
-      UserRoute,
+      ActivateWalletAccountNumber,
       SocialRoute,
       MarketPlaceRoute,
       CharityRoute,

@@ -114,7 +114,7 @@ export default function UserProfile({ navigation }) {
                 />
               </View>
               <View
-                style={{ marginBottom: 10, marginTop: 5, alignItems: 'center' }}
+                style={{ marginBottom: 5, marginTop: 5, alignItems: 'center' }}
               >
                 <Text category="h5">Bukola Daniel</Text>
                 <Text category="p2" appearance="hint">
@@ -124,7 +124,7 @@ export default function UserProfile({ navigation }) {
               <View
                 style={{
                   maxWidth: 300,
-                  marginBottom: 10,
+                  marginBottom: 5,
                 }}
               >
                 <Text
@@ -133,7 +133,7 @@ export default function UserProfile({ navigation }) {
                     textAlign: 'center',
                     lineHeight: 15,
                   }}
-                  numberOfLines={1}
+                  numberOfLines={2}
                 >
                   Content writer with beautiful aesthetics, Face of woozeee (It
                   seems).
@@ -141,7 +141,7 @@ export default function UserProfile({ navigation }) {
               </View>
               <View style={{ marginBottom: 10, alignItems: 'center' }}>
                 <Text category="h6" status="primary">
-                  wooz8264LG
+                  8264LG
                 </Text>
               </View>
               <View style={{ marginBottom: 10, flexDirection: 'row' }}>

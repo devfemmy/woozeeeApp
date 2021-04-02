@@ -149,7 +149,7 @@ export default function SocialUpload(props) {
             onPress={handleSelectVideo}
           >
             <Text style={{ fontSize: 16 }} status="basic">
-              {t('uploadFromDevice')}
+              {t('upload')}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 2, width: '100%' }} />
@@ -166,7 +166,7 @@ export default function SocialUpload(props) {
             onPress={handleRecordVideo}
           >
             <Text style={{ fontSize: 16 }} status="basic">
-              {t('recordWithCam')}
+              {t('record')}
             </Text>
           </Button>
         </Layout>

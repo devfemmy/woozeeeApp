@@ -157,5 +157,6 @@
   "weSentACode": "We sent you a code",
   "enterToVerify": "Enter it below for verification",
   "didNotReceiveOtp": "Didn't receive the OTP",
-  "resend": "Resend in"
+  "resend": "Resend in",
+  "record": "Record"
 }
