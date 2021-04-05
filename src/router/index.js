@@ -36,10 +36,14 @@ import Follow from 'src/screens/User/Common/Follow';
 
 // Onboarding
 import Onboarding from 'src/screens/User/Onboarding';
+
 import ActivateWallet from 'src/screens/User/Onboarding/ActivateWallet';
 import ActivateWalletPictureUpload from 'src/screens/User/Onboarding/ActivateWallet/PictureUpload';
 import ActivateWalletOTPVerification from 'src/screens/User/Onboarding/ActivateWallet/OTPVerification';
-import ActivateWalletAccountNumber from 'src/screens/User/Onboarding/ActivateWallet/AccountNumber';
+
+import ActivateCare from 'src/screens/User/Onboarding/ActivateCare';
+import ActivateCarePictureUpload from 'src/screens/User/Onboarding/ActivateCare/PictureUpload';
+import ActivateCareOTPVerification from 'src/screens/User/Onboarding/ActivateCare/OTPVerification';
 
 /* Routes import */
 import UserRoute from './User';
@@ -67,7 +71,9 @@ export default function Router() {
       ActivateWallet,
       ActivateWalletPictureUpload,
       ActivateWalletOTPVerification,
-      ActivateWalletAccountNumber,
+      ActivateCare,
+      ActivateCarePictureUpload,
+      ActivateCareOTPVerification,
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,

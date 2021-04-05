@@ -274,6 +274,7 @@ const VideoView = forwardRef((props, ref) => {
               textContent={`${item.likes} like(s)`}
               // direction="row"
               status={isLiked ? 'danger' : 'basic'}
+              align="flex-start"
               height={24}
               width={24}
               onPress={toggleLike}

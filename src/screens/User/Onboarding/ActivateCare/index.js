@@ -2,111 +2,33 @@ import React, { useContext, useState } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-import {
-  Layout,
-  Button,
-  Text,
-  Select,
-  SelectItem,
-  IndexPath,
-} from '@ui-kitten/components';
+import { Layout, Button, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import {
-  GeneralTextField,
-  GeneralDatePicker,
-  GeneralRadioGroup,
-  GeneralSelect,
-} from 'src/components/FormFields';
+import { GeneralTextField, GeneralDatePicker } from 'src/components/FormFields';
 
 import { IconCalendar } from 'src/components/CustomIcons';
-
-import statesLgas from 'src/store/nigeria_states_lgas.json';
-
-const STATES_LGAS = statesLgas;
-
-const GENDERS = ['Female', 'Male'];
-
-const TITLES = [{ title: 'Mr' }, { title: 'Mrs' }, { title: 'Ms' }];
-
-const RELIGIONS = [
-  { title: 'Christianity' },
-  { title: 'Muslim' },
-  { title: 'Other' },
-];
-
-const MARITAL_STATUS = [
-  { title: 'Divorced' },
-  { title: 'Married' },
-  { title: 'Single' },
-  { title: 'Widowed' },
-  { title: 'Other' },
-];
-
-// local compare
-const genericCompare = (prev, next) => {
-  if (prev.toLowerCase() < next.toLowerCase()) return -1;
-  if (prev.toLowerCase() > next.toLowerCase()) return 1;
-  return 0;
-};
-
-// extract and sort states
-const STATES = STATES_LGAS.map((data) => ({
-  alias: data.alias,
-  state: data.state,
-})).sort((a, b) => genericCompare(a.alias, b.alias));
-
-// extract and sort lgas
-const LGAS = STATES_LGAS.map((data) => ({
-  alias: data.alias,
-  lgas: data.lgas.sort((a, b) => genericCompare(a, b)),
-})).sort((a, b) => genericCompare(a.alias, b.alias));
 
 export default function ActivateWallet({ navigation }) {
   const [isLoading, setLoading] = useState(false);
 
   const [form, setFormValues] = useState({
-    title: TITLES[0].title,
     firstName: '',
-    middleName: '',
     lastName: '',
     mobileNumber: '',
-    gender: '',
     dob: '',
     email: '',
-    religion: RELIGIONS[0].title,
-    maritalStatus: MARITAL_STATUS[0].title,
-    profession: '',
-    maidenName: '',
-    bvn: '',
-    street: '',
+    address: '',
+    beneficiary1: '',
+    beneficiary2: '',
+    beneficiary3: '',
+    beneficiary4: '',
   });
 
   const t = useContext(LocaleContext);
-
-  const [selectedState, setSelectedState] = useState(new IndexPath(0));
-
-  const [selectedStateLga, setSelectedStateLga] = useState(0);
-
-  const [selectedLga, setSelectedLga] = useState(new IndexPath(0));
-
-  const handleSelectState = (index) => {
-    setSelectedState(index);
-    setSelectedStateLga(index.row);
-  };
-
-  const renderState = () => <Text>{STATES[selectedState.row].state}</Text>;
-
-  const handleSelectLga = (index) => {
-    setSelectedLga(index);
-  };
-
-  const renderLga = () => (
-    <Text>{LGAS[selectedStateLga].lgas[selectedLga.row]}</Text>
-  );
 
   // prettier-ignore
   const routePictureUpload = () => navigation.navigate('ActivateWalletPictureUpload');
@@ -138,35 +60,9 @@ export default function ActivateWallet({ navigation }) {
               }}
             >
               <View style={{ flex: 1, marginRight: 5 }}>
-                <GeneralSelect
-                  type="title"
-                  label={t('title')}
-                  data={TITLES}
-                  setFormValues={setFormValues}
-                />
-              </View>
-              <View style={{ flex: 1, marginLeft: 5 }}>
                 <GeneralTextField
                   type="firstName"
                   label={t('firstName')}
-                  autoCompleteType="name"
-                  textContentType="givenName"
-                  validate="required"
-                  setFormValues={setFormValues}
-                />
-              </View>
-            </View>
-            <View
-              style={{
-                paddingVertical: 10,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <View style={{ flex: 1, marginRight: 5 }}>
-                <GeneralTextField
-                  type="middleName"
-                  label={t('middleName')}
                   validate="required"
                   setFormValues={setFormValues}
                 />
@@ -192,28 +88,13 @@ export default function ActivateWallet({ navigation }) {
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <GeneralRadioGroup
-                    type="gender"
-                    label={t('gender')}
-                    data={GENDERS}
-                    setFormValues={setFormValues}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 5 }}>
-                  <GeneralDatePicker
-                    type="dob"
-                    label={t('dob')}
-                    setFormValues={setFormValues}
-                    accessoryRight={IconCalendar}
-                  />
-                </View>
+              <View style={{ flex: 1, marginLeft: 5 }}>
+                <GeneralDatePicker
+                  type="dob"
+                  label={t('dob')}
+                  setFormValues={setFormValues}
+                  accessoryRight={IconCalendar}
+                />
               </View>
             </View>
             <View style={{ paddingVertical: 10 }}>
@@ -228,85 +109,38 @@ export default function ActivateWallet({ navigation }) {
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <GeneralSelect
-                    type="religion"
-                    label={t('religion')}
-                    data={RELIGIONS}
-                    setFormValues={setFormValues}
-                  />
-                </View>
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <GeneralSelect
-                    type="maritalStatus"
-                    label={t('maritalStatus')}
-                    data={MARITAL_STATUS}
-                    setFormValues={setFormValues}
-                  />
-                </View>
-              </View>
-            </View>
-            <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
-                type="profession"
-                label={t('profession')}
+                type="address"
+                label={t('address')}
                 validate="required"
                 setFormValues={setFormValues}
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
-                type="maidenName"
-                label={t('maidenName')}
+                type="beneficiary1"
+                label={`${t('beneficiary')} ${t('name')}`}
                 setFormValues={setFormValues}
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
-                type="bvn"
-                label="BVN"
-                keyboardType="number-pad"
-                validate="required"
+                type="beneficiary2"
+                label={`${t('second')} ${t('beneficiary')}`}
                 setFormValues={setFormValues}
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
-              <Select
-                size="large"
-                label={t('state')}
-                value={renderState}
-                selectedIndex={selectedState}
-                onSelect={handleSelectState}
-              >
-                {STATES.map((option) => (
-                  <SelectItem key={option.state} title={option.state} />
-                ))}
-              </Select>
-            </View>
-            <View style={{ paddingVertical: 10 }}>
-              <Select
-                size="large"
-                label="LGA"
-                value={renderLga}
-                selectedIndex={selectedLga}
-                onSelect={handleSelectLga}
-              >
-                {LGAS[selectedStateLga].lgas.map((lga) => (
-                  <SelectItem key={lga} title={lga} />
-                ))}
-              </Select>
+              <GeneralTextField
+                type="beneficiary3"
+                label={`${t('third')} ${t('beneficiary')}`}
+                setFormValues={setFormValues}
+              />
             </View>
             <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
-                type="street"
-                label={t('street')}
-                validate="required"
+                type="beneficiary4"
+                label={`${t('fourth')} ${t('beneficiary')}`}
                 setFormValues={setFormValues}
               />
             </View>

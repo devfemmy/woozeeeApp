@@ -5,7 +5,11 @@ import React, {
 
 // prettier-ignore
 import {
-  View, Image, useWindowDimensions, ScrollView,
+  View,
+  Image,
+  useWindowDimensions,
+  ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -118,55 +122,67 @@ export default function Comments({ navigation }) {
   );
 
   // prettier-ignore
-  const Message = ({ sent, data }) => useMemo(
-    () => (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'flex-start',
-          marginTop: 15,
-        }}
-      >
-        <LinearGradient
-          colors={['#043F7C', '#FF5757']}
-          style={{
-            height: 34,
-            width: 34,
-            borderRadius: 17,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Image
-            source={require('assets/images/user/user1.png')}
+  const Message = ({ sent, data }) =>
+    useMemo(
+      () => (
+        <View>
+          <View
             style={{
-              height: 30,
-              width: 30,
-              borderRadius: 15,
-              borderColor: 'white',
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginTop: 15,
             }}
-          />
-        </LinearGradient>
-        <Layout
-          level="4"
-          style={{
-            flex: 1,
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-            borderRadius: 10,
-            marginHorizontal: 5,
-          }}
-        >
-          <Text category="s2" style={{ alignSelf: 'flex-start' }}>{data.user}</Text>
-          <Text category="p2">{data.msg}</Text>
-          <Text category="c1" style={{ alignSelf: 'flex-end' }}>
-            {data.time}
-          </Text>
-        </Layout>
-      </View>
-    ),
-    [data],
-  );
+          >
+            <LinearGradient
+              colors={['#043F7C', '#FF5757']}
+              style={{
+                height: 34,
+                width: 34,
+                borderRadius: 17,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Image
+                source={require('assets/images/user/user1.png')}
+                style={{
+                  height: 30,
+                  width: 30,
+                  borderRadius: 15,
+                  borderColor: 'white',
+                }}
+              />
+            </LinearGradient>
+            <Layout
+              level="4"
+              style={{
+                flex: 1,
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                borderRadius: 10,
+                marginHorizontal: 5,
+              }}
+            >
+              <Text category="s2" style={{ alignSelf: 'flex-start' }}>
+                {data.user}
+              </Text>
+              <Text category="p2">{data.msg}</Text>
+              <Text category="c1" style={{ alignSelf: 'flex-end' }}>
+                {data.time}
+              </Text>
+            </Layout>
+          </View>
+          <View style={{ marginVertical: 5, marginLeft: 50 }}>
+            <TouchableOpacity
+              activeOpacity={0.75}
+            >
+              <Text category="c2">{t('reply')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ),
+      [data],
+    );
 
   return useMemo(
     () => (

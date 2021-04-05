@@ -63,6 +63,7 @@ export default function Onboarding({ navigation }) {
   const ACTIVATE_SCREENS = {
     activateWallet: () => navigation.navigate('ActivateWallet'),
     activateCare: () => navigation.navigate('ActivateCare'),
+    goHome: () => navigation.replace('UserRoute'),
   };
 
   const routeHome = () => navigation.replace('UserRoute');

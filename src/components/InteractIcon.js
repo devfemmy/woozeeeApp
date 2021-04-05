@@ -13,6 +13,7 @@ export default function InteractIcon(props) {
     status,
     height,
     width,
+    align,
     style,
   } = props;
 
@@ -23,7 +24,7 @@ export default function InteractIcon(props) {
           style,
           {
             flexDirection: direction ?? 'column',
-            alignItems: 'center',
+            alignItems: align ?? 'center',
             backgroundColor: 'rgba(0, 0, 0, 0.0125)',
           },
         ]}

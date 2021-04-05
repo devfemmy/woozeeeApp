@@ -165,5 +165,12 @@
   "maritalStatus": "Marital Status",
   "profession": "Profession",
   "maidenName": "Maiden Name",
-  "street": "Street"
+  "street": "Street",
+  "address": "Address",
+  "name": "Name",
+  "beneficiary": "Beneficiary",
+  "second": "Second",
+  "third": "Third",
+  "fourth": "Fourth",
+  "reply": "Reply"
 }
