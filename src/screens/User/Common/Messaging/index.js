@@ -22,7 +22,7 @@ export default function Messaging({ navigation }) {
       <TabView
         style={{ flex: 1 }}
         selectedIndex={selectedIndex}
-        shouldLoadComponent={shouldLoadComponent}
+        // shouldLoadComponent={shouldLoadComponent}
         onSelect={(index) => setSelectedIndex(index)}
       >
         <Tab title={t('messages')} style={{ paddingVertical: 10 }}>

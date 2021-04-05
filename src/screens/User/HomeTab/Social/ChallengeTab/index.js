@@ -27,7 +27,7 @@ export default function Challenge({ navigation }) {
       <TabView
         style={{ flex: 1 }}
         selectedIndex={selectedIndex}
-        shouldLoadComponent={shouldLoadComponent}
+        // shouldLoadComponent={shouldLoadComponent}
         onSelect={(index) => setSelectedIndex(index)}
       >
         <Tab title={t('challenge')} style={{ paddingVertical: 10 }}>

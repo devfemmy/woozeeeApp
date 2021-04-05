@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useCallback } from 'react';
 
-import { Pressable } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import {
   Radio,
@@ -39,9 +39,9 @@ const SecureToggleIcon = (props) => {
   };
 
   return (
-    <Pressable onPress={handlePress}>
+    <TouchableOpacity activeOpacity={0.75} onPress={handlePress}>
       <IconEye {...otherProps} isClosed={isSecure} />
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
@@ -101,7 +101,7 @@ export const GeneralTextField = (props) => {
         size={size || 'large'}
         caption={caption}
         value={inputVal.value}
-        label={label}
+        label={`${label} ${validate ? '*' : ''}`}
         secureTextEntry={isSecureEntry}
         accessibilityLabel={label}
         placeholder={placeholder || label}

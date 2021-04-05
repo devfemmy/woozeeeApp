@@ -158,5 +158,12 @@
   "enterToVerify": "Enter it below for verification",
   "didNotReceiveOtp": "Didn't receive the OTP",
   "resend": "Resend in",
-  "record": "Record"
+  "record": "Record",
+  "title": "Title",
+  "middleName": "Middle name",
+  "religion": "Religion",
+  "maritalStatus": "Marital Status",
+  "profession": "Profession",
+  "maidenName": "Maiden Name",
+  "street": "Street"
 }
