@@ -177,5 +177,8 @@
   "redeem": "Redeem Points",
   "rewards": "rewards",
   "acceptCharge": "Accept Charges",
-  "completeTransfer": "Complete Transfer"
+  "completeTransfer": "Complete Transfer",
+  "beBack": "Ok, I will be back",
+  "marketComing": "Our 'Marketplace' segment will be available in the next quarter",
+  "charityComing": "Our 'Charity' segment will be available in the next quarter"
 }

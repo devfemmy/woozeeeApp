@@ -118,6 +118,8 @@ export default function usePreFetchResources() {
           require('assets/images/banner/mega-sale.jpg'),
           require('assets/images/banner/valentine.jpg'),
           require('assets/images/banner/woozeee-ad.jpg'),
+          require('assets/images/banner/marketplace.jpg'),
+          require('assets/images/banner/charity.jpg'),
           require('assets/images/user/user1.png'),
           require('assets/images/user/user2.png'),
           require('assets/images/user/user3.png'),

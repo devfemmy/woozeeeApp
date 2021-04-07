@@ -64,14 +64,16 @@ const woozeeeCategories = [
     banner: require('assets/images/banner/woozeee-marketplace.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fmarket.mp4?alt=media&token=2709a1b4-8d3b-4d74-a364-63a276e94493',
-    screen: 'MarketPlaceRoute',
+    // screen: 'MarketPlaceRoute',
+    screen: 'openComingSoonMarket',
   },
   {
     title: 'charity',
     banner: require('assets/images/banner/woozeee-charity.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fcharity.mp4?alt=media&token=c837385b-fef5-4df3-ad36-c36560fe0ee0',
-    screen: 'CharityRoute',
+    // screen: 'CharityRoute',
+    screen: 'openComingSoonCharity',
   },
 ];
 
@@ -116,6 +118,8 @@ export default function Home({ navigation }) {
   const sheetRefCare = useRef(null);
   const sheetRefWallet = useRef(null);
   const sheetRefRewards = useRef(null);
+  const sheetComingSoonMarket = useRef(null);
+  const sheetComingSoonCharity = useRef(null);
 
   const IS_PORTRAIT = height > width;
 
@@ -131,13 +135,16 @@ export default function Home({ navigation }) {
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
+  // const routeTo = (route) => navigation.replace(route);
+
   const ACTION_SHEETS = {
     openCare: () => sheetRefCare.current.open(),
     openWallet: () => sheetRefWallet.current.open(),
     openRewards: () => sheetRefRewards.current.open(),
+    openComingSoonMarket: () => sheetComingSoonMarket.current.open(),
+    openComingSoonCharity: () => sheetComingSoonCharity.current.open(),
+    SocialRoute: () => navigation.replace('SocialRoute'),
   };
-
-  const routeTo = (route) => navigation.replace(route);
 
   const RewardsSheet = useCallback(
     () => (
@@ -204,6 +211,7 @@ export default function Home({ navigation }) {
     ),
     [t, BG_THEME],
   );
+
   const CareSheet = useCallback(
     () => (
       <RBSheet
@@ -269,6 +277,7 @@ export default function Home({ navigation }) {
     ),
     [t, BG_THEME],
   );
+
   const WalletSheet = useCallback(
     () => (
       <RBSheet
@@ -335,6 +344,200 @@ export default function Home({ navigation }) {
     [t, BG_THEME],
   );
 
+  const MarketSheet = useCallback(
+    () => (
+      <RBSheet
+        ref={sheetComingSoonMarket}
+        height={height}
+        closeOnDragDown
+        animationType="fade"
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: BG_THEME,
+            paddingVertical: 20,
+          },
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            width: '100%',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-end',
+            paddingBottom: 30,
+            position: 'relative',
+          }}
+        >
+          <Image
+            source={require('assets/images/banner/marketplace.jpg')}
+            defaultSource={require('assets/images/banner/marketplace.jpg')}
+            resizeMode="contain"
+            style={{
+              height: '100%',
+              width: '100%',
+            }}
+          />
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'flex-end',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              height: '100%',
+              width: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.25)',
+            }}
+          >
+            <Layout
+              level="5"
+              style={{
+                alignItems: 'center',
+                width: '100%',
+                paddingHorizontal: 25,
+                paddingTop: 20,
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15,
+                height: 400,
+              }}
+            >
+              <Text category="h5" style={{ marginBottom: 20 }}>
+                {`woozeee ${t('marketplace')}`}
+              </Text>
+              <View style={{ flex: 1 }}>
+                <Image
+                  source={require('assets/images/gifs/qr-code-scan.gif')}
+                  defaultSource={require('assets/images/gifs/qr-code-scan.gif')}
+                  resizeMode="contain"
+                  style={{ height: '100%', width: 200, minHeight: 150 }}
+                />
+              </View>
+              <Text category="h6" style={{ marginVertical: 5 }}>
+                Hello Dev Romes
+              </Text>
+              <Text style={{ marginVertical: 5, textAlign: 'center' }}>
+                {t('marketComing')}
+              </Text>
+              <View
+                style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}
+              >
+                <Button
+                  status="danger"
+                  size="small"
+                  onPress={() => sheetComingSoonMarket.current.close()}
+                >
+                  <Text status="control" category="h6">
+                    {t('beBack')}
+                  </Text>
+                </Button>
+              </View>
+            </Layout>
+          </View>
+        </View>
+      </RBSheet>
+    ),
+    [t, BG_THEME, height],
+  );
+
+  const CharitySheet = useCallback(
+    () => (
+      <RBSheet
+        ref={sheetComingSoonCharity}
+        height={height}
+        closeOnDragDown
+        animationType="fade"
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: BG_THEME,
+            paddingVertical: 20,
+          },
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            width: '100%',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-end',
+            paddingBottom: 30,
+            position: 'relative',
+          }}
+        >
+          <Image
+            source={require('assets/images/banner/charity.jpg')}
+            defaultSource={require('assets/images/banner/charity.jpg')}
+            resizeMode="contain"
+            style={{
+              height: '100%',
+              width: '100%',
+            }}
+          />
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'flex-end',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              height: '100%',
+              width: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.25)',
+            }}
+          >
+            <Layout
+              level="5"
+              style={{
+                alignItems: 'center',
+                width: '100%',
+                paddingHorizontal: 25,
+                paddingTop: 20,
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15,
+                height: 400,
+              }}
+            >
+              <Text category="h5" style={{ marginBottom: 20 }}>
+                {`woozeee ${t('charity')}`}
+              </Text>
+              <View style={{ flex: 1 }}>
+                <Image
+                  source={require('assets/images/gifs/qr-code-scan.gif')}
+                  defaultSource={require('assets/images/gifs/qr-code-scan.gif')}
+                  resizeMode="contain"
+                  style={{ height: '100%', width: 200, minHeight: 150 }}
+                />
+              </View>
+              <Text category="h6" style={{ marginVertical: 5 }}>
+                Hello Dev Romes
+              </Text>
+              <Text style={{ marginVertical: 5, textAlign: 'center' }}>
+                {t('charityComing')}
+              </Text>
+              <View
+                style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}
+              >
+                <Button
+                  status="danger"
+                  size="small"
+                  onPress={() => sheetComingSoonCharity.current.close()}
+                >
+                  <Text status="control" category="h6">
+                    {t('beBack')}
+                  </Text>
+                </Button>
+              </View>
+            </Layout>
+          </View>
+        </View>
+      </RBSheet>
+    ),
+    [t, BG_THEME, height],
+  );
+
   const WoozeeeCards = (data) => (
     <TouchableOpacity
       activeOpacity={0.75}
@@ -373,7 +576,7 @@ export default function Home({ navigation }) {
         alignItems: 'center',
         alignSelf: 'center',
       }}
-      onPress={() => routeTo(data.item.screen)}
+      onPress={ACTION_SHEETS[data.item.screen]}
     >
       <View style={styles.cardContent}>
         <BackgroundVideo
@@ -450,6 +653,8 @@ export default function Home({ navigation }) {
       <RewardsSheet />
       <CareSheet />
       <WalletSheet />
+      <MarketSheet />
+      <CharitySheet />
     </Layout>
   );
 }
