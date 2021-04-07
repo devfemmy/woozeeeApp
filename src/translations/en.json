@@ -172,5 +172,10 @@
   "second": "Second",
   "third": "Third",
   "fourth": "Fourth",
-  "reply": "Reply"
+  "reply": "Reply",
+  "gotIt": "Ok, Got it",
+  "redeem": "Redeem Points",
+  "rewards": "rewards",
+  "acceptCharge": "Accept Charges",
+  "completeTransfer": "Complete Transfer"
 }

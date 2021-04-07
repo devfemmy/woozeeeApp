@@ -124,6 +124,7 @@ export default function usePreFetchResources() {
           require('assets/images/onboarding/care.jpg'),
           require('assets/images/onboarding/rewards.jpg'),
           require('assets/images/onboarding/wallet.jpg'),
+          require('assets/images/gifs/qr-code-scan.gif'),
           require('assets/audio/woozeee_Instrumental.mp3'),
         ]);
       } catch (e) {

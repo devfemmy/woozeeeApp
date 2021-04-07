@@ -1,4 +1,7 @@
-import React, { useContext } from 'react';
+// prettier-ignore
+import React, {
+  useContext, useRef, useCallback,
+} from 'react';
 
 import {
   View,
@@ -10,10 +13,16 @@ import {
 
 // prettier-ignore
 import {
-  Layout, Text, List,
+  Layout, Text, List, Button, Divider,
 } from '@ui-kitten/components';
 
-import { LoadingContext, LocaleContext } from 'src/contexts';
+import RBSheet from 'react-native-raw-bottom-sheet';
+
+import {
+  LoadingContext,
+  LocaleContext,
+  AppSettingsContext,
+} from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
@@ -28,14 +37,17 @@ const woozeeeCards = [
   {
     balance: '150.25',
     banner: require('assets/images/card/insure.jpg'),
+    action: 'openCare',
   },
   {
     balance: '350,152.83',
     banner: require('assets/images/card/wallet.jpg'),
+    action: 'openWallet',
   },
   {
     balance: '0.00',
     banner: require('assets/images/card/rewards.jpg'),
+    action: 'openRewards',
   },
 ];
 
@@ -101,6 +113,10 @@ export default function Home({ navigation }) {
 
   const { width, height } = useWindowDimensions();
 
+  const sheetRefCare = useRef(null);
+  const sheetRefWallet = useRef(null);
+  const sheetRefRewards = useRef(null);
+
   const IS_PORTRAIT = height > width;
 
   const CARD_HEIGHT = IS_PORTRAIT ? 190 : 170;
@@ -111,10 +127,217 @@ export default function Home({ navigation }) {
 
   const { isLoading } = useContext(LoadingContext);
 
+  const { appState } = useContext(AppSettingsContext);
+
+  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
+
+  const ACTION_SHEETS = {
+    openCare: () => sheetRefCare.current.open(),
+    openWallet: () => sheetRefWallet.current.open(),
+    openRewards: () => sheetRefRewards.current.open(),
+  };
+
   const routeTo = (route) => navigation.replace(route);
 
+  const RewardsSheet = useCallback(
+    () => (
+      <RBSheet
+        ref={sheetRefRewards}
+        height={400}
+        closeOnDragDown
+        animationType="fade"
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: BG_THEME,
+          },
+        }}
+      >
+        <Layout
+          level="5"
+          style={{
+            flex: 1,
+            width: '100%',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-end',
+            paddingBottom: 30,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 25,
+            }}
+          >
+            <Text category="h5" style={{ marginBottom: 20 }}>
+              {`woozeee ${t('rewards')}`}
+            </Text>
+            <View style={{ flex: 1 }}>
+              <Image
+                source={require('assets/images/gifs/qr-code-scan.gif')}
+                defaultSource={require('assets/images/gifs/qr-code-scan.gif')}
+                resizeMode="cover"
+                style={{ height: '100%', width: 200, minHeight: 150 }}
+              />
+            </View>
+            <Text category="h6" style={{ marginVertical: 5 }}>
+              Hello Dev Romes
+            </Text>
+            <Text style={{ marginVertical: 5 }}>{t('redeem')}</Text>
+            <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
+              <Button
+                status="danger"
+                size="small"
+                onPress={() => sheetRefRewards.current.close()}
+              >
+                <Text status="control" category="h6">
+                  {t('gotIt')}
+                </Text>
+              </Button>
+            </View>
+          </View>
+        </Layout>
+      </RBSheet>
+    ),
+    [t, BG_THEME],
+  );
+  const CareSheet = useCallback(
+    () => (
+      <RBSheet
+        ref={sheetRefCare}
+        height={400}
+        closeOnDragDown
+        animationType="fade"
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: BG_THEME,
+          },
+        }}
+      >
+        <Layout
+          level="5"
+          style={{
+            flex: 1,
+            width: '100%',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-end',
+            paddingBottom: 30,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 25,
+            }}
+          >
+            <Text category="h5" style={{ marginBottom: 20 }}>
+              {`woozeee ${t('care')}`}
+            </Text>
+            <View style={{ flex: 1 }}>
+              <Image
+                source={require('assets/images/gifs/qr-code-scan.gif')}
+                defaultSource={require('assets/images/gifs/qr-code-scan.gif')}
+                resizeMode="cover"
+                style={{ height: '100%', width: 200, minHeight: 150 }}
+              />
+            </View>
+            <Text category="h6" style={{ marginVertical: 5 }}>
+              Hello Dev Romes
+            </Text>
+            <Text style={{ marginVertical: 5 }}>{t('acceptCharge')}</Text>
+            <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
+              <Button
+                status="danger"
+                size="small"
+                onPress={() => sheetRefCare.current.close()}
+              >
+                <Text status="control" category="h6">
+                  {t('gotIt')}
+                </Text>
+              </Button>
+            </View>
+          </View>
+        </Layout>
+      </RBSheet>
+    ),
+    [t, BG_THEME],
+  );
+  const WalletSheet = useCallback(
+    () => (
+      <RBSheet
+        ref={sheetRefWallet}
+        height={400}
+        closeOnDragDown
+        animationType="fade"
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: BG_THEME,
+          },
+        }}
+      >
+        <Layout
+          level="5"
+          style={{
+            flex: 1,
+            width: '100%',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-end',
+            paddingBottom: 30,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              width: '100%',
+              paddingHorizontal: 25,
+            }}
+          >
+            <Text category="h5" style={{ marginBottom: 20 }}>
+              {`woozeee ${t('wallet')}`}
+            </Text>
+            <View style={{ flex: 1 }}>
+              <Image
+                source={require('assets/images/gifs/qr-code-scan.gif')}
+                defaultSource={require('assets/images/gifs/qr-code-scan.gif')}
+                resizeMode="cover"
+                style={{ height: '100%', width: 200, minHeight: 150 }}
+              />
+            </View>
+            <Text category="h6" style={{ marginVertical: 5 }}>
+              Hello Dev Romes
+            </Text>
+            <Text style={{ marginVertical: 5 }}>{t('completeTransfer')}</Text>
+            <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
+              <Button
+                status="danger"
+                size="small"
+                onPress={() => sheetRefWallet.current.close()}
+              >
+                <Text status="control" category="h6">
+                  {t('gotIt')}
+                </Text>
+              </Button>
+            </View>
+          </View>
+        </Layout>
+      </RBSheet>
+    ),
+    [t, BG_THEME],
+  );
+
   const WoozeeeCards = (data) => (
-    <View
+    <TouchableOpacity
+      activeOpacity={0.75}
       style={{
         height: CARD_HEIGHT,
         width: IS_PORTRAIT ? width / 1.75 : width / 3,
@@ -123,6 +346,7 @@ export default function Home({ navigation }) {
         alignItems: 'center',
         justifyContent: 'flex-start',
       }}
+      onPress={ACTION_SHEETS[data.item.action]}
     >
       <Balance value={data.item.balance} point={t('point')} />
       <Image
@@ -135,7 +359,7 @@ export default function Home({ navigation }) {
         }}
         resizeMode="cover"
       />
-    </View>
+    </TouchableOpacity>
   );
 
   const renderWoozeeeCategory = (data) => (
@@ -223,6 +447,9 @@ export default function Home({ navigation }) {
           })}
         />
       </View>
+      <RewardsSheet />
+      <CareSheet />
+      <WalletSheet />
     </Layout>
   );
 }

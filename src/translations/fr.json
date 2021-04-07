@@ -158,5 +158,22 @@
   "enterToVerify": "Entrez-le ci-dessous pour vérification",
   "didNotReceiveOtp": "N'a pas reçu le OTP",
   "resend": "Renvoyer dans",
-  "record": "Record"
+  "record": "Record",
+  "title": "Titre",
+  "middleName": "Deuxième nom",
+  "religion": "Religion",
+  "maritalStatus": "État civil",
+  "profession": "Profession",
+  "maidenName": "Nom de jeune fille",
+  "street": "Rue",
+  "address": "Adresse",
+  "name": "Nom",
+  "beneficiary": "Bénéficiaire",
+  "second": "Seconde",
+  "third": "Troisième",
+  "fourth": "Quatrième",
+  "reply": "Réponse",
+  "gotIt": "Ok, je l'ai",
+  "redeem": "Échanger des points",
+  "rewards": "récompenses"
 }
