@@ -271,7 +271,7 @@ const VideoView = forwardRef((props, ref) => {
               Accessory={(evaProps) => (
                 <IconCHeart {...evaProps} active={isLiked} />
               )}
-              textContent={`${item.likes} like(s)`}
+              textContent={item.likes}
               // direction="row"
               status={isLiked ? 'danger' : 'basic'}
               align="flex-start"
