@@ -42,8 +42,9 @@ import ActivateWalletPictureUpload from 'src/screens/User/Onboarding/ActivateWal
 import ActivateWalletOTPVerification from 'src/screens/User/Onboarding/ActivateWallet/OTPVerification';
 
 import ActivateCare from 'src/screens/User/Onboarding/ActivateCare';
-import ActivateCarePictureUpload from 'src/screens/User/Onboarding/ActivateCare/PictureUpload';
-import ActivateCareOTPVerification from 'src/screens/User/Onboarding/ActivateCare/OTPVerification';
+import ActivateCareSoloPlan from 'src/screens/User/Onboarding/ActivateCare/SoloPlan';
+import ActivateCareFamilyPlan from 'src/screens/User/Onboarding/ActivateCare/FamilyPlan';
+import ActivateCareElitePlan from 'src/screens/User/Onboarding/ActivateCare/ElitePlan';
 
 /* Routes import */
 import UserRoute from './User';
@@ -72,8 +73,9 @@ export default function Router() {
       ActivateWalletPictureUpload,
       ActivateWalletOTPVerification,
       ActivateCare,
-      ActivateCarePictureUpload,
-      ActivateCareOTPVerification,
+      ActivateCareSoloPlan,
+      ActivateCareFamilyPlan,
+      ActivateCareElitePlan,
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,

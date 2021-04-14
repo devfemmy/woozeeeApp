@@ -121,6 +121,8 @@ export const IconCheckmarkCircle = (props) => (
   <Icon {...props} name="checkmark-circle-outline" />
 );
 
+export const IconCheckmark = (props) => <Icon {...props} name="checkmark" />;
+
 export const IconCalendar = (props) => (
   <Icon {...props} name="calendar-outline" />
 );
