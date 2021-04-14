@@ -24,6 +24,7 @@ export default function Follow({ navigation }) {
         title="@Bukka101Official"
         navigation={navigation}
         screen="default"
+        search
       />
       <TabView
         style={{ flex: 1 }}

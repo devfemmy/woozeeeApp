@@ -30,6 +30,7 @@ const MOVIE_CATEGORIES = [
   {
     id: 2,
     title: 'Trending',
+    active: true,
   },
   {
     id: 3,
@@ -55,13 +56,13 @@ const MOVIE_CATEGORIES = [
 
 // const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
-const renderMovieCategory = (data) => (
+const renderMovieCategory = ({ item }) => (
   <Layout
-    level="2"
+    level={item.active ? '6' : '2'}
     style={{
       height: 40,
       marginHorizontal: 5,
-      borderRadius: 20,
+      borderRadius: 10,
     }}
   >
     <TouchableOpacity
@@ -75,11 +76,11 @@ const renderMovieCategory = (data) => (
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
-        // borderBottomColor: '#FF5757',
+        borderBottomColor: item.active && '#FF5757',
       }}
     >
       <Text status="basic" category="c2">
-        {data.item.title}
+        {item.title}
       </Text>
     </TouchableOpacity>
   </Layout>

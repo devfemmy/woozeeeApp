@@ -38,6 +38,7 @@ import {
   // IconForwardIos,
   IconPaperPlane,
   IconBookmark,
+  IconCEye,
 } from 'src/components/CustomIcons';
 
 const VideoView = forwardRef((props, ref) => {
@@ -272,9 +273,8 @@ const VideoView = forwardRef((props, ref) => {
                 <IconCHeart {...evaProps} active={isLiked} />
               )}
               textContent={item.likes}
-              // direction="row"
+              direction="row"
               status={isLiked ? 'danger' : 'basic'}
-              align="flex-start"
               height={24}
               width={24}
               onPress={toggleLike}
@@ -282,12 +282,21 @@ const VideoView = forwardRef((props, ref) => {
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={IconCChat}
-              // textContent={item.comments}
+              textContent={item.comments}
               direction="row"
               status="basic"
               height={24}
               width={24}
               onPress={routeComments}
+            />
+            <InteractIcon
+              style={{ marginHorizontal: 5 }}
+              Accessory={IconCEye}
+              textContent={item.views}
+              direction="row"
+              status="basic"
+              height={24}
+              width={24}
             />
             <InteractIcon
               style={{ marginHorizontal: 5 }}

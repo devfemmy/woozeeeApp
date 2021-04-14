@@ -52,7 +52,6 @@ export default function OTPVerification({ navigation }) {
             <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
                 type="otp"
-                label="OTP"
                 keyboardType="number-pad"
                 status="primary"
                 setFormValues={setFormValues}

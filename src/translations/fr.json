@@ -154,7 +154,7 @@
   "yourAccountNumIs": "Votre numéro de compte est",
   "complete": "Compléter",
   "otpVerify": "Vérification OTP",
-  "weSentACode": "Nous vous avons envoyé un code",
+  "weSentACode": "Nous avons envoyé un code à votre email",
   "enterToVerify": "Entrez-le ci-dessous pour vérification",
   "didNotReceiveOtp": "N'a pas reçu le OTP",
   "resend": "Renvoyer dans",

@@ -101,7 +101,8 @@ export const GeneralTextField = (props) => {
         size={size || 'large'}
         caption={caption}
         value={inputVal.value}
-        label={label ? `${label} ${validate ? '*' : ''}` : null}
+        label={label ?? null}
+        // label={label ? `${label} ${validate ? '*' : ''}` : null}
         secureTextEntry={isSecureEntry}
         accessibilityLabel={label}
         placeholder={placeholder || label}

@@ -14,7 +14,7 @@ const SLIDE_CONTENT = [
     banner: require('assets/images/onboarding/wallet.jpg'),
     title: 'woozeee wallet',
     description:
-      "Securely stores users' payment information and passwords and allows you to make and receive electronic payments. It is linked to a bank account.",
+      'Securely stores users payment information and passwords and allows you to make and receive electronic payments. It is linked to a bank account.',
     activateAction: 'activateWallet',
   },
   {
@@ -22,7 +22,7 @@ const SLIDE_CONTENT = [
     banner: require('assets/images/onboarding/care.jpg'),
     title: 'woozeee care',
     description:
-      'Opt-out insurance for all users covering, Legal consultation, Medical assurance, Travel insurance (air and road travel) and Road rescue).',
+      'Opt-out insurance for all users covering, Medical assurance, Travel insurance (air and road travel) by Axa Mansard, Legal consultation and Road rescue).',
     activateAction: 'activateCare',
   },
   {

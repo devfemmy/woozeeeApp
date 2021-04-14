@@ -154,7 +154,7 @@
   "yourAccountNumIs": "Your Account Number is",
   "complete": "Complete",
   "otpVerify": "OTP Verification",
-  "weSentACode": "We sent you a code",
+  "weSentACode": "We sent a code to your email",
   "enterToVerify": "Enter it below for verification",
   "didNotReceiveOtp": "Didn't receive the OTP",
   "resend": "Resend in",

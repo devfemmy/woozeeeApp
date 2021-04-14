@@ -14,7 +14,7 @@ import { Text, Button } from '@ui-kitten/components';
 import { IconEye } from 'src/components/CustomIcons';
 
 export default function MovieCard(props) {
-  const { data, extraWidth } = props;
+  const { data, extraWidth, livestream } = props;
 
   const { width, height } = useWindowDimensions();
 
@@ -56,15 +56,21 @@ export default function MovieCard(props) {
             alignItems: 'center',
           }}
         >
-          <Button
-            status="danger"
-            size="tiny"
-            style={{ paddingHorizontal: 0, paddingVertical: 0, marginRight: 5 }}
-          >
-            <Text status="control" category="s2">
-              Live
-            </Text>
-          </Button>
+          {livestream && (
+            <Button
+              status="danger"
+              size="tiny"
+              style={{
+                paddingHorizontal: 0,
+                paddingVertical: 0,
+                marginRight: 5,
+              }}
+            >
+              <Text status="control" category="s2">
+                Live
+              </Text>
+            </Button>
+          )}
           <View
             style={{
               backgroundColor: 'rgba(0, 0, 0, 0.25)',

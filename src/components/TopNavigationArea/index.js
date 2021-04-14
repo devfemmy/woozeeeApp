@@ -29,7 +29,7 @@ import TopNavigationGlobalMenu from './components/TopNavigationGlobalMenu';
 export default function TopNavigationArea(props) {
   // prettier-ignore
   const {
-    navigation, title, icon, style, screen,
+    navigation, title, icon, style, screen, search,
   } = props;
 
   const routeSearch = useCallback(() => navigation.navigate('Search'), [
@@ -266,6 +266,7 @@ export default function TopNavigationArea(props) {
           accessoryLeft={(evaProps) => (
             <BackButton {...evaProps} navigation={navigation} icon={icon} />
           )}
+          accessoryRight={search && renderSearchIcon}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -273,7 +274,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [navigation, title, icon, style],
+    [navigation, title, icon, style, search, renderSearchIcon],
   );
 
   const navs = {
