@@ -123,6 +123,20 @@ const AssetIconsPack = {
     'microphone-outline': IconProvider(
       require('assets/images/icon/microphone-outline.png'),
     ),
+    'arrow-up-outline': IconProvider(
+      require('assets/images/icon/arrow-up-outline.png'),
+    ),
+    'atm-card': IconProvider(require('assets/images/icon/atm-card.png')),
+    bag: IconProvider(require('assets/images/icon/bag.png')),
+    card: IconProvider(require('assets/images/icon/card.png')),
+    giftbox: IconProvider(require('assets/images/icon/giftbox.png')),
+    naira: IconProvider(require('assets/images/icon/naira.png')),
+    'plus-outline': IconProvider(
+      require('assets/images/icon/plus-outline.png'),
+    ),
+    'snow-outline': IconProvider(
+      require('assets/images/icon/snow-outline.png'),
+    ),
   },
 };
 

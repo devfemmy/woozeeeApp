@@ -430,3 +430,45 @@ export const IconCMic = (props) => {
 
   return <Icon {...otherProps} name="microphone-outline" pack="assets" />;
 };
+
+export const IconCArrowUp = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="arrow-up-outline" pack="assets" />;
+};
+
+export const IconCAtmCard = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="atm-card" pack="assets" />;
+};
+export const IconCBag = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="bag" pack="assets" />;
+};
+export const IconCCard = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="card" pack="assets" />;
+};
+export const IconCGiftBox = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="giftbox" pack="assets" />;
+};
+export const IconCNaira = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="naira" pack="assets" />;
+};
+export const IconCPlus = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="plus-outline" pack="assets" />;
+};
+export const IconCSnow = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="snow-outline" pack="assets" />;
+};
