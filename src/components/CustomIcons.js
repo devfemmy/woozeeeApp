@@ -472,3 +472,8 @@ export const IconCSnow = (props) => {
 
   return <Icon {...otherProps} name="snow-outline" pack="assets" />;
 };
+export const IconCWalletFill = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="wallet-fill" pack="assets" />;
+};

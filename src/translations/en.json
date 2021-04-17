@@ -180,5 +180,13 @@
   "completeTransfer": "Complete Transfer",
   "beBack": "Ok, I will be back",
   "marketComing": "Our 'Marketplace' segment will be available in the next quarter",
-  "charityComing": "Our 'Charity' segment will be available in the next quarter"
+  "charityComing": "Our 'Charity' segment will be available in the next quarter",
+  "transactionHistory": "Transaction History",
+  "balance": "Balance",
+  "credit": "Credit",
+  "debit": "Debit",
+  "activePlan": "Active Plan",
+  "morePlans": "More Plans",
+  "today": "Today",
+  "yesterday": "Yesterday"
 }

@@ -152,7 +152,7 @@ export default function ActivateWallet({ navigation }) {
                 }}
                 key={i.toString()}
               >
-                <IconCheckmark height={18} width={18} fill="black" />
+                <IconCheckmark height={18} width={18} fill="#08090B" />
                 <Text style={{ flex: 1, marginLeft: 5, fontSize: 12 }}>
                   {benefit}
                 </Text>
@@ -185,7 +185,7 @@ export default function ActivateWallet({ navigation }) {
       >
         <View style={{ paddingHorizontal: 15, marginTop: 20 }}>
           <Text status="primary" category="s2" style={{ marginBottom: 15 }}>
-            Active Plan
+            {t('activePlan')}
           </Text>
           <Card>
             <View style={{ marginHorizontal: -10 }}>
@@ -218,7 +218,7 @@ export default function ActivateWallet({ navigation }) {
                   alignItems: 'flex-start',
                 }}
               >
-                <IconCheckmark height={18} width={18} fill="black" />
+                <IconCheckmark height={18} width={18} fill="#08090B" />
                 <Text style={{ flex: 1, marginLeft: 5, fontSize: 12 }}>
                   Free medical care covering medical bills up to ₦200,000
                   annually
@@ -231,7 +231,7 @@ export default function ActivateWallet({ navigation }) {
                   alignItems: 'flex-start',
                 }}
               >
-                <IconCheckmark height={18} width={18} fill="black" />
+                <IconCheckmark height={18} width={18} fill="#08090B" />
                 <Text style={{ flex: 1, marginLeft: 5, fontSize: 12 }}>
                   Free Travel Insurance (For Road & Air)
                 </Text>
@@ -253,7 +253,7 @@ export default function ActivateWallet({ navigation }) {
           style={{ paddingHorizontal: 15, marginTop: 25, marginBottom: 15 }}
         >
           <Text status="primary" category="s2">
-            More Plans
+            {t('morePlans')}
           </Text>
         </View>
         <List

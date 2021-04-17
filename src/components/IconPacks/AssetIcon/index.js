@@ -137,6 +137,7 @@ const AssetIconsPack = {
     'snow-outline': IconProvider(
       require('assets/images/icon/snow-outline.png'),
     ),
+    'wallet-fill': IconProvider(require('assets/images/icon/wallet-fill.png')),
   },
 };
 

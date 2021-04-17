@@ -7,9 +7,9 @@ import { LocaleContext } from 'src/contexts';
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 // Tabs
-import Followers from './Followers';
-import Following from './Following';
-import Suggested from './Suggested';
+import All from './All';
+import Credit from './Credit';
+import Debit from './Debit';
 
 export default function Follow({ navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -22,7 +22,7 @@ export default function Follow({ navigation }) {
         title="@Bukka101Official"
         navigation={navigation}
         screen="default"
-        search
+        options
       />
       <TabView
         style={{ flex: 1 }}
@@ -30,14 +30,14 @@ export default function Follow({ navigation }) {
         // shouldLoadComponent={shouldLoadComponent}
         onSelect={(index) => setSelectedIndex(index)}
       >
-        <Tab title={t('followers')} style={{ paddingVertical: 10 }}>
-          <Followers navigation={navigation} />
+        <Tab title={t('all')} style={{ paddingVertical: 10 }}>
+          <All navigation={navigation} />
         </Tab>
-        <Tab title={t('following')} style={{ paddingVertical: 10 }}>
-          <Following navigation={navigation} />
+        <Tab title={t('credit')} style={{ paddingVertical: 10 }}>
+          <Credit navigation={navigation} />
         </Tab>
-        <Tab title={t('Suggested')} style={{ paddingVertical: 10 }}>
-          <Suggested navigation={navigation} />
+        <Tab title={t('debit')} style={{ paddingVertical: 10 }}>
+          <Debit navigation={navigation} />
         </Tab>
       </TabView>
     </Layout>

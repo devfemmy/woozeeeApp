@@ -175,5 +175,18 @@
   "reply": "Réponse",
   "gotIt": "Ok, je l'ai",
   "redeem": "Échanger des points",
-  "rewards": "récompenses"
+  "rewards": "récompenses",
+  "acceptCharge": "Accepter les charges",
+  "completeTransfer": "Transfert complet",
+  "beBack": "Ok, je serai de retour",
+  "marketComing": "Notre segment de 'marché' sera disponible au cours du prochain trimestre",
+  "charityComing": "Notre segment 'charité' sera disponible au cours du prochain trimestre",
+  "transactionHistory": "Historique des transactions",
+  "balance": "Solde",
+  "credit": "crédit",
+  "debit": "débit",
+  "activePlan": "plan actif",
+  "morePlans": "MPlus de plans",
+  "today": "Aujourd'hui",
+  "yesterday": "hier"
 }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import {
   View,
@@ -9,16 +9,12 @@ import {
 
 // prettier-ignore
 import {
-  Layout, Text, List, Button,
+  Layout, Text, List, Button, Card,
 } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 
 import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
-
-import WithDefaultFetch from 'src/components/DataFetch';
-
-import { DealsPosts } from 'src/components/MarketPosts';
 
 import {
   IconCCard,
@@ -26,9 +22,11 @@ import {
   IconCArrowUp,
   IconCSnow,
   IconCEye,
+  IconForwardIos,
+  IconCAtmCard,
+  IconCGiftBox,
+  IconCBag,
 } from 'src/components/CustomIcons';
-
-import { marketDealsUrl } from 'src/api/dummy';
 
 /* DATA */
 const woozeeeCards = [
@@ -73,24 +71,47 @@ const WALLET_ITEMS = [
   {
     id: 5,
     icon: IconCEye,
-    content: 'Hide Balance',
+    content: 'Toggle Balance',
+    action: 'toggleBalanceShown',
   },
 ];
 
-const PLACEHOLDER_CONFIG = {
-  count: 4,
-  numColumns: 2,
-  maxHeight: 180,
-  mediaLeft: true,
-};
-
-// prettier-ignore
-const DealsPostsArea = () => WithDefaultFetch(DealsPosts, marketDealsUrl, PLACEHOLDER_CONFIG);
+const TRANSACTION_HISTORY = [
+  {
+    id: 1,
+    icon: IconCAtmCard,
+    iconColor: '#14B571',
+    category: 'Money Matters',
+    title: 'Loan from Zedvance',
+    amount: '+ 31,985.94',
+    time: '12:44 PM',
+  },
+  {
+    id: 2,
+    icon: IconCGiftBox,
+    iconColor: '#08090B',
+    category: 'Give Back',
+    title: 'Quarterly Loyalty Bonus',
+    amount: '+ 3,899.99',
+    time: '09:10 AM',
+  },
+  {
+    id: 3,
+    icon: IconCBag,
+    iconColor: '#EE5E31',
+    category: 'Click & Shop',
+    title: 'Adidas Sneaker Lmited Edition',
+    amount: '- 76,000.00',
+    time: '06:54 AM',
+  },
+];
 
 export default function WalletTab({ navigation }) {
   useDisableAndroidExit();
 
   const { width, height } = useWindowDimensions();
+
+  const [isBalanceShown, setBalanceShown] = useState(true);
 
   const IS_PORTRAIT = height > width;
 
@@ -98,13 +119,61 @@ export default function WalletTab({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const routeTo = (route) => navigation.replace(route);
+  const toggleBalanceShown = () => {
+    setBalanceShown((prevState) => !prevState);
+  };
+
+  const ACTIONS = {
+    toggleBalanceShown,
+  };
+
+  const routeAllHistory = () => navigation.navigate('TransactionHistory');
+
+  const HistoryItem = ({ data }) => (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginVertical: 10,
+      }}
+    >
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View
+          style={{
+            height: 45,
+            width: 45,
+            borderRadius: 15,
+            backgroundColor: data.iconColor,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginRight: 10,
+          }}
+        >
+          <data.icon fill="white" style={{ height: 18, width: 18 }} />
+        </View>
+        <View>
+          <Text category="s2" style={{ marginBottom: 5, maxWidth: 200 }}>
+            {data.title}
+          </Text>
+          <Text category="c1">{data.category}</Text>
+        </View>
+      </View>
+      <View style={{ alignItems: 'flex-end' }}>
+        <Text category="s2" style={{ marginBottom: 5 }}>
+          {data.amount}
+        </Text>
+        <Text category="c1">{data.time}</Text>
+      </View>
+    </View>
+  );
 
   const WalletItem = ({ data }) => (
     <View style={{ padding: 10, width: '20%', alignItems: 'center' }}>
       <Button
         accessoryLeft={data.icon}
         style={{ borderRadius: 15, height: 60, width: 60 }}
+        onPress={ACTIONS[data.action]}
       />
       <Text
         status="primary"
@@ -178,6 +247,40 @@ export default function WalletTab({ navigation }) {
     </View>
   );
 
+  const renderTransactionHeader = () => (
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginLeft: 15,
+        paddingVertical: 10,
+      }}
+    >
+      <Text category="s1">{t('transactionHistory')}</Text>
+      <Button
+        size="tiny"
+        appearance="ghost"
+        accessoryRight={IconForwardIos}
+        onPress={routeAllHistory}
+      >
+        <Text status="primary" category="s2">
+          {t('viewAll')}
+        </Text>
+      </Button>
+    </View>
+  );
+
+  const renderFooterArea = () => (
+    <Card header={renderTransactionHeader}>
+      <View style={{ marginHorizontal: -10 }}>
+        {TRANSACTION_HISTORY.map((data) => (
+          <HistoryItem data={data} key={data.id} />
+        ))}
+      </View>
+    </Card>
+  );
+
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <View
@@ -190,9 +293,9 @@ export default function WalletTab({ navigation }) {
         }}
       >
         <View>
-          <Text category="c1">Balance</Text>
+          <Text category="c1">{t('balance')}</Text>
           <Text category="h5" status="primary">
-            N 249,238,134.34
+            {isBalanceShown ? '₦ 249,238,134.34' : '₦ xxx,xxx.xx'}
           </Text>
         </View>
         <View>
@@ -212,7 +315,7 @@ export default function WalletTab({ navigation }) {
         <List
           style={{ backgroundColor: 'transparent' }}
           ListHeaderComponent={renderHeaderArea}
-          ListFooterComponent={DealsPostsArea}
+          ListFooterComponent={renderFooterArea}
           ListFooterComponentStyle={{ paddingBottom: 10 }}
           horizontal={!IS_PORTRAIT}
           alwaysBounceHorizontal

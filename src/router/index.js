@@ -47,6 +47,9 @@ import ActivateCareSoloPlan from 'src/screens/User/Onboarding/ActivateCare/SoloP
 import ActivateCareFamilyPlan from 'src/screens/User/Onboarding/ActivateCare/FamilyPlan';
 import ActivateCareElitePlan from 'src/screens/User/Onboarding/ActivateCare/ElitePlan';
 
+// Wallet Screens
+import TransactionHistory from 'src/screens/User/WalletTab/TransactionHistory';
+
 /* Routes import */
 import UserRoute from './User';
 import SocialRoute from './User/HomeTab/Social';
@@ -93,6 +96,7 @@ export default function Router() {
       Rankings,
       UserProfile,
       Follow,
+      TransactionHistory,
     },
 
     Common: {
