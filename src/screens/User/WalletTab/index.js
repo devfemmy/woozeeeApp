@@ -29,16 +29,19 @@ import marketPlaceItems from './data';
 /* DATA */
 const woozeeeCards = [
   {
-    id: 1,
-    banner: require('assets/images/banner/mega-sale.jpg'),
+    balance: '150.25',
+    banner: require('assets/images/card/insure.jpg'),
+    action: 'openCare',
   },
   {
-    id: 2,
-    banner: require('assets/images/banner/woozeee-ad.jpg'),
+    balance: '350,152.83',
+    banner: require('assets/images/card/wallet.jpg'),
+    action: 'openWallet',
   },
   {
-    id: 3,
-    banner: require('assets/images/banner/valentine.jpg'),
+    balance: '0.00',
+    banner: require('assets/images/card/rewards.jpg'),
+    action: 'openRewards',
   },
 ];
 
@@ -106,11 +109,12 @@ export default function WalletTab({ navigation }) {
     </TouchableOpacity>
   );
 
-  const WoozeeeCardsAds = (data) => (
-    <View
+  const WoozeeeCards = (data) => (
+    <TouchableOpacity
+      activeOpacity={0.75}
       style={{
         height: CARD_HEIGHT,
-        width: IS_PORTRAIT ? width / 1.25 : width / 3,
+        width: IS_PORTRAIT ? width / 1.75 : width / 3,
         paddingHorizontal: 5,
         position: 'relative',
         alignItems: 'center',
@@ -121,13 +125,13 @@ export default function WalletTab({ navigation }) {
         source={data.item.banner}
         defaultSource={data.item.banner}
         style={{
-          height: IS_PORTRAIT ? 150 : 110,
+          height: IS_PORTRAIT ? 140 : 120,
           width: '100%',
           borderRadius: 5,
         }}
         resizeMode="cover"
       />
-    </View>
+    </TouchableOpacity>
   );
 
   const renderHeaderArea = () => (
@@ -143,7 +147,7 @@ export default function WalletTab({ navigation }) {
           showsVerticalScrollIndicator={false}
           data={woozeeeCards}
           keyExtractor={(_, i) => i.toString()}
-          renderItem={WoozeeeCardsAds}
+          renderItem={WoozeeeCards}
           getItemLayout={(data, index) => ({
             length: CARD_HEIGHT,
             offset: CARD_HEIGHT * index,
