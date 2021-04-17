@@ -2,15 +2,60 @@ import React, { useContext, useState } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-import { Layout, Button, Text } from '@ui-kitten/components';
+import {
+  Layout,
+  Button,
+  Text,
+  Select,
+  SelectItem,
+  IndexPath,
+} from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import { GeneralTextField, GeneralDatePicker } from 'src/components/FormFields';
+import {
+  GeneralTextField,
+  GeneralDatePicker,
+  GeneralRadioGroup,
+  GeneralSelect,
+} from 'src/components/FormFields';
 
 import { IconCalendar } from 'src/components/CustomIcons';
+
+import statesLgas from 'src/store/nigeria_states_lgas.json';
+
+const STATES_LGAS = statesLgas;
+
+const GENDERS = ['Female', 'Male'];
+
+const MARITAL_STATUS = [
+  { title: 'Divorced' },
+  { title: 'Married' },
+  { title: 'Single' },
+  { title: 'Widowed' },
+  { title: 'Other' },
+];
+
+// local compare
+const genericCompare = (prev, next) => {
+  if (prev.toLowerCase() < next.toLowerCase()) return -1;
+  if (prev.toLowerCase() > next.toLowerCase()) return 1;
+  return 0;
+};
+
+// extract and sort states
+const STATES = STATES_LGAS.map((data) => ({
+  alias: data.alias,
+  state: data.state,
+})).sort((a, b) => genericCompare(a.alias, b.alias));
+
+// extract and sort lgas
+const LGAS = STATES_LGAS.map((data) => ({
+  alias: data.alias,
+  lgas: data.lgas.sort((a, b) => genericCompare(a, b)),
+})).sort((a, b) => genericCompare(a.alias, b.alias));
 
 export default function SoloPlan({ navigation }) {
   const [isLoading, setLoading] = useState(false);
@@ -22,13 +67,32 @@ export default function SoloPlan({ navigation }) {
     dob: '',
     email: '',
     address: '',
-    beneficiary1: '',
-    beneficiary2: '',
-    beneficiary3: '',
-    beneficiary4: '',
+    maritalStatus: MARITAL_STATUS[0].title,
+    profession: '',
   });
 
   const t = useContext(LocaleContext);
+
+  const [selectedState, setSelectedState] = useState(new IndexPath(0));
+
+  const [selectedStateLga, setSelectedStateLga] = useState(0);
+
+  const [selectedLga, setSelectedLga] = useState(new IndexPath(0));
+
+  const handleSelectState = (index) => {
+    setSelectedState(index);
+    setSelectedStateLga(index.row);
+  };
+
+  const renderState = () => <Text>{STATES[selectedState.row].state}</Text>;
+
+  const handleSelectLga = (index) => {
+    setSelectedLga(index);
+  };
+
+  const renderLga = () => (
+    <Text>{LGAS[selectedStateLga].lgas[selectedLga.row]}</Text>
+  );
 
   // prettier-ignore
   const routePictureUpload = () => navigation.navigate('ActivateWalletPictureUpload');
@@ -88,13 +152,28 @@ export default function SoloPlan({ navigation }) {
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
-              <View style={{ flex: 1, marginLeft: 5 }}>
-                <GeneralDatePicker
-                  type="dob"
-                  label={t('dob')}
-                  setFormValues={setFormValues}
-                  accessoryRight={IconCalendar}
-                />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  <GeneralRadioGroup
+                    type="gender"
+                    label={t('gender')}
+                    data={GENDERS}
+                    setFormValues={setFormValues}
+                  />
+                </View>
+                <View style={{ flex: 1, marginLeft: 5 }}>
+                  <GeneralDatePicker
+                    type="dob"
+                    label={t('dob')}
+                    setFormValues={setFormValues}
+                    accessoryRight={IconCalendar}
+                  />
+                </View>
               </View>
             </View>
             <View style={{ paddingVertical: 10 }}>
@@ -117,32 +196,46 @@ export default function SoloPlan({ navigation }) {
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
-              <GeneralTextField
-                type="beneficiary1"
-                label={`${t('beneficiary')} ${t('name')}`}
+              <GeneralSelect
+                type="maritalStatus"
+                label={t('maritalStatus')}
+                data={MARITAL_STATUS}
                 setFormValues={setFormValues}
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
-                type="beneficiary2"
-                label={`${t('second')} ${t('beneficiary')}`}
+                type="profession"
+                label={t('profession')}
+                validate="required"
                 setFormValues={setFormValues}
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
-              <GeneralTextField
-                type="beneficiary3"
-                label={`${t('third')} ${t('beneficiary')}`}
-                setFormValues={setFormValues}
-              />
+              <Select
+                size="large"
+                label={t('state')}
+                value={renderState}
+                selectedIndex={selectedState}
+                onSelect={handleSelectState}
+              >
+                {STATES.map((option) => (
+                  <SelectItem key={option.state} title={option.state} />
+                ))}
+              </Select>
             </View>
             <View style={{ paddingVertical: 10 }}>
-              <GeneralTextField
-                type="beneficiary4"
-                label={`${t('fourth')} ${t('beneficiary')}`}
-                setFormValues={setFormValues}
-              />
+              <Select
+                size="large"
+                label="LGA"
+                value={renderLga}
+                selectedIndex={selectedLga}
+                onSelect={handleSelectLga}
+              >
+                {LGAS[selectedStateLga].lgas.map((lga) => (
+                  <SelectItem key={lga} title={lga} />
+                ))}
+              </Select>
             </View>
             <View style={{ paddingVertical: 20 }}>
               <Button

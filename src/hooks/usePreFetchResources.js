@@ -135,6 +135,8 @@ export default function usePreFetchResources() {
           require('assets/images/onboarding/rewards.jpg'),
           require('assets/images/onboarding/wallet.jpg'),
           require('assets/images/gifs/qr-code-scan.gif'),
+          require('assets/images/gifs/charity.gif'),
+          require('assets/images/gifs/marketplace.gif'),
           require('assets/audio/woozeee_Instrumental.mp3'),
         ]);
       } catch (e) {

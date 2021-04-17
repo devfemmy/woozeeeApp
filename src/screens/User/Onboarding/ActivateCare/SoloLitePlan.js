@@ -57,7 +57,7 @@ const LGAS = STATES_LGAS.map((data) => ({
   lgas: data.lgas.sort((a, b) => genericCompare(a, b)),
 })).sort((a, b) => genericCompare(a.alias, b.alias));
 
-export default function ElitePlan({ navigation }) {
+export default function SoloLitePlan({ navigation }) {
   const [isLoading, setLoading] = useState(false);
 
   const [form, setFormValues] = useState({
@@ -69,10 +69,6 @@ export default function ElitePlan({ navigation }) {
     address: '',
     maritalStatus: MARITAL_STATUS[0].title,
     profession: '',
-    beneficiary1: '',
-    beneficiary2: '',
-    beneficiary3: '',
-    beneficiary4: '',
   });
 
   const t = useContext(LocaleContext);
@@ -240,34 +236,6 @@ export default function ElitePlan({ navigation }) {
                   <SelectItem key={lga} title={lga} />
                 ))}
               </Select>
-            </View>
-            <View style={{ paddingVertical: 10 }}>
-              <GeneralTextField
-                type="beneficiary1"
-                label={`${t('beneficiary')} ${t('name')}`}
-                setFormValues={setFormValues}
-              />
-            </View>
-            <View style={{ paddingVertical: 10 }}>
-              <GeneralTextField
-                type="beneficiary2"
-                label={`${t('second')} ${t('beneficiary')}`}
-                setFormValues={setFormValues}
-              />
-            </View>
-            <View style={{ paddingVertical: 10 }}>
-              <GeneralTextField
-                type="beneficiary3"
-                label={`${t('third')} ${t('beneficiary')}`}
-                setFormValues={setFormValues}
-              />
-            </View>
-            <View style={{ paddingVertical: 10 }}>
-              <GeneralTextField
-                type="beneficiary4"
-                label={`${t('fourth')} ${t('beneficiary')}`}
-                setFormValues={setFormValues}
-              />
             </View>
             <View style={{ paddingVertical: 20 }}>
               <Button

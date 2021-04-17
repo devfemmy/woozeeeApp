@@ -9,12 +9,10 @@ import {
 
 // prettier-ignore
 import {
-  Layout, Text, List,
+  Layout, Text, List, Button,
 } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
-
-import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
@@ -22,26 +20,60 @@ import WithDefaultFetch from 'src/components/DataFetch';
 
 import { DealsPosts } from 'src/components/MarketPosts';
 
-import { marketDealsUrl } from 'src/api/dummy';
+import {
+  IconCCard,
+  IconCPlus,
+  IconCArrowUp,
+  IconCSnow,
+  IconCEye,
+} from 'src/components/CustomIcons';
 
-import marketPlaceItems from './data';
+import { marketDealsUrl } from 'src/api/dummy';
 
 /* DATA */
 const woozeeeCards = [
   {
-    balance: '150.25',
+    id: 1,
     banner: require('assets/images/card/insure.jpg'),
     action: 'openCare',
   },
   {
-    balance: '350,152.83',
+    id: 2,
     banner: require('assets/images/card/wallet.jpg'),
     action: 'openWallet',
   },
   {
-    balance: '0.00',
+    id: 3,
     banner: require('assets/images/card/rewards.jpg'),
     action: 'openRewards',
+  },
+];
+
+const WALLET_ITEMS = [
+  {
+    id: 1,
+    icon: IconCCard,
+    content: 'Accounts',
+  },
+  {
+    id: 2,
+    icon: IconCPlus,
+    content: 'Add Money',
+  },
+  {
+    id: 3,
+    icon: IconCArrowUp,
+    content: 'Transfer Money',
+  },
+  {
+    id: 4,
+    icon: IconCSnow,
+    content: 'Freeze',
+  },
+  {
+    id: 5,
+    icon: IconCEye,
+    content: 'Hide Balance',
   },
 ];
 
@@ -62,59 +94,33 @@ export default function WalletTab({ navigation }) {
 
   const IS_PORTRAIT = height > width;
 
-  const CARD_HEIGHT = IS_PORTRAIT ? 160 : 120;
+  const CARD_HEIGHT = IS_PORTRAIT ? 180 : 160;
 
   const t = useContext(LocaleContext);
 
   const routeTo = (route) => navigation.replace(route);
 
-  const MarketplaceItem = ({ data }) => (
-    <TouchableOpacity
-      activeOpacity={0.75}
-      style={{
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingHorizontal: 3,
-        marginVertical: 10,
-        width: '25%',
-      }}
-    >
-      <Layout
-        level="1"
-        style={{
-          borderRadius: 5,
-          paddingVertical: 15,
-          paddingHorizontal: 20,
-          marginBottom: 10,
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 3,
-          },
-          shadowOpacity: 0.05,
-          shadowRadius: 3,
-          elevation: 2,
-        }}
+  const WalletItem = ({ data }) => (
+    <View style={{ padding: 10, width: '20%', alignItems: 'center' }}>
+      <Button
+        accessoryLeft={data.icon}
+        style={{ borderRadius: 15, height: 60, width: 60 }}
+      />
+      <Text
+        status="primary"
+        category="c2"
+        style={{ fontSize: 11, textAlign: 'center', marginTop: 5 }}
       >
-        <Image
-          source={data.icon}
-          defaultSource={data.icon}
-          resizeMode="cover"
-          style={{ height: 30, width: 30 }}
-        />
-      </Layout>
-      <Text category="c2" style={{ textAlign: 'center' }}>
-        {t(data.title)}
+        {data.content}
       </Text>
-    </TouchableOpacity>
+    </View>
   );
 
   const WoozeeeCards = (data) => (
     <TouchableOpacity
       activeOpacity={0.75}
       style={{
-        height: CARD_HEIGHT,
-        width: IS_PORTRAIT ? width / 1.75 : width / 3,
+        width: IS_PORTRAIT ? width / 1.25 : width / 3,
         paddingHorizontal: 5,
         position: 'relative',
         alignItems: 'center',
@@ -125,9 +131,9 @@ export default function WalletTab({ navigation }) {
         source={data.item.banner}
         defaultSource={data.item.banner}
         style={{
-          height: IS_PORTRAIT ? 140 : 120,
+          height: IS_PORTRAIT ? 200 : 180,
           width: '100%',
-          borderRadius: 5,
+          borderRadius: 10,
         }}
         resizeMode="cover"
       />
@@ -136,7 +142,7 @@ export default function WalletTab({ navigation }) {
 
   const renderHeaderArea = () => (
     <View style={{ flex: 1, paddingTop: 10, paddingBottom: 10 }}>
-      <View style={{ flex: 1, Height: 180 }}>
+      <View style={{ flex: 1 }}>
         <List
           style={{ backgroundColor: 'transparent' }}
           contentContainerStyle={{ paddingHorizontal: 5 }}
@@ -161,12 +167,12 @@ export default function WalletTab({ navigation }) {
           flexDirection: 'row',
           flexWrap: 'wrap',
           alignItems: 'flex-start',
-          paddingVertical: 10,
+          paddingVertical: 20,
           paddingHorizontal: 5,
         }}
       >
-        {marketPlaceItems.map((data) => (
-          <MarketplaceItem data={data} key={data.id} />
+        {WALLET_ITEMS.map((data) => (
+          <WalletItem data={data} key={data.id} />
         ))}
       </View>
     </View>
@@ -174,12 +180,34 @@ export default function WalletTab({ navigation }) {
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title="woozeee"
-        navigation={navigation}
-        screen="marketPlace"
-      />
-
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingHorizontal: 15,
+          paddingVertical: 10,
+        }}
+      >
+        <View>
+          <Text category="c1">Balance</Text>
+          <Text category="h5" status="primary">
+            N 249,238,134.34
+          </Text>
+        </View>
+        <View>
+          <Image
+            source={require('assets/images/user/user2.png')}
+            style={{
+              height: 60,
+              width: 60,
+              borderRadius: 30,
+              borderWidth: 3,
+              borderColor: 'white',
+            }}
+          />
+        </View>
+      </View>
       <View style={{ flex: 1 }}>
         <List
           style={{ backgroundColor: 'transparent' }}

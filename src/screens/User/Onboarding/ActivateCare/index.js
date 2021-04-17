@@ -16,33 +16,48 @@ import { IconCheckmark } from 'src/components/CustomIcons';
 const MORE_PLANS = [
   {
     id: 1,
-    title: 'Family Plan',
-    price: '60,000',
+    title: 'Solo Plan',
+    price: '24,000',
     benefits: [
-      'Free medical care covering medical bills up to ₦ 1,000,000 annually',
-      'Free Road Recovery',
-      'Free Legal Assistance Call-out up to 10 times annually',
+      'Free medical care covering medical bills up to ₦ 200,000 annually',
       'Free Travel Insurance (For Road & Air)',
-      'Free Movie Premiere',
+      'Free Legal Assistance Call-out up to 4 times annually',
+      'Free Road Recovery up to 4 times annually',
     ],
     colorCode: '#009456',
     status: 'success',
-    route: 'ActivateCareFamilyPlan',
+    route: 'ActivateCareSoloPlan',
   },
   {
-    id: 1,
-    title: 'Elite Plan',
-    price: '120,000',
+    id: 2,
+    title: 'Family Plan',
+    price: '72,000',
     benefits: [
-      'Free medical care covering medical bills up to ₦ 3,000,000 annually',
-      'Free Road recovery up to 20 times annually',
-      'Free Legal assistance Call-out up to 20 times annually',
+      'Free medical care covering medical bills up to ₦ 1,000,000 annually',
+      'Free Road recovery up to 12 times annually',
+      'Free Legal assistance Call-out up to 12 times annually',
       'Free Travel Insurance (For Road & Air)',
       'Free Movie Premiere',
       'Free access to VIP at selected locations',
     ],
     colorCode: '#F9D65B',
     status: 'warning',
+    route: 'ActivateCareFamilyPlan',
+  },
+  {
+    id: 3,
+    title: 'Elite Plan',
+    price: '144,000',
+    benefits: [
+      'Free medical care covering medical bills up to ₦ 3,000,000 annually',
+      'Free Road recovery up to 12 times annually',
+      'Free Legal assistance Call-out up to 12 times annually',
+      'Free Travel Insurance (For Road & Air)',
+      'Free Movie Premiere',
+      'Free access to VIP at selected locations',
+    ],
+    colorCode: '#BBBBBB',
+    status: 'basic',
     route: 'ActivateCareElitePlan',
   },
 ];
@@ -61,6 +76,7 @@ export default function ActivateWallet({ navigation }) {
         flex: 1,
         justifyContent: 'flex-end',
         paddingHorizontal: 25,
+        paddingVertical: 15,
       }}
     >
       <Button
@@ -76,10 +92,10 @@ export default function ActivateWallet({ navigation }) {
   );
 
   const renderPlans = ({ item }) => (
-    <View style={{ width: width / 1.25 }}>
+    <View style={{ width: width / 1.15 }}>
       <View
         style={{
-          paddingHorizontal: 10,
+          paddingHorizontal: 5,
           height: '100%',
           flexDirection: 'row',
           alignItems: 'center',
@@ -110,16 +126,16 @@ export default function ActivateWallet({ navigation }) {
           </Text>
         </View>
         <Card
-          style={{ height: '100%', flex: 1 }}
+          style={{ height: '100%', flex: 1, borderRadius: 10 }}
           // prettier-ignore
           footer={() => renderCardFooter(item.status, item.route, item.colorCode)}
         >
-          <View>
+          <View style={{ marginHorizontal: -10 }}>
             <Text
               category="h5"
               status={item.status}
               style={{
-                marginBottom: 10,
+                marginBottom: 20,
                 textAlign: 'center',
                 color: item.colorCode,
               }}
@@ -131,22 +147,13 @@ export default function ActivateWallet({ navigation }) {
               <View
                 style={{
                   flexDirection: 'row',
-                  marginTop: 10,
+                  marginTop: 15,
                   alignItems: 'flex-start',
                 }}
                 key={i.toString()}
               >
-                <Button
-                  appearance="ghost"
-                  style={{
-                    paddingHorizontal: 0,
-                    paddingVertical: 0,
-                    minHeight: 0,
-                    minWidth: 0,
-                  }}
-                  accessoryLeft={IconCheckmark}
-                />
-                <Text category="p2" style={{ flex: 1 }}>
+                <IconCheckmark height={18} width={18} fill="black" />
+                <Text style={{ flex: 1, marginLeft: 5, fontSize: 12 }}>
                   {benefit}
                 </Text>
               </View>
@@ -181,7 +188,7 @@ export default function ActivateWallet({ navigation }) {
             Active Plan
           </Text>
           <Card>
-            <View>
+            <View style={{ marginHorizontal: -10 }}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -193,35 +200,26 @@ export default function ActivateWallet({ navigation }) {
                 <Text category="c2">Your current plan</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text category="h5" status="danger">
-                    ₦ 12,000
+                    ₦ 15,000
                   </Text>
                   <Text category="s2" status="danger">
                     {' /Year'}
                   </Text>
                 </View>
               </View>
-              <Text category="h5" status="danger" style={{ marginBottom: 10 }}>
-                Solo
+              <Text category="h5" status="danger" style={{ marginBottom: 20 }}>
+                Solo Lite
               </Text>
               <Text category="h6">Benefits</Text>
               <View
                 style={{
                   flexDirection: 'row',
-                  marginTop: 10,
+                  marginTop: 15,
                   alignItems: 'flex-start',
                 }}
               >
-                <Button
-                  appearance="ghost"
-                  style={{
-                    paddingHorizontal: 0,
-                    paddingVertical: 0,
-                    minHeight: 0,
-                    minWidth: 0,
-                  }}
-                  accessoryLeft={IconCheckmark}
-                />
-                <Text category="p2" style={{ flex: 1 }}>
+                <IconCheckmark height={18} width={18} fill="black" />
+                <Text style={{ flex: 1, marginLeft: 5, fontSize: 12 }}>
                   Free medical care covering medical bills up to ₦200,000
                   annually
                 </Text>
@@ -233,66 +231,15 @@ export default function ActivateWallet({ navigation }) {
                   alignItems: 'flex-start',
                 }}
               >
-                <Button
-                  appearance="ghost"
-                  style={{
-                    paddingHorizontal: 0,
-                    paddingVertical: 0,
-                    minHeight: 0,
-                    minWidth: 0,
-                  }}
-                  accessoryLeft={IconCheckmark}
-                />
-                <Text category="p2" style={{ flex: 1 }}>
-                  Free Road Recovery
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 10,
-                  alignItems: 'flex-start',
-                }}
-              >
-                <Button
-                  appearance="ghost"
-                  style={{
-                    paddingHorizontal: 0,
-                    paddingVertical: 0,
-                    minHeight: 0,
-                    minWidth: 0,
-                  }}
-                  accessoryLeft={IconCheckmark}
-                />
-                <Text category="p2" style={{ flex: 1 }}>
-                  Free Legal Assistance Call-out up to 4 times annually
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 10,
-                  alignItems: 'flex-start',
-                }}
-              >
-                <Button
-                  appearance="ghost"
-                  style={{
-                    paddingHorizontal: 0,
-                    paddingVertical: 0,
-                    minHeight: 0,
-                    minWidth: 0,
-                  }}
-                  accessoryLeft={IconCheckmark}
-                />
-                <Text category="p2" style={{ flex: 1 }}>
+                <IconCheckmark height={18} width={18} fill="black" />
+                <Text style={{ flex: 1, marginLeft: 5, fontSize: 12 }}>
                   Free Travel Insurance (For Road & Air)
                 </Text>
               </View>
-              <View style={{ marginTop: 10 }}>
+              <View style={{ marginTop: 20, marginHorizontal: 20 }}>
                 <Button
                   status="danger"
-                  onPress={() => routeTo('ActivateCareSoloPlan')}
+                  onPress={() => routeTo('ActivateCareSoloLitePlan')}
                 >
                   <Text status="control" category="h6">
                     Activate Now

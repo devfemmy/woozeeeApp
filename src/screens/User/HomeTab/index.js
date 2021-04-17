@@ -141,8 +141,7 @@ export default function Home({ navigation }) {
     openCare: () => sheetRefCare.current.open(),
     openWallet: () => sheetRefWallet.current.open(),
     openRewards: () => sheetRefRewards.current.open(),
-    // openComingSoonMarket: () => sheetComingSoonMarket.current.open(),
-    openComingSoonMarket: () => navigation.replace('MarketPlaceRoute'),
+    openComingSoonMarket: () => sheetComingSoonMarket.current.open(),
     openComingSoonCharity: () => sheetComingSoonCharity.current.open(),
     SocialRoute: () => navigation.replace('SocialRoute'),
   };
@@ -409,8 +408,8 @@ export default function Home({ navigation }) {
               </Text>
               <View style={{ flex: 1 }}>
                 <Image
-                  source={require('assets/images/gifs/qr-code-scan.gif')}
-                  defaultSource={require('assets/images/gifs/qr-code-scan.gif')}
+                  source={require('assets/images/gifs/marketplace.gif')}
+                  defaultSource={require('assets/images/gifs/marketplace.gif')}
                   resizeMode="contain"
                   style={{ height: '100%', width: 200, minHeight: 150 }}
                 />
@@ -506,8 +505,8 @@ export default function Home({ navigation }) {
               </Text>
               <View style={{ flex: 1 }}>
                 <Image
-                  source={require('assets/images/gifs/qr-code-scan.gif')}
-                  defaultSource={require('assets/images/gifs/qr-code-scan.gif')}
+                  source={require('assets/images/gifs/charity.gif')}
+                  defaultSource={require('assets/images/gifs/charity.gif')}
                   resizeMode="contain"
                   style={{ height: '100%', width: 200, minHeight: 150 }}
                 />
