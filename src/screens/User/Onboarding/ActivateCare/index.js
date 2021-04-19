@@ -31,7 +31,7 @@ const MORE_PLANS = [
   {
     id: 2,
     title: 'Family Plan',
-    price: '72,000',
+    price: '144,000',
     benefits: [
       'Free medical care covering medical bills up to ₦ 1,000,000 annually',
       'Free Road recovery up to 12 times annually',
@@ -47,9 +47,9 @@ const MORE_PLANS = [
   {
     id: 3,
     title: 'Elite Plan',
-    price: '144,000',
+    price: '288,000',
     benefits: [
-      'Free medical care covering medical bills up to ₦ 3,000,000 annually',
+      'Free medical care covering medical bills up to ₦ 2,000,000 annually',
       'Free Road recovery up to 12 times annually',
       'Free Legal assistance Call-out up to 12 times annually',
       'Free Travel Insurance (For Road & Air)',
@@ -200,7 +200,7 @@ export default function ActivateWallet({ navigation }) {
                 <Text category="c2">Your current plan</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text category="h5" status="danger">
-                    ₦ 15,000
+                    ₦ 18,000
                   </Text>
                   <Text category="s2" status="danger">
                     {' /Year'}

@@ -102,7 +102,7 @@ const VideoView = forwardRef((props, ref) => {
             }}
           >
             <View style={{ flexDirection: 'row' }}>
-              <View style={{ position: 'relative' }}>
+              {/* <View style={{ position: 'relative' }}>
                 <LinearGradient
                   colors={['#043F7C', '#FF5757']}
                   style={{
@@ -137,7 +137,7 @@ const VideoView = forwardRef((props, ref) => {
                   }}
                   resizeMode="cover"
                 />
-              </View>
+              </View> */}
               <View style={{ paddingLeft: 5 }}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text
@@ -219,8 +219,8 @@ const VideoView = forwardRef((props, ref) => {
 
               <View style={{ alignItems: 'center' }}>
                 <Image
-                  source={require('assets/images/drawable/icon.png')}
-                  defaultSource={require('assets/images/drawable/icon.png')}
+                  source={require('assets/images/user/user2.png')}
+                  defaultSource={require('assets/images/user/user2.png')}
                   style={{
                     height: 40,
                     width: 40,

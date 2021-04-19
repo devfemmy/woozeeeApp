@@ -12,7 +12,7 @@ const instance = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json:charset=utf-8',
     'secret-key':
-      '$2b$10$BifoVKHdKq1J9E8C1YK1nuvsaD4wY9dVW5jNPuy4/mvioQJ84wZ1O',
+      '$2b$10$Pi1RPDrKJH7S3a8Ke49Z1.9aNDp.xJ1jnkYibTnPFTIE15eV424lS',
   },
 });
 

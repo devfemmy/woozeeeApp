@@ -161,7 +161,7 @@ const VideoView = forwardRef((props, ref) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            paddingHorizontal: 10,
+            paddingLeft: 10,
           }}
         >
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -289,7 +289,7 @@ const VideoView = forwardRef((props, ref) => {
               width={24}
               onPress={routeComments}
             />
-            <InteractIcon
+            {/* <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={IconCEye}
               textContent={item.views}
@@ -297,7 +297,7 @@ const VideoView = forwardRef((props, ref) => {
               status="basic"
               height={24}
               width={24}
-            />
+            /> */}
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={IconCShare}
@@ -307,7 +307,7 @@ const VideoView = forwardRef((props, ref) => {
               width={24}
             />
           </View>
-          <View style={{ paddingRight: 10 }}>
+          <View>
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={(evaProps) => (
@@ -444,7 +444,7 @@ const VideoView = forwardRef((props, ref) => {
       </View>
       <RBSheet
         ref={sheetRef}
-        height={265}
+        height={205}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -470,50 +470,50 @@ const VideoView = forwardRef((props, ref) => {
             status="basic"
             style={{
               width: '100%',
-              justifyContent: 'flex-start',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={{ fontSize: 16 }} status="basic">
+              {t('follow')}
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 2, width: '100%' }} />
+          <Button
+            appearance="ghost"
+            status="basic"
+            style={{
+              width: '100%',
+              justifyContent: 'center',
             }}
           >
             <Text style={{ fontSize: 16 }} status="basic">
               {t('makeReport')}
             </Text>
           </Button>
-          <Divider style={{ marginVertical: 2, width: '100%' }} />
+          {/* <Divider style={{ marginVertical: 2, width: '100%' }} />
           <Button
             appearance="ghost"
             status="basic"
             style={{
               width: '100%',
-              justifyContent: 'flex-start',
+              justifyContent: 'center',
             }}
           >
             <Text style={{ fontSize: 16 }} status="basic">
               {t('downloadMedia')}
             </Text>
-          </Button>
+          </Button> */}
           <Divider style={{ marginVertical: 2, width: '100%' }} />
           <Button
             appearance="ghost"
             status="basic"
             style={{
               width: '100%',
-              justifyContent: 'flex-start',
+              justifyContent: 'center',
             }}
           >
             <Text style={{ fontSize: 16 }} status="basic">
-              {t('copyLink')}
-            </Text>
-          </Button>
-          <Divider style={{ marginVertical: 2, width: '100%' }} />
-          <Button
-            appearance="ghost"
-            status="basic"
-            style={{
-              width: '100%',
-              justifyContent: 'flex-start',
-            }}
-          >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {t('follow')}
+              {t('shareTo')}
             </Text>
           </Button>
         </Layout>

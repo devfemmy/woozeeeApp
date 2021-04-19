@@ -25,6 +25,7 @@ import SearchField from './components/SearchField';
 import SettingsButton from './components/SettingsButton';
 
 import TopNavigationGlobalMenu from './components/TopNavigationGlobalMenu';
+import TopNavigationUserMenu from './components/TopNavigationUserMenu';
 
 export default function TopNavigationArea(props) {
   // prettier-ignore
@@ -166,7 +167,8 @@ export default function TopNavigationArea(props) {
         <TopNavigation
           alignment="center"
           title={(evaProps) => <Logo {...evaProps} />}
-          accessoryRight={() => <IconCFlag style={{ height: 28, width: 28 }} />}
+          // accessoryRight={() => <IconCFlag style={{ height: 28, width: 28 }} />}
+          accessoryRight={() => <TopNavigationUserMenu />}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}

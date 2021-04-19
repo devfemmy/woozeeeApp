@@ -170,7 +170,7 @@ export default function Social({ navigation }) {
                     navigation={navigation}
                     t={t}
                   />
-                  {index + 1 < 12 && (index + 1) % 4 === 0 ? (
+                  {index === 2 || index === 8 ? (
                     <MoviesSection
                       t={t}
                       navigation={navigation}
@@ -178,6 +178,7 @@ export default function Social({ navigation }) {
                       height={ITEM_HEIGHT}
                     />
                   ) : null}
+                  {index === 5 ? <StoryPostsArea /> : null}
                 </>
               )}
               // getItemLayout={(data, index) => ({

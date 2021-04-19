@@ -68,12 +68,12 @@ const WALLET_ITEMS = [
     icon: IconCSnow,
     content: 'Freeze',
   },
-  {
-    id: 5,
-    icon: IconCEye,
-    content: 'Toggle Balance',
-    action: 'toggleBalanceShown',
-  },
+  // {
+  //   id: 5,
+  //   icon: IconCEye,
+  //   content: 'Toggle Balance',
+  //   action: 'toggleBalanceShown',
+  // },
 ];
 
 const TRANSACTION_HISTORY = [
@@ -169,7 +169,13 @@ export default function WalletTab({ navigation }) {
   );
 
   const WalletItem = ({ data }) => (
-    <View style={{ padding: 10, width: '20%', alignItems: 'center' }}>
+    <View
+      style={{
+        padding: 5,
+        width: '25%',
+        alignItems: 'center',
+      }}
+    >
       <Button
         accessoryLeft={data.icon}
         style={{ borderRadius: 15, height: 60, width: 60 }}
@@ -189,7 +195,7 @@ export default function WalletTab({ navigation }) {
     <TouchableOpacity
       activeOpacity={0.75}
       style={{
-        width: IS_PORTRAIT ? width / 1.25 : width / 3,
+        width: IS_PORTRAIT ? width / 1.15 : width / 3,
         paddingHorizontal: 5,
         position: 'relative',
         alignItems: 'center',
@@ -273,7 +279,7 @@ export default function WalletTab({ navigation }) {
 
   const renderFooterArea = () => (
     <Card header={renderTransactionHeader}>
-      <View style={{ marginHorizontal: -10 }}>
+      <View style={{ marginHorizontal: -10, marginVertical: -5 }}>
         {TRANSACTION_HISTORY.map((data) => (
           <HistoryItem data={data} key={data.id} />
         ))}

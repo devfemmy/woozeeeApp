@@ -19,7 +19,7 @@ export default function Follow({ navigation }) {
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
-        title="@Bukka101Official"
+        title="Transaction History"
         navigation={navigation}
         screen="default"
         options
