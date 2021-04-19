@@ -1,2 +1,0 @@
-# woozeee
-woozeee mobile app
