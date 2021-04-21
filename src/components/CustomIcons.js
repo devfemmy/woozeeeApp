@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Platform } from 'react-native';
+
 import { Icon } from '@ui-kitten/components';
 
 export const IconEye = (props) => {
@@ -476,4 +478,9 @@ export const IconCWalletFill = (props) => {
   const { active, ...otherProps } = props;
 
   return <Icon {...otherProps} name="wallet-fill" pack="assets" />;
+};
+export const IconCShareVariant = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name={`share-${Platform.OS}`} pack="assets" />;
 };

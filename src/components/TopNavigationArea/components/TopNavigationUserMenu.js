@@ -7,26 +7,16 @@ import {
   Toggle,
 } from '@ui-kitten/components';
 
-import {
-  AuthContext,
-  LoadingContext,
-  LocaleContext,
-  AppSettingsContext,
-} from 'src/contexts';
+import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import {
   IconMoreVertical,
-  IconSettings,
-  IconEdit,
-  IconLogout,
   IconMoon,
   IconEye,
 } from 'src/components/CustomIcons';
 
 export default function TopNavigationUserMenu(props) {
   const { balanceVisible, toggleBalance } = props;
-
-  console.log(balanceVisible);
 
   const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
 
@@ -104,7 +94,7 @@ export default function TopNavigationUserMenu(props) {
       backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.15)' }}
       accessibilityLiveRegion="polite"
       accessibilityHint="Options Menu"
-      style={{ minWidth: 230 }}
+      style={{ minWidth: 215 }}
     >
       <MenuItem
         accessoryLeft={IconMoon}

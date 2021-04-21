@@ -118,9 +118,9 @@ export default function Home({ navigation }) {
 
   // const routeTo = (route) => navigation.replace(route);
 
-  const toggleBalanceVisibility = () => {
+  const toggleBalanceVisibility = useCallback(() => {
     setBalanceVisible((prevState) => !prevState);
-  };
+  }, []);
 
   const ACTION_SHEETS = {
     openCare: () => sheetRefCare.current.open(),

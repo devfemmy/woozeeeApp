@@ -33,9 +33,8 @@ import InteractIcon from 'src/components/InteractIcon';
 import {
   IconCHeart,
   IconCChat,
-  IconCShare,
+  IconCShareVariant,
   IconMoreHorizontal,
-  // IconForwardIos,
   IconPaperPlane,
   IconBookmark,
   IconCEye,
@@ -300,7 +299,7 @@ const VideoView = forwardRef((props, ref) => {
             /> */}
             <InteractIcon
               style={{ marginHorizontal: 5 }}
-              Accessory={IconCShare}
+              Accessory={IconCShareVariant}
               direction="row"
               status="basic"
               height={24}

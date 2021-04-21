@@ -75,7 +75,7 @@ const MoviesSectionArea = (props) => {
       >
         <View
           style={{
-            paddingHorizontal: 10,
+            paddingLeft: 10,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
