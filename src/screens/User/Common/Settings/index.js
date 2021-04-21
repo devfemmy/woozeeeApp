@@ -30,11 +30,11 @@ import locales from './locales.json';
 const LOCALES = locales;
 
 export default function Settings({ navigation }) {
-  const { appState, appOptions } = useContext(AppSettingsContext);
-
   const t = useContext(LocaleContext);
 
   const { authOptions } = useContext(AuthContext);
+
+  const { appState, appOptions } = useContext(AppSettingsContext);
 
   const { logout } = authOptions;
 

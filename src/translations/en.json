@@ -189,5 +189,10 @@
   "morePlans": "More Plans",
   "today": "Today",
   "yesterday": "Yesterday",
-  "shareTo": "Share to..."
+  "shareTo": "Share to...",
+  "proceedToPayment": "Proceed to payment",
+  "payWithCard": "Pay with Credit/Debit Card",
+  "bankTransfer": "Bank Transfer",
+  "toggleBalance": "Toggle Balance",
+  "hideBalance": "Hide Balance"
 }

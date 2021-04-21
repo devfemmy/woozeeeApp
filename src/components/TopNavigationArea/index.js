@@ -28,9 +28,16 @@ import TopNavigationGlobalMenu from './components/TopNavigationGlobalMenu';
 import TopNavigationUserMenu from './components/TopNavigationUserMenu';
 
 export default function TopNavigationArea(props) {
-  // prettier-ignore
   const {
-    navigation, title, icon, style, screen, search, options,
+    navigation,
+    title,
+    icon,
+    style,
+    screen,
+    search,
+    options,
+    balanceVisible,
+    toggleBalance,
   } = props;
 
   const routeSearch = useCallback(() => navigation.navigate('Search'), [
@@ -168,7 +175,12 @@ export default function TopNavigationArea(props) {
           alignment="center"
           title={(evaProps) => <Logo {...evaProps} />}
           // accessoryRight={() => <IconCFlag style={{ height: 28, width: 28 }} />}
-          accessoryRight={() => <TopNavigationUserMenu />}
+          accessoryRight={() => (
+            <TopNavigationUserMenu
+              balanceVisible={balanceVisible}
+              toggleBalance={toggleBalance}
+            />
+          )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -176,7 +188,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style],
+    [style, balanceVisible, toggleBalance],
   );
 
   const TopNavigationSearch = useMemo(

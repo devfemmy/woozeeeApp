@@ -4,49 +4,86 @@ import {
   TopNavigationAction,
   OverflowMenu,
   MenuItem,
+  Toggle,
 } from '@ui-kitten/components';
 
-import { AuthContext, LoadingContext, LocaleContext } from 'src/contexts';
+import {
+  AuthContext,
+  LoadingContext,
+  LocaleContext,
+  AppSettingsContext,
+} from 'src/contexts';
 
 import {
   IconMoreVertical,
   IconSettings,
   IconEdit,
   IconLogout,
+  IconMoon,
+  IconEye,
 } from 'src/components/CustomIcons';
 
 export default function TopNavigationUserMenu(props) {
-  const { navigation } = props;
+  const { balanceVisible, toggleBalance } = props;
+
+  console.log(balanceVisible);
 
   const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
 
-  const { authOptions } = useContext(AuthContext);
+  // const { authOptions } = useContext(AuthContext);
 
-  const { logout } = authOptions;
+  // const { logout } = authOptions;
 
-  const { setLoading } = useContext(LoadingContext);
+  // const { setLoading } = useContext(LoadingContext);
 
   const t = useContext(LocaleContext);
+
+  const { appState, appOptions } = useContext(AppSettingsContext);
+
+  const { darkMode } = appState;
+
+  const { updateSettings } = appOptions;
+
+  // const [isLoading, setLoading] = useState(false);
+
+  const [isError, setError] = useState(false);
 
   const toggleMenu = () => setNavigationMenuOpen((prevState) => !prevState);
 
   const closeMenu = () => setNavigationMenuOpen(false);
 
-  const handleLogout = async () => {
+  // const handleLogout = async () => {
+  //   try {
+  //     closeMenu();
+  //     setLoading(true);
+  //     await logout();
+  //   } catch (e) {
+  //     const err = e;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const changeAppSettings = async (option) => {
     try {
-      closeMenu();
-      setLoading(true);
-      await logout();
+      // setLoading(true);
+      const settingsError = await updateSettings({
+        ...option,
+      });
+
+      if (settingsError) {
+        setError(true);
+      }
     } catch (e) {
-      const err = e;
+      setError(true);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
-  const routeSettings = () => navigation.navigate('Settings');
-
-  const routeEditProfile = () => navigation.navigate('EditProfile');
+  const handleSwitchTheme = async () => {
+    await changeAppSettings({ darkMode: !darkMode });
+  };
 
   const TopNavigationMenuAnchor = () => (
     <TopNavigationAction
@@ -63,25 +100,25 @@ export default function TopNavigationUserMenu(props) {
       anchor={TopNavigationMenuAnchor}
       visible={isNavigationMenuOpen}
       onBackdropPress={closeMenu}
-      onTouchEnd={closeMenu}
+      // onTouchEnd={closeMenu}
       backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.15)' }}
       accessibilityLiveRegion="polite"
-      accessibilityHint="Navigation Menu"
+      accessibilityHint="Options Menu"
+      style={{ minWidth: 230 }}
     >
       <MenuItem
-        accessoryLeft={IconEdit}
-        title={`${t('edit')} ${t('profile')}`}
-        onPress={routeEditProfile}
+        accessoryLeft={IconMoon}
+        title={t('darkMode')}
+        accessoryRight={() => (
+          <Toggle checked={darkMode} onChange={handleSwitchTheme} />
+        )}
       />
       <MenuItem
-        accessoryLeft={IconSettings}
-        title={t('settings')}
-        onPress={routeSettings}
-      />
-      <MenuItem
-        accessoryLeft={IconLogout}
-        title={t('logout')}
-        onPress={handleLogout}
+        accessoryLeft={IconEye}
+        title={t('hideBalance')}
+        accessoryRight={() => (
+          <Toggle checked={!balanceVisible} onChange={toggleBalance} />
+        )}
       />
     </OverflowMenu>
   );

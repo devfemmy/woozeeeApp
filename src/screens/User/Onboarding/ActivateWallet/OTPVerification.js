@@ -20,7 +20,7 @@ export default function OTPVerification({ navigation }) {
   const t = useContext(LocaleContext);
 
   // prettier-ignore
-  const routeHome = () => navigation.navigate('UserRoute');
+  const routeCare = () => navigation.navigate('ActivateCare');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -64,7 +64,7 @@ export default function OTPVerification({ navigation }) {
                 accessibilityLiveRegion="assertive"
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
-                onPress={routeHome}
+                onPress={routeCare}
                 disabled={isLoading}
               >
                 <Text status="control">{t('complete')}</Text>

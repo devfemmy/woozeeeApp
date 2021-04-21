@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useContext, useRef, useCallback,
+  useContext, useRef, useCallback, useState,
 } from 'react';
 
 import {
@@ -89,27 +89,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const Balance = (props) => {
-  const { value, point } = props;
-  const [wholeNum, decimalNum] = value.split('.');
-
-  return (
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        marginBottom: 5,
-      }}
-    >
-      <Text category="p2">{decimalNum ? 'N' : null}</Text>
-      <Text category="h5" style={{ marginHorizontal: 5 }}>
-        {wholeNum}
-      </Text>
-      <Text category="p2">{decimalNum ? `.${decimalNum}` : `${point}(s)`}</Text>
-    </View>
-  );
-};
-
 export default function Home({ navigation }) {
   useDisableAndroidExit();
 
@@ -120,6 +99,8 @@ export default function Home({ navigation }) {
   const sheetRefRewards = useRef(null);
   const sheetComingSoonMarket = useRef(null);
   const sheetComingSoonCharity = useRef(null);
+
+  const [isBalanceVisible, setBalanceVisible] = useState(true);
 
   const IS_PORTRAIT = height > width;
 
@@ -136,6 +117,10 @@ export default function Home({ navigation }) {
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
   // const routeTo = (route) => navigation.replace(route);
+
+  const toggleBalanceVisibility = () => {
+    setBalanceVisible((prevState) => !prevState);
+  };
 
   const ACTION_SHEETS = {
     openCare: () => sheetRefCare.current.open(),
@@ -538,6 +523,34 @@ export default function Home({ navigation }) {
     [t, BG_THEME, height],
   );
 
+  const Balance = (props) => {
+    const { value, point } = props;
+    const [wholeNum, decimalNum] = value.split('.');
+
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'flex-end',
+          marginBottom: 5,
+        }}
+      >
+        <Text category="p2">{decimalNum ? 'N' : null}</Text>
+        <Text category="h5" style={{ marginHorizontal: 5 }}>
+          {isBalanceVisible ? wholeNum : 'XXX,XXX'}
+        </Text>
+        <Text category="p2">
+          {/* eslint-disable-next-line no-nested-ternary */}
+          {isBalanceVisible
+            ? decimalNum
+              ? `.${decimalNum}`
+              : `${point}(s)`
+            : '.XX'}
+        </Text>
+      </View>
+    );
+  };
+
   const WoozeeeCards = (data) => (
     <TouchableOpacity
       activeOpacity={0.75}
@@ -629,6 +642,8 @@ export default function Home({ navigation }) {
         title="woozeee"
         navigation={navigation}
         screen="user"
+        balanceVisible={isBalanceVisible}
+        toggleBalance={toggleBalanceVisibility}
       />
 
       <View style={{ flex: 1 }}>
