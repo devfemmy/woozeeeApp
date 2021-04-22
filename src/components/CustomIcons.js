@@ -479,6 +479,11 @@ export const IconCWalletFill = (props) => {
 
   return <Icon {...otherProps} name="wallet-fill" pack="assets" />;
 };
+export const IconCStarFill = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="star-fill" pack="assets" />;
+};
 export const IconCShareVariant = (props) => {
   const { active, ...otherProps } = props;
 

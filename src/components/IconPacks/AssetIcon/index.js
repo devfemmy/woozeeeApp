@@ -138,6 +138,7 @@ const AssetIconsPack = {
       require('assets/images/icon/snow-outline.png'),
     ),
     'wallet-fill': IconProvider(require('assets/images/icon/wallet-fill.png')),
+    'star-fill': IconProvider(require('assets/images/icon/star-fill.png')),
     'share-ios': IconProvider(require('assets/images/icon/share-ios.png')),
     'share-android': IconProvider(
       require('assets/images/icon/share-android.png'),
