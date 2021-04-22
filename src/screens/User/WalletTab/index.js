@@ -106,7 +106,7 @@ const TRANSACTION_HISTORY = [
   },
 ];
 
-export default function WalletTab({ navigation }) {
+export default function Wallet({ navigation }) {
   useDisableAndroidExit();
 
   const { width, height } = useWindowDimensions();

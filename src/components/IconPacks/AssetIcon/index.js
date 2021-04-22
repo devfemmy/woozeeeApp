@@ -143,6 +143,12 @@ const AssetIconsPack = {
     'share-android': IconProvider(
       require('assets/images/icon/share-android.png'),
     ),
+    'mobile-topup': IconProvider(
+      require('assets/images/icon/mobile-topup.png'),
+    ),
+    'data-topup': IconProvider(require('assets/images/icon/data-topup.png')),
+    electricity: IconProvider(require('assets/images/icon/electricity.png')),
+    'cable-tv': IconProvider(require('assets/images/icon/cable-tv.png')),
   },
 };
 

@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
 
-import { View, Image, useWindowDimensions } from 'react-native';
+import { View, Image } from 'react-native';
 
-import { Layout, Text, List, Divider } from '@ui-kitten/components';
+// prettier-ignore
+import {
+  Layout, Text, List, Divider,
+} from '@ui-kitten/components';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -11,21 +14,6 @@ import { LocaleContext } from 'src/contexts';
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { IconCStarFill } from 'src/components/CustomIcons';
-
-import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
-
-import WithDefaultFetch from 'src/components/DataFetch';
-
-import { DealsPosts } from 'src/components/MarketPosts';
-
-import { marketDealsUrl } from 'src/api/dummy';
-
-const PLACEHOLDER_CONFIG = {
-  count: 4,
-  numColumns: 2,
-  maxHeight: 180,
-  mediaLeft: true,
-};
 
 const RANKINGS = [
   {
@@ -103,8 +91,6 @@ const RANKINGS = [
 ];
 
 export default function MarketPlace({ navigation }) {
-  const { width, height } = useWindowDimensions();
-
   const t = useContext(LocaleContext);
 
   const getTopRanks = (ranks) => {

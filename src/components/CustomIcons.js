@@ -484,6 +484,26 @@ export const IconCStarFill = (props) => {
 
   return <Icon {...otherProps} name="star-fill" pack="assets" />;
 };
+export const IconCCableTv = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="cable-tv" pack="assets" />;
+};
+export const IconCElectricity = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="electricity" pack="assets" />;
+};
+export const IconCDataTopUp = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="data-topup" pack="assets" />;
+};
+export const IconCMobileTopUp = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="mobile-topup" pack="assets" />;
+};
 export const IconCShareVariant = (props) => {
   const { active, ...otherProps } = props;
 
