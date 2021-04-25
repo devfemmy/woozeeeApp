@@ -139,6 +139,10 @@ export const IconCreditCard = (props) => (
 
 export const IconClock = (props) => <Icon {...props} name="clock-outline" />;
 
+export const IconDownload = (props) => (
+  <Icon {...props} name="download-outline" />
+);
+
 export const IconHome = (props) => <Icon {...props} name="home-outline" />;
 
 export const IconSearch = (props) => <Icon {...props} name="search-outline" />;
@@ -154,7 +158,7 @@ export const IconFlag = (props) => <Icon {...props} name="flag-outline" />;
 export const IconLogout = (props) => <Icon {...props} name="log-out-outline" />;
 
 export const IconForward = (props) => (
-  <Icon {...props} name="arrow-ios-forward-outline" />
+  <Icon {...props} name="arrow-forward-outline" />
 );
 
 export const IconMsgSquare = (props) => (

@@ -52,6 +52,7 @@ import TransactionHistory from 'src/screens/User/WalletTab/TransactionHistory';
 
 // BillPay Screens
 import BillPayment from 'src/screens/User/BillPayTab/BillPayment';
+import BillPaymentSuccess from 'src/screens/User/BillPayTab/Success';
 
 /* Routes import */
 import UserRoute from './User';
@@ -101,6 +102,7 @@ export default function Router() {
       Follow,
       TransactionHistory,
       BillPayment,
+      BillPaymentSuccess,
     },
 
     Common: {

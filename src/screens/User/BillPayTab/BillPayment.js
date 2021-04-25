@@ -115,8 +115,19 @@ export default function BillPayment({ navigation }) {
     mobile: '',
     amount: '',
     pin: '',
+    product: t('product'),
     account: t('paymentAccount'),
   });
+
+  const [selectedOption, setSelectedOption] = useState(0);
+
+  const handleAccountChange = (index) => {
+    setSelectedOption(index);
+    setFormValues((prevState) => ({
+      ...prevState,
+      account: ACCOUNTS[index].title,
+    }));
+  };
 
   const onClickOperator = (i) => {
     if (i === activeOperator) {
@@ -130,42 +141,9 @@ export default function BillPayment({ navigation }) {
 
   const handleOpenAccountSheet = () => accountSheetRef.current.open();
 
-  const AccountOptions = () => {
-    const [selectedOption, setSelectedOption] = useState(0);
+  const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
 
-    const handleAccountChange = (index) => {
-      setSelectedOption(index);
-      setFormValues((prevState) => ({
-        ...prevState,
-        account: ACCOUNTS[index].title,
-      }));
-    };
-    return (
-      <RadioGroup selectedIndex={selectedOption} onChange={handleAccountChange}>
-        {ACCOUNTS.map((option) => (
-          <Radio key={option.id}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '100%',
-              }}
-            >
-              <Text category="s2">{option.title}</Text>
-              <Image
-                source={option.image}
-                defaultSource={option.image}
-                resizeMode="cover"
-                style={{ height: 25, width: 25 }}
-              />
-            </View>
-          </Radio>
-        ))}
-      </RadioGroup>
-    );
-  };
-
+  // prettier-ignore
   const ProductSheet = () => (
     <RBSheet
       ref={productSheetRef}
@@ -212,6 +190,10 @@ export default function BillPayment({ navigation }) {
             paddingHorizontal: 20,
             marginBottom: 15,
           }}
+          onPress={() => setFormValues((prevState) => ({
+            ...prevState,
+            product: 'MTN  VTU',
+          }))}
         >
           <Text style={{ fontSize: 16 }} status="basic" category="h6">
             MTN VTU
@@ -260,7 +242,31 @@ export default function BillPayment({ navigation }) {
             </Text>
           </View>
           <View style={{ paddingHorizontal: 20 }}>
-            <AccountOptions />
+            <RadioGroup
+              selectedIndex={selectedOption}
+              onChange={handleAccountChange}
+            >
+              {ACCOUNTS.map((option) => (
+                <Radio key={option.id}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}
+                  >
+                    <Text category="s2">{option.title}</Text>
+                    <Image
+                      source={option.image}
+                      defaultSource={option.image}
+                      resizeMode="cover"
+                      style={{ height: 25, width: 25 }}
+                    />
+                  </View>
+                </Radio>
+              ))}
+            </RadioGroup>
           </View>
           <View
             style={{
@@ -283,7 +289,7 @@ export default function BillPayment({ navigation }) {
         </Layout>
       </RBSheet>
     ),
-    [BG_THEME, t],
+    [BG_THEME, t, selectedOption],
   );
 
   const WoozeeeCards = ({ item }) => (
@@ -365,7 +371,7 @@ export default function BillPayment({ navigation }) {
             style={{ justifyContent: 'space-between' }}
             onPress={handleOpenProductSheet}
           >
-            <Text>{t('product')}</Text>
+            <Text>{form.product}</Text>
           </Button>
         </View>
         <View style={{ paddingVertical: 5 }}>
@@ -418,6 +424,7 @@ export default function BillPayment({ navigation }) {
             accessibilityLiveRegion="assertive"
             accessibilityComponentType="button"
             accessibilityLabel="Continue"
+            onPress={routeSuccess}
           >
             <Text status="control">{t('proceed')}</Text>
           </Button>

@@ -213,5 +213,8 @@
   "transactionPin": "Transaction Pin",
   "proceed": "Proceed",
   "source": "Source",
-  "done": "Done"
+  "done": "Done",
+  "transactionSuccess": "Transaction Success!",
+  "downloadReceipt": "Download Receipt",
+  "shareReceipt": "Share Receipt"
 }
