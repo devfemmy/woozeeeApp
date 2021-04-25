@@ -33,15 +33,19 @@ import {
 const woozeeeCards = [
   {
     id: 1,
-    banner: require('assets/images/banner/glo-ad.jpg'),
+    banner: require('assets/images/card/mtn.png'),
   },
   {
     id: 2,
-    banner: require('assets/images/banner/glo-ad.jpg'),
+    banner: require('assets/images/card/airtel.png'),
   },
   {
     id: 3,
-    banner: require('assets/images/banner/glo-ad.jpg'),
+    banner: require('assets/images/card/glo.png'),
+  },
+  {
+    id: 4,
+    banner: require('assets/images/card/9mobile.png'),
   },
 ];
 
@@ -49,22 +53,22 @@ const WALLET_ITEMS = [
   {
     id: 1,
     icon: IconCMobileTopUp,
-    content: 'buyAirtime',
+    content: 'Buy Airtime',
   },
   {
     id: 2,
     icon: IconCDataTopUp,
-    content: 'buyData',
+    content: 'Buy Mobile Data',
   },
   {
     id: 3,
     icon: IconCCableTv,
-    content: 'payCable',
+    content: 'Pay Cable Tv',
   },
   {
     id: 4,
     icon: IconCElectricity,
-    content: 'payElectricity',
+    content: 'Pay Electricity',
   },
 ];
 
@@ -79,8 +83,6 @@ export default function BillPay({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const routePayment = () => navigation.navigate('BillPayment');
-
   const BillPayItem = ({ data }) => (
     <TouchableOpacity
       activeOpacity={0.75}
@@ -88,7 +90,6 @@ export default function BillPay({ navigation }) {
         padding: 5,
         width: '50%',
       }}
-      onPress={routePayment}
     >
       <Layout
         level="1"
@@ -111,7 +112,7 @@ export default function BillPay({ navigation }) {
           <data.icon style={{ height: 40, width: 40 }} />
         </View>
         <Text status="primary" style={{ textAlign: 'center', marginTop: 20 }}>
-          {t(data.content)}
+          {data.content}
         </Text>
       </Layout>
     </TouchableOpacity>
@@ -121,9 +122,8 @@ export default function BillPay({ navigation }) {
     <TouchableOpacity
       activeOpacity={0.75}
       style={{
-        width: IS_PORTRAIT ? width / 1.25 : width / 3,
+        width: width / 4.1,
         paddingHorizontal: 5,
-        position: 'relative',
         alignItems: 'center',
         justifyContent: 'flex-start',
       }}
@@ -132,11 +132,10 @@ export default function BillPay({ navigation }) {
         source={data.item.banner}
         defaultSource={data.item.banner}
         style={{
-          height: IS_PORTRAIT ? 200 : 180,
           width: '100%',
           borderRadius: 10,
         }}
-        resizeMode="cover"
+        resizeMode="contain"
       />
     </TouchableOpacity>
   );
@@ -184,11 +183,7 @@ export default function BillPay({ navigation }) {
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title="woozeee"
-        navigation={navigation}
-        screen="billPay"
-      />
+      <TopNavigationArea title="" navigation={navigation} screen="default" />
       <View style={{ flex: 1 }}>
         <List
           style={{ backgroundColor: 'transparent' }}
