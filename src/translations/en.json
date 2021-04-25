@@ -202,5 +202,16 @@
   "accounts": "Accounts",
   "addMoney": "Add Money",
   "transferMoney": "Transfer Money",
-  "freeze": "Freeze"
+  "freeze": "Freeze",
+  "serviceChoice": "What service would you like?",
+  "operatorChoice": "Select Mobile Operator *",
+  "selectProduct": "Select product",
+  "mobile": "Mobile Number",
+  "amount": "Amount",
+  "product": "Product",
+  "paymentAccount": "Payment Account / Wallet",
+  "transactionPin": "Transaction Pin",
+  "proceed": "Proceed",
+  "source": "Source",
+  "done": "Done"
 }

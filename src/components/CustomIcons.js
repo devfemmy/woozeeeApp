@@ -81,6 +81,10 @@ export const IconPaperPlane = (props) => (
   <Icon {...props} name="paper-plane-outline" />
 );
 
+export const IconArrowDown = (props) => (
+  <Icon {...props} name="arrow-ios-downward" />
+);
+
 export const IconFilm = (props) => <Icon {...props} name="film-outline" />;
 
 export const IconBell = (props) => <Icon {...props} name="bell-outline" />;
@@ -449,6 +453,11 @@ export const IconCBag = (props) => {
 
   return <Icon {...otherProps} name="bag" pack="assets" />;
 };
+export const IconCPhoneBook = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="phonebook-outline" pack="assets" />;
+};
 export const IconCCard = (props) => {
   const { active, ...otherProps } = props;
 
@@ -488,6 +497,11 @@ export const IconCCableTv = (props) => {
   const { active, ...otherProps } = props;
 
   return <Icon {...otherProps} name="cable-tv" pack="assets" />;
+};
+export const IconCCheck = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="check-filled" pack="assets" />;
 };
 export const IconCElectricity = (props) => {
   const { active, ...otherProps } = props;

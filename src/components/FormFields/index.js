@@ -56,6 +56,7 @@ export const GeneralTextField = (props) => {
     setFormValues,
     secure,
     status,
+    accessoryRight,
     ...otherProps
   } = props;
 
@@ -119,7 +120,7 @@ export const GeneralTextField = (props) => {
                 toggleSecure={setSecureEntry}
               />
             )
-            : null
+            : accessoryRight
         }
         /* prettier-ignore */
         captionIcon={(evaProps) => (

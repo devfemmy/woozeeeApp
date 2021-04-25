@@ -163,7 +163,7 @@ export default function BillPay({ navigation }) {
         />
       </View>
       <View style={{ marginTop: 40, paddingHorizontal: 15 }}>
-        <Text category="s1">What service would you like?</Text>
+        <Text category="s1">{t('serviceChoice')}</Text>
       </View>
       <View
         style={{

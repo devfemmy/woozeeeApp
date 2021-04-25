@@ -149,6 +149,12 @@ const AssetIconsPack = {
     'data-topup': IconProvider(require('assets/images/icon/data-topup.png')),
     electricity: IconProvider(require('assets/images/icon/electricity.png')),
     'cable-tv': IconProvider(require('assets/images/icon/cable-tv.png')),
+    'check-filled': IconProvider(
+      require('assets/images/icon/check-filled.png'),
+    ),
+    'phonebook-outline': IconProvider(
+      require('assets/images/icon/phonebook-outline.png'),
+    ),
   },
 };
 

@@ -189,5 +189,21 @@
   "morePlans": "MPlus de plans",
   "today": "Aujourd'hui",
   "yesterday": "hier",
-  "shareTo": "Partager à..."
+  "shareTo": "Partager à...",
+  "proceedToPayment": "Procéder au paiement",
+  "payWithCard": "Payer avec une carte de crédit / débit",
+  "bankTransfer": "virement",
+  "toggleBalance": "Balancer la balance",
+  "hideBalance": "cacher la balance",
+  "buyAirtime": "Acheter du temps d'antenne",
+  "buyData": "Acheter des données mobiles",
+  "payCable": "Payer la télévision par câble",
+  "payElectricity": "Payer l'électricité",
+  "accounts": "comptes",
+  "addMoney": "ajouter de l'argent",
+  "transferMoney": "Transférer de l'argent",
+  "freeze": "Geler",
+  "serviceChoice": "Quel service voudriez-vous?",
+  "operatorChoice": "Sélectionnez Opérateur de téléphonie mobile",
+  "selectProduct": "sélectionner un produit"
 }
