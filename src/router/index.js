@@ -66,8 +66,8 @@ export default function Router() {
       Intro,
       Login,
       Register,
-      RegisterFull,
       VerifyWithCode,
+      RegisterFull,
       RecoverWithEmail,
     },
 

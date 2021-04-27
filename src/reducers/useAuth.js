@@ -1,8 +1,13 @@
+import axios from 'axios';
 // prettier-ignore
 import {
   useReducer, useMemo,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+//prettier-ignore
+import { postAction, getAction } from '../services/Requests'
+import { methodTypes } from '../services/constants';
 
 // prettier-ignore
 import {
@@ -17,6 +22,8 @@ export default function useAuth() {
     initialState,
     initializeState,
   );
+
+  const baseUrl = 'https://apis.woozeee.com/api/v1/user/';
 
   // create obj for authentication options
   const authOptions = useMemo(
@@ -49,24 +56,30 @@ export default function useAuth() {
       },
       // login user then set token (use login details) in storage
       login: async (userData) => {
+        const res = await fetch('https://apis.woozeee.com/api/v1/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(userData),
+        });
+
+        const result = await res.json();
+        console.log(result);
         let token = null;
         let msg = null;
 
         try {
           //  TODO: implement authenticate login details:{email, password}
 
-          const dev = {
-            email: 'devromes@gmail.com',
-            password: 'dev1234',
-          };
-
           // prettier-ignore
-          msg = await userData.email.toLowerCase().trim() !== dev.email
+          msg = await result.error == true 
             ? 'loginNotFound'
             : null;
 
           if (!msg) {
-            token = await JSON.stringify(userData);
+            token = await JSON.stringify(result.token);
 
             await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
           }
@@ -76,10 +89,75 @@ export default function useAuth() {
             token,
           });
         } catch (e) {
+          cons;
           msg = e;
         }
-
         return msg;
+      },
+
+      signup: async (userData) => {
+        const userInfo = {
+          email: userData.email,
+          fName: userData.firstName,
+          sName: userData.lastName,
+          username: userData.firstName,
+          password: userData.password,
+          referralCode: userData.referralCode,
+        };
+
+        await fetch('https://apis.woozeee.com/api/v1/user/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(userInfo),
+        });
+      },
+
+      verifyAction: async (verificationCode) => {
+        const tokenValue = {
+          email: verificationCode.emailAddress,
+          token: verificationCode.code,
+        };
+
+        await fetch('https://apis.woozeee.com/api/v1/user/confirm-token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(tokenValue),
+        });
+
+        // const result = await res.json();
+
+        // let token = null;
+        // let msg = null;
+
+        // try {
+        //   //  TODO: implement authenticate login details:{email, password}
+
+        //   // prettier-ignore
+        //   msg = await result.error == true
+        //     ? 'tokenError'
+        //     : null;
+
+        //   if (!msg) {
+        //     token = await JSON.stringify(result.token);
+
+        //     await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
+        //   }
+
+        //   await dispatch({
+        //     type: 'LOG_IN',
+        //     token,
+        //   });
+        // } catch (e) {
+        //   msg = e;
+        // }
+
+        // return msg;
       },
 
       // Clear token from Storage then log user out

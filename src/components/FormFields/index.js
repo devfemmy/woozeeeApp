@@ -98,6 +98,7 @@ export const GeneralTextField = (props) => {
         accessibilityLiveRegion="polite"
         maxFontSizeMultiplier={1.5}
         autoCorrect={false}
+        autoCapitalize={false}
         size={size || 'large'}
         caption={caption}
         value={inputVal.value}

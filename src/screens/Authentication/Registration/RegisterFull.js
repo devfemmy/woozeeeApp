@@ -4,16 +4,25 @@ import { View, ScrollView } from 'react-native';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
 
-import { LocaleContext } from 'src/contexts';
+import { AuthContext, LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
-export default function RegisterFull({ navigation }) {
+import { useIsFocused } from '@react-navigation/native';
+
+export default function RegisterFull({ route, navigation }) {
+  // prettier-ignore
+  const {
+    authOptions,
+  } = useContext(AuthContext);
   const [isLoading, setLoading] = useState(false);
 
-  const [form, setFormValues] = useState({
+  const { form } = route.params;
+
+  const [userInfo, setUserInfo] = useState({
+    email: form.email,
     firstName: '',
     lastName: '',
     username: '',
@@ -21,11 +30,49 @@ export default function RegisterFull({ navigation }) {
     confirmPassword: '',
   });
 
+  const { signup } = authOptions;
+
   const t = useContext(LocaleContext);
+
+  const isFocused = useIsFocused();
+
+  const [errorMsg, setErrorMsg] = useState({
+    auth: null,
+  });
 
   const routeLogin = () => navigation.navigate('Login');
 
-  const routeVerifyWithCode = () => navigation.navigate('VerifyWithCode');
+  const routeVerifyWithCode = () =>
+    navigation.navigate('VerifyWithCode', { userInfo });
+
+  const signUp = async () => {
+    await signupUser();
+    await routeVerifyWithCode();
+  };
+
+  const signupUser = async () => {
+    let signupError = null;
+
+    try {
+      setLoading(true);
+
+      if (userInfo.password === userInfo.confirmPassword) {
+        signupError = await signup(userInfo);
+      } else {
+        signupError = 'singupError';
+      }
+    } catch (e) {
+      signupError = e;
+    } finally {
+      if (signupError) {
+        setErrorMsg((prevState) => ({
+          ...prevState,
+          auth: signupError,
+        }));
+      }
+      if (isFocused) setLoading(false);
+    }
+  };
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -60,7 +107,7 @@ export default function RegisterFull({ navigation }) {
                   autoCompleteType="name"
                   textContentType="givenName"
                   validate="required"
-                  setFormValues={setFormValues}
+                  setFormValues={setUserInfo}
                 />
               </View>
               <View style={{ flex: 1, marginLeft: 5 }}>
@@ -70,7 +117,7 @@ export default function RegisterFull({ navigation }) {
                   autoCompleteType="name"
                   textContentType="familyName"
                   validate="required"
-                  setFormValues={setFormValues}
+                  setFormValues={setUserInfo}
                 />
               </View>
             </View>
@@ -79,7 +126,7 @@ export default function RegisterFull({ navigation }) {
                 type="referralCode"
                 label={t('referralCode')}
                 // validate="required"
-                setFormValues={setFormValues}
+                setFormValues={setUserInfo}
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
@@ -90,7 +137,7 @@ export default function RegisterFull({ navigation }) {
                 textContentType="password"
                 validate="password"
                 secure
-                setFormValues={setFormValues}
+                setFormValues={setUserInfo}
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
@@ -101,7 +148,7 @@ export default function RegisterFull({ navigation }) {
                 textContentType="password"
                 validate="password"
                 secure
-                setFormValues={setFormValues}
+                setFormValues={setUserInfo}
               />
             </View>
             <View style={{ paddingVertical: 20 }}>
@@ -111,7 +158,7 @@ export default function RegisterFull({ navigation }) {
                 accessibilityLiveRegion="assertive"
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
-                onPress={routeVerifyWithCode}
+                onPress={signUp}
                 disabled={isLoading}
               >
                 <Text status="control">{t('continue')}</Text>

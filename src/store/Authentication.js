@@ -23,6 +23,11 @@ const reducer = (prevState, action) => {
         loginToken: action.token,
         isLoggedIn: true,
       };
+    case 'SIGN_UP':
+      return {
+        ...prevState,
+        loginToken: action.token,
+      };
     case 'LOG_OUT':
       return {
         ...prevState,

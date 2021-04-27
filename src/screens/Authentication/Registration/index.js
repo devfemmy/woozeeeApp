@@ -26,10 +26,23 @@ export default function Register({ navigation }) {
     email: '',
   });
 
+  const isEmailValid = (emailAddress) => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(emailAddress).toLowerCase());
+  };
+
+  const validateEmail = async () => {
+    if (isEmailValid(form.email)) {
+      routeRegisterFull();
+    } else {
+      return;
+    }
+  };
+
   const t = useContext(LocaleContext);
 
   const routeLogin = () => navigation.navigate('Login');
-  const routeRegisterFull = () => navigation.navigate('RegisterFull');
+  const routeRegisterFull = () => navigation.navigate('RegisterFull', { form });
 
   const routeTermsConditions = () => navigation.navigate('TermsConditions');
   const routePrivacyPolicy = () => navigation.navigate('PrivacyPolicy');
@@ -72,7 +85,7 @@ export default function Register({ navigation }) {
                 accessibilityLiveRegion="assertive"
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
-                onPress={routeRegisterFull}
+                onPress={validateEmail}
                 disabled={isLoading}
               >
                 <Text status="control">{t('continue')}</Text>

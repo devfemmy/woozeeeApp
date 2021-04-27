@@ -4,22 +4,61 @@ import { View, ScrollView } from 'react-native';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
 
-import { LocaleContext } from 'src/contexts';
+import { AuthContext, LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
-export default function VerifyWithCode({ navigation }) {
+import { useIsFocused } from '@react-navigation/native';
+
+export default function VerifyWithCode({ route, navigation }) {
+  // prettier-ignore
+  const {
+    authOptions,
+  } = useContext(AuthContext);
+
+  const { verifyAction } = authOptions;
+
+  const { userInfo } = route.params;
+
   const [isLoading, setLoading] = useState(false);
 
-  const [form, setFormValues] = useState({
-    code: '',
+  const [verifyCode, setVerifyCode] = useState({
+    emailAddress: userInfo.email,
+  });
+
+  const isFocused = useIsFocused();
+
+  const [errorMsg, setErrorMsg] = useState({
+    auth: null,
   });
 
   const t = useContext(LocaleContext);
 
   const routeLogin = () => navigation.navigate('Login');
+
+  const verifyAccount = async () => {
+    await verify();
+    await routeLogin();
+  };
+
+  const verify = async () => {
+    // let tokenError = null;
+    await verifyAction(verifyCode);
+
+    // try {
+    //   setLoading(true);
+    // } catch (e) {
+    //   tokenError = e;
+    // } finally {
+    //   setErrorMsg((prevState) => ({
+    //     ...prevState,
+    //     auth: tokenError,
+    //   }));
+    // }
+    // if (isFocused) setLoading(false);
+  };
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -47,12 +86,13 @@ export default function VerifyWithCode({ navigation }) {
                 autoCompleteType="off"
                 textContentType="oneTimeCode"
                 validate="required"
-                setFormValues={setFormValues}
+                setFormValues={setVerifyCode}
               />
               <Button
                 size="tiny"
                 appearance="ghost"
                 style={{ alignSelf: 'flex-end' }}
+                onPress={verify}
               >
                 <Text status="primary" category="s2">
                   {t('resendCode')}
@@ -67,6 +107,7 @@ export default function VerifyWithCode({ navigation }) {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
                 disabled={isLoading}
+                onPress={verifyAccount}
               >
                 <Text status="control">{t('submit')}</Text>
               </Button>
