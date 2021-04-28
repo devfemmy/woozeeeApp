@@ -6,14 +6,16 @@ import { useInfiniteQuery } from 'react-query';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import RBSheet from 'react-native-raw-bottom-sheet';
+
 // prettier-ignore
 import {
-  Layout, List,
+  Layout, List, Button, Text, Divider,
 } from '@ui-kitten/components';
 
 import Api from 'src/api';
 
-import { LocaleContext } from 'src/contexts';
+import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
@@ -32,6 +34,8 @@ import VideoView from 'src/components/VideoView';
 import MoviesSection from 'src/components/MoviesSection';
 
 import { trendingUrl, socialUrl } from 'src/api/dummy';
+
+import { IconCStartStream, IconCLiveStreams } from 'src/components/CustomIcons';
 
 const PLACEHOLDER_CONFIG1 = {
   count: 2,
@@ -62,6 +66,19 @@ export default function Social({ navigation }) {
   const ITEM_HEIGHT = VIEW_HEIGHT * 0.75;
 
   const t = useContext(LocaleContext);
+
+  const { appState } = useContext(AppSettingsContext);
+
+  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
+
+  const sheetRef = useRef(null);
+
+  const handleOpenSheet = () => sheetRef.current.open();
+
+  const routeLiveStream = useCallback(() => {
+    sheetRef.current.close();
+    navigation.navigate('LiveStream');
+  }, [navigation]);
 
   const SocialPostsArea = () => {
     const cellRefs = useRef({});
@@ -201,13 +218,73 @@ export default function Social({ navigation }) {
   };
 
   return (
-    <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title="woozeee"
-        navigation={navigation}
-        screen="social"
-      />
-      <SocialPostsArea />
-    </Layout>
+    <>
+      <Layout level="6" style={{ flex: 1 }}>
+        <TopNavigationArea
+          title="woozeee"
+          navigation={navigation}
+          screen="social"
+          onStreamClick={handleOpenSheet}
+        />
+        <SocialPostsArea />
+      </Layout>
+      <RBSheet
+        ref={sheetRef}
+        height={180}
+        closeOnDragDown
+        animationType="fade"
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: BG_THEME,
+          },
+        }}
+      >
+        <Layout
+          level="5"
+          style={{
+            flex: 1,
+            width: '100%',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-end',
+            paddingBottom: 30,
+          }}
+        >
+          <Button
+            appearance="ghost"
+            status="primary"
+            accessoryLeft={(evaProps) => (
+              <IconCStartStream {...evaProps} height={32} width={32} />
+            )}
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <Text style={{ fontSize: 16 }} status="primary">
+              {t('startLiveStream')}
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 2, width: '100%' }} />
+          <Button
+            appearance="ghost"
+            status="primary"
+            accessoryLeft={(evaProps) => (
+              <IconCLiveStreams {...evaProps} height={32} width={32} />
+            )}
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+            }}
+            onPress={routeLiveStream}
+          >
+            <Text style={{ fontSize: 16 }} status="primary">
+              {t('viewLiveStreams')}
+            </Text>
+          </Button>
+        </Layout>
+      </RBSheet>
+    </>
   );
 }

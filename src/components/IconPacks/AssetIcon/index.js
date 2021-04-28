@@ -155,6 +155,8 @@ const AssetIconsPack = {
     'phonebook-outline': IconProvider(
       require('assets/images/icon/phonebook-outline.png'),
     ),
+    startstream: IconProvider(require('assets/images/icon/startstream.png')),
+    livestreams: IconProvider(require('assets/images/icon/livestreams.png')),
   },
 };
 

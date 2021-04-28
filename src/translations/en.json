@@ -216,5 +216,7 @@
   "done": "Done",
   "transactionSuccess": "Transaction Success!",
   "downloadReceipt": "Download Receipt",
-  "shareReceipt": "Share Receipt"
+  "shareReceipt": "Share Receipt",
+  "startLiveStream": "Start Live Stream",
+  "viewLiveStreams": "View Live Streams"
 }

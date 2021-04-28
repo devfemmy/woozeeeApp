@@ -517,6 +517,16 @@ export const IconCDataTopUp = (props) => {
 
   return <Icon {...otherProps} name="data-topup" pack="assets" />;
 };
+export const IconCStartStream = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="startstream" pack="assets" />;
+};
+export const IconCLiveStreams = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="livestreams" pack="assets" />;
+};
 export const IconCMobileTopUp = (props) => {
   const { active, ...otherProps } = props;
 

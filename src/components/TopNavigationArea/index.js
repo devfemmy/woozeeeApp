@@ -39,13 +39,10 @@ export default function TopNavigationArea(props) {
     balanceVisible,
     toggleBalance,
     notification,
+    onStreamClick,
   } = props;
 
   const routeSearch = useCallback(() => navigation.navigate('Search'), [
-    navigation,
-  ]);
-
-  const routeLiveStream = useCallback(() => navigation.navigate('LiveStream'), [
     navigation,
   ]);
 
@@ -61,7 +58,7 @@ export default function TopNavigationArea(props) {
           icon={IconCVideo}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Livestream"
-          onPress={routeLiveStream}
+          onPress={onStreamClick}
         />
         <TopNavigationAction
           {...props}
@@ -74,7 +71,7 @@ export default function TopNavigationArea(props) {
         />
       </>
     ),
-    [props, routeLiveStream, routeMessaging],
+    [props, onStreamClick, routeMessaging],
   );
 
   const renderMarketPlaceTools = useCallback(
@@ -322,7 +319,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style],
+    [style, renderNotificationTool],
   );
 
   const navs = {

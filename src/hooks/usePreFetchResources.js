@@ -129,6 +129,8 @@ export default function usePreFetchResources() {
           require('assets/images/icon/data-topup.png'),
           require('assets/images/icon/mobile-topup.png'),
           require('assets/images/icon/electricity.png'),
+          require('assets/images/icon/startstream.png'),
+          require('assets/images/icon/livestreams.png'),
           require('assets/images/banner/onboarding-video-thumb.jpg'),
           require('assets/images/banner/woozeee-socials.jpg'),
           require('assets/images/banner/woozeee-marketplace.jpg'),
