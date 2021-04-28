@@ -17,7 +17,6 @@ export default function RegisterFull({ route, navigation }) {
   const {
     authOptions,
   } = useContext(AuthContext);
-  const [isLoading, setLoading] = useState(false);
 
   const { form } = route.params;
 
@@ -45,9 +44,26 @@ export default function RegisterFull({ route, navigation }) {
   const routeVerifyWithCode = () =>
     navigation.navigate('VerifyWithCode', { userInfo });
 
+  const isUserInfoValid = () => {
+    const { firstName, lastName, password, confirmPassword } = userInfo;
+    if (
+      firstName.length > 0 &&
+      lastName.length > 0 &&
+      password === confirmPassword
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const signUp = async () => {
-    await signupUser();
-    await routeVerifyWithCode();
+    if (isUserInfoValid() == true) {
+      await signupUser();
+      await routeVerifyWithCode();
+    } else {
+      return;
+    }
   };
 
   const signupUser = async () => {
@@ -55,12 +71,7 @@ export default function RegisterFull({ route, navigation }) {
 
     try {
       setLoading(true);
-
-      if (userInfo.password === userInfo.confirmPassword) {
-        signupError = await signup(userInfo);
-      } else {
-        signupError = 'singupError';
-      }
+      await signup(userInfo);
     } catch (e) {
       signupError = e;
     } finally {
@@ -73,6 +84,8 @@ export default function RegisterFull({ route, navigation }) {
       if (isFocused) setLoading(false);
     }
   };
+
+  const [isLoading, setLoading] = useState(isUserInfoValid());
 
   return (
     <Layout level="6" style={{ flex: 1 }}>

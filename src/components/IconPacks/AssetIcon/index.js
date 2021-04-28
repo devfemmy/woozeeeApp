@@ -138,9 +138,22 @@ const AssetIconsPack = {
       require('assets/images/icon/snow-outline.png'),
     ),
     'wallet-fill': IconProvider(require('assets/images/icon/wallet-fill.png')),
+    'star-fill': IconProvider(require('assets/images/icon/star-fill.png')),
     'share-ios': IconProvider(require('assets/images/icon/share-ios.png')),
     'share-android': IconProvider(
       require('assets/images/icon/share-android.png'),
+    ),
+    'mobile-topup': IconProvider(
+      require('assets/images/icon/mobile-topup.png'),
+    ),
+    'data-topup': IconProvider(require('assets/images/icon/data-topup.png')),
+    electricity: IconProvider(require('assets/images/icon/electricity.png')),
+    'cable-tv': IconProvider(require('assets/images/icon/cable-tv.png')),
+    'check-filled': IconProvider(
+      require('assets/images/icon/check-filled.png'),
+    ),
+    'phonebook-outline': IconProvider(
+      require('assets/images/icon/phonebook-outline.png'),
     ),
   },
 };

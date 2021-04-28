@@ -50,6 +50,10 @@ import ActivateCareElitePlan from 'src/screens/User/Onboarding/ActivateCare/Elit
 // Wallet Screens
 import TransactionHistory from 'src/screens/User/WalletTab/TransactionHistory';
 
+// BillPay Screens
+import BillPayment from 'src/screens/User/BillPayTab/BillPayment';
+import BillPaymentSuccess from 'src/screens/User/BillPayTab/Success';
+
 /* Routes import */
 import UserRoute from './User';
 import SocialRoute from './User/HomeTab/Social';
@@ -97,6 +101,8 @@ export default function Router() {
       UserProfile,
       Follow,
       TransactionHistory,
+      BillPayment,
+      BillPaymentSuccess,
     },
 
     Common: {

@@ -81,6 +81,10 @@ export const IconPaperPlane = (props) => (
   <Icon {...props} name="paper-plane-outline" />
 );
 
+export const IconArrowDown = (props) => (
+  <Icon {...props} name="arrow-ios-downward" />
+);
+
 export const IconFilm = (props) => <Icon {...props} name="film-outline" />;
 
 export const IconBell = (props) => <Icon {...props} name="bell-outline" />;
@@ -135,6 +139,10 @@ export const IconCreditCard = (props) => (
 
 export const IconClock = (props) => <Icon {...props} name="clock-outline" />;
 
+export const IconDownload = (props) => (
+  <Icon {...props} name="download-outline" />
+);
+
 export const IconHome = (props) => <Icon {...props} name="home-outline" />;
 
 export const IconSearch = (props) => <Icon {...props} name="search-outline" />;
@@ -150,7 +158,7 @@ export const IconFlag = (props) => <Icon {...props} name="flag-outline" />;
 export const IconLogout = (props) => <Icon {...props} name="log-out-outline" />;
 
 export const IconForward = (props) => (
-  <Icon {...props} name="arrow-ios-forward-outline" />
+  <Icon {...props} name="arrow-forward-outline" />
 );
 
 export const IconMsgSquare = (props) => (
@@ -449,6 +457,11 @@ export const IconCBag = (props) => {
 
   return <Icon {...otherProps} name="bag" pack="assets" />;
 };
+export const IconCPhoneBook = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="phonebook-outline" pack="assets" />;
+};
 export const IconCCard = (props) => {
   const { active, ...otherProps } = props;
 
@@ -478,6 +491,36 @@ export const IconCWalletFill = (props) => {
   const { active, ...otherProps } = props;
 
   return <Icon {...otherProps} name="wallet-fill" pack="assets" />;
+};
+export const IconCStarFill = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="star-fill" pack="assets" />;
+};
+export const IconCCableTv = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="cable-tv" pack="assets" />;
+};
+export const IconCCheck = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="check-filled" pack="assets" />;
+};
+export const IconCElectricity = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="electricity" pack="assets" />;
+};
+export const IconCDataTopUp = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="data-topup" pack="assets" />;
+};
+export const IconCMobileTopUp = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="mobile-topup" pack="assets" />;
 };
 export const IconCShareVariant = (props) => {
   const { active, ...otherProps } = props;

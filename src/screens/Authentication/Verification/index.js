@@ -39,8 +39,12 @@ export default function VerifyWithCode({ route, navigation }) {
   const routeLogin = () => navigation.navigate('Login');
 
   const verifyAccount = async () => {
-    await verify();
-    await routeLogin();
+    if (verifyCode.code.length > 0) {
+      await verify();
+      await routeLogin();
+    } else {
+      return;
+    }
   };
 
   const verify = async () => {

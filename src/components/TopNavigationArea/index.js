@@ -38,6 +38,7 @@ export default function TopNavigationArea(props) {
     options,
     balanceVisible,
     toggleBalance,
+    notification,
   } = props;
 
   const routeSearch = useCallback(() => navigation.navigate('Search'), [
@@ -64,7 +65,9 @@ export default function TopNavigationArea(props) {
         />
         <TopNavigationAction
           {...props}
-          icon={IconCNotification}
+          icon={(evaProps) => (
+            <IconCNotification style={[evaProps.style, { tintColor: null }]} />
+          )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Notification"
           onPress={routeMessaging}
@@ -96,12 +99,14 @@ export default function TopNavigationArea(props) {
     [props, routeSearch, routeMessaging],
   );
 
-  const renderCharityTools = useCallback(
+  const renderNotificationTool = useCallback(
     () => (
       <>
         <TopNavigationAction
           {...props}
-          icon={IconCNotification}
+          icon={(evaProps) => (
+            <IconCNotification style={[evaProps.style, { tintColor: null }]} />
+          )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Notification"
           onPress={routeMessaging}
@@ -141,9 +146,9 @@ export default function TopNavigationArea(props) {
     () => ({
       social: renderSocialTools,
       marketPlace: renderMarketPlaceTools,
-      charity: renderCharityTools,
+      charity: renderNotificationTool,
     }),
-    [renderSocialTools, renderMarketPlaceTools, renderCharityTools],
+    [renderSocialTools, renderMarketPlaceTools, renderNotificationTool],
   );
 
   const TopNavigationAuth = useMemo(
@@ -302,6 +307,24 @@ export default function TopNavigationArea(props) {
     ],
   );
 
+  const TopNavigationBillPay = useMemo(
+    () => (
+      <Layout level="5">
+        <TopNavigation
+          alignment="center"
+          // title={(evaProps) => <Logo {...evaProps} />}
+          // accessoryRight={() => <IconCFlag style={{ height: 28, width: 28 }} />}
+          accessoryRight={renderNotificationTool}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="screen navigation"
+          style={[style, { backgroundColor: 'transparent' }]}
+        />
+        <Divider />
+      </Layout>
+    ),
+    [style],
+  );
+
   const navs = {
     default: TopNavigationDefault,
     auth: TopNavigationAuth,
@@ -312,6 +335,7 @@ export default function TopNavigationArea(props) {
     social: TopNavigationGlobal,
     marketPlace: TopNavigationGlobal,
     charity: TopNavigationGlobal,
+    billPay: TopNavigationBillPay,
   };
 
   return navs[screen];

@@ -6,7 +6,9 @@ import BottomNavigationArea from 'src/components/BottomNavigationArea';
 
 import Home from 'src/screens/User/HomeTab';
 
-import WalletTab from 'src/screens/User/WalletTab';
+import Wallet from 'src/screens/User/WalletTab';
+
+import BillPay from 'src/screens/User/BillPayTab';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -17,8 +19,8 @@ export default function UserRoute() {
       tabBar={(props) => <BottomNavigationArea {...props} page="user" />}
     >
       <Screen name="HomeTab" component={Home} />
-      <Screen name="MyWalletTab" component={WalletTab} />
-      <Screen name="BillPayTab" component={Home} />
+      <Screen name="MyWalletTab" component={Wallet} />
+      <Screen name="BillPayTab" component={BillPay} />
       <Screen name="MyActivitiesTab" component={Home} />
     </Navigator>
   );

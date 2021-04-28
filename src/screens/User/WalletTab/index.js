@@ -51,22 +51,22 @@ const WALLET_ITEMS = [
   {
     id: 1,
     icon: IconCCard,
-    content: 'Accounts',
+    content: 'accounts',
   },
   {
     id: 2,
     icon: IconCPlus,
-    content: 'Add Money',
+    content: 'addMoney',
   },
   {
     id: 3,
     icon: IconCArrowUp,
-    content: 'Transfer Money',
+    content: 'transferMoney',
   },
   {
     id: 4,
     icon: IconCSnow,
-    content: 'Freeze',
+    content: 'freeze',
   },
   // {
   //   id: 5,
@@ -106,7 +106,7 @@ const TRANSACTION_HISTORY = [
   },
 ];
 
-export default function WalletTab({ navigation }) {
+export default function Wallet({ navigation }) {
   useDisableAndroidExit();
 
   const { width, height } = useWindowDimensions();
@@ -186,7 +186,7 @@ export default function WalletTab({ navigation }) {
         category="c2"
         style={{ fontSize: 11, textAlign: 'center', marginTop: 5 }}
       >
-        {data.content}
+        {t(data.content)}
       </Text>
     </View>
   );

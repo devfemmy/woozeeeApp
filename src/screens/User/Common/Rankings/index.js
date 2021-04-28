@@ -1,8 +1,11 @@
 import React, { useContext } from 'react';
 
-import { View, Image, useWindowDimensions } from 'react-native';
+import { View, Image } from 'react-native';
 
-import { Layout, Text, List } from '@ui-kitten/components';
+// prettier-ignore
+import {
+  Layout, Text, List, Divider,
+} from '@ui-kitten/components';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -10,20 +13,7 @@ import { LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
-import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
-
-import WithDefaultFetch from 'src/components/DataFetch';
-
-import { DealsPosts } from 'src/components/MarketPosts';
-
-import { marketDealsUrl } from 'src/api/dummy';
-
-const PLACEHOLDER_CONFIG = {
-  count: 4,
-  numColumns: 2,
-  maxHeight: 180,
-  mediaLeft: true,
-};
+import { IconCStarFill } from 'src/components/CustomIcons';
 
 const RANKINGS = [
   {
@@ -62,11 +52,45 @@ const RANKINGS = [
     image: require('assets/images/user/user1.png'),
     votes: 4,
   },
+  {
+    id: 7,
+    fullName: 'Uchiha Sasuke',
+    image: require('assets/images/user/user1.png'),
+    votes: 4,
+  },
+  {
+    id: 8,
+    fullName: 'Uchiha Sasuke',
+    image: require('assets/images/user/user1.png'),
+    votes: 4,
+  },
+  {
+    id: 9,
+    fullName: 'Uchiha Sasuke',
+    image: require('assets/images/user/user1.png'),
+    votes: 4,
+  },
+  {
+    id: 10,
+    fullName: 'Uchiha Sasuke',
+    image: require('assets/images/user/user1.png'),
+    votes: 4,
+  },
+  {
+    id: 11,
+    fullName: 'Uchiha Sasuke',
+    image: require('assets/images/user/user1.png'),
+    votes: 4,
+  },
+  {
+    id: 12,
+    fullName: 'Uchiha Sasuke',
+    image: require('assets/images/user/user1.png'),
+    votes: 4,
+  },
 ];
 
 export default function MarketPlace({ navigation }) {
-  const { width, height } = useWindowDimensions();
-
   const t = useContext(LocaleContext);
 
   const getTopRanks = (ranks) => {
@@ -99,7 +123,7 @@ export default function MarketPlace({ navigation }) {
   const RankItem = ({ item }) => (
     <View
       style={{
-        paddingHorizontal: 10,
+        paddingHorizontal: '1.5%',
         width: '30%',
         alignItems: 'center',
       }}
@@ -107,7 +131,7 @@ export default function MarketPlace({ navigation }) {
       <View
         style={{
           position: 'relative',
-          marginBottom: 20,
+          marginBottom: 10,
         }}
       >
         <LinearGradient
@@ -136,12 +160,12 @@ export default function MarketPlace({ navigation }) {
           source={item.rankIcon}
           defaultSource={item.rankIcon}
           style={{
-            height: 26,
-            width: 26,
-            borderRadius: 13,
+            height: 20,
+            width: 20,
+            borderRadius: 10,
             position: 'absolute',
-            left: item.pos === 1 ? 31 : 21,
-            bottom: -12,
+            left: item.pos === 1 ? 33 : 22,
+            bottom: -7,
           }}
           resizeMode="cover"
         />
@@ -149,125 +173,177 @@ export default function MarketPlace({ navigation }) {
       <View style={{ alignItems: 'center' }}>
         <Text
           category="s2"
-          style={{ marginBottom: 10, textAlign: 'center' }}
+          status="control"
+          style={{ textAlign: 'center' }}
           numberOfLines={1}
         >
           {item.data.fullName}
         </Text>
-        <View
-          style={{
-            backgroundColor: item.pos === 1 ? '#FF5757' : '#FFFFFF',
-            padding: 10,
-            borderRadius: 5,
-            alignItems: 'center',
-          }}
-        >
-          <Text status={item.pos === 1 ? 'control' : 'danger'} category="h6">
-            {item.data.votes}
-          </Text>
-          <Text status={item.pos === 1 ? 'control' : 'danger'} category="label">
-            {t('vote(s)')}
-          </Text>
+        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+          {Array(item.stars)
+            .fill(1)
+            .map(() => (
+              <IconCStarFill style={{ height: 10, width: 10 }} />
+            ))}
         </View>
+        {item.pos === 1 ? (
+          <View
+            style={{
+              backgroundColor: '#FFFFFF',
+              paddingHorizontal: 15,
+              paddingVertical: 20,
+              borderTopLeftRadius: 5,
+              borderTopRightRadius: 5,
+              alignItems: 'center',
+            }}
+          >
+            <Text status="danger" category="h5" style={{ marginBottom: 5 }}>
+              {item.data.votes}
+            </Text>
+            <Text status="danger" category="s2">
+              {t('votes')}
+            </Text>
+          </View>
+        ) : (
+          <View
+            style={{
+              backgroundColor: 'rgba(255, 87, 87, 0.5)',
+              padding: 15,
+              borderTopLeftRadius: 5,
+              borderTopRightRadius: 5,
+              alignItems: 'center',
+            }}
+          >
+            <Text category="h6" style={{ marginBottom: 5, color: '#C4C4C4' }}>
+              {item.data.votes}
+            </Text>
+            <Text category="c2" style={{ color: '#C4C4C4' }}>
+              {t('votes')}
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );
 
   const renderHeaderArea = () => (
-    <Layout level="5" style={{ flex: 1, paddingBottom: 10 }}>
+    <View
+      level="5"
+      style={{ flex: 1, backgroundColor: 'black', position: 'relative' }}
+    >
+      <Image
+        source={require('assets/images/drawable/logo-dark.png')}
+        defaultSource={require('assets/images/drawable/logo-dark.png')}
+        resizeMode="contain"
+        style={{
+          position: 'absolute',
+          width: '90%',
+          alignSelf: 'center',
+          tintColor: '#222',
+        }}
+      />
       <View
         style={{
           flex: 1,
           flexDirection: 'row',
-          alignItems: 'flex-start',
+          alignItems: 'flex-end',
           justifyContent: 'center',
-          paddingVertical: 10,
+          paddingTop: 15,
         }}
       >
         {getTopRanks(RANKINGS).map((data) => (
           <RankItem item={data} key={data.id} />
         ))}
       </View>
-    </Layout>
+    </View>
   );
 
   const renderOtherRanks = (data) => (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 15,
-        marginVertical: 5,
-      }}
-    >
-      <View
+    <>
+      <Layout
+        level="6"
         style={{
+          flex: 1,
           flexDirection: 'row',
+          justifyContent: 'space-between',
           alignItems: 'center',
+          paddingHorizontal: 15,
+          paddingVertical: 10,
+          borderTopLeftRadius: data.index === 0 ? 10 : 0,
+          borderTopRightRadius: data.index === 0 ? 10 : 0,
         }}
       >
-        <Text category="s1" style={{ marginRight: 10 }}>
-          {data.item.id}
-        </Text>
-        <LinearGradient
-          colors={['#043F7C', '#FF5757']}
-          style={{
-            height: 40,
-            width: 40,
-            borderRadius: 20,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Image
-            source={data.item.image}
-            defaultSource={data.item.image}
-            style={{
-              height: 36,
-              width: 36,
-              borderRadius: 18,
-              borderColor: 'white',
-            }}
-            resizeMode="cover"
-          />
-        </LinearGradient>
         <View
           style={{
             flexDirection: 'row',
-            flexWrap: 'wrap',
-            paddingRight: 5,
-            paddingLeft: 5,
-            maxWidth: 230,
-            marginLeft: 5,
+            alignItems: 'center',
           }}
         >
-          <Text category="s2" style={{ marginRight: 5 }}>
-            {data.item.fullName}
+          <Text category="label" style={{ marginRight: 10 }}>
+            {data.item.id}
+          </Text>
+          <LinearGradient
+            colors={['#043F7C', '#FF5757']}
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Image
+              source={data.item.image}
+              defaultSource={data.item.image}
+              style={{
+                height: 36,
+                width: 36,
+                borderRadius: 18,
+                borderColor: 'white',
+              }}
+              resizeMode="cover"
+            />
+          </LinearGradient>
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              paddingRight: 5,
+              paddingLeft: 5,
+              maxWidth: 230,
+              marginLeft: 5,
+            }}
+          >
+            <Text category="s2" style={{ marginRight: 5 }}>
+              {data.item.fullName}
+            </Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text category="c2" style={{ marginRight: 5 }}>
+            {data.item.votes}
+          </Text>
+          <Text category="c1" style={{ fontSize: 10 }}>
+            {t('votes')}
           </Text>
         </View>
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Text category="c2" style={{ marginRight: 5 }}>
-          {data.item.votes}
-        </Text>
-        <Text category="c1">{t('vote(s)')}</Text>
-      </View>
-    </View>
+      </Layout>
+      <Divider style={{ paddingVertical: 1 }} />
+    </>
   );
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
-        title="Rankings"
+        title="#ReplicaTrailer"
         navigation={navigation}
         screen="default"
+        search
       />
 
       <View style={{ flex: 1 }}>
         <List
-          style={{ backgroundColor: 'transparent' }}
+          style={{ backgroundColor: 'black' }}
           ListHeaderComponent={renderHeaderArea}
           data={RANKINGS.filter((item) => item.id > 3)}
           alwaysBounceHorizontal
