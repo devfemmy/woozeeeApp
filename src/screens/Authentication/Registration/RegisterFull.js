@@ -35,6 +35,8 @@ export default function RegisterFull({ route, navigation }) {
 
   const isFocused = useIsFocused();
 
+  const [isLoading, setLoading] = useState(isUserInfoValid());
+
   const [errorMsg, setErrorMsg] = useState({
     auth: null,
   });
@@ -84,8 +86,6 @@ export default function RegisterFull({ route, navigation }) {
       if (isFocused) setLoading(false);
     }
   };
-
-  const [isLoading, setLoading] = useState(isUserInfoValid());
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
