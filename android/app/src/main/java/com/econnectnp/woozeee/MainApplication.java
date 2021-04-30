@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 
+import co.apptailor.googlesignin.RNGoogleSigninPackage; 
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
@@ -32,6 +34,7 @@ public class MainApplication extends androidx.multidex.MultiDexApplication imple
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
     new BasePackageList().getPackageList()
   );
+  
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -39,10 +42,17 @@ public class MainApplication extends androidx.multidex.MultiDexApplication imple
       return BuildConfig.DEBUG;
     }
 
+    // @Override    
+    // public boolean canOverrideExistingModule() {        
+    //   return true;    
+    // }  
+
     @Override
     protected List<ReactPackage> getPackages() {
+
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
+      // packages.add(new RNGoogleSigninPackage());
       return packages;
     }
 
