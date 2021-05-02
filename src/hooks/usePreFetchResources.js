@@ -91,6 +91,7 @@ export default function usePreFetchResources() {
           require('assets/images/icon/camera-outline.png'),
           require('assets/images/icon/phone-outline.png'),
           require('assets/images/icon/phonebook-outline.png'),
+          require('assets/images/icon/phonebook-filled.png'),
           require('assets/images/icon/microphone-outline.png'),
           require('assets/images/icon/medal.png'),
           require('assets/images/icon/facebook.png'),

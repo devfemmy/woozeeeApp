@@ -226,5 +226,13 @@
   "aboutWoozeee": "About woozeee",
   "referrals": "Referrals",
   "help": "Help",
-  "privacySafety": "Privacy and Safety"
+  "privacySafety": "Privacy and Safety",
+  "frequentTrans": "Most frequent transactions",
+  "confirmTrans": "Confirm Transaction",
+  "airtime": "Airtime",
+  "mobileData": "Mobile Data",
+  "cableTv": "Cable TV",
+  "electricity": "Electricity",
+  "selectBundle": "Select a Bundle",
+  "bundle": "Bundle"
 }

@@ -462,6 +462,11 @@ export const IconCPhoneBook = (props) => {
 
   return <Icon {...otherProps} name="phonebook-outline" pack="assets" />;
 };
+export const IconCPhoneBookFill = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="phonebook-filled" pack="assets" />;
+};
 export const IconCCard = (props) => {
   const { active, ...otherProps } = props;
 

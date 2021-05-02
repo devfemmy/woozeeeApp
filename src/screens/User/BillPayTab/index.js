@@ -45,26 +45,57 @@ const woozeeeCards = [
   },
 ];
 
-const WALLET_ITEMS = [
+const BILL_ITEMS = [
   {
     id: 1,
     icon: IconCMobileTopUp,
     content: 'buyAirtime',
+    action: 'routeAirtime',
   },
   {
     id: 2,
     icon: IconCDataTopUp,
     content: 'buyData',
+    action: 'routeData',
   },
   {
     id: 3,
     icon: IconCCableTv,
     content: 'payCable',
+    action: 'routeTv',
   },
   {
     id: 4,
     icon: IconCElectricity,
     content: 'payElectricity',
+    action: 'routeElectricity',
+  },
+];
+
+const BILLS_HISTORY = [
+  {
+    id: 1,
+    themeColor: '#FF5757',
+    amount: '10000.00',
+    description: 'Airtime-09093199685-9Mobile',
+    date: '20/04/2021',
+    time: '12:44 PM',
+  },
+  {
+    id: 2,
+    themeColor: '#FF5757',
+    amount: '10000.00',
+    description: 'Airtime-09093199685-9Mobile',
+    date: '20/04/2021',
+    time: '12:44 PM',
+  },
+  {
+    id: 3,
+    themeColor: '#FF5757',
+    amount: '10000.00',
+    description: 'Airtime-09093199685-9Mobile',
+    date: '20/04/2021',
+    time: '12:44 PM',
   },
 ];
 
@@ -79,7 +110,14 @@ export default function BillPay({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const routePayment = () => navigation.navigate('BillPayment');
+  // const routePayment = () => navigation.navigate('BillPayment');
+
+  const BILL_ACTIONS = {
+    routeAirtime: () => navigation.navigate('BillAirtime'),
+    routeData: () => navigation.navigate('BillMobileData'),
+    routeTv: () => navigation.navigate('BillCableTv'),
+    routeElectricity: () => navigation.navigate('BillElectricity'),
+  };
 
   const BillPayItem = ({ data }) => (
     <TouchableOpacity
@@ -88,7 +126,7 @@ export default function BillPay({ navigation }) {
         padding: 5,
         width: '50%',
       }}
-      onPress={routePayment}
+      onPress={BILL_ACTIONS[data.action]}
     >
       <Layout
         level="1"
@@ -115,6 +153,38 @@ export default function BillPay({ navigation }) {
         </Text>
       </Layout>
     </TouchableOpacity>
+  );
+
+  const HistoryItem = ({ data }) => (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginVertical: 5,
+        borderWidth: 1,
+        borderColor: '#E9E9E9',
+        borderRadius: 5,
+        padding: 10,
+        borderLeftWidth: 6,
+        borderLeftColor: '#EB5757',
+      }}
+    >
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View>
+          <Text category="h6" style={{ marginBottom: 5, maxWidth: 200 }}>
+            {`₦ ${data.amount}`}
+          </Text>
+          <Text category="c1">{data.description}</Text>
+        </View>
+      </View>
+      <View style={{ alignItems: 'flex-end' }}>
+        <Text category="s2" style={{ marginBottom: 5 }}>
+          {data.date}
+        </Text>
+        <Text category="c1">{data.time}</Text>
+      </View>
+    </View>
   );
 
   const WoozeeeCards = (data) => (
@@ -171,12 +241,20 @@ export default function BillPay({ navigation }) {
           flexDirection: 'row',
           flexWrap: 'wrap',
           alignItems: 'flex-start',
-          paddingVertical: 20,
+          paddingVertical: 10,
           paddingHorizontal: 10,
         }}
       >
-        {WALLET_ITEMS.map((data) => (
+        {BILL_ITEMS.map((data) => (
           <BillPayItem data={data} key={data.id} />
+        ))}
+      </View>
+      <View style={{ marginTop: 15, paddingHorizontal: 15 }}>
+        <Text category="s1">{t('frequentTrans')}</Text>
+      </View>
+      <View style={{ marginVertical: 5, paddingHorizontal: 15 }}>
+        {BILLS_HISTORY.map((data) => (
+          <HistoryItem data={data} key={data.id} />
         ))}
       </View>
     </View>
