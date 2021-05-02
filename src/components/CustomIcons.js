@@ -532,6 +532,11 @@ export const IconCMobileTopUp = (props) => {
 
   return <Icon {...otherProps} name="mobile-topup" pack="assets" />;
 };
+export const IconCCoin = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="coin-filled" pack="assets" />;
+};
 export const IconCShareVariant = (props) => {
   const { active, ...otherProps } = props;
 

@@ -8,12 +8,12 @@ import {
 } from '@ui-kitten/components';
 
 import {
-  IconCFlag,
   IconCNotification,
   IconSearch,
   IconOptions,
   IconCVideo,
   IconCSearch,
+  IconCPlus,
 } from 'src/components/CustomIcons';
 
 // Components import
@@ -138,6 +138,18 @@ export default function TopNavigationArea(props) {
     [props],
   );
 
+  const renderAddStreamIcon = useCallback(
+    () => (
+      <TopNavigationAction
+        {...props}
+        icon={IconCPlus}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel="Options"
+      />
+    ),
+    [props],
+  );
+
   // render tools based on screen
   const renderTools = useMemo(
     () => ({
@@ -202,7 +214,9 @@ export default function TopNavigationArea(props) {
             <BackButton {...evaProps} navigation={navigation} icon="back" />
           )}
           title={(evaProps) => <SearchField {...evaProps} />}
-          accessoryRight={renderOptionsIcon}
+          accessoryRight={
+            icon === 'AddStream' ? renderAddStreamIcon : renderOptionsIcon
+          }
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -210,7 +224,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style, navigation, renderOptionsIcon],
+    [style, navigation, icon, renderOptionsIcon],
   );
 
   const TopNavigationProfile = useMemo(

@@ -157,6 +157,7 @@ const AssetIconsPack = {
     ),
     startstream: IconProvider(require('assets/images/icon/startstream.png')),
     livestreams: IconProvider(require('assets/images/icon/livestreams.png')),
+    'coin-filled': IconProvider(require('assets/images/icon/coin-filled.png')),
   },
 };
 

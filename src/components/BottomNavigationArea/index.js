@@ -10,6 +10,8 @@ import {
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import SocialUpload from 'src/components/BottomNavigationArea/SocialUpload';
+import MarketUpload from 'src/components/BottomNavigationArea/MarketUpload';
+import CharityUpload from 'src/components/BottomNavigationArea/CharityUpload';
 
 import {
   IconCHome,
@@ -47,14 +49,14 @@ const screens = {
   marketPlace: {
     market: IconCMarket,
     cart: IconCCart,
-    upload: SocialUpload,
+    upload: MarketUpload,
     categories: IconCGrid,
     profile: IconCUser2,
   },
   charity: {
     charity: IconCCharity,
     campaigns: IconCCampaign,
-    upload: SocialUpload,
+    upload: CharityUpload,
     heroes: IconCHero,
     profile: IconCUser,
   },
