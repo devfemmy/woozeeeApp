@@ -218,5 +218,7 @@
   "downloadReceipt": "Download Receipt",
   "shareReceipt": "Share Receipt",
   "startLiveStream": "Start Live Stream",
-  "viewLiveStreams": "View Live Streams"
+  "viewLiveStreams": "View Live Streams",
+  "makeFullPayment": "Make Full Payment",
+  "makeInstallments": "Make Instalmental Payment"
 }

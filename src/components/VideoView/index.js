@@ -302,8 +302,8 @@ const VideoView = forwardRef((props, ref) => {
               Accessory={IconCShareVariant}
               direction="row"
               status="basic"
-              height={24}
-              width={24}
+              height={21}
+              width={21}
             />
           </View>
           <View>

@@ -97,7 +97,7 @@ export default function MarketPlace({ navigation }) {
           source={data.icon}
           defaultSource={data.icon}
           resizeMode="cover"
-          style={{ height: 30, width: 30 }}
+          style={{ height: 40, width: 40 }}
         />
       </Layout>
       <Text category="c2" style={{ textAlign: 'center' }}>
