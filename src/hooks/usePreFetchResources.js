@@ -148,6 +148,7 @@ export default function usePreFetchResources() {
           require('assets/images/banner/marketplace.jpg'),
           require('assets/images/banner/charity.jpg'),
           require('assets/images/banner/glo-ad.jpg'),
+          require('assets/images/banner/profile.jpg'),
           require('assets/images/user/user1.png'),
           require('assets/images/user/user2.png'),
           require('assets/images/user/user3.png'),

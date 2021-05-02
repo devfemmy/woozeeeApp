@@ -224,7 +224,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style, navigation, icon, renderOptionsIcon],
+    [style, navigation, icon, renderOptionsIcon, renderAddStreamIcon],
   );
 
   const TopNavigationProfile = useMemo(

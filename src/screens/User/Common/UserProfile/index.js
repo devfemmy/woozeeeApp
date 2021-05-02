@@ -1,9 +1,14 @@
 import React, { useContext, useState } from 'react';
 
-// prettier-ignore
 import {
-  View, Image, ScrollView, useWindowDimensions,
+  View,
+  Image,
+  ScrollView,
+  useWindowDimensions,
+  TouchableOpacity,
 } from 'react-native';
+
+import { LinearGradient } from 'expo-linear-gradient';
 
 // prettier-ignore
 import {
@@ -14,15 +19,18 @@ import { LoadingContext, LocaleContext } from 'src/contexts';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
-import TopNavigationArea from 'src/components/TopNavigationArea';
-
-import OverlayLoader from 'src/components/OverlayLoader';
-
 import WithPaginatedFetch from 'src/components/DataFetch/WithPaginatedFetch';
 
 import { ProfilePosts } from 'src/components/SocialPosts';
 
-import { IconGrid, IconBookmark, IconHeart } from 'src/components/CustomIcons';
+import InteractIcon from 'src/components/InteractIcon';
+
+import {
+  IconGrid,
+  IconBookmark,
+  IconHeart,
+  IconBackIos,
+} from 'src/components/CustomIcons';
 
 import { trendingUrl } from 'src/api/dummy';
 
@@ -43,8 +51,6 @@ export default function UserProfile({ navigation }) {
 
   const { width, height } = useWindowDimensions();
 
-  const { isLoading } = useContext(LoadingContext);
-
   const t = useContext(LocaleContext);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -53,27 +59,138 @@ export default function UserProfile({ navigation }) {
 
   const IS_PORTRAIT = height > width;
 
-  const routeChats = () => navigation.navigate('Chats');
+  const routeFollow = () => navigation.navigate('Follow');
+
+  const goBack = () => navigation.goBack();
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
-      <OverlayLoader isLoading={isLoading} />
-      <TopNavigationArea
-        // title="woozeee"
-        navigation={navigation}
-        icon="back"
-        screen="default"
-      />
+      <View
+        style={{
+          position: 'relative',
+          height: 165,
+          width: '100%',
+          alignItems: 'flex-start',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: '#EDF1F7',
+            height: 120,
+            position: 'absolute',
+            width: '100%',
+            zIndex: 1,
+          }}
+        >
+          <Image
+            source={require('assets/images/banner/profile.jpg')}
+            defaultSource={require('assets/images/banner/profile.jpg')}
+            style={{
+              height: '100%',
+              resizeMode: 'cover',
+              width: '100%',
+            }}
+            resizeMode="cover"
+          />
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            zIndex: 5,
+            margin: 15,
+            left: 0,
+            top: 0,
+          }}
+        >
+          <InteractIcon
+            Accessory={(evaProps) => <IconBackIos {...evaProps} />}
+            height={26}
+            width={26}
+            onPress={goBack}
+          />
+        </View>
+        <View
+          style={{
+            backgroundColor: '#EDF1F7',
+            bottom: 0,
+            borderRadius: 53,
+            height: 106,
+            position: 'absolute',
+            width: 106,
+            zIndex: 3,
+            marginLeft: 15,
+          }}
+        >
+          <View style={{ position: 'relative' }}>
+            <LinearGradient
+              colors={['#043F7C', '#FF5757']}
+              style={{
+                height: 106,
+                width: 106,
+                borderRadius: 53,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Image
+                source={require('assets/images/user/user2.png')}
+                defaultSource={require('assets/images/user/user2.png')}
+                style={{
+                  height: 100,
+                  width: 100,
+                  borderRadius: 50,
+                }}
+                resizeMode="cover"
+              />
+            </LinearGradient>
+            <Image
+              source={require('assets/images/icon/verified.png')}
+              defaultSource={require('assets/images/icon/verified.png')}
+              style={{
+                height: 22,
+                width: 22,
+                borderRadius: 11,
+                position: 'absolute',
+                right: 0,
+                bottom: 7,
+              }}
+              resizeMode="cover"
+            />
+          </View>
+        </View>
+        <View
+          style={{
+            bottom: 0,
+            position: 'absolute',
+            zIndex: 3,
+            right: 0,
+          }}
+        >
+          <Button
+            status="primary"
+            size="tiny"
+            style={{
+              marginHorizontal: 15,
+              width: 100,
+              minHeight: 35,
+            }}
+          >
+            <Text status="control" category="c2">
+              {t('follow')}
+            </Text>
+          </Button>
+        </View>
+      </View>
       <View
         style={{
           flex: 1,
-          flexDirection: IS_PORTRAIT ? 'column' : 'row',
+          flexDirection: 'column',
           width: '100%',
         }}
       >
         <View
           style={{
-            height: IS_PORTRAIT ? 300 : '100%',
+            height: IS_PORTRAIT ? 180 : '100%',
             width: IS_PORTRAIT ? '100%' : '40%',
           }}
         >
@@ -85,67 +202,59 @@ export default function UserProfile({ navigation }) {
           >
             <View
               style={{
-                alignItems: 'center',
-                paddingHorizontal: 20,
+                paddingHorizontal: 15,
                 paddingBottom: 10,
+                paddingTop: 5,
               }}
             >
-              <View style={{ position: 'relative' }}>
-                <Image
-                  source={require('assets/images/user/user2.png')}
+              <View>
+                <View
                   style={{
-                    height: 100,
-                    width: 100,
-                    borderRadius: 50,
-                    borderWidth: 3,
-                    borderColor: 'white',
+                    marginBottom: 10,
+                    marginTop: 5,
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
                   }}
-                />
-                <Image
-                  source={require('assets/images/icon/verified.png')}
-                  style={{
-                    height: 20,
-                    width: 20,
-                    borderRadius: 10,
-                    position: 'absolute',
-                    right: 7,
-                    bottom: 7,
-                  }}
-                />
-              </View>
-              <View
-                style={{ marginBottom: 5, marginTop: 5, alignItems: 'center' }}
-              >
-                <Text category="h5">Bukola Daniel</Text>
-                <Text category="p2" appearance="hint">
-                  @Bukka101Official
-                </Text>
-              </View>
-              <View
-                style={{
-                  maxWidth: 300,
-                  marginBottom: 5,
-                }}
-              >
-                <Text
-                  category="c2"
-                  style={{
-                    textAlign: 'center',
-                    lineHeight: 15,
-                  }}
-                  numberOfLines={2}
                 >
-                  Content writer with beautiful aesthetics, Face of woozeee (It
-                  seems).
-                </Text>
+                  <Text category="h6">Bukola Daniel</Text>
+                  <Text style={{ marginHorizontal: 5 }}>|</Text>
+                  <Text category="c2" appearance="hint">
+                    @Bukka101Official
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    maxWidth: 300,
+                    marginBottom: 10,
+                  }}
+                >
+                  <Text
+                    category="c2"
+                    appearance="hint"
+                    style={{
+                      lineHeight: 15,
+                    }}
+                    numberOfLines={3}
+                  >
+                    Content writer with beautiful aesthetics, Face of woozeee
+                    (It seems).
+                  </Text>
+                </View>
               </View>
-              <View style={{ marginBottom: 10, alignItems: 'center' }}>
+              <View style={{ marginBottom: 10 }}>
                 <Text category="h6" status="primary">
                   8264LG
                 </Text>
               </View>
-              <View style={{ marginBottom: 10, flexDirection: 'row' }}>
-                <Button
+              {/* <View
+                style={{
+                  marginBottom: 10,
+                  marginTop: 5,
+                  flexDirection: 'row',
+                }}
+              > */}
+              {/* <Button
                   status="primary"
                   appearance="outline"
                   size="tiny"
@@ -153,22 +262,23 @@ export default function UserProfile({ navigation }) {
                     marginHorizontal: 5,
                     width: 120,
                   }}
+                  onPress={routeEditProfile}
+                >
+                  <Text status="primary" category="c2">
+                    {`${t('edit')} ${t('profile')}`}
+                  </Text>
+                </Button> */}
+              {/* <Button
+                  status="primary"
+                  appearance="outline"
+                  size="tiny"
+                  style={{ width: 100, minHeight: 35 }}
                 >
                   <Text status="primary" category="c2">
                     {t('follow')}
                   </Text>
-                </Button>
-                <Button
-                  status="primary"
-                  size="tiny"
-                  style={{ marginHorizontal: 5, width: 120 }}
-                  onPress={routeChats}
-                >
-                  <Text status="control" category="c2">
-                    {t('message')}
-                  </Text>
-                </Button>
-              </View>
+                </Button> */}
+              {/* </View> */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -178,23 +288,31 @@ export default function UserProfile({ navigation }) {
                 }}
               >
                 <View style={{ alignItems: 'center', width: '33%' }}>
-                  <Text category="s2">1.2m</Text>
+                  <Text category="h5">1.2m</Text>
                   <Text category="c2" appearance="hint">
                     {t('posts')}
                   </Text>
                 </View>
-                <View style={{ alignItems: 'center', width: '33%' }}>
-                  <Text category="s2">12.3K</Text>
+                <TouchableOpacity
+                  activeOpacity={0.75}
+                  style={{ alignItems: 'center', width: '33%' }}
+                  onPress={routeFollow}
+                >
+                  <Text category="h5">12.3K</Text>
                   <Text category="c2" appearance="hint">
                     {t('followers')}
                   </Text>
-                </View>
-                <View style={{ alignItems: 'center', width: '33%' }}>
-                  <Text category="s2">1.9k</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.75}
+                  style={{ alignItems: 'center', width: '33%' }}
+                  onPress={routeFollow}
+                >
+                  <Text category="h5">1.9k</Text>
                   <Text category="c2" appearance="hint">
                     {t('following')}
                   </Text>
-                </View>
+                </TouchableOpacity>
               </View>
             </View>
           </ScrollView>
