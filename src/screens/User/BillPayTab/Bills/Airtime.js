@@ -122,7 +122,6 @@ export default function Airtime({ navigation }) {
     mobile: '',
     amount: '',
     pin: '',
-    product: t('product'),
     account: t('paymentAccount'),
   });
 

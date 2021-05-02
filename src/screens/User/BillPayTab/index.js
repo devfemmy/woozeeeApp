@@ -37,11 +37,11 @@ const woozeeeCards = [
   },
   {
     id: 2,
-    banner: require('assets/images/banner/glo-ad.jpg'),
+    banner: require('assets/images/banner/mtn-ad.png'),
   },
   {
     id: 3,
-    banner: require('assets/images/banner/glo-ad.jpg'),
+    banner: require('assets/images/banner/airtel-ad.png'),
   },
 ];
 

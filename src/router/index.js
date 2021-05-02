@@ -52,9 +52,11 @@ import ActivateCareElitePlan from 'src/screens/User/Onboarding/ActivateCare/Elit
 import TransactionHistory from 'src/screens/User/WalletTab/TransactionHistory';
 
 // BillPay Screens
+import BillPaymentSuccess from 'src/screens/User/BillPayTab/Success';
 import BillAirtime from 'src/screens/User/BillPayTab/Bills/Airtime';
 import BillMobileData from 'src/screens/User/BillPayTab/Bills/MobileData';
-import BillPaymentSuccess from 'src/screens/User/BillPayTab/Success';
+import BillCableTv from 'src/screens/User/BillPayTab/Bills/CableTv';
+import BillElectricity from 'src/screens/User/BillPayTab/Bills/Electricity';
 
 /* Routes import */
 import UserRoute from './User';
@@ -104,9 +106,11 @@ export default function Router() {
       UserProfile,
       Follow,
       TransactionHistory,
+      BillPaymentSuccess,
       BillAirtime,
       BillMobileData,
-      BillPaymentSuccess,
+      BillCableTv,
+      BillElectricity,
     },
 
     Common: {

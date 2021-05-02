@@ -77,23 +77,23 @@ const ACCOUNTS = [
 const woozeeeCards = [
   {
     id: 1,
-    banner: require('assets/images/card/mtn.png'),
-    title: 'MTN',
+    banner: require('assets/images/card/dstv.png'),
+    title: 'DSTV',
   },
   {
     id: 2,
-    banner: require('assets/images/card/airtel.png'),
-    title: 'airtel',
+    banner: require('assets/images/card/gotv.png'),
+    title: 'GOTV',
   },
   {
     id: 3,
-    banner: require('assets/images/card/glo.png'),
-    title: 'glo',
+    banner: require('assets/images/card/irokotv.png'),
+    title: 'IROKO TV',
   },
   {
     id: 4,
-    banner: require('assets/images/card/9mobile.png'),
-    title: '9mobile',
+    banner: require('assets/images/card/lindaikejitv.png'),
+    title: 'LINDAIKEJI TV',
   },
 ];
 
@@ -119,10 +119,10 @@ export default function CableTv({ navigation }) {
   const confirmSheetRef = useRef(null);
 
   const [form, setFormValues] = useState({
-    mobile: '',
+    cardNumber: '',
+    channelDesc: '',
     amount: '',
     pin: '',
-    product: t('product'),
     account: t('paymentAccount'),
   });
 
@@ -216,13 +216,13 @@ export default function CableTv({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Network
+              Biller
             </Text>
             <Text
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              MTN
+              DSTV
             </Text>
           </View>
           <View
@@ -239,7 +239,7 @@ export default function CableTv({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Mobile Number
+              Card Number
             </Text>
             <Text
               category="s2"
@@ -427,7 +427,7 @@ export default function CableTv({ navigation }) {
   const renderHeaderArea = () => (
     <View style={{ flex: 1, paddingTop: 20 }}>
       <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-        <Text category="s1">{t('operatorChoice')}</Text>
+        <Text category="s1">{t('selectBiller')}</Text>
       </View>
       <View style={{ flex: 1 }}>
         <List
@@ -475,13 +475,18 @@ export default function CableTv({ navigation }) {
         </View> */}
         <View style={{ paddingVertical: 5 }}>
           <GeneralTextField
-            type="mobile"
-            label={t('mobile')}
-            autoCompleteType="tel"
-            textContentType="telephoneNumber"
+            type="cardNumber"
+            label={t('cardNumber')}
             validate="required"
             setFormValues={setFormValues}
-            accessoryRight={IconCPhoneBookFill}
+          />
+        </View>
+        <View style={{ paddingVertical: 5 }}>
+          <GeneralTextField
+            type="channelDesc"
+            label={t('channelDesc')}
+            validate="required"
+            setFormValues={setFormValues}
           />
         </View>
         <View style={{ paddingVertical: 5 }}>
@@ -535,7 +540,7 @@ export default function CableTv({ navigation }) {
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
-        title={t('airtime')}
+        title={t('cableTv')}
         navigation={navigation}
         screen="default"
       />

@@ -24,17 +24,18 @@ import {
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
+import InteractIcon from 'src/components/InteractIcon';
+
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
-import { GeneralTextField } from 'src/components/FormFields';
+import { GeneralTextField, GeneralSelect } from 'src/components/FormFields';
 
 import {
   IconArrowDown,
-  IconCNaira,
   IconCCheck,
-  IconCPhoneBook,
+  IconClose,
 } from 'src/components/CustomIcons';
 
 const ACCOUNTS = [
@@ -74,23 +75,35 @@ const ACCOUNTS = [
 const woozeeeCards = [
   {
     id: 1,
-    banner: require('assets/images/card/mtn.png'),
+    banner: require('assets/images/card/ekedc.png'),
+    title: 'EKEDC',
   },
   {
     id: 2,
-    banner: require('assets/images/card/airtel.png'),
+    banner: require('assets/images/card/iedc.png'),
+    title: 'IEDC',
   },
   {
     id: 3,
-    banner: require('assets/images/card/glo.png'),
+    banner: require('assets/images/card/aedc.png'),
+    title: 'AEDC',
   },
   {
     id: 4,
-    banner: require('assets/images/card/9mobile.png'),
+    banner: require('assets/images/card/irecharge.png'),
+    title: 'iRECHARGE',
   },
 ];
 
-export default function BillPayment({ navigation }) {
+const PLACE = [
+  { title: 'PLACE 1' },
+  { title: 'PLACE 2' },
+  { title: 'PLACE 3' },
+];
+
+const TYPE = [{ title: 'TYPE 1' }, { title: 'TYPE 2' }, { title: 'TYPE 3' }];
+
+export default function Electricity({ navigation }) {
   useDisableAndroidExit();
 
   const { width, height } = useWindowDimensions();
@@ -107,15 +120,17 @@ export default function BillPayment({ navigation }) {
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
-  const productSheetRef = useRef(null);
-
   const accountSheetRef = useRef(null);
+
+  const confirmSheetRef = useRef(null);
 
   const [form, setFormValues] = useState({
     mobile: '',
+    meterNumber: '',
+    selectPlace: '',
+    selectType: '',
     amount: '',
     pin: '',
-    product: t('product'),
     account: t('paymentAccount'),
   });
 
@@ -137,17 +152,22 @@ export default function BillPayment({ navigation }) {
     }
   };
 
-  const handleOpenProductSheet = () => productSheetRef.current.open();
-
   const handleOpenAccountSheet = () => accountSheetRef.current.open();
+
+  const handleOpenConfirmSheet = () => confirmSheetRef.current.open();
 
   const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
 
+  const handleConfirmTransaction = () => {
+    confirmSheetRef.current.close();
+    routeSuccess();
+  };
+
   // prettier-ignore
-  const ProductSheet = () => (
+  const ConfirmSheet = () => (
     <RBSheet
-      ref={productSheetRef}
-      height={160}
+      ref={confirmSheetRef}
+      height={380}
       closeOnDragDown
       animationType="fade"
       customStyles={{
@@ -164,42 +184,125 @@ export default function BillPayment({ navigation }) {
           flex: 1,
           width: '100%',
           alignItems: 'flex-start',
-          justifyContent: 'flex-end',
+          justifyContent: 'flex-start',
           paddingBottom: 30,
         }}
       >
         <View
           style={{
             width: '100%',
-            justifyContent: 'flex-start',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
             paddingBottom: 15,
             paddingHorizontal: 20,
           }}
         >
           <Text category="h6" style={{ fontSize: 16 }} status="primary">
-            {t('selectProduct')}
+            {t('confirmTrans')}
           </Text>
+          <InteractIcon
+            Accessory={(evaProps) => <IconClose {...evaProps} fill="#888" />}
+            height={30}
+            width={30}
+            onPress={() => confirmSheetRef.current.close()}
+          />
         </View>
         <Divider style={{ marginBottom: 20, width: '100%' }} />
-        <TouchableOpacity
-          activeOpacity={0.75}
-          style={{
-            width: '100%',
-            justifyContent: 'flex-start',
-            flexDirection: 'column',
-            paddingHorizontal: 20,
-            marginBottom: 15,
-          }}
-          onPress={() => setFormValues((prevState) => ({
-            ...prevState,
-            product: 'MTN  VTU',
-          }))}
-        >
-          <Text style={{ fontSize: 16 }} status="basic" category="h6">
-            MTN VTU
-          </Text>
-          <Text category="c2">Min: ₦ 50.00 | Max: ₦ 50,000.00</Text>
-        </TouchableOpacity>
+        <View>
+          <View
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 10,
+            }}
+          >
+            <Text
+              category="s2"
+              appearance="hint"
+              style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
+            >
+              Biller
+            </Text>
+            <Text
+              category="s2"
+              style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
+            >
+              DSTV
+            </Text>
+          </View>
+          <View
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 10,
+            }}
+          >
+            <Text
+              category="s2"
+              appearance="hint"
+              style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
+            >
+              Card Number
+            </Text>
+            <Text
+              category="s2"
+              style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
+            >
+              09045678966
+            </Text>
+          </View>
+          <View
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 10,
+            }}
+          >
+            <Text
+              category="s2"
+              appearance="hint"
+              style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
+            >
+              Amount
+            </Text>
+            <Text
+              category="s2"
+              style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
+            >
+              ₦1,000
+            </Text>
+          </View>
+        </View>
+        <View style={{ width: '100%', paddingHorizontal: 15, paddingTop: 10 }}>
+          <View style={{ paddingVertical: 5 }}>
+            <GeneralTextField
+              type="pin"
+              label={t('transactionPin')}
+              keyboardType="number-pad"
+              validate="required"
+              setFormValues={setFormValues}
+            />
+          </View>
+          <View style={{ paddingTop: 10 }}>
+            <Button
+              status="danger"
+              size="large"
+              accessibilityLiveRegion="assertive"
+              accessibilityComponentType="button"
+              accessibilityLabel="Continue"
+              onPress={handleConfirmTransaction}
+            >
+              <Text status="control">{t('confirm')}</Text>
+            </Button>
+          </View>
+        </View>
       </Layout>
     </RBSheet>
   );
@@ -301,6 +404,7 @@ export default function BillPayment({ navigation }) {
         alignItems: 'center',
         justifyContent: 'flex-start',
         position: 'relative',
+        maxHeight: 130,
       }}
       onPress={() => onClickOperator(item.id)}
     >
@@ -310,11 +414,12 @@ export default function BillPayment({ navigation }) {
         style={{
           width: '100%',
           borderRadius: 10,
+          maxHeight: 100,
         }}
         resizeMode="contain"
       />
       {item.id === activeOperator && (
-        <View style={{ position: 'absolute', top: 20, right: 0 }}>
+        <View style={{ position: 'absolute', top: 0, right: 0 }}>
           <IconCCheck
             style={{
               height: 25,
@@ -323,13 +428,14 @@ export default function BillPayment({ navigation }) {
           />
         </View>
       )}
+      <Text category="s2">{item.title}</Text>
     </TouchableOpacity>
   );
 
   const renderHeaderArea = () => (
     <View style={{ flex: 1, paddingTop: 20 }}>
-      <View style={{ paddingHorizontal: 15 }}>
-        <Text category="s1">{t('operatorChoice')}</Text>
+      <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+        <Text category="s1">{t('selectBiller')}</Text>
       </View>
       <View style={{ flex: 1 }}>
         <List
@@ -358,21 +464,33 @@ export default function BillPayment({ navigation }) {
       style={{
         flex: 1,
         paddingBottom: 20,
+        marginTop: 10,
       }}
     >
       <View style={{ paddingHorizontal: 15 }}>
-        <View style={{ paddingBottom: 10 }}>
-          <Text category="label" appearance="hint" style={{ marginBottom: 5 }}>
-            {t('selectProduct')}
-          </Text>
-          <Button
-            appearance="outline"
-            accessoryRight={IconArrowDown}
-            style={{ justifyContent: 'space-between' }}
-            onPress={handleOpenProductSheet}
-          >
-            <Text>{form.product}</Text>
-          </Button>
+        <View style={{ paddingVertical: 5 }}>
+          <GeneralTextField
+            type="meterNumber"
+            label={t('meterNumber')}
+            validate="required"
+            setFormValues={setFormValues}
+          />
+        </View>
+        <View style={{ paddingVertical: 10 }}>
+          <GeneralSelect
+            type="selectPlace"
+            label={t('selectPlace')}
+            data={PLACE}
+            setFormValues={setFormValues}
+          />
+        </View>
+        <View style={{ paddingVertical: 10 }}>
+          <GeneralSelect
+            type="selectType"
+            label={t('selectType')}
+            data={TYPE}
+            setFormValues={setFormValues}
+          />
         </View>
         <View style={{ paddingVertical: 5 }}>
           <GeneralTextField
@@ -382,7 +500,6 @@ export default function BillPayment({ navigation }) {
             textContentType="telephoneNumber"
             validate="required"
             setFormValues={setFormValues}
-            accessoryRight={IconCPhoneBook}
           />
         </View>
         <View style={{ paddingVertical: 5 }}>
@@ -392,7 +509,7 @@ export default function BillPayment({ navigation }) {
             keyboardType="number-pad"
             validate="required"
             setFormValues={setFormValues}
-            accessoryLeft={IconCNaira}
+            // accessoryLeft={IconCNaira}
           />
         </View>
         <View style={{ paddingVertical: 10 }}>
@@ -408,7 +525,7 @@ export default function BillPayment({ navigation }) {
             <Text>{form.account}</Text>
           </Button>
         </View>
-        <View style={{ paddingVertical: 5 }}>
+        {/* <View style={{ paddingVertical: 5 }}>
           <GeneralTextField
             type="pin"
             label={t('transactionPin')}
@@ -416,7 +533,7 @@ export default function BillPayment({ navigation }) {
             validate="required"
             setFormValues={setFormValues}
           />
-        </View>
+        </View> */}
         <View style={{ paddingVertical: 20 }}>
           <Button
             status="danger"
@@ -424,7 +541,7 @@ export default function BillPayment({ navigation }) {
             accessibilityLiveRegion="assertive"
             accessibilityComponentType="button"
             accessibilityLabel="Continue"
-            onPress={routeSuccess}
+            onPress={handleOpenConfirmSheet}
           >
             <Text status="control">{t('proceed')}</Text>
           </Button>
@@ -435,7 +552,11 @@ export default function BillPayment({ navigation }) {
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea title="" navigation={navigation} screen="default" />
+      <TopNavigationArea
+        title={t('electricity')}
+        navigation={navigation}
+        screen="default"
+      />
       <View style={{ flex: 1 }}>
         <List
           style={{ backgroundColor: 'transparent' }}
@@ -448,8 +569,8 @@ export default function BillPayment({ navigation }) {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-      <ProductSheet />
       <AccountSheet />
+      <ConfirmSheet />
     </Layout>
   );
 }

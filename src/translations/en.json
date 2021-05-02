@@ -234,5 +234,11 @@
   "cableTv": "Cable TV",
   "electricity": "Electricity",
   "selectBundle": "Select a Bundle",
-  "bundle": "Bundle"
+  "bundle": "Bundle",
+  "cardNumber": "Smart Card Number",
+  "channelDesc": "Channel Description",
+  "selectBiller": "Select Biller *",
+  "meterNumber": "Meter Number",
+  "selectPlace": "Select a Place",
+  "selectType": "Select a Type"
 }

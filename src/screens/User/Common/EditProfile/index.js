@@ -124,7 +124,7 @@ export default function EditProfile({ navigation }) {
               onPress={selectCoverImage}
             >
               <Image
-                source={require('assets/images/banner/profile.jpg')}
+                source={{ uri: coverImage }}
                 defaultSource={require('assets/images/banner/profile.jpg')}
                 style={{
                   height: '100%',
@@ -176,7 +176,7 @@ export default function EditProfile({ navigation }) {
                   }}
                 >
                   <Image
-                    source={require('assets/images/user/user2.png')}
+                    source={{ uri: userImage }}
                     defaultSource={require('assets/images/user/user2.png')}
                     style={{
                       height: 100,

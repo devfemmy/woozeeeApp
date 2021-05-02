@@ -287,7 +287,7 @@ export default function MobileData({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              MTN
+              glo
             </Text>
           </View>
           <View
@@ -333,7 +333,7 @@ export default function MobileData({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              ₦1,000
+              ₦ 50,000
             </Text>
           </View>
         </View>
