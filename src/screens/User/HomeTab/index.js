@@ -127,8 +127,7 @@ export default function Home({ navigation }) {
     openWallet: () => sheetRefWallet.current.open(),
     openRewards: () => sheetRefRewards.current.open(),
     openComingSoonMarket: () => sheetComingSoonMarket.current.open(),
-    openComingSoonCharity: () => navigation.replace('CharityRoute'),
-    // openComingSoonCharity: () => sheetComingSoonCharity.current.open(),
+    openComingSoonCharity: () => sheetComingSoonCharity.current.open(),
     SocialRoute: () => navigation.replace('SocialRoute'),
   };
 

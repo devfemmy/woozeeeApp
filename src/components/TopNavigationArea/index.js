@@ -18,7 +18,7 @@ import {
 
 // Components import
 import BackButton from './components/BackButton';
-import HelpButton from './components/HelpButton';
+// import HelpButton from './components/HelpButton';
 import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
@@ -38,7 +38,7 @@ export default function TopNavigationArea(props) {
     options,
     balanceVisible,
     toggleBalance,
-    notification,
+    // notification,
     onStreamClick,
   } = props;
 
@@ -62,9 +62,7 @@ export default function TopNavigationArea(props) {
         />
         <TopNavigationAction
           {...props}
-          icon={(evaProps) => (
-            <IconCNotification style={[evaProps.style, { tintColor: null }]} />
-          )}
+          icon={IconCNotification}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Notification"
           onPress={routeMessaging}
