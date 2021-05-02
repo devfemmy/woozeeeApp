@@ -101,9 +101,7 @@ export default function TopNavigationArea(props) {
       <>
         <TopNavigationAction
           {...props}
-          icon={(evaProps) => (
-            <IconCNotification style={[evaProps.style, { tintColor: null }]} />
-          )}
+          icon={IconCNotification}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Notification"
           onPress={routeMessaging}
