@@ -141,6 +141,7 @@ export const GeneralTextField = (props) => {
       isSecureEntry,
       validate,
       placeholder,
+      accessoryRight,
     ],
   );
 };

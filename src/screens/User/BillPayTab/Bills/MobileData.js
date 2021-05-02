@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   useWindowDimensions,
+  ScrollView,
 } from 'react-native';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -108,6 +109,8 @@ export default function MobileData({ navigation }) {
 
   const [activeOperator, setActiveOperator] = useState(null);
 
+  const [selectedOption, setSelectedOption] = useState(0);
+
   const t = useContext(LocaleContext);
 
   const { appState } = useContext(AppSettingsContext);
@@ -124,11 +127,9 @@ export default function MobileData({ navigation }) {
     mobile: '',
     amount: '',
     pin: '',
-    product: t('bundle'),
-    account: t('paymentAccount'),
+    product: '',
+    account: '',
   });
-
-  const [selectedOption, setSelectedOption] = useState(0);
 
   const handleAccountChange = (index) => {
     setSelectedOption(index);
@@ -209,6 +210,7 @@ export default function MobileData({ navigation }) {
           onPress={() => setFormValues((prevState) => ({
             ...prevState,
             product: '100GB',
+            amount: '50000',
           }))}
         >
           <Text style={{ fontSize: 16 }} status="basic" category="h6">
@@ -287,7 +289,7 @@ export default function MobileData({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              glo
+              {woozeeeCards[activeOperator - 1]?.title || 'none'}
             </Text>
           </View>
           <View
@@ -310,7 +312,7 @@ export default function MobileData({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              09045678966
+              {form.mobile || 'none'}
             </Text>
           </View>
           <View
@@ -333,7 +335,7 @@ export default function MobileData({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              ₦ 50,000
+              {`₦ ${form.amount || 0}`}
             </Text>
           </View>
         </View>
@@ -489,114 +491,6 @@ export default function MobileData({ navigation }) {
     </TouchableOpacity>
   );
 
-  const renderHeaderArea = () => (
-    <View style={{ flex: 1, paddingTop: 20 }}>
-      <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-        <Text category="s1">{t('operatorChoice')}</Text>
-      </View>
-      <View style={{ flex: 1 }}>
-        <List
-          style={{ backgroundColor: 'transparent' }}
-          contentContainerStyle={{ paddingHorizontal: 5 }}
-          horizontal
-          alwaysBounceHorizontal
-          alwaysBounceVertical
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          data={woozeeeCards}
-          keyExtractor={(_, i) => i.toString()}
-          renderItem={WoozeeeCards}
-          getItemLayout={(data, index) => ({
-            length: CARD_HEIGHT,
-            offset: CARD_HEIGHT * index,
-            index,
-          })}
-        />
-      </View>
-    </View>
-  );
-
-  const renderFooterArea = () => (
-    <View
-      style={{
-        flex: 1,
-        paddingBottom: 20,
-        marginTop: 10,
-      }}
-    >
-      <View style={{ paddingHorizontal: 15 }}>
-        <View style={{ paddingBottom: 10 }}>
-          <Text category="label" appearance="hint" style={{ marginBottom: 5 }}>
-            {t('selectBundle')}
-          </Text>
-          <Button
-            appearance="outline"
-            accessoryRight={IconArrowDown}
-            style={{ justifyContent: 'space-between' }}
-            onPress={handleOpenProductSheet}
-          >
-            <Text>{form.product}</Text>
-          </Button>
-        </View>
-        <View style={{ paddingVertical: 5 }}>
-          <GeneralTextField
-            type="mobile"
-            label={t('mobileNum')}
-            autoCompleteType="tel"
-            textContentType="telephoneNumber"
-            validate="required"
-            setFormValues={setFormValues}
-            accessoryRight={IconCPhoneBookFill}
-          />
-        </View>
-        {/* <View style={{ paddingVertical: 5 }}>
-          <GeneralTextField
-            type="amount"
-            label={t('amount')}
-            keyboardType="number-pad"
-            validate="required"
-            setFormValues={setFormValues}
-            // accessoryLeft={IconCNaira}
-          />
-        </View> */}
-        <View style={{ paddingVertical: 10 }}>
-          <Text category="label" appearance="hint" style={{ marginBottom: 5 }}>
-            {t('paymentAccount')}
-          </Text>
-          <Button
-            appearance="outline"
-            accessoryRight={IconArrowDown}
-            style={{ justifyContent: 'space-between' }}
-            onPress={handleOpenAccountSheet}
-          >
-            <Text>{form.account}</Text>
-          </Button>
-        </View>
-        {/* <View style={{ paddingVertical: 5 }}>
-          <GeneralTextField
-            type="pin"
-            label={t('transactionPin')}
-            keyboardType="number-pad"
-            validate="required"
-            setFormValues={setFormValues}
-          />
-        </View> */}
-        <View style={{ paddingVertical: 20 }}>
-          <Button
-            status="danger"
-            size="large"
-            accessibilityLiveRegion="assertive"
-            accessibilityComponentType="button"
-            accessibilityLabel="Continue"
-            onPress={handleOpenConfirmSheet}
-          >
-            <Text status="control">{t('proceed')}</Text>
-          </Button>
-        </View>
-      </View>
-    </View>
-  );
-
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
@@ -604,18 +498,106 @@ export default function MobileData({ navigation }) {
         navigation={navigation}
         screen="default"
       />
-      <View style={{ flex: 1 }}>
-        <List
-          style={{ backgroundColor: 'transparent' }}
-          ListHeaderComponent={renderHeaderArea}
-          ListFooterComponent={renderFooterArea}
-          horizontal={!IS_PORTRAIT}
-          alwaysBounceHorizontal
-          alwaysBounceVertical
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
+      <ScrollView
+        style={{ flex: 1 }}
+        alwaysBounceVertical
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, paddingTop: 20 }}>
+            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+              <Text category="s1">{t('operatorChoice')}</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <List
+                style={{ backgroundColor: 'transparent' }}
+                contentContainerStyle={{ paddingHorizontal: 5 }}
+                horizontal
+                alwaysBounceHorizontal
+                alwaysBounceVertical
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                data={woozeeeCards}
+                keyExtractor={(_, i) => i.toString()}
+                renderItem={WoozeeeCards}
+                getItemLayout={(data, index) => ({
+                  length: CARD_HEIGHT,
+                  offset: CARD_HEIGHT * index,
+                  index,
+                })}
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              paddingBottom: 20,
+              marginTop: 10,
+            }}
+          >
+            <View style={{ paddingHorizontal: 15 }}>
+              <View style={{ paddingBottom: 10 }}>
+                <Text
+                  category="label"
+                  appearance="hint"
+                  style={{ marginBottom: 5 }}
+                >
+                  {t('selectBundle')}
+                </Text>
+                <Button
+                  appearance="outline"
+                  accessoryRight={IconArrowDown}
+                  style={{ justifyContent: 'space-between' }}
+                  onPress={handleOpenProductSheet}
+                >
+                  <Text>{form.product || t('bundle')}</Text>
+                </Button>
+              </View>
+              <View style={{ paddingVertical: 5 }}>
+                <GeneralTextField
+                  type="mobile"
+                  label={t('mobileNum')}
+                  autoCompleteType="tel"
+                  textContentType="telephoneNumber"
+                  validate="required"
+                  setFormValues={setFormValues}
+                  accessoryRight={IconCPhoneBookFill}
+                />
+              </View>
+              <View style={{ paddingVertical: 10 }}>
+                <Text
+                  category="label"
+                  appearance="hint"
+                  style={{ marginBottom: 5 }}
+                >
+                  {t('paymentAccount')}
+                </Text>
+                <Button
+                  appearance="outline"
+                  accessoryRight={IconArrowDown}
+                  style={{ justifyContent: 'space-between' }}
+                  onPress={handleOpenAccountSheet}
+                >
+                  <Text>{form.account || t('paymentAccount')}</Text>
+                </Button>
+              </View>
+              <View style={{ paddingVertical: 20 }}>
+                <Button
+                  status="danger"
+                  size="large"
+                  accessibilityLiveRegion="assertive"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Continue"
+                  onPress={handleOpenConfirmSheet}
+                >
+                  <Text status="control">{t('proceed')}</Text>
+                </Button>
+              </View>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
       <ProductSheet />
       <AccountSheet />
       <ConfirmSheet />
