@@ -216,7 +216,7 @@ export default function CableTv({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Biller
+              {t('biller')}
             </Text>
             <Text
               category="s2"
@@ -239,7 +239,7 @@ export default function CableTv({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Card Number
+              {t('cardNumber')}
             </Text>
             <Text
               category="s2"
@@ -262,7 +262,7 @@ export default function CableTv({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Amount
+              {t('amount')}
             </Text>
             <Text
               category="s2"

@@ -224,13 +224,13 @@ export default function Electricity({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Biller
+              {t('biller')}
             </Text>
             <Text
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              DSTV
+              EKEDC
             </Text>
           </View>
           <View
@@ -247,7 +247,7 @@ export default function Electricity({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Card Number
+              {t('meterNumber')}
             </Text>
             <Text
               category="s2"
@@ -270,7 +270,7 @@ export default function Electricity({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Amount
+              {t('amount')}
             </Text>
             <Text
               category="s2"
@@ -495,7 +495,7 @@ export default function Electricity({ navigation }) {
         <View style={{ paddingVertical: 5 }}>
           <GeneralTextField
             type="mobile"
-            label={t('mobile')}
+            label={t('mobileNum')}
             autoCompleteType="tel"
             textContentType="telephoneNumber"
             validate="required"

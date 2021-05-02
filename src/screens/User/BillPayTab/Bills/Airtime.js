@@ -215,7 +215,7 @@ export default function Airtime({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Network
+              {t('network')}
             </Text>
             <Text
               category="s2"
@@ -238,7 +238,7 @@ export default function Airtime({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Mobile Number
+              {t('mobileNum')}
             </Text>
             <Text
               category="s2"
@@ -261,7 +261,7 @@ export default function Airtime({ navigation }) {
               appearance="hint"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
             >
-              Amount
+              {t('amount')}
             </Text>
             <Text
               category="s2"
@@ -475,7 +475,7 @@ export default function Airtime({ navigation }) {
         <View style={{ paddingVertical: 5 }}>
           <GeneralTextField
             type="mobile"
-            label={t('mobile')}
+            label={t('mobileNum')}
             autoCompleteType="tel"
             textContentType="telephoneNumber"
             validate="required"

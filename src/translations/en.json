@@ -206,7 +206,6 @@
   "serviceChoice": "What service would you like?",
   "operatorChoice": "Select Mobile Operator *",
   "selectProduct": "Select product",
-  "mobile": "Mobile Number",
   "amount": "Amount",
   "product": "Product",
   "paymentAccount": "Payment Account / Wallet",
@@ -240,5 +239,7 @@
   "selectBiller": "Select Biller *",
   "meterNumber": "Meter Number",
   "selectPlace": "Select a Place",
-  "selectType": "Select a Type"
+  "selectType": "Select a Type",
+  "biller": "Biller",
+  "network": "Network"
 }
