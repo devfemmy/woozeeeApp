@@ -205,5 +205,20 @@
   "freeze": "Geler",
   "serviceChoice": "Quel service voudriez-vous?",
   "operatorChoice": "Sélectionnez Opérateur de téléphonie mobile",
-  "selectProduct": "sélectionner un produit"
+  "selectProduct": "sélectionner un produit",
+  "mobile": "numéro de portable",
+  "amount": "montant",
+  "product": "produit",
+  "paymentAccount": "Compte de paiement / portefeuille",
+  "transactionPin": "Pin de transaction",
+  "proceed": "procéder",
+  "source": "la source",
+  "done": "fini",
+  "transactionSuccess": "transaction réussie!",
+  "downloadReceipt": "Télécharger le reçu",
+  "shareReceipt": "Partager le reçu",
+  "startLiveStream": "Démarrer la diffusion en direct",
+  "viewLiveStreams": "Voir les diffusions en direct",
+  "makeFullPayment": "Effectuer le paiement intégral",
+  "makeInstallments": "Effectuer un paiement échelonné"
 }

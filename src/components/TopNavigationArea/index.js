@@ -193,6 +193,7 @@ export default function TopNavigationArea(props) {
             <TopNavigationUserMenu
               balanceVisible={balanceVisible}
               toggleBalance={toggleBalance}
+              navigation={navigation}
             />
           )}
           accessibilityLiveRegion="polite"
@@ -202,7 +203,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style, balanceVisible, toggleBalance],
+    [style, balanceVisible, toggleBalance, navigation],
   );
 
   const TopNavigationSearch = useMemo(

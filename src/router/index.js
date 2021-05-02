@@ -23,6 +23,7 @@ import PrivacyPolicy from 'src/screens/Common/PrivacyPolicy';
 
 // Common User Screens
 import Settings from 'src/screens/User/Common/Settings';
+import SettingsGlobal from 'src/screens/User/Common/SettingsGlobal';
 import EditProfile from 'src/screens/User/Common/EditProfile';
 import Search from 'src/screens/User/Common/Search';
 import Movies from 'src/screens/User/Common/Movies';
@@ -91,6 +92,7 @@ export default function Router() {
       CharityRoute,
       EditProfile,
       Settings,
+      SettingsGlobal,
       Movies,
       LiveStream,
       Messaging,
