@@ -117,10 +117,10 @@ export default function Profile({ navigation }) {
           style={{
             backgroundColor: '#EDF1F7',
             bottom: 0,
-            borderRadius: 53,
-            height: 106,
+            borderRadius: 52,
+            height: 104,
             position: 'absolute',
-            width: 106,
+            width: 104,
             zIndex: 3,
             marginLeft: 15,
           }}
@@ -129,9 +129,9 @@ export default function Profile({ navigation }) {
             <LinearGradient
               colors={['#043F7C', '#FF5757']}
               style={{
-                height: 106,
-                width: 106,
-                borderRadius: 53,
+                height: 104,
+                width: 104,
+                borderRadius: 52,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
@@ -155,8 +155,8 @@ export default function Profile({ navigation }) {
                 width: 22,
                 borderRadius: 11,
                 position: 'absolute',
-                right: 0,
-                bottom: 7,
+                right: 4,
+                bottom: 8,
               }}
               resizeMode="cover"
             />

@@ -59,126 +59,115 @@ export default function Settings({ navigation }) {
             padding: 15,
           }}
         >
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginBottom: 10, paddingHorizontal: 15 }}>
             <Text status="primary" category="c2">
               {t('settings')}
             </Text>
           </View>
-          <View
+          <Button
+            appearance="outline"
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
+              borderColor: 'transparent',
             }}
+            accessoryRight={IconForwardIos}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <Text category="s2" style={{ marginLeft: 10 }}>
-                {t('videoAutoPlay')}
-              </Text>
-            </View>
-            <Toggle
-              checked={autoPlay}
-              onChange={() => setAutoPlay((prevState) => !prevState)}
-            />
-          </View>
-          <Divider style={{ marginVertical: 10 }} />
-          <View
+            <Text category="s2" status="" style={{ marginLeft: 10 }}>
+              {t('account')}
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 5 }} />
+          <Button
+            appearance="outline"
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
+              borderColor: 'transparent',
             }}
+            accessoryRight={IconForwardIos}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <Text category="s2" style={{ marginLeft: 10 }}>
-                {t('followingPostNotif')}
-              </Text>
-            </View>
-            <Toggle
-              checked={postNotif}
-              onChange={() => setPostNotif((prevState) => !prevState)}
-            />
-          </View>
-          <Divider style={{ marginVertical: 10 }} />
-          <View
+            <Text category="s2" status="" style={{ marginLeft: 10 }}>
+              {t('privacySafety')}
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 5 }} />
+          <Button
+            appearance="outline"
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
+              borderColor: 'transparent',
             }}
+            accessoryRight={IconForwardIos}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <Text category="s2" style={{ marginLeft: 10 }}>
-                {t('autoUpdate')}
-              </Text>
-            </View>
-            <Toggle
-              checked={autoUpdate}
-              onChange={() => setAutoUpdate((prevState) => !prevState)}
-            />
-          </View>
-          <Divider style={{ marginVertical: 10 }} />
-          <View
+            <Text category="s2" status="" style={{ marginLeft: 10 }}>
+              {t('notifications')}
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 5 }} />
+          <Button
+            appearance="outline"
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
+              borderColor: 'transparent',
             }}
+            accessoryRight={IconForwardIos}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <Text category="s2" style={{ marginLeft: 10 }}>
-                {t('hideAccount')}
-              </Text>
-            </View>
-            <Toggle
-              checked={hideAccount}
-              onChange={() => setHideAccount((prevState) => !prevState)}
-            />
-          </View>
-          <Divider style={{ marginVertical: 10 }} />
-          <View
+            <Text category="s2" status="" style={{ marginLeft: 10 }}>
+              {t('display')}
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 5 }} />
+          <Button
+            appearance="outline"
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
+              borderColor: 'transparent',
             }}
+            accessoryRight={IconForwardIos}
           >
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <Text category="s2" style={{ marginLeft: 10 }}>
-                {t('disableAccount')}
-              </Text>
-            </View>
-            <Toggle
-              checked={disableAccount}
-              onChange={() => setDisableAccount((prevState) => !prevState)}
-            />
-          </View>
-          <Divider style={{ marginVertical: 10 }} />
+            <Text category="s2" status="" style={{ marginLeft: 10 }}>
+              {t('aboutWoozeee')}
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 5 }} />
+          <Button
+            appearance="outline"
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderColor: 'transparent',
+            }}
+            accessoryRight={IconForwardIos}
+          >
+            <Text category="s2" status="" style={{ marginLeft: 10 }}>
+              {t('referrals')}
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 5 }} />
+          <Button
+            appearance="outline"
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderColor: 'transparent',
+            }}
+            accessoryRight={IconForwardIos}
+          >
+            <Text category="s2" status="" style={{ marginLeft: 10 }}>
+              {t('help')}
+            </Text>
+          </Button>
           <View style={{ marginVertical: 20 }}>
             <Button appearance="ghost" onPress={handleLogout}>
               <Text status="danger" category="s1">

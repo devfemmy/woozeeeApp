@@ -220,5 +220,11 @@
   "startLiveStream": "Start Live Stream",
   "viewLiveStreams": "View Live Streams",
   "makeFullPayment": "Make Full Payment",
-  "makeInstallments": "Make Instalmental Payment"
+  "makeInstallments": "Make Instalmental Payment",
+  "account": "Account",
+  "display": "Display",
+  "aboutWoozeee": "About woozeee",
+  "referrals": "Referrals",
+  "help": "Help",
+  "privacySafety": "Privacy and Safety"
 }

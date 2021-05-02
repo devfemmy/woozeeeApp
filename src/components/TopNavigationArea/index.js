@@ -169,9 +169,9 @@ export default function TopNavigationArea(props) {
           accessoryLeft={(evaProps) => (
             <BackButton {...evaProps} navigation={navigation} icon={icon} />
           )}
-          accessoryRight={(evaProps) => (
-            <HelpButton {...evaProps} navigation={navigation} />
-          )}
+          // accessoryRight={(evaProps) => (
+          //   <HelpButton {...evaProps} navigation={navigation} />
+          // )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
