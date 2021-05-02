@@ -108,81 +108,78 @@ export default function Comments({ navigation }) {
             setFormValues={setFormValues}
           />
         </View>
-        <View style={{ alignSelf: 'flex-start', marginTop: 4 }}>
-          <InteractIcon
-            Accessory={IconPaperPlane}
-            status="primary"
-            height={32}
-            width={32}
-          />
-        </View>
+        <InteractIcon
+          Accessory={IconPaperPlane}
+          status="primary"
+          height={32}
+          width={32}
+        />
       </View>
     ),
     [t],
   );
 
   // prettier-ignore
-  const Message = ({ sent, data }) =>
-    useMemo(
-      () => (
-        <View>
-          <View
+  const Message = ({ sent, data }) => useMemo(
+    () => (
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            marginTop: 15,
+          }}
+        >
+          <LinearGradient
+            colors={['#043F7C', '#FF5757']}
             style={{
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              marginTop: 15,
+              height: 34,
+              width: 34,
+              borderRadius: 17,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            <LinearGradient
-              colors={['#043F7C', '#FF5757']}
+            <Image
+              source={require('assets/images/user/user1.png')}
               style={{
-                height: 34,
-                width: 34,
-                borderRadius: 17,
-                alignItems: 'center',
-                justifyContent: 'center',
+                height: 30,
+                width: 30,
+                borderRadius: 15,
+                borderColor: 'white',
               }}
-            >
-              <Image
-                source={require('assets/images/user/user1.png')}
-                style={{
-                  height: 30,
-                  width: 30,
-                  borderRadius: 15,
-                  borderColor: 'white',
-                }}
-              />
-            </LinearGradient>
-            <Layout
-              level="4"
-              style={{
-                flex: 1,
-                paddingHorizontal: 10,
-                paddingVertical: 5,
-                borderRadius: 10,
-                marginHorizontal: 5,
-              }}
-            >
-              <Text category="s2" style={{ alignSelf: 'flex-start' }}>
-                {data.user}
-              </Text>
-              <Text category="p2">{data.msg}</Text>
-              <Text category="c1" style={{ alignSelf: 'flex-end' }}>
-                {data.time}
-              </Text>
-            </Layout>
-          </View>
-          <View style={{ marginVertical: 5, marginLeft: 50 }}>
-            <TouchableOpacity
-              activeOpacity={0.75}
-            >
-              <Text category="c2">{t('reply')}</Text>
-            </TouchableOpacity>
-          </View>
+            />
+          </LinearGradient>
+          <Layout
+            level="4"
+            style={{
+              flex: 1,
+              paddingHorizontal: 10,
+              paddingVertical: 5,
+              borderRadius: 10,
+              marginHorizontal: 5,
+            }}
+          >
+            <Text category="s2" style={{ alignSelf: 'flex-start' }}>
+              {data.user}
+            </Text>
+            <Text category="p2">{data.msg}</Text>
+            <Text category="c1" style={{ alignSelf: 'flex-end' }}>
+              {data.time}
+            </Text>
+          </Layout>
         </View>
-      ),
-      [data],
-    );
+        <View style={{ marginVertical: 5, marginLeft: 50 }}>
+          <TouchableOpacity
+            activeOpacity={0.75}
+          >
+            <Text category="c2">{t('reply')}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    ),
+    [data],
+  );
 
   return useMemo(
     () => (

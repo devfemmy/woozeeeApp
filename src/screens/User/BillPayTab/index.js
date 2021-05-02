@@ -163,11 +163,13 @@ export default function BillPay({ navigation }) {
         justifyContent: 'space-between',
         marginVertical: 5,
         borderWidth: 1,
-        borderColor: '#E9E9E9',
+        borderTopColor: '#E9E9E9',
+        borderRightColor: '#E9E9E9',
+        borderBottomColor: '#E9E9E9',
+        borderLeftColor: '#FF5757',
+        borderLeftWidth: 6,
         borderRadius: 5,
         padding: 10,
-        borderLeftWidth: 6,
-        borderLeftColor: '#EB5757',
       }}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
