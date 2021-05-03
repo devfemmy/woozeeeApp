@@ -29,8 +29,6 @@ import InteractIcon from 'src/components/InteractIcon';
 
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
-import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
-
 import { GeneralTextField, GeneralSelect } from 'src/components/FormFields';
 
 import {
@@ -105,8 +103,6 @@ const PLACE = [
 const TYPE = [{ title: 'TYPE 1' }, { title: 'TYPE 2' }, { title: 'TYPE 3' }];
 
 export default function Electricity({ navigation }) {
-  useDisableAndroidExit();
-
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;

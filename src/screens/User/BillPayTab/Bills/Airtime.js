@@ -29,8 +29,6 @@ import InteractIcon from 'src/components/InteractIcon';
 
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
-import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
-
 import { GeneralTextField } from 'src/components/FormFields';
 
 import {
@@ -99,7 +97,6 @@ const woozeeeCards = [
 ];
 
 export default function Airtime({ navigation }) {
-  useDisableAndroidExit();
 
   const { width, height } = useWindowDimensions();
 
