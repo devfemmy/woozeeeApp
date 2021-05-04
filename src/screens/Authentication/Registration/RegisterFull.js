@@ -35,8 +35,6 @@ export default function RegisterFull({ route, navigation }) {
 
   const isFocused = useIsFocused();
 
-  const [isLoading, setLoading] = useState(isUserInfoValid());
-
   const [errorMsg, setErrorMsg] = useState({
     auth: null,
   });
@@ -58,6 +56,8 @@ export default function RegisterFull({ route, navigation }) {
       return false;
     }
   };
+
+  const [isLoading, setLoading] = useState(isUserInfoValid());
 
   const signUp = async () => {
     if (isUserInfoValid() == true) {

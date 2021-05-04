@@ -23,12 +23,20 @@ import {
   IconCTwitter,
   IconCApple,
 } from 'src/components/CustomIcons';
+import SignUpWithGoogle from 'src/services/Requests/googleSignIn';
+import SignUpWithFacebook from 'src/services/Requests/facebookSignIn';
 
 export default function Login({ navigation }) {
   // prettier-ignore
   const {
     authOptions,
   } = useContext(AuthContext);
+
+  function callSigunp() {
+    SignUpWithGoogle({ signupSocial });
+  }
+
+  const { signupWithGoogle, signupSocial } = authOptions;
 
   const t = useContext(LocaleContext);
 
@@ -185,7 +193,9 @@ export default function Login({ navigation }) {
                 accessibilityLiveRegion="polite"
                 accessibilityComponentType="button"
                 accessibilityLabel="Sign up with Google"
+                onPress={SignUpWithGoogle}
                 style={{ marginVertical: 5, backgroundColor: 'white' }}
+                onPress={callSigunp}
               >
                 <Text category="s1" style={{ color: 'black' }}>
                   Google
@@ -200,13 +210,14 @@ export default function Login({ navigation }) {
                 accessibilityLiveRegion="polite"
                 accessibilityComponentType="button"
                 accessibilityLabel="Sign up with Facebook"
+                onPress={SignUpWithFacebook}
                 style={{ marginVertical: 5 }}
               >
                 <Text category="s1" status="control">
                   Facebook
                 </Text>
               </Button>
-              <Button
+              {/* <Button
                 status="info"
                 size="medium"
                 accessoryLeft={() => (
@@ -220,7 +231,7 @@ export default function Login({ navigation }) {
                 <Text category="s1" status="control">
                   Twitter
                 </Text>
-              </Button>
+              </Button> */}
               {Constants.platform.ios && (
                 <Button
                   size="medium"
