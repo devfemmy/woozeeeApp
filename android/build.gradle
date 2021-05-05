@@ -11,6 +11,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
 
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://artifactory.img.ly/artifactory/imgly" }
@@ -31,7 +32,7 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        mavenCentral()
+        
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url("$rootDir/../node_modules/react-native/android")

@@ -18,7 +18,7 @@ async function SignUpWithFacebook() {
 
     // Once signed in, get the users AccesToken
     const data = await AccessToken.getCurrentAccessToken();
-    // console.log(`Data -> ${data}`)
+    console.log(`Data -> ${data}`);
 
     if (!data) {
       throw 'Something went wrong obtaining access token';
