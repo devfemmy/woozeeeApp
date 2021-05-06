@@ -1,29 +1,49 @@
 import auth from '@react-native-firebase/auth';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 
-async function SignUpWithApple() {
-  // Start the sign-in request
-  const appleAuthRequestResponse = await appleAuth.performRequest({
-    requestedOperation: appleAuth.Operation.LOGIN,
-    requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-  });
+async function SignUpWithApple({ appleSignup }) {
+  const userData = {
+    email: '',
+    fName: '',
+    sName: '',
+    source: 'apple',
+    token: '',
+  };
+  try {
+    // performs login request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
 
-  console.log(appleAuthRequestResponse);
+    // Ensure Apple returned a user identityToken
+    if (!appleAuthRequestResponse.identityToken) {
+      throw 'Apple Sign-In failed - no identify token returned';
+    } else {
+      const {
+        email,
+        identityToken,
+        fullName,
+        nonce,
+      } = await appleAuthRequestResponse;
+      userData.email = email;
+      userData.fName = fullName.givenName;
+      userData.sName = fullName.familyName;
+      userData.token = identityToken;
 
-  // Ensure Apple returned a user identityToken
-  if (!appleAuthRequestResponse.identityToken) {
-    throw 'Apple Sign-In failed - no identify token returned';
+      const appleCredential = await auth.AppleAuthProvider.credential(
+        identityToken,
+        nonce,
+      );
+
+      await appleSignup(userData);
+
+      // Sign the user in with the credential
+      // return auth().signInWithCredential(appleCredential);
+    }
+  } catch (err) {
+    console.log('err -> ' + err);
   }
-
-  // Create a Firebase credential from the response
-  const { identityToken, nonce } = appleAuthRequestResponse;
-  const appleCredential = auth.AppleAuthProvider.credential(
-    identityToken,
-    nonce,
-  );
-
-  // Sign the user in with the credential
-  return auth().signInWithCredential(appleCredential);
 }
 
 export default SignUpWithApple;

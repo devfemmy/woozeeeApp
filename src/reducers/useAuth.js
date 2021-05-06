@@ -122,11 +122,11 @@ export default function useAuth() {
         console.log(result);
       },
 
-      signupSocial: async (userData) => {
+      googleSignup: async (userData) => {
         const userInfo = {
           email: userData.email,
-          fName: userData.firstName,
-          sName: userData.lastName,
+          fName: userData.fName,
+          sName: userData.sName,
           source: userData.source,
         };
 
@@ -151,7 +151,7 @@ export default function useAuth() {
           //  TODO: implement authenticate login details:{email, password}
 
           // prettier-ignore
-          msg = await result.error == true 
+          msg = await result.error == true
             ? console.log("login not found")
             : null;
 
@@ -170,6 +170,106 @@ export default function useAuth() {
         }
         return msg;
       },
+
+      facebookSignup: async (userData) => {
+        const userInfo = {
+          email: userData.info.email,
+          token: userData.info.accessToken,
+          source: userData.source,
+        };
+
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/user/login?social=true',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify(userInfo),
+          },
+        );
+        console.log('userInfo -> ', userInfo);
+        const result = await res.json();
+        console.log(result);
+
+        let token = null;
+        let msg = null;
+
+        try {
+          //  TODO: implement authenticate login details:{email, password}
+
+          // prettier-ignore
+          msg = await result.error == true
+              ? console.log("login not found")
+              : null;
+
+          if (!msg) {
+            token = JSON.stringify(userInfo.token);
+            await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
+          }
+
+          dispatch({
+            type: 'LOG_IN',
+            token,
+          });
+        } catch (e) {
+          msg = e;
+        }
+        return msg;
+      },
+
+      appleSignup: async (userData) => {
+        const userInfo = {
+          email: userData.email,
+          fName: userData.fName,
+          sName: userData.sName,
+          token: userData.token,
+          source: userData.source,
+        };
+
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/user/login?social=true',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify(userInfo),
+          },
+        );
+        console.log('userInfo -> ', userInfo);
+        const result = await res.json();
+        console.log(result);
+
+        let token = null;
+        let msg = null;
+
+        try {
+          //  TODO: implement authenticate login details:{email, password}
+
+          // prettier-ignore
+          msg = await result.error == true
+              ? console.log("login not found")
+              : null;
+
+          if (!msg) {
+            token = JSON.stringify(userInfo.token);
+            await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
+          }
+
+          dispatch({
+            type: 'LOG_IN',
+            token,
+          });
+        } catch (e) {
+          msg = e;
+        }
+        return msg;
+      },
+
+      forgotPassword: async (verificationCode) => {},
 
       verifyAction: async (verificationCode) => {
         const tokenValue = {
@@ -199,8 +299,8 @@ export default function useAuth() {
 
           // prettier-ignore
           msg = await result.error == true
-            ? 'tokenError'
-            : null;
+              ? 'tokenError'
+              : null;
 
           if (!msg) {
             token = await JSON.stringify(result.token);

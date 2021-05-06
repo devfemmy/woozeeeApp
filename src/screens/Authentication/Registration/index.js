@@ -25,11 +25,23 @@ import SignUpWithApple from 'src/services/Requests/appleSignIn';
 
 export default function Register({ navigation }) {
   const { authOptions } = useContext(AuthContext);
-  const { signupWithGoogle, signupSocial } = authOptions;
+  const {
+    signupWithGoogle,
+    googleSignup,
+    facebookSignup,
+    appleSignup,
+  } = authOptions;
   const [isLoading, setLoading] = useState(false);
 
-  function callSigunp() {
-    SignUpWithGoogle({ signupSocial });
+  function callGoogleSigunp() {
+    SignUpWithGoogle({ googleSignup });
+  }
+  function callFBSigunp() {
+    SignUpWithFacebook({ facebookSignup });
+  }
+
+  function callAppleSignup() {
+    SignUpWithApple({ appleSignup });
   }
 
   const [form, setFormValues] = useState({
@@ -153,7 +165,7 @@ export default function Register({ navigation }) {
                 accessibilityComponentType="button"
                 accessibilityLabel="Sign up with Google"
                 style={{ marginVertical: 5, backgroundColor: 'white' }}
-                onPress={callSigunp}
+                onPress={callGoogleSigunp}
               >
                 <Text category="s1" style={{ color: 'black' }}>
                   Google
@@ -169,13 +181,13 @@ export default function Register({ navigation }) {
                 accessibilityComponentType="button"
                 accessibilityLabel="Sign up with Facebook"
                 style={{ marginVertical: 5 }}
-                onPress={SignUpWithFacebook}
+                onPress={callFBSigunp}
               >
                 <Text category="s1" status="control">
                   Facebook
                 </Text>
               </Button>
-              <Button
+              {/* <Button
                 status="info"
                 size="medium"
                 accessoryLeft={() => (
@@ -189,7 +201,7 @@ export default function Register({ navigation }) {
                 <Text category="s1" status="control">
                   Twitter
                 </Text>
-              </Button>
+              </Button> */}
               {Constants.platform.ios && (
                 <Button
                   size="medium"
@@ -200,7 +212,7 @@ export default function Register({ navigation }) {
                   accessibilityComponentType="button"
                   accessibilityLabel="Sign up with Apple"
                   style={{ marginVertical: 5, backgroundColor: 'black' }}
-                  onPress={SignUpWithApple}
+                  onPress={callAppleSignup}
                 >
                   <Text category="s1" status="control">
                     Apple

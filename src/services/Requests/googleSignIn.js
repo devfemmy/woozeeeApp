@@ -1,11 +1,9 @@
-import { useContext, useState } from 'react';
-
 import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-async function SignUpWithGoogle({ signupSocial }) {
+async function SignUpWithGoogle({ googleSignup }) {
   const userData = {
     email: '',
     fName: '',
@@ -27,7 +25,7 @@ async function SignUpWithGoogle({ signupSocial }) {
     userData.fName = await userInfo.user.givenName;
     userData.sName = await userInfo.user.familyName;
 
-    await signupSocial(userData);
+    await googleSignup(userData);
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       // user cancelled the login flow

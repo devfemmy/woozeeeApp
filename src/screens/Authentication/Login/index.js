@@ -36,6 +36,10 @@ export default function Login({ navigation }) {
     SignUpWithGoogle({ signupSocial });
   }
 
+  function callFBSigunp() {
+    SignUpWithFacebook({ signupSocial });
+  }
+
   const { signupWithGoogle, signupSocial } = authOptions;
 
   const t = useContext(LocaleContext);
@@ -210,7 +214,7 @@ export default function Login({ navigation }) {
                 accessibilityLiveRegion="polite"
                 accessibilityComponentType="button"
                 accessibilityLabel="Sign up with Facebook"
-                onPress={SignUpWithFacebook}
+                onPress={callFBSigunp}
                 style={{ marginVertical: 5 }}
               >
                 <Text category="s1" status="control">

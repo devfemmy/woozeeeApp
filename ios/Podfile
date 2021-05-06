@@ -11,6 +11,7 @@ target 'woozeee' do
   use_react_native!(:path => config["reactNativePath"])
 
   pod 'GoogleSignIn', '~> 5.0.2' 
+  # pod 'FacebookLogin'
   # Uncomment the code below to enable Flipper.
   #
   # You should not install Flipper in CI environments when creating release
