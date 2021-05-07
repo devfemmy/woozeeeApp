@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   useWindowDimensions,
+  Dimensions,
   ScrollView,
 } from 'react-native';
 
@@ -36,6 +37,7 @@ import {
   IconCCheck,
   IconClose,
 } from 'src/components/CustomIcons';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 
 const ACCOUNTS = [
   {
@@ -353,7 +355,7 @@ export default function Electricity({ navigation }) {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      width: '100%',
+                      width: wp('80%'),
                     }}
                   >
                     <Text category="s2">{option.title}</Text>

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
-import { Layout, Tab, TabView } from '@ui-kitten/components';
+import { Layout, } from '@ui-kitten/components';
+import { useWindowDimensions, Text, StyleSheet } from 'react-native';
+
+import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
@@ -17,6 +20,43 @@ export default function Challenge({ navigation }) {
 
   const shouldLoadComponent = (index) => index === selectedIndex;
 
+  const styles = StyleSheet.create({
+    activeTabTextColor: {
+      color: '#395185',
+      fontSize: 17
+    },
+    tabTextColor: {
+      color: 'grey',
+      fontSize: 17
+    }
+  })
+  
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'Challenges' },
+    { key: 'second', title: 'Explore' },
+  ]);
+
+  const renderScene = SceneMap({
+    first: Versus,
+    second: Explore,
+  });
+
+  const renderTabBar = props => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: '#395185' }}
+      style={{ backgroundColor: '#F7F9FC', }}
+      renderLabel={({ route, focused , color }) => (
+        <Text  style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}>
+          {route.title}
+        </Text>
+      )}
+    />
+  );
+
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
@@ -24,10 +64,9 @@ export default function Challenge({ navigation }) {
         navigation={navigation}
         screen="toolbar"
       />
-      <TabView
+      {/* <TabView
         style={{ flex: 1 }}
         selectedIndex={selectedIndex}
-        // shouldLoadComponent={shouldLoadComponent}
         onSelect={(index) => setSelectedIndex(index)}
       >
         <Tab title={t('challenge')} style={{ paddingVertical: 10 }}>
@@ -36,7 +75,16 @@ export default function Challenge({ navigation }) {
         <Tab title={t('explore')} style={{ paddingVertical: 10 }}>
           <Explore />
         </Tab>
-      </TabView>
+      </TabView> */}
+          <TabView
+          renderTabBar={renderTabBar}
+          swipeEnabled= {false}
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{ width: layout.width }}
+    />
+
     </Layout>
   );
 }

@@ -41,6 +41,8 @@ import { IconCMovie, IconCMedal } from 'src/components/CustomIcons';
 import Api from 'src/api';
 
 import { socialUrl } from 'src/api/dummy';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 
 export default function Wooz({ navigation }) {
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
@@ -57,6 +59,10 @@ export default function Wooz({ navigation }) {
   // }
 
   const VIEW_HEIGHT = height - (57 + spacing);
+ 
+  // const VIEW_HEIGHT = hp('100%');
+  // console.log('hEIGHT', VIEW_HEIGHT)
+
 
   const t = useContext(LocaleContext);
 

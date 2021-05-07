@@ -137,7 +137,7 @@ export const UsersPosts = ({ info }) => info.map((item) => (
         {item.category}
       </Text>
       <Text category="c1" style={{ marginBottom: 5 }}>
-        {`${item.content.length} Videos(s)`}
+        {`${item.content.length} Video(s)`}
       </Text>
     </View>
     <List
@@ -170,8 +170,8 @@ export const ProfilePosts = ({ info }) => (
       paddingBottom: 25,
       paddingTop: 5,
     }}
-    alwaysBounceVertical
-    showsHorizontalScrollIndicator={false}
+    // alwaysBounceVertical
+    showsHorizontalScrollIndicator={true}
     showsVerticalScrollIndicator={false}
     numColumns={3}
     data={info}
