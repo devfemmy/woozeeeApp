@@ -462,6 +462,11 @@ export const IconCPhoneBook = (props) => {
 
   return <Icon {...otherProps} name="phonebook-outline" pack="assets" />;
 };
+export const IconCPhoneBookFill = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="phonebook-filled" pack="assets" />;
+};
 export const IconCCard = (props) => {
   const { active, ...otherProps } = props;
 
@@ -517,10 +522,25 @@ export const IconCDataTopUp = (props) => {
 
   return <Icon {...otherProps} name="data-topup" pack="assets" />;
 };
+export const IconCStartStream = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="startstream" pack="assets" />;
+};
+export const IconCLiveStreams = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="livestreams" pack="assets" />;
+};
 export const IconCMobileTopUp = (props) => {
   const { active, ...otherProps } = props;
 
   return <Icon {...otherProps} name="mobile-topup" pack="assets" />;
+};
+export const IconCCoin = (props) => {
+  const { active, ...otherProps } = props;
+
+  return <Icon {...otherProps} name="coin-filled" pack="assets" />;
 };
 export const IconCShareVariant = (props) => {
   const { active, ...otherProps } = props;

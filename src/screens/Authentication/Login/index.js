@@ -32,15 +32,19 @@ export default function Login({ navigation }) {
     authOptions,
   } = useContext(AuthContext);
 
+  const { googleSignup, facebookSignup, appleSignup } = authOptions;
+
   function callSigunp() {
-    SignUpWithGoogle({ signupSocial });
+    SignUpWithGoogle({ googleSignup });
   }
 
   function callFBSigunp() {
-    SignUpWithFacebook({ signupSocial });
+    SignUpWithFacebook({ facebookSignup });
   }
 
-  const { signupWithGoogle, signupSocial } = authOptions;
+  function callAppleSignup() {
+    SignUpWithApple({ appleSignup });
+  }
 
   const t = useContext(LocaleContext);
 
@@ -246,6 +250,7 @@ export default function Login({ navigation }) {
                   accessibilityComponentType="button"
                   accessibilityLabel="Sign up with Apple"
                   style={{ marginVertical: 5, backgroundColor: 'black' }}
+                  onPress={callAppleSignup}
                 >
                   <Text category="s1" status="control">
                     Apple

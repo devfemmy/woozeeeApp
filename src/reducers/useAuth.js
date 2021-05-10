@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable eqeqeq */
+/* eslint-disable quotes */
 import axios from 'axios';
 // prettier-ignore
 import {
@@ -10,7 +13,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-//prettier-ignore
+// prettier-ignore
 import { postAction, getAction } from '../services/Requests'
 import { methodTypes } from '../services/constants';
 
@@ -27,8 +30,6 @@ export default function useAuth() {
     initialState,
     initializeState,
   );
-
-  const baseUrl = 'https://apis.woozeee.com/api/v1/user/';
 
   // create obj for authentication options
   const authOptions = useMemo(
@@ -61,7 +62,6 @@ export default function useAuth() {
       },
       // login user then set token (use login details) in storage
       login: async (userData) => {
-        console.log(userData);
         const res = await fetch('https://apis.woozeee.com/api/v1/user/login', {
           method: 'POST',
           headers: {
@@ -72,7 +72,6 @@ export default function useAuth() {
         });
 
         const result = await res.json();
-        console.log(result);
         let token = null;
         let msg = null;
 
@@ -100,28 +99,6 @@ export default function useAuth() {
         return msg;
       },
 
-      signup: async (userData) => {
-        const userInfo = {
-          email: userData.email,
-          fName: userData.firstName,
-          sName: userData.lastName,
-          username: userData.firstName,
-          password: userData.password,
-          referralCode: userData.referralCode,
-        };
-
-        const res = await fetch('https://apis.woozeee.com/api/v1/user/create', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify(userInfo),
-        });
-        const result = await res.json();
-        console.log(result);
-      },
-
       googleSignup: async (userData) => {
         const userInfo = {
           email: userData.email,
@@ -142,7 +119,6 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
-        console.log(result);
 
         let token = null;
         let msg = null;
@@ -189,9 +165,7 @@ export default function useAuth() {
             body: JSON.stringify(userInfo),
           },
         );
-        console.log('userInfo -> ', userInfo);
         const result = await res.json();
-        console.log(result);
 
         let token = null;
         let msg = null;
@@ -201,11 +175,11 @@ export default function useAuth() {
 
           // prettier-ignore
           msg = await result.error == true
-              ? console.log("login not found")
-              : null;
+            ? console.log("login not found")
+            : null;
 
           if (!msg) {
-            token = JSON.stringify(userInfo.token);
+            token = userInfo.token;
             await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
           }
 
@@ -239,9 +213,7 @@ export default function useAuth() {
             body: JSON.stringify(userInfo),
           },
         );
-        console.log('userInfo -> ', userInfo);
         const result = await res.json();
-        console.log(result);
 
         let token = null;
         let msg = null;
@@ -251,8 +223,8 @@ export default function useAuth() {
 
           // prettier-ignore
           msg = await result.error == true
-              ? console.log("login not found")
-              : null;
+            ? console.log("login not found")
+            : null;
 
           if (!msg) {
             token = JSON.stringify(userInfo.token);
@@ -269,7 +241,48 @@ export default function useAuth() {
         return msg;
       },
 
-      forgotPassword: async (verificationCode) => {},
+      forgotPassword: async (confirmationCode) => {
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/user/confirm-token',
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify(),
+          },
+        );
+
+        const result = await res.json();
+
+        let token = null;
+        let msg = null;
+
+        try {
+          //  TODO: implement authenticate login details:{email, password}
+
+          // prettier-ignore
+          msg = await result.error == true
+            ? 'tokenError'
+            : null;
+
+          if (!msg) {
+            token = await JSON.stringify(result.token);
+
+            await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
+          }
+
+          await dispatch({
+            type: 'LOG_IN',
+            token,
+          });
+        } catch (e) {
+          msg = e;
+        }
+
+        return msg;
+      },
 
       verifyAction: async (verificationCode) => {
         const tokenValue = {
@@ -299,8 +312,8 @@ export default function useAuth() {
 
           // prettier-ignore
           msg = await result.error == true
-              ? 'tokenError'
-              : null;
+            ? 'tokenError'
+            : null;
 
           if (!msg) {
             token = await JSON.stringify(result.token);
@@ -319,7 +332,7 @@ export default function useAuth() {
         return msg;
       },
 
-      //Social login/signup section
+      // Social login/signup section
       // Google
       signupWithGoogle: async () => {
         const userData = {
@@ -336,16 +349,12 @@ export default function useAuth() {
         try {
           await GoogleSignin.hasPlayServices();
           const userInfo = await GoogleSignin.signIn();
-          idToken = JSON.stringify(userInfo.idToken);
+          const idToken = JSON.stringify(userInfo.idToken);
           userData.email = await userInfo.user.email;
           userData.firstName = await userInfo.user.givenName;
           userData.lastName = await userInfo.user.familyName;
           await AsyncStorage.setItem('USER_AUTH_TOKEN', idToken);
           await authOptions.login(userData);
-          // await dispatch({
-          //   type: 'LOG_IN',
-          //   idToken,
-          // });
         } catch (error) {
           if (error.code === statusCodes.SIGN_IN_CANCELLED) {
             // user cancelled the login flow

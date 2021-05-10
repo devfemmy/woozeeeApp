@@ -10,7 +10,7 @@ import { View, StyleSheet, Image } from 'react-native';
 
 import { Text } from '@ui-kitten/components';
 
-import { LinearGradient } from 'expo-linear-gradient';
+// import { LinearGradient } from 'expo-linear-gradient';
 
 import InteractIcon from 'src/components/InteractIcon';
 
@@ -21,6 +21,7 @@ import {
   IconCChat,
   IconPlayPause,
   IconCVote,
+  IconCCoin,
 } from 'src/components/CustomIcons';
 
 const styles = StyleSheet.create({
@@ -193,8 +194,12 @@ const VideoView = forwardRef((props, ref) => {
                 <InteractIcon
                   size="large"
                   style={{ marginBottom: 15 }}
-                  Accessory={(evaProps) => <IconCVote {...evaProps} active />}
-                  status={isVoted ? 'danger' : 'control'}
+                  /* prettier-ignore */
+                  Accessory={(evaProps) => (isVoted ? (
+                    <IconCCoin style={{ height: 36, width: 36 }} />
+                  ) : (
+                    <IconCVote {...evaProps} active />
+                  ))}
                   textContent={item.likes}
                   onPress={toggleVote}
                 />

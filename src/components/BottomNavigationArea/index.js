@@ -10,6 +10,8 @@ import {
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import SocialUpload from 'src/components/BottomNavigationArea/SocialUpload';
+import MarketUpload from 'src/components/BottomNavigationArea/MarketUpload';
+import CharityUpload from 'src/components/BottomNavigationArea/CharityUpload';
 
 import {
   IconCHome,
@@ -47,14 +49,14 @@ const screens = {
   marketPlace: {
     market: IconCMarket,
     cart: IconCCart,
-    upload: SocialUpload,
+    upload: MarketUpload,
     categories: IconCGrid,
     profile: IconCUser2,
   },
   charity: {
     charity: IconCCharity,
     campaigns: IconCCampaign,
-    upload: SocialUpload,
+    upload: CharityUpload,
     heroes: IconCHero,
     profile: IconCUser,
   },
@@ -87,6 +89,8 @@ export default function BottomNavigationArea(props) {
     [navigation, ICON_THEME, BG_THEME],
   );
 
+  const PAGE_ITEMS = Object.entries(screens[page]);
+
   return useMemo(
     () => (
       <Layout level="5">
@@ -95,9 +99,11 @@ export default function BottomNavigationArea(props) {
           appearance="noIndicator"
           style={[style, { backgroundColor: 'transparent' }]}
           selectedIndex={state.index}
-          onSelect={(index) => navigation.navigate(state.routeNames[index])}
+          /* prettier-ignore */
+          onSelect={(index) => PAGE_ITEMS[index][0] !== 'upload'
+            && navigation.navigate(state.routeNames[index])}
         >
-          {Object.entries(screens[page]).map(([title, icon], id) => (
+          {PAGE_ITEMS.map(([title, icon], id) => (
             <BottomNavigationTab
               title={title === 'upload' ? null : t(title)}
               // prettier-ignore
@@ -108,6 +114,6 @@ export default function BottomNavigationArea(props) {
         </BottomNavigation>
       </Layout>
     ),
-    [t, navigation, page, state, style, renderIcon],
+    [t, navigation, state, style, PAGE_ITEMS, renderIcon],
   );
 }

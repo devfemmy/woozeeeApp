@@ -195,7 +195,7 @@ export default function Explore({ navigation }) {
               renderItem={(renderData) => (
                 <MovieCard data={renderData.item} extraWidth={0} livestream />
               )}
-              getItemLayout={(data, index) => ({
+              getItemLayout={(_, index) => ({
                 length: 300,
                 offset: 300 * index,
                 index,
@@ -219,7 +219,7 @@ export default function Explore({ navigation }) {
       <TopNavigationArea
         title="woozeee"
         navigation={navigation}
-        icon="logout"
+        icon="AddStream"
         screen="search"
       />
       <SocialPostsArea />

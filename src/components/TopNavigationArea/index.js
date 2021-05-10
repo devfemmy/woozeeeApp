@@ -8,17 +8,17 @@ import {
 } from '@ui-kitten/components';
 
 import {
-  IconCFlag,
   IconCNotification,
   IconSearch,
   IconOptions,
   IconCVideo,
   IconCSearch,
+  IconCPlus,
 } from 'src/components/CustomIcons';
 
 // Components import
 import BackButton from './components/BackButton';
-import HelpButton from './components/HelpButton';
+// import HelpButton from './components/HelpButton';
 import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
@@ -38,14 +38,11 @@ export default function TopNavigationArea(props) {
     options,
     balanceVisible,
     toggleBalance,
-    notification,
+    // notification,
+    onStreamClick,
   } = props;
 
   const routeSearch = useCallback(() => navigation.navigate('Search'), [
-    navigation,
-  ]);
-
-  const routeLiveStream = useCallback(() => navigation.navigate('LiveStream'), [
     navigation,
   ]);
 
@@ -61,20 +58,18 @@ export default function TopNavigationArea(props) {
           icon={IconCVideo}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Livestream"
-          onPress={routeLiveStream}
+          onPress={onStreamClick}
         />
         <TopNavigationAction
           {...props}
-          icon={(evaProps) => (
-            <IconCNotification style={[evaProps.style, { tintColor: null }]} />
-          )}
+          icon={IconCNotification}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Notification"
           onPress={routeMessaging}
         />
       </>
     ),
-    [props, routeLiveStream, routeMessaging],
+    [props, onStreamClick, routeMessaging],
   );
 
   const renderMarketPlaceTools = useCallback(
@@ -104,9 +99,7 @@ export default function TopNavigationArea(props) {
       <>
         <TopNavigationAction
           {...props}
-          icon={(evaProps) => (
-            <IconCNotification style={[evaProps.style, { tintColor: null }]} />
-          )}
+          icon={IconCNotification}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Notification"
           onPress={routeMessaging}
@@ -141,6 +134,18 @@ export default function TopNavigationArea(props) {
     [props],
   );
 
+  const renderAddStreamIcon = useCallback(
+    () => (
+      <TopNavigationAction
+        {...props}
+        icon={IconCPlus}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel="Options"
+      />
+    ),
+    [props],
+  );
+
   // render tools based on screen
   const renderTools = useMemo(
     () => ({
@@ -160,9 +165,9 @@ export default function TopNavigationArea(props) {
           accessoryLeft={(evaProps) => (
             <BackButton {...evaProps} navigation={navigation} icon={icon} />
           )}
-          accessoryRight={(evaProps) => (
-            <HelpButton {...evaProps} navigation={navigation} />
-          )}
+          // accessoryRight={(evaProps) => (
+          //   <HelpButton {...evaProps} navigation={navigation} />
+          // )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -184,6 +189,7 @@ export default function TopNavigationArea(props) {
             <TopNavigationUserMenu
               balanceVisible={balanceVisible}
               toggleBalance={toggleBalance}
+              navigation={navigation}
             />
           )}
           accessibilityLiveRegion="polite"
@@ -193,7 +199,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style, balanceVisible, toggleBalance],
+    [style, balanceVisible, toggleBalance, navigation],
   );
 
   const TopNavigationSearch = useMemo(
@@ -205,7 +211,9 @@ export default function TopNavigationArea(props) {
             <BackButton {...evaProps} navigation={navigation} icon="back" />
           )}
           title={(evaProps) => <SearchField {...evaProps} />}
-          accessoryRight={renderOptionsIcon}
+          accessoryRight={
+            icon === 'AddStream' ? renderAddStreamIcon : renderOptionsIcon
+          }
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -213,7 +221,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style, navigation, renderOptionsIcon],
+    [style, navigation, icon, renderOptionsIcon, renderAddStreamIcon],
   );
 
   const TopNavigationProfile = useMemo(
@@ -322,7 +330,7 @@ export default function TopNavigationArea(props) {
         <Divider />
       </Layout>
     ),
-    [style],
+    [style, renderNotificationTool],
   );
 
   const navs = {

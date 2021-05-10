@@ -8,7 +8,7 @@ export const trendingUrl = 'b/607d6c530ed6f819beafb46f';
 export const exploreUrl = 'b/607d6ca55b165e19f6239c02';
 
 // export const socialUrl = 'b/6005a2d0e31fbc3bdef53092';
-export const socialUrl = 'b/607d6d10ee971419c4dd2401';
+export const socialUrl = 'entries';
 
 // export const marketDealsUrl = 'b/604b3cc37ffeba41c076f387';
 export const marketDealsUrl = 'b/607d6d50ee971419c4dd246e';

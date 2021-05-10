@@ -13,7 +13,7 @@ import {
 
 // prettier-ignore
 import {
-  Layout, Text, List, Button, Divider,
+  Layout, Text, List, Button,
 } from '@ui-kitten/components';
 
 import RBSheet from 'react-native-raw-bottom-sheet';

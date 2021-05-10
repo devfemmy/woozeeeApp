@@ -30,11 +30,11 @@ import marketPlaceItems from './data';
 const woozeeeCards = [
   {
     id: 1,
-    banner: require('assets/images/banner/mega-sale.jpg'),
+    banner: require('assets/images/banner/woozeee-ad.jpg'),
   },
   {
     id: 2,
-    banner: require('assets/images/banner/woozeee-ad.jpg'),
+    banner: require('assets/images/banner/mega-sale.jpg'),
   },
   {
     id: 3,
@@ -97,7 +97,7 @@ export default function MarketPlace({ navigation }) {
           source={data.icon}
           defaultSource={data.icon}
           resizeMode="cover"
-          style={{ height: 30, width: 30 }}
+          style={{ height: 40, width: 40 }}
         />
       </Layout>
       <Text category="c2" style={{ textAlign: 'center' }}>

@@ -13,10 +13,11 @@ import {
   IconMoreVertical,
   IconMoon,
   IconEye,
+  IconSettings,
 } from 'src/components/CustomIcons';
 
 export default function TopNavigationUserMenu(props) {
-  const { balanceVisible, toggleBalance } = props;
+  const { balanceVisible, toggleBalance, navigation } = props;
 
   const [isNavigationMenuOpen, setNavigationMenuOpen] = useState(false);
 
@@ -75,6 +76,8 @@ export default function TopNavigationUserMenu(props) {
     await changeAppSettings({ darkMode: !darkMode });
   };
 
+  const routeSettingsGlobal = () => navigation.navigate('SettingsGlobal');
+
   const TopNavigationMenuAnchor = () => (
     <TopNavigationAction
       {...props}
@@ -90,12 +93,17 @@ export default function TopNavigationUserMenu(props) {
       anchor={TopNavigationMenuAnchor}
       visible={isNavigationMenuOpen}
       onBackdropPress={closeMenu}
-      // onTouchEnd={closeMenu}
+      onTouchEnd={closeMenu}
       backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.15)' }}
       accessibilityLiveRegion="polite"
       accessibilityHint="Options Menu"
       style={{ minWidth: 215 }}
     >
+      <MenuItem
+        accessoryLeft={IconSettings}
+        title={t('settings')}
+        onPress={routeSettingsGlobal}
+      />
       <MenuItem
         accessoryLeft={IconMoon}
         title={t('darkMode')}

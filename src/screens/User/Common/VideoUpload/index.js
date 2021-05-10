@@ -79,13 +79,13 @@ export default function VideoUpload({ route, navigation }) {
 
       (async () => {
         try {
-          await videoComp?.loadAsync({ uri: editorResult.video });
+          await videoComp?.loadAsync({ uri: editorResult?.video });
         } catch (e) {
           const msg = e;
         }
       })();
     },
-    [editorResult.video],
+    [editorResult?.video],
   );
 
   const handleUploadLoc = (loc) => {

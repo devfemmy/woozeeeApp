@@ -327,7 +327,7 @@ export default function ElitePlan({ navigation }) {
             }}
           >
             <Text style={{ fontSize: 16 }} status="basic">
-              {t('payWithCard')}
+              {t('makeFullPayment')}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 2, width: '100%' }} />
@@ -340,7 +340,7 @@ export default function ElitePlan({ navigation }) {
             }}
           >
             <Text style={{ fontSize: 16 }} status="basic">
-              {t('bankTransfer')}
+              {t('makeInstallments')}
             </Text>
           </Button>
         </Layout>

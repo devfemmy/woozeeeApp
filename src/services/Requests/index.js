@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 const baseUrl = 'https://apis.woozeee.com/api/v1/user/';
 
 export const postAction = async (userInfo, actionType, methodType) => {
