@@ -73,6 +73,11 @@ export default function useAuth() {
         });
 
         const result = await res.json();
+        console.log(result);
+        const email = result.user.email;
+        const user_id = result.user.id
+        AsyncStorage.setItem('userid', user_id)
+        AsyncStorage.setItem('email', email)
         let token = null;
         let msg = null;
 
@@ -120,7 +125,10 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
-
+        const email = result.user.email;
+        const user_id = result.user.id
+        AsyncStorage.setItem('userid', user_id)
+        AsyncStorage.setItem('email', email)
         let token = null;
         let msg = null;
 
@@ -167,7 +175,10 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
-
+        const email = result.user.email;
+        const user_id = result.user.id
+        AsyncStorage.setItem('userid', user_id)
+        AsyncStorage.setItem('email', email)
         let token = null;
         let msg = null;
 
@@ -215,6 +226,10 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
+        const email = result.user.email;
+        const user_id = result.user.id
+        AsyncStorage.setItem('userid', user_id)
+        AsyncStorage.setItem('email', email)
 
         let token = null;
         let msg = null;
@@ -256,6 +271,10 @@ export default function useAuth() {
         );
 
         const result = await res.json();
+        const email = result.user.email;
+        const user_id = result.user.id
+        AsyncStorage.setItem('userid', user_id)
+        AsyncStorage.setItem('email', email)
 
         let token = null;
         let msg = null;
@@ -304,6 +323,10 @@ export default function useAuth() {
         );
 
         const result = await res.json();
+        const email = result.user.email;
+        const user_id = result.user.id
+        AsyncStorage.setItem('userid', user_id)
+        AsyncStorage.setItem('email', email)
 
         let token = null;
         let msg = null;

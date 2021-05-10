@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 // prettier-ignore
 import {
   View, ScrollView, Image, TouchableOpacity,
 } from 'react-native';
-
-import { LinearGradient } from 'expo-linear-gradient';
 
 // prettier-ignore
 import {
@@ -19,8 +17,6 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 import ImageVideoPicker from 'src/utilities/ImageVideoPicker';
 import getLibraryPermission from 'src/utilities/getLibraryPermission';
 
-import InteractIcon from 'src/components/InteractIcon';
-
 import {
   GeneralTextField,
   GeneralRadioGroup,
@@ -28,10 +24,12 @@ import {
   GeneralDatePicker,
 } from 'src/components/FormFields';
 
-import { IconCalendar, IconBackIos } from 'src/components/CustomIcons';
+import { IconCalendar } from 'src/components/CustomIcons';
 
 import countries from './countries.json';
 import states from './states.json';
+import axios from '../../../../services/api/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const COUNTRIES = countries;
 
@@ -63,6 +61,52 @@ export default function EditProfile({ navigation }) {
     bio: '',
   });
 
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormValues(prevState => ({
+        ...prevState,
+        [name]: value
+    }));
+};
+
+  const getUserProfile = (email) => {
+    const id = AsyncStorage.getItem('USER_AUTH_TOKEN').then(
+        res => {
+            axios.get(`user?email=${email}`,{headers: {Authorization: res}})
+            .then(
+              response => {
+               const user_data = response.data.user;
+               const first_name = user_data.fName;
+               const last_name = user_data.sName;
+               const user_name = user_data.displayName
+               setFormValues((prevState) => ({...prevState, 
+                firstName: first_name, 
+                lastName: last_name,
+                username: user_name
+              }))
+               console.log(user_data)
+              }
+            )
+            .catch(err => {                  
+                  console.log(err.response)
+
+            })
+        }
+    )
+    .catch( err => {console.log(err)}) 
+}
+
+useEffect(() => {
+    const email = AsyncStorage.getItem('email').then(
+      response => {
+        getUserProfile(response)
+      }
+    ).catch(
+      err => err
+    )
+     
+}, [])
+
   const t = useContext(LocaleContext);
 
   const selectCoverImage = async () => {
@@ -84,16 +128,14 @@ export default function EditProfile({ navigation }) {
 
     setUserImage(imageFile.uri);
   };
-
-  const goBack = () => navigation.goBack();
-
+  console.log("forms", form)
   return (
     <Layout level="6" style={{ flex: 1 }}>
-      {/* <TopNavigationArea
+      <TopNavigationArea
         title={`${t('edit')} ${t('profile')}`}
         navigation={navigation}
         screen="auth"
-      /> */}
+      />
       <ScrollView
         alwaysBounceVertical
         showsHorizontalScrollIndicator={false}
@@ -105,117 +147,6 @@ export default function EditProfile({ navigation }) {
           }}
         >
           <View
-            style={{
-              position: 'relative',
-              height: 165,
-              width: '100%',
-              alignItems: 'flex-start',
-            }}
-          >
-            <TouchableOpacity
-              activeOpacity={0.75}
-              style={{
-                backgroundColor: '#EDF1F7',
-                height: 120,
-                position: 'absolute',
-                width: '100%',
-                zIndex: 1,
-              }}
-              onPress={selectCoverImage}
-            >
-              <Image
-                source={{ uri: coverImage }}
-                defaultSource={require('assets/images/banner/profile.jpg')}
-                style={{
-                  height: '100%',
-                  resizeMode: 'cover',
-                  width: '100%',
-                }}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-            <View
-              style={{
-                position: 'absolute',
-                zIndex: 5,
-                margin: 15,
-                left: 0,
-                top: 0,
-              }}
-            >
-              <InteractIcon
-                Accessory={(evaProps) => <IconBackIos {...evaProps} />}
-                height={26}
-                width={26}
-                onPress={goBack}
-              />
-            </View>
-            <TouchableOpacity
-              activeOpacity={0.75}
-              style={{
-                backgroundColor: '#EDF1F7',
-                bottom: 0,
-                borderRadius: 52,
-                height: 104,
-                position: 'absolute',
-                width: 104,
-                zIndex: 3,
-                marginLeft: 15,
-              }}
-              onPress={selectUserImage}
-            >
-              <View style={{ position: 'relative' }}>
-                <LinearGradient
-                  colors={['#043F7C', '#FF5757']}
-                  style={{
-                    height: 104,
-                    width: 104,
-                    borderRadius: 52,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Image
-                    source={{ uri: userImage }}
-                    defaultSource={require('assets/images/user/user2.png')}
-                    style={{
-                      height: 100,
-                      width: 100,
-                      borderRadius: 50,
-                    }}
-                    resizeMode="cover"
-                  />
-                  <Image
-                    source={require('assets/images/icon/camera-outline.png')}
-                    defaultSource={require('assets/images/icon/camera-outline.png')}
-                    style={{
-                      position: 'absolute',
-                      height: 26,
-                      width: 26,
-                      top: 40,
-                      left: 40,
-                      tintColor: 'white',
-                    }}
-                    resizeMode="cover"
-                  />
-                </LinearGradient>
-                <Image
-                  source={require('assets/images/icon/verified.png')}
-                  defaultSource={require('assets/images/icon/verified.png')}
-                  style={{
-                    height: 22,
-                    width: 22,
-                    borderRadius: 11,
-                    position: 'absolute',
-                    right: 4,
-                    bottom: 8,
-                  }}
-                  resizeMode="cover"
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
-          {/* <View
             style={{
               position: 'relative',
               height: 165,
@@ -282,7 +213,7 @@ export default function EditProfile({ navigation }) {
                 resizeMode="cover"
               />
             </TouchableOpacity>
-          </View> */}
+          </View>
           <View style={{ padding: 15 }}>
             <View
               style={{
@@ -298,6 +229,7 @@ export default function EditProfile({ navigation }) {
                   autoCompleteType="name"
                   textContentType="givenName"
                   validate="required"
+                  value={form.firstName}
                   setFormValues={setFormValues}
                 />
               </View>
@@ -308,6 +240,7 @@ export default function EditProfile({ navigation }) {
                   autoCompleteType="name"
                   textContentType="familyName"
                   validate="required"
+                  value= {form.lastName}
                   setFormValues={setFormValues}
                 />
               </View>
@@ -319,6 +252,7 @@ export default function EditProfile({ navigation }) {
                 autoCompleteType="username"
                 textContentType="username"
                 validate="required"
+                value= {form.username}
                 setFormValues={setFormValues}
               />
             </View>

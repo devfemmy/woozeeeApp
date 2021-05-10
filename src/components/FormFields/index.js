@@ -55,13 +55,14 @@ export const GeneralTextField = (props) => {
     validate,
     setFormValues,
     secure,
+    value,
     status,
     accessoryRight,
     ...otherProps
   } = props;
 
   const [inputVal, setInputVal] = useState({
-    value: '',
+    value: value,
     status: status ?? 'basic',
   });
 
@@ -76,6 +77,9 @@ export const GeneralTextField = (props) => {
         ...currentState,
         value: input,
       }));
+
+      setFormValues((prevState) => ({ ...prevState, [type]: input }));
+
     },
     [validate],
   );
@@ -99,10 +103,10 @@ export const GeneralTextField = (props) => {
         accessibilityLiveRegion="polite"
         maxFontSizeMultiplier={1.5}
         autoCorrect={false}
-        autoCapitalize={'none'}
+        autoCapitalize={"none"}
         size={size || 'large'}
         caption={caption}
-        value={inputVal.value}
+        value={value}
         label={label ?? null}
         // label={label ? `${label} ${validate ? '*' : ''}` : null}
         secureTextEntry={isSecureEntry}
@@ -142,7 +146,6 @@ export const GeneralTextField = (props) => {
       isSecureEntry,
       validate,
       placeholder,
-      accessoryRight,
     ],
   );
 };
