@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -30,6 +31,7 @@ import InteractIcon from 'src/components/InteractIcon';
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import { GeneralTextField } from 'src/components/FormFields';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 
 import {
   IconArrowDown,
@@ -38,6 +40,7 @@ import {
   IconCPhoneBookFill,
   IconClose,
 } from 'src/components/CustomIcons';
+
 
 const ACCOUNTS = [
   {
@@ -316,8 +319,8 @@ export default function Airtime({ navigation }) {
           style={{
             flex: 1,
             width: '100%',
-            alignItems: 'flex-start',
-            justifyContent: 'flex-end',
+            // alignItems: 'flex-start',
+            // justifyContent: 'flex-end',
             paddingBottom: 30,
           }}
         >
@@ -345,7 +348,7 @@ export default function Airtime({ navigation }) {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      width: '100%',
+                      width: wp('80%'),
                     }}
                   >
                     <Text category="s2">{option.title}</Text>

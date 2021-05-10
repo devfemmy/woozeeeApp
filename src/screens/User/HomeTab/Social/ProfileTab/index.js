@@ -68,7 +68,7 @@ export default function Profile({ navigation }) {
   const routeSettings = () => navigation.navigate('Settings');
 
   return (
-    <Layout level="6" style={{ flex: 1 }}>
+    <ScrollView level="6" style={{ flex: 1 }}>
       <View
         style={{
           position: 'relative',
@@ -168,8 +168,22 @@ export default function Profile({ navigation }) {
             position: 'absolute',
             zIndex: 3,
             right: 0,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center'
           }}
         >
+            <Button
+                  status="primary"
+                  appearance="outline"
+                  size="tiny"
+                  style={{ marginHorizontal: 5, width: 100, minHeight: 35 }}
+                  onPress={routeMessaging}
+                >
+                  <Text status="primary" category="c2">
+                    {t('messaging')}
+                  </Text>
+                </Button>
           <Button
             status="primary"
             size="tiny"
@@ -195,15 +209,16 @@ export default function Profile({ navigation }) {
       >
         <View
           style={{
-            height: IS_PORTRAIT ? 180 : '100%',
+            // height: IS_PORTRAIT ? 180 : '100%',
             width: IS_PORTRAIT ? '100%' : '40%',
+            // backgroundColor: 'blue'
           }}
         >
-          <ScrollView
-            style={{ flex: 1 }}
-            alwaysBounceVertical
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
+          <View
+            style={{ flex: 1}}
+            // alwaysBounceVertical
+            // showsVerticalScrollIndicator={false}
+            // showsHorizontalScrollIndicator={false}
           >
             <View
               style={{
@@ -249,39 +264,6 @@ export default function Profile({ navigation }) {
               </View>
               <View
                 style={{
-                  marginBottom: 10,
-                  marginTop: 5,
-                  flexDirection: 'row',
-                }}
-              >
-                {/* <Button
-                  status="primary"
-                  appearance="outline"
-                  size="tiny"
-                  style={{
-                    marginHorizontal: 5,
-                    width: 120,
-                  }}
-                  onPress={routeEditProfile}
-                >
-                  <Text status="primary" category="c2">
-                    {`${t('edit')} ${t('profile')}`}
-                  </Text>
-                </Button> */}
-                <Button
-                  status="primary"
-                  appearance="outline"
-                  size="tiny"
-                  style={{ marginHorizontal: 5, width: 100, minHeight: 35 }}
-                  onPress={routeMessaging}
-                >
-                  <Text status="primary" category="c2">
-                    {t('messaging')}
-                  </Text>
-                </Button>
-              </View>
-              <View
-                style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
@@ -299,7 +281,7 @@ export default function Profile({ navigation }) {
                   style={{ alignItems: 'center', width: '33%' }}
                   onPress={routeFollow}
                 >
-                  <Text category="h5">12.3K</Text>
+                  <Text category="h5">12.3k</Text>
                   <Text category="c2" appearance="hint">
                     {t('followers')}
                   </Text>
@@ -316,7 +298,7 @@ export default function Profile({ navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
-          </ScrollView>
+          </View>
         </View>
         <Divider />
         <TabView
@@ -337,6 +319,6 @@ export default function Profile({ navigation }) {
           </Tab>
         </TabView>
       </View>
-    </Layout>
+    </ScrollView>
   );
 }

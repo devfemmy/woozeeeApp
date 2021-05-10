@@ -84,7 +84,7 @@ export default function useAuth() {
             : null;
 
           if (!msg) {
-            token = await JSON.stringify(result.token);
+            token = await result.token;
 
             await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
           }
@@ -132,7 +132,7 @@ export default function useAuth() {
             : null;
 
           if (!msg) {
-            token = JSON.stringify(result.token);
+            token = await result.token;
 
             await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
           }
@@ -179,7 +179,7 @@ export default function useAuth() {
             : null;
 
           if (!msg) {
-            token = userInfo.token;
+            token = await userInfo.token;
             await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
           }
 
@@ -227,7 +227,7 @@ export default function useAuth() {
             : null;
 
           if (!msg) {
-            token = JSON.stringify(userInfo.token);
+            token = await userInfo.token;
             await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
           }
 
@@ -309,14 +309,13 @@ export default function useAuth() {
 
         try {
           //  TODO: implement authenticate login details:{email, password}
-
           // prettier-ignore
           msg = await result.error == true
             ? 'tokenError'
             : null;
 
           if (!msg) {
-            token = await JSON.stringify(result.token);
+            token = await result.token;
 
             await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
           }
@@ -330,46 +329,6 @@ export default function useAuth() {
         }
 
         return msg;
-      },
-
-      // Social login/signup section
-      // Google
-      signupWithGoogle: async () => {
-        const userData = {
-          email: '',
-          firstName: '',
-          lastName: '',
-        };
-        await GoogleSignin.configure({
-          scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-          iosClientId:
-            '979696525592-oi481tbbn0pp9htv408l99vh6fa08e3o.apps.googleusercontent.com',
-          // offlineAccess: false,
-        });
-        try {
-          await GoogleSignin.hasPlayServices();
-          const userInfo = await GoogleSignin.signIn();
-          const idToken = JSON.stringify(userInfo.idToken);
-          userData.email = await userInfo.user.email;
-          userData.firstName = await userInfo.user.givenName;
-          userData.lastName = await userInfo.user.familyName;
-          await AsyncStorage.setItem('USER_AUTH_TOKEN', idToken);
-          await authOptions.login(userData);
-        } catch (error) {
-          if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            // user cancelled the login flow
-            console.log('Signin cancelled');
-          } else if (error.code === statusCodes.IN_PROGRESS) {
-            // operation (e.g. sign in) is in progress already
-            console.log('signin in progress');
-          } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            // play services not available or outdated
-            console.log('service not available');
-          } else {
-            // some other error happened
-            console.log(error);
-          }
-        }
       },
 
       // Clear token from Storage then log user out
