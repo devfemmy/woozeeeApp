@@ -46,7 +46,8 @@ export default function useAuth() {
           const tokenAsync = await AsyncStorage.getItem('USER_AUTH_TOKEN');
 
           if (tokenAsync) {
-            token = await JSON.parse(tokenAsync);
+            console.log("token Async222", tokenAsync)
+            token = await tokenAsync;
           }
 
           // dispatch Get_token action
