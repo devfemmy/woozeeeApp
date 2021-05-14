@@ -110,7 +110,7 @@ export default function Social({ navigation }) {
     } = useInfiniteQuery(
       ['inFiniteSocialVideos', 1],
       async ({ pageParam = 1 }) => {
-        const promise = await Api.getVideos(socialUrl, 1, pageParam);
+        const promise = await Api.getVideos(pageParam);
         promise.cancel = () => Api.cancelRequest('Request aborted');
         return promise;
       },
@@ -121,6 +121,9 @@ export default function Social({ navigation }) {
         cacheTime: 1000 * 60 * 1,
       },
     );
+    // console.log(data.pages[0].pageData);
+    // console.log(data?.pages[0].pageData.data[0].mediaURL);
+
     if (status === 'loading') {
       return (
         <Placeholders

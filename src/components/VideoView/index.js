@@ -31,6 +31,12 @@ import { GeneralTextField } from 'src/components/FormFields';
 import InteractIcon from 'src/components/InteractIcon';
 
 import {
+  sendComment,
+  handleLike,
+  getUserData,
+} from '../../services/Requests/index';
+
+import {
   IconCHeart,
   IconCChat,
   IconCShareVariant,
@@ -62,13 +68,27 @@ const VideoView = forwardRef((props, ref) => {
 
   const [form, setFormValues] = useState({
     comment: '',
+    entryId: item.userId,
   });
+
+  const likeData = {
+    entryId: item._id,
+    isLike: !isLiked,
+  };
 
   const { appState } = useContext(AppSettingsContext);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
-  const toggleLike = () => setLiked((prevState) => !prevState);
+  const toggleLike = async () => {
+    setLiked(!isLiked);
+    await handleLike(likeData);
+  };
+
+  const handleComment = () => {
+    sendComment(form);
+    setFormValues((comment = ''));
+  };
 
   const toggleBookmark = () => setBookmarked((prevState) => !prevState);
 
@@ -78,7 +98,11 @@ const VideoView = forwardRef((props, ref) => {
 
   const handleOpenSheet = () => sheetRef.current.open();
 
-  const routeUserProfile = () => navigation.navigate('UserProfile');
+  const routeUserProfile = async () => {
+    const userData = await getUserData(item.userId);
+    const { data } = userData;
+    await navigation.navigate('UserProfile', data);
+  };
 
   useImperativeHandle(ref, () => ({
     async play() {
@@ -116,7 +140,7 @@ const VideoView = forwardRef((props, ref) => {
 
             if (!status.isLoaded) {
               await videoRef.current.loadAsync({
-                uri: item.video,
+                uri: item.mediaURL,
               });
             }
           } catch (e) {
@@ -141,7 +165,7 @@ const VideoView = forwardRef((props, ref) => {
           })();
         }
       };
-    }, [item.video]),
+    }, [item.mediaURL]),
   );
 
   return (
@@ -201,10 +225,10 @@ const VideoView = forwardRef((props, ref) => {
                 }}
               >
                 <Text status="primary" category="s2" style={{ marginRight: 5 }}>
-                  {item.ownerFirstName}
+                  {item.userDisplayName}
                 </Text>
                 <Text status="danger" category="s2">
-                  {item.ownerLastName}
+                  {/* {item.userDisplayName} */}
                 </Text>
               </View>
               <Image
@@ -244,8 +268,8 @@ const VideoView = forwardRef((props, ref) => {
             resizeMode="cover"
             usePoster
             posterSource={
-              item.poster
-                ? { uri: item.poster }
+              item.medialThumbnail
+                ? { uri: item.medialThumbnail }
                 : require('assets/images/banner/placeholder-image.png')
             }
             posterStyle={{ height: '100%', width: '100%', resizeMode: 'cover' }}
@@ -271,39 +295,39 @@ const VideoView = forwardRef((props, ref) => {
               Accessory={(evaProps) => (
                 <IconCHeart {...evaProps} active={isLiked} />
               )}
-              textContent={item.likes}
+              textContent={item.totalLikes}
               direction="row"
               status={isLiked ? 'danger' : 'basic'}
-              height={24}
-              width={24}
+              height={20}
+              width={20}
               onPress={toggleLike}
             />
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={IconCChat}
-              textContent={item.comments}
+              textContent={item.totalComments}
               direction="row"
               status="basic"
-              height={24}
-              width={24}
+              height={20}
+              width={20}
               onPress={routeComments}
             />
-            {/* <InteractIcon
+            <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={IconCEye}
-              textContent={item.views}
+              textContent={item.totalViews}
               direction="row"
               status="basic"
-              height={24}
-              width={24}
-            /> */}
+              height={20}
+              width={20}
+            />
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={IconCShareVariant}
               direction="row"
               status="basic"
-              height={21}
-              width={21}
+              height={20}
+              width={20}
             />
           </View>
           <View>
@@ -321,68 +345,6 @@ const VideoView = forwardRef((props, ref) => {
           </View>
         </View>
         <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
-          {/* <View
-            style={{
-              marginBottom: 10,
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-            }}
-          >
-            <Text
-              category="p2"
-              style={{ flex: 1, lineHeight: 24 }}
-              numberOfLines={hideText ? 1 : 0}
-            >
-              The love of woozeee is the beginning of wisdom, if you believe say
-              I.
-            </Text>
-            <Button
-              size="tiny"
-              appearance="ghost"
-              style={{ width: 60 }}
-              onPress={updateHiddenText}
-            >
-              <Text appearance="hint" category="c2">
-                {hideText ? 'more' : 'less'}
-              </Text>
-            </Button>
-          </View> */}
-          {/* <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                flex: 1,
-              }}
-            >
-              <Text category="s2" status="primary">
-                Mathias Wisdom
-              </Text>
-              <Text category="s2" style={{ marginHorizontal: 2 }}>
-                :
-              </Text>
-              <Text category="p2">That&apos;s my boy</Text>
-            </View>
-            <View style={{ width: 125 }}>
-              <Button
-                size="tiny"
-                appearance="ghost"
-                accessoryRight={IconForwardIos}
-                onPress={routeComments}
-              >
-                <Text status="primary" category="s2">
-                  {t('comments')}
-                </Text>
-              </Button>
-            </View>
-          </View> */}
           <View
             style={{
               flexDirection: 'row',
@@ -426,6 +388,7 @@ const VideoView = forwardRef((props, ref) => {
                 status="primary"
                 height={28}
                 width={28}
+                onPress={handleComment}
               />
             </View>
           </View>
@@ -436,7 +399,7 @@ const VideoView = forwardRef((props, ref) => {
                 <Text category="c1" {...momentProps} style={{ fontSize: 10 }} />
               )}
             >
-              {item.dateAdded}
+              {item.createdAt}
             </Moment>
           </View>
         </View>

@@ -14,6 +14,8 @@ import { Text } from '@ui-kitten/components';
 export default function StoryCard(props) {
   const { data, extraWidth } = props;
 
+  // console.log(data);
+
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;
@@ -40,7 +42,7 @@ export default function StoryCard(props) {
               justifyContent: 'center',
             }}
           >
-            <Image
+            {/* <Image
               source={{ uri: `https://i.postimg.cc/${data.banner}` }}
               defaultSource={require('assets/images/banner/placeholder-image.png')}
               style={{
@@ -49,10 +51,10 @@ export default function StoryCard(props) {
                 borderRadius: 40,
               }}
               resizeMode="cover"
-            />
+            /> */}
           </LinearGradient>
           <Text category="c2" style={{ marginTop: 10 }}>
-            {data.tag}
+            {data.hashtagName}
           </Text>
         </View>
       </TouchableOpacity>

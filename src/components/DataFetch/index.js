@@ -45,7 +45,11 @@ export default function WithDefaultFetch(
       setIsLoading(true);
       setIsError(false);
 
-      const { pageData } = await Api.getVideos(fetchUrl);
+      const res = await Api.getVideos(fetchUrl);
+
+      // console.log(res.pageData.data);
+
+      // console.log(data[0].mediaURL);
 
       if (isMounted.current) {
         setPosts(pageData.data);

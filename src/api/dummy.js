@@ -2,7 +2,9 @@
 export const challengeUrl = 'b/607d6bc80ed6f819beafb356';
 
 // export const trendingUrl = 'b/600478774f42973a289e12fb';
-export const trendingUrl = 'b/607d6c530ed6f819beafb46f';
+export const trendingUrl = 'stories';
+
+export const userPostsUrl = 'entries?userId=';
 
 // export const exploreUrl = 'b/60047a08f98f6e35d5fdae6e';
 export const exploreUrl = 'b/607d6ca55b165e19f6239c02';
