@@ -59,6 +59,7 @@ export default function Profile({ navigation }) {
     fName: '',
     sName: '',
     email: '',
+    bio: '',
     imgUrl: '',
     followersCount: '',
     followingCount: '',
@@ -92,6 +93,7 @@ export default function Profile({ navigation }) {
                const user_data = response.data.user;
                const first_name = user_data.fName;
                const last_name = user_data.sName;
+               const bio = user_data.bio;
                const email = user_data.email;
                const imageUrl = user_data.imgUrl;
                const videoCount = user_data.videoCount;
@@ -101,6 +103,7 @@ export default function Profile({ navigation }) {
                 fName: first_name, 
                 sName: last_name,
                 email: email,
+                bio: bio,
                 imageUrl: imageUrl,
                 videoCount: videoCount,
                 followersCount: followersCount,
@@ -132,7 +135,8 @@ useEffect(() => {
   return unsubscribe;
 }, [navigation]);
   return (
-    <ScrollView level="6" style={{ flex: 1 }}>
+    <Layout level="6" style={{ flex: 1 }}>
+      <ScrollView>
       <View
         style={{
           position: 'relative',
@@ -280,9 +284,9 @@ useEffect(() => {
         >
           <View
             style={{ flex: 1}}
-            // alwaysBounceVertical
-            // showsVerticalScrollIndicator={false}
-            // showsHorizontalScrollIndicator={false}
+            alwaysBounceVertical
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
           >
             <View
               style={{
@@ -323,8 +327,7 @@ useEffect(() => {
                     }}
                     numberOfLines={3}
                   >
-                    Content writer with beautiful aesthetics, Face of woozeee
-                    (It seems).
+                  {form.bio}
                   </Text>
                 </View>
               </View>
@@ -391,6 +394,8 @@ useEffect(() => {
           </Tab>
         </TabView>
       </View>
-    </ScrollView>
+      </ScrollView>
+
+    </Layout>
   );
 }

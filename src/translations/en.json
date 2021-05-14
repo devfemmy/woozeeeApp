@@ -15,6 +15,7 @@
   "error": "Error",
   "emailAddress": "Email address",
   "password": "Password",
+  "oldPassword": "Old Password",
   "forgotPassword": "Forgot Password",
   "continue": "Continue",
   "dontHaveAccount": "Don't have an account",

@@ -26,6 +26,7 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 import { IconMoon, IconFlag } from 'src/components/CustomIcons';
 
 import locales from './locales.json';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const LOCALES = locales;
 
@@ -239,6 +240,27 @@ export default function Settings({ navigation }) {
               onChange={() => setDisableAccount((prevState) => !prevState)}
             />
           </View>
+          <Divider style={{ marginVertical: 10 }} />
+          <TouchableOpacity
+          onPress= {() => navigation.navigate('ChangePassword')}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingVertical: 5
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Text category="s2" style={{ marginLeft: 10 }}>
+                Change Password
+              </Text>
+            </View>
+          </TouchableOpacity>
           <Divider style={{ marginVertical: 10 }} />
           <View style={{ marginBottom: 10, marginTop: 20 }}>
             <Text status="primary" category="c2">
