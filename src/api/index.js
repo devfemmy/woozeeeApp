@@ -25,6 +25,16 @@ const createInstance = async () => {
 };
 
 export default {
+  getStories: async () => {
+    const instance = await createInstance();
+
+    const res = await instance.get('stories');
+    const { data } = res;
+    return {
+      pageData: data,
+      previousID: 1,
+    };
+  },
   getVideos: async (page = 1, cursor = 1) => {
     const instance = await createInstance();
 

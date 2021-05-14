@@ -33,7 +33,7 @@ import VideoView from 'src/components/VideoView';
 
 import MoviesSection from 'src/components/MoviesSection';
 
-import { trendingUrl, socialUrl } from 'src/api/dummy';
+import { trendingUrl } from 'src/api/dummy';
 
 import { IconCStartStream, IconCLiveStreams } from 'src/components/CustomIcons';
 
