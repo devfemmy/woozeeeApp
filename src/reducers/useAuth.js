@@ -75,7 +75,7 @@ export default function useAuth() {
         const result = await res.json();
         console.log(result);
         const email = result.user.email;
-        const user_id = result.user.id
+        const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
         let token = null;
@@ -125,8 +125,9 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
+        console.log("results", result)
         const email = result.user.email;
-        const user_id = result.user.id
+        const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
         let token = null;
@@ -176,7 +177,7 @@ export default function useAuth() {
         );
         const result = await res.json();
         const email = result.user.email;
-        const user_id = result.user.id
+        const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
         let token = null;
@@ -226,8 +227,9 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
+        console.log("results", result)
         const email = result.user.email;
-        const user_id = result.user.id
+        const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
 
@@ -272,7 +274,7 @@ export default function useAuth() {
 
         const result = await res.json();
         const email = result.user.email;
-        const user_id = result.user.id
+        const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
 
@@ -324,7 +326,7 @@ export default function useAuth() {
 
         const result = await res.json();
         const email = result.user.email;
-        const user_id = result.user.id
+        const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
 

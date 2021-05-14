@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext,useEffect, useState } from 'react';
 
 import {
   View,
@@ -31,6 +31,8 @@ import {
   IconHeart,
   IconSettings,
 } from 'src/components/CustomIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from '../../../../../services/api';
 
 import { trendingUrl } from 'src/api/dummy';
 
@@ -53,6 +55,17 @@ export default function Profile({ navigation }) {
 
   const t = useContext(LocaleContext);
 
+  const [form, setFormValues] = useState({
+    fName: '',
+    sName: '',
+    email: '',
+    imgUrl: '',
+    followersCount: '',
+    followingCount: '',
+    videoCount: ''
+
+  });
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const shouldLoadComponent = (index) => index === selectedIndex;
@@ -67,6 +80,57 @@ export default function Profile({ navigation }) {
 
   const routeSettings = () => navigation.navigate('Settings');
 
+
+  const getUserProfile = (user_id) => {
+    // setLoading(true)
+    AsyncStorage.getItem('USER_AUTH_TOKEN').then(
+        res => {
+            axios.get(`user?userId=${user_id}`,{headers: {Authorization: res}})
+            .then(
+              response => {
+              // setLoading(false)
+               const user_data = response.data.user;
+               const first_name = user_data.fName;
+               const last_name = user_data.sName;
+               const email = user_data.email;
+               const imageUrl = user_data.imgUrl;
+               const videoCount = user_data.videoCount;
+               const followingCount = user_data.followingCount;
+               const followersCount = user_data.followersCount;
+               setFormValues((prevState) => ({...prevState, 
+                fName: first_name, 
+                sName: last_name,
+                email: email,
+                imageUrl: imageUrl,
+                videoCount: videoCount,
+                followersCount: followersCount,
+                followingCount: followingCount
+              }))
+              }
+            )
+            .catch(err => {  
+                  // setLoading(false)                
+                  console.log(err.response)
+
+            })
+        }
+    )
+    .catch( err => {console.log(err)}) 
+}
+useEffect(() => {
+  const unsubscribe = navigation.addListener('focus', () => {
+    AsyncStorage.getItem('userid').then(
+      response => {
+        getUserProfile(response);
+      }
+    ).catch(
+      err => err
+    )
+    });
+
+  
+  return unsubscribe;
+}, [navigation]);
   return (
     <ScrollView level="6" style={{ flex: 1 }}>
       <View
@@ -137,7 +201,7 @@ export default function Profile({ navigation }) {
               }}
             >
               <Image
-                source={require('assets/images/user/user2.png')}
+                source={{uri: form.imageUrl}}
                 defaultSource={require('assets/images/user/user2.png')}
                 style={{
                   height: 100,
@@ -237,10 +301,12 @@ export default function Profile({ navigation }) {
                     flexWrap: 'wrap',
                   }}
                 >
-                  <Text category="h6">Bukola Daniel</Text>
+                  <Text category="h6">
+                    {`${form.fName} ${form.sName}`}
+                  </Text>
                   <Text style={{ marginHorizontal: 5 }}>|</Text>
                   <Text category="c2" appearance="hint">
-                    @Bukka101Official
+                   {form.email}
                   </Text>
                 </View>
                 <View
@@ -271,7 +337,9 @@ export default function Profile({ navigation }) {
                 }}
               >
                 <View style={{ alignItems: 'center', width: '33%' }}>
-                  <Text category="h5">1.2m</Text>
+                  <Text category="h5">
+                    {form.videoCount}
+                  </Text>
                   <Text category="c2" appearance="hint">
                     {t('posts')}
                   </Text>
@@ -281,7 +349,9 @@ export default function Profile({ navigation }) {
                   style={{ alignItems: 'center', width: '33%' }}
                   onPress={routeFollow}
                 >
-                  <Text category="h5">12.3k</Text>
+                  <Text category="h5">
+                    {form.followersCount}
+                  </Text>
                   <Text category="c2" appearance="hint">
                     {t('followers')}
                   </Text>
@@ -291,7 +361,9 @@ export default function Profile({ navigation }) {
                   style={{ alignItems: 'center', width: '33%' }}
                   onPress={routeFollow}
                 >
-                  <Text category="h5">1.9k</Text>
+                  <Text category="h5">
+                    {form.followingCount}
+                  </Text>
                   <Text category="c2" appearance="hint">
                     {t('following')}
                   </Text>

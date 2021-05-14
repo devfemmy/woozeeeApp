@@ -22,6 +22,7 @@ export default {
   getVideos: async (url, page = 1, cursor = 1) => ({
     pageData: await instance({
       method: 'GET',
+      
       url,
       params: {},
       cancelToken: source.token,
