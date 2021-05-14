@@ -60,7 +60,8 @@ const VideoView = forwardRef((props, ref) => {
 
   const isMounted = useRef(false);
 
-  const [isLiked, setLiked] = useState(false);
+  const [isLiked, setLiked] = useState(item.userEntryData.isLike);
+  const [totalLikes, setTotalLikes] = useState(item.totalLikes);
 
   const [isBookmarked, setBookmarked] = useState(false);
 
@@ -73,7 +74,7 @@ const VideoView = forwardRef((props, ref) => {
 
   const likeData = {
     entryId: item._id,
-    isLike: !isLiked,
+    isLike: isLiked,
   };
 
   const { appState } = useContext(AppSettingsContext);
@@ -82,12 +83,23 @@ const VideoView = forwardRef((props, ref) => {
 
   const toggleLike = async () => {
     setLiked(!isLiked);
-    await handleLike(likeData);
+    const newLikesCount = isLiked ? totalLikes - 1 : totalLikes + 1;
+    setTotalLikes(newLikesCount);
+
+    // We want to update the total like count that is returned from the server
+    // So we have fresh like count after interaction with the like icon (:
+    handleLike(likeData).then((resData) => {
+      // The meta contains new count for the entry
+      // resData.meta.totalLikes.totalLikes
+      // resData.meta.totalLikes.totalVotes
+      // resData.meta.totalLikes.totalViews
+      // resData.meta.totalLikes.totalComments
+      setTotalLikes(resData.meta.totalLikes);
+    });
   };
 
   const handleComment = () => {
     sendComment(form);
-    setFormValues((comment = ''));
   };
 
   const toggleBookmark = () => setBookmarked((prevState) => !prevState);
@@ -295,7 +307,7 @@ const VideoView = forwardRef((props, ref) => {
               Accessory={(evaProps) => (
                 <IconCHeart {...evaProps} active={isLiked} />
               )}
-              textContent={item.totalLikes}
+              textContent={totalLikes}
               direction="row"
               status={isLiked ? 'danger' : 'basic'}
               height={20}

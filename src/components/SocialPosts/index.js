@@ -60,6 +60,8 @@ export const TrendingPosts = ({ info }) => {
 export const StoryPosts = ({ info }) => {
   const t = useContext(LocaleContext);
 
+  // console.log('info from StoryPosts -> ' + info);
+
   const RenderCategoryHeader = () => (
     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
       <TouchableOpacity activeOpacity={0.75} style={{ position: 'relative' }}>

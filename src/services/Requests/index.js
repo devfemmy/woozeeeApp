@@ -21,38 +21,30 @@ const axiosReq = async (methodType, reqData) => {
 };
 
 export const handleLike = async (likeData) => {
-  console.log(likeData);
-  if (likeData.isLike == true) {
-    const config = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `${await getToken()}`,
-      },
-      body: likeData,
-    };
-    const res = await axios.post(baseUrl + 'entry-data', likeData, config);
+  const body = {
+    entryId: likeData.entryId,
+    isLike: true,
+  };
+  const token = await getToken();
 
-    return res;
-  } else {
-    console.log('Aleem, see oo. It ran!!');
-    const config = {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `${await getToken()}`,
-      },
-      body: JSON.stringify(likeData),
-    };
-    try {
-      const res = await axios.delete(baseUrl + 'entry-data', likeData, config);
-      console.log('you unliked');
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
+  const config = {
+    method: likeData.isLike ? 'delete' : 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
+    url: `${baseUrl}entry-data`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -70,5 +62,5 @@ export const getUserData = async (id) => {
 };
 
 export const sendComment = (comment) => {
-  console.log(comment);
+  // console.log(comment);
 };
