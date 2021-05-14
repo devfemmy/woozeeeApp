@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 
 // prettier-ignore
 import {
-  View, ScrollView, Image, TouchableOpacity,
+  View, ScrollView, ActivityIndicator, Image, TouchableOpacity,
 } from 'react-native';
 
 // prettier-ignore
 import {
   Layout, Button, Text,
+  RadioGroup, Radio,
+  Datepicker
 } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
@@ -41,24 +43,28 @@ const libraryImagePicker = ImageVideoPicker('Images');
 
 export default function EditProfile({ navigation }) {
   const [isLoading, setLoading] = useState(false);
-
+  const [token, setToken] = useState('');
+  const [user_id, setUserId] = useState('')
   const [userImage, setUserImage] = useState(
-    'https://i.postimg.cc/CMQvmvwQ/user1.png',
+    '',
   );
 
   const [coverImage, setCoverImage] = useState(
     'https://i.postimg.cc/PJzQXxnN/back1.jpg',
   );
+  const [selectedValue, setSelectedValue] = useState(null);
+  const [date, setDate] = useState(new Date());
 
   const [form, setFormValues] = useState({
-    firstName: '',
-    lastName: '',
-    username: '',
-    gender: '',
+    fName: '',
+    sName: '',
+    displayName: '',
+    sex: '',
     dob: '',
     country: '',
     state: '',
     bio: '',
+    imgUrl: ''
   });
 
   const handleChange = e => {
@@ -69,25 +75,40 @@ export default function EditProfile({ navigation }) {
     }));
 };
 
-  const getUserProfile = (email) => {
-    const id = AsyncStorage.getItem('USER_AUTH_TOKEN').then(
+  const getUserProfile = (user_id) => {
+    setLoading(true)
+    AsyncStorage.getItem('USER_AUTH_TOKEN').then(
         res => {
-            axios.get(`user?email=${email}`,{headers: {Authorization: res}})
+            axios.get(`user?userId=${user_id}`,{headers: {Authorization: res}})
             .then(
               response => {
+              setLoading(false)
                const user_data = response.data.user;
                const first_name = user_data.fName;
                const last_name = user_data.sName;
-               const user_name = user_data.displayName
+               const user_name = user_data.displayName;
+               const sex = user_data.sex;
+               const imageUrl = user_data.imgUrl;
+               setUserImage(imageUrl)
+               if (sex === 'Male') {
+                 setSelectedValue(1)
+               }else {
+                 setSelectedValue(0)
+               }
+               const dob = user_data.dob;
+               setDate(new Date(dob))
                setFormValues((prevState) => ({...prevState, 
-                firstName: first_name, 
-                lastName: last_name,
-                username: user_name
+                fName: first_name, 
+                sName: last_name,
+                displayName: user_name,
+                sex: sex,
+                dob: dob
               }))
                console.log(user_data)
               }
             )
-            .catch(err => {                  
+            .catch(err => {  
+                  setLoading(false)                
                   console.log(err.response)
 
             })
@@ -96,16 +117,45 @@ export default function EditProfile({ navigation }) {
     .catch( err => {console.log(err)}) 
 }
 
+const updateProfile = () => {
+  setLoading(true);
+  const data = form;
+  axios.put(`update/?userId=${user_id}`, data, {headers: {Authorization: token}})
+  .then(res => {
+    setLoading(false);
+    const message = res.data.message;
+    alert(message)
+  }
+    )
+  .catch(err => {
+    setLoading(false);
+    console.log("err", err.response)
+  })
+
+}
+
 useEffect(() => {
-    const email = AsyncStorage.getItem('email').then(
+  const unsubscribe = navigation.addListener('focus', () => {
+    AsyncStorage.getItem('userid').then(
       response => {
-        getUserProfile(response)
+        getUserProfile(response);
+        setUserId(response)
       }
     ).catch(
       err => err
     )
-     
-}, [])
+    AsyncStorage.getItem('USER_AUTH_TOKEN').then(
+      res => {
+        setToken(res)
+      }
+    ).catch(
+      err => err
+    )
+    });
+
+  
+  return unsubscribe;
+}, [navigation]);
 
   const t = useContext(LocaleContext);
 
@@ -127,8 +177,25 @@ useEffect(() => {
     if (!imageFile?.uri) return;
 
     setUserImage(imageFile.uri);
+    console.log("image uri", imageFile.uri)
+    setFormValues((prevState) => ({...prevState, 
+      imgUrl: imageFile.uri,
+    }))
   };
-  console.log("forms", form)
+  const setSelectedHandler =(index) => {
+    setSelectedValue(index);
+    setFormValues((prevState) => ({...prevState, 
+      sex: index === 0 ? 'Female': 'Male',
+    }))
+  }
+  const setNewDateHandler = (date) => {
+    setDate(date);
+    setFormValues((prevState) => ({
+      ...prevState,
+      dob: date
+    }))
+  }
+  console.log("forms", form);
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
@@ -224,35 +291,35 @@ useEffect(() => {
             >
               <View style={{ flex: 1, marginRight: 5 }}>
                 <GeneralTextField
-                  type="firstName"
+                  type="fName"
                   label={t('firstName')}
                   autoCompleteType="name"
                   textContentType="givenName"
                   validate="required"
-                  value={form.firstName}
+                  value={form.fName}
                   setFormValues={setFormValues}
                 />
               </View>
               <View style={{ flex: 1, marginLeft: 5 }}>
                 <GeneralTextField
-                  type="lastName"
+                  type="sName"
                   label={t('lastName')}
                   autoCompleteType="name"
                   textContentType="familyName"
                   validate="required"
-                  value= {form.lastName}
+                  value= {form.sName}
                   setFormValues={setFormValues}
                 />
               </View>
             </View>
             <View style={{ paddingVertical: 5 }}>
               <GeneralTextField
-                type="username"
+                type="displayName"
                 label={t('username')}
                 autoCompleteType="username"
                 textContentType="username"
                 validate="required"
-                value= {form.username}
+                value= {form.displayName}
                 setFormValues={setFormValues}
               />
             </View>
@@ -264,20 +331,36 @@ useEffect(() => {
               }}
             >
               <View style={{ flex: 1, marginRight: 5 }}>
-                <GeneralRadioGroup
-                  type="gender"
+                  <Text category="label" appearance="hint">
+                    {t('gender')}
+                  </Text>
+              <RadioGroup selectedIndex={selectedValue} onChange={index => setSelectedHandler(index)}>
+                {GENDERS.map((option) => (
+                  <Radio key={option}>{option}</Radio>
+                ))}
+              </RadioGroup>
+                {/* <GeneralRadioGroup
+                  type="sex"
                   label={t('gender')}
                   data={GENDERS}
+                  selectedValue= {selectedValue}
+                  value={form.sex}
                   setFormValues={setFormValues}
-                />
+                /> */}
               </View>
               <View style={{ flex: 1, marginLeft: 5 }}>
-                <GeneralDatePicker
+              <Datepicker
+                label={t('dob')}
+                date={date}
+                onSelect={nextDate => setNewDateHandler(nextDate)}
+                accessoryRight={IconCalendar}
+              />
+                {/* <GeneralDatePicker
                   type="dob"
                   label={t('dob')}
                   setFormValues={setFormValues}
                   accessoryRight={IconCalendar}
-                />
+                /> */}
               </View>
             </View>
             <View
@@ -311,6 +394,7 @@ useEffect(() => {
                 multiline
                 height={50}
                 validate="required"
+                value= {form.bio}
                 setFormValues={setFormValues}
               />
             </View>
@@ -322,6 +406,7 @@ useEffect(() => {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
                 disabled={isLoading}
+                onPress= {() => updateProfile()}
               >
                 <Text status="control">{t('updateProfile')}</Text>
               </Button>
