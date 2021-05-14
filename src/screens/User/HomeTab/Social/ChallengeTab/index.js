@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import { Layout, } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 import { useWindowDimensions, Text, StyleSheet } from 'react-native';
 
-import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
@@ -23,20 +23,20 @@ export default function Challenge({ navigation }) {
   const styles = StyleSheet.create({
     activeTabTextColor: {
       color: '#395185',
-      fontSize: 17
+      fontSize: 17,
     },
     tabTextColor: {
       color: 'grey',
-      fontSize: 17
-    }
-  })
-  
+      fontSize: 17,
+    },
+  });
+
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'first', title: 'Challenges' },
-    { key: 'second', title: 'Explore' },
+    { key: 'first', title: t('challenge') },
+    { key: 'second', title: t('explore') },
   ]);
 
   const renderScene = SceneMap({
@@ -44,13 +44,16 @@ export default function Challenge({ navigation }) {
     second: Explore,
   });
 
-  const renderTabBar = props => (
+  const renderTabBar = (props) => (
     <TabBar
       {...props}
       indicatorStyle={{ backgroundColor: '#395185' }}
-      style={{ backgroundColor: '#F7F9FC', }}
-      renderLabel={({ route, focused , color }) => (
-        <Text  style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}>
+      style={{ backgroundColor: '#F7F9FC' }}
+      renderLabel={({ route, focused, color }) => (
+        <Text
+          style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}
+          status="basic"
+        >
           {route.title}
         </Text>
       )}
@@ -76,15 +79,14 @@ export default function Challenge({ navigation }) {
           <Explore />
         </Tab>
       </TabView> */}
-          <TabView
-          renderTabBar={renderTabBar}
-          swipeEnabled= {false}
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{ width: layout.width }}
-    />
-
+      <TabView
+        renderTabBar={renderTabBar}
+        swipeEnabled={false}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+      />
     </Layout>
   );
 }

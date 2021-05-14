@@ -70,6 +70,7 @@ export default function WithPaginatedFetch(
     );
   }
   if (!isLoading && !isError && data.pageData.data.length > 0) {
+    // console.log(data.pageData.data);
     return (
       <>
         <WrappedComponent info={data.pageData.data} />

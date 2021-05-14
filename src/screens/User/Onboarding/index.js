@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import { View, Image, TouchableOpacity } from 'react-native';
 
@@ -9,8 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Layout, Text, Button } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
-
-const token = AsyncStorage.getItem('USER_AUTH_TOKEN');
 
 const SLIDE_CONTENT = [
   {
@@ -52,8 +50,6 @@ export default function Onboarding({ navigation }) {
   const [lastIndex, setLastIndex] = useState(false);
 
   const t = useContext(LocaleContext);
-
-  console.log(token);
 
   const checkLastIndex = (nextIndex) => {
     setTimeout(() => {

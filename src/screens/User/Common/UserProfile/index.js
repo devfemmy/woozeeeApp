@@ -32,7 +32,7 @@ import {
   IconBackIos,
 } from 'src/components/CustomIcons';
 
-import { trendingUrl } from 'src/api/dummy';
+import { userPostsUrl } from 'src/api/dummy';
 
 const PLACEHOLDER_CONFIG = {
   count: 4,
@@ -43,10 +43,23 @@ const PLACEHOLDER_CONFIG = {
 
 // prettier-ignore
 const ProfilePostsArea = () => (
-  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG)
+  WithPaginatedFetch(ProfilePosts, userPostsUrl, PLACEHOLDER_CONFIG)
 );
 
-export default function UserProfile({ navigation }) {
+export default function UserProfile({ route, navigation }) {
+  const { user } = route.params;
+
+  const {
+    displayName,
+    email,
+    fName,
+    sName,
+    totalEntries,
+    followersCount,
+    followingCount,
+    imgUrl,
+  } = user;
+
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
   const { width, height } = useWindowDimensions();
@@ -133,8 +146,8 @@ export default function UserProfile({ navigation }) {
               }}
             >
               <Image
-                source={require('assets/images/user/user2.png')}
-                defaultSource={require('assets/images/user/user2.png')}
+                source={imgUrl}
+                defaultSource={imgUrl}
                 style={{
                   height: 100,
                   width: 100,
@@ -217,10 +230,12 @@ export default function UserProfile({ navigation }) {
                     flexWrap: 'wrap',
                   }}
                 >
-                  <Text category="h6">Bukola Daniel</Text>
+                  <Text category="h6">
+                    {fName} {sName}
+                  </Text>
                   <Text style={{ marginHorizontal: 5 }}>|</Text>
                   <Text category="c2" appearance="hint">
-                    @Bukka101Official
+                    {displayName}
                   </Text>
                 </View>
                 <View
@@ -244,7 +259,7 @@ export default function UserProfile({ navigation }) {
               </View>
               <View style={{ marginBottom: 10 }}>
                 <Text category="h6" status="primary">
-                  8264LG
+                  {/* 8264LG */}
                 </Text>
               </View>
               {/* <View
@@ -288,7 +303,7 @@ export default function UserProfile({ navigation }) {
                 }}
               >
                 <View style={{ alignItems: 'center', width: '33%' }}>
-                  <Text category="h5">1.2m</Text>
+                  <Text category="h5">{totalEntries}</Text>
                   <Text category="c2" appearance="hint">
                     {t('posts')}
                   </Text>
@@ -298,7 +313,7 @@ export default function UserProfile({ navigation }) {
                   style={{ alignItems: 'center', width: '33%' }}
                   onPress={routeFollow}
                 >
-                  <Text category="h5">12.3K</Text>
+                  <Text category="h5">{followingCount}</Text>
                   <Text category="c2" appearance="hint">
                     {t('followers')}
                   </Text>
@@ -308,7 +323,7 @@ export default function UserProfile({ navigation }) {
                   style={{ alignItems: 'center', width: '33%' }}
                   onPress={routeFollow}
                 >
-                  <Text category="h5">1.9k</Text>
+                  <Text category="h5">{followersCount}</Text>
                   <Text category="c2" appearance="hint">
                     {t('following')}
                   </Text>

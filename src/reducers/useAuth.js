@@ -46,7 +46,7 @@ export default function useAuth() {
           const tokenAsync = await AsyncStorage.getItem('USER_AUTH_TOKEN');
 
           if (tokenAsync) {
-            console.log("token Async222", tokenAsync)
+            console.log('token Async222', tokenAsync);
             token = await tokenAsync;
           }
 
@@ -74,10 +74,13 @@ export default function useAuth() {
 
         const result = await res.json();
         console.log(result);
+<<<<<<< HEAD
         const email = result.user.email;
         const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
+=======
+>>>>>>> 85ae0a62f78c4f5e898ba12a30a1ea54f9653561
         let token = null;
         let msg = null;
 
@@ -92,7 +95,7 @@ export default function useAuth() {
           if (!msg) {
             token = await result.token;
 
-            await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
+            await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
           }
 
           await dispatch({
@@ -125,11 +128,15 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
+<<<<<<< HEAD
         console.log("results", result)
         const email = result.user.email;
         const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
+=======
+
+>>>>>>> 85ae0a62f78c4f5e898ba12a30a1ea54f9653561
         let token = null;
         let msg = null;
 
@@ -144,7 +151,7 @@ export default function useAuth() {
           if (!msg) {
             token = await result.token;
 
-            await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
+            await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
           }
 
           dispatch({
@@ -176,10 +183,13 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
+<<<<<<< HEAD
         const email = result.user.email;
         const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
+=======
+>>>>>>> 85ae0a62f78c4f5e898ba12a30a1ea54f9653561
         let token = null;
         let msg = null;
 
@@ -193,7 +203,7 @@ export default function useAuth() {
 
           if (!msg) {
             token = await userInfo.token;
-            await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
+            await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
           }
 
           dispatch({
@@ -227,11 +237,14 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
+<<<<<<< HEAD
         console.log("results", result)
         const email = result.user.email;
         const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
+=======
+>>>>>>> 85ae0a62f78c4f5e898ba12a30a1ea54f9653561
 
         let token = null;
         let msg = null;
@@ -246,7 +259,7 @@ export default function useAuth() {
 
           if (!msg) {
             token = await userInfo.token;
-            await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
+            await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
           }
 
           dispatch({
@@ -273,11 +286,14 @@ export default function useAuth() {
         );
 
         const result = await res.json();
+<<<<<<< HEAD
         const email = result.user.email;
         const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
 
+=======
+>>>>>>> 85ae0a62f78c4f5e898ba12a30a1ea54f9653561
         let token = null;
         let msg = null;
 
@@ -290,9 +306,9 @@ export default function useAuth() {
             : null;
 
           if (!msg) {
-            token = await JSON.stringify(result.token);
+            token = await result.token;
 
-            await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
+            // await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
           }
 
           await dispatch({
@@ -325,10 +341,13 @@ export default function useAuth() {
         );
 
         const result = await res.json();
+<<<<<<< HEAD
         const email = result.user.email;
         const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
+=======
+>>>>>>> 85ae0a62f78c4f5e898ba12a30a1ea54f9653561
 
         let token = null;
         let msg = null;
@@ -343,7 +362,7 @@ export default function useAuth() {
           if (!msg) {
             token = await result.token;
 
-            await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
+            await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
           }
 
           await dispatch({
