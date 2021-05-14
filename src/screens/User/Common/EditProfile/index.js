@@ -89,6 +89,7 @@ export default function EditProfile({ navigation }) {
                const user_name = user_data.displayName;
                const sex = user_data.sex;
                const imageUrl = user_data.imgUrl;
+               const bio = user_data.bio
                setUserImage(imageUrl)
                if (sex === 'Male') {
                  setSelectedValue(1)
@@ -102,7 +103,8 @@ export default function EditProfile({ navigation }) {
                 sName: last_name,
                 displayName: user_name,
                 sex: sex,
-                dob: dob
+                dob: dob,
+                bio: bio
               }))
                console.log(user_data)
               }
@@ -195,6 +197,7 @@ useEffect(() => {
       dob: date
     }))
   }
+
   console.log("forms", form);
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -295,7 +298,7 @@ useEffect(() => {
                   label={t('firstName')}
                   autoCompleteType="name"
                   textContentType="givenName"
-                  validate="required"
+                  // validate="required"
                   value={form.fName}
                   setFormValues={setFormValues}
                 />
@@ -306,7 +309,7 @@ useEffect(() => {
                   label={t('lastName')}
                   autoCompleteType="name"
                   textContentType="familyName"
-                  validate="required"
+                  // validate="required"
                   value= {form.sName}
                   setFormValues={setFormValues}
                 />
@@ -318,7 +321,7 @@ useEffect(() => {
                 label={t('username')}
                 autoCompleteType="username"
                 textContentType="username"
-                validate="required"
+                // validate="required"
                 value= {form.displayName}
                 setFormValues={setFormValues}
               />
@@ -393,7 +396,7 @@ useEffect(() => {
                 label={t('bio')}
                 multiline
                 height={50}
-                validate="required"
+                // validate="required"
                 value= {form.bio}
                 setFormValues={setFormValues}
               />

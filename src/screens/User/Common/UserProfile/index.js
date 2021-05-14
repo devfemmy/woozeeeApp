@@ -54,6 +54,7 @@ export default function UserProfile({ route, navigation }) {
     email,
     fName,
     sName,
+    bio,
     totalEntries,
     followersCount,
     followingCount,
@@ -252,8 +253,7 @@ export default function UserProfile({ route, navigation }) {
                     }}
                     numberOfLines={3}
                   >
-                    Content writer with beautiful aesthetics, Face of woozeee
-                    (It seems).
+                    {bio}
                   </Text>
                 </View>
               </View>

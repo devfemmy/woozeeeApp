@@ -25,6 +25,8 @@ import PrivacyPolicy from 'src/screens/Common/PrivacyPolicy';
 import Settings from 'src/screens/User/Common/Settings';
 import SettingsGlobal from 'src/screens/User/Common/SettingsGlobal';
 import EditProfile from 'src/screens/User/Common/EditProfile';
+import ChangePassword from 'src/screens/User/Common/ChangePassword';
+
 import Search from 'src/screens/User/Common/Search';
 import Movies from 'src/screens/User/Common/Movies';
 import LiveStream from 'src/screens/User/Common/LiveStream';
@@ -94,6 +96,7 @@ export default function Router() {
       MarketPlaceRoute,
       CharityRoute,
       EditProfile,
+      ChangePassword,
       Settings,
       SettingsGlobal,
       Movies,

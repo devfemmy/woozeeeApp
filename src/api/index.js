@@ -25,19 +25,6 @@ const createInstance = async () => {
 };
 
 export default {
-<<<<<<< HEAD
-  getVideos: async (url, page = 1, cursor = 1) => ({
-    pageData: await instance({
-      method: 'GET',
-      
-      url,
-      params: {},
-      cancelToken: source.token,
-    }),
-    previousID: 1,
-    nextID: 2,
-  }),
-=======
   getVideos: async (page = 1, cursor = 1) => {
     const instance = await createInstance();
 
@@ -50,6 +37,5 @@ export default {
       nextID: page + 1,
     };
   },
->>>>>>> 85ae0a62f78c4f5e898ba12a30a1ea54f9653561
   cancelRequest: (msg) => source.cancel(msg),
 };
