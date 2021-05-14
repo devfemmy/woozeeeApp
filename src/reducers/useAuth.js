@@ -130,9 +130,11 @@ export default function useAuth() {
         const user_id = result.user._id
         AsyncStorage.setItem('userid', user_id)
         AsyncStorage.setItem('email', email)
+
         let token = null;
         let msg = null;
 
+        
         try {
           //  TODO: implement authenticate login details:{email, password}
 
