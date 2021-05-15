@@ -1,4 +1,5 @@
 import React, {
+  Component,
   useState,
   useContext,
   useCallback,
@@ -7,7 +8,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, Share } from 'react-native';
 
 import Moment from 'react-moment';
 
@@ -72,6 +73,26 @@ const VideoView = forwardRef((props, ref) => {
     entryId: item.userId,
   });
 
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: 'Share woozeee post',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          alert(result.activityType);
+        } else {
+          // shared
+          alert('Shared');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+        // alert('Action dismissed');
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   const likeData = {
     entryId: item._id,
     isLike: isLiked,
@@ -106,7 +127,14 @@ const VideoView = forwardRef((props, ref) => {
 
   // const updateHiddenText = () => setHideText((prevState) => !prevState);
 
-  const routeComments = () => navigation.navigate('Comments');
+  const routeComments = () => props.navigation.navigate('Comments');
+
+  const routeReport = () => {
+    sheetRef.current.close();
+    props.navigation.navigate('Report', data);
+  };
+
+  const handleFollow = () => {};
 
   const handleOpenSheet = () => sheetRef.current.open();
 
@@ -446,6 +474,7 @@ const VideoView = forwardRef((props, ref) => {
               width: '100%',
               justifyContent: 'center',
             }}
+            onPress={handleFollow}
           >
             <Text style={{ fontSize: 16 }} status="basic">
               {t('follow')}
@@ -459,6 +488,7 @@ const VideoView = forwardRef((props, ref) => {
               width: '100%',
               justifyContent: 'center',
             }}
+            onPress={routeReport}
           >
             <Text style={{ fontSize: 16 }} status="basic">
               {t('makeReport')}
@@ -485,6 +515,7 @@ const VideoView = forwardRef((props, ref) => {
               width: '100%',
               justifyContent: 'center',
             }}
+            onPress={handleShare}
           >
             <Text style={{ fontSize: 16 }} status="basic">
               {t('shareTo')}

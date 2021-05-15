@@ -3,9 +3,10 @@ export const challengeUrl = 'b/607d6bc80ed6f819beafb356';
 
 export const trendingUrl = 'stories';
 
+export const moviesUrl =
+  'movies?pageNumber=1&pageSize=10&providerId=5fbe41512acc12138c00def3';
+
 export const userPostsUrl = 'entries?userId=';
-
-
 
 // export const exploreUrl = 'b/60047a08f98f6e35d5fdae6e';
 export const exploreUrl = 'b/607d6ca55b165e19f6239c02';

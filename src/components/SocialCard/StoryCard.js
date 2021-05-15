@@ -14,6 +14,8 @@ import { Text } from '@ui-kitten/components';
 export default function StoryCard(props) {
   const { data, extraWidth } = props;
 
+  // console.log(data);
+
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;
@@ -52,15 +54,9 @@ export default function StoryCard(props) {
                 borderRadius: 40,
               }}
               resizeMode="cover"
-            />
+            /> 
           </LinearGradient>
-          <Text
-            category="c2"
-            style={{
-              marginTop: 10,
-              textAlign: 'center',
-            }}
-          >
+          <Text category="c2" style={{ marginTop: 10 , textAlign:'center'}}>
             {data.userDisplayName}
           </Text>
         </View>

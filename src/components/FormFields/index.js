@@ -79,7 +79,6 @@ export const GeneralTextField = (props) => {
       }));
 
       setFormValues((prevState) => ({ ...prevState, [type]: input }));
-
     },
     [validate],
   );
@@ -103,7 +102,7 @@ export const GeneralTextField = (props) => {
         accessibilityLiveRegion="polite"
         maxFontSizeMultiplier={1.5}
         autoCorrect={false}
-        autoCapitalize={"none"}
+        autoCapitalize={'none'}
         size={size || 'large'}
         caption={caption}
         value={value}

@@ -20,6 +20,37 @@ const axiosReq = async (methodType, reqData) => {
   // return res;
 };
 
+export const sendReport = async (userReason, userId) => {
+  const data = {
+    reason: userReason.reason,
+    section: 'socials',
+    entryId: userId,
+    resolved: false,
+  };
+
+  const token = await getToken();
+
+  const config = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: data,
+    url: `${baseUrl}complaints`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const handleLike = async (likeData) => {
   const body = {
     entryId: likeData.entryId,

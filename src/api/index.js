@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+// import firebase from 'firebase';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { CancelToken } = axios;
 
+// const db = firebase.firestore();
+
 const source = CancelToken.source();
 
 export const getToken = () => {
+  // firebase.initializeApp();
   return AsyncStorage.getItem('USER_AUTH_TOKEN');
 };
 
@@ -25,6 +29,16 @@ const createInstance = async () => {
 };
 
 export default {
+  // getComments: async () => {
+  //   const [comments, setComments] = useState([]);
+  //   const res = db.collection('entryComments');
+
+  //   const data = await res.get();
+  //   data.docs.forEach((comment) => {
+  //     console.log(setComments(comment));
+  //   });
+  //   return comments;
+  // },
   getStories: async () => {
     const instance = await createInstance();
 
@@ -33,6 +47,18 @@ export default {
     return {
       pageData: data,
       previousID: 1,
+    };
+  },
+  getMovies: async () => {
+    const instance = await createInstance();
+
+    const res = await instance.get(
+      'movies?pageNumber=1&pageSize=10&providerId=5fbe41512acc12138c00def3',
+    );
+
+    const { data } = res;
+    return {
+      pageData: data,
     };
   },
   getVideos: async (page = 1, cursor = 1) => {

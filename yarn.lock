@@ -8607,6 +8607,11 @@
 "react-native-screens@>= 2.0.0-alpha.0 || >= 2.0.0-beta.0 || >= 2.0.0", "react-native-screens@~2.15.2":
   "version" "2.15.2"
 
+"react-native-share@^6.0.1":
+  "integrity" "sha512-K7mw2ep4cg++K6GUab32Kic3DeDUveonsQhTElwb6pZyjp0R/TLGQ11+pxcZBVlTiZhdOttyrLdCA6TsMX1lzg=="
+  "resolved" "https://registry.npmjs.org/react-native-share/-/react-native-share-6.0.1.tgz"
+  "version" "6.0.1"
+
 "react-native-svg@^9.13.6", "react-native-svg@^9.4.0", "react-native-svg@12.1.0":
   "version" "12.1.0"
   dependencies:

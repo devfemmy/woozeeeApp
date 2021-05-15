@@ -163,8 +163,11 @@ export const UsersPosts = ({ info }) => info.map((item) => (
 ));
 
 // prettier-ignore
-export const ProfilePosts = ({ info }) => (
-  <List
+export const ProfilePosts = ({ info }) => {
+  // const {data} = info;
+  // console.log(info)
+  return(
+    <List
     style={{
       backgroundColor: 'transparent',
     }}
@@ -187,7 +190,8 @@ export const ProfilePosts = ({ info }) => (
       index,
     })}
   />
-);
+  )
+  }
 
 export const WoozPosts = ({ info }) => {
   const { bottom, top } = useSafeAreaInsets();

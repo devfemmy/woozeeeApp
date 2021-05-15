@@ -27,6 +27,7 @@ import SettingsGlobal from 'src/screens/User/Common/SettingsGlobal';
 import EditProfile from 'src/screens/User/Common/EditProfile';
 import ChangePassword from 'src/screens/User/Common/ChangePassword';
 
+import Report from '../components/ReportCard/index';
 import Search from 'src/screens/User/Common/Search';
 import Movies from 'src/screens/User/Common/Movies';
 import LiveStream from 'src/screens/User/Common/LiveStream';
@@ -114,6 +115,7 @@ export default function Router() {
       BillMobileData,
       BillCableTv,
       BillElectricity,
+      Report,
     },
 
     Common: {

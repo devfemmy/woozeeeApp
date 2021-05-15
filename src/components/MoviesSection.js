@@ -17,7 +17,7 @@ import Placeholders from 'src/components/Placeholders';
 
 import MovieSectionCard from 'src/components/SocialCard/MovieSectionCard';
 
-import { trendingUrl } from 'src/api/dummy';
+import { moviesUrl } from 'src/api/dummy';
 
 import { IconForwardIos } from 'src/components/CustomIcons';
 
@@ -30,8 +30,8 @@ const MoviesSectionArea = (props) => {
 
   const { status, data, refetch } = useQuery(
     ['moviesSection', 1],
-    async ({ pageParam = 1 }) => {
-      const promise = await Api.getVideos(trendingUrl, 1, pageParam);
+    async () => {
+      const promise = await Api.getMovies();
       promise.cancel = () => Api.cancelRequest('Request aborted');
       return promise;
     },
@@ -64,7 +64,7 @@ const MoviesSectionArea = (props) => {
     // prettier-ignore
     status !== 'loading'
       && status !== 'error'
-      && data.pageData.data.length > 0
+    && data.pageData.data.length > 0
   ) {
     return (
       <View

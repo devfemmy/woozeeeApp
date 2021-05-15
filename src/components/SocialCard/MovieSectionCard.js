@@ -16,6 +16,8 @@ import { IconEye } from 'src/components/CustomIcons';
 export default function MovieCard(props) {
   const { data, extraWidth } = props;
 
+  console.log('Movie card called');
+
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;
