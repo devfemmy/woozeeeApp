@@ -79,6 +79,38 @@ export const handleLike = async (likeData) => {
   }
 };
 
+export const handleFollow = async (userId, following) => {
+  const data = {
+    userId,
+    isFollow: true,
+  };
+
+  // following
+  //   ? console.log('method is post', following)
+  //   : console.log('method is delete', following);
+  const token = await getToken();
+
+  const config = {
+    method: following ? 'post' : 'delete',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data,
+    url: `${baseUrl}user-data`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getUserData = async (id) => {
   const config = {
     method: 'GET',

@@ -15,6 +15,7 @@ import Register from 'src/screens/Authentication/Registration';
 import RegisterFull from 'src/screens/Authentication/Registration/RegisterFull';
 import VerifyWithCode from 'src/screens/Authentication/Verification';
 import RecoverWithEmail from 'src/screens/Authentication/Recovery';
+import RecoveryFull from '../screens/Authentication/Recovery/RecoveryFull';
 
 // Common screens
 import FAQs from 'src/screens/Common/FAQs';
@@ -80,6 +81,7 @@ export default function Router() {
       VerifyWithCode,
       RegisterFull,
       RecoverWithEmail,
+      RecoveryFull,
     },
 
     User: {

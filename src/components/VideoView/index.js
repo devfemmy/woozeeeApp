@@ -34,6 +34,7 @@ import InteractIcon from 'src/components/InteractIcon';
 import {
   sendComment,
   handleLike,
+  handleFollow,
   getUserData,
 } from '../../services/Requests/index';
 
@@ -55,6 +56,8 @@ const VideoView = forwardRef((props, ref) => {
 
   const { item } = data;
 
+  const { userId } = item;
+
   const videoRef = useRef(null);
 
   const sheetRef = useRef(null);
@@ -72,6 +75,9 @@ const VideoView = forwardRef((props, ref) => {
     comment: '',
     entryId: item.userId,
   });
+
+  const [following, setFollowing] = useState(true);
+  let isFollowing;
 
   const handleShare = async () => {
     try {
@@ -119,6 +125,15 @@ const VideoView = forwardRef((props, ref) => {
     });
   };
 
+  const toggleFollow = async () => {
+    setFollowing(!following);
+    const res = await handleFollow(userId, following);
+    const isFollow = await res.data.isFollow;
+    console.log(res);
+    isFollowing = isFollow;
+    console.log(isFollowing);
+  };
+
   const handleComment = () => {
     sendComment(form);
   };
@@ -133,8 +148,6 @@ const VideoView = forwardRef((props, ref) => {
     sheetRef.current.close();
     props.navigation.navigate('Report', data);
   };
-
-  const handleFollow = () => {};
 
   const handleOpenSheet = () => sheetRef.current.open();
 
@@ -474,10 +487,10 @@ const VideoView = forwardRef((props, ref) => {
               width: '100%',
               justifyContent: 'center',
             }}
-            onPress={handleFollow}
+            onPress={toggleFollow}
           >
             <Text style={{ fontSize: 16 }} status="basic">
-              {t('follow')}
+              {following == true ? t('follow') : t('unfollow')}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 2, width: '100%' }} />

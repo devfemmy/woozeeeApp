@@ -13,6 +13,8 @@
   "loginNotFound": "Email / password is incorrect",
   "tokenError": "Code Mismatch",
   "error": "Error",
+  "unfollow":"Unfollow",
+  "newPassword": "New Password",
   "reason":"Reason",
   "makeAReport": "Make a Report",
   "emailAddress": "Email address",

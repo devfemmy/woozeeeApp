@@ -75,9 +75,9 @@ export default function useAuth() {
         const result = await res.json();
         console.log(result);
         const email = result.user.email;
-        const user_id = result.user._id
-        AsyncStorage.setItem('userid', user_id)
-        AsyncStorage.setItem('email', email)
+        const user_id = result.user._id;
+        AsyncStorage.setItem('userid', user_id);
+        AsyncStorage.setItem('email', email);
         let token = null;
         let msg = null;
 
@@ -125,16 +125,15 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
-        console.log("results", result)
+        console.log('results', result);
         const email = result.user.email;
-        const user_id = result.user._id
-        AsyncStorage.setItem('userid', user_id)
-        AsyncStorage.setItem('email', email)
+        const user_id = result.user._id;
+        AsyncStorage.setItem('userid', user_id);
+        AsyncStorage.setItem('email', email);
 
         let token = null;
         let msg = null;
 
-        
         try {
           //  TODO: implement authenticate login details:{email, password}
 
@@ -179,9 +178,9 @@ export default function useAuth() {
         );
         const result = await res.json();
         const email = result.user.email;
-        const user_id = result.user._id
-        AsyncStorage.setItem('userid', user_id)
-        AsyncStorage.setItem('email', email)
+        const user_id = result.user._id;
+        AsyncStorage.setItem('userid', user_id);
+        AsyncStorage.setItem('email', email);
         let token = null;
         let msg = null;
 
@@ -229,11 +228,11 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
-        console.log("results", result)
+        console.log('results', result);
         const email = result.user.email;
-        const user_id = result.user._id
-        AsyncStorage.setItem('userid', user_id)
-        AsyncStorage.setItem('email', email)
+        const user_id = result.user._id;
+        AsyncStorage.setItem('userid', user_id);
+        AsyncStorage.setItem('email', email);
 
         let token = null;
         let msg = null;
@@ -261,51 +260,21 @@ export default function useAuth() {
         return msg;
       },
 
-      forgotPassword: async (confirmationCode) => {
-        const res = await fetch(
-          'https://apis.woozeee.com/api/v1/user/confirm-token',
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify(),
-          },
-        );
+      forgotPassword: async (data) => {
+        // const res = await fetch(
+        //   'https://apis.woozeee.com/api/v1/reset',
+        //   {
+        //     method: 'PUT',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       Accept: 'application/json',
+        //     },
+        //     body: data,
+        //   },
+        // );
 
-        const result = await res.json();
-        const email = result.user.email;
-        const user_id = result.user._id
-        AsyncStorage.setItem('userid', user_id)
-        AsyncStorage.setItem('email', email)
-
-        let token = null;
-        let msg = null;
-
-        try {
-          //  TODO: implement authenticate login details:{email, password}
-
-          // prettier-ignore
-          msg = await result.error == true
-            ? 'tokenError'
-            : null;
-
-          if (!msg) {
-            token = await result.token;
-
-            // await AsyncStorage.setItem('USER_AUTH_TOKEN', token);
-          }
-
-          await dispatch({
-            type: 'LOG_IN',
-            token,
-          });
-        } catch (e) {
-          msg = e;
-        }
-
-        return msg;
+        // const result = await res.json();
+        console.log('from forgotPassword fn -> ', data);
       },
 
       verifyAction: async (verificationCode) => {
@@ -328,9 +297,9 @@ export default function useAuth() {
 
         const result = await res.json();
         const email = result.user.email;
-        const user_id = result.user._id
-        AsyncStorage.setItem('userid', user_id)
-        AsyncStorage.setItem('email', email)
+        const user_id = result.user._id;
+        AsyncStorage.setItem('userid', user_id);
+        AsyncStorage.setItem('email', email);
 
         let token = null;
         let msg = null;
