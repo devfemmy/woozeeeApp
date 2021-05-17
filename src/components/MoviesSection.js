@@ -106,7 +106,7 @@ const MoviesSectionArea = (props) => {
           data={data.pageData.data}
           keyExtractor={(_, i) => i.toString()}
           renderItem={(renderData) => (
-            <MovieSectionCard data={renderData.item} extraWidth={0.5} />
+            <MovieSectionCard pressed={() => navigation.navigate('ViewMovies', {movie_data: renderData})}  data={renderData.item} extraWidth={0.5} />
           )}
           getItemLayout={(data, index) => ({
             length: 360,

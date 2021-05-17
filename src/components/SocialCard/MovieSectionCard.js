@@ -14,7 +14,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { IconEye } from 'src/components/CustomIcons';
 
 export default function MovieCard(props) {
-  const { data, extraWidth } = props;
+  const { data, extraWidth, navigation } = props;
 
   const { width, height } = useWindowDimensions();
 
@@ -33,6 +33,7 @@ export default function MovieCard(props) {
         }}
       >
         <TouchableOpacity
+          onPress= {props.pressed}
           activeOpacity={0.75}
           style={{
             width: '100%',
