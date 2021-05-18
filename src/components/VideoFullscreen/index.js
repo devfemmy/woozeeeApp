@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { Text } from '@ui-kitten/components';
 
@@ -24,6 +24,14 @@ import {
   IconCCoin,
 } from 'src/components/CustomIcons';
 
+import {
+  sendComment,
+  handleLike,
+  handleFollow,
+  getUserData,
+  getUserEntries,
+} from '../../services/Requests/index';
+
 const styles = StyleSheet.create({
   uiContainer: {
     flex: 1,
@@ -39,14 +47,47 @@ const styles = StyleSheet.create({
 const VideoView = forwardRef((props, ref) => {
   // prettier-ignore
   const {
-    data, height, videoRef, challenge,
+    data, height, videoRef, challenge, navigation
   } = props;
 
   const { item } = data;
 
+  // console.log('from video full screen -> ', item);
+
+  const [isLiked, setLiked] = useState(item.userEntryData.isLike);
+  const [totalLikes, setTotalLikes] = useState(item.totalLikes);
+
   const [shouldPlay, setShouldPlay] = useState(true);
 
-  const [isLiked, setLiked] = useState(false);
+  const likeData = {
+    entryId: item._id,
+    isLike: isLiked,
+  };
+
+  const routeUserProfile = async () => {
+    const userData = await getUserData(item.userId);
+    const { data } = userData;
+    await navigation.navigate('UserProfile', data);
+  };
+
+  const toggleLike = async () => {
+    setLiked(!isLiked);
+    const newLikesCount = isLiked ? totalLikes - 1 : totalLikes + 1;
+    setTotalLikes(newLikesCount);
+
+    // We want to update the total like count that is returned from the server
+    // So we have fresh like count after interaction with the like icon (:
+    handleLike(likeData).then((resData) => {
+      // The meta contains new count for the entry
+      // resData.meta.totalLikes.totalLikes
+      // resData.meta.totalLikes.totalVotes
+      // resData.meta.totalLikes.totalViews
+      // resData.meta.totalLikes.totalComments
+      setTotalLikes(resData.meta.totalLikes);
+    });
+  };
+
+  // const [isLiked, setLiked] = useState(false);
 
   const [isVoted, setVoted] = useState(false);
 
@@ -72,7 +113,7 @@ const VideoView = forwardRef((props, ref) => {
     })();
   }, [videoRef]);
 
-  const toggleLike = useCallback(() => setLiked((prevState) => !prevState), []);
+  // const toggleLike = useCallback(() => setLiked((prevState) => !prevState), []);
 
   const toggleVote = useCallback(() => setVoted((prevState) => !prevState), []);
 
@@ -146,10 +187,10 @@ const VideoView = forwardRef((props, ref) => {
                     category="h6"
                     style={{ marginRight: 5 }}
                   >
-                    {item.ownerFirstName}
+                    {item.userFirstName}
                   </Text>
                   <Text status="danger" category="h6">
-                    {item.ownerLastName}
+                    {item.userLastName}
                   </Text>
                 </View>
                 <View
@@ -170,7 +211,7 @@ const VideoView = forwardRef((props, ref) => {
                   />
                   <InteractIcon
                     Accessory={(evaProps) => <IconEye {...evaProps} />}
-                    textContent={item.views}
+                    textContent={item.totalViews}
                     height={20}
                     width={20}
                     direction="row"
@@ -184,7 +225,7 @@ const VideoView = forwardRef((props, ref) => {
                       backgroundColor: 'rgba(0, 0, 0, 0.0125)',
                     }}
                   >
-                    {item.category}
+                    {item.userEntryData.categoryName}
                   </Text>
                 </View>
               </View>
@@ -214,18 +255,20 @@ const VideoView = forwardRef((props, ref) => {
               <InteractIcon
                 style={{ marginBottom: 10 }}
                 Accessory={(evaProps) => <IconCChat {...evaProps} active />}
-                textContent={item.comments}
+                textContent={item.totalComments}
               />
               <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={(evaProps) => <IconCShare {...evaProps} active />}
-                textContent={item.shares}
               />
 
-              <View style={{ alignItems: 'center' }}>
+              <TouchableOpacity
+                style={{ alignItems: 'center' }}
+                onPress={routeUserProfile}
+              >
                 <Image
-                  source={require('assets/images/user/user2.png')}
-                  defaultSource={require('assets/images/user/user2.png')}
+                  source={require('assets/images/banner/profile.jpg')}
+                  defaultSource={{ uri: item.userImageURL }}
                   style={{
                     height: 40,
                     width: 40,
@@ -235,7 +278,7 @@ const VideoView = forwardRef((props, ref) => {
                   }}
                   resizeMode="cover"
                 />
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

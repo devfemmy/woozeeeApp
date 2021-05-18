@@ -234,6 +234,7 @@ export default function Wooz({ navigation }) {
                     data={{ item, i }}
                     height={VIEW_HEIGHT}
                     videoRef={videoRef}
+                    navigation={navigation}
                   />
                 </React.Fragment>
               ))}

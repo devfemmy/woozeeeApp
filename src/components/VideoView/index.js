@@ -134,7 +134,8 @@ const VideoView = forwardRef((props, ref) => {
   const followState = () => getUserEntries(userId);
 
   const handleComment = () => {
-    sendComment(form);
+    // sendComment(form);
+    setFormValues('');
   };
 
   const toggleBookmark = () => setBookmarked((prevState) => !prevState);
@@ -432,6 +433,7 @@ const VideoView = forwardRef((props, ref) => {
                 placeholder={t('leaveComment')}
                 setFormValues={setFormValues}
                 size="medium"
+                value={form.comment}
               />
             </View>
             <View style={{ alignSelf: 'flex-start', marginTop: 4 }}>
