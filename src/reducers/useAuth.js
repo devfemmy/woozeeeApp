@@ -46,7 +46,7 @@ export default function useAuth() {
           const tokenAsync = await AsyncStorage.getItem('USER_AUTH_TOKEN');
 
           if (tokenAsync) {
-            console.log('token Async222', tokenAsync);
+            // console.log('token Async222', tokenAsync);
             token = await tokenAsync;
           }
 
@@ -73,7 +73,7 @@ export default function useAuth() {
         });
 
         const result = await res.json();
-        console.log(result);
+        // console.log(result);
         const email = result.user.email;
         const user_id = result.user._id;
         AsyncStorage.setItem('userid', user_id);
@@ -125,7 +125,7 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
-        console.log('results', result);
+        // console.log('results', result);
         const email = result.user.email;
         const user_id = result.user._id;
         AsyncStorage.setItem('userid', user_id);
@@ -228,7 +228,7 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
-        console.log('results', result);
+        // console.log('results', result);
         const email = result.user.email;
         const user_id = result.user._id;
         AsyncStorage.setItem('userid', user_id);
@@ -272,9 +272,8 @@ export default function useAuth() {
         //     body: data,
         //   },
         // );
-
         // const result = await res.json();
-        console.log('from forgotPassword fn -> ', data);
+        // console.log('from forgotPassword fn -> ', data);
       },
 
       verifyAction: async (verificationCode) => {

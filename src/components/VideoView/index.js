@@ -36,6 +36,7 @@ import {
   handleLike,
   handleFollow,
   getUserData,
+  getUserEntries,
 } from '../../services/Requests/index';
 
 import {
@@ -76,8 +77,8 @@ const VideoView = forwardRef((props, ref) => {
     entryId: item.userId,
   });
 
-  const [following, setFollowing] = useState(true);
-  let isFollowing;
+  const [following, setFollowing] = useState(item.userEntryData.isFollow);
+  // console.log(item.userEntryData);
 
   const handleShare = async () => {
     try {
@@ -127,12 +128,10 @@ const VideoView = forwardRef((props, ref) => {
 
   const toggleFollow = async () => {
     setFollowing(!following);
-    const res = await handleFollow(userId, following);
-    const isFollow = await res.data.isFollow;
-    console.log(res);
-    isFollowing = isFollow;
-    console.log(isFollowing);
+    await handleFollow(userId, !following);
   };
+
+  const followState = () => getUserEntries(userId);
 
   const handleComment = () => {
     sendComment(form);
@@ -490,7 +489,7 @@ const VideoView = forwardRef((props, ref) => {
             onPress={toggleFollow}
           >
             <Text style={{ fontSize: 16 }} status="basic">
-              {following == true ? t('follow') : t('unfollow')}
+              {following ? t('unfollow') : t('follow')}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 2, width: '100%' }} />

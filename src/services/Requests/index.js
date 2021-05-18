@@ -85,9 +85,6 @@ export const handleFollow = async (userId, following) => {
     isFollow: true,
   };
 
-  // following
-  //   ? console.log('method is post', following)
-  //   : console.log('method is delete', following);
   const token = await getToken();
 
   const config = {
@@ -121,6 +118,19 @@ export const getUserData = async (id) => {
     },
   };
   const res = await axios.get(baseUrl + `user/user?userId=${id}`, config);
+  return res;
+};
+
+export const getUserEntries = async (id) => {
+  const config = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `${await getToken()}`,
+    },
+  };
+  const res = await axios.get(baseUrl + `entries?userId=${id}`, config);
   return res;
 };
 

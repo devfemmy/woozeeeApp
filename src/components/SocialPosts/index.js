@@ -163,9 +163,9 @@ export const UsersPosts = ({ info }) => info.map((item) => (
 ));
 
 // prettier-ignore
-export const ProfilePosts = ({ info }) => {
-  // const {data} = info;
-  // console.log(info)
+export const ProfilePosts = ({allEntries}) => {
+  console.log("from profile post -> ", allEntries)
+  const {firstTenEntries} = allEntries
   return(
     <List
     style={{
@@ -179,10 +179,10 @@ export const ProfilePosts = ({ info }) => {
     showsHorizontalScrollIndicator={true}
     showsVerticalScrollIndicator={false}
     numColumns={3}
-    data={info}
+    data={firstTenEntries}
     keyExtractor={(_, i) => i.toString()}
     renderItem={(renderData) => (
-      <VideoCard data={renderData.item} extraWidth={0} numColumns={3} />
+      <VideoCard data={renderData} extraWidth={0} numColumns={3} />
     )}
     getItemLayout={(data, index) => ({
       length: 200,

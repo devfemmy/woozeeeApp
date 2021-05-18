@@ -49,7 +49,7 @@ export default function VideoCard(props) {
         onPress={routeChallengeWooz}
       >
         <Image
-          source={{ uri: `https://i.postimg.cc/${data.banner}` }}
+          source={{ uri: data.medialThumbnail }}
           defaultSource={require('assets/images/banner/placeholder-image.png')}
           style={{
             height: 175,
@@ -58,7 +58,7 @@ export default function VideoCard(props) {
           }}
           resizeMode="cover"
         />
-        {data.ownerImg ? (
+        {data._id ? (
           <LinearGradient
             colors={['#043F7C', '#FF5757']}
             style={{
@@ -73,7 +73,7 @@ export default function VideoCard(props) {
             }}
           >
             <Image
-              source={{ uri: `https://i.postimg.cc/${data.ownerImg}` }}
+              source={{ uri: data.medialThumbnail }}
               defaultSource={require('assets/images/banner/placeholder-image.png')}
               style={{
                 height: 32,
@@ -85,7 +85,7 @@ export default function VideoCard(props) {
             />
           </LinearGradient>
         ) : null}
-        {data.tag ? (
+        {data.categoryId ? (
           <View
             style={{
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -102,11 +102,11 @@ export default function VideoCard(props) {
               style={{ color: 'white', marginBottom: 5 }}
               numberOfLines={1}
             >
-              {data.tag}
+              {data.category_group}
             </Text>
             <View>
               <Text category="c1" status="control">
-                12.5 Entries
+                {data.totalViews}
               </Text>
             </View>
           </View>
