@@ -158,7 +158,7 @@ export default function Wooz({ navigation }) {
     } = useInfiniteQuery(
       ['inFiniteWoozVideos', 1],
       async ({ pageParam = 1 }) => {
-        const promise = await Api.getVideos(socialUrl, 1, pageParam);
+        const promise = await Api.getVideos(pageParam);
         promise.cancel = () => Api.cancelRequest('Request aborted');
         return promise;
       },
@@ -224,7 +224,7 @@ export default function Wooz({ navigation }) {
                       }}
                       source={
                         item.poster
-                          ? { uri: item.poster }
+                          ? { uri: item.mediaURL }
                           : require('assets/images/banner/placeholder-image.png')
                       }
                     />
@@ -247,7 +247,7 @@ export default function Wooz({ navigation }) {
                   ref={videoRef}
                   resizeMode="contain"
                   style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                  source={{ uri: page.pageData.data[index].video }}
+                  source={{ uri: page.pageData.data[index].mediaURL }}
                   isLooping
                   shouldPlay={isFocused}
                   // prettier-ignore
