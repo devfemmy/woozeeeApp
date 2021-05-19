@@ -11,6 +11,7 @@ import {
   RadioGroup, Radio,
   Datepicker
 } from '@ui-kitten/components';
+import RNFetchBlob from 'rn-fetch-blob'
 
 import { LocaleContext } from 'src/contexts';
 
@@ -97,7 +98,12 @@ export default function EditProfile({ navigation }) {
                  setSelectedValue(0)
                }
                const dob = user_data.dob;
-               setDate(new Date(dob))
+               if (dob === null) {
+                setDate(new Date())
+               }else {
+                setDate(new Date(dob))
+               }
+              
                setFormValues((prevState) => ({...prevState, 
                 fName: first_name, 
                 sName: last_name,
@@ -180,8 +186,11 @@ useEffect(() => {
 
     setUserImage(imageFile.uri);
     console.log("image uri", imageFile.uri)
+    const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
+
+
     setFormValues((prevState) => ({...prevState, 
-      imgUrl: imageFile.uri,
+      imgUrl: base64image,
     }))
   };
   const setSelectedHandler =(index) => {
@@ -356,6 +365,8 @@ useEffect(() => {
                 label={t('dob')}
                 date={date}
                 onSelect={nextDate => setNewDateHandler(nextDate)}
+                min = {new Date ('12-05-1880')}
+                max= {new Date()}
                 accessoryRight={IconCalendar}
               />
                 {/* <GeneralDatePicker

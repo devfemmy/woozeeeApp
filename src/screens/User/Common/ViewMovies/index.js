@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
-import { View, useWindowDimensions, TouchableOpacity } from 'react-native';
+import { View, useWindowDimensions, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -21,6 +21,11 @@ import Placeholders from 'src/components/Placeholders';
 import MovieCard from 'src/components/SocialCard/MovieCard';
 
 import { trendingUrl } from 'src/api/dummy';
+import MovieComponent from 'src/components/MovieComponent';
+import { TextIcon } from 'src/components/IconPacks/TextIcon';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import MovieScroll from 'src/components/MovieScroll';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const MOVIE_CATEGORIES = [
   {
@@ -115,7 +120,8 @@ const renderMovieCategories = () => (
 
 export default function Explore({ navigation, route }) {
   const { width, height } = useWindowDimensions();
-const {movie_data} = route.params;
+  const {movie_data} = route.params;
+  const [paid, setPaid] = useState(true);
 
 console.log("moshdsk", movie_data)
   const { bottom, top } = useSafeAreaInsets();
@@ -216,15 +222,128 @@ console.log("moshdsk", movie_data)
       />
     );
   };
-
+  const styles = StyleSheet.create({
+    container: {
+      padding: 10
+    },
+    textStyle: {
+      fontSize: 20,
+      fontWeight: '700'
+    },
+    actions: {
+      width: wp('75%'),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    },
+    // textshadow:{
+    //   fontSize:100,
+    //   color:'#FFFFFF',
+    //   fontFamily:'Times New Roman',
+    //   paddingLeft:30,
+    //   paddingRight:30,
+    //   textShadowColor:'#FF5757',
+    //   textShadowOffset:{width: 2, height: 2},
+    //   textShadowRadius:5,
+    // },
+  })
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
-        title="woozeee"
+        title="Movie"
         navigation={navigation}
-        icon="logout"
-        screen="search"
+        
+        screen="auth"
       />
+      {/* <View> */}
+        <TouchableOpacity>
+          <Image
+          style= {{width: '100%'}}
+          source= {require('../../../../assets/images/movies/movie1.png')}
+          />
+        </TouchableOpacity>
+        <ScrollView style= {styles.container}>
+            <Text category='h1' style= {styles.textStyle}>
+            My Name is Tayo
+            </Text>
+            <MovieComponent
+            label= "New"
+            year= "2020"
+            rating= "16+"
+            duration= "1hr 44min"
+            quality= "HD"
+            toplist= "10"
+            trend= "#1"
+            
+            />
+            {paid ? 
+                <Text category= "h4">
+                  $1.00
+                </Text>: null
+            }
+
+            <View>
+            {paid ? 
+                <TextIcon 
+                bg= "#FF5757"
+                color= "white" fill= "white" 
+                text= "Purchase" 
+                icon_name= "shopping-cart-outline" />
+          :
+                <TextIcon 
+                bg= "#FF5757"
+                color= "white" fill= "white" 
+                text= "Play" 
+                icon_name= "play-circle-outline" />          
+          }
+
+            </View>
+            <View>
+              <Text>
+              After applying for 200 job application, 
+              he decided to go for something different . 
+              But things 
+              don’t go as smoothly as planned.
+              </Text>
+              <View style= {{marginVertical: 5}}>
+                <Text>
+                Cast: Sir Dee, Seyi Awolowo, Avala
+                </Text>
+                <Text>
+                Director: Stephanie Dadet
+                </Text>
+              </View>
+              <View style= {styles.actions}>
+                <TextIcon 
+                bg= "transparent"
+                color= "#494949" fill= "#494949" 
+                text= "My List" 
+                icon_name= "checkmark-outline" />
+                <TextIcon 
+                bg= "transparent"
+                color= "#494949" fill= "#494949" 
+                text= "Rate" 
+                icon_name= "star-outline" />
+                <TextIcon 
+                bg= "transparent"
+                color= "#494949" fill= "#494949" 
+                text= "Share" 
+                icon_name= "share-outline" />
+              </View>
+            </View>
+            <View>
+                <MovieScroll
+                show
+                title = "Recommended for you"
+                img= {require('../../../../assets/images/movies/movie2.png')}
+                />
+                <MovieScroll
+                img= {require('../../../../assets/images/movies/movie3.png')}
+                />
+            </View>
+        </ScrollView>
+      {/* </View> */}
+
       {/* <SocialPostsArea /> */}
     </Layout>
   );

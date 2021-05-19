@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-import { Layout } from '@ui-kitten/components';
-import { useWindowDimensions, Text, StyleSheet } from 'react-native';
+import { Layout, Text } from '@ui-kitten/components';
+import { useWindowDimensions, StyleSheet } from 'react-native';
 
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
@@ -22,11 +23,11 @@ export default function Challenge({ navigation }) {
 
   const styles = StyleSheet.create({
     activeTabTextColor: {
-      color: '#395185',
+      color: '#0959AB',
       fontSize: 17,
     },
     tabTextColor: {
-      color: 'grey',
+      // color: 'grey',
       fontSize: 17,
     },
   });
@@ -47,8 +48,8 @@ export default function Challenge({ navigation }) {
   const renderTabBar = (props) => (
     <TabBar
       {...props}
-      indicatorStyle={{ backgroundColor: '#395185' }}
-      style={{ backgroundColor: '#F7F9FC' }}
+      indicatorStyle={{ backgroundColor: '#0959AB' }}
+      style={{ backgroundColor: 'transparent' }}
       renderLabel={({ route, focused, color }) => (
         <Text
           style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}

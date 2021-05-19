@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
-import { View, useWindowDimensions, TouchableOpacity } from 'react-native';
+import { View, useWindowDimensions, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useInfiniteQuery } from 'react-query';
 
 import { Layout, List, Text } from '@ui-kitten/components';
+
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import Api from 'src/api';
 
@@ -21,6 +23,8 @@ import Placeholders from 'src/components/Placeholders';
 import MovieCard from 'src/components/SocialCard/MovieCard';
 
 import { trendingUrl } from 'src/api/dummy';
+import Versus from '../../HomeTab/Social/ChallengeTab/VersusTab/index';
+import { TextIcon } from 'src/components/IconPacks/TextIcon';
 
 const MOVIE_CATEGORIES = [
   {
@@ -213,6 +217,52 @@ export default function Explore({ navigation }) {
       />
     );
   };
+  const styles = StyleSheet.create({
+    tabView: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: '2%'
+    },
+    activeTabTextColor: {
+      color: 'rgba(255, 87, 87, 1)',
+      fontSize: 17,
+    },
+    tabTextColor: {
+      // color: '#494949',
+      fontSize: 17,
+    },
+  })
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'All' },
+    { key: 'second', title: 'TV series' },
+    { key: 'third', title: 'Movies' },
+  ]);
+
+  const renderScene = SceneMap({
+    first: Versus,
+    second: Versus,
+    third: Versus,
+  });
+
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: 'rgba(255, 87, 87, 1)' }}
+      style={{ backgroundColor: 'transparent' }}
+      renderLabel={({ route, focused, color }) => (
+        <Text
+          style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}
+          status="basic"
+        >
+          {route.title}
+        </Text>
+      )}
+    />
+  );
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -222,7 +272,23 @@ export default function Explore({ navigation }) {
         icon="logout"
         screen="search"
       />
-      <SocialPostsArea />
+      <View style= {styles.tabView}>
+          <TabView
+            renderTabBar={renderTabBar}
+            swipeEnabled={false}
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: layout.width }}
+          />
+          <TextIcon 
+          show
+          bg= "transparent"
+          color= "#494949" fill= "#494949" 
+          text= "Category" 
+          icon_name= "arrow-ios-downward-outline" />
+      </View>
+      {/* <SocialPostsArea /> */}
     </Layout>
   );
 }
