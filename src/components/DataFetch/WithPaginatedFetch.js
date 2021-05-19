@@ -8,7 +8,6 @@ import Api from 'src/api';
 
 import { LocaleContext } from 'src/contexts';
 
-
 import Placeholders from 'src/components/Placeholders';
 
 import FetchFailed from './FetchFailed';
@@ -17,12 +16,15 @@ export default function WithPaginatedFetch(
   WrappedComponent,
   fetchUrl,
   placeholderProp,
+  testData,
 ) {
   const { width, height } = useWindowDimensions();
 
   const t = useContext(LocaleContext);
 
   const [activePage, setPage] = useState('default');
+
+  // console.log('FROM PAGINATED -> ', testData);
 
   // get placeholder max height based on received props
   const getMaxHeight = () => {
@@ -73,7 +75,7 @@ export default function WithPaginatedFetch(
     // console.log(data.pageData.data);
     return (
       <>
-        <WrappedComponent info={data.pageData.data} />
+        <WrappedComponent info={data.pageData.data} allEntries={testData} />
       </>
     );
   }

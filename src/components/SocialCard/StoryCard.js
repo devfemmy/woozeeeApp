@@ -31,7 +31,10 @@ export default function StoryCard(props) {
           paddingHorizontal: 10,
         }}
       >
-        <View style={{ alignItems: 'center' }}>
+        <View
+          style={{ alignItems: 'center' }}
+          onPress={() => console.log('pressed')}
+        >
           <LinearGradient
             colors={['#043F7C', '#FF5757']}
             style={{
@@ -42,8 +45,8 @@ export default function StoryCard(props) {
               justifyContent: 'center',
             }}
           >
-            {/* <Image
-              source={{ uri: `https://i.postimg.cc/${data.banner}` }}
+            <Image
+              source={{ uri: data.photoURL }}
               defaultSource={require('assets/images/banner/placeholder-image.png')}
               style={{
                 height: 80,
@@ -51,10 +54,10 @@ export default function StoryCard(props) {
                 borderRadius: 40,
               }}
               resizeMode="cover"
-            /> */}
+            /> 
           </LinearGradient>
-          <Text category="c2" style={{ marginTop: 10 }}>
-            {data.hashtagName}
+          <Text category="c2" style={{ marginTop: 10 , textAlign:'center'}}>
+            {data.userDisplayName}
           </Text>
         </View>
       </TouchableOpacity>

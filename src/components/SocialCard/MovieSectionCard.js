@@ -43,7 +43,7 @@ export default function MovieCard(props) {
           }}
         >
           <Image
-            source={{ uri: `https://i.postimg.cc/${data.banner}` }}
+            source={data.posterURL}
             defaultSource={require('assets/images/banner/placeholder-image.png')}
             style={{
               height: 200,
@@ -69,10 +69,10 @@ export default function MovieCard(props) {
               fill="white"
             />
             <Text category="c2" status="control">
-              11.5k
+              {data.totalViews}
             </Text>
           </View>
-          {data.ownerImg ? (
+          {data.posterURL ? (
             <LinearGradient
               colors={['#043F7C', '#FF5757']}
               style={{
@@ -86,7 +86,7 @@ export default function MovieCard(props) {
               }}
             >
               <Image
-                source={{ uri: `https://i.postimg.cc/${data.ownerImg}` }}
+                source={data.posterURL}
                 defaultSource={require('assets/images/banner/placeholder-image.png')}
                 style={{
                   height: 44,
@@ -101,7 +101,7 @@ export default function MovieCard(props) {
         </TouchableOpacity>
         <View style={{ marginTop: 20 }}>
           <Text category="p2" style={{ textAlign: 'center', lineHeight: 20 }}>
-            My name is Tayo
+            {data.description}
           </Text>
         </View>
       </View>

@@ -1,17 +1,16 @@
 // export const challengeUrl = 'b/600441b7f98f6e35d5fd9d20/3';
 export const challengeUrl = 'b/607d6bc80ed6f819beafb356';
 
-// export const trendingUrl = 'b/600478774f42973a289e12fb';
 export const trendingUrl = 'stories';
 
+export const moviesUrl =
+  'movies?pageNumber=1&pageSize=10&providerId=5fbe41512acc12138c00def3';
+
 export const userPostsUrl = 'entries?userId=';
-
-
 
 // export const exploreUrl = 'b/60047a08f98f6e35d5fdae6e';
 export const exploreUrl = 'b/607d6ca55b165e19f6239c02';
 
-// export const socialUrl = 'b/6005a2d0e31fbc3bdef53092';
 export const socialUrl = 'entries';
 
 // export const marketDealsUrl = 'b/604b3cc37ffeba41c076f387';

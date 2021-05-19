@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+// import firebase from 'firebase';
+// const db = firebase.firestore();
+
 import { getToken } from '../../api/index';
 
 const baseUrl = 'https://apis.woozeee.com/api/v1/';
@@ -20,39 +23,91 @@ const axiosReq = async (methodType, reqData) => {
   // return res;
 };
 
-export const handleLike = async (likeData) => {
-  console.log(likeData);
-  if (likeData.isLike == true) {
-    const config = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `${await getToken()}`,
-      },
-      body: likeData,
-    };
-    const res = await axios.post(baseUrl + 'entry-data', likeData, config);
+export const sendReport = async (userReason, userId) => {
+  const data = {
+    reason: userReason.reason,
+    section: 'socials',
+    entryId: userId,
+    resolved: false,
+  };
 
-    return res;
-  } else {
-    console.log('Aleem, see oo. It ran!!');
-    const config = {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `${await getToken()}`,
-      },
-      body: JSON.stringify(likeData),
-    };
-    try {
-      const res = await axios.delete(baseUrl + 'entry-data', likeData, config);
-      console.log('you unliked');
-      console.log(res.data);
-    } catch (err) {
-      console.log(err);
-    }
+  const token = await getToken();
+
+  const config = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: data,
+    url: `${baseUrl}complaints`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleLike = async (likeData) => {
+  const body = {
+    entryId: likeData.entryId,
+    isLike: true,
+  };
+  const token = await getToken();
+
+  const config = {
+    method: likeData.isLike ? 'delete' : 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
+    url: `${baseUrl}entry-data`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleFollow = async (userId, following) => {
+  const data = {
+    userId,
+    isFollow: true,
+  };
+
+  const token = await getToken();
+
+  const config = {
+    method: following ? 'post' : 'delete',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data,
+    url: `${baseUrl}user-data`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -69,6 +124,22 @@ export const getUserData = async (id) => {
   return res;
 };
 
-export const sendComment = (comment) => {
-  console.log(comment);
+export const getUserEntries = async (id) => {
+  const config = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `${await getToken()}`,
+    },
+  };
+  const res = await axios.get(baseUrl + `entries?userId=${id}`, config);
+  return res;
+};
+
+export const sendComment = async () => {
+  // console.log(comment);
+  const response = db.collection('Blogs');
+  const data = await response.get();
+  data.docs.forEach((item) => console.log(item));
 };

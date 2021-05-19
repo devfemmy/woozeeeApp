@@ -1,4 +1,5 @@
 import React, {
+  Component,
   useState,
   useContext,
   useCallback,
@@ -7,7 +8,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, Share } from 'react-native';
 
 import Moment from 'react-moment';
 
@@ -33,7 +34,9 @@ import InteractIcon from 'src/components/InteractIcon';
 import {
   sendComment,
   handleLike,
+  handleFollow,
   getUserData,
+  getUserEntries,
 } from '../../services/Requests/index';
 
 import {
@@ -54,13 +57,16 @@ const VideoView = forwardRef((props, ref) => {
 
   const { item } = data;
 
+  const { userId } = item;
+
   const videoRef = useRef(null);
 
   const sheetRef = useRef(null);
 
   const isMounted = useRef(false);
 
-  const [isLiked, setLiked] = useState(false);
+  const [isLiked, setLiked] = useState(item.userEntryData.isLike);
+  const [totalLikes, setTotalLikes] = useState(item.totalLikes);
 
   const [isBookmarked, setBookmarked] = useState(false);
 
@@ -71,9 +77,32 @@ const VideoView = forwardRef((props, ref) => {
     entryId: item.userId,
   });
 
+  const [following, setFollowing] = useState(item.userEntryData.isFollow);
+  // console.log(item.userEntryData);
+
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: 'Share woozeee post',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          alert(result.activityType);
+        } else {
+          // shared
+          alert('Shared');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+        // alert('Action dismissed');
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   const likeData = {
     entryId: item._id,
-    isLike: !isLiked,
+    isLike: isLiked,
   };
 
   const { appState } = useContext(AppSettingsContext);
@@ -82,19 +111,43 @@ const VideoView = forwardRef((props, ref) => {
 
   const toggleLike = async () => {
     setLiked(!isLiked);
-    await handleLike(likeData);
+    const newLikesCount = isLiked ? totalLikes - 1 : totalLikes + 1;
+    setTotalLikes(newLikesCount);
+
+    // We want to update the total like count that is returned from the server
+    // So we have fresh like count after interaction with the like icon (:
+    handleLike(likeData).then((resData) => {
+      // The meta contains new count for the entry
+      // resData.meta.totalLikes.totalLikes
+      // resData.meta.totalLikes.totalVotes
+      // resData.meta.totalLikes.totalViews
+      // resData.meta.totalLikes.totalComments
+      setTotalLikes(resData.meta.totalLikes);
+    });
   };
 
+  const toggleFollow = async () => {
+    setFollowing(!following);
+    await handleFollow(userId, !following);
+  };
+
+  const followState = () => getUserEntries(userId);
+
   const handleComment = () => {
-    sendComment(form);
-    setFormValues((comment = ''));
+    sendComment();
+    setFormValues('');
   };
 
   const toggleBookmark = () => setBookmarked((prevState) => !prevState);
 
   // const updateHiddenText = () => setHideText((prevState) => !prevState);
 
-  const routeComments = () => navigation.navigate('Comments');
+  const routeComments = () => props.navigation.navigate('Comments');
+
+  const routeReport = () => {
+    sheetRef.current.close();
+    props.navigation.navigate('Report', data);
+  };
 
   const handleOpenSheet = () => sheetRef.current.open();
 
@@ -295,7 +348,7 @@ const VideoView = forwardRef((props, ref) => {
               Accessory={(evaProps) => (
                 <IconCHeart {...evaProps} active={isLiked} />
               )}
-              textContent={item.totalLikes}
+              textContent={totalLikes}
               direction="row"
               status={isLiked ? 'danger' : 'basic'}
               height={20}
@@ -380,6 +433,7 @@ const VideoView = forwardRef((props, ref) => {
                 placeholder={t('leaveComment')}
                 setFormValues={setFormValues}
                 size="medium"
+                // value={form.comment}
               />
             </View>
             <View style={{ alignSelf: 'flex-start', marginTop: 4 }}>
@@ -434,9 +488,10 @@ const VideoView = forwardRef((props, ref) => {
               width: '100%',
               justifyContent: 'center',
             }}
+            onPress={toggleFollow}
           >
             <Text style={{ fontSize: 16 }} status="basic">
-              {t('follow')}
+              {following ? t('unfollow') : t('follow')}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 2, width: '100%' }} />
@@ -447,6 +502,7 @@ const VideoView = forwardRef((props, ref) => {
               width: '100%',
               justifyContent: 'center',
             }}
+            onPress={routeReport}
           >
             <Text style={{ fontSize: 16 }} status="basic">
               {t('makeReport')}
@@ -473,6 +529,7 @@ const VideoView = forwardRef((props, ref) => {
               width: '100%',
               justifyContent: 'center',
             }}
+            onPress={handleShare}
           >
             <Text style={{ fontSize: 16 }} status="basic">
               {t('shareTo')}

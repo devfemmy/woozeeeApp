@@ -60,6 +60,8 @@ export const TrendingPosts = ({ info }) => {
 export const StoryPosts = ({ info }) => {
   const t = useContext(LocaleContext);
 
+  // console.log('info from StoryPosts -> ' + info);
+
   const RenderCategoryHeader = () => (
     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
       <TouchableOpacity activeOpacity={0.75} style={{ position: 'relative' }}>
@@ -161,8 +163,11 @@ export const UsersPosts = ({ info }) => info.map((item) => (
 ));
 
 // prettier-ignore
-export const ProfilePosts = ({ info }) => (
-  <List
+export const ProfilePosts = ({allEntries}) => {
+  // console.log("from profile post -> ", allEntries)
+  const {firstTenEntries} = allEntries
+  return(
+    <List
     style={{
       backgroundColor: 'transparent',
     }}
@@ -174,10 +179,10 @@ export const ProfilePosts = ({ info }) => (
     showsHorizontalScrollIndicator={true}
     showsVerticalScrollIndicator={false}
     numColumns={3}
-    data={info}
+    data={firstTenEntries}
     keyExtractor={(_, i) => i.toString()}
     renderItem={(renderData) => (
-      <VideoCard data={renderData.item} extraWidth={0} numColumns={3} />
+      <VideoCard data={renderData} extraWidth={0} numColumns={3} />
     )}
     getItemLayout={(data, index) => ({
       length: 200,
@@ -185,7 +190,8 @@ export const ProfilePosts = ({ info }) => (
       index,
     })}
   />
-);
+  )
+  }
 
 export const WoozPosts = ({ info }) => {
   const { bottom, top } = useSafeAreaInsets();

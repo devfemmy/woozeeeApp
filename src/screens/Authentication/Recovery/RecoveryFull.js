@@ -4,30 +4,41 @@ import { View, ScrollView } from 'react-native';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
 
-import { LocaleContext } from 'src/contexts';
+import { useIsFocused } from '@react-navigation/native';
+
+import { AuthContext, LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
-export default function RecoverWithEmail({ navigation }) {
+export default function RecoveryFull({ route, navigation }) {
   const [isLoading, setLoading] = useState(false);
 
-  const [email, setFormValues] = useState('');
+  const { authOptions } = useContext(AuthContext);
+
+  const { email } = route.params;
 
   const t = useContext(LocaleContext);
 
-  const routeRegister = () => navigation.navigate('Register');
+  const { forgotPassword } = authOptions;
 
-  const isEmailValid = (emailAddress) => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(emailAddress).toLowerCase());
+  const isFocused = useIsFocused();
+
+  const [errorMsg, setErrorMsg] = useState({
+    auth: null,
+  });
+
+  const [form, setFormValues] = useState({
+    email,
+    password: '',
+  });
+
+  const loginUser = async () => {
+    await forgotPassword(form);
   };
 
-  const routeRecoveryFull = () =>
-    isEmailValid(email.email)
-      ? navigation.navigate('RecoveryFull', email)
-      : null;
+  const routeRegister = () => navigation.navigate('Register');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -47,15 +58,41 @@ export default function RecoverWithEmail({ navigation }) {
             padding: 15,
           }}
         >
+          {errorMsg.auth ? (
+            <View
+              style={{
+                paddingVertical: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row',
+              }}
+            >
+              <Text status="danger" category="label" style={{ marginRight: 2 }}>
+                {` ${t('error')}! `}
+              </Text>
+              <Text status="danger" category="p2">
+                {t(errorMsg.auth)}
+              </Text>
+            </View>
+          ) : null}
           <View style={{ paddingBottom: 10 }}>
             <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
-                type="email"
-                label={t('emailAddress')}
-                autoCompleteType="email"
-                textContentType="emailAddress"
-                validate="email"
-                // onChangeText={isEmailValid(email) ? setDisabled(false) : setDisabled(true)}
+                type="token"
+                label={t('verificationCode')}
+                autoCompleteType="off"
+                textContentType="oneTimeCode"
+                validate="required"
+                setFormValues={setFormValues}
+              />
+            </View>
+            <View style={{ paddingVertical: 10 }}>
+              <GeneralTextField
+                type="password"
+                label={t('newPassword')}
+                textContentType="password"
+                validate="password"
+                secure
                 setFormValues={setFormValues}
               />
             </View>
@@ -66,8 +103,8 @@ export default function RecoverWithEmail({ navigation }) {
                 accessibilityLiveRegion="assertive"
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
-                onPress={routeRecoveryFull}
                 disabled={isLoading}
+                onPress={loginUser}
               >
                 <Text status="control">{t('continue')}</Text>
               </Button>

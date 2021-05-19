@@ -41,8 +41,10 @@ import { IconCMovie, IconCMedal } from 'src/components/CustomIcons';
 import Api from 'src/api';
 
 import { socialUrl } from 'src/api/dummy';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 export default function Wooz({ navigation }) {
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
@@ -59,10 +61,9 @@ export default function Wooz({ navigation }) {
   // }
 
   const VIEW_HEIGHT = height - (57 + spacing);
- 
+
   // const VIEW_HEIGHT = hp('100%');
   // console.log('hEIGHT', VIEW_HEIGHT)
-
 
   const t = useContext(LocaleContext);
 
@@ -98,31 +99,31 @@ export default function Wooz({ navigation }) {
       }
     };
 
-    // const startVideo = async () => {
-    //   try {
-    //     const status = await videoRef.current.getStatusAsync();
+    const startVideo = async () => {
+      try {
+        const status = await videoRef.current.getStatusAsync();
 
-    //     if (status.isLoaded) {
-    //       await videoRef.current.playAsync();
-    //       videoViewRef.current.resetPlayState(true);
-    //     }
-    //   } catch (e) {
-    //     const msg = e;
-    //   }
-    // };
+        if (status.isLoaded) {
+          await videoRef.current.playAsync();
+          videoViewRef.current.resetPlayState(true);
+        }
+      } catch (e) {
+        const msg = e;
+      }
+    };
 
-    // const stopVideo = async () => {
-    //   try {
-    //     const status = await videoRef.current.getStatusAsync();
+    const stopVideo = async () => {
+      try {
+        const status = await videoRef.current.getStatusAsync();
 
-    //     if (status.isLoaded) {
-    //       await videoRef.current.stopAsync();
-    //       videoViewRef.current.resetPlayState(false);
-    //     }
-    //   } catch (e) {
-    //     const msg = e;
-    //   }
-    // };
+        if (status.isLoaded) {
+          await videoRef.current.stopAsync();
+          videoViewRef.current.resetPlayState(false);
+        }
+      } catch (e) {
+        const msg = e;
+      }
+    };
 
     useFocusEffect(
       useCallback(() => {
@@ -157,7 +158,7 @@ export default function Wooz({ navigation }) {
     } = useInfiniteQuery(
       ['inFiniteWoozVideos', 1],
       async ({ pageParam = 1 }) => {
-        const promise = await Api.getVideos(socialUrl, 1, pageParam);
+        const promise = await Api.getVideos(pageParam);
         promise.cancel = () => Api.cancelRequest('Request aborted');
         return promise;
       },
@@ -223,7 +224,7 @@ export default function Wooz({ navigation }) {
                       }}
                       source={
                         item.poster
-                          ? { uri: item.poster }
+                          ? { uri: item.mediaURL }
                           : require('assets/images/banner/placeholder-image.png')
                       }
                     />
@@ -233,6 +234,7 @@ export default function Wooz({ navigation }) {
                     data={{ item, i }}
                     height={VIEW_HEIGHT}
                     videoRef={videoRef}
+                    navigation={navigation}
                   />
                 </React.Fragment>
               ))}
@@ -246,7 +248,7 @@ export default function Wooz({ navigation }) {
                   ref={videoRef}
                   resizeMode="contain"
                   style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                  source={{ uri: page.pageData.data[index].video }}
+                  source={{ uri: page.pageData.data[index].mediaURL }}
                   isLooping
                   shouldPlay={isFocused}
                   // prettier-ignore

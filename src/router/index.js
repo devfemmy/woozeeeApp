@@ -15,6 +15,7 @@ import Register from 'src/screens/Authentication/Registration';
 import RegisterFull from 'src/screens/Authentication/Registration/RegisterFull';
 import VerifyWithCode from 'src/screens/Authentication/Verification';
 import RecoverWithEmail from 'src/screens/Authentication/Recovery';
+import RecoveryFull from '../screens/Authentication/Recovery/RecoveryFull';
 
 // Common screens
 import FAQs from 'src/screens/Common/FAQs';
@@ -27,6 +28,7 @@ import SettingsGlobal from 'src/screens/User/Common/SettingsGlobal';
 import EditProfile from 'src/screens/User/Common/EditProfile';
 import ChangePassword from 'src/screens/User/Common/ChangePassword';
 
+import Report from '../components/ReportCard/index';
 import Search from 'src/screens/User/Common/Search';
 import Movies from 'src/screens/User/Common/Movies';
 import ViewMovies from 'src/screens/User/Common/ViewMovies';
@@ -80,6 +82,7 @@ export default function Router() {
       VerifyWithCode,
       RegisterFull,
       RecoverWithEmail,
+      RecoveryFull,
     },
 
     User: {
@@ -116,6 +119,7 @@ export default function Router() {
       BillMobileData,
       BillCableTv,
       BillElectricity,
+      Report,
     },
 
     Common: {

@@ -10,6 +10,8 @@ import {
 
 import { LinearGradient } from 'expo-linear-gradient';
 
+import Api from 'src/api';
+
 // prettier-ignore
 import {
   Layout, Text, Button, Tab, TabView, Divider,
@@ -32,6 +34,11 @@ import {
   IconBackIos,
 } from 'src/components/CustomIcons';
 
+import {
+  getUserEntries,
+  handleFollow,
+} from '../../../../services/Requests/index';
+
 import { userPostsUrl } from 'src/api/dummy';
 
 const PLACEHOLDER_CONFIG = {
@@ -42,14 +49,15 @@ const PLACEHOLDER_CONFIG = {
 };
 
 // prettier-ignore
-const ProfilePostsArea = () => (
-  WithPaginatedFetch(ProfilePosts, userPostsUrl, PLACEHOLDER_CONFIG)
+const ProfilePostsArea = ({testData}) => (
+  WithPaginatedFetch(ProfilePosts, userPostsUrl, PLACEHOLDER_CONFIG, testData)
 );
 
 export default function UserProfile({ route, navigation }) {
   const { user } = route.params;
 
   const {
+    userId,
     displayName,
     email,
     fName,
@@ -59,7 +67,24 @@ export default function UserProfile({ route, navigation }) {
     followersCount,
     followingCount,
     imgUrl,
+    userData,
   } = user;
+
+  // console.log(user);
+
+  // const getEntries = async () => {
+  //   await getUserEntries(userId);
+  // };
+  // getEntries();
+
+  const [following, setFollowing] = useState(userData.isFollow);
+  // console.log(userData);
+
+  const toggleFollow = async () => {
+    // console.log(userData.userId, following);
+    // setFollowing(following);
+    // await handleFollow(userData.userId, !following);
+  };
 
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
@@ -188,9 +213,10 @@ export default function UserProfile({ route, navigation }) {
               width: 100,
               minHeight: 35,
             }}
+            onPress={toggleFollow}
           >
             <Text status="control" category="c2">
-              {t('follow')}
+              {following ? t('following') : t('follow')}
             </Text>
           </Button>
         </View>
@@ -313,7 +339,7 @@ export default function UserProfile({ route, navigation }) {
                   style={{ alignItems: 'center', width: '33%' }}
                   onPress={routeFollow}
                 >
-                  <Text category="h5">{followingCount}</Text>
+                  <Text category="h5">{followersCount}</Text>
                   <Text category="c2" appearance="hint">
                     {t('followers')}
                   </Text>
@@ -323,7 +349,7 @@ export default function UserProfile({ route, navigation }) {
                   style={{ alignItems: 'center', width: '33%' }}
                   onPress={routeFollow}
                 >
-                  <Text category="h5">{followersCount}</Text>
+                  <Text category="h5">{followingCount}</Text>
                   <Text category="c2" appearance="hint">
                     {t('following')}
                   </Text>
@@ -341,13 +367,13 @@ export default function UserProfile({ route, navigation }) {
           onSelect={(index) => setSelectedIndex(index)}
         >
           <Tab title={t('all')} icon={IconGrid}>
-            <ProfilePostsArea />
+            <ProfilePostsArea testData={user} />
           </Tab>
           <Tab title={t('saved')} icon={IconBookmark}>
-            <ProfilePostsArea />
+            <ProfilePostsArea testData={user} />
           </Tab>
           <Tab title={t('liked')} icon={IconHeart}>
-            <ProfilePostsArea />
+            <ProfilePostsArea testData={user} />
           </Tab>
         </TabView>
       </View>

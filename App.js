@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 
-import React, { useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 
 import { enableScreens } from 'react-native-screens';
 

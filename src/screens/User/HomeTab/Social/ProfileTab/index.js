@@ -1,4 +1,4 @@
-import React, { useContext,useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import {
   View,
@@ -44,8 +44,8 @@ const PLACEHOLDER_CONFIG = {
 };
 
 // prettier-ignore
-const ProfilePostsArea = () => (
-  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG)
+const ProfilePostsArea = ({testData}) => (
+  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, testData)
 );
 
 export default function Profile({ navigation }) {
@@ -55,6 +55,8 @@ export default function Profile({ navigation }) {
 
   const t = useContext(LocaleContext);
 
+  const [user, setUser] = useState({});
+
   const [form, setFormValues] = useState({
     fName: '',
     sName: '',
@@ -63,8 +65,7 @@ export default function Profile({ navigation }) {
     imgUrl: '',
     followersCount: '',
     followingCount: '',
-    videoCount: ''
-
+    videoCount: '',
   });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -81,321 +82,309 @@ export default function Profile({ navigation }) {
 
   const routeSettings = () => navigation.navigate('Settings');
 
-
   const getUserProfile = (user_id) => {
     // setLoading(true)
-    AsyncStorage.getItem('USER_AUTH_TOKEN').then(
-        res => {
-            axios.get(`user?userId=${user_id}`,{headers: {Authorization: res}})
-            .then(
-              response => {
-              // setLoading(false)
-               const user_data = response.data.user;
-               const first_name = user_data.fName;
-               const last_name = user_data.sName;
-               const bio = user_data.bio;
-               const email = user_data.email;
-               const imageUrl = user_data.imgUrl;
-               const videoCount = user_data.videoCount;
-               const followingCount = user_data.followingCount;
-               const followersCount = user_data.followersCount;
-               setFormValues((prevState) => ({...prevState, 
-                fName: first_name, 
-                sName: last_name,
-                email: email,
-                bio: bio,
-                imageUrl: imageUrl,
-                videoCount: videoCount,
-                followersCount: followersCount,
-                followingCount: followingCount
-              }))
-              }
-            )
-            .catch(err => {  
-                  // setLoading(false)                
-                  console.log(err.response)
-
-            })
-        }
-    )
-    .catch( err => {console.log(err)}) 
-}
-useEffect(() => {
-  const unsubscribe = navigation.addListener('focus', () => {
-    AsyncStorage.getItem('userid').then(
-      response => {
-        getUserProfile(response);
-      }
-    ).catch(
-      err => err
-    )
+    AsyncStorage.getItem('USER_AUTH_TOKEN')
+      .then((res) => {
+        axios
+          .get(`user?userId=${user_id}`, { headers: { Authorization: res } })
+          .then((response) => {
+            // setLoading(false)
+            const user_data = response.data.user;
+            const first_name = user_data.fName;
+            const last_name = user_data.sName;
+            const bio = user_data.bio;
+            const email = user_data.email;
+            const imageUrl = user_data.imgUrl;
+            const videoCount = user_data.videoCount;
+            const followingCount = user_data.followingCount;
+            const followersCount = user_data.followersCount;
+            setFormValues((prevState) => ({
+              ...prevState,
+              fName: first_name,
+              sName: last_name,
+              email: email,
+              bio: bio,
+              imageUrl: imageUrl,
+              videoCount: videoCount,
+              followersCount: followersCount,
+              followingCount: followingCount,
+            }));
+            setUser(user_data);
+          })
+          .catch((err) => {
+            // setLoading(false)
+            console.log(err.response);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      AsyncStorage.getItem('userid')
+        .then((response) => {
+          getUserProfile(response);
+        })
+        .catch((err) => err);
     });
 
-  
-  return unsubscribe;
-}, [navigation]);
+    return unsubscribe;
+  }, [navigation]);
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <ScrollView>
-      <View
-        style={{
-          position: 'relative',
-          height: 165,
-          width: '100%',
-          alignItems: 'flex-start',
-        }}
-      >
         <View
           style={{
-            backgroundColor: '#EDF1F7',
-            height: 120,
-            position: 'absolute',
+            position: 'relative',
+            height: 165,
             width: '100%',
-            zIndex: 1,
+            alignItems: 'flex-start',
           }}
         >
-          <Image
-            source={require('assets/images/banner/profile.jpg')}
-            defaultSource={require('assets/images/banner/profile.jpg')}
+          <View
             style={{
-              height: '100%',
-              resizeMode: 'cover',
+              backgroundColor: '#EDF1F7',
+              height: 120,
+              position: 'absolute',
               width: '100%',
+              zIndex: 1,
             }}
-            resizeMode="cover"
-          />
-        </View>
-        <View
-          style={{
-            position: 'absolute',
-            zIndex: 5,
-            margin: 15,
-            right: 0,
-            top: 0,
-          }}
-        >
-          <InteractIcon
-            Accessory={(evaProps) => <IconSettings {...evaProps} />}
-            height={26}
-            width={26}
-            onPress={routeSettings}
-          />
-        </View>
-        <View
-          style={{
-            backgroundColor: '#EDF1F7',
-            bottom: 0,
-            borderRadius: 52,
-            height: 104,
-            position: 'absolute',
-            width: 104,
-            zIndex: 3,
-            marginLeft: 15,
-          }}
-        >
-          <View style={{ position: 'relative' }}>
-            <LinearGradient
-              colors={['#043F7C', '#FF5757']}
-              style={{
-                height: 104,
-                width: 104,
-                borderRadius: 52,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Image
-                source={{uri: form.imageUrl}}
-                defaultSource={require('assets/images/user/user2.png')}
-                style={{
-                  height: 100,
-                  width: 100,
-                  borderRadius: 50,
-                }}
-                resizeMode="cover"
-              />
-            </LinearGradient>
+          >
             <Image
-              source={require('assets/images/icon/verified.png')}
-              defaultSource={require('assets/images/icon/verified.png')}
+              source={require('assets/images/banner/profile.jpg')}
+              defaultSource={require('assets/images/banner/profile.jpg')}
               style={{
-                height: 22,
-                width: 22,
-                borderRadius: 11,
-                position: 'absolute',
-                right: 4,
-                bottom: 8,
+                height: '100%',
+                resizeMode: 'cover',
+                width: '100%',
               }}
               resizeMode="cover"
             />
           </View>
-        </View>
-        <View
-          style={{
-            bottom: 0,
-            position: 'absolute',
-            zIndex: 3,
-            right: 0,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}
-        >
-            <Button
-                  status="primary"
-                  appearance="outline"
-                  size="tiny"
-                  style={{ marginHorizontal: 5, width: 100, minHeight: 35 }}
-                  onPress={routeMessaging}
-                >
-                  <Text status="primary" category="c2">
-                    {t('messaging')}
-                  </Text>
-                </Button>
-          <Button
-            status="primary"
-            size="tiny"
+          <View
             style={{
-              marginHorizontal: 15,
-              width: 100,
-              minHeight: 35,
+              position: 'absolute',
+              zIndex: 5,
+              margin: 15,
+              right: 0,
+              top: 0,
             }}
-            onPress={routeEditProfile}
           >
-            <Text status="control" category="c2">
-              {`${t('edit')} ${t('profile')}`}
-            </Text>
-          </Button>
+            <InteractIcon
+              Accessory={(evaProps) => <IconSettings {...evaProps} />}
+              height={26}
+              width={26}
+              onPress={routeSettings}
+            />
+          </View>
+          <View
+            style={{
+              backgroundColor: '#EDF1F7',
+              bottom: 0,
+              borderRadius: 52,
+              height: 104,
+              position: 'absolute',
+              width: 104,
+              zIndex: 3,
+              marginLeft: 15,
+            }}
+          >
+            <View style={{ position: 'relative' }}>
+              <LinearGradient
+                colors={['#043F7C', '#FF5757']}
+                style={{
+                  height: 104,
+                  width: 104,
+                  borderRadius: 52,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  source={{ uri: form.imageUrl }}
+                  defaultSource={require('assets/images/user/user2.png')}
+                  style={{
+                    height: 100,
+                    width: 100,
+                    borderRadius: 50,
+                  }}
+                  resizeMode="cover"
+                />
+              </LinearGradient>
+              <Image
+                source={require('assets/images/icon/verified.png')}
+                defaultSource={require('assets/images/icon/verified.png')}
+                style={{
+                  height: 22,
+                  width: 22,
+                  borderRadius: 11,
+                  position: 'absolute',
+                  right: 4,
+                  bottom: 8,
+                }}
+                resizeMode="cover"
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              bottom: 0,
+              position: 'absolute',
+              zIndex: 3,
+              right: 0,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Button
+              status="primary"
+              appearance="outline"
+              size="tiny"
+              style={{ marginHorizontal: 5, width: 100, minHeight: 35 }}
+              onPress={routeMessaging}
+            >
+              <Text status="primary" category="c2">
+                {t('messaging')}
+              </Text>
+            </Button>
+            <Button
+              status="primary"
+              size="tiny"
+              style={{
+                marginHorizontal: 15,
+                width: 100,
+                minHeight: 35,
+              }}
+              onPress={routeEditProfile}
+            >
+              <Text status="control" category="c2">
+                {`${t('edit')} ${t('profile')}`}
+              </Text>
+            </Button>
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          width: '100%',
-        }}
-      >
         <View
           style={{
-            // height: IS_PORTRAIT ? 180 : '100%',
-            width: IS_PORTRAIT ? '100%' : '40%',
-            // backgroundColor: 'blue'
+            flex: 1,
+            flexDirection: 'column',
+            width: '100%',
           }}
         >
           <View
-            style={{ flex: 1}}
-            alwaysBounceVertical
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
+            style={{
+              // height: IS_PORTRAIT ? 180 : '100%',
+              width: IS_PORTRAIT ? '100%' : '40%',
+              // backgroundColor: 'blue'
+            }}
           >
             <View
-              style={{
-                paddingHorizontal: 15,
-                paddingBottom: 10,
-                paddingTop: 5,
-              }}
+              style={{ flex: 1 }}
+              alwaysBounceVertical
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
             >
-              <View>
-                <View
-                  style={{
-                    marginBottom: 10,
-                    marginTop: 5,
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                  }}
-                >
-                  <Text category="h6">
-                    {`${form.fName} ${form.sName}`}
-                  </Text>
-                  <Text style={{ marginHorizontal: 5 }}>|</Text>
-                  <Text category="c2" appearance="hint">
-                   {form.email}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    maxWidth: 300,
-                    marginBottom: 10,
-                  }}
-                >
-                  <Text
-                    category="c2"
-                    appearance="hint"
-                    style={{
-                      lineHeight: 15,
-                    }}
-                    numberOfLines={3}
-                  >
-                  {form.bio}
-                  </Text>
-                </View>
-              </View>
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  width: '100%',
+                  paddingHorizontal: 15,
+                  paddingBottom: 10,
+                  paddingTop: 5,
                 }}
               >
-                <View style={{ alignItems: 'center', width: '33%' }}>
-                  <Text category="h5">
-                    {form.videoCount}
-                  </Text>
-                  <Text category="c2" appearance="hint">
-                    {t('posts')}
-                  </Text>
+                <View>
+                  <View
+                    style={{
+                      marginBottom: 10,
+                      marginTop: 5,
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    <Text category="h6">{`${form.fName} ${form.sName}`}</Text>
+                    <Text style={{ marginHorizontal: 5 }}>|</Text>
+                    <Text category="c2" appearance="hint">
+                      {form.email}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      maxWidth: 300,
+                      marginBottom: 10,
+                    }}
+                  >
+                    <Text
+                      category="c2"
+                      appearance="hint"
+                      style={{
+                        lineHeight: 15,
+                      }}
+                      numberOfLines={3}
+                    >
+                      {form.bio}
+                    </Text>
+                  </View>
                 </View>
-                <TouchableOpacity
-                  activeOpacity={0.75}
-                  style={{ alignItems: 'center', width: '33%' }}
-                  onPress={routeFollow}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
                 >
-                  <Text category="h5">
-                    {form.followersCount}
-                  </Text>
-                  <Text category="c2" appearance="hint">
-                    {t('followers')}
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.75}
-                  style={{ alignItems: 'center', width: '33%' }}
-                  onPress={routeFollow}
-                >
-                  <Text category="h5">
-                    {form.followingCount}
-                  </Text>
-                  <Text category="c2" appearance="hint">
-                    {t('following')}
-                  </Text>
-                </TouchableOpacity>
+                  <View style={{ alignItems: 'center', width: '33%' }}>
+                    <Text category="h5">{form.videoCount}</Text>
+                    <Text category="c2" appearance="hint">
+                      {t('posts')}
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    activeOpacity={0.75}
+                    style={{ alignItems: 'center', width: '33%' }}
+                    onPress={routeFollow}
+                  >
+                    <Text category="h5">{form.followersCount}</Text>
+                    <Text category="c2" appearance="hint">
+                      {t('followers')}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.75}
+                    style={{ alignItems: 'center', width: '33%' }}
+                    onPress={routeFollow}
+                  >
+                    <Text category="h5">{form.followingCount}</Text>
+                    <Text category="c2" appearance="hint">
+                      {t('following')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
+          <Divider />
+          <TabView
+            style={{ flex: 1 }}
+            indicatorStyle={{ backgroundColor: 'transparent' }}
+            selectedIndex={selectedIndex}
+            shouldLoadComponent={shouldLoadComponent}
+            onSelect={(index) => setSelectedIndex(index)}
+          >
+            <Tab title={t('all')} icon={IconGrid}>
+              <ProfilePostsArea testData={user} />
+            </Tab>
+            <Tab title={t('saved')} icon={IconBookmark}>
+              <ProfilePostsArea testData={user} />
+            </Tab>
+            <Tab title={t('liked')} icon={IconHeart}>
+              <ProfilePostsArea testData={user} />
+            </Tab>
+          </TabView>
         </View>
-        <Divider />
-        <TabView
-          style={{ flex: 1 }}
-          indicatorStyle={{ backgroundColor: 'transparent' }}
-          selectedIndex={selectedIndex}
-          shouldLoadComponent={shouldLoadComponent}
-          onSelect={(index) => setSelectedIndex(index)}
-        >
-          <Tab title={t('all')} icon={IconGrid}>
-            <ProfilePostsArea />
-          </Tab>
-          <Tab title={t('saved')} icon={IconBookmark}>
-            <ProfilePostsArea />
-          </Tab>
-          <Tab title={t('liked')} icon={IconHeart}>
-            <ProfilePostsArea />
-          </Tab>
-        </TabView>
-      </View>
       </ScrollView>
-
     </Layout>
   );
 }
