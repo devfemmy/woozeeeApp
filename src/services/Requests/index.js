@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-import firebase from 'firebase';
-
-// firebase.initializeApp();
+// import firebase from 'firebase';
 // const db = firebase.firestore();
 
 import { getToken } from '../../api/index';

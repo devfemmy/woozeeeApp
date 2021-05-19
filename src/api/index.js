@@ -52,9 +52,7 @@ export default {
   getMovies: async () => {
     const instance = await createInstance();
 
-    const res = await instance.get(
-      'movies?pageNumber=1&pageSize=10&providerId=5fbe41512acc12138c00def3',
-    );
+    const res = await instance.get('movies?pageNumber=1&pageSize=10');
 
     const { data } = res;
     return {
