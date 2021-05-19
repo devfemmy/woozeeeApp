@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+import firebase from 'firebase';
+
+// firebase.initializeApp();
+// const db = firebase.firestore();
+
 import { getToken } from '../../api/index';
 
 const baseUrl = 'https://apis.woozeee.com/api/v1/';
@@ -134,6 +139,9 @@ export const getUserEntries = async (id) => {
   return res;
 };
 
-export const sendComment = (comment) => {
+export const sendComment = async () => {
   // console.log(comment);
+  const response = db.collection('Blogs');
+  const data = await response.get();
+  data.docs.forEach((item) => console.log(item));
 };
