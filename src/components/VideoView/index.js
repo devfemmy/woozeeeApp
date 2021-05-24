@@ -36,7 +36,8 @@ import {
   handleLike,
   handleFollow,
   getUserData,
-  getUserEntries,
+  viewVideo,
+  handleBookmark,
 } from '../../services/Requests/index';
 
 import {
@@ -65,20 +66,30 @@ const VideoView = forwardRef((props, ref) => {
 
   const isMounted = useRef(false);
 
+  const [isBookmarked, setBookmarked] = useState(item.userEntryData.isBookmark);
+
   const [isLiked, setLiked] = useState(item.userEntryData.isLike);
+
   const [totalLikes, setTotalLikes] = useState(item.totalLikes);
 
-  const [isBookmarked, setBookmarked] = useState(false);
-
   // const [hideText, setHideText] = useState(true);
-
   const [form, setFormValues] = useState({
     comment: '',
     entryId: item.userId,
   });
 
   const [following, setFollowing] = useState(item.userEntryData.isFollow);
-  // console.log(item.userEntryData);
+
+  const likeData = {
+    entryId: item._id,
+    isLike: isLiked,
+  };
+
+  const { appState } = useContext(AppSettingsContext);
+
+  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
+
+  // const toggleBookmark = () => setBookmarked((prevState) => !prevState);
 
   const handleShare = async () => {
     try {
@@ -100,17 +111,10 @@ const VideoView = forwardRef((props, ref) => {
       console.log(error.message);
     }
   };
-  const likeData = {
-    entryId: item._id,
-    isLike: isLiked,
-  };
-
-  const { appState } = useContext(AppSettingsContext);
-
-  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
   const toggleLike = async () => {
     setLiked(!isLiked);
+
     const newLikesCount = isLiked ? totalLikes - 1 : totalLikes + 1;
     setTotalLikes(newLikesCount);
 
@@ -126,20 +130,23 @@ const VideoView = forwardRef((props, ref) => {
     });
   };
 
+  const toggleBookmark = async () => {
+    setBookmarked(!isBookmarked);
+    console.log(!isBookmarked);
+
+    const res = await handleBookmark(item.userEntryData.entryId, !isBookmarked);
+    console.log(res);
+  };
+
   const toggleFollow = async () => {
     setFollowing(!following);
     await handleFollow(userId, !following);
   };
 
-  const followState = () => getUserEntries(userId);
-
   const handleComment = () => {
     sendComment();
-    setFormValues('');
+    // setFormValues('');
   };
-
-  const toggleBookmark = () => setBookmarked((prevState) => !prevState);
-
   // const updateHiddenText = () => setHideText((prevState) => !prevState);
 
   const routeComments = () => props.navigation.navigate('Comments');
@@ -157,14 +164,20 @@ const VideoView = forwardRef((props, ref) => {
     await navigation.navigate('UserProfile', data);
   };
 
+  const handleView = async (item_id) => {
+    await viewVideo(item_id);
+  };
+
   useImperativeHandle(ref, () => ({
     async play() {
       try {
-        const status = await videoRef.current.getStatusAsync();
-
-        if (status.isPlaying) return;
-
         await videoRef.current.playAsync();
+        await videoRef.current.getStatusAsync();
+        // console.log(status);
+        if (status.isPlaying) {
+          handleView(item._id);
+          return;
+        }
       } catch (e) {
         const msg = e;
       }
@@ -327,6 +340,7 @@ const VideoView = forwardRef((props, ref) => {
             }
             posterStyle={{ height: '100%', width: '100%', resizeMode: 'cover' }}
             style={{ flex: 1 }}
+            // onPress={}
           />
         </View>
         <View

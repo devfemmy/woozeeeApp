@@ -10,11 +10,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { List, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
+
+import { ChallengeVideoCard } from '../../components/SocialCard/index';
 
 import VideoCard from 'src/components/SocialCard';
 
@@ -124,43 +128,102 @@ export const StoryPosts = ({ info }) => {
 };
 
 // prettier-ignore
-export const UsersPosts = ({ info }) => info.map((item) => (
-  <View
-    style={{
-      flex: 1,
-      marginBottom: 10,
-      paddingVertical: 5,
-      maxHeight: 235,
-    }}
-    key={item.category}
-  >
-    <View style={{ paddingHorizontal: 10 }}>
-      <Text category="h6" status="danger" style={{ marginBottom: 5 }}>
-        {item.category}
-      </Text>
-      <Text category="c1" style={{ marginBottom: 5 }}>
-        {`${item.content.length} Video(s)`}
-      </Text>
-    </View>
-    <List
-      style={{ backgroundColor: 'transparent' }}
-      alwaysBounceHorizontal
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-      data={item.content}
-      keyExtractor={(_, i) => i.toString()}
-      renderItem={(renderData) => (
-        <VideoCard data={renderData.item} extraWidth={0.5} />
-      )}
-      getItemLayout={(data, index) => ({
-        length: 200,
-        offset: 200 * index,
-        index,
-      })}
-    />
-  </View>
-));
+export const UsersPosts = ({ info }) => info.map((item) => {
+  return(
+    (
+      <View
+        style={{
+          flex: 1,
+          marginBottom: 10,
+          paddingVertical: 5,
+          maxHeight: 235,
+        }}
+        key={uuidv4()}
+      >
+        <View style={{ paddingHorizontal: 10 }}>
+          <Text category="h6" status="danger" style={{ marginBottom: 5 }}>
+            {item.userDisplayName}
+          </Text>
+          <Text category="c1" style={{ marginBottom: 5 }}>
+            {`${info.length} Video(s)`}
+          </Text>
+        </View>
+        <List
+          style={{ backgroundColor: 'transparent' }}
+          alwaysBounceHorizontal
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          data={info}
+          keyExtractor={(_, i) => i.toString()}
+          renderItem={(renderData) => (
+            <VideoCard data={renderData} extraWidth={0.5} />
+          )}
+          getItemLayout={(data, index) => ({
+            length: 200,
+            offset: 200 * index,
+            index,
+          })}
+        />
+      </View>
+    )
+  )
+});
+
+export const ChallengePosts = ({ chaData }) => {
+  console.log('challenge data -> ', chaData);
+  // const { dat}
+
+  const { data } = chaData;
+  console.log('subs from post -> ', data);
+  return chaData && chaData.data ? (
+    chaData.data.map((item) => {
+      return item.subs.map((sub) => {
+        return sub.challenges.length ? (
+          <View
+            style={{
+              flex: 1,
+              marginBottom: 10,
+              paddingVertical: 5,
+              maxHeight: 235,
+            }}
+            key={uuidv4()}
+          >
+            <View style={{ paddingHorizontal: 10 }}>
+              <Text category="h6" status="danger" style={{ marginBottom: 15 }}>
+                {sub.categoryName}
+              </Text>
+              <Text category="c1" style={{ marginBottom: 5 }}>
+                {`${sub.totalEntries} Video(s)`}
+              </Text>
+            </View>
+            <View>
+              <List
+                style={{ backgroundColor: 'transparent' }}
+                alwaysBounceHorizontal
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                data={sub.challenges}
+                keyExtractor={(_, i) => i.toString()}
+                renderItem={(renderData) => (
+                  <ChallengeVideoCard data={renderData} extraWidth={0.5} />
+                )}
+                getItemLayout={(data, index) => ({
+                  length: 200,
+                  offset: 200 * index,
+                  index,
+                })}
+              />
+            </View>
+          </View>
+        ) : null;
+      });
+    })
+  ) : (
+    <></>
+  );
+};
 
 // prettier-ignore
 export const ProfilePosts = ({allEntries}) => {

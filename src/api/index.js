@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import firebase from 'firebase';
+
+// import { firestore } from 'firebase';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { CancelToken } = axios;
 
-// const db = firebase.firestore();
+// const db = firestore();
 
 const source = CancelToken.source();
 
@@ -29,16 +30,16 @@ const createInstance = async () => {
 };
 
 export default {
-  // getComments: async () => {
-  //   const [comments, setComments] = useState([]);
-  //   const res = db.collection('entryComments');
-
-  //   const data = await res.get();
-  //   data.docs.forEach((comment) => {
-  //     console.log(setComments(comment));
-  //   });
-  //   return comments;
-  // },
+  getComments: async () => {
+    // const [comments, setComments] = useState([]);
+    // const res = db.collection('entryComments');
+    // const data = await res.get();
+    // console.log(data);
+    // data.docs.forEach((comment) => {
+    //   console.log(setComments(comment));
+    // });
+    // return comments;
+  },
   getStories: async () => {
     const instance = await createInstance();
 
@@ -69,6 +70,17 @@ export default {
       pageData: data,
       previousID: 1,
       nextID: page + 1,
+    };
+  },
+  getChallenges: async () => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`challenge-groups`);
+
+    const { data } = res;
+    // console.log(data);
+    return {
+      pageData: data,
     };
   },
   cancelRequest: (msg) => source.cancel(msg),

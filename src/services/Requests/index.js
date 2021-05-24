@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-// import firebase from 'firebase';
-// const db = firebase.firestore();
+import firebase, { firestore } from 'firebase';
+
+// firebase.initializeApp();
+// const db = firestore();
 
 import { getToken } from '../../api/index';
 
@@ -138,8 +140,67 @@ export const getUserEntries = async (id) => {
 };
 
 export const sendComment = async () => {
-  // console.log(comment);
-  const response = db.collection('Blogs');
-  const data = await response.get();
-  data.docs.forEach((item) => console.log(item));
+  // const res = db.collection('entryComments');
+  // const data = await res.get();
+  // console.log(data);
+};
+
+export const viewVideo = async (id) => {
+  const data = {
+    entryId: id,
+    isView: true,
+  };
+
+  const token = await getToken();
+
+  const config = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: data,
+    url: `${baseUrl}entry-data`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleBookmark = async (id, isBookmarked) => {
+  const data = {
+    entryId: id,
+    isBookmark: true,
+  };
+
+  // console.log(data, isBookmarked);
+
+  const token = await getToken();
+
+  const config = {
+    method: !isBookmarked ? 'delete' : 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: data,
+    url: `${baseUrl}entry-data`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 };

@@ -44,8 +44,8 @@ const PLACEHOLDER_CONFIG = {
 };
 
 // prettier-ignore
-const ProfilePostsArea = ({testData}) => (
-  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, testData)
+const ProfilePostsArea = ({userPostData}) => (
+  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, userPostData)
 );
 
 export default function Profile({ navigation }) {
@@ -374,13 +374,13 @@ export default function Profile({ navigation }) {
             onSelect={(index) => setSelectedIndex(index)}
           >
             <Tab title={t('all')} icon={IconGrid}>
-              <ProfilePostsArea testData={user} />
+              <ProfilePostsArea userPostData={user} />
             </Tab>
             <Tab title={t('saved')} icon={IconBookmark}>
-              <ProfilePostsArea testData={user} />
+              <ProfilePostsArea userPostData={user} />
             </Tab>
             <Tab title={t('liked')} icon={IconHeart}>
-              <ProfilePostsArea testData={user} />
+              <ProfilePostsArea userPostData={user} />
             </Tab>
           </TabView>
         </View>

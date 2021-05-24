@@ -42,7 +42,9 @@ import Api from 'src/api';
 
 import { socialUrl } from 'src/api/dummy';
 
-export default function Wooz({ navigation }) {
+export default function Wooz({ route, navigation }) {
+  console.log('from wooz -> ', route.params);
+
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
   const { width, height } = useWindowDimensions();
