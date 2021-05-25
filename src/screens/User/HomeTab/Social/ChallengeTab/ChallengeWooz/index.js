@@ -30,7 +30,7 @@ import { LocaleContext } from 'src/contexts';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
-import VideoFullscreen from 'src/components/ChallengeVideo';
+import ChallengeVideo from 'src/components/ChallengeVideo';
 
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
@@ -156,7 +156,7 @@ export default function Wooz({ route, navigation }) {
       refetch,
       hasNextPage,
       hasPreviousPage,
-    } = useInfiniteQuery(['inFiniteWoozVideos', 1], async () => {
+    } = useInfiniteQuery(['ChallengeWooz', 1], async () => {
       const promise = await Api.getWoozData(_id);
       if (data !== {} && data !== undefined) {
         setWoozData(data);
@@ -167,21 +167,8 @@ export default function Wooz({ route, navigation }) {
       return promise;
     });
 
-    // const { pages } = woozData;
-
     console.log('from challenge, challenge is => ', woozData);
 
-    if (status === 'loading') {
-      return (
-        <Placeholders
-          mediaLeft={false}
-          count={1}
-          numColumns={1}
-          maxHeight={height * 0.75}
-          maxWidth={width}
-        />
-      );
-    }
     if (status === 'error') {
       return (
         <FetchFailed
@@ -230,7 +217,7 @@ export default function Wooz({ route, navigation }) {
                       }
                     />
                   </View>
-                  <VideoFullscreen
+                  <ChallengeVideo
                     ref={videoViewRef}
                     data={item}
                     height={VIEW_HEIGHT}
@@ -249,7 +236,7 @@ export default function Wooz({ route, navigation }) {
                   ref={videoRef}
                   resizeMode="contain"
                   style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                  source={{ uri: page.pageData.data[index].video }}
+                  source={{ uri: page.pageData.data[index].mediaURL }}
                   isLooping
                   shouldPlay={isFocused}
                   // prettier-ignore

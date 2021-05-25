@@ -11,6 +11,8 @@ import { View, StyleSheet, Image, TouchableOpacity, Share } from 'react-native';
 
 import { Text } from '@ui-kitten/components';
 
+import { Video } from 'expo-av';
+
 // import { LinearGradient } from 'expo-linear-gradient';
 
 import InteractIcon from 'src/components/InteractIcon';
@@ -53,8 +55,6 @@ const VideoView = forwardRef((props, ref) => {
 
   const { item } = data;
 
-  console.log('from video full screen for wooz -> ', data);
-
   const [isLiked, setLiked] = useState(data.userEntryData.isLike);
   const [totalLikes, setTotalLikes] = useState(data.totalLikes);
 
@@ -65,8 +65,8 @@ const VideoView = forwardRef((props, ref) => {
     isLike: isLiked,
   };
 
-  const routeUserProfile = async () => {
-    const userData = await getUserData(data.userId);
+  const routeUserProfile = async (userId) => {
+    const userData = await getUserData(userId);
     const { data } = userData;
     await navigation.navigate('UserProfile', data);
   };
@@ -273,7 +273,7 @@ const VideoView = forwardRef((props, ref) => {
 
               <TouchableOpacity
                 style={{ alignItems: 'center' }}
-                onPress={routeUserProfile}
+                onPress={() => routeUserProfile(data.userId)}
               >
                 <Image
                   source={{ uri: data.userImageURL }}

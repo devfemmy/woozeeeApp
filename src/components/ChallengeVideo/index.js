@@ -10,7 +10,7 @@ import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { Text } from '@ui-kitten/components';
 
-// import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import InteractIcon from 'src/components/InteractIcon';
 
@@ -47,12 +47,12 @@ const styles = StyleSheet.create({
 const ChallengeVideo = forwardRef((props, ref) => {
   // prettier-ignore
   const {
-      data, height, videoRef, challenge, navigation
+      data, height, videoRef, navigation
     } = props;
 
   const { item } = data;
 
-  console.log('from challenge video full screen -> ', data);
+  //   console.log('from challenge video full screen -> ', data);
 
   const [isLiked, setLiked] = useState(data.userEntryData.isLike);
   const [totalLikes, setTotalLikes] = useState(data.totalLikes);
@@ -144,42 +144,6 @@ const ChallengeVideo = forwardRef((props, ref) => {
             }}
           >
             <View style={{ flexDirection: 'row' }}>
-              {/* <View style={{ position: 'relative' }}>
-                  <LinearGradient
-                    colors={['#043F7C', '#FF5757']}
-                    style={{
-                      height: 50,
-                      width: 50,
-                      borderRadius: 25,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Image
-                      source={require('assets/images/user/user2.png')}
-                      defaultSource={require('assets/images/user/user2.png')}
-                      style={{
-                        height: 46,
-                        width: 46,
-                        borderRadius: 23,
-                      }}
-                      resizeMode="cover"
-                    />
-                  </LinearGradient>
-                  <Image
-                    source={require('assets/images/icon/verified.png')}
-                    defaultSource={require('assets/images/icon/verified.png')}
-                    style={{
-                      height: 16,
-                      width: 16,
-                      borderRadius: 13,
-                      position: 'absolute',
-                      right: 0,
-                      bottom: 20,
-                    }}
-                    resizeMode="cover"
-                  />
-                </View> */}
               <View style={{ paddingLeft: 5 }}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text
@@ -285,7 +249,6 @@ const ChallengeVideo = forwardRef((props, ref) => {
     [
       height,
       item,
-      challenge,
       shouldPlay,
       togglePause,
       isLiked,

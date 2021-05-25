@@ -170,8 +170,6 @@ export default function Wooz({ navigation }) {
       },
     );
 
-    // console.log('from wooz -> ', data);
-
     if (status === 'loading') {
       return (
         <Placeholders
