@@ -1,5 +1,4 @@
 import React, {
-  Component,
   useState,
   useMemo,
   useCallback,
@@ -7,7 +6,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 
-import { View, StyleSheet, Image, TouchableOpacity, Share } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { Text } from '@ui-kitten/components';
 
@@ -45,15 +44,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const VideoView = forwardRef((props, ref) => {
+const ChallengeVideo = forwardRef((props, ref) => {
   // prettier-ignore
   const {
-    data, height, videoRef, challenge, navigation
-  } = props;
+      data, height, videoRef, challenge, navigation
+    } = props;
 
   const { item } = data;
 
-  console.log('from video full screen for wooz -> ', data);
+  console.log('from challenge video full screen -> ', data);
 
   const [isLiked, setLiked] = useState(data.userEntryData.isLike);
   const [totalLikes, setTotalLikes] = useState(data.totalLikes);
@@ -86,27 +85,6 @@ const VideoView = forwardRef((props, ref) => {
       // resData.meta.totalLikes.totalComments
       setTotalLikes(resData.meta.totalLikes);
     });
-  };
-
-  const handleShare = async () => {
-    try {
-      const result = await Share.share({
-        message: data.mediaURL,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          alert(result.activityType);
-        } else {
-          // shared
-          alert('Shared');
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-        // alert('Action dismissed');
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
   };
 
   // const [isLiked, setLiked] = useState(false);
@@ -167,41 +145,41 @@ const VideoView = forwardRef((props, ref) => {
           >
             <View style={{ flexDirection: 'row' }}>
               {/* <View style={{ position: 'relative' }}>
-                <LinearGradient
-                  colors={['#043F7C', '#FF5757']}
-                  style={{
-                    height: 50,
-                    width: 50,
-                    borderRadius: 25,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Image
-                    source={require('assets/images/user/user2.png')}
-                    defaultSource={require('assets/images/user/user2.png')}
+                  <LinearGradient
+                    colors={['#043F7C', '#FF5757']}
                     style={{
-                      height: 46,
-                      width: 46,
-                      borderRadius: 23,
+                      height: 50,
+                      width: 50,
+                      borderRadius: 25,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Image
+                      source={require('assets/images/user/user2.png')}
+                      defaultSource={require('assets/images/user/user2.png')}
+                      style={{
+                        height: 46,
+                        width: 46,
+                        borderRadius: 23,
+                      }}
+                      resizeMode="cover"
+                    />
+                  </LinearGradient>
+                  <Image
+                    source={require('assets/images/icon/verified.png')}
+                    defaultSource={require('assets/images/icon/verified.png')}
+                    style={{
+                      height: 16,
+                      width: 16,
+                      borderRadius: 13,
+                      position: 'absolute',
+                      right: 0,
+                      bottom: 20,
                     }}
                     resizeMode="cover"
                   />
-                </LinearGradient>
-                <Image
-                  source={require('assets/images/icon/verified.png')}
-                  defaultSource={require('assets/images/icon/verified.png')}
-                  style={{
-                    height: 16,
-                    width: 16,
-                    borderRadius: 13,
-                    position: 'absolute',
-                    right: 0,
-                    bottom: 20,
-                  }}
-                  resizeMode="cover"
-                />
-              </View> */}
+                </View> */}
               <View style={{ paddingLeft: 5 }}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text
@@ -254,6 +232,18 @@ const VideoView = forwardRef((props, ref) => {
             </View>
             <View>
               <InteractIcon
+                size="large"
+                style={{ marginBottom: 15 }}
+                /* prettier-ignore */
+                Accessory={(evaProps) => (isVoted ? (
+                      <IconCCoin style={{ height: 36, width: 36 }} />
+                    ) : (
+                      <IconCVote {...evaProps} active />
+                    ))}
+                textContent={data.likes}
+                onPress={toggleVote}
+              />
+              <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={IconCHeartToggle}
                 status={isLiked ? 'danger' : 'control'}
@@ -268,7 +258,6 @@ const VideoView = forwardRef((props, ref) => {
               <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={(evaProps) => <IconCShare {...evaProps} active />}
-                onPress={handleShare}
               />
 
               <TouchableOpacity
@@ -307,4 +296,4 @@ const VideoView = forwardRef((props, ref) => {
   );
 });
 
-export default VideoView;
+export default ChallengeVideo;

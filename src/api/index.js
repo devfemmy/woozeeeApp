@@ -83,5 +83,15 @@ export default {
       pageData: data,
     };
   },
+  getWoozData: async (id) => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`entries?challengeId=${id}`);
+    const { data } = res;
+    // console.log('from fetch => ', );
+    return {
+      pageData: data,
+    };
+  },
   cancelRequest: (msg) => source.cancel(msg),
 };

@@ -180,8 +180,6 @@ export const handleBookmark = async (id, isBookmarked) => {
     isBookmark: true,
   };
 
-  // console.log(data, isBookmarked);
-
   const token = await getToken();
 
   const config = {

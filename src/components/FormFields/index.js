@@ -62,7 +62,7 @@ export const GeneralTextField = (props) => {
   } = props;
 
   const [inputVal, setInputVal] = useState({
-    value: value,
+    value: 'value',
     status: status ?? 'basic',
   });
 
@@ -105,7 +105,7 @@ export const GeneralTextField = (props) => {
         autoCapitalize={'none'}
         size={size || 'large'}
         caption={caption}
-        value={value}
+        value
         label={label ?? null}
         // label={label ? `${label} ${validate ? '*' : ''}` : null}
         secureTextEntry={isSecureEntry}

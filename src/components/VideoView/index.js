@@ -94,7 +94,7 @@ const VideoView = forwardRef((props, ref) => {
   const handleShare = async () => {
     try {
       const result = await Share.share({
-        message: 'Share woozeee post',
+        message: item.mediaURL,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -132,10 +132,10 @@ const VideoView = forwardRef((props, ref) => {
 
   const toggleBookmark = async () => {
     setBookmarked(!isBookmarked);
-    console.log(!isBookmarked);
+    // console.log(!isBookmarked);
 
     const res = await handleBookmark(item.userEntryData.entryId, !isBookmarked);
-    console.log(res);
+    // console.log(res);
   };
 
   const toggleFollow = async () => {
@@ -388,14 +388,14 @@ const VideoView = forwardRef((props, ref) => {
               height={20}
               width={20}
             />
-            <InteractIcon
+            {/* <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={IconCShareVariant}
               direction="row"
               status="basic"
               height={20}
               width={20}
-            />
+            /> */}
           </View>
           <View>
             <InteractIcon

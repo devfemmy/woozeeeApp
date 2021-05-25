@@ -171,11 +171,11 @@ export const UsersPosts = ({ info }) => info.map((item) => {
 });
 
 export const ChallengePosts = ({ chaData }) => {
-  console.log('challenge data -> ', chaData);
+  // console.log('challenge data -> ', chaData);
   // const { dat}
 
   const { data } = chaData;
-  console.log('subs from post -> ', data);
+  // console.log('subs from post -> ', data);
   return chaData && chaData.data ? (
     chaData.data.map((item) => {
       return item.subs.map((sub) => {

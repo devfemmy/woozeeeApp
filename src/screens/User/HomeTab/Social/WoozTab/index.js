@@ -170,6 +170,8 @@ export default function Wooz({ navigation }) {
       },
     );
 
+    // console.log('from wooz -> ', data);
+
     if (status === 'loading') {
       return (
         <Placeholders
@@ -223,7 +225,7 @@ export default function Wooz({ navigation }) {
                         position: 'absolute',
                       }}
                       source={
-                        item.poster
+                        item
                           ? { uri: item.mediaURL }
                           : require('assets/images/banner/placeholder-image.png')
                       }
@@ -231,7 +233,7 @@ export default function Wooz({ navigation }) {
                   </View>
                   <VideoFullscreen
                     ref={videoViewRef}
-                    data={{ item, i }}
+                    data={item}
                     height={VIEW_HEIGHT}
                     videoRef={videoRef}
                     navigation={navigation}

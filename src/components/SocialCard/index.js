@@ -136,10 +136,10 @@ export function ChallengeVideoCard(props) {
 
   const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
 
-  const routeChallengeWooz = useCallback(
-    () => navigation.navigate('ChallengeWooz', challenge),
-    [navigation],
-  );
+  const routeChallengeWooz = useCallback(() => {
+    // const res = await getWoozData(challenge._id);
+    navigation.navigate('ChallengeWooz', challenge), [navigation];
+  });
 
   // console.log('challenge -> ', challenge);
   return useMemo(

@@ -14,6 +14,8 @@ import {
 
 import { useInfiniteQuery } from 'react-query';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
@@ -28,7 +30,7 @@ import { LocaleContext } from 'src/contexts';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
-import VideoFullscreen from 'src/components/VideoFullscreen';
+import VideoFullscreen from 'src/components/ChallengeVideo';
 
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
@@ -40,10 +42,10 @@ import { IconBackIos, IconCMedal } from 'src/components/CustomIcons';
 
 import Api from 'src/api';
 
-import { socialUrl } from 'src/api/dummy';
-
 export default function Wooz({ route, navigation }) {
-  console.log('from wooz -> ', route.params);
+  const { _id } = route.params;
+
+  // console.log('from wooz -> ', _id);
 
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
@@ -95,6 +97,8 @@ export default function Wooz({ route, navigation }) {
         videoViewRef.current?.resetPlayState(true);
       }
     };
+
+    const [woozData, setWoozData] = useState({});
 
     // const startVideo = async () => {
     //   try {
@@ -152,20 +156,20 @@ export default function Wooz({ route, navigation }) {
       refetch,
       hasNextPage,
       hasPreviousPage,
-    } = useInfiniteQuery(
-      ['inFiniteWoozVideos', 1],
-      async ({ pageParam = 1 }) => {
-        const promise = await Api.getVideos(socialUrl, 1, pageParam);
-        promise.cancel = () => Api.cancelRequest('Request aborted');
-        return promise;
-      },
-      {
-        getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
-        getNextPageParam: (lastPage) => lastPage.nextID ?? false,
-        keepPreviousData: true,
-        cacheTime: 1000 * 60 * 1,
-      },
-    );
+    } = useInfiniteQuery(['inFiniteWoozVideos', 1], async () => {
+      const promise = await Api.getWoozData(_id);
+      if (data !== {} && data !== undefined) {
+        setWoozData(data);
+      } else {
+        setWoozData({ message: 'No challenge data loaded' });
+      }
+      promise.cancel = () => Api.cancelRequest('Request aborted');
+      return promise;
+    });
+
+    // const { pages } = woozData;
+
+    console.log('from challenge, challenge is => ', woozData);
 
     if (status === 'loading') {
       return (
@@ -191,11 +195,11 @@ export default function Wooz({ route, navigation }) {
       // prettier-ignore
       status !== 'loading'
       && status !== 'error'
-      && data.pages[0].pageData.data.length > 0
+      && woozData.pages
     ) {
-      videoLength.current = data.pages[0].pageData.data.length;
-      return data.pages.map((page) => (
-        <React.Fragment key={page.nextID}>
+      videoLength.current = woozData.pages[0].pageData.data.length;
+      return woozData.pages.map((page) => (
+        <React.Fragment key={uuidv4()}>
           <View style={{ flex: 1 }}>
             <ScrollView
               style={{
@@ -220,18 +224,18 @@ export default function Wooz({ route, navigation }) {
                         position: 'absolute',
                       }}
                       source={
-                        item.poster
-                          ? { uri: item.poster }
+                        woozData.pages
+                          ? { uri: item.mediaURL }
                           : require('assets/images/banner/placeholder-image.png')
                       }
                     />
                   </View>
                   <VideoFullscreen
                     ref={videoViewRef}
-                    data={{ item, i }}
+                    data={item}
                     height={VIEW_HEIGHT}
                     videoRef={videoRef}
-                    challenge
+                    navigation={navigation}
                   />
                 </React.Fragment>
               ))}
