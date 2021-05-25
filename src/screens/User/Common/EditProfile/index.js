@@ -51,7 +51,7 @@ export default function EditProfile({ navigation }) {
   );
 
   const [coverImage, setCoverImage] = useState(
-    'https://i.postimg.cc/PJzQXxnN/back1.jpg',
+    '',
   );
   const [selectedValue, setSelectedValue] = useState(null);
   const [date, setDate] = useState(new Date());
@@ -90,8 +90,10 @@ export default function EditProfile({ navigation }) {
                const user_name = user_data.displayName;
                const sex = user_data.sex;
                const imageUrl = user_data.imgUrl;
+               const coverPhotoUrl = user_data.coverPhotoUrl
                const bio = user_data.bio
-               setUserImage(imageUrl)
+               setUserImage(imageUrl);
+               setCoverImage(coverPhotoUrl)
                if (sex === 'Male') {
                  setSelectedValue(1)
                }else {
@@ -175,6 +177,9 @@ useEffect(() => {
     if (!imageFile?.uri) return;
 
     setCoverImage(imageFile.uri);
+    setFormValues((prevState) => ({...prevState, 
+      coverPhotoUrl: imageFile.uri,
+    }))
   };
 
   const selectUserImage = async () => {
@@ -186,11 +191,11 @@ useEffect(() => {
 
     setUserImage(imageFile.uri);
     console.log("image uri", imageFile.uri)
-    const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
+    // const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
 
 
     setFormValues((prevState) => ({...prevState, 
-      imgUrl: base64image,
+      imgUrl: imageFile.uri,
     }))
   };
   const setSelectedHandler =(index) => {

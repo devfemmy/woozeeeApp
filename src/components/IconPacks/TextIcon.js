@@ -3,9 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const HeartIcon = (props) => (
-    <Icon color = "red" name='heart'/>
-  );
 
 export const TextIcon = (props) => {
 
@@ -16,7 +13,11 @@ export const TextIcon = (props) => {
           alignItems: 'center',
           flexDirection: 'row',
           backgroundColor: props.bg,
-          marginVertical: 8
+          marginVertical: 8,
+          borderColor: props.borderColor,
+          borderWidth: props.borderWidth,
+          width: props.width
+          
         },
         icon: {
           width: 22,
@@ -30,7 +31,7 @@ export const TextIcon = (props) => {
       });
   return (
     <>
-       <TouchableOpacity style= {styles.button}>
+       <TouchableOpacity onPress= {props.onPress} style= {styles.button}>
            <View style= {{justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center'}}>
               {props.show ? 
                 <Text category= "p1" style= {styles.color}>

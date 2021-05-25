@@ -32,6 +32,7 @@ import Report from '../components/ReportCard/index';
 import Search from 'src/screens/User/Common/Search';
 import Movies from 'src/screens/User/Common/Movies';
 import ViewMovies from 'src/screens/User/Common/ViewMovies';
+import MoviePage from 'src/screens/User/Common/ViewMovies/MoviePage';
 import LiveStream from 'src/screens/User/Common/LiveStream';
 import Messaging from 'src/screens/User/Common/Messaging';
 import Comments from 'src/screens/User/Common/Comments';
@@ -105,6 +106,7 @@ export default function Router() {
       SettingsGlobal,
       Movies,
       ViewMovies,
+      MoviePage,
       LiveStream,
       Messaging,
       Comments,

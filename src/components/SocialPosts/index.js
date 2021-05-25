@@ -139,7 +139,7 @@ export const UsersPosts = ({ info }) => info.map((item) => (
         {item.category}
       </Text>
       <Text category="c1" style={{ marginBottom: 5 }}>
-        {`${item.content.length} Video(s)`}
+        {/* {`${item.category} Video(s)`} */}
       </Text>
     </View>
     <List

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-import { Layout } from '@ui-kitten/components';
+import { Layout, Text } from '@ui-kitten/components';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
@@ -36,6 +36,7 @@ export default function Versus({ navigation }) {
         <View style={{ paddingBottom: 20 }}>
           <View>
             <UserPostsArea />
+            <Text>Hey</Text>
           </View>
         </View>
       </ScrollView>
