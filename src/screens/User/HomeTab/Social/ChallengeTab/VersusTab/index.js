@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-import { Layout, Text } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 

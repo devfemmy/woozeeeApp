@@ -20,6 +20,8 @@ import { LocaleContext } from 'src/contexts';
 
 import { ChallengeVideoCard } from '../../components/SocialCard/index';
 
+import { UserProfilePostCard } from '../../components/SocialCard/index';
+
 import VideoCard from 'src/components/SocialCard';
 
 import StoryCard from 'src/components/SocialCard/StoryCard';
@@ -240,7 +242,7 @@ export const ProfilePosts = ({allEntries}) => {
     data={firstTenEntries}
     keyExtractor={(_, i) => i.toString()}
     renderItem={(renderData) => (
-      <VideoCard data={renderData} extraWidth={0} numColumns={3} />
+      <UserProfilePostCard data={renderData} extraWidth={0} numColumns={3} />
     )}
     getItemLayout={(data, index) => ({
       length: 200,

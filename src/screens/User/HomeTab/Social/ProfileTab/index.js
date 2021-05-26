@@ -96,7 +96,6 @@ export default function Profile({ navigation }) {
             const bio = user_data.bio;
             const email = user_data.email;
             const imageUrl = user_data.imgUrl;
-            const coverPhotoUrl = user_data.coverPhotoUrl
             const videoCount = user_data.videoCount;
             const followingCount = user_data.followingCount;
             const followersCount = user_data.followersCount;
@@ -107,7 +106,6 @@ export default function Profile({ navigation }) {
               email: email,
               bio: bio,
               imageUrl: imageUrl,
-              coverPhotoUrl: coverPhotoUrl,
               videoCount: videoCount,
               followersCount: followersCount,
               followingCount: followingCount,
@@ -155,7 +153,7 @@ export default function Profile({ navigation }) {
             }}
           >
             <Image
-               source={{ uri: form.coverPhotoUrl }}
+              source={require('assets/images/banner/profile.jpg')}
               defaultSource={require('assets/images/banner/profile.jpg')}
               style={{
                 height: '100%',
@@ -241,7 +239,7 @@ export default function Profile({ navigation }) {
               alignItems: 'center',
             }}
           >
-            {/* <Button
+            <Button
               status="primary"
               appearance="outline"
               size="tiny"
@@ -251,7 +249,7 @@ export default function Profile({ navigation }) {
               <Text status="primary" category="c2">
                 {t('messaging')}
               </Text>
-            </Button> */}
+            </Button>
             <Button
               status="primary"
               size="tiny"

@@ -7,6 +7,8 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
+import Video from 'react-native-video';
+
 import Moment from 'react-moment';
 
 import { useNavigation } from '@react-navigation/native';
@@ -14,15 +16,12 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { Text } from '@ui-kitten/components';
-import Video from 'react-native-video';
 
 export default function VideoCard(props) {
   // prettier-ignore
   const {
     data, extraWidth, numColumns,
   } = props;
-
-  // console.log('from profile post -> ', data);
 
   const navigation = useNavigation();
 
@@ -51,7 +50,7 @@ export default function VideoCard(props) {
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
-        // onPress={routeChallengeWooz}
+        onPress={routeChallengeWooz}
       >
         <Image
           source={{ uri: data.medialThumbnail }}

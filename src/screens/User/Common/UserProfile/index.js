@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 
 import {
   View,
@@ -70,20 +70,20 @@ export default function UserProfile({ route, navigation }) {
     userData,
   } = user;
 
-  // const _handleFollow = useEffect(() => {
-  //   toggleFollow();
-  // }, [userData.isFollow]);
+  // console.log(user);
 
-  const [following, setFollowing] = useState(
-    userData !== null ? userData.isFollow : false,
-  );
+  // const getEntries = async () => {
+  //   await getUserEntries(userId);
+  // };
+  // getEntries();
+
+  const [following, setFollowing] = useState(userData.isFollow);
+  // console.log(userData);
 
   const toggleFollow = async () => {
-    // console.log(user);
     // console.log(userData.userId, following);
-    setFollowing(!following);
-    const res = await handleFollow(userData.userId, !following);
-    console.log(res);
+    // setFollowing(following);
+    // await handleFollow(userData.userId, !following);
   };
 
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
