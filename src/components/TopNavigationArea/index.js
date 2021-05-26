@@ -36,6 +36,7 @@ export default function TopNavigationArea(props) {
     screen,
     search,
     options,
+    pressed,
     balanceVisible,
     toggleBalance,
     // notification,
@@ -127,6 +128,7 @@ export default function TopNavigationArea(props) {
       <TopNavigationAction
         {...props}
         icon={IconOptions}
+        onPress= {pressed}
         accessibilityLiveRegion="polite"
         accessibilityLabel="Options"
       />

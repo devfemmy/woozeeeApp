@@ -14,12 +14,15 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { Text } from '@ui-kitten/components';
+import Video from 'react-native-video';
 
 export default function VideoCard(props) {
   // prettier-ignore
   const {
     data, extraWidth, numColumns,
   } = props;
+
+  // console.log('from profile post -> ', data);
 
   const navigation = useNavigation();
 
@@ -48,7 +51,7 @@ export default function VideoCard(props) {
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
-        onPress={routeChallengeWooz}
+        // onPress={routeChallengeWooz}
       >
         <Image
           source={{ uri: data.medialThumbnail }}
@@ -113,6 +116,57 @@ export default function VideoCard(props) {
             </View>
           </View>
         ) : null}
+      </TouchableOpacity>
+    ),
+    [COLUMN_COUNT, IS_PORTRAIT, extraWidth, width, data, routeChallengeWooz],
+  );
+}
+
+export function UserProfilePostCard(props) {
+  const { data, extraWidth, numColumns } = props;
+
+  // const { firstTenEntries } = data;
+
+  console.log('from user UserProfilePostCard-> ', data);
+
+  const navigation = useNavigation();
+
+  const { width, height } = useWindowDimensions();
+
+  const IS_PORTRAIT = height > width;
+
+  const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
+
+  const routeChallengeWooz = useCallback(
+    () => navigation.navigate('ChallengeWooz'),
+    [navigation],
+  );
+  return useMemo(
+    () => (
+      <TouchableOpacity
+        activeOpacity={0.75}
+        style={{
+          height: 180,
+          width: IS_PORTRAIT
+            ? width / (COLUMN_COUNT + extraWidth)
+            : width / (COLUMN_COUNT + extraWidth),
+          paddingHorizontal: 3,
+          position: 'relative',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+        }}
+      >
+        <Video
+          poster={data.item.medialThumbnail}
+          source={{ uri: data.item.mediaURL }}
+          paused={true}
+          style={{
+            height: 175,
+            width: '100%',
+            borderRadius: 5,
+          }}
+          resizeMode="cover"
+        />
       </TouchableOpacity>
     ),
     [COLUMN_COUNT, IS_PORTRAIT, extraWidth, width, data, routeChallengeWooz],

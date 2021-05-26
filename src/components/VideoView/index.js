@@ -161,6 +161,7 @@ const VideoView = forwardRef((props, ref) => {
   const routeUserProfile = async () => {
     const userData = await getUserData(item.userId);
     const { data } = userData;
+    // console.log(userData);
     await navigation.navigate('UserProfile', data);
   };
 

@@ -48,9 +48,7 @@ export default function EditProfile({ navigation }) {
   const [user_id, setUserId] = useState('');
   const [userImage, setUserImage] = useState('');
 
-  const [coverImage, setCoverImage] = useState(
-    'https://i.postimg.cc/PJzQXxnN/back1.jpg',
-  );
+  const [coverImage, setCoverImage] = useState('');
   const [selectedValue, setSelectedValue] = useState(null);
   const [date, setDate] = useState(new Date());
 
@@ -88,8 +86,10 @@ export default function EditProfile({ navigation }) {
             const user_name = user_data.displayName;
             const sex = user_data.sex;
             const imageUrl = user_data.imgUrl;
+            const coverPhotoUrl = user_data.coverPhotoUrl;
             const bio = user_data.bio;
             setUserImage(imageUrl);
+            setCoverImage(coverPhotoUrl);
             if (sex === 'Male') {
               setSelectedValue(1);
             } else {
@@ -111,7 +111,7 @@ export default function EditProfile({ navigation }) {
               dob: dob,
               bio: bio,
             }));
-            //  console.log(user_data)
+            console.log(user_data);
           })
           .catch((err) => {
             setLoading(false);
@@ -169,6 +169,10 @@ export default function EditProfile({ navigation }) {
     if (!imageFile?.uri) return;
 
     setCoverImage(imageFile.uri);
+    setFormValues((prevState) => ({
+      ...prevState,
+      coverPhotoUrl: imageFile.uri,
+    }));
   };
 
   const selectUserImage = async () => {
@@ -180,9 +184,9 @@ export default function EditProfile({ navigation }) {
 
     setUserImage(imageFile.uri);
     console.log('image uri', imageFile.uri);
-    const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
+    // const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
 
-    setFormValues((prevState) => ({ ...prevState, imgUrl: base64image }));
+    setFormValues((prevState) => ({ ...prevState, imgUrl: imageFile.uri }));
   };
   const setSelectedHandler = (index) => {
     setSelectedValue(index);
@@ -199,7 +203,7 @@ export default function EditProfile({ navigation }) {
     }));
   };
 
-  console.log('forms', form);
+  // console.log('forms', form);
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
