@@ -77,13 +77,15 @@ export default function UserProfile({ route, navigation }) {
   // };
   // getEntries();
 
-  const [following, setFollowing] = useState(userData.isFollow);
+  const [following, setFollowing] = useState(
+    userData ? userData.isFollow : false,
+  );
   // console.log(userData);
 
   const toggleFollow = async () => {
     // console.log(userData.userId, following);
-    // setFollowing(following);
-    // await handleFollow(userData.userId, !following);
+    setFollowing(following);
+    await handleFollow(userData.userId, !following);
   };
 
   useModifiedAndroidBackAction(navigation, 'SocialRoute');

@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Share } from 'react-native';
 
 import { Text } from '@ui-kitten/components';
 
@@ -66,8 +66,9 @@ const ChallengeVideo = forwardRef((props, ref) => {
 
   const routeUserProfile = async () => {
     const userData = await getUserData(data.userId);
-    const { data } = userData;
-    await navigation.navigate('UserProfile', data);
+    // const { data } = userData;
+    console.log(userData.data);
+    await navigation.navigate('UserProfile', userData.data);
   };
 
   const toggleLike = async () => {
@@ -85,6 +86,27 @@ const ChallengeVideo = forwardRef((props, ref) => {
       // resData.meta.totalLikes.totalComments
       setTotalLikes(resData.meta.totalLikes);
     });
+  };
+
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: data.mediaURL,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          alert(result.activityType);
+        } else {
+          // shared
+          alert('Shared');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+        // alert('Action dismissed');
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   // const [isLiked, setLiked] = useState(false);
@@ -222,6 +244,7 @@ const ChallengeVideo = forwardRef((props, ref) => {
               <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={(evaProps) => <IconCShare {...evaProps} active />}
+                onPress={handleShare}
               />
 
               <TouchableOpacity

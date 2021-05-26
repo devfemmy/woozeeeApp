@@ -126,7 +126,7 @@ export function UserProfilePostCard(props) {
 
   // const { firstTenEntries } = data;
 
-  console.log('from user UserProfilePostCard-> ', data);
+  // console.log('from user UserProfilePostCard-> ', data);
 
   const navigation = useNavigation();
 
