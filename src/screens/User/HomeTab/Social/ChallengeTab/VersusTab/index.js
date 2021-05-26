@@ -4,12 +4,6 @@ import { View, ScrollView } from 'react-native';
 
 import { Layout, Text } from '@ui-kitten/components';
 
-import { useQuery } from 'react-query';
-
-import Api from '../../../../../../api/index';
-
-import { useInfiniteQuery } from 'react-query';
-
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
 import WithDefaultFetch from 'src/components/DataFetch';

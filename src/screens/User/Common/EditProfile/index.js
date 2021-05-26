@@ -139,218 +139,235 @@ export default function EditProfile({ navigation }) {
         setLoading(false);
         console.log('err', err.response);
       });
-  };
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      AsyncStorage.getItem('userid')
-        .then((response) => {
-          getUserProfile(response);
-          setUserId(response);
+    const updateProfile = () => {
+      setLoading(true);
+      const data = form;
+      axios
+        .put(`update/?userId=${user_id}`, data, {
+          headers: { Authorization: token },
         })
-        .catch((err) => err);
-      AsyncStorage.getItem('USER_AUTH_TOKEN')
         .then((res) => {
-          setToken(res);
+          setLoading(false);
+          const message = res.data.message;
+          alert(message);
         })
-        .catch((err) => err);
-    });
+        .catch((err) => {
+          setLoading(false);
+          console.log('err', err.response);
+        });
+    };
 
-    return unsubscribe;
-  }, [navigation]);
+    useEffect(() => {
+      const unsubscribe = navigation.addListener('focus', () => {
+        AsyncStorage.getItem('userid')
+          .then((response) => {
+            getUserProfile(response);
+            setUserId(response);
+          })
+          .catch((err) => err);
+        AsyncStorage.getItem('USER_AUTH_TOKEN')
+          .then((res) => {
+            setToken(res);
+          })
+          .catch((err) => err);
+      });
 
-  const t = useContext(LocaleContext);
+      return unsubscribe;
+    }, [navigation]);
 
-  const selectCoverImage = async () => {
-    await getLibraryPermission();
+    const t = useContext(LocaleContext);
 
-    const imageFile = await libraryImagePicker([4, 3]);
+    const selectCoverImage = async () => {
+      await getLibraryPermission();
 
-    if (!imageFile?.uri) return;
+      const imageFile = await libraryImagePicker([4, 3]);
 
-    setCoverImage(imageFile.uri);
-    setFormValues((prevState) => ({
-      ...prevState,
-      coverPhotoUrl: imageFile.uri,
-    }));
-  };
+      if (!imageFile?.uri) return;
 
-  const selectUserImage = async () => {
-    await getLibraryPermission();
+      setCoverImage(imageFile.uri);
+      setFormValues((prevState) => ({
+        ...prevState,
+        coverPhotoUrl: imageFile.uri,
+      }));
+    };
 
-    const imageFile = await libraryImagePicker([1, 1]);
+    const selectUserImage = async () => {
+      await getLibraryPermission();
 
-    if (!imageFile?.uri) return;
+      const imageFile = await libraryImagePicker([1, 1]);
 
-    setUserImage(imageFile.uri);
-    console.log('image uri', imageFile.uri);
-    // const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
+      if (!imageFile?.uri) return;
 
-    setFormValues((prevState) => ({ ...prevState, imgUrl: imageFile.uri }));
-  };
-  const setSelectedHandler = (index) => {
-    setSelectedValue(index);
-    setFormValues((prevState) => ({
-      ...prevState,
-      sex: index === 0 ? 'Female' : 'Male',
-    }));
-  };
-  const setNewDateHandler = (date) => {
-    setDate(date);
-    setFormValues((prevState) => ({
-      ...prevState,
-      dob: date,
-    }));
-  };
+      setUserImage(imageFile.uri);
+      console.log('image uri', imageFile.uri);
+      // const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
 
-  // console.log('forms', form);
-  return (
-    <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title={`${t('edit')} ${t('profile')}`}
-        navigation={navigation}
-        screen="auth"
-      />
-      <ScrollView
-        alwaysBounceVertical
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <View
-          style={{
-            flex: 1,
-          }}
+      setFormValues((prevState) => ({ ...prevState, imgUrl: imageFile.uri }));
+    };
+    const setSelectedHandler = (index) => {
+      setSelectedValue(index);
+      setFormValues((prevState) => ({
+        ...prevState,
+        sex: index === 0 ? 'Female' : 'Male',
+      }));
+    };
+    const setNewDateHandler = (date) => {
+      setDate(date);
+      setFormValues((prevState) => ({
+        ...prevState,
+        dob: date,
+      }));
+    };
+
+    // console.log('forms', form);
+    return (
+      <Layout level="6" style={{ flex: 1 }}>
+        <TopNavigationArea
+          title={`${t('edit')} ${t('profile')}`}
+          navigation={navigation}
+          screen="auth"
+        />
+        <ScrollView
+          alwaysBounceVertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         >
           <View
             style={{
-              position: 'relative',
-              height: 165,
-              width: '100%',
-              alignItems: 'center',
+              flex: 1,
             }}
           >
-            <TouchableOpacity
-              activeOpacity={0.75}
+            <View
               style={{
-                backgroundColor: '#EDF1F7',
-                height: 120,
-                position: 'absolute',
+                position: 'relative',
+                height: 165,
                 width: '100%',
-                zIndex: 1,
+                alignItems: 'center',
               }}
-              onPress={() => selectCoverImage()}
             >
-              <Image
-                source={{ uri: coverImage }}
+              <TouchableOpacity
+                activeOpacity={0.75}
                 style={{
-                  height: '100%',
-                  resizeMode: 'cover',
-                  width: '100%',
-                }}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.75}
-              style={{
-                backgroundColor: '#EDF1F7',
-                bottom: 0,
-                borderRadius: 50,
-                height: 100,
-                position: 'absolute',
-                width: 100,
-                zIndex: 3,
-              }}
-              onPress={() => selectUserImage()}
-            >
-              <Image
-                source={{ uri: userImage }}
-                style={{
-                  borderColor: 'white',
-                  borderWidth: 3,
-                  borderRadius: 50,
-                  height: '100%',
-                  resizeMode: 'cover',
-                  width: '100%',
-                }}
-                resizeMode="cover"
-              />
-              <Image
-                source={require('assets/images/icon/camera-outline.png')}
-                defaultSource={require('assets/images/icon/camera-outline.png')}
-                style={{
+                  backgroundColor: '#EDF1F7',
+                  height: 120,
                   position: 'absolute',
-                  height: 26,
-                  width: 26,
-                  top: 37,
-                  left: 37,
+                  width: '100%',
+                  zIndex: 1,
                 }}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ padding: 15 }}>
-            <View
-              style={{
-                paddingVertical: 5,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <View style={{ flex: 1, marginRight: 5 }}>
+                onPress={() => selectCoverImage()}
+              >
+                <Image
+                  source={{ uri: coverImage }}
+                  style={{
+                    height: '100%',
+                    resizeMode: 'cover',
+                    width: '100%',
+                  }}
+                  resizeMode="cover"
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.75}
+                style={{
+                  backgroundColor: '#EDF1F7',
+                  bottom: 0,
+                  borderRadius: 50,
+                  height: 100,
+                  position: 'absolute',
+                  width: 100,
+                  zIndex: 3,
+                }}
+                onPress={() => selectUserImage()}
+              >
+                <Image
+                  source={{ uri: userImage }}
+                  style={{
+                    borderColor: 'white',
+                    borderWidth: 3,
+                    borderRadius: 50,
+                    height: '100%',
+                    resizeMode: 'cover',
+                    width: '100%',
+                  }}
+                  resizeMode="cover"
+                />
+                <Image
+                  source={require('assets/images/icon/camera-outline.png')}
+                  defaultSource={require('assets/images/icon/camera-outline.png')}
+                  style={{
+                    position: 'absolute',
+                    height: 26,
+                    width: 26,
+                    top: 37,
+                    left: 37,
+                  }}
+                  resizeMode="cover"
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ padding: 15 }}>
+              <View
+                style={{
+                  paddingVertical: 5,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  <GeneralTextField
+                    type="fName"
+                    label={t('firstName')}
+                    autoCompleteType="name"
+                    textContentType="givenName"
+                    // validate="required"
+                    value={form.fName}
+                    setFormValues={setFormValues}
+                  />
+                </View>
+                <View style={{ flex: 1, marginLeft: 5 }}>
+                  <GeneralTextField
+                    type="sName"
+                    label={t('lastName')}
+                    autoCompleteType="name"
+                    textContentType="familyName"
+                    // validate="required"
+                    value={form.sName}
+                    setFormValues={setFormValues}
+                  />
+                </View>
+              </View>
+              <View style={{ paddingVertical: 5 }}>
                 <GeneralTextField
-                  type="fName"
-                  label={t('firstName')}
-                  autoCompleteType="name"
-                  textContentType="givenName"
+                  type="displayName"
+                  label={t('username')}
+                  autoCompleteType="username"
+                  textContentType="username"
                   // validate="required"
-                  value={form.fName}
+                  value={form.displayName}
                   setFormValues={setFormValues}
                 />
               </View>
-              <View style={{ flex: 1, marginLeft: 5 }}>
-                <GeneralTextField
-                  type="sName"
-                  label={t('lastName')}
-                  autoCompleteType="name"
-                  textContentType="familyName"
-                  // validate="required"
-                  value={form.sName}
-                  setFormValues={setFormValues}
-                />
-              </View>
-            </View>
-            <View style={{ paddingVertical: 5 }}>
-              <GeneralTextField
-                type="displayName"
-                label={t('username')}
-                autoCompleteType="username"
-                textContentType="username"
-                // validate="required"
-                value={form.displayName}
-                setFormValues={setFormValues}
-              />
-            </View>
-            <View
-              style={{
-                paddingVertical: 5,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <View style={{ flex: 1, marginRight: 5 }}>
-                <Text category="label" appearance="hint">
-                  {t('gender')}
-                </Text>
-                <RadioGroup
-                  selectedIndex={selectedValue}
-                  onChange={(index) => setSelectedHandler(index)}
-                >
-                  {GENDERS.map((option) => (
-                    <Radio key={option}>{option}</Radio>
-                  ))}
-                </RadioGroup>
-                {/* <GeneralRadioGroup
+              <View
+                style={{
+                  paddingVertical: 5,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  <Text category="label" appearance="hint">
+                    {t('gender')}
+                  </Text>
+                  <RadioGroup
+                    selectedIndex={selectedValue}
+                    onChange={(index) => setSelectedHandler(index)}
+                  >
+                    {GENDERS.map((option) => (
+                      <Radio key={option}>{option}</Radio>
+                    ))}
+                  </RadioGroup>
+                  {/* <GeneralRadioGroup
                   type="sex"
                   label={t('gender')}
                   data={GENDERS}
@@ -358,75 +375,76 @@ export default function EditProfile({ navigation }) {
                   value={form.sex}
                   setFormValues={setFormValues}
                 /> */}
-              </View>
-              <View style={{ flex: 1, marginLeft: 5 }}>
-                <Datepicker
-                  label={t('dob')}
-                  date={date}
-                  onSelect={(nextDate) => setNewDateHandler(nextDate)}
-                  min={new Date('12-05-1880')}
-                  max={new Date()}
-                  accessoryRight={IconCalendar}
-                />
-                {/* <GeneralDatePicker
+                </View>
+                <View style={{ flex: 1, marginLeft: 5 }}>
+                  <Datepicker
+                    label={t('dob')}
+                    date={date}
+                    onSelect={(nextDate) => setNewDateHandler(nextDate)}
+                    min={new Date('12-05-1880')}
+                    max={new Date()}
+                    accessoryRight={IconCalendar}
+                  />
+                  {/* <GeneralDatePicker
                   type="dob"
                   label={t('dob')}
                   setFormValues={setFormValues}
                   accessoryRight={IconCalendar}
                 /> */}
+                </View>
               </View>
-            </View>
-            <View
-              style={{
-                paddingVertical: 5,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}
-            >
-              <View style={{ flex: 1, marginRight: 5 }}>
-                <GeneralSelect
-                  type="country"
-                  label={t('country')}
-                  data={COUNTRIES}
-                  setFormValues={setFormValues}
-                />
-              </View>
-              <View style={{ flex: 1, marginLeft: 5 }}>
-                <GeneralSelect
-                  type="state"
-                  label={t('state')}
-                  data={STATES}
-                  setFormValues={setFormValues}
-                />
-              </View>
-            </View>
-            <View style={{ paddingVertical: 5 }}>
-              <GeneralTextField
-                type="bio"
-                label={t('bio')}
-                multiline
-                height={50}
-                // validate="required"
-                value={form.bio}
-                setFormValues={setFormValues}
-              />
-            </View>
-            <View style={{ paddingVertical: 20 }}>
-              <Button
-                status="danger"
-                size="large"
-                accessibilityLiveRegion="assertive"
-                accessibilityComponentType="button"
-                accessibilityLabel="Continue"
-                disabled={isLoading}
-                onPress={() => updateProfile()}
+              <View
+                style={{
+                  paddingVertical: 5,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}
               >
-                <Text status="control">{t('updateProfile')}</Text>
-              </Button>
+                <View style={{ flex: 1, marginRight: 5 }}>
+                  <GeneralSelect
+                    type="country"
+                    label={t('country')}
+                    data={COUNTRIES}
+                    setFormValues={setFormValues}
+                  />
+                </View>
+                <View style={{ flex: 1, marginLeft: 5 }}>
+                  <GeneralSelect
+                    type="state"
+                    label={t('state')}
+                    data={STATES}
+                    setFormValues={setFormValues}
+                  />
+                </View>
+              </View>
+              <View style={{ paddingVertical: 5 }}>
+                <GeneralTextField
+                  type="bio"
+                  label={t('bio')}
+                  multiline
+                  height={50}
+                  // validate="required"
+                  value={form.bio}
+                  setFormValues={setFormValues}
+                />
+              </View>
+              <View style={{ paddingVertical: 20 }}>
+                <Button
+                  status="danger"
+                  size="large"
+                  accessibilityLiveRegion="assertive"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Continue"
+                  disabled={isLoading}
+                  onPress={() => updateProfile()}
+                >
+                  <Text status="control">{t('updateProfile')}</Text>
+                </Button>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </Layout>
-  );
+        </ScrollView>
+      </Layout>
+    );
+  };
 }
