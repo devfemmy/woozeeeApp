@@ -140,6 +140,9 @@ export function UserProfilePostCard(props) {
     () => navigation.navigate('ChallengeWooz'),
     [navigation],
   );
+  // console.log('from video -> ', data);
+  // console.log('data ->', data.item.medialThumbnail);
+  // console.log(data.item.mediaURL);
   return useMemo(
     () => (
       <TouchableOpacity
