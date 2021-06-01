@@ -1,13 +1,27 @@
 import axios from 'axios';
 
-import firebase, { firestore } from 'firebase';
+import firebase from '@react-native-firebase/app';
 
-// firebase.initializeApp();
-// const db = firestore();
+import firestore from '@react-native-firebase/firestore';
 
 import { getToken } from '../../api/index';
 
 const baseUrl = 'https://apis.woozeee.com/api/v1/';
+
+// if (firebase.apps.length) {
+//   firebase.initializeApp();
+// }
+
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+//   // authDomain: 'woozeee-d7f6c.firebaseapp.com',
+//   databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+//   projectId: 'woozeee-d7f6c',
+//   storageBucket: 'woozeee-d7f6c.appspot.com',
+//   messagingSenderId: '979696525592',
+//   appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+//   // measurementId: 'G-XQKMT94R9R',
+// };
 
 const axiosReq = async (methodType, reqData) => {
   const config = {
@@ -44,6 +58,36 @@ export const sendReport = async (userReason, userId) => {
     },
     data: data,
     url: `${baseUrl}complaints`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleVote = async (voteData) => {
+  // const currentVoteEntryId = voteData.entryId; --to store the entryId of the previously voted challenge
+  const body = {
+    entryId: voteData.entryId,
+    isVote: true,
+  };
+
+  const token = await getToken();
+
+  const config = {
+    method: voteData.isVote ? 'delete' : 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: body,
+    url: `${baseUrl}entry-data`,
   };
 
   let res;
@@ -139,10 +183,9 @@ export const getUserEntries = async (id) => {
   return res;
 };
 
-export const sendComment = async () => {
-  // const res = db.collection('entryComments');
-  // const data = await res.get();
-  // console.log(data);
+export const sendComment = async (comment) => {
+  const res = await firestore().collection('entryComments').get();
+  console.log(res);
 };
 
 export const viewVideo = async (id) => {
@@ -151,6 +194,7 @@ export const viewVideo = async (id) => {
     isView: true,
   };
 
+  // console.log(data);
   const token = await getToken();
 
   const config = {

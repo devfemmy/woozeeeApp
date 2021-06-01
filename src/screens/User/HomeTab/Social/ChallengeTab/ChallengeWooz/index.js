@@ -42,10 +42,11 @@ import { IconBackIos, IconCMedal } from 'src/components/CustomIcons';
 
 import Api from 'src/api';
 
-export default function Wooz({ route, navigation }) {
-  const { _id } = route.params;
+import { viewVideo } from '../../../../../../services/Requests/index';
 
-  // console.log('from wooz -> ', _id);
+export default function Wooz({ route, navigation }) {
+  console.log('route params -> ', route.params);
+  const { _id } = route.params;
 
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
@@ -169,6 +170,15 @@ export default function Wooz({ route, navigation }) {
 
     console.log('from challenge, challenge is => ', woozData);
 
+    const onPlaybackStatusUpdate = async (playbackStatus, entryId) => {
+      if (playbackStatus.didJustFinish) {
+        const res = await viewVideo(entryId);
+        console.log(res);
+      }
+    };
+
+    console.log(status);
+
     if (status === 'error') {
       return (
         <FetchFailed
@@ -180,11 +190,11 @@ export default function Wooz({ route, navigation }) {
     }
     if (
       // prettier-ignore
-      status !== 'loading'
-      && status !== 'error'
+      status !== 'error'
+      && status !== 'loading'
       && woozData.pages
     ) {
-      videoLength.current = woozData.pages[0].pageData.data.length;
+      videoLength.curarent = woozData.pages[0].pageData.data.length;
       return woozData.pages.map((page) => (
         <React.Fragment key={uuidv4()}>
           <View style={{ flex: 1 }}>
@@ -239,12 +249,19 @@ export default function Wooz({ route, navigation }) {
                   source={{ uri: page.pageData.data[index].mediaURL }}
                   isLooping
                   shouldPlay={isFocused}
-                  // prettier-ignore
-                  onReadyForDisplay={() => Animated.timing(opacity, {
-                    toValue: 1,
-                    useNativeDriver: true,
-                    duration: 500,
-                  }).start()}
+                  onPlaybackStatusUpdate={(playbackStatus) =>
+                    onPlaybackStatusUpdate(
+                      playbackStatus,
+                      page.pageData.data[index].userEntryData.entryId,
+                    )
+                  }
+                  onReadyForDisplay={() =>
+                    Animated.timing(opacity, {
+                      toValue: 1,
+                      useNativeDriver: true,
+                      duration: 500,
+                    }).start()
+                  }
                 />
               </Animated.View>
             </ScrollView>

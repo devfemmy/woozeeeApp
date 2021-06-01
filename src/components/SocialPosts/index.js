@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -20,7 +21,10 @@ import { LocaleContext } from 'src/contexts';
 
 import { ChallengeVideoCard } from '../../components/SocialCard/index';
 
-import { UserProfilePostCard } from '../../components/SocialCard/index';
+import {
+  UserProfilePostCard,
+  ExploreVideoCard,
+} from '../../components/SocialCard/index';
 
 import VideoCard from 'src/components/SocialCard';
 
@@ -130,47 +134,57 @@ export const StoryPosts = ({ info }) => {
 };
 
 // prettier-ignore
-export const UsersPosts = ({ info }) => info.map((item) => {
-  return(
-    (
-      <View
-        style={{
-          flex: 1,
-          marginBottom: 10,
-          paddingVertical: 5,
-          maxHeight: 235,
-        }}
-        key={uuidv4()}
-      >
-        <View style={{ paddingHorizontal: 10 }}>
-          <Text category="h6" status="danger" style={{ marginBottom: 5 }}>
-            {item.userDisplayName}
-          </Text>
-          <Text category="c1" style={{ marginBottom: 5 }}>
-            {`${info.length} Video(s)`}
-          </Text>
-        </View>
-        <List
-          style={{ backgroundColor: 'transparent' }}
-          alwaysBounceHorizontal
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          data={info}
-          keyExtractor={(_, i) => i.toString()}
-          renderItem={(renderData) => (
-            <VideoCard data={renderData} extraWidth={0.5} />
-          )}
-          getItemLayout={(data, index) => ({
-            length: 200,
-            offset: 200 * index,
-            index,
-          })}
-        />
-      </View>
-    )
-  )
-});
+export const UsersPosts = ({ info, exploreData }) => {
+  const { data} = exploreData;
+  return data ? (
+    data.map((item) => {
+      return item.subs.map((sub) => {
+        return sub.entries.length ? (
+          <View
+            style={{
+              flex: 1,
+              marginBottom: 10,
+              paddingVertical: 5,
+              maxHeight: 235,
+            }}
+            key={uuidv4()}
+          >
+            {/* <View style={{ paddingHorizontal: 10 }}>
+              <Text>Text category="h6" status="danger" style={{ marginBottom: 10 }}>
+                {item.groupName}
+              </Text>
+              <Text category="c1" style={{ marginBottom: 5 }}>
+                {`${sub.totalEntries} Video(s)`}
+              </Text>
+            </View> */}
+            <View style={{ paddingHorizontal: 10 }}>
+              <Text category="c1" style={{ marginBottom: 5 }}>
+                {`${sub.categoryName} ${sub.entries.length} clip(s)`}
+              </Text>
+              <List
+                  style={{ backgroundColor: 'transparent' }}
+                  alwaysBounceHorizontal
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  data={sub.entries}
+                  keyExtractor={(_, i) => i.toString()}
+                  renderItem={(renderData) => (
+                    <VideoCard data={renderData} extraWidth={0.5} />
+                  )}
+                  getItemLayout={(data, index) => ({
+                    length: 200,
+                    offset: 200 * index,
+                    index,
+                  })}
+                />
+           </View>
+          </View>
+        ): null
+      })
+    })
+  ): null
+}
 
 export const ChallengePosts = ({ chaData }) => {
   return chaData && chaData.data ? (

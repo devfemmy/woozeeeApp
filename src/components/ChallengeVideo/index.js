@@ -1,6 +1,7 @@
 import React, {
   useState,
   useMemo,
+  useEffect,
   useCallback,
   forwardRef,
   useImperativeHandle,
@@ -30,6 +31,8 @@ import {
   handleFollow,
   getUserData,
   getUserEntries,
+  handleVote,
+  viewVideo,
 } from '../../services/Requests/index';
 
 const styles = StyleSheet.create({
@@ -52,7 +55,11 @@ const ChallengeVideo = forwardRef((props, ref) => {
 
   const { item } = data;
 
-  //   console.log('from challenge video full screen -> ', data);
+  // console.log('from challenge videoref -> ', videoRef);
+
+  const [isVoted, setVoted] = useState(data.userEntryData.isVote);
+
+  // const [isPlaying, setIsPlaying] = useState(false);
 
   const [isLiked, setLiked] = useState(data.userEntryData.isLike);
   const [totalLikes, setTotalLikes] = useState(data.totalLikes);
@@ -64,11 +71,19 @@ const ChallengeVideo = forwardRef((props, ref) => {
     isLike: isLiked,
   };
 
+  const voteData = {
+    entryId: data._id,
+    isVote: isVoted,
+  };
+
   const routeUserProfile = async () => {
     const userData = await getUserData(data.userId);
-    // const { data } = userData;
-    console.log(userData.data);
     await navigation.navigate('UserProfile', userData.data);
+  };
+
+  const toggleVote = async () => {
+    setVoted(!isVoted);
+    await handleVote(voteData);
   };
 
   const toggleLike = async () => {
@@ -109,10 +124,6 @@ const ChallengeVideo = forwardRef((props, ref) => {
     }
   };
 
-  // const [isLiked, setLiked] = useState(false);
-
-  const [isVoted, setVoted] = useState(false);
-
   const togglePause = useCallback(() => {
     (async () => {
       try {
@@ -134,11 +145,6 @@ const ChallengeVideo = forwardRef((props, ref) => {
       }
     })();
   }, [videoRef]);
-
-  // const toggleLike = useCallback(() => setLiked((prevState) => !prevState), []);
-
-  const toggleVote = useCallback(() => setVoted((prevState) => !prevState), []);
-
   useImperativeHandle(ref, () => ({
     resetPlayState(playState) {
       setShouldPlay(playState);

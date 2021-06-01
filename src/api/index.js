@@ -83,6 +83,17 @@ export default {
       pageData: data,
     };
   },
+  getExplore: async () => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`category-groups`);
+
+    const { data } = res;
+    // console.log(data);
+    return {
+      pageData: data,
+    };
+  },
   getWoozData: async (id) => {
     const instance = await createInstance();
 

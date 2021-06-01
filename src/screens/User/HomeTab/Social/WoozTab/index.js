@@ -40,11 +40,7 @@ import { IconCMovie, IconCMedal } from 'src/components/CustomIcons';
 
 import Api from 'src/api';
 
-import { socialUrl } from 'src/api/dummy';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import { viewVideo } from '../../../../../services/Requests/index';
 
 export default function Wooz({ navigation }) {
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
@@ -96,6 +92,13 @@ export default function Wooz({ navigation }) {
         opacity.setValue(0);
         setIndex(newIndex);
         videoViewRef.current?.resetPlayState(true);
+      }
+    };
+
+    const onPlaybackStatusUpdate = async (playbackStatus, entryId) => {
+      if (playbackStatus.didJustFinish) {
+        const res = await viewVideo(entryId);
+        console.log(res);
       }
     };
 
@@ -250,6 +253,12 @@ export default function Wooz({ navigation }) {
                   style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
                   source={{ uri: page.pageData.data[index].mediaURL }}
                   isLooping
+                  onPlaybackStatusUpdate={(playbackStatus) =>
+                    onPlaybackStatusUpdate(
+                      playbackStatus,
+                      page.pageData.data[index].userEntryData.entryId,
+                    )
+                  }
                   shouldPlay={isFocused}
                   // prettier-ignore
                   onReadyForDisplay={() => Animated.timing(opacity, {

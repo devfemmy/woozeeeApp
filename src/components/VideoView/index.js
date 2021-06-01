@@ -29,6 +29,8 @@ import { AppSettingsContext } from 'src/contexts';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
+import firebase from '@react-native-firebase/app';
+
 import InteractIcon from 'src/components/InteractIcon';
 
 import {
@@ -40,6 +42,8 @@ import {
   handleBookmark,
 } from '../../services/Requests/index';
 
+// import firebase from 'firebase';
+
 import {
   IconCHeart,
   IconCChat,
@@ -49,6 +53,22 @@ import {
   IconBookmark,
   IconCEye,
 } from 'src/components/CustomIcons';
+
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+//   authDomain: 'woozeee-d7f6c.firebaseapp.com',
+//   databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+//   projectId: 'woozeee-d7f6c',
+//   storageBucket: 'woozeee-d7f6c.appspot.com',
+//   messagingSenderId: '979696525592',
+//   appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+//   measurementId: 'G-XQKMT94R9R',
+// };
+// const db = firebase.firestore();
+
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// }
 
 const VideoView = forwardRef((props, ref) => {
   // prettier-ignore
@@ -143,9 +163,13 @@ const VideoView = forwardRef((props, ref) => {
     await handleFollow(userId, !following);
   };
 
-  const handleComment = () => {
-    sendComment();
-    // setFormValues('');
+  const handleComment = async () => {
+    console.log('pressed');
+    const response = db.collection('entryComments');
+    const data = await response.get();
+    console.log(data._delegate._snapshot);
+    // await sendComment(form);
+    // // setFormValues('');
   };
   // const updateHiddenText = () => setHideText((prevState) => !prevState);
 

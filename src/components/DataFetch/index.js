@@ -35,6 +35,8 @@ export default function WithDefaultFetch(
 
   const [challengeData, setChallengeData] = useState({});
 
+  const [exploreData, setExploreData] = useState({});
+
   // console.log('challenge data from with paginated -> ', challengeData);
 
   const getMaxHeight = () => {
@@ -52,8 +54,17 @@ export default function WithDefaultFetch(
     setChallengeData(pageData);
   };
 
+  const getExploreData = async () => {
+    const res = await Api.getExplore();
+    // console.log(res);
+    const { pageData } = res;
+    // console.log(pageData.data);
+    setExploreData(pageData);
+  };
+
   useEffect(() => {
     getChallenges();
+    getExploreData();
   }, []);
 
   // console.log('from datafetched => ', challengeData);
@@ -117,8 +128,11 @@ export default function WithDefaultFetch(
   if (posts && posts.length > 0) {
     return (
       <>
-        {/* <WrappedComponent info={posts} challengeData={challenges} /> */}
-        <WrappedComponent info={posts} chaData={challengeData} />
+        <WrappedComponent
+          info={posts}
+          chaData={challengeData}
+          exploreData={exploreData}
+        />
       </>
     );
   }
