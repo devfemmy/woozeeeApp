@@ -27,6 +27,7 @@ import Settings from 'src/screens/User/Common/Settings';
 import SettingsGlobal from 'src/screens/User/Common/SettingsGlobal';
 import EditProfile from 'src/screens/User/Common/EditProfile';
 import ChangePassword from 'src/screens/User/Common/ChangePassword';
+import UploadEntries from 'src/screens/User/Common/VideoUpload/UploadEntries';
 
 import Report from '../components/ReportCard/index';
 import Search from 'src/screens/User/Common/Search';
@@ -102,6 +103,7 @@ export default function Router() {
       CharityRoute,
       EditProfile,
       ChangePassword,
+      UploadEntries,
       Settings,
       SettingsGlobal,
       Movies,
