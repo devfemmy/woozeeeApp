@@ -62,7 +62,7 @@ export const GeneralTextField = (props) => {
   } = props;
 
   const [inputVal, setInputVal] = useState({
-    value: value,
+    value: 'value',
     status: status ?? 'basic',
   });
 

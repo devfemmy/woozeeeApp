@@ -14,6 +14,8 @@ import {
 
 import { useInfiniteQuery } from 'react-query';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
@@ -28,7 +30,7 @@ import { LocaleContext } from 'src/contexts';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
-import VideoFullscreen from 'src/components/VideoFullscreen';
+import ChallengeVideo from 'src/components/ChallengeVideo';
 
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
@@ -40,9 +42,11 @@ import { IconBackIos, IconCMedal } from 'src/components/CustomIcons';
 
 import Api from 'src/api';
 
-import { socialUrl } from 'src/api/dummy';
+export default function Wooz({ route, navigation }) {
+  const { _id } = route.params;
 
-export default function Wooz({ navigation }) {
+  // console.log('from wooz -> ', _id);
+
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
   const { width, height } = useWindowDimensions();
@@ -93,6 +97,8 @@ export default function Wooz({ navigation }) {
         videoViewRef.current?.resetPlayState(true);
       }
     };
+
+    const [woozData, setWoozData] = useState({});
 
     // const startVideo = async () => {
     //   try {
@@ -150,32 +156,19 @@ export default function Wooz({ navigation }) {
       refetch,
       hasNextPage,
       hasPreviousPage,
-    } = useInfiniteQuery(
-      ['inFiniteWoozVideos', 1],
-      async ({ pageParam = 1 }) => {
-        const promise = await Api.getVideos(socialUrl, 1, pageParam);
-        promise.cancel = () => Api.cancelRequest('Request aborted');
-        return promise;
-      },
-      {
-        getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
-        getNextPageParam: (lastPage) => lastPage.nextID ?? false,
-        keepPreviousData: true,
-        cacheTime: 1000 * 60 * 1,
-      },
-    );
+    } = useInfiniteQuery(['ChallengeWooz', 1], async () => {
+      const promise = await Api.getWoozData(_id);
+      if (data !== {} && data !== undefined) {
+        setWoozData(data);
+      } else {
+        setWoozData({ message: 'No challenge data loaded' });
+      }
+      promise.cancel = () => Api.cancelRequest('Request aborted');
+      return promise;
+    });
 
-    if (status === 'loading') {
-      return (
-        <Placeholders
-          mediaLeft={false}
-          count={1}
-          numColumns={1}
-          maxHeight={height * 0.75}
-          maxWidth={width}
-        />
-      );
-    }
+    console.log('from challenge, challenge is => ', woozData);
+
     if (status === 'error') {
       return (
         <FetchFailed
@@ -189,11 +182,11 @@ export default function Wooz({ navigation }) {
       // prettier-ignore
       status !== 'loading'
       && status !== 'error'
-      && data.pages[0].pageData.data.length > 0
+      && woozData.pages
     ) {
-      videoLength.current = data.pages[0].pageData.data.length;
-      return data.pages.map((page) => (
-        <React.Fragment key={page.nextID}>
+      videoLength.current = woozData.pages[0].pageData.data.length;
+      return woozData.pages.map((page) => (
+        <React.Fragment key={uuidv4()}>
           <View style={{ flex: 1 }}>
             <ScrollView
               style={{
@@ -218,18 +211,18 @@ export default function Wooz({ navigation }) {
                         position: 'absolute',
                       }}
                       source={
-                        item.poster
-                          ? { uri: item.poster }
+                        woozData.pages
+                          ? { uri: item.mediaURL }
                           : require('assets/images/banner/placeholder-image.png')
                       }
                     />
                   </View>
-                  <VideoFullscreen
+                  <ChallengeVideo
                     ref={videoViewRef}
-                    data={{ item, i }}
+                    data={item}
                     height={VIEW_HEIGHT}
                     videoRef={videoRef}
-                    challenge
+                    navigation={navigation}
                   />
                 </React.Fragment>
               ))}
@@ -243,7 +236,7 @@ export default function Wooz({ navigation }) {
                   ref={videoRef}
                   resizeMode="contain"
                   style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                  source={{ uri: page.pageData.data[index].video }}
+                  source={{ uri: page.pageData.data[index].mediaURL }}
                   isLooping
                   shouldPlay={isFocused}
                   // prettier-ignore

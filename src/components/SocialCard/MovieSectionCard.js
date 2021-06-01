@@ -33,7 +33,7 @@ export default function MovieCard(props) {
         }}
       >
         <TouchableOpacity
-          onPress= {props.pressed}
+          onPress={props.pressed}
           activeOpacity={0.75}
           style={{
             width: '100%',

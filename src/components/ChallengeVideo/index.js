@@ -1,5 +1,4 @@
 import React, {
-  Component,
   useState,
   useMemo,
   useCallback,
@@ -11,9 +10,7 @@ import { View, StyleSheet, Image, TouchableOpacity, Share } from 'react-native';
 
 import { Text } from '@ui-kitten/components';
 
-import { Video } from 'expo-av';
-
-// import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import InteractIcon from 'src/components/InteractIcon';
 
@@ -47,13 +44,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const VideoView = forwardRef((props, ref) => {
+const ChallengeVideo = forwardRef((props, ref) => {
   // prettier-ignore
   const {
-    data, height, videoRef, challenge, navigation
-  } = props;
+      data, height, videoRef, navigation
+    } = props;
 
   const { item } = data;
+
+  //   console.log('from challenge video full screen -> ', data);
 
   const [isLiked, setLiked] = useState(data.userEntryData.isLike);
   const [totalLikes, setTotalLikes] = useState(data.totalLikes);
@@ -65,10 +64,11 @@ const VideoView = forwardRef((props, ref) => {
     isLike: isLiked,
   };
 
-  const routeUserProfile = async (userId) => {
-    const userData = await getUserData(userId);
-    const { data } = userData;
-    await navigation.navigate('UserProfile', data);
+  const routeUserProfile = async () => {
+    const userData = await getUserData(data.userId);
+    // const { data } = userData;
+    console.log(userData.data);
+    await navigation.navigate('UserProfile', userData.data);
   };
 
   const toggleLike = async () => {
@@ -166,42 +166,6 @@ const VideoView = forwardRef((props, ref) => {
             }}
           >
             <View style={{ flexDirection: 'row' }}>
-              {/* <View style={{ position: 'relative' }}>
-                <LinearGradient
-                  colors={['#043F7C', '#FF5757']}
-                  style={{
-                    height: 50,
-                    width: 50,
-                    borderRadius: 25,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Image
-                    source={require('assets/images/user/user2.png')}
-                    defaultSource={require('assets/images/user/user2.png')}
-                    style={{
-                      height: 46,
-                      width: 46,
-                      borderRadius: 23,
-                    }}
-                    resizeMode="cover"
-                  />
-                </LinearGradient>
-                <Image
-                  source={require('assets/images/icon/verified.png')}
-                  defaultSource={require('assets/images/icon/verified.png')}
-                  style={{
-                    height: 16,
-                    width: 16,
-                    borderRadius: 13,
-                    position: 'absolute',
-                    right: 0,
-                    bottom: 20,
-                  }}
-                  resizeMode="cover"
-                />
-              </View> */}
               <View style={{ paddingLeft: 5 }}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text
@@ -254,6 +218,18 @@ const VideoView = forwardRef((props, ref) => {
             </View>
             <View>
               <InteractIcon
+                size="large"
+                style={{ marginBottom: 15 }}
+                /* prettier-ignore */
+                Accessory={(evaProps) => (isVoted ? (
+                      <IconCCoin style={{ height: 36, width: 36 }} />
+                    ) : (
+                      <IconCVote {...evaProps} active />
+                    ))}
+                textContent={data.likes}
+                onPress={toggleVote}
+              />
+              <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={IconCHeartToggle}
                 status={isLiked ? 'danger' : 'control'}
@@ -273,7 +249,7 @@ const VideoView = forwardRef((props, ref) => {
 
               <TouchableOpacity
                 style={{ alignItems: 'center' }}
-                onPress={() => routeUserProfile(data.userId)}
+                onPress={routeUserProfile}
               >
                 <Image
                   source={{ uri: data.userImageURL }}
@@ -296,7 +272,6 @@ const VideoView = forwardRef((props, ref) => {
     [
       height,
       item,
-      challenge,
       shouldPlay,
       togglePause,
       isLiked,
@@ -307,4 +282,4 @@ const VideoView = forwardRef((props, ref) => {
   );
 });
 
-export default VideoView;
+export default ChallengeVideo;

@@ -49,8 +49,8 @@ const PLACEHOLDER_CONFIG = {
 };
 
 // prettier-ignore
-const ProfilePostsArea = ({testData}) => (
-  WithPaginatedFetch(ProfilePosts, userPostsUrl, PLACEHOLDER_CONFIG, testData)
+const ProfilePostsArea = ({userPostData}) => (
+  WithPaginatedFetch(ProfilePosts, userPostsUrl, PLACEHOLDER_CONFIG, userPostData)
 );
 
 export default function UserProfile({ route, navigation }) {
@@ -77,13 +77,15 @@ export default function UserProfile({ route, navigation }) {
   // };
   // getEntries();
 
-  const [following, setFollowing] = useState(userData.isFollow);
+  const [following, setFollowing] = useState(
+    userData ? userData.isFollow : false,
+  );
   // console.log(userData);
 
   const toggleFollow = async () => {
     // console.log(userData.userId, following);
-    // setFollowing(following);
-    // await handleFollow(userData.userId, !following);
+    setFollowing(following);
+    await handleFollow(userData.userId, !following);
   };
 
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
@@ -367,13 +369,13 @@ export default function UserProfile({ route, navigation }) {
           onSelect={(index) => setSelectedIndex(index)}
         >
           <Tab title={t('all')} icon={IconGrid}>
-            <ProfilePostsArea testData={user} />
+            <ProfilePostsArea userPostData={user} />
           </Tab>
           <Tab title={t('saved')} icon={IconBookmark}>
-            <ProfilePostsArea testData={user} />
+            <ProfilePostsArea userPostData={user} />
           </Tab>
           <Tab title={t('liked')} icon={IconHeart}>
-            <ProfilePostsArea testData={user} />
+            <ProfilePostsArea userPostData={user} />
           </Tab>
         </TabView>
       </View>

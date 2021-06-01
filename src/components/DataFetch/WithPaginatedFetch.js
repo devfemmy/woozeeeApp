@@ -16,15 +16,13 @@ export default function WithPaginatedFetch(
   WrappedComponent,
   fetchUrl,
   placeholderProp,
-  testData,
+  userPostData,
 ) {
   const { width, height } = useWindowDimensions();
 
   const t = useContext(LocaleContext);
 
   const [activePage, setPage] = useState('default');
-
-  // console.log('FROM PAGINATED -> ', testData);
 
   // get placeholder max height based on received props
   const getMaxHeight = () => {
@@ -72,10 +70,9 @@ export default function WithPaginatedFetch(
     );
   }
   if (!isLoading && !isError && data.pageData.data.length > 0) {
-    // console.log(data.pageData.data);
     return (
       <>
-        <WrappedComponent info={data.pageData.data} allEntries={testData} />
+        <WrappedComponent info={data.pageData.data} allEntries={userPostData} />
       </>
     );
   }
