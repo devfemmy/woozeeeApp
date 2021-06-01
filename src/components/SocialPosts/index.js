@@ -29,6 +29,7 @@ import {
 import VideoCard from 'src/components/SocialCard';
 
 import StoryCard from 'src/components/SocialCard/StoryCard';
+import { useNavigation } from '@react-navigation/native';
 
 import VideoFullscreen from 'src/components/VideoFullscreen';
 
@@ -70,11 +71,15 @@ export const TrendingPosts = ({ info }) => {
 export const StoryPosts = ({ info }) => {
   const t = useContext(LocaleContext);
 
+  const navigation = useNavigation()
+
   // console.log('info from StoryPosts -> ' + info);
 
   const RenderCategoryHeader = () => (
     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
-      <TouchableOpacity activeOpacity={0.75} style={{ position: 'relative' }}>
+      <TouchableOpacity 
+      onPress= {() => navigation.navigate('UploadEntries')}
+      activeOpacity={0.75} style={{ position: 'relative' }}>
         <Image
           source={require('assets/images/user/user2.png')}
           defaultSource={require('assets/images/user/user2.png')}

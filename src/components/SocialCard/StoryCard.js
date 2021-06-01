@@ -32,7 +32,7 @@ export default function StoryCard(props) {
         }}
       >
         <View
-          style={{ alignItems: 'center' }}
+          style={{ alignItems: 'center'}}
           onPress={() => console.log('pressed')}
         >
           <LinearGradient

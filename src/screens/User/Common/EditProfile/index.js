@@ -183,6 +183,13 @@ export default function EditProfile({ navigation }) {
     if (!imageFile?.uri) return;
 
     setUserImage(imageFile.uri);
+    console.log("image uri", imageFile.uri)
+    const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
+    console.log(base64image, "base64")
+
+    setFormValues((prevState) => ({...prevState, 
+      imgUrl: imageFile.uri,
+    }))
     console.log('image uri', imageFile.uri);
     // const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
 
