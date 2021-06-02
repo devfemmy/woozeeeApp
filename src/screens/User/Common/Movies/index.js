@@ -273,6 +273,8 @@ export default function Explore({ navigation }) {
     third: MyMovies,
   });
 
+  // Some Updates
+
   const renderTabBar = (props) => (
     <TabBar
       {...props}
