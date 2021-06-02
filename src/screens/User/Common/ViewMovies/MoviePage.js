@@ -16,6 +16,7 @@ const {item} = route.params;
         <Video
         poster= {item.posterURL[0]} 
         controls= {true}
+        fullscreenOrientation = "landscape"
         resizeMode= "contain"
         fullscreen= {false}
         source={{uri: item.mediaURL}}   // Can be a URL or a local file.

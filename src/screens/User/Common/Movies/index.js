@@ -265,12 +265,14 @@ export default function Explore({ navigation }) {
     { key: 'first', title: 'All' },
     { key: 'second', title: 'TV series' },
     { key: 'third', title: 'Movies' },
+    { key: 'fourth', title: 'Category' },
   ]);
 
   const renderScene = SceneMap({
     first: AllMovies,
     second: TvSeries,
     third: MyMovies,
+    fourth: AllMovies,
   });
 
   const renderTabBar = (props) => (
