@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNFetchBlob from 'rn-fetch-blob';
 import firebase from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
-import { StyleSheet, BackHandler, Image, View } from 'react-native';
+import { StyleSheet, BackHandler, Image, View, ActivityIndicator} from 'react-native';
 
 // prettier-ignore
 import { LocaleContext } from 'src/contexts';
@@ -42,12 +42,13 @@ const PreviewEntry = (props) => {
       }
       return path
     }
-    const upLoadEntries = (url) => {
+    const upLoadEntries = (url, type) => {
       setLoading(true);
       const data = {
         mediaURL: url,
         entryTypes : ['story'],
-        description: form.caption
+        description: form.caption,
+        // type: type
       };
       axios.post(`entries`, data, {headers: {Authorization: token}})
       .then(res => {
@@ -220,7 +221,13 @@ const PreviewEntry = (props) => {
         [handleVideoRef],
       );
 
-
+      // if (isLoading) {
+      //   return (
+      //     <Layout level="6" style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      //      <ActivityIndicator  size="large" color="#FDB813" />
+      //     </Layout>
+      //   );
+      // }
     return (
         <Layout level="6" style={{ flex: 1, padding: 25 }}>
             {imageUri === null ? 
