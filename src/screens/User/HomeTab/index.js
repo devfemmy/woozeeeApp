@@ -36,17 +36,17 @@ import BackgroundVideo from 'src/components/BackgroundVideo';
 const woozeeeCards = [
   {
     balance: '150.25',
-    banner: require('assets/images/card/insure.jpg'),
+    banner: require('assets/images/card/card1.jpg'),
     action: 'openCare',
   },
   {
     balance: '350,152.83',
-    banner: require('assets/images/card/wallet.jpg'),
+    banner: require('assets/images/card/card2.png'),
     action: 'openWallet',
   },
   {
     balance: '0.00',
-    banner: require('assets/images/card/rewards.jpg'),
+    banner: require('assets/images/card/card3.png'),
     action: 'openRewards',
   },
 ];

@@ -32,7 +32,7 @@ export default function StoryCard(props) {
         }}
       >
         <View
-          style={{ alignItems: 'center'}}
+          style={{ alignItems: 'center' }}
           onPress={() => console.log('pressed')}
         >
           <LinearGradient
@@ -46,7 +46,7 @@ export default function StoryCard(props) {
             }}
           >
             <Image
-              source={{ uri: data.photoURL }}
+              source={{ uri: data.userImageURL }}
               defaultSource={require('assets/images/banner/placeholder-image.png')}
               style={{
                 height: 80,
@@ -54,10 +54,11 @@ export default function StoryCard(props) {
                 borderRadius: 40,
               }}
               resizeMode="cover"
-            /> 
+            />
           </LinearGradient>
-          <Text category="c2" style={{ marginTop: 10 , textAlign:'center'}}>
-            {data.userDisplayName}
+          <Text category="c2" style={{ marginTop: 10, textAlign: 'center' }}>
+            {data.userFirstName}
+            {data.userLastName}
           </Text>
         </View>
       </TouchableOpacity>

@@ -5,11 +5,10 @@ import { useWindowDimensions, StyleSheet } from 'react-native';
 
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
-
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
 import Versus from 'src/screens/User/HomeTab/Social/ChallengeTab/VersusTab';
-import Explore from 'src/screens/User/HomeTab/Social/ChallengeTab/ExploreTab';
+import Explore from 'src/screens/User/HomeTab/Social/ChallengeTab/ExploreWooz';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 import { t } from 'i18n-js';

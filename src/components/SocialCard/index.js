@@ -31,13 +31,10 @@ export default function VideoCard(props) {
 
   const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
 
-  const routeChallengeWooz = () => {
-    console.log('from video card -> ', data);
-  };
-  // useCallback(
-  // () => navigation.navigate('ChallengeWooz', { _id: data.item._id }),
-  // [navigation],
-  // );
+  const routeChallengeWooz = useCallback(
+    () => navigation.navigate('ExploreWooz', data.item),
+    [navigation],
+  );
 
   return useMemo(
     () => (
@@ -310,9 +307,9 @@ export function ExploreVideoCard(props) {
     data, extraWidth, numColumns,
   } = props;
 
-  const { item } = data;
+  // const { item } = data;
 
-  console.log('from explore card -> ', data);
+  // console.log('from explore card -> ', data);
 
   const navigation = useNavigation();
 

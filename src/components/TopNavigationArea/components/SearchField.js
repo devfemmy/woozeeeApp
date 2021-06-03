@@ -13,6 +13,7 @@ export default function SearchField(props) {
     value: '',
     status: 'basic',
   });
+  // console.log(form.value);
 
   const t = useContext(LocaleContext);
 

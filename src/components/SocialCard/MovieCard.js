@@ -38,7 +38,7 @@ export default function MovieCard(props) {
         }}
       >
         <Image
-          source={require('assets/images/banner/placeholder-image.png')}
+          source={{ uri: `https://i.postimg.cc/${data.banner}` }}
           defaultSource={require('assets/images/banner/placeholder-image.png')}
           style={{
             height: 295,
@@ -112,7 +112,7 @@ export default function MovieCard(props) {
             }}
           >
             <Image
-              source={require('assets/images/banner/placeholder-image.png')}
+              source={{ uri: `https://i.postimg.cc/${data.ownerImg}` }}
               style={{
                 height: 32,
                 width: 32,

@@ -8,6 +8,8 @@ import React, {
   useImperativeHandle,
 } from 'react';
 
+import { Root } from 'native-base';
+
 import { View, Image, TouchableOpacity, Share } from 'react-native';
 
 import Moment from 'react-moment';
@@ -31,6 +33,8 @@ import { GeneralTextField } from 'src/components/FormFields';
 
 import firebase from '@react-native-firebase/app';
 
+import firestore from '@react-native-firebase/firestore';
+
 import InteractIcon from 'src/components/InteractIcon';
 
 import {
@@ -42,8 +46,6 @@ import {
   handleBookmark,
 } from '../../services/Requests/index';
 
-// import firebase from 'firebase';
-
 import {
   IconCHeart,
   IconCChat,
@@ -54,23 +56,10 @@ import {
   IconCEye,
 } from 'src/components/CustomIcons';
 
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
-//   authDomain: 'woozeee-d7f6c.firebaseapp.com',
-//   databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
-//   projectId: 'woozeee-d7f6c',
-//   storageBucket: 'woozeee-d7f6c.appspot.com',
-//   messagingSenderId: '979696525592',
-//   appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
-//   measurementId: 'G-XQKMT94R9R',
-// };
-// const db = firebase.firestore();
-
-// if (!firebase.apps.length) {
-//   firebase.initializeApp(firebaseConfig);
-// }
+import { Toast } from 'native-base';
 
 const VideoView = forwardRef((props, ref) => {
+  // const db = firebase.firestore();
   // prettier-ignore
   const {
     data, viewHeight, navigation, t,
@@ -118,16 +107,20 @@ const VideoView = forwardRef((props, ref) => {
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
-          alert(result.activityType);
+          // console.log(result.activityType);
+          alert('Done');
+          sheetRef.current.close();
         } else {
           // shared
-          alert('Shared');
+          alert('Post Shared!');
+          sheetRef.current.close();
         }
       } else if (result.action === Share.dismissedAction) {
-        // dismissed
-        // alert('Action dismissed');
+        alert('Action dismissed');
       }
+      sheetRef.current.close();
     } catch (error) {
+      alert('An error occured');
       console.log(error.message);
     }
   };
@@ -153,7 +146,6 @@ const VideoView = forwardRef((props, ref) => {
   const toggleBookmark = async () => {
     setBookmarked(!isBookmarked);
     // console.log(!isBookmarked);
-
     const res = await handleBookmark(item.userEntryData.entryId, !isBookmarked);
     // console.log(res);
   };
@@ -164,14 +156,13 @@ const VideoView = forwardRef((props, ref) => {
   };
 
   const handleComment = async () => {
-    console.log('pressed');
-    const response = db.collection('entryComments');
-    const data = await response.get();
-    console.log(data._delegate._snapshot);
+    // console.log('pressed');
+    // const response = firestore.collection('entryComments');
+    // const data = await response.get();
+    console.log(firebase);
     // await sendComment(form);
     // // setFormValues('');
   };
-  // const updateHiddenText = () => setHideText((prevState) => !prevState);
 
   const routeComments = () => props.navigation.navigate('Comments');
 
@@ -259,7 +250,7 @@ const VideoView = forwardRef((props, ref) => {
   );
 
   return (
-    <>
+    <Root>
       <View
         style={{
           flex: 1,
@@ -575,7 +566,7 @@ const VideoView = forwardRef((props, ref) => {
           </Button>
         </Layout>
       </RBSheet>
-    </>
+    </Root>
   );
 });
 

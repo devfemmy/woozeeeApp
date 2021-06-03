@@ -41,12 +41,12 @@ const axiosReq = async (methodType, reqData) => {
 
 export const sendReport = async (userReason, userId) => {
   const data = {
-    reason: userReason.reason,
+    reason:
+      userReason.reason === 'Others' ? userReason.others : userReason.reason,
     section: 'socials',
     entryId: userId,
     resolved: false,
   };
-
   const token = await getToken();
 
   const config = {

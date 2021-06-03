@@ -30,6 +30,13 @@ const createInstance = async () => {
 };
 
 export default {
+  getAllUsers: async (name) => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`user/search?q=${name}`);
+    const { data } = res;
+    return data;
+  },
   getComments: async () => {
     // const [comments, setComments] = useState([]);
     // const res = db.collection('entryComments');
@@ -94,10 +101,24 @@ export default {
       pageData: data,
     };
   },
-  getWoozData: async (id) => {
+  getWoozData: async (page = 1, id) => {
     const instance = await createInstance();
 
-    const res = await instance.get(`entries?challengeId=${id}`);
+    const res = await instance.get(
+      `entries?challengeId=${id}&pageNumber=${page}`,
+    );
+    const { data } = res;
+    // console.log('from fetch => ', );
+    return {
+      pageData: data,
+      previousID: 1,
+      nextID: page + 1,
+    };
+  },
+  getExploreData: async (id) => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`entries?categoryId=${id}`);
     const { data } = res;
     // console.log('from fetch => ', );
     return {

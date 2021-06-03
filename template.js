@@ -575,7 +575,6 @@ const myReport = [
         1: 'View Entries',
         2: 'Like entries',
         3: 'Unlike entries',
-        4: 'Comment on entries',
         5: 'See total views',
         6: 'See total votes (If challenge entry)',
         7: 'View Movies',
@@ -590,13 +589,11 @@ const myReport = [
       challenges: {
         4: 'Comment on entries',
         12: 'View rankings',
-        13: 'Search for users',
         14: 'Enter a challenge',
         10: 'Vote for only one entry',
       },
       explore: {
         4: 'Comment on entries',
-        9: 'Search for users',
       },
     },
   },

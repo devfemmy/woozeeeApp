@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useState, useRef, useContext, useCallback,
+  useState, useRef, useContext, useCallback, useMemo
 } from 'react';
 
 import {
@@ -22,7 +22,7 @@ import Constants from 'expo-constants';
 
 import { Video } from 'expo-av';
 
-import { Layout } from '@ui-kitten/components';
+import { Layout, Button, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 
@@ -34,13 +34,74 @@ import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
 import Placeholders from 'src/components/Placeholders';
 
-import InteractIcon from 'src/components/InteractIcon';
-
 import { IconCMovie, IconCMedal } from 'src/components/CustomIcons';
 
 import Api from 'src/api';
 
 import { viewVideo } from '../../../../../services/Requests/index';
+
+const InteractIcon = (props) => {
+  const {
+    Accessory,
+    textContent,
+    direction,
+    onPress,
+    status,
+    height,
+    width,
+    align,
+    style,
+  } = props;
+
+  return useMemo(
+    () => (
+      <View
+        style={[
+          style,
+          {
+            flexDirection: direction ?? 'column',
+            alignItems: align ?? 'center',
+            backgroundColor: 'rgba(0, 0, 0, .6)',
+            alignSelf: 'flex-start',
+            padding: 4,
+            borderRadius: 10,
+            marginRight: 5,
+          },
+        ]}
+      >
+        <Button
+          appearance="ghost"
+          status={status ?? 'control'}
+          size="tiny"
+          style={{
+            paddingVertical: 0,
+            paddingHorizontal: 0,
+          }}
+          accessoryLeft={(evaProps) => (
+            <Accessory
+              {...evaProps}
+              style={[
+                evaProps.style,
+                { height: height ?? 32, width: width ?? 32 },
+              ]}
+            />
+          )}
+          onPress={onPress}
+        />
+        {textContent ? (
+          <Text
+            status={status ?? 'control'}
+            category="c2"
+            style={{ textAlign: 'center', marginRight: 5 }}
+          >
+            {textContent}
+          </Text>
+        ) : null}
+      </View>
+    ),
+    [textContent, onPress, height, width, status, style, direction],
+  );
+};
 
 export default function Wooz({ navigation }) {
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
