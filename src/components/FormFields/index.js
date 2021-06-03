@@ -242,7 +242,7 @@ export const GeneralAutocomplete = (props) => {
 export const GeneralSelect = (props) => {
   // prettier-ignore
   const {
-    label, data, type, size, setFormValues,
+    label, data, type, size, setFormValues, placeholder
   } = props;
 
   const [selectedOption, setSelectedOption] = useState(new IndexPath(0));

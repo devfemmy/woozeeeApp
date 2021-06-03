@@ -1,6 +1,7 @@
 import React, {
   useState,
   useMemo,
+  useEffect,
   useCallback,
   forwardRef,
   useImperativeHandle,
@@ -8,11 +9,9 @@ import React, {
 
 import { View, StyleSheet, Image, TouchableOpacity, Share } from 'react-native';
 
-import { Text } from '@ui-kitten/components';
+import { Text, Button } from '@ui-kitten/components';
 
 import { LinearGradient } from 'expo-linear-gradient';
-
-import InteractIcon from 'src/components/InteractIcon';
 
 import {
   IconCHeartToggle,
@@ -30,6 +29,8 @@ import {
   handleFollow,
   getUserData,
   getUserEntries,
+  handleVote,
+  viewVideo,
 } from '../../services/Requests/index';
 
 const styles = StyleSheet.create({
@@ -44,6 +45,69 @@ const styles = StyleSheet.create({
   },
 });
 
+const InteractIcon = (props) => {
+  const {
+    Accessory,
+    textContent,
+    direction,
+    onPress,
+    status,
+    height,
+    width,
+    align,
+    style,
+  } = props;
+
+  return useMemo(
+    () => (
+      <View
+        style={[
+          style,
+          {
+            flexDirection: direction ?? 'column',
+            alignItems: align ?? 'center',
+            backgroundColor: 'rgba(0, 0, 0, .6)',
+            alignSelf: 'flex-start',
+            padding: 4,
+            borderRadius: 10,
+            marginRight: 5,
+          },
+        ]}
+      >
+        <Button
+          appearance="ghost"
+          status={status ?? 'control'}
+          size="tiny"
+          style={{
+            paddingVertical: 0,
+            paddingHorizontal: 0,
+          }}
+          accessoryLeft={(evaProps) => (
+            <Accessory
+              {...evaProps}
+              style={[
+                evaProps.style,
+                { height: height ?? 32, width: width ?? 32 },
+              ]}
+            />
+          )}
+          onPress={onPress}
+        />
+        {textContent ? (
+          <Text
+            status={status ?? 'control'}
+            category="c2"
+            style={{ textAlign: 'center', marginRight: 5 }}
+          >
+            {textContent}
+          </Text>
+        ) : null}
+      </View>
+    ),
+    [textContent, onPress, height, width, status, style, direction],
+  );
+};
+
 const ChallengeVideo = forwardRef((props, ref) => {
   // prettier-ignore
   const {
@@ -52,7 +116,11 @@ const ChallengeVideo = forwardRef((props, ref) => {
 
   const { item } = data;
 
-  //   console.log('from challenge video full screen -> ', data);
+  // console.log('from challenge videoref -> ', videoRef);
+
+  const [isVoted, setVoted] = useState(data.userEntryData.isVote);
+
+  // const [isPlaying, setIsPlaying] = useState(false);
 
   const [isLiked, setLiked] = useState(data.userEntryData.isLike);
   const [totalLikes, setTotalLikes] = useState(data.totalLikes);
@@ -64,11 +132,19 @@ const ChallengeVideo = forwardRef((props, ref) => {
     isLike: isLiked,
   };
 
+  const voteData = {
+    entryId: data._id,
+    isVote: isVoted,
+  };
+
   const routeUserProfile = async () => {
     const userData = await getUserData(data.userId);
-    // const { data } = userData;
-    console.log(userData.data);
     await navigation.navigate('UserProfile', userData.data);
+  };
+
+  const toggleVote = async () => {
+    setVoted(!isVoted);
+    await handleVote(voteData);
   };
 
   const toggleLike = async () => {
@@ -109,10 +185,6 @@ const ChallengeVideo = forwardRef((props, ref) => {
     }
   };
 
-  // const [isLiked, setLiked] = useState(false);
-
-  const [isVoted, setVoted] = useState(false);
-
   const togglePause = useCallback(() => {
     (async () => {
       try {
@@ -134,11 +206,6 @@ const ChallengeVideo = forwardRef((props, ref) => {
       }
     })();
   }, [videoRef]);
-
-  // const toggleLike = useCallback(() => setLiked((prevState) => !prevState), []);
-
-  const toggleVote = useCallback(() => setVoted((prevState) => !prevState), []);
-
   useImperativeHandle(ref, () => ({
     resetPlayState(playState) {
       setShouldPlay(playState);
@@ -167,9 +234,17 @@ const ChallengeVideo = forwardRef((props, ref) => {
           >
             <View style={{ flexDirection: 'row' }}>
               <View style={{ paddingLeft: 5 }}>
-                <View style={{ flexDirection: 'row' }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    backgroundColor: 'rgba(0, 0, 0, .6)',
+                    paddingVertical: 5,
+                    paddingHorizontal: 8,
+                    borderRadius: 10,
+                  }}
+                >
                   <Text
-                    status="primary"
+                    status="control"
                     category="h6"
                     style={{ marginRight: 5 }}
                   >
@@ -201,14 +276,25 @@ const ChallengeVideo = forwardRef((props, ref) => {
                     height={20}
                     width={20}
                     direction="row"
+                    style={{ marginRight: 7 }}
                   />
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    backgroundColor: 'rgba(0, 0, 0, .6)',
+                    alignSelf: 'flex-start',
+                    padding: 8,
+                    borderRadius: 10,
+                  }}
+                >
                   <Text
                     status="control"
                     category="s2"
                     style={{
                       backgroundColor: 'rgba(0, 0, 0, 0.0125)',
+                      marginBottom: 2,
                     }}
                   >
                     {data.userEntryData.categoryName}
@@ -217,18 +303,20 @@ const ChallengeVideo = forwardRef((props, ref) => {
               </View>
             </View>
             <View>
-              <InteractIcon
-                size="large"
-                style={{ marginBottom: 15 }}
-                /* prettier-ignore */
-                Accessory={(evaProps) => (isVoted ? (
+              {data.isChallenge && (
+                <InteractIcon
+                  size="large"
+                  style={{ marginBottom: 15 }}
+                  /* prettier-ignore */
+                  Accessory={(evaProps) => (isVoted ? (
                       <IconCCoin style={{ height: 36, width: 36 }} />
                     ) : (
                       <IconCVote {...evaProps} active />
                     ))}
-                textContent={data.likes}
-                onPress={toggleVote}
-              />
+                  textContent={data.likes}
+                  onPress={toggleVote}
+                />
+              )}
               <InteractIcon
                 style={{ marginBottom: 15 }}
                 Accessory={IconCHeartToggle}
@@ -248,7 +336,7 @@ const ChallengeVideo = forwardRef((props, ref) => {
               />
 
               <TouchableOpacity
-                style={{ alignItems: 'center' }}
+                style={{ alignItems: 'center', marginBottom: 5 }}
                 onPress={routeUserProfile}
               >
                 <Image

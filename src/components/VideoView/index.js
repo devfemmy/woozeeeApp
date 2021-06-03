@@ -8,6 +8,8 @@ import React, {
   useImperativeHandle,
 } from 'react';
 
+import { Root } from 'native-base';
+
 import { View, Image, TouchableOpacity, Share } from 'react-native';
 
 import Moment from 'react-moment';
@@ -28,6 +30,10 @@ import { useFocusEffect } from '@react-navigation/native';
 import { AppSettingsContext } from 'src/contexts';
 
 import { GeneralTextField } from 'src/components/FormFields';
+
+import firebase from '@react-native-firebase/app';
+
+import firestore from '@react-native-firebase/firestore';
 
 import InteractIcon from 'src/components/InteractIcon';
 
@@ -50,7 +56,10 @@ import {
   IconCEye,
 } from 'src/components/CustomIcons';
 
+import { Toast } from 'native-base';
+
 const VideoView = forwardRef((props, ref) => {
+  // const db = firebase.firestore();
   // prettier-ignore
   const {
     data, viewHeight, navigation, t,
@@ -98,16 +107,20 @@ const VideoView = forwardRef((props, ref) => {
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
-          alert(result.activityType);
+          // console.log(result.activityType);
+          alert('Done');
+          sheetRef.current.close();
         } else {
           // shared
-          alert('Shared');
+          alert('Post Shared!');
+          sheetRef.current.close();
         }
       } else if (result.action === Share.dismissedAction) {
-        // dismissed
-        // alert('Action dismissed');
+        alert('Action dismissed');
       }
+      sheetRef.current.close();
     } catch (error) {
+      alert('An error occured');
       console.log(error.message);
     }
   };
@@ -133,7 +146,6 @@ const VideoView = forwardRef((props, ref) => {
   const toggleBookmark = async () => {
     setBookmarked(!isBookmarked);
     // console.log(!isBookmarked);
-
     const res = await handleBookmark(item.userEntryData.entryId, !isBookmarked);
     // console.log(res);
   };
@@ -143,11 +155,14 @@ const VideoView = forwardRef((props, ref) => {
     await handleFollow(userId, !following);
   };
 
-  const handleComment = () => {
-    sendComment();
-    // setFormValues('');
+  const handleComment = async () => {
+    // console.log('pressed');
+    // const response = firestore.collection('entryComments');
+    // const data = await response.get();
+    console.log(firebase);
+    // await sendComment(form);
+    // // setFormValues('');
   };
-  // const updateHiddenText = () => setHideText((prevState) => !prevState);
 
   const routeComments = () => props.navigation.navigate('Comments');
 
@@ -235,7 +250,7 @@ const VideoView = forwardRef((props, ref) => {
   );
 
   return (
-    <>
+    <Root>
       <View
         style={{
           flex: 1,
@@ -551,7 +566,7 @@ const VideoView = forwardRef((props, ref) => {
           </Button>
         </Layout>
       </RBSheet>
-    </>
+    </Root>
   );
 });
 

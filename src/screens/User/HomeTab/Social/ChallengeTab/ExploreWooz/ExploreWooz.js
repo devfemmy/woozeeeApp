@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useState, useRef, useContext, useCallback,
+  useState, useRef, useContext, useCallback, useMemo,
 } from 'react';
 
 import {
@@ -20,11 +20,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
-import Constants from 'expo-constants';
-
 import { Video } from 'expo-av';
 
-import { Layout } from '@ui-kitten/components';
+import { Layout, Button, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 
@@ -36,17 +34,79 @@ import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
 import Placeholders from 'src/components/Placeholders';
 
-import InteractIcon from 'src/components/InteractIcon';
-
-import { IconBackIos, IconCMedal } from 'src/components/CustomIcons';
+import { IconBackIos, IconCMovie } from 'src/components/CustomIcons';
 
 import Api from 'src/api';
 
 import { viewVideo } from '../../../../../../services/Requests/index';
 
-export default function Wooz({ route, navigation }) {
-  // console.log('route params -> ', route.params);
-  const { _id } = route.params;
+const InteractIcon = (props) => {
+  const {
+    Accessory,
+    textContent,
+    direction,
+    onPress,
+    status,
+    height,
+    width,
+    align,
+    style,
+  } = props;
+
+  return useMemo(
+    () => (
+      <View
+        style={[
+          style,
+          {
+            flexDirection: direction ?? 'column',
+            alignItems: align ?? 'center',
+            backgroundColor: 'rgba(0, 0, 0, .6)',
+            alignSelf: 'flex-start',
+            padding: 4,
+            borderRadius: 10,
+            marginRight: 5,
+          },
+        ]}
+      >
+        <Button
+          appearance="ghost"
+          status={status ?? 'control'}
+          size="tiny"
+          style={{
+            paddingVertical: 0,
+            paddingHorizontal: 0,
+          }}
+          accessoryLeft={(evaProps) => (
+            <Accessory
+              {...evaProps}
+              style={[
+                evaProps.style,
+                { height: height ?? 32, width: width ?? 32 },
+              ]}
+            />
+          )}
+          onPress={onPress}
+        />
+        {textContent ? (
+          <Text
+            status={status ?? 'control'}
+            category="c2"
+            style={{ textAlign: 'center', marginRight: 5 }}
+          >
+            {textContent}
+          </Text>
+        ) : null}
+      </View>
+    ),
+    [textContent, onPress, height, width, status, style, direction],
+  );
+};
+
+export default function ExploreWooz({ route, navigation }) {
+  const exData = route.params;
+
+  // console.log('route params -> ', exData);
 
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
@@ -67,7 +127,7 @@ export default function Wooz({ route, navigation }) {
 
   const goBack = () => navigation.goBack();
 
-  const routeRanking = () => navigation.navigate('Rankings');
+  const routeMovies = () => navigation.navigate('Movies');
 
   const WoozPostsArea = () => {
     const isFocused = useIsFocused();
@@ -99,7 +159,7 @@ export default function Wooz({ route, navigation }) {
       }
     };
 
-    const [woozData, setWoozData] = useState({});
+    const [exploreData, setExploreData] = useState({});
 
     // const startVideo = async () => {
     //   try {
@@ -158,27 +218,21 @@ export default function Wooz({ route, navigation }) {
       hasNextPage,
       hasPreviousPage,
     } = useInfiniteQuery(
-      ['ChallengeWooz', 1],
-      async ({ pageParam = 1 }) => {
-        const promise = await Api.getWoozData(pageParam, _id);
+      ['ExploreWooz', 1],
+      async () => {
+        const promise = await Api.getExploreData(exData.categoryId);
         if (data !== {} && data !== undefined) {
-          setWoozData(data);
+          setExploreData(data);
         } else {
-          setWoozData({ message: 'No challenge data loaded' });
+          setExploreData({ message: 'No explore data loaded' });
         }
         promise.cancel = () => Api.cancelRequest('Request aborted');
         return promise;
       },
-      {
-        getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
-        getNextPageParam: (lastPage) => lastPage.nextID ?? false,
-        keepPreviousData: true,
-        staleTime: 0,
-        cacheTime: 0,
-      },
+      { cacheTime: 0, staleTime: 0 },
     );
 
-    // console.log('from challenge, challenge is => ', woozData);
+    // console.log('from explore, explore data is => ', exploreData);
 
     const onPlaybackStatusUpdate = async (playbackStatus, entryId) => {
       if (playbackStatus.didJustFinish) {
@@ -202,10 +256,10 @@ export default function Wooz({ route, navigation }) {
       // prettier-ignore
       status !== 'error'
       && status !== 'loading'
-      && woozData.pages
+      && exploreData.pages
     ) {
-      videoLength.current = woozData.pages[0].pageData.data.length;
-      return woozData.pages.map((page) => (
+      videoLength.current = exploreData.pages[0].pageData.data.length;
+      return exploreData.pages.map((page) => (
         <React.Fragment key={uuidv4()}>
           <View style={{ flex: 1 }}>
             <ScrollView
@@ -231,7 +285,7 @@ export default function Wooz({ route, navigation }) {
                         position: 'absolute',
                       }}
                       source={
-                        woozData.pages
+                        exploreData.pages
                           ? { uri: item.mediaURL }
                           : require('assets/images/banner/placeholder-image.png')
                       }
@@ -318,11 +372,11 @@ export default function Wooz({ route, navigation }) {
             onPress={goBack}
           />
           <InteractIcon
-            Accessory={IconCMedal}
+            Accessory={IconCMovie}
             status="control"
             height={28}
             width={28}
-            onPress={routeRanking}
+            onPress={routeMovies}
           />
         </View>
         <WoozPostsArea />
