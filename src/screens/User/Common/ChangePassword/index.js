@@ -40,8 +40,9 @@ export default function ChangePassword({ navigation }) {
 const updatePassword = () => {
   setLoading(true);
   const data = form;
-  axios.put(`update-password?userId=${user_id}`, data, {headers: {Authorization: token}})
+  axios.put(`user/update-password?userId=${user_id}`, data, {headers: {Authorization: token}})
   .then(res => {
+    console.log(res, "response")
     setLoading(false);
     const message = res.data.message;
     alert(message)

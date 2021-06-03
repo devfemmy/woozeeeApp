@@ -28,11 +28,13 @@ import SettingsGlobal from 'src/screens/User/Common/SettingsGlobal';
 import EditProfile from 'src/screens/User/Common/EditProfile';
 import ChangePassword from 'src/screens/User/Common/ChangePassword';
 import UploadEntries from 'src/screens/User/Common/VideoUpload/UploadEntries';
+import PreviewEntry from 'src/screens/User/Common/VideoUpload/PreviewEntry';
 
 import Report from '../components/ReportCard/index';
 import Search from 'src/screens/User/Common/Search';
 import Movies from 'src/screens/User/Common/Movies';
 import ViewMovies from 'src/screens/User/Common/ViewMovies';
+import MoviePage from 'src/screens/User/Common/ViewMovies/MoviePage';
 import LiveStream from 'src/screens/User/Common/LiveStream';
 import Messaging from 'src/screens/User/Common/Messaging';
 import Comments from 'src/screens/User/Common/Comments';
@@ -103,10 +105,12 @@ export default function Router() {
       EditProfile,
       ChangePassword,
       UploadEntries,
+      PreviewEntry,
       Settings,
       SettingsGlobal,
       Movies,
       ViewMovies,
+      MoviePage,
       LiveStream,
       Messaging,
       Comments,

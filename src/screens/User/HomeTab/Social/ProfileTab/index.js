@@ -44,8 +44,8 @@ const PLACEHOLDER_CONFIG = {
 };
 
 // prettier-ignore
-const ProfilePostsArea = ({userPostData}) => (
-  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, userPostData)
+const ProfilePostsArea = ({testData}) => (
+  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, testData)
 );
 
 export default function Profile({ navigation }) {
@@ -87,7 +87,7 @@ export default function Profile({ navigation }) {
     AsyncStorage.getItem('USER_AUTH_TOKEN')
       .then((res) => {
         axios
-          .get(`user?userId=${user_id}`, { headers: { Authorization: res } })
+          .get(`user/user?userId=${user_id}`, { headers: { Authorization: res } })
           .then((response) => {
             // setLoading(false)
             const user_data = response.data.user;
@@ -96,6 +96,7 @@ export default function Profile({ navigation }) {
             const bio = user_data.bio;
             const email = user_data.email;
             const imageUrl = user_data.imgUrl;
+            const coverPhotoUrl = user_data.coverPhotoUrl
             const videoCount = user_data.videoCount;
             const followingCount = user_data.followingCount;
             const followersCount = user_data.followersCount;
@@ -106,6 +107,7 @@ export default function Profile({ navigation }) {
               email: email,
               bio: bio,
               imageUrl: imageUrl,
+              coverPhotoUrl: coverPhotoUrl,
               videoCount: videoCount,
               followersCount: followersCount,
               followingCount: followingCount,
@@ -153,7 +155,7 @@ export default function Profile({ navigation }) {
             }}
           >
             <Image
-              source={require('assets/images/banner/profile.jpg')}
+               source={{ uri: form.coverPhotoUrl }}
               defaultSource={require('assets/images/banner/profile.jpg')}
               style={{
                 height: '100%',
@@ -234,12 +236,12 @@ export default function Profile({ navigation }) {
               position: 'absolute',
               zIndex: 3,
               right: 0,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              width: '30%',
+              justifyContent: 'flex-end',
+              flexDirection: 'row'
             }}
           >
-            <Button
+            {/* <Button
               status="primary"
               appearance="outline"
               size="tiny"
@@ -249,13 +251,13 @@ export default function Profile({ navigation }) {
               <Text status="primary" category="c2">
                 {t('messaging')}
               </Text>
-            </Button>
+            </Button> */}
             <Button
               status="primary"
               size="tiny"
               style={{
                 marginHorizontal: 15,
-                width: 100,
+                width: '100%',
                 minHeight: 35,
               }}
               onPress={routeEditProfile}
@@ -374,13 +376,13 @@ export default function Profile({ navigation }) {
             onSelect={(index) => setSelectedIndex(index)}
           >
             <Tab title={t('all')} icon={IconGrid}>
-              <ProfilePostsArea userPostData={user} />
+              <ProfilePostsArea testData={user} />
             </Tab>
             <Tab title={t('saved')} icon={IconBookmark}>
-              <ProfilePostsArea userPostData={user} />
+              <ProfilePostsArea testData={user} />
             </Tab>
             <Tab title={t('liked')} icon={IconHeart}>
-              <ProfilePostsArea userPostData={user} />
+              <ProfilePostsArea testData={user} />
             </Tab>
           </TabView>
         </View>
