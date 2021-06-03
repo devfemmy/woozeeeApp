@@ -14,7 +14,7 @@ import { Text } from '@ui-kitten/components';
 export default function StoryCard(props) {
   const { data, extraWidth } = props;
 
-  // console.log(data);
+  console.log(data);
 
   const { width, height } = useWindowDimensions();
 
@@ -46,7 +46,7 @@ export default function StoryCard(props) {
             }}
           >
             <Image
-              source={{ uri: data.userImageURL }}
+              source={{ uri: data.item.userImageURL }}
               defaultSource={require('assets/images/banner/placeholder-image.png')}
               style={{
                 height: 80,
@@ -57,8 +57,8 @@ export default function StoryCard(props) {
             />
           </LinearGradient>
           <Text category="c2" style={{ marginTop: 10, textAlign: 'center' }}>
-            {data.userFirstName}
-            {data.userLastName}
+            {data.item.userFirstName}
+            {data.item.userLastName}
           </Text>
         </View>
       </TouchableOpacity>

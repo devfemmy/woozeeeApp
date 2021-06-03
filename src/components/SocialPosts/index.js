@@ -73,7 +73,7 @@ export const StoryPosts = ({ info }) => {
 
   const navigation = useNavigation();
 
-  console.log('info from StoryPosts -> ', info);
+  // console.log('info from StoryPosts -> ', info);
 
   const RenderCategoryHeader = () => (
     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
@@ -128,7 +128,7 @@ export const StoryPosts = ({ info }) => {
         data={info}
         keyExtractor={(_, i) => i.toString()}
         renderItem={(renderData) => (
-          <StoryCard data={renderData.item} extraWidth={0.5} />
+          <StoryCard data={renderData} extraWidth={0.5} />
         )}
         getItemLayout={(data, index) => ({
           length: 175,
