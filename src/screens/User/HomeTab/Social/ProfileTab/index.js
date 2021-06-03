@@ -44,8 +44,8 @@ const PLACEHOLDER_CONFIG = {
 };
 
 // prettier-ignore
-const ProfilePostsArea = ({userPostData}) => (
-  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, userPostData)
+const ProfilePostsArea = ({testData}) => (
+  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, testData)
 );
 
 export default function Profile({ navigation }) {
@@ -66,7 +66,6 @@ export default function Profile({ navigation }) {
     followersCount: '',
     followingCount: '',
     videoCount: '',
-    coverPhotoUrl: '',
   });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -91,7 +90,6 @@ export default function Profile({ navigation }) {
           .get(`user?userId=${user_id}`, { headers: { Authorization: res } })
           .then((response) => {
             // setLoading(false)
-            console.log(response)
             const user_data = response.data.user;
             const first_name = user_data.fName;
             const last_name = user_data.sName;
@@ -157,7 +155,7 @@ export default function Profile({ navigation }) {
             }}
           >
             <Image
-              source={require('assets/images/banner/profile.jpg')}
+               source={{ uri: form.coverPhotoUrl }}
               defaultSource={require('assets/images/banner/profile.jpg')}
               style={{
                 height: '100%',
@@ -208,7 +206,7 @@ export default function Profile({ navigation }) {
               >
                 <Image
                   source={{ uri: form.imageUrl }}
-                  // defaultSource={require('assets/images/user/user2.png')}
+                  defaultSource={require('assets/images/user/user2.png')}
                   style={{
                     height: 100,
                     width: 100,
@@ -243,7 +241,7 @@ export default function Profile({ navigation }) {
               alignItems: 'center',
             }}
           >
-            <Button
+            {/* <Button
               status="primary"
               appearance="outline"
               size="tiny"
@@ -253,7 +251,7 @@ export default function Profile({ navigation }) {
               <Text status="primary" category="c2">
                 {t('messaging')}
               </Text>
-            </Button>
+            </Button> */}
             <Button
               status="primary"
               size="tiny"
@@ -378,13 +376,13 @@ export default function Profile({ navigation }) {
             onSelect={(index) => setSelectedIndex(index)}
           >
             <Tab title={t('all')} icon={IconGrid}>
-              <ProfilePostsArea userPostData={user} />
+              <ProfilePostsArea testData={user} />
             </Tab>
             <Tab title={t('saved')} icon={IconBookmark}>
-              <ProfilePostsArea userPostData={user} />
+              <ProfilePostsArea testData={user} />
             </Tab>
             <Tab title={t('liked')} icon={IconHeart}>
-              <ProfilePostsArea userPostData={user} />
+              <ProfilePostsArea testData={user} />
             </Tab>
           </TabView>
         </View>
