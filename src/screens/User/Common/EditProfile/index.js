@@ -11,7 +11,7 @@ import {
   RadioGroup, Radio,
   Datepicker
 } from '@ui-kitten/components';
-import RNFetchBlob from 'rn-fetch-blob';
+import RNFetchBlob from 'rn-fetch-blob'
 
 import { LocaleContext } from 'src/contexts';
 
@@ -45,11 +45,13 @@ const libraryImagePicker = ImageVideoPicker('Images');
 export default function EditProfile({ navigation }) {
   const [isLoading, setLoading] = useState(false);
   const [token, setToken] = useState('');
-  const [user_id, setUserId] = useState('');
-  const [userImage, setUserImage] = useState('');
+  const [user_id, setUserId] = useState('')
+  const [userImage, setUserImage] = useState(
+    '',
+  );
 
   const [coverImage, setCoverImage] = useState(
-    'https://i.postimg.cc/PJzQXxnN/back1.jpg',
+    '',
   );
   const [selectedValue, setSelectedValue] = useState(null);
   const [date, setDate] = useState(new Date());
@@ -63,101 +65,107 @@ export default function EditProfile({ navigation }) {
     country: '',
     state: '',
     bio: '',
-    imgUrl: '',
+    imgUrl: ''
   });
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: value,
+    setFormValues(prevState => ({
+        ...prevState,
+        [name]: value
     }));
-  };
+};
 
   const getUserProfile = (user_id) => {
-    setLoading(true);
-    AsyncStorage.getItem('USER_AUTH_TOKEN')
-      .then((res) => {
-        axios
-          .get(`user?userId=${user_id}`, { headers: { Authorization: res } })
-          .then((response) => {
-            setLoading(false);
-            const user_data = response.data.user;
-            const first_name = user_data.fName;
-            const last_name = user_data.sName;
-            const user_name = user_data.displayName;
-            const sex = user_data.sex;
-            const imageUrl = user_data.imgUrl;
-            const bio = user_data.bio;
-            setUserImage(imageUrl);
-            if (sex === 'Male') {
-              setSelectedValue(1);
-            } else {
-              setSelectedValue(0);
-            }
-            const dob = user_data.dob;
-            if (dob === null) {
-              setDate(new Date());
-            } else {
-              setDate(new Date(dob));
-            }
+    setLoading(true)
+    AsyncStorage.getItem('USER_AUTH_TOKEN').then(
+        res => {
+            axios.get(`user/user?userId=${user_id}`,{headers: {Authorization: res}})
+            .then(
+              response => {
+              setLoading(false)
+               const user_data = response.data.user;
+               const first_name = user_data.fName;
+               const last_name = user_data.sName;
+               const user_name = user_data.displayName;
+               const sex = user_data.sex;
+               const imageUrl = user_data.imgUrl;
+               const coverPhotoUrl = user_data.coverPhotoUrl
+               const bio = user_data.bio
+               setUserImage(imageUrl);
+               setCoverImage(coverPhotoUrl)
+               if (sex === 'Male') {
+                 setSelectedValue(1)
+               }else {
+                 setSelectedValue(0)
+               }
+               const dob = user_data.dob;
+               if (dob === null) {
+                setDate(new Date())
+               }else {
+                setDate(new Date(dob))
+               }
+              
+               setFormValues((prevState) => ({...prevState, 
+                fName: first_name, 
+                sName: last_name,
+                displayName: user_name,
+                sex: sex,
+                dob: dob,
+                bio: bio
+              }))
+               console.log(user_data)
+              }
+            )
+            .catch(err => {  
+                  setLoading(false)                
+                  console.log(err.response)
 
-            setFormValues((prevState) => ({
-              ...prevState,
-              fName: first_name,
-              sName: last_name,
-              displayName: user_name,
-              sex: sex,
-              dob: dob,
-              bio: bio,
-            }));
-            //  console.log(user_data)
-          })
-          .catch((err) => {
-            setLoading(false);
-            console.log(err.response);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+            })
+        }
+    )
+    .catch( err => {console.log(err)}) 
+}
 
-  const updateProfile = () => {
-    setLoading(true);
-    const data = form;
-    axios
-      .put(`update/?userId=${user_id}`, data, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        setLoading(false);
-        const message = res.data.message;
-        alert(message);
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.log('err', err.response);
-      });
-  };
+const updateProfile = () => {
+  setLoading(true);
+  const data = form;
+  axios.put(`user/update/?userId=${user_id}`, data, {headers: {Authorization: token}})
+  .then(res => {
+    setLoading(false);
+    const message = res.data.message;
+    alert(message)
+  }
+    )
+  .catch(err => {
+    setLoading(false);
+    console.log("err", err.response)
+  })
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      AsyncStorage.getItem('userid')
-        .then((response) => {
-          getUserProfile(response);
-          setUserId(response);
-        })
-        .catch((err) => err);
-      AsyncStorage.getItem('USER_AUTH_TOKEN')
-        .then((res) => {
-          setToken(res);
-        })
-        .catch((err) => err);
+}
+
+useEffect(() => {
+  const unsubscribe = navigation.addListener('focus', () => {
+    AsyncStorage.getItem('userid').then(
+      response => {
+        getUserProfile(response);
+        setUserId(response)
+      }
+    ).catch(
+      err => err
+    )
+    AsyncStorage.getItem('USER_AUTH_TOKEN').then(
+      res => {
+        setToken(res)
+      }
+    ).catch(
+      err => err
+    )
     });
 
-    return unsubscribe;
-  }, [navigation]);
+  
+  return unsubscribe;
+}, [navigation]);
 
   const t = useContext(LocaleContext);
 
@@ -167,12 +175,11 @@ export default function EditProfile({ navigation }) {
     const imageFile = await libraryImagePicker([4, 3]);
 
     if (!imageFile?.uri) return;
+
     setCoverImage(imageFile.uri);
-    const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
-    setFormValues((prevState) => ({
-      ...prevState,
+    setFormValues((prevState) => ({...prevState, 
       coverPhotoUrl: imageFile.uri,
-    }));
+    }))
   };
 
   const selectUserImage = async () => {
@@ -184,33 +191,28 @@ export default function EditProfile({ navigation }) {
 
     setUserImage(imageFile.uri);
     console.log("image uri", imageFile.uri)
-    // const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
+    const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
     console.log(base64image, "base64")
 
     setFormValues((prevState) => ({...prevState, 
-      imgUrl: imageFile.uri
+      imgUrl: imageFile.uri,
     }))
-    // console.log('image uri', imageFile.uri);
-    // const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
-
-    // setFormValues((prevState) => ({ ...prevState, imgUrl: imageFile.uri }));
   };
-  const setSelectedHandler = (index) => {
+  const setSelectedHandler =(index) => {
     setSelectedValue(index);
-    setFormValues((prevState) => ({
-      ...prevState,
-      sex: index === 0 ? 'Female' : 'Male',
-    }));
-  };
+    setFormValues((prevState) => ({...prevState, 
+      sex: index === 0 ? 'Female': 'Male',
+    }))
+  }
   const setNewDateHandler = (date) => {
     setDate(date);
     setFormValues((prevState) => ({
       ...prevState,
-      dob: date,
-    }));
-  };
+      dob: date
+    }))
+  }
 
-  // console.log('forms', form);
+  console.log("forms", form);
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
@@ -322,7 +324,7 @@ export default function EditProfile({ navigation }) {
                   autoCompleteType="name"
                   textContentType="familyName"
                   // validate="required"
-                  value={form.sName}
+                  value= {form.sName}
                   setFormValues={setFormValues}
                 />
               </View>
@@ -334,7 +336,7 @@ export default function EditProfile({ navigation }) {
                 autoCompleteType="username"
                 textContentType="username"
                 // validate="required"
-                value={form.displayName}
+                value= {form.displayName}
                 setFormValues={setFormValues}
               />
             </View>
@@ -346,17 +348,14 @@ export default function EditProfile({ navigation }) {
               }}
             >
               <View style={{ flex: 1, marginRight: 5 }}>
-                <Text category="label" appearance="hint">
-                  {t('gender')}
-                </Text>
-                <RadioGroup
-                  selectedIndex={selectedValue}
-                  onChange={(index) => setSelectedHandler(index)}
-                >
-                  {GENDERS.map((option) => (
-                    <Radio key={option}>{option}</Radio>
-                  ))}
-                </RadioGroup>
+                  <Text category="label" appearance="hint">
+                    {t('gender')}
+                  </Text>
+              <RadioGroup selectedIndex={selectedValue} onChange={index => setSelectedHandler(index)}>
+                {GENDERS.map((option) => (
+                  <Radio key={option}>{option}</Radio>
+                ))}
+              </RadioGroup>
                 {/* <GeneralRadioGroup
                   type="sex"
                   label={t('gender')}
@@ -367,14 +366,14 @@ export default function EditProfile({ navigation }) {
                 /> */}
               </View>
               <View style={{ flex: 1, marginLeft: 5 }}>
-                <Datepicker
-                  label={t('dob')}
-                  date={date}
-                  onSelect={(nextDate) => setNewDateHandler(nextDate)}
-                  min={new Date('12-05-1880')}
-                  max={new Date()}
-                  accessoryRight={IconCalendar}
-                />
+              <Datepicker
+                label={t('dob')}
+                date={date}
+                onSelect={nextDate => setNewDateHandler(nextDate)}
+                min = {new Date ('12-05-1880')}
+                max= {new Date()}
+                accessoryRight={IconCalendar}
+              />
                 {/* <GeneralDatePicker
                   type="dob"
                   label={t('dob')}
@@ -414,7 +413,7 @@ export default function EditProfile({ navigation }) {
                 multiline
                 height={50}
                 // validate="required"
-                value={form.bio}
+                value= {form.bio}
                 setFormValues={setFormValues}
               />
             </View>
@@ -426,7 +425,7 @@ export default function EditProfile({ navigation }) {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
                 disabled={isLoading}
-                onPress={() => updateProfile()}
+                onPress= {() => updateProfile()}
               >
                 <Text status="control">{t('updateProfile')}</Text>
               </Button>

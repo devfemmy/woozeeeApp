@@ -87,7 +87,7 @@ export default function Profile({ navigation }) {
     AsyncStorage.getItem('USER_AUTH_TOKEN')
       .then((res) => {
         axios
-          .get(`user?userId=${user_id}`, { headers: { Authorization: res } })
+          .get(`user/user?userId=${user_id}`, { headers: { Authorization: res } })
           .then((response) => {
             // setLoading(false)
             const user_data = response.data.user;
@@ -236,9 +236,9 @@ export default function Profile({ navigation }) {
               position: 'absolute',
               zIndex: 3,
               right: 0,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              width: '30%',
+              justifyContent: 'flex-end',
+              flexDirection: 'row'
             }}
           >
             {/* <Button
@@ -257,7 +257,7 @@ export default function Profile({ navigation }) {
               size="tiny"
               style={{
                 marginHorizontal: 15,
-                width: 100,
+                width: '100%',
                 minHeight: 35,
               }}
               onPress={routeEditProfile}

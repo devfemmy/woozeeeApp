@@ -14,11 +14,11 @@ const {item} = route.params;
         screen="auth"
       />
         <Video
-        poster= {item.posterURL[0]} 
+        // poster= {item.posterURL[0]} 
         controls= {true}
-        fullscreenOrientation = "landscape"
         resizeMode= "contain"
-        fullscreen= {false}
+        fullscreen= {true}
+        fullscreenOrientation= "landscape"
         source={{uri: item.mediaURL}}   // Can be a URL or a local file.
        ref={(ref) => {
         // this.player = ref
@@ -37,8 +37,9 @@ var styles = StyleSheet.create({
       bottom: 0,
       right: 0,
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
+      backgroundColor: 'black',
+      // alignItems: 'center',
+      // justifyContent: 'center'
     },
   });
 
