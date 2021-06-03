@@ -167,8 +167,8 @@ export default function EditProfile({ navigation }) {
     const imageFile = await libraryImagePicker([4, 3]);
 
     if (!imageFile?.uri) return;
-
     setCoverImage(imageFile.uri);
+    const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
     setFormValues((prevState) => ({
       ...prevState,
       coverPhotoUrl: imageFile.uri,
@@ -184,16 +184,16 @@ export default function EditProfile({ navigation }) {
 
     setUserImage(imageFile.uri);
     console.log("image uri", imageFile.uri)
-    const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
+    // const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
     console.log(base64image, "base64")
 
     setFormValues((prevState) => ({...prevState, 
-      imgUrl: imageFile.uri,
+      imgUrl: imageFile.uri
     }))
-    console.log('image uri', imageFile.uri);
+    // console.log('image uri', imageFile.uri);
     // const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
 
-    setFormValues((prevState) => ({ ...prevState, imgUrl: imageFile.uri }));
+    // setFormValues((prevState) => ({ ...prevState, imgUrl: imageFile.uri }));
   };
   const setSelectedHandler = (index) => {
     setSelectedValue(index);

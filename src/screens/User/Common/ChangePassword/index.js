@@ -42,6 +42,7 @@ const updatePassword = () => {
   const data = form;
   axios.put(`update-password?userId=${user_id}`, data, {headers: {Authorization: token}})
   .then(res => {
+    console.log(res, "response")
     setLoading(false);
     const message = res.data.message;
     alert(message)

@@ -66,6 +66,7 @@ export default function Profile({ navigation }) {
     followersCount: '',
     followingCount: '',
     videoCount: '',
+    coverPhotoUrl: '',
   });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -90,12 +91,14 @@ export default function Profile({ navigation }) {
           .get(`user?userId=${user_id}`, { headers: { Authorization: res } })
           .then((response) => {
             // setLoading(false)
+            console.log(response)
             const user_data = response.data.user;
             const first_name = user_data.fName;
             const last_name = user_data.sName;
             const bio = user_data.bio;
             const email = user_data.email;
             const imageUrl = user_data.imgUrl;
+            const coverPhotoUrl = user_data.coverPhotoUrl
             const videoCount = user_data.videoCount;
             const followingCount = user_data.followingCount;
             const followersCount = user_data.followersCount;
@@ -106,6 +109,7 @@ export default function Profile({ navigation }) {
               email: email,
               bio: bio,
               imageUrl: imageUrl,
+              coverPhotoUrl: coverPhotoUrl,
               videoCount: videoCount,
               followersCount: followersCount,
               followingCount: followingCount,
@@ -204,7 +208,7 @@ export default function Profile({ navigation }) {
               >
                 <Image
                   source={{ uri: form.imageUrl }}
-                  defaultSource={require('assets/images/user/user2.png')}
+                  // defaultSource={require('assets/images/user/user2.png')}
                   style={{
                     height: 100,
                     width: 100,

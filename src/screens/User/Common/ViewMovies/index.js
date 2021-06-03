@@ -121,7 +121,7 @@ const renderMovieCategories = () => (
 export default function Explore({ navigation, route }) {
   const { width, height } = useWindowDimensions();
   const {movie_data} = route.params;
-  const [paid, setPaid] = useState(true);
+  const [paid, setPaid] = useState(false);
 
 console.log("moshdsk", movie_data)
   const { bottom, top } = useSafeAreaInsets();
