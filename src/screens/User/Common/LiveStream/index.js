@@ -189,7 +189,7 @@ __onStreamHealthUpdate(streamhealth) {
       ref={ref => {myBroadcasterRef = ref; }} applicationId={"erEJmaJQzzubKcp0xewaoQ"} /> */}
 
 <TouchableOpacity onPress= {this.startMyBroadCast}>
-    <Text>Start Broadcast</Text>
+    <Text>Started Broadcast</Text>
 </TouchableOpacity>
       </Layout>
   )

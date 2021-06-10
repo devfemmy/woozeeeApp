@@ -64,8 +64,8 @@ const woozeeeCategories = [
     banner: require('assets/images/banner/woozeee-marketplace.jpg'),
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fmarket.mp4?alt=media&token=2709a1b4-8d3b-4d74-a364-63a276e94493',
-    // screen: 'MarketPlaceRoute',
-    screen: 'openComingSoonMarket',
+    screen: 'MarketPlaceRoute',
+    // screen: 'openComingSoonMarket',
   },
   {
     title: 'charity',
@@ -129,6 +129,8 @@ export default function Home({ navigation }) {
     openComingSoonMarket: () => sheetComingSoonMarket.current.open(),
     openComingSoonCharity: () => sheetComingSoonCharity.current.open(),
     SocialRoute: () => navigation.replace('SocialRoute'),
+    MarketPlaceRoute: () => navigation.replace('MarketPlaceRoute'),
+
   };
 
   const RewardsSheet = useCallback(

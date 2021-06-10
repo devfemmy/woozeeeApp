@@ -29,6 +29,7 @@ import {
   IconCCharity,
   IconCCampaign,
   IconCHero,
+  IconGrid,
 } from '../CustomIcons';
 
 // Screens
@@ -52,6 +53,11 @@ const screens = {
     upload: MarketUpload,
     categories: IconCGrid,
     profile: IconCUser2,
+  },
+  askADoc: {
+    home: IconCHome,
+    appointments: IconGrid,
+    healthBlog: IconCWallet
   },
   charity: {
     charity: IconCCharity,
