@@ -81,6 +81,7 @@ export const GeneralTextField = (props) => {
       setFormValues((prevState) => ({ ...prevState, [type]: input }));
     },
     [validate],
+    
   );
 
   const handleChangeNoValidate = useCallback((input) => {

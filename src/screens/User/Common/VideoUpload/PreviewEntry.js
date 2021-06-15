@@ -1,32 +1,45 @@
 import React, {useCallback, useEffect,useContext, useState} from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import {
-  Layout, Text,Button
+  Layout, Text,Button, Divider,
+  Toggle,
 } from '@ui-kitten/components';
 import { Video } from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNFetchBlob from 'rn-fetch-blob';
 import firebase from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
-import { StyleSheet, BackHandler, Image, View, ActivityIndicator} from 'react-native';
+import { StyleSheet, BackHandler, Image, View, Alert, ActivityIndicator} from 'react-native';
 
 // prettier-ignore
 import { LocaleContext } from 'src/contexts';
-import { GeneralTextField } from 'src/components/FormFields/index';
 import { Platform } from 'react-native';
 import axios from '../../../../services/api/index'
+import CustomField from 'src/components/CustomField/index';
 
 
 
 const PreviewEntry = (props) => {
-  const { editorResult, imageUri } = props.route.params;
+  const { editorResult, imageUri, entries } = props.route.params;
   const [token, setToken] = useState('');
   const [isLoading, setLoading] = useState(false);
-    const [form, setFormValues] = useState({
-        caption: '',
-      });
+  const [caption, setCaption] = useState('');
+  const [uploadLocations, setUploadLocations] = useState({
+    stories: false,
+    feeds: false,
+    wooz: false,
+  });
 
-    const t = useContext(LocaleContext);
+  
+
+  const handleUploadLoc = (loc) => {
+    setUploadLocations((prevState) => ({
+      ...prevState,
+      [loc]: !prevState[loc],
+    }));
+  };
+
+  const t = useContext(LocaleContext);
     // Remove File Prefix from Path
 
     const normalizePath = async (path) => {
@@ -43,27 +56,66 @@ const PreviewEntry = (props) => {
       return path
     }
     const upLoadEntries = (url, type) => {
-      setLoading(true);
-      const data = {
-        mediaURL: url,
-        entryTypes : ['story'],
-        description: form.caption,
-        type: type
-      };
-      axios.post(`stories`, data, {headers: {Authorization: token}})
-      .then(res => {
-        console.log(res)
-        setLoading(false);
+      if (entries === true) {
+        const data = {
+          mediaURL: url,
+          description: caption,
+          type: type
+        };
+        axios.post(`stories`, data, {headers: {Authorization: token}})
+        .then(res => {
+          console.log(res)
+          Alert.alert(
+            'Success',
+            'Upload Succesful',
+            [
+              {text: 'OK', onPress: () => props.navigation.popToTop()},
+            ],
+            { cancelable: false }
+          )
+          setLoading(false);
+        }
+          )
+        .catch(err => {
+          console.log(err.response)
+          setLoading(false);
+        })
+      }else {
+        const wooz = uploadLocations.wooz ? 'wooz': null;
+        const feeds = uploadLocations.feeds ? 'feed': null;
+        const stories = uploadLocations.stories ? 'story': null;
+        const data = {
+          mediaURL: url,
+          entryTypes:  [wooz, feeds, stories],
+          description: caption
+        };
+        console.log('data', data)
+        axios.post(`entries`, data, {headers: {Authorization: token}})
+        .then(res => {
+          console.log(res);
+          const message = res.message
+          setLoading(false);
+          Alert.alert(
+            'Success',
+            'Upload Succesful',
+            [
+              {text: 'OK', onPress: () => props.navigation.popToTop()},
+            ],
+            { cancelable: false }
+          )
+          
+        }
+          )
+        .catch(err => {
+          console.log(err.response)
+          setLoading(false);
+        })
       }
-        )
-      .catch(err => {
-        console.log(err.response)
-        setLoading(false);
-      })
+
     }
     const uploadFileToFirebase = async (videoUri, video, type ) => {
       if (editorResult === null) {
-        const uploadTask = storage().ref(`allFiles/${'image'}`).
+        const uploadTask = storage().ref(`mediaEntries/${'image'}`).
         putString(videoUri, 'base64', {contentType: 'jpg'});
         uploadTask.on('state_changed', 
         (snapshot) => {
@@ -94,7 +146,8 @@ const PreviewEntry = (props) => {
         }
       );
       }else {
-        const uploadTask = storage().ref(`allFiles/${'femmy222'}`).
+        const name = `Woozee${Math.random()}`
+        const uploadTask = storage().ref(`mediaEntries/${'video'}${name}`).
         putString(videoUri, 'base64', {contentType: 'video/mp4'});
         uploadTask.on('state_changed', 
         (snapshot) => {
@@ -129,13 +182,13 @@ const PreviewEntry = (props) => {
 
     const getVideoUri = async (type = 'video') => {
       setLoading(true)
-      const video = editorResult.uri;
+      const video = editorResult;
       const filePath = await normalizePath(video)
       const videoUri = await RNFetchBlob.fs.readFile(filePath, 'base64');
       // console.log('videoUri', videoUri);
       uploadFileToFirebase(videoUri, video, type)
     }
-    const getImageUri = async (type = "image") => {
+    const getImageUri = async (type = "photo") => {
       setLoading(true)
       const image = imageUri;
       // const filePath = normalizePath(video)
@@ -191,7 +244,7 @@ const PreviewEntry = (props) => {
     
           (async () => {
             try {
-              await videoComp?.loadAsync({ uri: editorResult.uri });
+              await videoComp?.loadAsync({ uri: editorResult });
             } catch (e) {
               const msg = e;
             }
@@ -228,6 +281,7 @@ const PreviewEntry = (props) => {
       //     </Layout>
       //   );
       // }
+      console.log("value", caption)
     return (
         <Layout level="6" style={{ flex: 1, padding: 25 }}>
             {imageUri === null ? 
@@ -235,7 +289,7 @@ const PreviewEntry = (props) => {
              <Image style= {{height: 300, width: '100%', resizeMode: 'cover'}} source= {{uri: imageUri}} />
         }
             <View style={{ marginHorizontal: 5, marginBottom: 10, marginVertical: 20 }}>
-                <GeneralTextField
+                {/* <GeneralTextField
                   type="caption"
                   label={`Caption`}
                   placeholder={'AddCaption'}
@@ -243,37 +297,140 @@ const PreviewEntry = (props) => {
                   multiline
                   height={100}
                   value= {form.caption}
-                  // maxHeight={150}
+                /> */}
+                <CustomField
+                label = "Caption"
+                placeholder = {'Add Caption'}
+                multiline
+                height= {100}
+                value= {caption}
+                onChangeText = {nextValue => setCaption(nextValue)}
                 />
               </View>
-              <View style={{ paddingHorizontal: 15, marginVertical: 30 }}>
-              {imageUri === null ? 
-                     <Button
-                     onPress = {() => getVideoUri()}
-                     disabled={isLoading}
-                     status="danger"
-                   >
-                     <Text status="control" category="h6">
-                       {`Post`}
-                     </Text>
-                   </Button>
-                  :<Button
-                  onPress = {() => getImageUri()}
-                  disabled={isLoading}
-                  status="danger"
-                >
-                  <Text status="control" category="h6">
-                    {`Post`}
+              {entries ? 
+              null : 
+              
+              <View
+                style={{
+                  flex: 1,
+                  paddingRight: 5,
+                  paddingLeft: 5,
+                }}
+              >
+                <View style={{ marginBottom: 5 }}>
+                  <Text status="primary" category="c2">
+                    {t('showOn')}
                   </Text>
-                </Button>       
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Text category="s2" style={{ marginLeft: 0 }}>
+                      {t('wooz')}
+                    </Text>
+                  </View>
+                  <Toggle
+                    checked={uploadLocations.stories}
+                    onChange={(e) => handleUploadLoc('stories')}
+                  />
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Text category="s2" style={{ marginLeft: 0 }}>
+                      {t('feeds')}
+                    </Text>
+                  </View>
+                  <Toggle
+                    checked={uploadLocations.feeds}
+                    onChange={(e) => handleUploadLoc('feeds')}
+                  />
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Text category="s2" style={{ marginLeft: 0 }}>
+                      {t('stories')}
+                    </Text>
+                  </View>
+                  <Toggle
+                    checked={uploadLocations.wooz}
+                    onChange={(e) => handleUploadLoc('wooz')}
+                  />
+                </View>
+              </View>
+              }
+              {isLoading ? 
+             <ActivityIndicator style={styles.loading} size="large" color="#ff2a00" /> : 
+
+             <View style={{ paddingHorizontal: 15, marginVertical: 30 }}>
+             {imageUri === null ? 
+                    <Button
+                    onPress = {() => getVideoUri()}
+                    disabled={isLoading}
+                    status="danger"
+                  >
+                    <Text status="control" category="h6">
+                      {`Post`}
+                    </Text>
+                  </Button>
+                 :<Button
+                 onPress = {() => getImageUri()}
+                 disabled={isLoading}
+                 status="danger"
+               >
+                 <Text status="control" category="h6">
+                   {`Post`}
+                 </Text>
+               </Button>       
+           }
+           </View>
             }
-            </View>
         </Layout>
     )
 }
 
 const styles = StyleSheet.create({
-
+  loading: {
+    marginBottom: 20,
+    alignSelf: "center",
+    justifyContent: "center",
+    position: "absolute",
+    bottom: 0,
+},
 })
 
 export default PreviewEntry

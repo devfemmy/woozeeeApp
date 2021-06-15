@@ -7,16 +7,18 @@ import { Layout, List } from '@ui-kitten/components';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
+import { AppID } from "./utils";
+import KeepAwake from '../../../../components/Awake'
 
 const { height, width } = Dimensions.get("screen");
-class LiveStream extends Component {
+class LiveStream extends React.PureComponent {
       constructor(props) {
         super(props);
 
         this.state = {
             statusLive: "stopped", //stopped
             startingLive: false,
+            started: false,
             stoppingLive: false,
             refLive: null,
             stream_details: null,
@@ -32,172 +34,83 @@ class LiveStream extends Component {
             transports: ['websocket'],
         }); */
     }
-  componentDidMount() {
-
+    async componentDidMount() {
+        const { show } = this.props;
     }
-
-_startLive() {
-      this.refLive.startBroadcast();
-      this.setState({ startingLive: true })
-  }
-  _onBroadcastStarted() {
-    this.setState({ statusLive: "started", startingLive: false, platformLive: true });
-}
-
-_onBroadcastStopped() {
-    this.setState({ statusLive: "stopped", stoppingLive: false, platformLive: false });
-}
-
-_onBroadcastIdReceived(broadcasteId) {
-    const { show } = this.state;
-
-    this.props.changeStatusLiveTo(this.collection, "DIRECTO");
-    notifyUsersPerSms(show);
-    setUrlOnStream(broadcasteId, show.stream_name);
-}
-
-__onStreamHealthUpdate(streamhealth) {
-    console.log(streamhealth)
-}
-
-_switchCameraIconSide() {
-    this.refLive.switchCamera();
-}
-
-__onStreamHealthUpdate(streamhealth) {
-  console.log(streamhealth)
-}
   startMyBroadCast = () => {
-    console.log("stopp start")
-    this.myBroadcasterRef.startBroadcast();
+    this.setState({startingLive: true})
+    myBroadcasterRef.startBroadcast();
     console.log("starting")
+  }
+  onBroadcastStarted = () => {
+      this.setState({startingLive: false, started: true})
+  }
+  endBroadcast = () => {
+    myBroadcasterRef.stopBroadcast();
+    this.setState({started: false})
   }
   render() {
     const { statusLive, user_in_room, startingLive, stoppingLive, show, messages } = this.state;
     return (
-      <Layout level="6" style={{ flex: 1 }}>
-          <TopNavigationArea
-          title={`Live Broadcast`}
-          navigation={this.props.navigation}
-          screen="auth"
-      />
-                  <SafeAreaView style={styles.contentWrapAll}>
-                <View style={styles.wrapVideo}>
-
-                    <View style={styles.contentLiveInfo}>
-                        {
-                            statusLive == "started" ?
-                                <Fragment>
-                                    <View style={styles.horizontalAlign}>
-                                        <LiveSignal style={{ marginRight: 7 }} texto="Em Directo" />
-                                        <Viewers viewers={formatNumbers(user_in_room.length)} />
-                                    </View>
-                                    {
-                                        stoppingLive ? <ActivityIndicator style={styles.buttonStreamStop} size="small" color="#ff2a00" /> :
-                                            <TouchableOpacity
-                                                activeOpacity={.8}
-                                                style={styles.buttonStreamStop}
-                                                onPress={() => this._stopLive(show.id)}
-                                            >
-                                                <Text style={[styles.textBranco, { fontWeight: "bold", fontSize: 17 }]}>Terminar</Text>
-                                            </TouchableOpacity>
-                                    }
-                                </Fragment> : null
-                        }
-                    </View>
-                    {
-                        show === "" ? <ActivityIndicator style={styles.loading} size="large" color="#ff2a00" /> :
-                        <RNBambuserBroadcaster
-                        style= {{flex: 1, backgroundColor: 'black'}}
-                        audioQuality= {"audioQualityHigh"}
-                        author= "NONE"
-                        title = "Hello"
-                        ref={ref => { this.refLive = ref; }}
-                        aspect={{ width: 9, height: 16 }}
-                        audioQuality={RNBambuserBroadcaster.AUDIO_QUALITY.HIGH}
-                        onBroadcastStarted={() => this._onBroadcastStarted()}
-                        onBroadcastIdReceived={ broadcastId => this._onBroadcastIdReceived(broadcastId)}
-                        onBroadcastError={(errorCode, errorMessage) => {
-                            console.log('Error with code ' + errorCode, errorMessage);
-                        }}
-                        onStartBroadcastNotReady={() => {
-                            console.log('Broadcast not ready yet')
-                        }}
-                        onBroadcastStopped={() => this._onBroadcastStopped()}
-                        onStreamHealthUpdate={this._onStreamHealthUpdate}
-                        applicationId={'JpW2TKHoR9MlbgsWaChADw'}
-              />
-                    }
-                    {
-                        startingLive ? <ActivityIndicator style={styles.loading} size="large" color="#ff2a00" /> :
-                            <View style={styles.contentControlsLive}>
-                                {
-                                    statusLive == "started" ?
-
-                                        <TouchableOpacity style={styles.buttonSwitchCamera} />
-                                        :
-                                        <>
-                                            <TouchableOpacity activeOpacity={.8} onPress={() => this.props.context.setState({ goLive: false })} style={styles.buttonSwitchCamera}>
-                                              <Text>Hey</Text>
-                                                {/* <Leave width={38} height={38} /> */}
-                                            </TouchableOpacity>
-                                            <TouchableOpacity
-                                                activeOpacity={.8}
-                                                style={styles.buttonStream}
-                                                onPress={() => this._startLive()}
-                                            />
-                                        </>
-                                }
-                                <TouchableOpacity activeOpacity={.8} onPress={() => this._switchCameraIconSide()} style={styles.buttonSwitchCamera}>
-                                    {/* <SwitchCameraIcon width={38} height={38} /> */}
-                                    <Text>Hey</Text>
-                                </TouchableOpacity>
-                            </View>
-                    }
-                    {statusLive != "started" ? null :
-                        <View style={styles.wrapAllMessagesChat}>
-                            <View style={styles.contentSentMessage}>
-                                <FlatList
-                                    data={messages}
-                                    inverted
-                                    extraData={this.state}
-                                    showsVerticalScrollIndicator={false}
-                                    ref={(ref) => { this.flatListRef = ref }}
-                                    keyExtractor={(item, index) => index.toString()}
-                                    renderItem={({ item }) => {
-                                        return (
-                                            <View style={styles.wrapSentMessage}>
-                                                {/* <View style={styles.contentFoto}>
-                                                    {item.picProfile ? <Image source={{ uri: item.picProfile }} style={styles.fotoPerfil} resizeMode={"contain"} /> : <Foto width={24} height={24} />}
-                                                </View> */}
-                                                <View style={styles.contentSentMessage}>
-                                                    <Text style={[styles.textBranco, { fontWeight: "bold" }]}>{item.nome}</Text>
-                                                    <Text style={styles.textBranco}>{item.message}</Text>
-                                                </View>
-                                            </View>
-                                        )
-                                    }}
-                                />
-                            </View>
-                        </View>}
-                </View>
-            </SafeAreaView>
-      {/* <RNBambuserBroadcaster title= "Woozee Broadcast" applicationId={"erEJmaJQzzubKcp0xewaoQ"} /> */}
-      {/* <RNBambuserBroadcaster
-      
+      <Layout style={{ flex: 1 }}>
+      <RNBambuserBroadcaster
       style={{ flex: 1 }}
-      ref={ref => {myBroadcasterRef = ref; }} applicationId={"erEJmaJQzzubKcp0xewaoQ"} /> */}
-
-<TouchableOpacity onPress= {this.startMyBroadCast}>
-    <Text>Started Broadcast</Text>
-</TouchableOpacity>
-      </Layout>
-  )
-  }
+      onBroadcastStarted = {this.onBroadcastStarted}
+      ref={ref => {myBroadcasterRef = ref; }} applicationId={"JpW2TKHoR9MlbgsWaChADw"} />
+            {this.state.startingLive ? 
+        <ActivityIndicator style={styles.loading} size="large" color="#ff2a00" /> :
+        <View>
+            {this.state.started ? 
+        <View style= {styles.flexContainer}>
+            <View style= {styles.liveContainer}>
+                <Text style= {styles.textLive}>
+                    LIVE
+                </Text>
+            </View>
+            <TouchableOpacity style= {styles.button} onPress= {this.endBroadcast}>
+                <Text style= {{color: 'white', fontWeight: 'bold'}}>
+                    End Broadcast
+                </Text>
+            </TouchableOpacity>
+        </View> :
+        <TouchableOpacity activeOpacity={.8}
+        style={styles.buttonStream} onPress= {this.startMyBroadCast} />
+        }
+        </View>
+        }
+    </Layout>
+        )
+        }
 
 }
 
 const styles = StyleSheet.create({
+
+ liveContainer: {
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center'
+ },
+ flexContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 25,
+    paddingVertical: 5
+ },
+ button: {
+    backgroundColor: '#ff2a00',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center'
+ },
+ textLive: {
+    // color: '#ff2a00',
+    color: '#39FF14',
+    fontWeight: 'bold',
+    fontSize: 18
+ },
   wrapVideo: {
       flex: 1,
   },

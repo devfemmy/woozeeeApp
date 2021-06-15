@@ -6,6 +6,7 @@ import { Icon } from '@ui-kitten/components';
 import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
 
 export default function UploadEntries(props) {
+  const {entries} = props.route.params;
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [camera, setCamera] = useState(null);
@@ -18,7 +19,7 @@ export default function UploadEntries(props) {
   const [resetTimer, setResetTimer] = useState(false);
   const [resetStopwatch, setResetStopwatch] = useState(false);
   const [video_on, setVideoOn] = useState(false);
-
+  console.log("entries", entries)
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       (async () => {
@@ -45,8 +46,13 @@ export default function UploadEntries(props) {
     console.log(result);
 
     if (!result.cancelled) {
-      setImage(result.uri);
-      props.navigation.navigate('PreviewEntry', {imageUri: result.uri, editorResult: null})
+      console.log(result.type, "type");
+      if (result.type === 'video') {
+        props.navigation.navigate('PreviewEntry', {editorResult: result.uri, imageUri: null, entries: entries})
+      }else {
+        setImage(result.uri);
+        props.navigation.navigate('PreviewEntry', {imageUri: result.uri, editorResult: null, entries: entries})
+      }
     }
   };
 
@@ -54,7 +60,7 @@ export default function UploadEntries(props) {
     if (cameraRef) {
         const data = await cameraRef.takePictureAsync(null);
         setImage(data.uri);
-        props.navigation.navigate('PreviewEntry', {imageUri: data.uri, editorResult: null})
+        props.navigation.navigate('PreviewEntry', {imageUri: data.uri, editorResult: null, entries: entries})
         console.log(data.uri)
       }
   }
@@ -108,6 +114,8 @@ export default function UploadEntries(props) {
         }
         <View style= {styles.cameraContainer}>
             <Camera 
+        ratio={"16:9"}
+        
         ref={ref => setCameraRef(ref)}
         style={styles.camera} type={type} />
         </View> 
@@ -181,7 +189,7 @@ export default function UploadEntries(props) {
                   setRecording(true)
                   setIsStopwatchStart(true)
                 await cameraRef.recordAsync().then(
-                  res => props.navigation.navigate('PreviewEntry', {editorResult: res, imageUri: null})
+                  res => props.navigation.navigate('PreviewEntry', {editorResult: res.uri, imageUri: null, entries: entries})
                 ).catch(
                   err => err
                 );

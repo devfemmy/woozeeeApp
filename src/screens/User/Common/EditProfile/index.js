@@ -211,8 +211,6 @@ useEffect(() => {
       dob: date
     }))
   }
-
-  console.log("forms", form);
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
