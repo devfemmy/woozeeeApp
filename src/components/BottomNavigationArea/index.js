@@ -29,6 +29,7 @@ import {
   IconCCharity,
   IconCCampaign,
   IconCHero,
+  IconBackIos,
 } from '../CustomIcons';
 
 // Screens

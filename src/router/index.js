@@ -70,6 +70,7 @@ import BillElectricity from 'src/screens/User/BillPayTab/Bills/Electricity';
 import UserRoute from './User';
 import SocialRoute from './User/HomeTab/Social';
 import MarketPlaceRoute from './User/HomeTab/MarketPlace';
+import MoneyMattersTab from '../screens/User/HomeTab/MarketPlace/MoneyMatters/MoneyMattersTab';
 import CharityRoute from './User/HomeTab/Charity';
 
 const { Navigator, Screen } = createStackNavigator();
@@ -126,6 +127,7 @@ export default function Router() {
       BillCableTv,
       BillElectricity,
       Report,
+      MoneyMattersTab,
     },
 
     Common: {

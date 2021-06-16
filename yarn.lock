@@ -11188,6 +11188,13 @@
   "resolved" "https://registry.npmjs.org/react-moment/-/react-moment-1.1.1.tgz"
   "version" "1.1.1"
 
+"react-native-3dcube-navigation@^1.0.4":
+  "integrity" "sha512-9BGdJDcouWi8a/KqajCOm+gHayXfFhodq8G/mgSMp0363QyZAlP7iPtYjL6mkaUcR8JAjzgCREh4CHAAMJmnhw=="
+  "resolved" "https://registry.npmjs.org/react-native-3dcube-navigation/-/react-native-3dcube-navigation-1.0.4.tgz"
+  "version" "1.0.4"
+  dependencies:
+    "react" "^16.2.0"
+
 "react-native-drawer@2.5.1":
   "integrity" "sha512-cxcQNbSWy5sbGi7anSVp6EDr6JarOBMY9lbFOeLFeVYbONiudoqRKbgEsSDgSw3/LFCLvUXK5zdjXCOedeytxQ=="
   "resolved" "https://registry.npmjs.org/react-native-drawer/-/react-native-drawer-2.5.1.tgz"
@@ -11249,6 +11256,13 @@
   "resolved" "https://registry.npmjs.org/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz"
   "version" "1.3.1"
 
+"react-native-modalbox@^2.0.2":
+  "integrity" "sha512-uSuoZ+siPPNqWGyw8NXhA/Aots7mOx2+qijFoeovequY0kczZEPZDd0ARHbzg+1cE3H3AATJEwGdkVA8lUxs0g=="
+  "resolved" "https://registry.npmjs.org/react-native-modalbox/-/react-native-modalbox-2.0.2.tgz"
+  "version" "2.0.2"
+  dependencies:
+    "prop-types" "^15.5.10"
+
 "react-native-pager-view@*", "react-native-pager-view@^5.1.7":
   "integrity" "sha512-mb7xa0XnMlNXrIE422vWKPBVlt0GBP21744zT8yEv6Xe/0aAM/dsDugD3dy9z4vybyp2yszAzw9XP0bIsfS6LA=="
   "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.1.7.tgz"
@@ -11284,6 +11298,11 @@
   "resolved" "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-3.1.9.tgz"
   "version" "3.1.9"
 
+"react-native-scalable-image@^1.1.0":
+  "integrity" "sha512-XwIALxv6vxUben3wVQ65GEldqRITxLZa1u5hKwuHn79Bt0sQ7rehWQc9UU6sLW5Gca4SQPEGNgqddQkF/cIGbw=="
+  "resolved" "https://registry.npmjs.org/react-native-scalable-image/-/react-native-scalable-image-1.1.0.tgz"
+  "version" "1.1.0"
+
 "react-native-screens@>= 2.0.0-alpha.0 || >= 2.0.0-beta.0 || >= 2.0.0", "react-native-screens@~2.15.2":
   "integrity" "sha512-CagNf2APXkVoRlF3Mugr264FbKbrBg9eXUkqhIPVeZB8EsdS8XPrnt99yj/pzmT+yJMBY0dGrjXT8+68WYh6YQ=="
   "resolved" "https://registry.npmjs.org/react-native-screens/-/react-native-screens-2.15.2.tgz"
@@ -11313,6 +11332,11 @@
   dependencies:
     "css-select" "^2.1.0"
     "css-tree" "^1.0.0-alpha.39"
+
+"react-native-swipe-gestures@^1.0.5":
+  "integrity" "sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw=="
+  "resolved" "https://registry.npmjs.org/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz"
+  "version" "1.0.5"
 
 "react-native-swiper@^1.6.0":
   "integrity" "sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ=="
@@ -11440,7 +11464,9 @@
     "whatwg-fetch" "^3.0.0"
 
 "react-query@^3.6.0":
-  "version" "3.12.0"
+  "integrity" "sha512-dof8XXSZ7HprfzvpbJE+YZrhUXcQYxy1j+NU8ZPYpKKDF79wlZAke+GyYhQ0b6SuOFp8ZpVXSpdD4AL3lxmeXQ=="
+  "resolved" "https://registry.npmjs.org/react-query/-/react-query-3.16.1.tgz"
+  "version" "3.16.1"
   dependencies:
     "@babel/runtime" "^7.5.5"
     "broadcast-channel" "^3.4.1"
@@ -11486,7 +11512,7 @@
     "raf" "^3.1.0"
     "tween-functions" "^1.0.1"
 
-"react@*", "react@^16.0", "react@^16.0 || ^17.0.0", "react@^16.13.1", "react@^16.8.0 || ^17.0.0", "react@>=16", "react@>=16.0.0-alpha.3", "react@>=16.4.1", "react@>=16.5.1", "react@~16.8.6 || ~16.9.0 || ~16.11.0 || ~16.13.1 || ~17.0.1", "react@16 || 17", "react@16.13.1", "react@16.5.0":
+"react@*", "react@^16.0", "react@^16.0 || ^17.0.0", "react@^16.13.1", "react@^16.2.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.3", "react@>=16", "react@>=16.0.0-alpha.3", "react@>=16.4.1", "react@>=16.5.1", "react@~16.8.6 || ~16.9.0 || ~16.11.0 || ~16.13.1 || ~17.0.1", "react@16 || 17", "react@16.13.1", "react@16.5.0":
   "integrity" "sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w=="
   "resolved" "https://registry.npmjs.org/react/-/react-16.13.1.tgz"
   "version" "16.13.1"
@@ -14222,3 +14248,8 @@
   "integrity" "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q=="
   "resolved" "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   "version" "0.1.0"
+
+"zuck.js@^1.6.0":
+  "integrity" "sha512-3qmtPkymsnIC1ekjzqwfSpqrVEMU6KMovQOB+Hj+LuykxtcsQcOfhRJDgyOJvA15NC6PYhiBJQTDO2N1XCCH6Q=="
+  "resolved" "https://registry.npmjs.org/zuck.js/-/zuck.js-1.6.0.tgz"
+  "version" "1.6.0"

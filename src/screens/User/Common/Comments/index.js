@@ -1,10 +1,11 @@
 // prettier-ignore
 import React, {
-  useState, useMemo, useCallback, useContext,
+  useState, useMemo, useCallback, useContext, useEffect
 } from 'react';
 
 // prettier-ignore
 import {
+  TextInput,
   View,
   Image,
   useWindowDimensions,
@@ -12,11 +13,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import firebase from '@react-native-firebase/app';
+
+import firestore from '@react-native-firebase/firestore';
+
+import Moment from 'react-moment';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // prettier-ignore
 import {
-  Layout, Card, Text,
+  Layout, Card, Text, List
 } from '@ui-kitten/components';
 
 import { LinearGradient } from 'expo-linear-gradient';
@@ -29,7 +36,7 @@ import InteractIcon from 'src/components/InteractIcon';
 
 import { IconClose, IconPaperPlane } from 'src/components/CustomIcons';
 
-export default function Comments({ navigation }) {
+export default function Comments({ route, navigation }) {
   const { height } = useWindowDimensions();
 
   const { bottom, top } = useSafeAreaInsets();
@@ -38,9 +45,49 @@ export default function Comments({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const [form, setFormValues] = useState({
-    comment: '',
-  });
+  const { currUserData, postItem } = route.params;
+
+  // console.log(postItem);
+
+  const [comments, setComments] = useState([]);
+
+  const fetchComments = async () => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
+    const allComments = await firestore()
+      .collection('entryComments')
+      .doc(postItem._id.trim())
+      .collection('comments')
+      .get();
+
+    const _comments = [];
+    allComments.forEach((snap) => {
+      _comments.push(snap._data);
+    });
+
+    setComments([..._comments]);
+  };
+
+  useEffect(() => {
+    fetchComments();
+  }, []);
 
   const closeComments = useCallback(() => navigation.pop(), [navigation]);
 
@@ -69,8 +116,60 @@ export default function Comments({ navigation }) {
     [t, closeComments],
   );
 
-  const renderCardFooter = useCallback(
-    () => (
+  const sendComment = async (commentMessage) => {
+    // console.log(entryId);
+    const firebaseConfig = {
+      apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    // console.log(item, commentMessage);
+
+    await firestore()
+      .collection('entryComments')
+      .doc(postItem._id.trim())
+      .collection('comments')
+      .doc()
+      .set({
+        senderId: currUserData.user._id,
+        text: commentMessage,
+        userFirstName: currUserData.user.fName,
+        userLastName: currUserData.user.sName,
+        userName: `@iam${currUserData.user.fName.toLowerCase()}${currUserData.user.sName.toLowerCase()}`,
+        imgUrl: currUserData.user.imgUrl,
+        sentAt: Date(),
+        delivered: false,
+        sent: true,
+      });
+    setComments([
+      ...comments,
+      {
+        senderId: currUserData.user._id,
+        text: commentMessage,
+        userFirstName: currUserData.user.fName,
+        userLastName: currUserData.user.sName,
+        userName: `@iam${currUserData.user.fName.toLowerCase()}${currUserData.user.sName.toLowerCase()}`,
+        imgUrl: currUserData.user.imgUrl,
+        sentAt: Date(),
+        delivered: false,
+        sent: true,
+      },
+    ]);
+  };
+
+  const renderCardFooter = () => {
+    const [text, setText] = useState('');
+
+    return (
       <View
         style={{
           flex: 1,
@@ -102,10 +201,18 @@ export default function Comments({ navigation }) {
           />
         </LinearGradient>
         <View style={{ flex: 1, marginHorizontal: 5 }}>
-          <GeneralTextField
-            type="comment"
-            placeholder={t('writeComment')}
-            setFormValues={setFormValues}
+          <TextInput
+            placeholder="Leave a comment"
+            onChangeText={(text) => setText(text)}
+            style={{
+              borderWidth: 0.5,
+              height: 40,
+              paddingHorizontal: 5,
+              borderColor: 'white',
+              borderRadius: 5,
+              color: 'grey',
+            }}
+            defaultValue={text}
           />
         </View>
         <InteractIcon
@@ -113,14 +220,21 @@ export default function Comments({ navigation }) {
           status="primary"
           height={32}
           width={32}
+          onPress={() => {
+            if (text !== '') {
+              sendComment(text);
+              setText('');
+            } else {
+              console.log('enter a comment');
+            }
+          }}
         />
       </View>
-    ),
-    [t],
-  );
+    );
+  };
 
   // prettier-ignore
-  const Message = ({ sent, data }) => useMemo(
+  const Message = ({ userName, message, img, time }) => useMemo(
     () => (
       <View>
         <View
@@ -141,7 +255,7 @@ export default function Comments({ navigation }) {
             }}
           >
             <Image
-              source={require('assets/images/user/user1.png')}
+              source={img}
               style={{
                 height: 30,
                 width: 30,
@@ -160,13 +274,18 @@ export default function Comments({ navigation }) {
               marginHorizontal: 5,
             }}
           >
-            <Text category="s2" style={{ alignSelf: 'flex-start' }}>
-              {data.user}
+            <Text category="s2" style={{ alignSelf: 'flex-start', marginBottom:2 }}>
+              {userName}
             </Text>
-            <Text category="p2">{data.msg}</Text>
-            <Text category="c1" style={{ alignSelf: 'flex-end' }}>
-              {data.time}
-            </Text>
+            <Text category="p2" style={{ marginBottom:2 }}>{message}</Text>
+            <Moment
+              fromNow
+              element={(momentProps) => (
+                <Text category="c1" {...momentProps} style={{ fontSize: 10, textAlign:'right' }} />
+              )}
+            >
+              {time}
+            </Moment>
           </Layout>
         </View>
         <View style={{ marginVertical: 5, marginLeft: 50 }}>
@@ -178,7 +297,7 @@ export default function Comments({ navigation }) {
         </View>
       </View>
     ),
-    [data],
+    [],
   );
 
   return useMemo(
@@ -196,42 +315,38 @@ export default function Comments({ navigation }) {
           <View
             style={{
               height: height - INSETS,
+              justifyContent: 'flex-end',
             }}
           >
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              style={{ flex: 1 }}
-              contentContainerStyle={{
-                flex: 1,
-                justifyContent: 'flex-end',
-              }}
-            >
-              <Message
-                data={{
-                  user: 'Jack mar',
-                  msg:
-                    'Hello world, woozeee, Testing the limit of this very long message',
-                  time: '9:15am',
+            {/* {console.log('comments in here is => ', comments)} */}
+            {comments.length > 0 ? (
+              <List
+                style={{
+                  backgroundColor: 'transparent',
+                  paddingVertical: 10,
+                  flex: 1,
                 }}
+                contentContainerStyle={{}}
+                alwaysBounceVertical
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                data={comments}
+                keyExtractor={(_, i) => i.toString()}
+                renderItem={(comment, index) => (
+                  <Message
+                    key={index}
+                    userName={`${comment.item.userFirstName} ${comment.item.userLastName}`}
+                    message={`${comment.item.text}`}
+                    time={`${comment.item.sentAt}`}
+                  />
+                )}
+                getItemLayout={(data, index) => ({
+                  length: 150,
+                  offset: 150 * index,
+                  index,
+                })}
               />
-              <Message
-                sent
-                data={{
-                  user: 'You',
-                  msg:
-                    'Hello world, woozeee, Testing the limit of this very long message',
-                  time: '9:15am',
-                }}
-              />
-              <Message
-                data={{
-                  user: 'Jack mar',
-                  msg:
-                    'Hello world, woozeee, Testing the limit of this very long message',
-                  time: '9:15am',
-                }}
-              />
-            </ScrollView>
+            ) : null}
           </View>
         </Card>
       </Layout>

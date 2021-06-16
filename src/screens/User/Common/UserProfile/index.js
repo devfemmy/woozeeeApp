@@ -23,7 +23,7 @@ import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction
 
 import WithPaginatedFetch from 'src/components/DataFetch/WithPaginatedFetch';
 
-import { ProfilePosts } from 'src/components/SocialPosts';
+import { ProfilePosts, LikedProfilePosts } from 'src/components/SocialPosts';
 
 import InteractIcon from 'src/components/InteractIcon';
 
@@ -40,6 +40,7 @@ import {
 } from '../../../../services/Requests/index';
 
 import { userPostsUrl } from 'src/api/dummy';
+import { useEffect } from 'react';
 
 const PLACEHOLDER_CONFIG = {
   count: 4,
@@ -53,16 +54,27 @@ const ProfilePostsArea = ({userPostData}) => (
   WithPaginatedFetch(ProfilePosts, userPostsUrl, PLACEHOLDER_CONFIG, userPostData)
 );
 
+const ProfilePostLikedArea = ({ userPostData }) =>
+  WithPaginatedFetch(
+    ProfilePosts,
+    userPostsUrl,
+    PLACEHOLDER_CONFIG,
+    userPostData,
+  );
+
 export default function UserProfile({ route, navigation }) {
   const { user } = route.params;
 
+  let likedData = [];
+
   const {
-    userId,
+    _id,
     displayName,
     email,
     fName,
     sName,
     bio,
+    referralCode,
     totalEntries,
     followersCount,
     followingCount,
@@ -70,20 +82,24 @@ export default function UserProfile({ route, navigation }) {
     userData,
   } = user;
 
-  // console.log(user);
+  const getLikedData = async () => {
+    const res = await Api.getLikedPosts(_id);
+    const {
+      pageData: { data },
+    } = res;
+    // console.log('inside fn => ', data);
+    data.forEach((entry) => likedData.push(entry));
+  };
 
-  // const getEntries = async () => {
-  //   await getUserEntries(userId);
-  // };
-  // getEntries();
+  useEffect(() => {
+    getLikedData();
+  }, []);
 
   const [following, setFollowing] = useState(
     userData ? userData.isFollow : false,
   );
-  // console.log(userData);
 
   const toggleFollow = async () => {
-    // console.log(userData.userId, following);
     setFollowing(following);
     await handleFollow(userData.userId, !following);
   };
@@ -287,7 +303,7 @@ export default function UserProfile({ route, navigation }) {
               </View>
               <View style={{ marginBottom: 10 }}>
                 <Text category="h6" status="primary">
-                  {/* 8264LG */}
+                  {/* {referralCode.toUpperCase()} */}
                 </Text>
               </View>
               {/* <View
@@ -361,6 +377,8 @@ export default function UserProfile({ route, navigation }) {
           </ScrollView>
         </View>
         <Divider />
+        {/* {console.log('from ... -> ', likedData)} */}
+
         <TabView
           style={{ flex: 1 }}
           indicatorStyle={{ backgroundColor: 'transparent' }}
@@ -375,7 +393,7 @@ export default function UserProfile({ route, navigation }) {
             <ProfilePostsArea userPostData={user} />
           </Tab>
           <Tab title={t('liked')} icon={IconHeart}>
-            <ProfilePostsArea userPostData={user} />
+            <ProfilePostLikedArea userPostData={user} />
           </Tab>
         </TabView>
       </View>

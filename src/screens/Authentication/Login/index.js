@@ -25,6 +25,7 @@ import {
 } from 'src/components/CustomIcons';
 import SignUpWithGoogle from 'src/services/Requests/googleSignIn';
 import SignUpWithFacebook from 'src/services/Requests/facebookSignIn';
+import SignUpWithApple from 'src/services/Requests/appleSignIn';
 
 export default function Login({ navigation }) {
   // prettier-ignore

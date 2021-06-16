@@ -61,11 +61,6 @@ const InteractIcon = (props) => {
           {
             flexDirection: direction ?? 'column',
             alignItems: align ?? 'center',
-            backgroundColor: 'rgba(0, 0, 0, .6)',
-            alignSelf: 'flex-start',
-            padding: 4,
-            borderRadius: 10,
-            marginRight: 5,
           },
         ]}
       >
@@ -161,31 +156,31 @@ export default function ExploreWooz({ route, navigation }) {
 
     const [exploreData, setExploreData] = useState({});
 
-    // const startVideo = async () => {
-    //   try {
-    //     const status = await videoRef.current.getStatusAsync();
+    const startVideo = async () => {
+      try {
+        const status = await videoRef.current.getStatusAsync();
 
-    //     if (status.isLoaded) {
-    //       await videoRef.current.playAsync();
-    //       videoViewRef.current.resetPlayState(true);
-    //     }
-    //   } catch (e) {
-    //     const msg = e;
-    //   }
-    // };
+        if (status.isLoaded) {
+          await videoRef.current.playAsync();
+          videoViewRef.current.resetPlayState(true);
+        }
+      } catch (e) {
+        const msg = e;
+      }
+    };
 
-    // const stopVideo = async () => {
-    //   try {
-    //     const status = await videoRef.current.getStatusAsync();
+    const stopVideo = async () => {
+      try {
+        const status = await videoRef.current.getStatusAsync();
 
-    //     if (status.isLoaded) {
-    //       await videoRef.current.stopAsync();
-    //       videoViewRef.current.resetPlayState(false);
-    //     }
-    //   } catch (e) {
-    //     const msg = e;
-    //   }
-    // };
+        if (status.isLoaded) {
+          await videoRef.current.stopAsync();
+          videoViewRef.current.resetPlayState(false);
+        }
+      } catch (e) {
+        const msg = e;
+      }
+    };
 
     useFocusEffect(
       useCallback(() => {
@@ -219,8 +214,8 @@ export default function ExploreWooz({ route, navigation }) {
       hasPreviousPage,
     } = useInfiniteQuery(
       ['ExploreWooz', 1],
-      async () => {
-        const promise = await Api.getExploreData(exData.categoryId);
+      async ({ pageParam = 1 }) => {
+        const promise = await Api.getExploreData(pageParam, exData.categoryId);
         if (data !== {} && data !== undefined) {
           setExploreData(data);
         } else {
@@ -229,10 +224,14 @@ export default function ExploreWooz({ route, navigation }) {
         promise.cancel = () => Api.cancelRequest('Request aborted');
         return promise;
       },
-      { cacheTime: 0, staleTime: 0 },
+      {
+        getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
+        getNextPageParam: (lastPage) => lastPage.nextID ?? false,
+        keepPreviousData: true,
+        cacheTime: 0,
+        staleTime: 0,
+      },
     );
-
-    // console.log('from explore, explore data is => ', exploreData);
 
     const onPlaybackStatusUpdate = async (playbackStatus, entryId) => {
       if (playbackStatus.didJustFinish) {
@@ -256,11 +255,11 @@ export default function ExploreWooz({ route, navigation }) {
       // prettier-ignore
       status !== 'error'
       && status !== 'loading'
-      && exploreData.pages
+      && data.pages[0].pageData.data.length > 0
     ) {
-      videoLength.current = exploreData.pages[0].pageData.data.length;
-      return exploreData.pages.map((page) => (
-        <React.Fragment key={uuidv4()}>
+      videoLength.current = data.pages[0].pageData.data.length;
+      return data.pages.map((page) => (
+        <React.Fragment key={page.nextID}>
           <View style={{ flex: 1 }}>
             <ScrollView
               style={{
@@ -285,7 +284,7 @@ export default function ExploreWooz({ route, navigation }) {
                         position: 'absolute',
                       }}
                       source={
-                        exploreData.pages
+                        data.pages
                           ? { uri: item.mediaURL }
                           : require('assets/images/banner/placeholder-image.png')
                       }
@@ -306,27 +305,29 @@ export default function ExploreWooz({ route, navigation }) {
                   { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
                 ]}
               >
-                <Video
-                  ref={videoRef}
-                  resizeMode="contain"
-                  style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                  source={{ uri: page.pageData.data[index].mediaURL }}
-                  isLooping
-                  shouldPlay={isFocused}
-                  onPlaybackStatusUpdate={(playbackStatus) =>
-                    onPlaybackStatusUpdate(
-                      playbackStatus,
-                      page.pageData.data[index].userEntryData.entryId,
-                    )
-                  }
-                  onReadyForDisplay={() =>
-                    Animated.timing(opacity, {
-                      toValue: 1,
-                      useNativeDriver: true,
-                      duration: 500,
-                    }).start()
-                  }
-                />
+                {page.pageData.data.length ? (
+                  <Video
+                    ref={videoRef}
+                    resizeMode="contain"
+                    style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+                    source={{ uri: page.pageData.data[index].mediaURL }}
+                    isLooping
+                    shouldPlay={isFocused}
+                    onPlaybackStatusUpdate={(playbackStatus) =>
+                      onPlaybackStatusUpdate(
+                        playbackStatus,
+                        page.pageData.data[index].userEntryData.entryId,
+                      )
+                    }
+                    onReadyForDisplay={() =>
+                      Animated.timing(opacity, {
+                        toValue: 1,
+                        useNativeDriver: true,
+                        duration: 500,
+                      }).start()
+                    }
+                  />
+                ) : null}
               </Animated.View>
             </ScrollView>
           </View>
@@ -362,6 +363,7 @@ export default function ExploreWooz({ route, navigation }) {
             justifyContent: 'space-between',
             alignItems: 'center',
             width: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',
           }}
         >
           <InteractIcon

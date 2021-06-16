@@ -35,6 +35,8 @@ import VideoFullscreen from 'src/components/VideoFullscreen';
 
 import { IconPlusCircle } from 'src/components/CustomIcons';
 
+import Stories from '../../components/UserStories/screens/Stories';
+
 export const TrendingPosts = ({ info }) => {
   const t = useContext(LocaleContext);
   return useMemo(
@@ -117,7 +119,22 @@ export const StoryPosts = ({ info }) => {
       <View style={{ paddingHorizontal: 10, paddingBottom: 10 }}>
         <Text category="h6">{t('recentStories')}</Text>
       </View>
-      <List
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{
+          paddingHorizontal: 10,
+          paddingBottom: 10,
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <RenderCategoryHeader />
+        <Stories storyData={info} extraWidth={0.5} />
+      </ScrollView>
+
+      {/* <StoryCard /> */}
+      {/* <List
         style={{ backgroundColor: 'transparent' }}
         contentContainerStyle={{ alignItems: 'flex-start' }}
         alwaysBounceHorizontal
@@ -135,7 +152,7 @@ export const StoryPosts = ({ info }) => {
           offset: 175 * index,
           index,
         })}
-      />
+      /> */}
     </View>
   );
 };
@@ -272,7 +289,38 @@ export const ProfilePosts = ({allEntries}) => {
     })}
   />
   )
-  }
+}
+
+export const LikedProfilePosts = ({ allEntries }) => {
+  // console.log('from LikedProfilePosts  -> ', allEntries);
+  // const {firstTenEntries} = allEntries
+  return (
+    //   <List
+    //   style={{
+    //     backgroundColor: 'transparent',
+    //   }}
+    //   contentContainerStyle={{
+    //     paddingBottom: 25,
+    //     paddingTop: 5,
+    //   }}
+    //   // alwaysBounceVertical
+    //   showsHorizontalScrollIndicator={true}
+    //   showsVerticalScrollIndicator={false}
+    //   numColumns={3}
+    //   data={firstTenEntries}
+    //   keyExtractor={(_, i) => i.toString()}
+    //   renderItem={(renderData) => (
+    //     <UserProfilePostCard data={renderData} extraWidth={0} numColumns={3} />
+    //   )}
+    //   getItemLayout={(data, index) => ({
+    //     length: 200,
+    //     offset: 200 * index,
+    //     index,
+    //   })}
+    // />
+    <Text>Nothing to see here</Text>
+  );
+};
 
 export const WoozPosts = ({ info }) => {
   const { bottom, top } = useSafeAreaInsets();

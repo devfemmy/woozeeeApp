@@ -14,7 +14,7 @@ import { Text } from '@ui-kitten/components';
 export default function StoryCard(props) {
   const { data, extraWidth } = props;
 
-  console.log(data);
+  // console.log(data);
 
   const { width, height } = useWindowDimensions();
 
@@ -31,10 +31,7 @@ export default function StoryCard(props) {
           paddingHorizontal: 10,
         }}
       >
-        <View
-          style={{ alignItems: 'center' }}
-          onPress={() => console.log('pressed')}
-        >
+        <View style={{ alignItems: 'center' }}>
           <LinearGradient
             colors={['#043F7C', '#FF5757']}
             style={{

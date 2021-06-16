@@ -33,9 +33,12 @@ export default function Report({ route, navigation }) {
       text: 'Complaint sent!',
       buttonText: 'Okay',
       position: 'bottom',
-      type: 'info',
+      type: 'success',
       duration: 3000,
     });
+    setTimeout(() => {
+      navigation.goBack();
+    }, 3000);
   };
 
   const [form, setFormValues] = useState({
@@ -57,7 +60,7 @@ export default function Report({ route, navigation }) {
     isFormValid();
   }, [form]);
 
-  console.log(isFormValid());
+  // console.log(isFormValid());
 
   return (
     <Root>

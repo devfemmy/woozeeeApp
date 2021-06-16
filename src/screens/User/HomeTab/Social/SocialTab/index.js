@@ -84,6 +84,7 @@ export default function Social({ navigation }) {
     const cellRefs = useRef({});
     const handleOnViewableItemsChanged = useCallback((props) => {
       const { changed } = props;
+      // console.log('changed is => ', changed);
       changed.forEach((item) => {
         const cell = cellRefs.current[item.key];
         if (cell) {
@@ -118,11 +119,10 @@ export default function Social({ navigation }) {
         getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
         getNextPageParam: (lastPage) => lastPage.nextID ?? false,
         keepPreviousData: true,
-        cacheTime: 1000 * 60 * 1,
+        cacheTime: 0,
+        staleTime: 0,
       },
     );
-    // console.log(data.pages[0].pageData);
-    // console.log(data?.pages[0].pageData.data[0].mediaURL);
 
     if (status === 'loading') {
       return (

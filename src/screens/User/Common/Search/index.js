@@ -16,7 +16,10 @@ import { LocaleContext } from 'src/contexts';
 
 import { IconSearch } from 'src/components/CustomIcons';
 
+import { getUserData } from '../../../../services/Requests/index';
+
 import BackButton from '../../../../components/TopNavigationArea/components/BackButton';
+import UserRoute from 'src/router/User/index';
 
 // import WithDefaultFetch from 'src/components/DataFetch';
 
@@ -31,7 +34,13 @@ import BackButton from '../../../../components/TopNavigationArea/components/Back
 //   mediaLeft: true,
 // };
 
-const UserTemplate = ({ userProfilePic, displayName }) => {
+const UserTemplate = ({ userProfilePic, displayName, userId, navigation }) => {
+  const routeUserProfile = async () => {
+    const userData = await getUserData(userId);
+    const { data } = userData;
+    await navigation.navigate('UserProfile', data);
+  };
+
   return (
     <>
       <Layout
@@ -52,7 +61,7 @@ const UserTemplate = ({ userProfilePic, displayName }) => {
             paddingHorizontal: 5,
             // paddingVertical: 5,
           }}
-          // onPress={routeChats}
+          onPress={routeUserProfile}
         >
           <LinearGradient
             colors={['#043F7C', '#FF5757']}
@@ -93,8 +102,6 @@ export default function Search({ navigation }) {
     status: 'basic',
   });
 
-  // console.log(form.value);
-
   const t = useContext(LocaleContext);
 
   const handleChange = (inputSearch) => {
@@ -104,18 +111,19 @@ export default function Search({ navigation }) {
     }));
   };
 
-  const userList = [];
+  const [userList, setUserList] = useState([]);
 
   const fetchUsers = async () => {
     const res = await Api.getAllUsers(form.value);
     const { users } = res;
-    users.forEach((user) => userList.push(user));
-    console.log(userList);
+    setUserList([...users]);
   };
 
   useEffect(() => {
     fetchUsers();
   }, [form.value]);
+
+  // console.log(userList);
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -124,12 +132,11 @@ export default function Search({ navigation }) {
         // {...props}
         style={{
           width: '100%',
-          // paddingLeft: 55,
-          // paddingRight: 55,
           display: 'flex',
           flexDirection: 'row',
-          // justifyContent: '',
           alignItems: 'center',
+          marginVertical: 10,
+          marginHorizontal: 15,
         }}
       >
         <BackButton
@@ -141,7 +148,7 @@ export default function Search({ navigation }) {
         <Input
           style={{
             width: '70%',
-            marginLeft: 10,
+            marginHorizontal: 20,
           }}
           size="medium"
           value={form.value}
@@ -152,7 +159,46 @@ export default function Search({ navigation }) {
           accessoryLeft={IconSearch}
         />
       </View>
-      <ScrollView
+
+      {userList.length > 0 ? (
+        <List
+          style={{ backgroundColor: 'transparent', paddingVertical: 10 }}
+          alwaysBounceVertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          data={userList}
+          keyExtractor={(_, i) => i.toString()}
+          renderItem={(user, index) =>
+            form.value.length > 1 && (
+              <UserTemplate
+                key={index}
+                userProfilePic={require('../../../../assets/images/user/user1.png')}
+                displayName={`${user.item.fName} ${user.item.sName}`}
+                userId={user.item._id}
+                navigation={navigation}
+              />
+            )
+          }
+          getItemLayout={(data, index) => ({
+            length: 150,
+            offset: 150 * index,
+            index,
+          })}
+        />
+      ) : (
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text>User not found</Text>
+        </View>
+      )}
+
+      {/* <ScrollView
         style={{ flex: 1, paddingVertical: 10 }}
         alwaysBounceVertical
         showsVerticalScrollIndicator={false}
@@ -160,49 +206,18 @@ export default function Search({ navigation }) {
       >
         <View style={{ paddingBottom: 20 }}>
           <View style={{ paddingHorizontal: 15 }}>
-            <UserTemplate
-              userProfilePic={require('../../../../assets/images/user/user1.png')}
-              displayName="Tosin Olowoyo"
-            />
+            {userList.map((user, index) => (
+              <UserTemplate
+                key={index}
+                userProfilePic={require('../../../../assets/images/user/user1.png')}
+                displayName={`${user.fName} ${user.sName}`}
+                userId={user._id}
+                navigation={navigation}
+              />
+            ))}
           </View>
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </Layout>
   );
-}
-
-{
-  /* <List
-              style={{
-                flex: 1,
-                backgroundColor: 'transparent',
-              }}
-              // alwaysBounceVertical
-              // showsHorizontalScrollIndicator={false}
-              // showsVerticalScrollIndicator={false}
-              // removeClippedSubviews
-              // ListHeaderComponentStyle={{
-              //   paddingVertical: 10,
-              //   borderBottomWidth: 1,
-              //   borderColor: 'rgba(143, 155, 179, 0.08)',
-              // }}
-              data={userList}
-              keyExtractor={(_, i) => i.toString()}
-              renderItem={(user) =>
-                user ? (
-                  <UserTemplate
-                    userProfilePic={require('../../../../assets/images/user/user1.png')}
-                    displayName={user.fullName}
-                  />
-                ) : (
-                  <Text
-                    category="h6"
-                    appearance="hint"
-                    style={{ textAlign: 'center' }}
-                  >
-                    User not found
-                  </Text>
-                )
-              }
-            /> */
 }

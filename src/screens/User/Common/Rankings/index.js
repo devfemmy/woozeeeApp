@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import { View, Image } from 'react-native';
 
@@ -7,6 +7,8 @@ import {
   Layout, Text, List, Divider,
 } from '@ui-kitten/components';
 
+import Api from 'src/api';
+
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { LocaleContext } from 'src/contexts';
@@ -14,6 +16,10 @@ import { LocaleContext } from 'src/contexts';
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { IconCStarFill } from 'src/components/CustomIcons';
+
+import rank1 from '../../../../assets/images/icon/rank1-filled.png';
+import rank2 from '../../../../assets/images/icon/rank2-filled.png';
+import rank3 from '../../../../assets/images/icon/rank3-filled.png';
 
 const RANKINGS = [
   {
@@ -90,8 +96,33 @@ const RANKINGS = [
   },
 ];
 
-export default function MarketPlace({ navigation }) {
+export default function LeaderBoard({ route, navigation }) {
+  const [ranks, setRanks] = useState([]);
   const t = useContext(LocaleContext);
+
+  const { challengeId } = route.params;
+
+  // console.log(challengeId);
+
+  const getRankings = async () => {
+    const res = await Api.getChallengeRanking(1, 30, challengeId);
+    const { data } = res;
+    setRanks(data);
+    console.log(res);
+  };
+
+  useEffect(() => {
+    getRankings();
+  }, []);
+
+  const topRanks = ranks.slice(0, 3);
+  const rankData = [
+    { ...topRanks[1], pos: 2 },
+    { ...topRanks[0], pos: 1 },
+    { ...topRanks[2], pos: 3 },
+  ];
+
+  const rankIcons = [rank1, rank2, rank3];
 
   const getTopRanks = (ranks) => {
     const TOP_RANK = [
@@ -120,111 +151,112 @@ export default function MarketPlace({ navigation }) {
     return TOP_RANK;
   };
 
-  const RankItem = ({ item }) => (
-    <View
-      style={{
-        paddingHorizontal: '1.5%',
-        width: '30%',
-        alignItems: 'center',
-      }}
-    >
+  const RankItem = ({ item, position }) => {
+    return (
       <View
         style={{
-          position: 'relative',
-          marginBottom: 10,
+          paddingHorizontal: '1.5%',
+          width: '30%',
+          alignItems: 'center',
         }}
       >
-        <LinearGradient
-          colors={['#043F7C', '#FF5757']}
+        <View
           style={{
-            height: item.pos === 1 ? 84 : 64,
-            width: item.pos === 1 ? 84 : 64,
-            borderRadius: item.pos === 1 ? 42 : 32,
-            alignItems: 'center',
-            justifyContent: 'center',
+            position: 'relative',
+            marginBottom: 10,
           }}
         >
-          <Image
-            source={item.data.image}
-            defaultSource={item.data.image}
+          <LinearGradient
+            colors={['#043F7C', '#FF5757']}
             style={{
-              height: item.pos === 1 ? 80 : 60,
-              width: item.pos === 1 ? 80 : 60,
-              borderRadius: item.pos === 1 ? 40 : 30,
-              borderColor: 'white',
+              height: position === 1 ? 84 : 64,
+              width: position === 1 ? 84 : 64,
+              borderRadius: position === 1 ? 42 : 32,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Image
+              source={{ uri: item.userImgURL }}
+              defaultSource={item.userImageURL}
+              style={{
+                height: position === 1 ? 80 : 60,
+                width: position === 1 ? 80 : 60,
+                borderRadius: position === 1 ? 40 : 30,
+                borderColor: 'white',
+              }}
+              resizeMode="cover"
+            />
+          </LinearGradient>
+          {/* <Text>{item.pos}</Text> */}
+          <Image
+            source={rankIcons[item.pos - 1]}
+            defaultSource={rankIcons[item.pos - 1]}
+            style={{
+              height: 20,
+              width: 20,
+              borderRadius: 10,
+              position: 'absolute',
+              left: position === 1 ? 33 : 22,
+              bottom: -7,
             }}
             resizeMode="cover"
           />
-        </LinearGradient>
-        <Image
-          source={item.rankIcon}
-          defaultSource={item.rankIcon}
-          style={{
-            height: 20,
-            width: 20,
-            borderRadius: 10,
-            position: 'absolute',
-            left: item.pos === 1 ? 33 : 22,
-            bottom: -7,
-          }}
-          resizeMode="cover"
-        />
-      </View>
-      <View style={{ alignItems: 'center' }}>
-        <Text
-          category="s2"
-          status="control"
-          style={{ textAlign: 'center' }}
-          numberOfLines={1}
-        >
-          {item.data.fullName}
-        </Text>
-        <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-          {Array(item.stars)
-            .fill(1)
-            .map(() => (
-              <IconCStarFill style={{ height: 10, width: 10 }} />
-            ))}
         </View>
-        {item.pos === 1 ? (
-          <View
-            style={{
-              backgroundColor: '#FFFFFF',
-              paddingHorizontal: 15,
-              paddingVertical: 20,
-              borderTopLeftRadius: 5,
-              borderTopRightRadius: 5,
-              alignItems: 'center',
-            }}
+        <View style={{ alignItems: 'center' }}>
+          <Text
+            category="s2"
+            status="control"
+            style={{ textAlign: 'center' }}
+            numberOfLines={1}
           >
-            <Text status="danger" category="h5" style={{ marginBottom: 5 }}>
-              {item.data.votes}
-            </Text>
-            <Text status="danger" category="s2">
-              {t('votes')}
-            </Text>
+            {`${item.userFirstName} ${item.userLastName}`}
+          </Text>
+          <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+            {/* {stars.map(() => (
+              <IconCStarFill style={{ height: 10, width: 10 }} />
+            ))} */}
           </View>
-        ) : (
-          <View
-            style={{
-              backgroundColor: 'rgba(255, 87, 87, 0.5)',
-              padding: 15,
-              borderTopLeftRadius: 5,
-              borderTopRightRadius: 5,
-              alignItems: 'center',
-            }}
-          >
-            <Text category="h6" style={{ marginBottom: 5, color: '#C4C4C4' }}>
-              {item.data.votes}
-            </Text>
-            <Text category="c2" style={{ color: '#C4C4C4' }}>
-              {t('votes')}
-            </Text>
-          </View>
-        )}
+          {position === 1 ? (
+            <View
+              style={{
+                backgroundColor: '#FFFFFF',
+                paddingHorizontal: 15,
+                paddingVertical: 20,
+                borderTopLeftRadius: 5,
+                borderTopRightRadius: 5,
+                alignItems: 'center',
+              }}
+            >
+              <Text status="danger" category="h5" style={{ marginBottom: 5 }}>
+                {item.totalVotes}
+              </Text>
+              <Text status="danger" category="s2">
+                {t('votes')}
+              </Text>
+            </View>
+          ) : (
+            <View
+              style={{
+                backgroundColor: 'rgba(255, 87, 87, 0.5)',
+                padding: 15,
+                borderTopLeftRadius: 5,
+                borderTopRightRadius: 5,
+                alignItems: 'center',
+              }}
+            >
+              <Text category="h6" style={{ marginBottom: 5, color: '#C4C4C4' }}>
+                {item.totalVotes}
+              </Text>
+              <Text category="c2" style={{ color: '#C4C4C4' }}>
+                {t('votes')}
+              </Text>
+            </View>
+          )}
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   const renderHeaderArea = () => (
     <View
@@ -251,9 +283,9 @@ export default function MarketPlace({ navigation }) {
           paddingTop: 15,
         }}
       >
-        {getTopRanks(RANKINGS).map((data) => (
-          <RankItem item={data} key={data.id} />
-        ))}
+        {rankData.map((data, index) => {
+          return <RankItem item={data} position={index} key={index} />;
+        })}
       </View>
     </View>
   );
@@ -280,7 +312,7 @@ export default function MarketPlace({ navigation }) {
           }}
         >
           <Text category="label" style={{ marginRight: 10 }}>
-            {data.item.id}
+            {data.index + 4}
           </Text>
           <LinearGradient
             colors={['#043F7C', '#FF5757']}
@@ -293,8 +325,8 @@ export default function MarketPlace({ navigation }) {
             }}
           >
             <Image
-              source={data.item.image}
-              defaultSource={data.item.image}
+              source={data.item.userImageURL}
+              defaultSource={data.item.userImageURL}
               style={{
                 height: 36,
                 width: 36,
@@ -315,13 +347,13 @@ export default function MarketPlace({ navigation }) {
             }}
           >
             <Text category="s2" style={{ marginRight: 5 }}>
-              {data.item.fullName}
+              {`${data.item.userFirstName} ${data.item.userLastName}`}
             </Text>
           </View>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text category="c2" style={{ marginRight: 5 }}>
-            {data.item.votes}
+            {data.item.totalVotes}
           </Text>
           <Text category="c1" style={{ fontSize: 10 }}>
             {t('votes')}
@@ -335,7 +367,7 @@ export default function MarketPlace({ navigation }) {
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
-        title="#ReplicaTrailer"
+        // title={ranks[0].hashtagName}
         navigation={navigation}
         screen="default"
         search
@@ -345,7 +377,7 @@ export default function MarketPlace({ navigation }) {
         <List
           style={{ backgroundColor: 'black' }}
           ListHeaderComponent={renderHeaderArea}
-          data={RANKINGS.filter((item) => item.id > 3)}
+          data={ranks.slice(3)}
           alwaysBounceHorizontal
           alwaysBounceVertical
           showsVerticalScrollIndicator={false}

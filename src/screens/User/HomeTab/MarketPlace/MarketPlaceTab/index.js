@@ -63,9 +63,9 @@ export default function MarketPlace({ navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const routeTo = (route) => navigation.replace(route);
+  const routeTo = (route) => navigation.navigate(route, { navigation });
 
-  const MarketplaceItem = ({ data }) => (
+  const MarketplaceItem = ({ data, navigation }) => (
     <TouchableOpacity
       activeOpacity={0.75}
       style={{
@@ -75,6 +75,7 @@ export default function MarketPlace({ navigation }) {
         marginVertical: 10,
         width: '25%',
       }}
+      onPress={() => routeTo(data.route)}
     >
       <Layout
         level="1"
@@ -162,7 +163,7 @@ export default function MarketPlace({ navigation }) {
         }}
       >
         {marketPlaceItems.map((data) => (
-          <MarketplaceItem data={data} key={data.id} />
+          <MarketplaceItem data={data} key={data.id} navigation={navigation} />
         ))}
       </View>
     </View>

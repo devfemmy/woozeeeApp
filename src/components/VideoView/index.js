@@ -57,6 +57,9 @@ import {
 } from 'src/components/CustomIcons';
 
 import { Toast } from 'native-base';
+import { TextInput } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const VideoView = forwardRef((props, ref) => {
   // const db = firebase.firestore();
@@ -154,24 +157,49 @@ const VideoView = forwardRef((props, ref) => {
     setFollowing(!following);
     await handleFollow(userId, !following);
   };
+  const sendComment = async (commentMessage) => {
+    const userId = await AsyncStorage.getItem('userid');
+    const userData = await getUserData(userId);
+    // const { data } = userData;
+    // console.log(userData.data.user);
 
-  const handleComment = async () => {
-    // console.log('pressed');
-    // const response = firestore.collection('entryComments');
-    // const data = await response.get();
-    console.log(firebase);
-    // await sendComment(form);
-    // // setFormValues('');
+    const firebaseConfig = {
+      apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    await firestore()
+      .collection('entryComments')
+      .doc(data.item._id.trim())
+      .collection('comments')
+      .doc()
+      .set({
+        senderId: userData.data.user._id,
+        text: commentMessage,
+        userFirstName: userData.data.user.fName,
+        userLastName: userData.data.user.sName,
+        userName: `@iam${userData.data.user.fName.toLowerCase()}${userData.data.user.sName.toLowerCase()}`,
+        imgUrl: userData.data.user.sName.imgUrl,
+        sentAt: Date(),
+        delivered: false,
+        sent: true,
+      });
   };
-
-  const routeComments = () => props.navigation.navigate('Comments');
 
   const routeReport = () => {
     sheetRef.current.close();
     props.navigation.navigate('Report', data);
   };
-
-  const handleOpenSheet = () => sheetRef.current.open();
 
   const routeUserProfile = async () => {
     const userData = await getUserData(item.userId);
@@ -179,9 +207,21 @@ const VideoView = forwardRef((props, ref) => {
     await navigation.navigate('UserProfile', data);
   };
 
+  const routeComments = async () => {
+    const userId = await AsyncStorage.getItem('userid');
+    const userData = await getUserData(userId);
+    const { data } = userData;
+    await props.navigation.navigate('Comments', {
+      currUserData: data,
+      postItem: item,
+    });
+  };
+
   const handleView = async (item_id) => {
     await viewVideo(item_id);
   };
+
+  const handleOpenSheet = () => sheetRef.current.open();
 
   useImperativeHandle(ref, () => ({
     async play() {
@@ -248,6 +288,8 @@ const VideoView = forwardRef((props, ref) => {
       };
     }, [item.mediaURL]),
   );
+
+  const [text, setText] = useState('');
 
   return (
     <Root>
@@ -387,7 +429,7 @@ const VideoView = forwardRef((props, ref) => {
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={IconCChat}
-              textContent={item.totalComments}
+              // textContent={item.totalComments}
               direction="row"
               status="basic"
               height={20}
@@ -395,7 +437,7 @@ const VideoView = forwardRef((props, ref) => {
               onPress={routeComments}
             />
             <InteractIcon
-              style={{ marginHorizontal: 5 }}
+              style={{ marginHorizontal: 0 }}
               Accessory={IconCEye}
               textContent={item.totalViews}
               direction="row"
@@ -403,14 +445,6 @@ const VideoView = forwardRef((props, ref) => {
               height={20}
               width={20}
             />
-            {/* <InteractIcon
-              style={{ marginHorizontal: 5 }}
-              Accessory={IconCShareVariant}
-              direction="row"
-              status="basic"
-              height={20}
-              width={20}
-            /> */}
           </View>
           <View>
             <InteractIcon
@@ -457,12 +491,15 @@ const VideoView = forwardRef((props, ref) => {
               />
             </LinearGradient>
             <View style={{ flex: 1, marginHorizontal: 5 }}>
-              <GeneralTextField
-                type="comment"
-                placeholder={t('leaveComment')}
-                setFormValues={setFormValues}
-                size="medium"
-                // value={form.comment}
+              <TextInput
+                placeholder="Leave a comment"
+                onChangeText={(text) => setText(text)}
+                style={{
+                  height: 40,
+                  paddingHorizontal: 5,
+                  color: 'grey',
+                }}
+                defaultValue={text}
               />
             </View>
             <View style={{ alignSelf: 'flex-start', marginTop: 4 }}>
@@ -471,7 +508,14 @@ const VideoView = forwardRef((props, ref) => {
                 status="primary"
                 height={28}
                 width={28}
-                onPress={handleComment}
+                onPress={() => {
+                  if (text !== '') {
+                    sendComment(text);
+                    setText('');
+                  } else {
+                    console.log('enter a comment');
+                  }
+                }}
               />
             </View>
           </View>

@@ -122,6 +122,19 @@ export default function TopNavigationArea(props) {
     [props, routeSearch],
   );
 
+  const renderNotificationIcon = useCallback(
+    () => (
+      <TopNavigationAction
+        {...props}
+        icon={IconCNotification}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel="Notification"
+        onPress={routeMessaging}
+      />
+    ),
+    [props, routeMessaging],
+  );
+
   const renderOptionsIcon = useCallback(
     () => (
       <TopNavigationAction
@@ -284,6 +297,32 @@ export default function TopNavigationArea(props) {
     [style, renderSearchIcon],
   );
 
+  const TopNavigationNotificationToolbar = useMemo(
+    //topNavBar at money matters home
+    () => (
+      <Layout level="5">
+        <TopNavigation
+          title="Home"
+          alignment="start"
+          accessoryLeft={(evaProps) => <BackButton navigation={navigation} />}
+          accessoryRight={renderNotificationIcon}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="screen navigation"
+          style={[
+            style,
+            {
+              backgroundColor: 'transparent',
+              justifyContent: 'center',
+              alignItems: 'center',
+            },
+          ]}
+        />
+        <Divider />
+      </Layout>
+    ),
+    [style, renderNotificationIcon],
+  );
+
   const TopNavigationDefault = useMemo(
     () => (
       <Layout level="5">
@@ -310,6 +349,7 @@ export default function TopNavigationArea(props) {
       style,
       search,
       renderSearchIcon,
+      renderNotificationIcon,
       options,
       renderOptionsIcon,
     ],
@@ -339,6 +379,7 @@ export default function TopNavigationArea(props) {
     user: TopNavigationUser,
     search: TopNavigationSearch,
     toolbar: TopNavigationToolbar,
+    notification: TopNavigationNotificationToolbar,
     profile: TopNavigationProfile,
     social: TopNavigationGlobal,
     marketPlace: TopNavigationGlobal,

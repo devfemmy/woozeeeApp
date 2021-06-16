@@ -20,6 +20,8 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
 import Constants from 'expo-constants';
 
+import CustomVideo from '../../../../../components/CustomVideo';
+
 import { Video } from 'expo-av';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
@@ -39,6 +41,7 @@ import { IconCMovie, IconCMedal } from 'src/components/CustomIcons';
 import Api from 'src/api';
 
 import { viewVideo } from '../../../../../services/Requests/index';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const InteractIcon = (props) => {
   const {
@@ -61,11 +64,6 @@ const InteractIcon = (props) => {
           {
             flexDirection: direction ?? 'column',
             alignItems: align ?? 'center',
-            backgroundColor: 'rgba(0, 0, 0, .6)',
-            alignSelf: 'flex-start',
-            padding: 4,
-            borderRadius: 10,
-            marginRight: 5,
           },
         ]}
       >
@@ -143,6 +141,7 @@ export default function Wooz({ navigation }) {
 
     const onMomentumScrollEnd = ({ nativeEvent }) => {
       const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
+      // console.log('new index is -> ', newIndex);
 
       if (
         // prettier-ignore
@@ -159,7 +158,7 @@ export default function Wooz({ navigation }) {
     const onPlaybackStatusUpdate = async (playbackStatus, entryId) => {
       if (playbackStatus.didJustFinish) {
         const res = await viewVideo(entryId);
-        console.log(res);
+        // console.log(res);
       }
     };
 
@@ -308,6 +307,27 @@ export default function Wooz({ navigation }) {
                   { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
                 ]}
               >
+                {/* <CustomVideo
+                  ref={videoRef}
+                  resizeMode="contain"
+                  style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+                  source={{ uri: page.pageData.data[index].mediaURL }}
+                  isLooping
+                  onPlaybackStatusUpdate={(playbackStatus) =>
+                    onPlaybackStatusUpdate(
+                      playbackStatus,
+                      page.pageData.data[index].userEntryData.entryId,
+                    )
+                  }
+                  isMuted={true}
+                  shouldPlay={isFocused}
+                  // prettier-ignore
+                  onReadyForDisplay={() => Animated.timing(opacity, {
+                    toValue: 1,
+                    useNativeDriver: true,
+                    duration: 500,
+                  }).start()}
+                /> */}
                 <Video
                   ref={videoRef}
                   resizeMode="contain"
@@ -320,6 +340,7 @@ export default function Wooz({ navigation }) {
                       page.pageData.data[index].userEntryData.entryId,
                     )
                   }
+                  isMuted={false}
                   shouldPlay={isFocused}
                   // prettier-ignore
                   onReadyForDisplay={() => Animated.timing(opacity, {
@@ -363,6 +384,7 @@ export default function Wooz({ navigation }) {
             justifyContent: 'flex-end',
             alignItems: 'center',
             width: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.05)',
           }}
         >
           <InteractIcon

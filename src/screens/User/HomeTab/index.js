@@ -65,7 +65,7 @@ const woozeeeCategories = [
     video:
       'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fmarket.mp4?alt=media&token=2709a1b4-8d3b-4d74-a364-63a276e94493',
     // screen: 'MarketPlaceRoute',
-    screen: 'openComingSoonMarket',
+    screen: 'MarketPlaceRoute',
   },
   {
     title: 'charity',
@@ -126,7 +126,7 @@ export default function Home({ navigation }) {
     openCare: () => sheetRefCare.current.open(),
     openWallet: () => sheetRefWallet.current.open(),
     openRewards: () => sheetRefRewards.current.open(),
-    openComingSoonMarket: () => sheetComingSoonMarket.current.open(),
+    MarketPlaceRoute: () => navigation.replace('MarketPlaceRoute', navigation),
     openComingSoonCharity: () => sheetComingSoonCharity.current.open(),
     SocialRoute: () => navigation.replace('SocialRoute'),
   };
@@ -355,7 +355,7 @@ export default function Home({ navigation }) {
             position: 'relative',
           }}
         >
-          <Image
+          {/* <Image
             source={require('assets/images/banner/marketplace.jpg')}
             defaultSource={require('assets/images/banner/marketplace.jpg')}
             resizeMode="contain"
@@ -363,7 +363,7 @@ export default function Home({ navigation }) {
               height: '100%',
               width: '100%',
             }}
-          />
+          /> */}
           <View
             style={{
               flex: 1,

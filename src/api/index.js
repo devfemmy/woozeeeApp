@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-// import { firestore } from 'firebase';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { CancelToken } = axios;
 
-// const db = firestore();
-
 const source = CancelToken.source();
 
 export const getToken = () => {
-  // firebase.initializeApp();
   return AsyncStorage.getItem('USER_AUTH_TOKEN');
 };
 
@@ -67,18 +62,6 @@ export default {
       pageData: data,
     };
   },
-  getVideos: async (page = 1, cursor = 1) => {
-    const instance = await createInstance();
-
-    const res = await instance.get(`entries?pageSize=10&pageNumber=${page}`);
-
-    const { data } = res;
-    return {
-      pageData: data,
-      previousID: 1,
-      nextID: page + 1,
-    };
-  },
   getChallenges: async () => {
     const instance = await createInstance();
 
@@ -90,15 +73,16 @@ export default {
       pageData: data,
     };
   },
-  getExplore: async () => {
+  getVideos: async (page = 1, cursor = 1) => {
     const instance = await createInstance();
 
-    const res = await instance.get(`category-groups`);
+    const res = await instance.get(`entries?pageSize=10&pageNumber=${page}`);
 
     const { data } = res;
-    // console.log(data);
     return {
       pageData: data,
+      previousID: 1,
+      nextID: page + 1,
     };
   },
   getWoozData: async (page = 1, id) => {
@@ -115,15 +99,53 @@ export default {
       nextID: page + 1,
     };
   },
-  getExploreData: async (id) => {
+  getExploreData: async (page = 1, id) => {
     const instance = await createInstance();
 
-    const res = await instance.get(`entries?categoryId=${id}`);
+    const res = await instance.get(
+      `entries?categoryId=${id}&pageNumber=${page}`,
+    );
     const { data } = res;
     // console.log('from fetch => ', );
     return {
       pageData: data,
+      previousID: 1,
+      nextID: page + 1,
     };
+  },
+
+  getExplore: async () => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`category-groups`);
+
+    const { data } = res;
+    // console.log(data);
+    return {
+      pageData: data,
+    };
+  },
+
+  getLikedPosts: async (userId) => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`entry-data?action=like&userId=${userId}`);
+
+    const { data } = res;
+    // console.log(user);
+    return {
+      pageData: data,
+    };
+  },
+  getChallengeRanking: async (page, size, challengeId) => {
+    const instance = await createInstance();
+
+    const res = await instance.get(
+      `entries?sortBy=totalVotes&sortOrder=1&pageNumber=${page}&pageSize=${size}&challengeId=${challengeId}`,
+    );
+
+    const { data } = res;
+    return data;
   },
   cancelRequest: (msg) => source.cancel(msg),
 };

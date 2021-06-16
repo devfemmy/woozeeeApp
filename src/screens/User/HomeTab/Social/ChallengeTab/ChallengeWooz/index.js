@@ -67,7 +67,8 @@ export default function Wooz({ route, navigation }) {
 
   const goBack = () => navigation.goBack();
 
-  const routeRanking = () => navigation.navigate('Rankings');
+  const routeRanking = () =>
+    navigation.navigate('Rankings', { challengeId: _id });
 
   const WoozPostsArea = () => {
     const isFocused = useIsFocused();
@@ -86,6 +87,7 @@ export default function Wooz({ route, navigation }) {
 
     const onMomentumScrollEnd = ({ nativeEvent }) => {
       const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
+      // console.log('new index is -> ', newIndex);
 
       if (
         // prettier-ignore
@@ -101,31 +103,31 @@ export default function Wooz({ route, navigation }) {
 
     const [woozData, setWoozData] = useState({});
 
-    // const startVideo = async () => {
-    //   try {
-    //     const status = await videoRef.current.getStatusAsync();
+    const startVideo = async () => {
+      try {
+        const status = await videoRef.current.getStatusAsync();
 
-    //     if (status.isLoaded) {
-    //       await videoRef.current.playAsync();
-    //       videoViewRef.current.resetPlayState(true);
-    //     }
-    //   } catch (e) {
-    //     const msg = e;
-    //   }
-    // };
+        if (status.isLoaded) {
+          await videoRef.current.playAsync();
+          videoViewRef.current.resetPlayState(true);
+        }
+      } catch (e) {
+        const msg = e;
+      }
+    };
 
-    // const stopVideo = async () => {
-    //   try {
-    //     const status = await videoRef.current.getStatusAsync();
+    const stopVideo = async () => {
+      try {
+        const status = await videoRef.current.getStatusAsync();
 
-    //     if (status.isLoaded) {
-    //       await videoRef.current.stopAsync();
-    //       videoViewRef.current.resetPlayState(false);
-    //     }
-    //   } catch (e) {
-    //     const msg = e;
-    //   }
-    // };
+        if (status.isLoaded) {
+          await videoRef.current.stopAsync();
+          videoViewRef.current.resetPlayState(false);
+        }
+      } catch (e) {
+        const msg = e;
+      }
+    };
 
     useFocusEffect(
       useCallback(() => {
@@ -178,8 +180,6 @@ export default function Wooz({ route, navigation }) {
       },
     );
 
-    // console.log('from challenge, challenge is => ', woozData);
-
     const onPlaybackStatusUpdate = async (playbackStatus, entryId) => {
       if (playbackStatus.didJustFinish) {
         const res = await viewVideo(entryId);
@@ -202,11 +202,11 @@ export default function Wooz({ route, navigation }) {
       // prettier-ignore
       status !== 'error'
       && status !== 'loading'
-      && woozData.pages
+      && data.pages[0].pageData.data.length > 0
     ) {
-      videoLength.current = woozData.pages[0].pageData.data.length;
-      return woozData.pages.map((page) => (
-        <React.Fragment key={uuidv4()}>
+      videoLength.current = data.pages[0].pageData.data.length;
+      return data.pages.map((page) => (
+        <React.Fragment key={page.nextID}>
           <View style={{ flex: 1 }}>
             <ScrollView
               style={{
@@ -231,7 +231,7 @@ export default function Wooz({ route, navigation }) {
                         position: 'absolute',
                       }}
                       source={
-                        woozData.pages
+                        data.pages
                           ? { uri: item.mediaURL }
                           : require('assets/images/banner/placeholder-image.png')
                       }
@@ -252,27 +252,30 @@ export default function Wooz({ route, navigation }) {
                   { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
                 ]}
               >
-                <Video
-                  ref={videoRef}
-                  resizeMode="contain"
-                  style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                  source={{ uri: page.pageData.data[index].mediaURL }}
-                  isLooping
-                  shouldPlay={isFocused}
-                  onPlaybackStatusUpdate={(playbackStatus) =>
-                    onPlaybackStatusUpdate(
-                      playbackStatus,
-                      page.pageData.data[index].userEntryData.entryId,
-                    )
-                  }
-                  onReadyForDisplay={() =>
-                    Animated.timing(opacity, {
-                      toValue: 1,
-                      useNativeDriver: true,
-                      duration: 500,
-                    }).start()
-                  }
-                />
+                {/* {console.log(data)} */}
+                {page.pageData.data.length ? (
+                  <Video
+                    ref={videoRef}
+                    resizeMode="contain"
+                    style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+                    source={{ uri: page.pageData.data[index].mediaURL }}
+                    isLooping
+                    shouldPlay={isFocused}
+                    onPlaybackStatusUpdate={(playbackStatus) =>
+                      onPlaybackStatusUpdate(
+                        playbackStatus,
+                        page.pageData.data[index].userEntryData.entryId,
+                      )
+                    }
+                    onReadyForDisplay={() =>
+                      Animated.timing(opacity, {
+                        toValue: 1,
+                        useNativeDriver: true,
+                        duration: 500,
+                      }).start()
+                    }
+                  />
+                ) : null}
               </Animated.View>
             </ScrollView>
           </View>
@@ -308,6 +311,7 @@ export default function Wooz({ route, navigation }) {
             justifyContent: 'space-between',
             alignItems: 'center',
             width: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.1)',
           }}
         >
           <InteractIcon

@@ -7,7 +7,14 @@ import React, {
   useImperativeHandle,
 } from 'react';
 
-import { View, StyleSheet, Image, TouchableOpacity, Share } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Share,
+  TouchableWithoutFeedback,
+} from 'react-native';
 
 import { Text, Button } from '@ui-kitten/components';
 
@@ -66,11 +73,6 @@ const InteractIcon = (props) => {
           {
             flexDirection: direction ?? 'column',
             alignItems: align ?? 'center',
-            backgroundColor: 'rgba(0, 0, 0, .6)',
-            alignSelf: 'flex-start',
-            padding: 4,
-            borderRadius: 10,
-            marginRight: 5,
           },
         ]}
       >
@@ -126,6 +128,8 @@ const ChallengeVideo = forwardRef((props, ref) => {
   const [totalLikes, setTotalLikes] = useState(data.totalLikes);
 
   const [shouldPlay, setShouldPlay] = useState(true);
+
+  const [muteState, setIsMuted] = useState(false);
 
   const likeData = {
     entryId: data._id,
@@ -212,6 +216,22 @@ const ChallengeVideo = forwardRef((props, ref) => {
     },
   }));
 
+  const toggleMute = () => {
+    setIsMuted(!muteState);
+    videoRef.current.setIsMutedAsync(muteState);
+  };
+
+  let lastTap = null;
+  const handleDoubleTap = () => {
+    const now = Date.now();
+    const DOUBLE_PRESS_DELAY = 300;
+    if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
+      toggleMute();
+    } else {
+      lastTap = now;
+    }
+  };
+
   return useMemo(
     () => (
       <View
@@ -221,139 +241,138 @@ const ChallengeVideo = forwardRef((props, ref) => {
           zIndex: 95,
         }}
       >
-        <View style={styles.uiContainer}>
+        <TouchableWithoutFeedback onPress={() => handleDoubleTap()}>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'flex-end',
-              width: '100%',
-              paddingHorizontal: 10,
-              paddingBottom: 20,
+              backgroundColor: 'transparent',
+              height,
             }}
-          >
-            <View style={{ flexDirection: 'row' }}>
-              <View style={{ paddingLeft: 5 }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    backgroundColor: 'rgba(0, 0, 0, .6)',
-                    paddingVertical: 5,
-                    paddingHorizontal: 8,
-                    borderRadius: 10,
-                  }}
-                >
-                  <Text
-                    status="control"
-                    category="h6"
-                    style={{ marginRight: 5 }}
-                  >
-                    {data.userFirstName}
-                  </Text>
-                  <Text status="danger" category="h6">
-                    {data.userLastName}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    marginVertical: 5,
-                  }}
-                >
-                  <InteractIcon
-                    status={!shouldPlay ? 'danger' : 'success'}
-                    Accessory={(evaProps) => (
-                      <IconPlayPause {...evaProps} isPlaying={!shouldPlay} />
-                    )}
-                    height={20}
-                    width={20}
-                    onPress={togglePause}
-                  />
-                  <InteractIcon
-                    Accessory={(evaProps) => <IconEye {...evaProps} />}
-                    textContent={data.totalViews}
-                    height={20}
-                    width={20}
-                    direction="row"
-                    style={{ marginRight: 7 }}
-                  />
-                </View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    backgroundColor: 'rgba(0, 0, 0, .6)',
-                    alignSelf: 'flex-start',
-                    padding: 8,
-                    borderRadius: 10,
-                  }}
-                >
-                  <Text
-                    status="control"
-                    category="s2"
+          ></View>
+        </TouchableWithoutFeedback>
+        <View style={styles.uiContainer}>
+          <TouchableWithoutFeedback onPress={() => handleDoubleTap()}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'flex-end',
+                width: '100%',
+                paddingVertical: 5,
+                paddingHorizontal: 10,
+                paddingBottom: 20,
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <View style={{ flexDirection: 'row' }}>
+                <View style={{ paddingLeft: 5 }}>
+                  <View
                     style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-                      marginBottom: 2,
+                      flexDirection: 'row',
                     }}
                   >
-                    {data.userEntryData.categoryName}
-                  </Text>
+                    <Text
+                      status="control"
+                      category="h6"
+                      style={{ marginRight: 5 }}
+                    >
+                      {data.userFirstName}
+                    </Text>
+                    <Text status="danger" category="h6">
+                      {data.userLastName}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginVertical: 5,
+                    }}
+                  >
+                    <InteractIcon
+                      status={!shouldPlay ? 'danger' : 'success'}
+                      Accessory={(evaProps) => (
+                        <IconPlayPause {...evaProps} isPlaying={!shouldPlay} />
+                      )}
+                      height={20}
+                      width={20}
+                      onPress={togglePause}
+                    />
+                    <InteractIcon
+                      Accessory={(evaProps) => <IconEye {...evaProps} />}
+                      textContent={data.totalViews}
+                      height={20}
+                      width={20}
+                      direction="row"
+                      style={{ marginRight: 7 }}
+                    />
+                  </View>
+                  <View>
+                    <Text
+                      status="control"
+                      category="s2"
+                      style={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.0125)',
+                        marginBottom: 2,
+                      }}
+                    >
+                      {data.userEntryData.categoryName}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-            <View>
-              {data.isChallenge && (
-                <InteractIcon
-                  size="large"
-                  style={{ marginBottom: 15 }}
-                  /* prettier-ignore */
-                  Accessory={(evaProps) => (isVoted ? (
+              <View>
+                {data.isChallenge && (
+                  <InteractIcon
+                    size="large"
+                    style={{ marginBottom: 15 }}
+                    /* prettier-ignore */
+                    Accessory={(evaProps) => (isVoted ? (
                       <IconCCoin style={{ height: 36, width: 36 }} />
                     ) : (
                       <IconCVote {...evaProps} active />
                     ))}
+                    textContent={data.likes}
+                    onPress={toggleVote}
+                  />
+                )}
+                <InteractIcon
+                  style={{ marginBottom: 15 }}
+                  Accessory={IconCHeartToggle}
+                  status={isLiked ? 'danger' : 'control'}
                   textContent={data.likes}
-                  onPress={toggleVote}
+                  onPress={toggleLike}
                 />
-              )}
-              <InteractIcon
-                style={{ marginBottom: 15 }}
-                Accessory={IconCHeartToggle}
-                status={isLiked ? 'danger' : 'control'}
-                textContent={data.likes}
-                onPress={toggleLike}
-              />
-              <InteractIcon
-                style={{ marginBottom: 10 }}
-                Accessory={(evaProps) => <IconCChat {...evaProps} active />}
-                textContent={data.totalComments}
-              />
-              <InteractIcon
-                style={{ marginBottom: 15 }}
-                Accessory={(evaProps) => <IconCShare {...evaProps} active />}
-                onPress={handleShare}
-              />
+                <InteractIcon
+                  style={{ marginBottom: 10 }}
+                  Accessory={(evaProps) => <IconCChat {...evaProps} active />}
+                  textContent={data.totalComments}
+                />
+                <InteractIcon
+                  style={{ marginBottom: 15 }}
+                  Accessory={(evaProps) => <IconCShare {...evaProps} active />}
+                  onPress={handleShare}
+                />
 
-              <TouchableOpacity
-                style={{ alignItems: 'center', marginBottom: 5 }}
-                onPress={routeUserProfile}
-              >
-                <Image
-                  source={{ uri: data.userImageURL }}
-                  defaultSource={require('assets/images/banner/profile.jpg')}
-                  style={{
-                    height: 40,
-                    width: 40,
-                    borderRadius: 20,
-                    borderWidth: 2,
-                    borderColor: 'white',
-                  }}
-                  resizeMode="cover"
-                />
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ alignItems: 'center', marginBottom: 5 }}
+                  onPress={routeUserProfile}
+                >
+                  <Image
+                    source={{ uri: data.userImageURL }}
+                    defaultSource={require('assets/images/banner/profile.jpg')}
+                    style={{
+                      height: 40,
+                      width: 40,
+                      borderRadius: 20,
+                      borderWidth: 2,
+                      borderColor: 'white',
+                    }}
+                    resizeMode="cover"
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     ),
