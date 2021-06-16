@@ -9,7 +9,7 @@ export const TextIcon = (props) => {
     const styles = StyleSheet.create({
         button: {
           height: props.show ? 30 : 40,
-          justifyContent: 'center',
+          justifyContent: props.start ? 'flex-start' : 'center',
           alignItems: 'center',
           flexDirection: 'row',
           backgroundColor: props.bg,
@@ -25,7 +25,8 @@ export const TextIcon = (props) => {
           marginRight: 5
         },
         color: {
-            color: props.color
+            color: props.color,
+            fontWeight: props.bold
         }
       
       });

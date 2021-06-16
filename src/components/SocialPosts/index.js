@@ -80,7 +80,7 @@ export const StoryPosts = ({ info }) => {
   const RenderCategoryHeader = () => (
     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('UploadEntries')}
+        onPress={() => navigation.navigate('UploadEntries', {entries: true})}
         activeOpacity={0.75}
         style={{ position: 'relative' }}
       >

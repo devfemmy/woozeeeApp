@@ -1,228 +1,247 @@
-import React, { useContext } from 'react';
+import React, { Component } from 'react';
+import { SafeAreaView, View, Text, StyleSheet, 
+  TouchableOpacity, Dimensions,
+   ActivityIndicator, Alert, FlatList, Platform } from "react-native";
+import RNBambuserBroadcaster from 'react-native-bambuser-broadcaster';
+import { Layout, List } from '@ui-kitten/components';
+import TopNavigationArea from 'src/components/TopNavigationArea/index';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { AppID } from "./utils";
+import KeepAwake from '../../../../components/Awake'
 
-import { View, useWindowDimensions, TouchableOpacity } from 'react-native';
+const { height, width } = Dimensions.get("screen");
+class LiveStream extends React.PureComponent {
+      constructor(props) {
+        super(props);
 
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+        this.state = {
+            statusLive: "stopped", //stopped
+            startingLive: false,
+            started: false,
+            stoppingLive: false,
+            refLive: null,
+            stream_details: null,
+            artist: undefined,
+            cameraId: 1,
+            user_in_room: 0,
+            show: "",
+            messages: [],
+            platformLive: false,
+        }
 
-import { useInfiniteQuery } from 'react-query';
-
-import { Layout, List, Text } from '@ui-kitten/components';
-
-import Api from 'src/api';
-
-import { LocaleContext } from 'src/contexts';
-
-import TopNavigationArea from 'src/components/TopNavigationArea';
-
-import FetchFailed from 'src/components/DataFetch/FetchFailed';
-
-import Placeholders from 'src/components/Placeholders';
-
-import MovieCard from 'src/components/SocialCard/MovieCard';
-
-import { trendingUrl } from 'src/api/dummy';
-
-const MOVIE_CATEGORIES = [
-  {
-    id: 1,
-    title: 'All',
-    active: true,
-  },
-  {
-    id: 2,
-    title: 'Trending',
-  },
-  {
-    id: 3,
-    title: 'woozeee Originals',
-  },
-  {
-    id: 4,
-    title: 'Classics',
-  },
-  {
-    id: 5,
-    title: 'Anime',
-  },
-  {
-    id: 6,
-    title: 'Romance',
-  },
-  {
-    id: 7,
-    title: 'Triller',
-  },
-];
-
-// const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
-
-const renderMovieCategory = ({ item }) => (
-  <Layout
-    level={item.active ? '6' : '2'}
-    style={{
-      height: 40,
-      marginHorizontal: 5,
-      borderRadius: 10,
-    }}
-  >
-    <TouchableOpacity
-      activeOpacity={0.75}
-      style={{
-        backgroundColor: 'transparent',
-        borderColor: 'transparent',
-        borderRadius: 0,
-        borderBottomWidth: 3,
-        paddingHorizontal: 15,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%',
-        borderBottomColor: item.active && '#FF5757',
-      }}
-    >
-      <Text status="basic" category="c2">
-        {item.title}
-      </Text>
-    </TouchableOpacity>
-  </Layout>
-);
-
-const renderMovieCategories = () => (
-  <View style={{ marginBottom: 20, height: 45 }}>
-    <List
-      style={{
-        flex: 1,
-        backgroundColor: 'transparent',
-      }}
-      contentContainerStyle={{
-        paddingHorizontal: 10,
-      }}
-      alwaysBounceHorizontal
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-      data={MOVIE_CATEGORIES}
-      keyExtractor={(_, i) => i.toString()}
-      renderItem={renderMovieCategory}
-      getItemLayout={(data, index) => ({
-        length: 50,
-        offset: 50 * index,
-        index,
-      })}
-    />
-  </View>
-);
-
-export default function Explore({ navigation }) {
-  const { width, height } = useWindowDimensions();
-
-  const { bottom, top } = useSafeAreaInsets();
-
-  const t = useContext(LocaleContext);
-
-  const SocialPostsArea = () => {
-    const {
-      status,
-      data,
-      error,
-      isFetching,
-      isFetchingNextPage,
-      isFetchingPreviousPage,
-      fetchNextPage,
-      fetchPreviousPage,
-      refetch,
-      hasNextPage,
-      hasPreviousPage,
-    } = useInfiniteQuery(
-      ['infiniteLiveStream', 1],
-      async ({ pageParam = 1 }) => {
-        const promise = await Api.getVideos(trendingUrl, 1, pageParam);
-        promise.cancel = () => Api.cancelRequest('Request aborted');
-        return promise;
-      },
-      {
-        getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
-        getNextPageParam: (lastPage) => lastPage.nextID ?? false,
-        keepPreviousData: true,
-        cacheTime: 1000 * 60 * 1,
-      },
-    );
-
-    if (status === 'loading') {
-      return (
-        <Placeholders
-          mediaLeft
-          row
-          count={4}
-          numColumns={2}
-          maxHeight={270}
-          maxWidth={width}
-        />
-      );
+        /* this.socket = io(URL_SERVER_SOCKET, {
+            transports: ['websocket'],
+        }); */
     }
-    if (status === 'error') {
-      return (
-        <FetchFailed
-          onPress={refetch}
-          info={t('networkError')}
-          retry={t('retry')}
-        />
-      );
+    async componentDidMount() {
+        const { show } = this.props;
     }
-    if (
-      // prettier-ignore
-      status !== 'loading'
-      && status !== 'error'
-      && data.pages[0].pageData.data.length > 0
-    ) {
-      return data.pages.map((page) => (
-        <React.Fragment key={page.nextID}>
-          <View style={{ flex: 1 }}>
-            <List
-              style={{
-                backgroundColor: 'transparent',
-              }}
-              contentContainerStyle={{
-                paddingVertical: 20,
-                paddingHorizontal: 7,
-              }}
-              ListHeaderComponent={renderMovieCategories}
-              alwaysBounceVertical
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              numColumns={2}
-              data={page.pageData.data}
-              keyExtractor={(_, i) => i.toString()}
-              renderItem={(renderData) => (
-                <MovieCard data={renderData.item} extraWidth={0} livestream />
-              )}
-              getItemLayout={(_, index) => ({
-                length: 300,
-                offset: 300 * index,
-                index,
-              })}
-            />
-          </View>
-        </React.Fragment>
-      ));
-    }
+  startMyBroadCast = () => {
+    this.setState({startingLive: true})
+    myBroadcasterRef.startBroadcast();
+    console.log("starting")
+  }
+  onBroadcastStarted = () => {
+      this.setState({startingLive: false, started: true})
+  }
+  endBroadcast = () => {
+    myBroadcasterRef.stopBroadcast();
+    this.setState({started: false})
+  }
+  render() {
+    const { statusLive, user_in_room, startingLive, stoppingLive, show, messages } = this.state;
     return (
-      <FetchFailed
-        onPress={refetch}
-        info={t('noVideos')}
-        retry={t('refresh')}
-      />
-    );
-  };
-
-  return (
-    <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title="woozeee"
-        navigation={navigation}
-        icon="AddStream"
-        screen="search"
-      />
-      <SocialPostsArea />
+      <Layout style={{ flex: 1 }}>
+      <RNBambuserBroadcaster
+      style={{ flex: 1 }}
+      onBroadcastStarted = {this.onBroadcastStarted}
+      ref={ref => {myBroadcasterRef = ref; }} applicationId={"JpW2TKHoR9MlbgsWaChADw"} />
+            {this.state.startingLive ? 
+        <ActivityIndicator style={styles.loading} size="large" color="#ff2a00" /> :
+        <View>
+            {this.state.started ? 
+        <View style= {styles.flexContainer}>
+            <View style= {styles.liveContainer}>
+                <Text style= {styles.textLive}>
+                    LIVE
+                </Text>
+            </View>
+            <TouchableOpacity style= {styles.button} onPress= {this.endBroadcast}>
+                <Text style= {{color: 'white', fontWeight: 'bold'}}>
+                    End Broadcast
+                </Text>
+            </TouchableOpacity>
+        </View> :
+        <TouchableOpacity activeOpacity={.8}
+        style={styles.buttonStream} onPress= {this.startMyBroadCast} />
+        }
+        </View>
+        }
     </Layout>
-  );
+        )
+        }
+
 }
+
+const styles = StyleSheet.create({
+
+ liveContainer: {
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center'
+ },
+ flexContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 25,
+    paddingVertical: 5
+ },
+ button: {
+    backgroundColor: '#ff2a00',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center'
+ },
+ textLive: {
+    // color: '#ff2a00',
+    color: '#39FF14',
+    fontWeight: 'bold',
+    fontSize: 18
+ },
+  wrapVideo: {
+      flex: 1,
+  },
+  camera: {
+      flex: 1
+  },
+  contentControlsLive: {
+      position: "absolute",
+      bottom: 0,
+      width,
+      flexDirection: "row",
+      justifyContent: "space-between",
+  },
+  buttonStream: {
+      backgroundColor: "#ff2a00",
+      borderRadius: 60,
+      height: 60,
+      width: 60,
+      alignSelf: "center",
+  },
+  startButtonLive: {
+      backgroundColor: "#555",
+      padding: 5,
+      marginBottom: 20,
+      alignSelf: "center",
+  },
+  loading: {
+      marginBottom: 20,
+      alignSelf: "center",
+      justifyContent: "center",
+      position: "absolute",
+      bottom: 0,
+  },
+  buttonStreamStop: {
+      padding: 5,
+  },
+  contentLiveInfo: {
+      padding: 10,
+      position: "absolute",
+      width,
+      alignItems: "center",
+      zIndex: 1,
+      flexDirection: "row",
+      justifyContent: "space-between"
+  },
+  buttonSwitchCamera: {
+      padding: 20
+  },
+  wrapSentMessage: {
+      flex: 1,
+      flexDirection: "row",
+      marginBottom: 20,
+      justifyContent: "flex-end",
+  },
+  contentSentMessage: {
+      flex: 1,
+      padding: 4,
+      justifyContent: "flex-end"
+  },
+  wrapAllMessagesChat: {
+      position: "absolute",
+      bottom: 0,
+      width: wp("75%"),
+      height: hp("50%")
+  },
+  contentFoto: {
+      borderRadius: 100,
+      padding: 12,
+      width: 48,
+      height: 48,
+      marginRight: 5,
+      backgroundColor: "#2F2F2F",
+  },
+  fotoPerfil: {
+      width: 48,
+      height: 48,
+  },
+  contentWrapAll: {
+    flex: 1,
+    backgroundColor: "#111",
+},
+contentVideoWrap: {
+    height,
+},
+contentWrapPadding: {
+    flex: 1,
+    backgroundColor: "#111",
+    padding: 16
+},
+textBranco: {
+    color: "#fff"
+},
+textCinza: {
+    color: "#999"
+},
+horizontalAlign: {
+    flexDirection: "row",
+    alignItems: "center"
+},
+horizontalAlignJustify: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: 'space-between',
+},
+flexJustify: {
+    flex: 1,
+    justifyContent: 'space-between',
+},
+flexSimple: {
+    flex: 1,
+},
+titleModal: {
+    fontSize: 25,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#fff"
+},
+iconButtons: {
+    padding: 16
+},
+inputs: {
+    color: "#fff",
+    paddingLeft: 16,
+    paddingRight: 16,
+    padding: Platform.OS === "ios" ? 16 : null,
+    borderRadius: 10,
+    backgroundColor: "#333",
+    marginTop: 12,
+    marginBottom: 12
+},
+
+})
+
+export default LiveStream;

@@ -250,6 +250,7 @@ dependencies {
 
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     implementation(project(":react-native-google-signin"))
+    implementation project(path: ':libbambuser')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

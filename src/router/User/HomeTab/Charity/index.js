@@ -19,7 +19,7 @@ export default function CharityRoute() {
     >
       <Screen name="CharityTab" component={Charity} />
       <Screen name="CartTab" component={Charity} />
-      <Screen name="VideoUpload" component={VideoUpload} />
+      {/* <Screen name="VideoUpload" component={VideoUpload} /> */}
       <Screen name="CategoryTab" component={Charity} />
       <Screen name="ProfileTab" component={Charity} />
     </Navigator>

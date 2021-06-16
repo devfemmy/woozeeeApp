@@ -3,49 +3,49 @@ const marketPlaceItems = [
     id: 1,
     title: 'moneyMatters',
     icon: require('assets/images/icon/atm-filled.png'),
-    route: 'MoneyMattersTab',
+    route: 'AskADoctor'
   },
   {
     id: 2,
     title: 'myBank',
     icon: require('assets/images/icon/bank-filled.png'),
-    route: 'MyBankRoute',
+    route: 'AskADoctor'
   },
   {
     id: 3,
     title: 'onTheGo',
     icon: require('assets/images/icon/map-filled.png'),
-    route: 'OnTheGoRoute',
+    route: 'AskADoctor'
   },
   {
     id: 4,
     title: 'clickAndShop',
     icon: require('assets/images/icon/bag-filled.png'),
-    route: 'ClickAndShopRoute',
+    route: 'AskADoctor'
   },
   {
     id: 5,
     title: 'askALawyer',
     icon: require('assets/images/icon/balance-filled.png'),
-    route: 'AskALawyerRoute',
+    route: 'AskADoctor'
   },
   {
     id: 6,
     title: 'askADoc',
     icon: require('assets/images/icon/doctor-filled.png'),
-    route: 'AskADocRoute',
+    route: 'AskADoctorRoute'
   },
   {
     id: 7,
     title: 'clickAndPlay',
     icon: require('assets/images/icon/ball-filled.png'),
-    route: 'ClickAndPlayRoute',
+    route: 'AskADoctor'
   },
   {
     id: 8,
     title: 'otherServices',
     icon: require('assets/images/icon/tag-filled.png'),
-    route: 'OthersRoute',
+    route: 'AskADoctor'
   },
 ];
 

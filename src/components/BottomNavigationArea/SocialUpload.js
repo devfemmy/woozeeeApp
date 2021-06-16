@@ -101,7 +101,7 @@ export default function SocialUpload(props) {
         elevation: 6,
       }}
     >
-      <TouchableOpacity onPress={() => navigation.navigate('UploadEntries')}>
+      <TouchableOpacity onPress={() => navigation.navigate('UploadEntries', {entries: false})}>
         <Image
           source={require('assets/images/icon/upload.png')}
           defaultSource={require('assets/images/icon/upload.png')}

@@ -43,6 +43,9 @@ import Rankings from 'src/screens/User/Common/Rankings';
 import UserProfile from 'src/screens/User/Common/UserProfile';
 import Follow from 'src/screens/User/Common/Follow';
 
+// Ask a doctor
+
+
 // Onboarding
 import Onboarding from 'src/screens/User/Onboarding';
 
@@ -70,8 +73,10 @@ import BillElectricity from 'src/screens/User/BillPayTab/Bills/Electricity';
 import UserRoute from './User';
 import SocialRoute from './User/HomeTab/Social';
 import MarketPlaceRoute from './User/HomeTab/MarketPlace';
-import MoneyMattersTab from '../screens/User/HomeTab/MarketPlace/MoneyMatters/MoneyMattersTab';
+import AskADoctorRoute from './User/HomeTab/MarketPlace/AskDoctor'
 import CharityRoute from './User/HomeTab/Charity';
+import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/index';
+import Consultation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Consultation/index';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -102,9 +107,11 @@ export default function Router() {
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,
+      AskADoctorRoute,
       CharityRoute,
       EditProfile,
       ChangePassword,
+      Consultation,
       UploadEntries,
       PreviewEntry,
       Settings,
@@ -127,7 +134,7 @@ export default function Router() {
       BillCableTv,
       BillElectricity,
       Report,
-      MoneyMattersTab,
+      AskADoctor
     },
 
     Common: {
