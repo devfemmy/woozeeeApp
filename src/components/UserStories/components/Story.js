@@ -9,7 +9,6 @@ const ScreenWidth = Dimensions.get('window').width;
 
 const Story = (props) => {
   const { story } = props;
-  console.log('from story gan gan -> ', story);
   const { srcURL, type } = story || {};
 
   return (

@@ -10,9 +10,19 @@ import React, {
 
 import { Root } from 'native-base';
 
-import { View, Image, TouchableOpacity, Share } from 'react-native';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Share,
+  TouchableWithoutFeedback,
+} from 'react-native';
 
 import Moment from 'react-moment';
+
+import useAppSettings from 'src/reducers/useAppSettings';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
 
@@ -56,19 +66,31 @@ import {
   IconCEye,
 } from 'src/components/CustomIcons';
 
-import { Toast } from 'native-base';
-import { TextInput } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+
+import { TextInput } from 'react-native';
 
 const VideoView = forwardRef((props, ref) => {
   // const db = firebase.firestore();
   // prettier-ignore
-  const {
-    data, viewHeight, navigation, t,
-  } = props;
+  const [appTheme, setTheme] = useState('')
+  const getTheme = async () => {
+    const res = await AsyncStorage.getItem('appTheme');
+    setTheme(res);
+  };
+
+  getTheme();
+  console.log(appTheme);
+
+  const { data, viewHeight, navigation, t } = props;
 
   const { item } = data;
+
+  const { appState, appOptions } = useAppSettings();
+
+  // console.log(item);
 
   const { userId } = item;
 
@@ -97,11 +119,9 @@ const VideoView = forwardRef((props, ref) => {
     isLike: isLiked,
   };
 
-  const { appState } = useContext(AppSettingsContext);
+  // const { appState } = useContext(AppSettingsContext);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
-
-  // const toggleBookmark = () => setBookmarked((prevState) => !prevState);
 
   const handleShare = async () => {
     try {
@@ -160,8 +180,6 @@ const VideoView = forwardRef((props, ref) => {
   const sendComment = async (commentMessage) => {
     const userId = await AsyncStorage.getItem('userid');
     const userData = await getUserData(userId);
-    // const { data } = userData;
-    // console.log(userData.data.user);
 
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
@@ -247,6 +265,13 @@ const VideoView = forwardRef((props, ref) => {
       }
     },
   }));
+
+  const [muteState, setIsMuted] = useState(false);
+
+  const toggleMute = () => {
+    setIsMuted(!muteState);
+    videoRef.current.setIsMutedAsync(muteState);
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -377,29 +402,57 @@ const VideoView = forwardRef((props, ref) => {
             />
           </View>
         </View>
-        <View
-          style={{
-            flex: 1,
-            marginVertical: 10,
-            position: 'relative',
-          }}
-        >
-          <Video
-            ref={videoRef}
-            isLooping
-            shouldPlay={false}
-            resizeMode="cover"
-            usePoster
-            posterSource={
-              item.medialThumbnail
-                ? { uri: item.medialThumbnail }
-                : require('assets/images/banner/placeholder-image.png')
-            }
-            posterStyle={{ height: '100%', width: '100%', resizeMode: 'cover' }}
-            style={{ flex: 1 }}
-            // onPress={}
-          />
-        </View>
+        <TouchableWithoutFeedback onPress={() => toggleMute()}>
+          <View
+            style={{
+              flex: 1,
+              marginVertical: 10,
+              position: 'relative',
+            }}
+          >
+            {data.item.description !== '' && (
+              <Text
+                // status="primary"
+                category="s2"
+                style={{ marginLeft: 10, marginBottom: 8 }}
+              >
+                {data.item.description}
+              </Text>
+            )}
+
+            {data.item.type && data.item.type == 'photo' ? (
+              <Image
+                source={{ uri: item.mediaURL }}
+                defaultSource={require('assets/images/banner/placeholder-image.png')}
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  // borderRadius: 8,
+                }}
+                resizeMode="cover"
+              />
+            ) : (
+              <Video
+                ref={videoRef}
+                isLooping={true}
+                shouldPlay={false}
+                resizeMode="cover"
+                usePoster
+                posterSource={
+                  item.medialThumbnail
+                    ? { uri: item.medialThumbnail }
+                    : require('assets/images/banner/placeholder-image.png')
+                }
+                posterStyle={{
+                  height: '100%',
+                  width: '100%',
+                  resizeMode: 'cover',
+                }}
+                style={{ flex: 1 }}
+              />
+            )}
+          </View>
+        </TouchableWithoutFeedback>
         <View
           style={{
             flexDirection: 'row',
@@ -414,36 +467,75 @@ const VideoView = forwardRef((props, ref) => {
               paddingHorizontal: 5,
             }}
           >
-            <InteractIcon
+            {/* <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={(evaProps) => (
                 <IconCHeart {...evaProps} active={isLiked} />
               )}
               textContent={totalLikes}
               direction="row"
-              status={isLiked ? 'danger' : 'basic'}
+              status={isLiked ? 'danger' : 'control'}
               height={20}
               width={20}
               onPress={toggleLike}
-            />
-            <InteractIcon
-              style={{ marginHorizontal: 5 }}
-              Accessory={IconCChat}
-              // textContent={item.totalComments}
-              direction="row"
-              status="basic"
-              height={20}
-              width={20}
+            /> */}
+
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginHorizontal: 8,
+              }}
+            >
+              {isLiked ? (
+                <Ionicons
+                  name="md-heart-sharp"
+                  style={{
+                    marginVertical: 1,
+                    marginRight: 5,
+                  }}
+                  size={22}
+                  color="red"
+                  onPress={toggleLike}
+                />
+              ) : (
+                <Ionicons
+                  name="ios-heart-outline"
+                  style={{
+                    marginVertical: 1,
+                    marginRight: 5,
+                  }}
+                  size={22}
+                  color={appTheme === '#F7F9FC' ? 'black' : 'white'}
+                  onPress={toggleLike}
+                />
+              )}
+              {totalLikes > 0 && (
+                <Text category="s2" style={{ color: isLiked ? 'red' : 'gray' }}>
+                  {totalLikes}
+                </Text>
+              )}
+            </View>
+            <Ionicons
+              name="ios-chatbox-ellipses-outline"
+              style={{
+                marginVertical: 2,
+                marginHorizontal: 10,
+              }}
+              size={21}
+              color={appTheme === '#F7F9FC' ? 'black' : 'white'}
               onPress={routeComments}
             />
-            <InteractIcon
-              style={{ marginHorizontal: 0 }}
-              Accessory={IconCEye}
-              textContent={item.totalViews}
-              direction="row"
-              status="basic"
-              height={20}
-              width={20}
+            <Feather
+              name="send"
+              size={20}
+              color={appTheme === '#F7F9FC' ? 'black' : 'white'}
+              style={{
+                marginVertical: 2,
+                marginHorizontal: 8,
+              }}
             />
           </View>
           <View>
@@ -533,14 +625,14 @@ const VideoView = forwardRef((props, ref) => {
       </View>
       <RBSheet
         ref={sheetRef}
-        height={205}
+        height={item.userId !== item.userEntryData.userId ? 205 : 155}
         closeOnDragDown
         animationType="fade"
         customStyles={{
           container: {
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: BG_THEME,
+            backgroundColor: 'transparent',
           },
         }}
       >
@@ -554,19 +646,21 @@ const VideoView = forwardRef((props, ref) => {
             paddingBottom: 30,
           }}
         >
-          <Button
-            appearance="ghost"
-            status="basic"
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-            }}
-            onPress={toggleFollow}
-          >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {following ? t('unfollow') : t('follow')}
-            </Text>
-          </Button>
+          {item.userId !== item.userEntryData.userId && (
+            <Button
+              appearance="ghost"
+              status="basic"
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+              }}
+              onPress={toggleFollow}
+            >
+              <Text style={{ fontSize: 16 }} status="basic">
+                {following ? t('unfollow') : t('follow')}
+              </Text>
+            </Button>
+          )}
           <Divider style={{ marginVertical: 2, width: '100%' }} />
           <Button
             appearance="ghost"

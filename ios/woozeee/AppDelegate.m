@@ -6,6 +6,9 @@
 #import <React/RCTLinkingManager.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
+// #import <FBSDKLoginKit/FBSDKLoginKit.h>
+// #import <FBSDKShareKit/FBSDKShareKit.h>
+
 #import <UMCore/UMModuleRegistry.h>
 #import <UMReactNativeAdapter/UMNativeModulesProxy.h>
 #import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>

@@ -21,7 +21,6 @@ const StoryContainer = (props) => {
   const { user } = props;
   // console.log('from story container user is -> ', user);
   const { items = [] } = user || {};
-  console.log('from story container items is -> ', items);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModelOpen, setModel] = useState(false);
   const [isPause, setIsPause] = useState(false);

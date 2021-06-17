@@ -18,6 +18,8 @@ import {
 
 import RBSheet from 'react-native-raw-bottom-sheet';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   LoadingContext,
   LocaleContext,
@@ -116,6 +118,12 @@ export default function Home({ navigation }) {
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
+  const setAppThem = async () => {
+    await AsyncStorage.setItem('appTheme', BG_THEME);
+  };
+
+  setAppThem();
+
   // const routeTo = (route) => navigation.replace(route);
 
   const toggleBalanceVisibility = useCallback(() => {
@@ -130,7 +138,6 @@ export default function Home({ navigation }) {
     openComingSoonCharity: () => sheetComingSoonCharity.current.open(),
     SocialRoute: () => navigation.replace('SocialRoute'),
     MarketPlaceRoute: () => navigation.replace('MarketPlaceRoute'),
-
   };
 
   const RewardsSheet = useCallback(

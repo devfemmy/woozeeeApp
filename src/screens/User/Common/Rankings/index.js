@@ -108,7 +108,7 @@ export default function LeaderBoard({ route, navigation }) {
     const res = await Api.getChallengeRanking(1, 30, challengeId);
     const { data } = res;
     setRanks(data);
-    console.log(res);
+    // console.log(res);
   };
 
   useEffect(() => {

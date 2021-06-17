@@ -10,7 +10,6 @@ class UserView extends React.PureComponent {
 
   render() {
     const { props } = this;
-    console.log('props is ', props);
 
     return (
       <View style={styles.userView}>

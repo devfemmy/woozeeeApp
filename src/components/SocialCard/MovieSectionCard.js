@@ -43,7 +43,7 @@ export default function MovieCard(props) {
           }}
         >
           <Image
-            source={data.posterURL}
+            source={require('assets/images/banner/placeholder-image.png')}
             defaultSource={require('assets/images/banner/placeholder-image.png')}
             style={{
               height: 200,
@@ -52,7 +52,7 @@ export default function MovieCard(props) {
             }}
             resizeMode="cover"
           />
-          <View
+          {/* <View
             style={{
               position: 'absolute',
               top: 10,
@@ -71,7 +71,7 @@ export default function MovieCard(props) {
             <Text category="c2" status="control">
               {data.totalViews}
             </Text>
-          </View>
+          </View> */}
           {data.posterURL ? (
             <LinearGradient
               colors={['#043F7C', '#FF5757']}
@@ -86,7 +86,7 @@ export default function MovieCard(props) {
               }}
             >
               <Image
-                source={data.posterURL}
+                source={require('assets/images/banner/placeholder-image.png')}
                 defaultSource={require('assets/images/banner/placeholder-image.png')}
                 style={{
                   height: 44,

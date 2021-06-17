@@ -20,7 +20,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const Stories = (props) => {
   const { storyData, extraWidth } = props;
-  console.log('storyData from -> ', storyData);
   const [isModelOpen, setModel] = useState(false);
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const [currentScrollValue, setCurrentScrollValue] = useState(0);
@@ -30,7 +29,6 @@ const Stories = (props) => {
   const IS_PORTRAIT = height > width;
 
   const onStorySelect = (index) => {
-    console.log(index);
     setCurrentUserIndex(index);
     setModel(true);
   };
@@ -64,12 +62,12 @@ const Stories = (props) => {
   const onScrollChange = (scrollValue) => {
     if (currentScrollValue > scrollValue) {
       onStoryNext(true);
-      console.log('next');
+      // console.log('next');
       setCurrentScrollValue(scrollValue);
     }
     if (currentScrollValue < scrollValue) {
       onStoryPrevious();
-      console.log('previous');
+      // console.log('previous');
       setCurrentScrollValue(scrollValue);
     }
   };

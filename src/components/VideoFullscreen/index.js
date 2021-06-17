@@ -177,7 +177,7 @@ const VideoView = forwardRef((props, ref) => {
   };
 
   const togglePause = useCallback(() => {
-    console.log(videoRef);
+    // console.log(videoRef);
     (async () => {
       try {
         if (videoRef) {
@@ -261,11 +261,11 @@ const VideoView = forwardRef((props, ref) => {
                       category="h6"
                       style={{ marginBottom: 5 }}
                     >
-                      {data.userFirstName}
+                      @{data.userDisplayName}
                     </Text>
-                    <Text status="danger" category="h6">
+                    {/* <Text status="danger" category="h6">
                       {data.userLastName}
-                    </Text>
+                    </Text> */}
                   </View>
                   <View
                     style={{

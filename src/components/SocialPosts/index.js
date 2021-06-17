@@ -80,7 +80,7 @@ export const StoryPosts = ({ info }) => {
   const RenderCategoryHeader = () => (
     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('UploadEntries', {entries: true})}
+        onPress={() => navigation.navigate('UploadEntries', { entries: true })}
         activeOpacity={0.75}
         style={{ position: 'relative' }}
       >
@@ -262,7 +262,7 @@ export const ChallengePosts = ({ chaData }) => {
 
 // prettier-ignore
 export const ProfilePosts = ({allEntries}) => {
-  // console.log("from profile post -> ", allEntries)
+  console.log("from profile post -> ", allEntries)
   const {firstTenEntries} = allEntries
   return(
     <List

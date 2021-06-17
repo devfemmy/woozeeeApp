@@ -12,6 +12,7 @@ export default function InteractIcon(props) {
     onPress,
     status,
     height,
+    color,
     width,
     align,
     style,
@@ -36,6 +37,7 @@ export default function InteractIcon(props) {
           style={{
             paddingVertical: 0,
             paddingHorizontal: 0,
+            color: { color },
           }}
           accessoryLeft={(evaProps) => (
             <Accessory
