@@ -11196,10 +11196,24 @@
   "resolved" "https://registry.npmjs.org/react-moment/-/react-moment-1.1.1.tgz"
   "version" "1.1.1"
 
+"react-native-3dcube-navigation@^1.0.4":
+  "integrity" "sha512-9BGdJDcouWi8a/KqajCOm+gHayXfFhodq8G/mgSMp0363QyZAlP7iPtYjL6mkaUcR8JAjzgCREh4CHAAMJmnhw=="
+  "resolved" "https://registry.npmjs.org/react-native-3dcube-navigation/-/react-native-3dcube-navigation-1.0.4.tgz"
+  "version" "1.0.4"
+  dependencies:
+    "react" "^16.2.0"
+
 "react-native-bambuser-broadcaster@^0.0.18":
   "integrity" "sha512-RRMF1FvWxBu0eKkmleFzXTdx/uG4OnrEbLxSjToSCVLPLdynDSQp8Gj861pcUKNbvMEkmc+EshOiz56EYIdggQ=="
   "resolved" "https://registry.npmjs.org/react-native-bambuser-broadcaster/-/react-native-bambuser-broadcaster-0.0.18.tgz"
   "version" "0.0.18"
+  dependencies:
+    "jetifier" "^1.6.5"
+
+"react-native-bambuser-player@^0.0.20":
+  "integrity" "sha512-bnQVpTBxHfv5m/f2Po8pyvIrANKJ0rImgbMpEY0Qw2fE25R1J/jetNLRJ+idXo+hOTtPWBYJ/9URhz5AmgIVWA=="
+  "resolved" "https://registry.npmjs.org/react-native-bambuser-player/-/react-native-bambuser-player-0.0.20.tgz"
+  "version" "0.0.20"
   dependencies:
     "jetifier" "^1.6.5"
 
@@ -11528,7 +11542,7 @@
     "raf" "^3.1.0"
     "tween-functions" "^1.0.1"
 
-"react@16.13.1":
+"react@^16.2.0", "react@16.13.1":
   "integrity" "sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w=="
   "resolved" "https://registry.npmjs.org/react/-/react-16.13.1.tgz"
   "version" "16.13.1"

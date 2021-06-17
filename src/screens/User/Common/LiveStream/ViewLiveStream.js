@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, 
   TouchableOpacity, Dimensions,
    ActivityIndicator, Platform } from "react-native";
-import RNBambuserBroadcaster from 'react-native-bambuser-broadcaster';
+import RNBambuserPlayer from 'react-native-bambuser-player';
 import { Layout} from '@ui-kitten/components';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,7 +11,7 @@ import { AppID } from "./utils";
 import KeepAwake from '../../../../components/Awake'
 
 const { height, width } = Dimensions.get("screen");
-class LiveStream extends React.PureComponent {
+class ViewLiveStream extends React.PureComponent {
       constructor(props) {
         super(props);
 
@@ -28,47 +28,22 @@ class LiveStream extends React.PureComponent {
     async componentDidMount() {
         const { show } = this.props;
     }
-  startMyBroadCast = () => {
-    this.setState({startingLive: true})
-    myBroadcasterRef.startBroadcast();
-    console.log("starting")
-  }
-  onBroadcastStarted = () => {
-      this.setState({startingLive: false, started: true})
-  }
-  endBroadcast = () => {
-    myBroadcasterRef.stopBroadcast();
-    this.setState({started: false})
-  }
   render() {
     return (
       <Layout style={{ flex: 1 }}>
-      <RNBambuserBroadcaster
-      style={{ flex: 1 }}
-      onBroadcastStarted = {this.onBroadcastStarted}
-      ref={ref => {myBroadcasterRef = ref; }} applicationId={"JpW2TKHoR9MlbgsWaChADw"} />
+      <RNBambuserPlayer
+        style={{ flex: 1 }}
+        resourceUri= ""
+        // onBroadcastStarted = {this.onBroadcastStarted}
+        ref={ref => {myBroadcasterRef = ref; }} applicationId={"JpW2TKHoR9MlbgsWaChADw"} />
             {this.state.startingLive ? 
-        <ActivityIndicator style={styles.loading} size="large" color="#ff2a00" /> :
-        <View>
-            {this.state.started ? 
-        <View style= {styles.flexContainer}>
-            <View style= {styles.liveContainer}>
-                <Text style= {styles.textLive}>
-                    LIVE
-                </Text>
+            <ActivityIndicator style={styles.loading} size="large" color="#ff2a00" /> :
+            <View>
+            <TouchableOpacity activeOpacity={.8}
+            style={styles.buttonStream} onPress= {this.startMyBroadCast} />
             </View>
-            <TouchableOpacity style= {styles.button} onPress= {this.endBroadcast}>
-                <Text style= {{color: 'white', fontWeight: 'bold'}}>
-                    End Broadcast
-                </Text>
-            </TouchableOpacity>
-        </View> :
-        <TouchableOpacity activeOpacity={.8}
-        style={styles.buttonStream} onPress= {this.startMyBroadCast} />
-        }
-        </View>
-        }
-    </Layout>
+            }
+        </Layout>
         )
         }
 
@@ -234,4 +209,4 @@ inputs: {
 
 })
 
-export default LiveStream;
+export default ViewLiveStream;

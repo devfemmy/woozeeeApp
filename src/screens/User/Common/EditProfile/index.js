@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 // prettier-ignore
 import {
-  View, ScrollView, ActivityIndicator, Image, TouchableOpacity,
+  View, ScrollView, ActivityIndicator, Image, TouchableOpacity, Platform,
 } from 'react-native';
 
 // prettier-ignore
@@ -12,6 +12,8 @@ import {
   Datepicker
 } from '@ui-kitten/components';
 import RNFetchBlob from 'rn-fetch-blob'
+import firebase from '@react-native-firebase/app';
+import storage from '@react-native-firebase/storage';
 
 import { LocaleContext } from 'src/contexts';
 
@@ -33,6 +35,8 @@ import countries from './countries.json';
 import states from './states.json';
 import axios from '../../../../services/api/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import CustomField from 'src/components/CustomField/index';
+import { Toast, Content, Root } from 'native-base';
 
 const COUNTRIES = countries;
 
@@ -53,8 +57,15 @@ export default function EditProfile({ navigation }) {
   const [coverImage, setCoverImage] = useState(
     '',
   );
+  const [base64userImg, setBaseUserImage] = useState('')
   const [selectedValue, setSelectedValue] = useState(null);
   const [date, setDate] = useState(new Date());
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [bio, setBio] = useState('');
+  const [showMessage, setMsg] = useState(null)
+
 
   const [form, setFormValues] = useState({
     fName: '',
@@ -91,13 +102,17 @@ export default function EditProfile({ navigation }) {
                const sex = user_data.sex;
                const imageUrl = user_data.imgUrl;
                const coverPhotoUrl = user_data.coverPhotoUrl
-               const bio = user_data.bio
+               const bio = user_data.bio;
+               setFirstName(first_name);
+               setLastName(last_name);
+               setUserName(user_name);
+               setBio(bio)
                setUserImage(imageUrl);
                setCoverImage(coverPhotoUrl)
                if (sex === 'Male') {
-                 setSelectedValue(1)
-               }else {
                  setSelectedValue(0)
+               }else {
+                 setSelectedValue(1)
                }
                const dob = user_data.dob;
                if (dob === null) {
@@ -106,14 +121,10 @@ export default function EditProfile({ navigation }) {
                 setDate(new Date(dob))
                }
               
-               setFormValues((prevState) => ({...prevState, 
-                fName: first_name, 
-                sName: last_name,
-                displayName: user_name,
-                sex: sex,
-                dob: dob,
-                bio: bio
-              }))
+              //  setFormValues((prevState) => ({...prevState, 
+              //   sex: sex,
+              //   dob: dob,
+              // }))
                console.log(user_data)
               }
             )
@@ -129,23 +140,102 @@ export default function EditProfile({ navigation }) {
 
 const updateProfile = () => {
   setLoading(true);
-  const data = form;
+  const data = {
+    fName: firstName,
+    sName: lastName,
+    bio: bio,
+    displayName: userName,
+    sex: selectedValue === 0 ? 'Male' : 'Female',
+    dob: date,
+    imgUrl: userImage,
+    coverPhotoUrl: coverImage
+  }
+  console.log("form", data);
   axios.put(`user/update/?userId=${user_id}`, data, {headers: {Authorization: token}})
   .then(res => {
-    setLoading(false);
     const message = res.data.message;
-    alert(message)
+    setLoading(false);
+    // setMsg(message)
+    Toast.show({
+      text: message,
+      buttonText: 'Okay',
+      position: 'bottom',
+      type: 'success',
+      duration: 3000,
+    });
+    setLoading(false);
+    // alert(message)
   }
     )
   .catch(err => {
     setLoading(false);
-    console.log("err", err.response)
+        Toast.show({
+      text: 'Error',
+      buttonText: 'Okay',
+      position: 'bottom',
+      type: 'failed',
+      duration: 3000,
+    });
+    console.log("err", err)
   })
 
 }
 
+const uploadFileToFirebase = async (url, type, user) => {
+    const name = `WoozeeImg${Math.random()}`
+    const uploadTask = storage().ref(`profileImages/${'image'}${name}`).
+    putString(url, 'base64', {contentType: 'jpg'});
+    uploadTask.on('state_changed', 
+    (snapshot) => {
+      // Observe state change events such as progress, pause, and resume
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          console.log('Upload is running');
+          break;
+      }
+    }, 
+    (error) => {
+      // Handle unsuccessful uploads
+      console.log(error)
+    }, 
+    () => {
+      // Handle successful uploads on complete
+      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        if (user === true) {
+          setUserImage(downloadURL)
+        }else {
+          setCoverImage(downloadURL);
+        }
+        console.log('File available at', downloadURL);
+        // upLoadEntries(downloadURL, type)
+      });
+    }
+  );
+}
+
 useEffect(() => {
   const unsubscribe = navigation.addListener('focus', () => {
+    const firebaseConfig = {
+      apiKey: "AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8",
+      authDomain: "woozeee-d7f6c.firebaseapp.com",
+      databaseURL: "https://woozeee-d7f6c.firebaseio.com",
+      projectId: "woozeee-d7f6c",
+      storageBucket: "woozeee-d7f6c.appspot.com",
+      messagingSenderId: "979696525592",
+      appId: "1:979696525592:web:ec27a203184d23e0dcfe6d",
+      measurementId: "G-XQKMT94R9R"
+    };
+  
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig)
+    }
     AsyncStorage.getItem('userid').then(
       response => {
         getUserProfile(response);
@@ -168,6 +258,19 @@ useEffect(() => {
 }, [navigation]);
 
   const t = useContext(LocaleContext);
+  
+  const normalizePath = async (path) => {
+    if (Platform.OS === 'ios' || Platform.OS === 'android') {
+      const filePrefix = 'file://';
+      if (path.startsWith(filePrefix)) {
+        path = path.substring(filePrefix.length);
+        try {
+          path = decodeURI(path)
+        } catch (e) {}
+      }
+    }
+    return path
+  }
 
   const selectCoverImage = async () => {
     await getLibraryPermission();
@@ -175,11 +278,12 @@ useEffect(() => {
     const imageFile = await libraryImagePicker([4, 3]);
 
     if (!imageFile?.uri) return;
-
-    setCoverImage(imageFile.uri);
-    setFormValues((prevState) => ({...prevState, 
-      coverPhotoUrl: imageFile.uri,
-    }))
+    const type = imageFile.type;
+    const uri = imageFile.uri;
+    setCoverImage(uri);
+    const path = await normalizePath(uri);
+    const imageUri = await RNFetchBlob.fs.readFile(path, 'base64');
+    uploadFileToFirebase(imageUri, type, user = false)
   };
 
   const selectUserImage = async () => {
@@ -188,15 +292,12 @@ useEffect(() => {
     const imageFile = await libraryImagePicker([1, 1]);
 
     if (!imageFile?.uri) return;
-
-    setUserImage(imageFile.uri);
-    console.log("image uri", imageFile.uri)
-    const base64image = await RNFetchBlob.fs.readFile(imageFile.uri, 'base64');
-    console.log(base64image, "base64")
-
-    setFormValues((prevState) => ({...prevState, 
-      imgUrl: imageFile.uri,
-    }))
+    const uri = imageFile.uri;
+    const type = imageFile.type
+    setUserImage(uri);
+    const path = await normalizePath(uri);
+    const imageUri = await RNFetchBlob.fs.readFile(path, 'base64');
+    uploadFileToFirebase(imageUri, type, user = true)
   };
   const setSelectedHandler =(index) => {
     setSelectedValue(index);
@@ -212,6 +313,7 @@ useEffect(() => {
     }))
   }
   return (
+    <Root>
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
         title={`${t('edit')} ${t('profile')}`}
@@ -305,38 +407,29 @@ useEffect(() => {
               }}
             >
               <View style={{ flex: 1, marginRight: 5 }}>
-                <GeneralTextField
-                  type="fName"
-                  label={t('firstName')}
-                  autoCompleteType="name"
-                  textContentType="givenName"
-                  // validate="required"
-                  value={form.fName}
-                  setFormValues={setFormValues}
-                />
+                <CustomField
+                 label={t('firstName')}
+                placeholder = {'First Name'}
+                value= {firstName}
+                onChangeText = {nextValue => setFirstName(nextValue)}
+                />  
               </View>
               <View style={{ flex: 1, marginLeft: 5 }}>
-                <GeneralTextField
-                  type="sName"
-                  label={t('lastName')}
-                  autoCompleteType="name"
-                  textContentType="familyName"
-                  // validate="required"
-                  value= {form.sName}
-                  setFormValues={setFormValues}
-                />
+              <CustomField
+                label={t('lastName')}
+                placeholder = {'Last Name'}
+                value= {lastName}
+                onChangeText = {nextValue => setLastName(nextValue)}
+                />  
               </View>
             </View>
             <View style={{ paddingVertical: 5 }}>
-              <GeneralTextField
-                type="displayName"
-                label={t('username')}
-                autoCompleteType="username"
-                textContentType="username"
-                // validate="required"
-                value= {form.displayName}
-                setFormValues={setFormValues}
-              />
+              <CustomField
+                  label={t('username')}
+                  placeholder = {'Username'}
+                  value= {userName}
+                  onChangeText = {nextValue => setUserName(nextValue)}
+                  />  
             </View>
             <View
               style={{
@@ -368,8 +461,8 @@ useEffect(() => {
                 label={t('dob')}
                 date={date}
                 onSelect={nextDate => setNewDateHandler(nextDate)}
-                min = {new Date ('12-05-1880')}
-                max= {new Date()}
+                // min = {new Date ('12-05-1880')}
+                // max= {new Date('22-06-2022')}
                 accessoryRight={IconCalendar}
               />
                 {/* <GeneralDatePicker
@@ -380,7 +473,7 @@ useEffect(() => {
                 /> */}
               </View>
             </View>
-            <View
+            {/* <View
               style={{
                 paddingVertical: 5,
                 flexDirection: 'row',
@@ -403,17 +496,16 @@ useEffect(() => {
                   setFormValues={setFormValues}
                 />
               </View>
-            </View>
+            </View> */}
             <View style={{ paddingVertical: 5 }}>
-              <GeneralTextField
-                type="bio"
-                label={t('bio')}
-                multiline
-                height={50}
-                // validate="required"
-                value= {form.bio}
-                setFormValues={setFormValues}
-              />
+                  <CustomField
+                  multiline
+                  height={50}
+                  label={t('bio')}
+                  placeholder = {'Bio'}
+                  value= {bio}
+                  onChangeText = {nextValue => setBio(nextValue)}
+                  />  
             </View>
             <View style={{ paddingVertical: 20 }}>
               <Button
@@ -432,5 +524,6 @@ useEffect(() => {
         </View>
       </ScrollView>
     </Layout>
+    </Root>
   );
 }

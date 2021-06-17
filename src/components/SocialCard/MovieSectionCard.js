@@ -43,7 +43,7 @@ export default function MovieCard(props) {
           }}
         >
           <Image
-            source={data.posterURL}
+            source={require('assets/images/banner/placeholder-image.png')}
             defaultSource={require('assets/images/banner/placeholder-image.png')}
             style={{
               height: 200,
@@ -86,7 +86,7 @@ export default function MovieCard(props) {
               }}
             >
               <Image
-                source={data.posterURL}
+                source={require('assets/images/banner/placeholder-image.png')}
                 defaultSource={require('assets/images/banner/placeholder-image.png')}
                 style={{
                   height: 44,
