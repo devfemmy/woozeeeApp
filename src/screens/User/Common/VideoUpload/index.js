@@ -283,6 +283,7 @@ export default function VideoUpload({ route, navigation }) {
               </View>
             </View>
             <Divider style={{ marginVertical: 10 }} />
+            {/* Start */}
             <View
               style={{
                 flex: 1,

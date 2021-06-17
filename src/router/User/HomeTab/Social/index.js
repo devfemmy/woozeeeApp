@@ -13,12 +13,14 @@ import VideoUpload from 'src/screens/User/Common/VideoUpload';
 
 // Routes
 import Challenge from './Challenge';
+import { Root } from 'native-base';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export default function SocialRoute() {
   return (
-    <Navigator
+    <Root>
+      <Navigator
       detachInactiveScreens
       tabBar={(props) => <BottomNavigationArea {...props} page="social" />}
     >
@@ -28,5 +30,6 @@ export default function SocialRoute() {
       <Screen name="ChallengeTab" component={Challenge} />
       <Screen name="ProfileTab" component={Profile} />
     </Navigator>
+    </Root>
   );
 }

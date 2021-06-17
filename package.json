@@ -61,6 +61,7 @@
     "react-native": "~0.63.4",
     "react-native-3dcube-navigation": "^1.0.4",
     "react-native-bambuser-broadcaster": "^0.0.18",
+    "react-native-bambuser-player": "^0.0.20",
     "react-native-easy-toast": "^2.0.0",
     "react-native-elements": "^3.4.1",
     "react-native-fbsdk": "^3.0.0",

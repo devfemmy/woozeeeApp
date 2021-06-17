@@ -9,7 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNFetchBlob from 'rn-fetch-blob';
 import firebase from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
-import { StyleSheet, BackHandler, Image, View, Alert, ActivityIndicator} from 'react-native';
+import { StyleSheet, BackHandler, Image, View, ActivityIndicator} from 'react-native';
+import { Toast, Root } from 'native-base';
 
 // prettier-ignore
 import { LocaleContext } from 'src/contexts';
@@ -25,7 +26,7 @@ const PreviewEntry = (props) => {
   const [isLoading, setLoading] = useState(false);
   const [caption, setCaption] = useState('');
   const [uploadLocations, setUploadLocations] = useState({
-    stories: false,
+    // stories: false,
     feeds: false,
     wooz: false,
   });
@@ -43,7 +44,6 @@ const PreviewEntry = (props) => {
     // Remove File Prefix from Path
 
     const normalizePath = async (path) => {
-      console.log("file path", path)
       if (Platform.OS === 'ios' || Platform.OS === 'android') {
         const filePrefix = 'file://';
         if (path.startsWith(filePrefix)) {
@@ -64,30 +64,43 @@ const PreviewEntry = (props) => {
         };
         axios.post(`stories`, data, {headers: {Authorization: token}})
         .then(res => {
-          console.log(res)
-          Alert.alert(
-            'Success',
-            'Upload Succesful',
-            [
-              {text: 'OK', onPress: () => props.navigation.popToTop()},
-            ],
-            { cancelable: false }
-          )
+          console.log(res);
           setLoading(false);
+          Toast.show({
+            text: 'Upload Succesful!',
+            buttonText: 'Okay',
+            position: 'bottom',
+            type: 'success',
+            duration: 3000,
+          });
+          setTimeout(() => {
+            props.navigation.goBack();
+          }, 3000);
         }
           )
         .catch(err => {
           console.log(err.response)
           setLoading(false);
+          Toast.show({
+            text: 'Upload Not Succesful!',
+            buttonText: 'Okay',
+            position: 'bottom',
+            type: 'failed',
+            duration: 3000,
+          });
+          setTimeout(() => {
+            props.navigation.goBack();
+          }, 3000);
         })
       }else {
         const wooz = uploadLocations.wooz ? 'wooz': null;
         const feeds = uploadLocations.feeds ? 'feed': null;
-        const stories = uploadLocations.stories ? 'story': null;
+        // const stories = uploadLocations.stories ? 'story': null;
         const data = {
           mediaURL: url,
-          entryTypes:  [wooz, feeds, stories],
-          description: caption
+          entryTypes:  [wooz, feeds],
+          description: caption,
+          type: type
         };
         console.log('data', data)
         axios.post(`entries`, data, {headers: {Authorization: token}})
@@ -95,27 +108,40 @@ const PreviewEntry = (props) => {
           console.log(res);
           const message = res.message
           setLoading(false);
-          Alert.alert(
-            'Success',
-            'Upload Succesful',
-            [
-              {text: 'OK', onPress: () => props.navigation.popToTop()},
-            ],
-            { cancelable: false }
-          )
+          Toast.show({
+            text: 'Upload Succesful!',
+            buttonText: 'Okay',
+            position: 'bottom',
+            type: 'success',
+            duration: 3000,
+          });
+          setTimeout(() => {
+            navigation.goBack();
+          }, 3000);
           
         }
           )
         .catch(err => {
           console.log(err.response)
           setLoading(false);
+          Toast.show({
+            text: 'Upload Not Succesful!',
+            buttonText: 'Okay',
+            position: 'bottom',
+            type: 'failed',
+            duration: 3000,
+          });
+          setTimeout(() => {
+            navigation.goBack();
+          }, 3000);
         })
       }
 
     }
     const uploadFileToFirebase = async (videoUri, video, type ) => {
       if (editorResult === null) {
-        const uploadTask = storage().ref(`mediaEntries/${'image'}`).
+        const name = `Woozee${Math.random()}`
+        const uploadTask = storage().ref(`mediaEntries/${'image'}${name}`).
         putString(videoUri, 'base64', {contentType: 'jpg'});
         uploadTask.on('state_changed', 
         (snapshot) => {
@@ -283,6 +309,7 @@ const PreviewEntry = (props) => {
       // }
       console.log("value", caption)
     return (
+        <Root>
         <Layout level="6" style={{ flex: 1, padding: 25 }}>
             {imageUri === null ? 
              <VideoPreview />: 
@@ -341,8 +368,8 @@ const PreviewEntry = (props) => {
                     </Text>
                   </View>
                   <Toggle
-                    checked={uploadLocations.stories}
-                    onChange={(e) => handleUploadLoc('stories')}
+                    checked={uploadLocations.wooz}
+                    onChange={(e) => handleUploadLoc('wooz')}
                   />
                 </View>
                 <View
@@ -368,7 +395,7 @@ const PreviewEntry = (props) => {
                     onChange={(e) => handleUploadLoc('feeds')}
                   />
                 </View>
-                <View
+                {/* <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
@@ -388,9 +415,9 @@ const PreviewEntry = (props) => {
                   </View>
                   <Toggle
                     checked={uploadLocations.wooz}
-                    onChange={(e) => handleUploadLoc('wooz')}
+                    onChange={(e) => handleUploadLoc('stories')}
                   />
-                </View>
+                </View> */}
               </View>
               }
               {isLoading ? 
@@ -420,6 +447,7 @@ const PreviewEntry = (props) => {
            </View>
             }
         </Layout>
+        </Root>
     )
 }
 
