@@ -2,6 +2,7 @@ import React, {
   Component,
   useState,
   useContext,
+  useMemo,
   useCallback,
   useRef,
   forwardRef,
@@ -82,7 +83,6 @@ const VideoView = forwardRef((props, ref) => {
   };
 
   getTheme();
-  console.log(appTheme);
 
   const { data, viewHeight, navigation, t } = props;
 
@@ -118,8 +118,6 @@ const VideoView = forwardRef((props, ref) => {
     entryId: item._id,
     isLike: isLiked,
   };
-
-  // const { appState } = useContext(AppSettingsContext);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
@@ -407,7 +405,7 @@ const VideoView = forwardRef((props, ref) => {
             style={{
               flex: 1,
               marginVertical: 10,
-              position: 'relative',
+              // position: 'relative',
             }}
           >
             {data.item.description !== '' && (
@@ -421,16 +419,21 @@ const VideoView = forwardRef((props, ref) => {
             )}
 
             {data.item.type && data.item.type == 'photo' ? (
-              <Image
-                source={{ uri: item.mediaURL }}
-                defaultSource={require('assets/images/banner/placeholder-image.png')}
+              <View
                 style={{
-                  height: '100%',
-                  width: '100%',
-                  // borderRadius: 8,
+                  height: viewHeight / 1.7,
                 }}
-                resizeMode="cover"
-              />
+              >
+                <Image
+                  source={{ uri: item.mediaURL }}
+                  defaultSource={require('assets/images/banner/placeholder-image.png')}
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                  }}
+                  resizeMode="cover"
+                />
+              </View>
             ) : (
               <Video
                 ref={videoRef}

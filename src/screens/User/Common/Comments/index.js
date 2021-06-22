@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useState, useMemo, useCallback, useContext, useEffect
+  useState, useMemo, useCallback, useContext, useEffect, useRef
 } from 'react';
 
 // prettier-ignore
@@ -39,6 +39,8 @@ import { IconClose, IconPaperPlane } from 'src/components/CustomIcons';
 export default function Comments({ route, navigation }) {
   const { height } = useWindowDimensions();
 
+  const replyRef = useRef(null);
+
   const { bottom, top } = useSafeAreaInsets();
 
   const INSETS = bottom + top + 180;
@@ -47,9 +49,10 @@ export default function Comments({ route, navigation }) {
 
   const { currUserData, postItem } = route.params;
 
-  // console.log(postItem);
+  console.log(postItem);
 
   const [comments, setComments] = useState([]);
+  const [commentId, setCommentId] = useState('');
 
   const fetchComments = async () => {
     const firebaseConfig = {
@@ -77,12 +80,20 @@ export default function Comments({ route, navigation }) {
       .collection('comments')
       .get();
 
+    // allComments.forEach((snap) => {
+    //   console.log('snap ', snap.id);
+    //   console.log(postItem._id.trim());
+    // });
+    console.log('all comments', allComments);
+
     const _comments = [];
     allComments.forEach((snap) => {
-      _comments.push(snap._data);
+      let replies = Object.assign(snap._data, { replyId: snap.id });
+      _comments.push(replies);
     });
 
     setComments([..._comments]);
+    console.log('fetched comments is', _comments);
   };
 
   useEffect(() => {
@@ -118,6 +129,12 @@ export default function Comments({ route, navigation }) {
 
   const sendComment = async (commentMessage) => {
     // console.log(entryId);
+    if (commentId) {
+      console.log(commentMessage, commentId);
+      setCommentId('');
+    } else {
+      console.log(commentMessage);
+    }
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
       authDomain: 'woozeee-d7f6c.firebaseapp.com',
@@ -132,24 +149,44 @@ export default function Comments({ route, navigation }) {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-    // console.log(item, commentMessage);
+    // // console.log(item, commentMessage);
 
-    await firestore()
-      .collection('entryComments')
-      .doc(postItem._id.trim())
-      .collection('comments')
-      .doc()
-      .set({
-        senderId: currUserData.user._id,
-        text: commentMessage,
-        userFirstName: currUserData.user.fName,
-        userLastName: currUserData.user.sName,
-        userName: `@iam${currUserData.user.fName.toLowerCase()}${currUserData.user.sName.toLowerCase()}`,
-        imgUrl: currUserData.user.imgUrl,
-        sentAt: Date(),
-        delivered: false,
-        sent: true,
-      });
+    if (commentId) {
+      await firestore()
+        .collection('entryComments')
+        .doc(postItem._id.trim())
+        .collection('comments')
+        .doc(commentId)
+        .collection('replies')
+        .add({
+          senderId: currUserData.user._id,
+          text: commentMessage,
+          userFirstName: currUserData.user.fName,
+          userLastName: currUserData.user.sName,
+          userName: `@iam${currUserData.user.fName.toLowerCase()}${currUserData.user.sName.toLowerCase()}`,
+          imgUrl: currUserData.user.imgUrl,
+          sentAt: Date(),
+          delivered: false,
+          sent: true,
+        });
+    } else {
+      await firestore()
+        .collection('entryComments')
+        .doc(postItem._id.trim())
+        .collection('comments')
+        .doc()
+        .set({
+          senderId: currUserData.user._id,
+          text: commentMessage,
+          userFirstName: currUserData.user.fName,
+          userLastName: currUserData.user.sName,
+          userName: `@iam${currUserData.user.fName.toLowerCase()}${currUserData.user.sName.toLowerCase()}`,
+          imgUrl: currUserData.user.imgUrl,
+          sentAt: Date(),
+          delivered: false,
+          sent: true,
+        });
+    }
     setComments([
       ...comments,
       {
@@ -168,7 +205,6 @@ export default function Comments({ route, navigation }) {
 
   const renderCardFooter = () => {
     const [text, setText] = useState('');
-
     return (
       <View
         style={{
@@ -202,6 +238,7 @@ export default function Comments({ route, navigation }) {
         </LinearGradient>
         <View style={{ flex: 1, marginHorizontal: 5 }}>
           <TextInput
+            ref={replyRef}
             placeholder="Leave a comment"
             onChangeText={(text) => setText(text)}
             style={{
@@ -233,67 +270,153 @@ export default function Comments({ route, navigation }) {
     );
   };
 
+  const changeFocus = (_id) => {
+    replyRef.current.focus();
+    setCommentId(_id);
+  };
+
+  const ReplyComponent = ({ userName, message, img, time, replyId }) => {
+    return (
+      <View style={{ marginLeft: 40 }}>
+        <View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginTop: 15,
+            }}
+          >
+            <LinearGradient
+              colors={['#043F7C', '#FF5757']}
+              style={{
+                height: 24,
+                width: 24,
+                borderRadius: 12,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Image
+                source={img}
+                style={{
+                  height: 20,
+                  width: 20,
+                  borderRadius: 10,
+                  borderColor: 'white',
+                }}
+              />
+            </LinearGradient>
+            <Layout
+              level="4"
+              style={{
+                flex: 1,
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                borderRadius: 10,
+                marginHorizontal: 5,
+              }}
+            >
+              <Text
+                category="c2"
+                style={{ alignSelf: 'flex-start', marginBottom: 2 }}
+              >
+                {userName}
+              </Text>
+              <Text category="c2" style={{ marginBottom: 2 }}>
+                {message}
+              </Text>
+              <Moment
+                fromNow
+                element={(momentProps) => (
+                  <Text
+                    category="c1"
+                    {...momentProps}
+                    style={{ fontSize: 10, textAlign: 'right' }}
+                  />
+                )}
+              >
+                {time}
+              </Moment>
+            </Layout>
+          </View>
+          <View style={{ marginVertical: 5, marginLeft: 50 }}>
+            <TouchableOpacity
+              activeOpacity={0.75}
+              onPress={() => changeFocus(replyId)}
+            >
+              <Text category="c2">{t('reply')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <ReplyComponent />
+      </View>
+    );
+  };
+
   // prettier-ignore
-  const Message = ({ userName, message, img, time }) => useMemo(
+  const Message = ({ userName, message, img, time, replyId }) => useMemo(
     () => (
       <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-            marginTop: 15,
-          }}
-        >
-          <LinearGradient
-            colors={['#043F7C', '#FF5757']}
+        <View>
+          <View
             style={{
-              height: 34,
-              width: 34,
-              borderRadius: 17,
-              alignItems: 'center',
-              justifyContent: 'center',
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              marginTop: 15,
             }}
           >
-            <Image
-              source={img}
+            <LinearGradient
+              colors={['#043F7C', '#FF5757']}
               style={{
-                height: 30,
-                width: 30,
-                borderRadius: 15,
-                borderColor: 'white',
+                height: 34,
+                width: 34,
+                borderRadius: 17,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
-            />
-          </LinearGradient>
-          <Layout
-            level="4"
-            style={{
-              flex: 1,
-              paddingHorizontal: 10,
-              paddingVertical: 5,
-              borderRadius: 10,
-              marginHorizontal: 5,
-            }}
-          >
-            <Text category="s2" style={{ alignSelf: 'flex-start', marginBottom:2 }}>
-              {userName}
-            </Text>
-            <Text category="p2" style={{ marginBottom:2 }}>{message}</Text>
-            <Moment
-              fromNow
-              element={(momentProps) => (
-                <Text category="c1" {...momentProps} style={{ fontSize: 10, textAlign:'right' }} />
-              )}
             >
-              {time}
-            </Moment>
-          </Layout>
-        </View>
-        <View style={{ marginVertical: 5, marginLeft: 50 }}>
-          <TouchableOpacity
-            activeOpacity={0.75}
-          >
-            <Text category="c2">{t('reply')}</Text>
-          </TouchableOpacity>
+              <Image
+                source={img}
+                style={{
+                  height: 30,
+                  width: 30,
+                  borderRadius: 15,
+                  borderColor: 'white',
+                }}
+              />
+            </LinearGradient>
+            <Layout
+              level="4"
+              style={{
+                flex: 1,
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                borderRadius: 10,
+                marginHorizontal: 5,
+              }}
+            >
+              <Text category="s2" style={{ alignSelf: 'flex-start', marginBottom:2 }}>
+                {userName}
+              </Text>
+              <Text category="p2" style={{ marginBottom:2 }}>{message}</Text>
+              <Moment
+                fromNow
+                element={(momentProps) => (
+                  <Text category="c1" {...momentProps} style={{ fontSize: 10, textAlign:'right' }} />
+                )}
+              >
+                {time}
+              </Moment>
+            </Layout>
+          </View>
+          <View style={{ marginVertical: 5, marginLeft: 50 }}>
+            <TouchableOpacity
+              activeOpacity={0.75}
+              onPress={() => changeFocus(replyId)}
+            >
+              <Text category="c2">{t('reply')}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     ),
@@ -318,7 +441,7 @@ export default function Comments({ route, navigation }) {
               justifyContent: 'flex-end',
             }}
           >
-            {/* {console.log('comments in here is => ', comments)} */}
+            {console.log('comments in here is => ', comments)}
             {comments.length > 0 ? (
               <List
                 style={{
@@ -338,6 +461,7 @@ export default function Comments({ route, navigation }) {
                     userName={`${comment.item.userFirstName} ${comment.item.userLastName}`}
                     message={`${comment.item.text}`}
                     time={`${comment.item.sentAt}`}
+                    replyId={comment.item.replyId}
                   />
                 )}
                 getItemLayout={(data, index) => ({

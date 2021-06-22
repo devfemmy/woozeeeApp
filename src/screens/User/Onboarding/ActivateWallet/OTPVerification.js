@@ -10,7 +10,7 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
-export default function OTPVerification({ navigation }) {
+export default function OTPVerification({ route, navigation }) {
   const [isLoading, setLoading] = useState(false);
 
   const [form, setFormValues] = useState({
@@ -20,7 +20,7 @@ export default function OTPVerification({ navigation }) {
   const t = useContext(LocaleContext);
 
   // prettier-ignore
-  const routeCare = () => navigation.navigate('ActivateCare');
+  const routeCare = () => navigation.navigate('ActivateWalletCreatePin', route.params);
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -67,7 +67,7 @@ export default function OTPVerification({ navigation }) {
                 onPress={routeCare}
                 disabled={isLoading}
               >
-                <Text status="control">{t('complete')}</Text>
+                <Text status="control">{t('next')}</Text>
               </Button>
             </View>
           </View>

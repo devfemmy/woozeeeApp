@@ -197,11 +197,11 @@ export default function Social({ navigation }) {
                   {index === 5 ? <StoryPostsArea /> : null}
                 </>
               )}
-              // getItemLayout={(data, index) => ({
-              //   length: ITEM_HEIGHT,
-              //   offset: ITEM_HEIGHT * index,
-              //   index,
-              // })}
+              getItemLayout={(data, index) => ({
+                length: ITEM_HEIGHT,
+                offset: ITEM_HEIGHT * index,
+                index,
+              })}
             />
           </View>
         </React.Fragment>

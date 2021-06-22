@@ -24,7 +24,7 @@ export default function RegisterFull({ route, navigation }) {
     email: form.email,
     firstName: '',
     lastName: '',
-    username: '',
+    userName: '',
     password: '',
     confirmPassword: '',
   });
@@ -136,12 +136,20 @@ export default function RegisterFull({ route, navigation }) {
             </View>
             <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
+                type="userName"
+                label="Username"
+                validate="required"
+                setFormValues={setUserInfo}
+              />
+            </View>
+            {/* <View style={{ paddingVertical: 10 }}>
+              <GeneralTextField
                 type="referralCode"
                 label={t('referralCode')}
                 // validate="required"
                 setFormValues={setUserInfo}
               />
-            </View>
+            </View> */}
             <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
                 type="password"

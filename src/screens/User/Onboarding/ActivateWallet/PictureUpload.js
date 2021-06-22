@@ -64,7 +64,7 @@ export default function PictureUpload({ navigation }) {
   const handleOpenSheet = () => sheetRef.current.open();
 
   // prettier-ignore
-  const routeActivateWalletOTPVerify = () => navigation.navigate('ActivateWalletOTPVerification');
+  const routeActivateWalletOTPVerify = () => navigation.navigate('ActivateWalletSelectBanks');
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
