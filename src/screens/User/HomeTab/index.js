@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useContext, useRef, useCallback, useState,
+  useContext, useRef, useCallback, useState, useEffect,
 } from 'react';
 
 import {
@@ -35,23 +35,8 @@ import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 import BackgroundVideo from 'src/components/BackgroundVideo';
 
 /* DATA */
-const woozeeeCards = [
-  {
-    balance: '150.25',
-    banner: require('assets/images/card/card1.jpg'),
-    action: 'openCare',
-  },
-  {
-    balance: '350,152.83',
-    banner: require('assets/images/card/card2.png'),
-    action: 'openWallet',
-  },
-  {
-    balance: '0.00',
-    banner: require('assets/images/card/card3.png'),
-    action: 'openRewards',
-  },
-];
+
+
 
 const woozeeeCategories = [
   {
@@ -103,6 +88,13 @@ export default function Home({ navigation }) {
   const sheetComingSoonCharity = useRef(null);
 
   const [isBalanceVisible, setBalanceVisible] = useState(true);
+  const [insureCardNo, setInsureCardNo] = useState(null);
+  const [walletCardNo, setWalletCardNo] = useState(null);
+  const [rewardCardNo, setRewardCardNo] = useState(null)
+  const [insureAmt, setInsureAmt] = useState(null);
+  const [walletAmt, setWalletAmt] = useState(null);
+  const [rewardAmt, setRewardAmt] = useState(null);
+  const [fullname, setFullName] = useState(null);
 
   const IS_PORTRAIT = height > width;
 
@@ -115,6 +107,90 @@ export default function Home({ navigation }) {
   const { isLoading } = useContext(LoadingContext);
 
   const { appState } = useContext(AppSettingsContext);
+
+  const woozeeeCards = [
+    {
+      balance: parseInt(insureAmt).toFixed(2),
+      cardNum: insureCardNo,
+      banner: require('assets/images/card/card1.jpg'),
+      action: 'openCare',
+    },
+    {
+      balance: parseInt(walletAmt).toFixed(2),
+      cardNum: walletCardNo,
+      banner: require('assets/images/card/card2.png'),
+      action: 'openWallet',
+    },
+    {
+      balance: parseInt(rewardAmt).toFixed(2),
+      cardNum: rewardCardNo,
+      banner: require('assets/images/card/card3.png'),
+      action: 'openRewards',
+    },
+  ];
+
+  const fetchFromAsyncStorage = () => {
+        // Fetch Data from Asynchstorage
+
+        AsyncStorage.getItem('fullName').then(
+          res => {
+            setFullName(res)
+          }
+        ).catch(
+          err => err
+        );
+        AsyncStorage.getItem('insureCardNo').then(
+          res => {
+            setInsureCardNo(res)
+          }
+        ).catch(
+          err => err
+        );
+        AsyncStorage.getItem('walletCardNo').then(
+          res => {
+            setWalletCardNo(res)
+          }
+        ).catch(
+          err => err
+        );
+        AsyncStorage.getItem('rewardCardNo').then(
+          res => {
+            setRewardCardNo(res)
+          }
+        ).catch(
+          err => err
+        );
+        AsyncStorage.getItem('insureAmt').then(
+          res => {
+            setInsureAmt(res)
+          }
+        ).catch(
+          err => err
+        );
+        AsyncStorage.getItem('walletAmt').then(
+          res => {
+            setWalletAmt(res)
+          }
+        ).catch(
+          err => err
+        );
+        AsyncStorage.getItem('rewardAmt').then(
+          res => {
+            setRewardAmt(res)
+          }
+        ).catch(
+          err => err
+        );
+  }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchFromAsyncStorage()
+      });
+
+    
+    return unsubscribe;
+  }, [navigation]);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
@@ -185,7 +261,7 @@ export default function Home({ navigation }) {
               />
             </View>
             <Text category="h6" style={{ marginVertical: 5 }}>
-              Hello Dev Romes
+              Hello {fullname}
             </Text>
             <Text style={{ marginVertical: 5 }}>{t('redeem')}</Text>
             <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
@@ -203,7 +279,7 @@ export default function Home({ navigation }) {
         </Layout>
       </RBSheet>
     ),
-    [t, BG_THEME],
+    [t, BG_THEME, fullname],
   );
 
   const CareSheet = useCallback(
@@ -251,7 +327,7 @@ export default function Home({ navigation }) {
               />
             </View>
             <Text category="h6" style={{ marginVertical: 5 }}>
-              Hello Dev Romes
+              Hello {fullname}
             </Text>
             <Text style={{ marginVertical: 5 }}>{t('acceptCharge')}</Text>
             <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
@@ -269,7 +345,7 @@ export default function Home({ navigation }) {
         </Layout>
       </RBSheet>
     ),
-    [t, BG_THEME],
+    [t, BG_THEME, fullname],
   );
 
   const WalletSheet = useCallback(
@@ -317,7 +393,7 @@ export default function Home({ navigation }) {
               />
             </View>
             <Text category="h6" style={{ marginVertical: 5 }}>
-              Hello Dev Romes
+              Hello {fullname}
             </Text>
             <Text style={{ marginVertical: 5 }}>{t('completeTransfer')}</Text>
             <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
@@ -335,7 +411,7 @@ export default function Home({ navigation }) {
         </Layout>
       </RBSheet>
     ),
-    [t, BG_THEME],
+    [t, BG_THEME, fullname],
   );
 
   const MarketSheet = useCallback(
@@ -409,7 +485,7 @@ export default function Home({ navigation }) {
                 />
               </View>
               <Text category="h6" style={{ marginVertical: 5 }}>
-                Hello Dev Romes
+                Hello {fullname}
               </Text>
               <Text style={{ marginVertical: 5, textAlign: 'center' }}>
                 {t('marketComing')}
@@ -432,7 +508,7 @@ export default function Home({ navigation }) {
         </View>
       </RBSheet>
     ),
-    [t, BG_THEME, height],
+    [t, BG_THEME, height, fullname],
   );
 
   const CharitySheet = useCallback(
@@ -506,7 +582,7 @@ export default function Home({ navigation }) {
                 />
               </View>
               <Text category="h6" style={{ marginVertical: 5 }}>
-                Hello Dev Romes
+                Hello {fullname}
               </Text>
               <Text style={{ marginVertical: 5, textAlign: 'center' }}>
                 {t('charityComing')}
@@ -584,6 +660,8 @@ export default function Home({ navigation }) {
         }}
         resizeMode="cover"
       />
+       <Text category= "s1" style= {{position: 'absolute', bottom: 65, color: 'white', left: 20}}>{`****  ****  ****  ****  ${data.item.cardNum}`}</Text>
+      <Text category= "s2" style= {{position: 'absolute', bottom: 23, color: 'white', left: 20}}>{fullname}</Text>
     </TouchableOpacity>
   );
 
