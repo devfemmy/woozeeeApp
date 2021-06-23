@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Image } from 'react-native';
 
 import Constants from 'expo-constants';
 
@@ -197,6 +197,27 @@ export default function Login({ navigation }) {
                 size="medium"
                 appearance="outline"
                 accessoryLeft={() => (
+                  <Image
+                    source={require('../../../assets/images/icon/access.png')}
+                    defaultSource={require('../../../assets/images/icon/access.png')}
+                    resizeMode="cover"
+                  />
+                )}
+                accessibilityLiveRegion="polite"
+                accessibilityComponentType="button"
+                accessibilityLabel="Sign up with Access Bank"
+                onPress={SignUpWithGoogle}
+                style={{ marginVertical: 5, backgroundColor: '#F5821E' }}
+              >
+                <Text category="s1" style={{ color: 'white' }}>
+                  Access Bank
+                </Text>
+              </Button>
+              <Button
+                status="primary"
+                size="medium"
+                appearance="outline"
+                accessoryLeft={() => (
                   <IconCGoogle style={{ height: 20, width: 20 }} />
                 )}
                 accessibilityLiveRegion="polite"
@@ -210,7 +231,7 @@ export default function Login({ navigation }) {
                   Google
                 </Text>
               </Button>
-              <Button
+              {/* <Button
                 status="primary"
                 size="medium"
                 accessoryLeft={() => (
@@ -225,7 +246,7 @@ export default function Login({ navigation }) {
                 <Text category="s1" status="control">
                   Facebook
                 </Text>
-              </Button>
+              </Button> */}
               {/* <Button
                 status="info"
                 size="medium"

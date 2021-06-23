@@ -262,7 +262,7 @@ export const ChallengePosts = ({ chaData }) => {
 
 // prettier-ignore
 export const ProfilePosts = ({allEntries}) => {
-  console.log("from profile post -> ", allEntries)
+  // console.log("from profile post -> ", allEntries)
   const {firstTenEntries} = allEntries
   return(
     <List

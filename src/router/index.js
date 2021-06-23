@@ -45,12 +45,13 @@ import Follow from 'src/screens/User/Common/Follow';
 
 // Ask a doctor
 
-
 // Onboarding
 import Onboarding from 'src/screens/User/Onboarding';
 
 import ActivateWallet from 'src/screens/User/Onboarding/ActivateWallet';
 import ActivateWalletPictureUpload from 'src/screens/User/Onboarding/ActivateWallet/PictureUpload';
+import ActivateWalletSelectBanks from 'src/screens/User/Onboarding/ActivateWallet/SelectBanks';
+import ActivateWalletCreatePin from 'src/screens/User/Onboarding/ActivateWallet/CreatePin';
 import ActivateWalletOTPVerification from 'src/screens/User/Onboarding/ActivateWallet/OTPVerification';
 
 import ActivateCare from 'src/screens/User/Onboarding/ActivateCare';
@@ -73,7 +74,7 @@ import BillElectricity from 'src/screens/User/BillPayTab/Bills/Electricity';
 import UserRoute from './User';
 import SocialRoute from './User/HomeTab/Social';
 import MarketPlaceRoute from './User/HomeTab/MarketPlace';
-import AskADoctorRoute from './User/HomeTab/MarketPlace/AskDoctor'
+import AskADoctorRoute from './User/HomeTab/MarketPlace/AskDoctor';
 import CharityRoute from './User/HomeTab/Charity';
 import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/index';
 import Consultation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Consultation/index';
@@ -98,6 +99,8 @@ export default function Router() {
       Onboarding,
       ActivateWallet,
       ActivateWalletPictureUpload,
+      ActivateWalletSelectBanks,
+      ActivateWalletCreatePin,
       ActivateWalletOTPVerification,
       ActivateCare,
       ActivateCareSoloLitePlan,
@@ -134,7 +137,7 @@ export default function Router() {
       BillCableTv,
       BillElectricity,
       Report,
-      AskADoctor
+      AskADoctor,
     },
 
     Common: {
