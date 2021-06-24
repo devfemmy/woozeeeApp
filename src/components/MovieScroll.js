@@ -14,16 +14,16 @@ const MovieScroll = (props) => {
 
             <ScrollView horizontal>
                 <TouchableOpacity>
-                    <Image style= {{width: 120, height: 140, resizeMode: 'contain'}} source= {props.img} />
+                    <Image style= {{width: 110, height: 140, resizeMode: 'contain'}} source= {props.img} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Image style= {{width: 120, height: 140, resizeMode: 'contain'}} source= {props.img} />
+                    <Image style= {{width: 110, height: 140, resizeMode: 'contain'}} source= {props.img} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Image style= {{width: 120, height: 140, resizeMode: 'contain'}} source= {props.img} />
+                    <Image style= {{width: 110, height: 140, resizeMode: 'contain'}} source= {props.img} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Image style= {{width: 120, height: 140, resizeMode: 'contain'}} source= {props.img} />
+                    <Image style= {{width: 110, height: 140, resizeMode: 'contain'}} source= {props.img} />
                 </TouchableOpacity>
             </ScrollView>
         </View>

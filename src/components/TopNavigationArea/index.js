@@ -38,6 +38,7 @@ export default function TopNavigationArea(props) {
     options,
     balanceVisible,
     toggleBalance,
+    pressed,
     // notification,
     onStreamClick,
   } = props;

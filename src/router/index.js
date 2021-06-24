@@ -78,6 +78,7 @@ import AskADoctorRoute from './User/HomeTab/MarketPlace/AskDoctor';
 import CharityRoute from './User/HomeTab/Charity';
 import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/index';
 import Consultation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Consultation/index';
+import MoreOptions from 'src/screens/User/Common/Movies/More/index';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -122,6 +123,7 @@ export default function Router() {
       Movies,
       ViewMovies,
       MoviePage,
+      MoreOptions,
       LiveStream,
       Messaging,
       Comments,

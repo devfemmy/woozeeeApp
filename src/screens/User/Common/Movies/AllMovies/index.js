@@ -27,7 +27,7 @@ const AllMovies = () => {
         }
     })
     return (
-        <Layout style= {{flex: 1}}>
+        <Layout level="6" style={{ flex: 1 }}>
             <ScrollView>
                 <View style= {styles.imageCon}>
                     <Image 
