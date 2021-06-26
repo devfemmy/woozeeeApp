@@ -6,16 +6,20 @@ import {
   ScrollView,
   useWindowDimensions,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
 import Api from 'src/api';
+import { Video } from 'expo-av';
 
 // prettier-ignore
 import {
   Layout, Text, Button, Tab, TabView, Divider,
 } from '@ui-kitten/components';
+
+import { SimpleLineIcons } from '@expo/vector-icons';
 
 import { LoadingContext, LocaleContext } from 'src/contexts';
 
@@ -24,6 +28,8 @@ import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction
 import WithPaginatedFetch from 'src/components/DataFetch/WithPaginatedFetch';
 
 import { ProfilePosts, LikedProfilePosts } from 'src/components/SocialPosts';
+
+import Modal from 'react-native-modalbox';
 
 import InteractIcon from 'src/components/InteractIcon';
 
@@ -51,15 +57,23 @@ const PLACEHOLDER_CONFIG = {
 
 // prettier-ignore
 const ProfilePostsArea = ({userPostData}) => (
-  WithPaginatedFetch(ProfilePosts, userPostsUrl, PLACEHOLDER_CONFIG, userPostData)
+  WithPaginatedFetch(ProfilePosts , userPostsUrl, PLACEHOLDER_CONFIG, userPostData)
 );
 
-const ProfilePostLikedArea = ({ userPostData }) =>
+// const ProfilePostLikedArea = ({ userPostData }) =>
+//   WithPaginatedFetch(
+//     LikedProfilePosts,
+//     userPostsUrl,
+//     PLACEHOLDER_CONFIG,
+//     userPostData,
+//   );
+
+const ProfilePostsSavedArea = ({ userSavedData }) =>
   WithPaginatedFetch(
     ProfilePosts,
     userPostsUrl,
     PLACEHOLDER_CONFIG,
-    userPostData,
+    userSavedData,
   );
 
 export default function UserProfile({ route, navigation }) {
@@ -82,6 +96,10 @@ export default function UserProfile({ route, navigation }) {
     userData,
   } = user;
 
+  const [videoData, setVideoData] = useState({});
+
+  // console.log(videoData);
+
   const getLikedData = async () => {
     const res = await Api.getLikedPosts(_id);
     const {
@@ -102,7 +120,7 @@ export default function UserProfile({ route, navigation }) {
   const toggleFollow = async () => {
     setFollowing(!following);
     await handleFollow(userData.userId, !following);
-    console.log('pressed');
+    // console.log('pressed');
   };
 
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
@@ -121,8 +139,49 @@ export default function UserProfile({ route, navigation }) {
 
   const goBack = () => navigation.goBack();
 
+  const [modalState, setModalState] = useState(false);
+
+  const PlayVideoModal = () => {
+    return (
+      <View>
+        <Modal
+          style={{
+            backgroundColor: 'transparent',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          }}
+          animationType="slide"
+          position="center"
+          isOpen={modalState}
+          coverScreen={true}
+          swipeToClose={true}
+        >
+          <Video
+            source={{ uri: videoData.mediaURL }}
+            isLooping={true}
+            shouldPlay={modalState}
+            resizeMode="cover"
+            usePoster
+            posterSource={
+              videoData.medialThumbnail
+                ? { uri: videoData.medialThumbnail }
+                : require('assets/images/banner/placeholder-image.png')
+            }
+            style={{
+              flex: 1,
+              marginVertical: 150,
+              marginHorizontal: 10,
+              borderRadius: 15,
+            }}
+          />
+        </Modal>
+      </View>
+    );
+  };
+
   return (
     <Layout level="6" style={{ flex: 1 }}>
+      <PlayVideoModal />
       <View
         style={{
           position: 'relative',
@@ -222,8 +281,29 @@ export default function UserProfile({ route, navigation }) {
             position: 'absolute',
             zIndex: 3,
             right: 0,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
+          <View
+            status="primary"
+            style={{
+              // backgroundColor: 'transparent',
+              borderColor: '#003153',
+              borderWidth: 1,
+              marginHorizontal: 5,
+              width: 30,
+              height: 30,
+              borderRadius: 30,
+              alignItems: 'center',
+              // padding: 5,
+              justifyContent: 'center',
+            }}
+          >
+            <SimpleLineIcons name="envelope" size={18} color="#003153" />
+          </View>
           <Button
             status="primary"
             size="tiny"
@@ -307,38 +387,13 @@ export default function UserProfile({ route, navigation }) {
                   {/* {referralCode.toUpperCase()} */}
                 </Text>
               </View>
-              {/* <View
+              <View
                 style={{
                   marginBottom: 10,
                   marginTop: 5,
                   flexDirection: 'row',
                 }}
-              > */}
-              {/* <Button
-                  status="primary"
-                  appearance="outline"
-                  size="tiny"
-                  style={{
-                    marginHorizontal: 5,
-                    width: 120,
-                  }}
-                  onPress={routeEditProfile}
-                >
-                  <Text status="primary" category="c2">
-                    {`${t('edit')} ${t('profile')}`}
-                  </Text>
-                </Button> */}
-              {/* <Button
-                  status="primary"
-                  appearance="outline"
-                  size="tiny"
-                  style={{ width: 100, minHeight: 35 }}
-                >
-                  <Text status="primary" category="c2">
-                    {t('follow')}
-                  </Text>
-                </Button> */}
-              {/* </View> */}
+              ></View>
               <View
                 style={{
                   flexDirection: 'row',
@@ -391,10 +446,10 @@ export default function UserProfile({ route, navigation }) {
             <ProfilePostsArea userPostData={user} />
           </Tab>
           <Tab title={t('saved')} icon={IconBookmark}>
-            <ProfilePostsArea userPostData={user} />
+            <ProfilePostsSavedArea userSavedData={user} />
           </Tab>
           <Tab title={t('liked')} icon={IconHeart}>
-            <ProfilePostLikedArea userPostData={user} />
+            <LikedProfilePosts userId={_id} />
           </Tab>
         </TabView>
       </View>

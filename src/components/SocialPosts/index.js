@@ -11,7 +11,11 @@ import {
   ScrollView,
 } from 'react-native';
 
+import { useInfiniteQuery } from 'react-query';
+
 import { v4 as uuidv4 } from 'uuid';
+
+import Api from 'src/api';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -19,16 +23,20 @@ import { List, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 
+import FetchFailed from 'src/components/DataFetch/FetchFailed';
+
 import { ChallengeVideoCard } from '../../components/SocialCard/index';
 
 import {
   UserProfilePostCard,
   ExploreVideoCard,
+  UserPostLikedCard,
 } from '../../components/SocialCard/index';
 
 import VideoCard from 'src/components/SocialCard';
 
 import StoryCard from 'src/components/SocialCard/StoryCard';
+
 import { useNavigation } from '@react-navigation/native';
 
 import VideoFullscreen from 'src/components/VideoFullscreen';
@@ -132,27 +140,6 @@ export const StoryPosts = ({ info }) => {
         <RenderCategoryHeader />
         <Stories storyData={info} extraWidth={0.5} />
       </ScrollView>
-
-      {/* <StoryCard /> */}
-      {/* <List
-        style={{ backgroundColor: 'transparent' }}
-        contentContainerStyle={{ alignItems: 'flex-start' }}
-        alwaysBounceHorizontal
-        horizontal
-        ListHeaderComponent={RenderCategoryHeader}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        data={info}
-        keyExtractor={(_, i) => i.toString()}
-        renderItem={(renderData) => (
-          <StoryCard data={renderData} extraWidth={0.5} />
-        )}
-        getItemLayout={(data, index) => ({
-          length: 175,
-          offset: 175 * index,
-          index,
-        })}
-      /> */}
     </View>
   );
 };
@@ -262,7 +249,6 @@ export const ChallengePosts = ({ chaData }) => {
 
 // prettier-ignore
 export const ProfilePosts = ({allEntries}) => {
-  // console.log("from profile post -> ", allEntries)
   const {firstTenEntries} = allEntries
   return(
     <List
@@ -280,7 +266,7 @@ export const ProfilePosts = ({allEntries}) => {
     data={firstTenEntries}
     keyExtractor={(_, i) => i.toString()}
     renderItem={(renderData) => (
-      <UserProfilePostCard data={renderData} extraWidth={0} numColumns={3} />
+      <UserProfilePostCard data={renderData} extraWidth={0} numColumns={3} allPosts={allEntries} />
     )}
     getItemLayout={(data, index) => ({
       length: 200,
@@ -291,34 +277,112 @@ export const ProfilePosts = ({allEntries}) => {
   )
 }
 
-export const LikedProfilePosts = ({ allEntries }) => {
-  // console.log('from LikedProfilePosts  -> ', allEntries);
-  // const {firstTenEntries} = allEntries
+export const LikedProfilePosts = ({ userId }) => {
+  // console.log('from props  -> ', userId);
+  const t = useContext(LocaleContext);
+  const [likedData, setLikedData] = useState({});
+
+  const {
+    status,
+    data,
+    error,
+    isFetching,
+    isFetchingNextPage,
+    isFetchingPreviousPage,
+    fetchNextPage,
+    fetchPreviousPage,
+    refetch,
+    hasNextPage,
+    hasPreviousPage,
+  } = useInfiniteQuery(
+    ['LikedData', 1],
+    async ({ pageParam = 1 }) => {
+      const promise = await Api.getUserLikedPosts(pageParam, userId);
+      if (data !== {} && data !== undefined) {
+        setLikedData(data);
+        console.log('Data is -> ', data);
+      } else {
+        setLikedData({ message: 'No data loaded' });
+      }
+      promise.cancel = () => Api.cancelRequest('Request aborted');
+      return promise;
+    },
+    {
+      getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
+      getNextPageParam: (lastPage) => lastPage.nextID ?? false,
+      keepPreviousData: true,
+      staleTime: 0,
+      cacheTime: 0,
+    },
+  );
+
+  // if (status === 'error') {
+  //   return (
+  //     <FetchFailed
+  //       onPress={refetch}
+  //       info={t('networkError')}
+  //       retry={t('retry')}
+  //     />
+  //   );
+  // }
+
+  if (status === 'loading') {
+    console.log(likedData);
+    return <Text>Loading...</Text>;
+  }
+
+  if (status === 'success') {
+    return (
+      <List
+        style={{
+          backgroundColor: 'transparent',
+        }}
+        contentContainerStyle={{
+          paddingBottom: 25,
+          paddingTop: 5,
+        }}
+        // alwaysBounceVertical
+        showsHorizontalScrollIndicator={true}
+        showsVerticalScrollIndicator={false}
+        numColumns={3}
+        data={data.pages[0].pageData.data}
+        keyExtractor={(_, i) => i.toString()}
+        renderItem={(renderData) => (
+          <UserPostLikedCard data={renderData} extraWidth={0} numColumns={3} />
+        )}
+        getItemLayout={(data, index) => ({
+          length: 200,
+          offset: 200 * index,
+          index,
+        })}
+      />
+    );
+  }
+  console.log(data);
   return (
-    //   <List
-    //   style={{
-    //     backgroundColor: 'transparent',
-    //   }}
-    //   contentContainerStyle={{
-    //     paddingBottom: 25,
-    //     paddingTop: 5,
-    //   }}
-    //   // alwaysBounceVertical
-    //   showsHorizontalScrollIndicator={true}
-    //   showsVerticalScrollIndicator={false}
-    //   numColumns={3}
-    //   data={firstTenEntries}
-    //   keyExtractor={(_, i) => i.toString()}
-    //   renderItem={(renderData) => (
-    //     <UserProfilePostCard data={renderData} extraWidth={0} numColumns={3} />
-    //   )}
-    //   getItemLayout={(data, index) => ({
-    //     length: 200,
-    //     offset: 200 * index,
-    //     index,
-    //   })}
-    // />
-    <Text>Nothing to see here</Text>
+    <List
+      style={{
+        backgroundColor: 'transparent',
+      }}
+      contentContainerStyle={{
+        paddingBottom: 25,
+        paddingTop: 5,
+      }}
+      // alwaysBounceVertical
+      showsHorizontalScrollIndicator={true}
+      showsVerticalScrollIndicator={false}
+      numColumns={3}
+      data={data.pages[0].pageData.data}
+      keyExtractor={(_, i) => i.toString()}
+      renderItem={(renderData) => (
+        <UserPostLikedCard data={renderData} extraWidth={0} numColumns={3} />
+      )}
+      getItemLayout={(data, index) => ({
+        length: 200,
+        offset: 200 * index,
+        index,
+      })}
+    />
   );
 };
 

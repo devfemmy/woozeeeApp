@@ -87,7 +87,9 @@ export default function Profile({ navigation }) {
     AsyncStorage.getItem('USER_AUTH_TOKEN')
       .then((res) => {
         axios
-          .get(`user/user?userId=${user_id}`, { headers: { Authorization: res } })
+          .get(`user/user?userId=${user_id}`, {
+            headers: { Authorization: res },
+          })
           .then((response) => {
             // setLoading(false)
             const user_data = response.data.user;
@@ -96,7 +98,7 @@ export default function Profile({ navigation }) {
             const bio = user_data.bio;
             const email = user_data.email;
             const imageUrl = user_data.imgUrl;
-            const coverPhotoUrl = user_data.coverPhotoUrl
+            const coverPhotoUrl = user_data.coverPhotoUrl;
             const videoCount = user_data.videoCount;
             const followingCount = user_data.followingCount;
             const followersCount = user_data.followersCount;
@@ -155,7 +157,7 @@ export default function Profile({ navigation }) {
             }}
           >
             <Image
-               source={{ uri: form.coverPhotoUrl }}
+              source={{ uri: form.coverPhotoUrl }}
               defaultSource={require('assets/images/banner/profile.jpg')}
               style={{
                 height: '100%',
@@ -238,7 +240,7 @@ export default function Profile({ navigation }) {
               right: 0,
               width: '30%',
               justifyContent: 'flex-end',
-              flexDirection: 'row'
+              flexDirection: 'row',
             }}
           >
             {/* <Button

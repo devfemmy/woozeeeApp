@@ -628,7 +628,7 @@ const VideoView = forwardRef((props, ref) => {
       </View>
       <RBSheet
         ref={sheetRef}
-        height={item.userId !== item.userEntryData.userId ? 205 : 155}
+        height={205}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -649,7 +649,7 @@ const VideoView = forwardRef((props, ref) => {
             paddingBottom: 30,
           }}
         >
-          {item.userId !== item.userEntryData.userId && (
+          {item.userId !== item.userEntryData.userId ? (
             <Button
               appearance="ghost"
               status="basic"
@@ -661,6 +661,20 @@ const VideoView = forwardRef((props, ref) => {
             >
               <Text style={{ fontSize: 16 }} status="basic">
                 {following ? t('unfollow') : t('follow')}
+              </Text>
+            </Button>
+          ) : (
+            <Button
+              appearance="ghost"
+              status="basic"
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+              }}
+              // onPress={toggleFollow}
+            >
+              <Text style={{ fontSize: 16 }} status="basic">
+                Delete Post
               </Text>
             </Button>
           )}
