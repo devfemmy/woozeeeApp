@@ -9,17 +9,18 @@ import React, {
   useImperativeHandle,
 } from 'react';
 
-import { Root } from 'native-base';
-
 import {
   View,
   Image,
   TouchableOpacity,
   Share,
   TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
 
 import Moment from 'react-moment';
+
+import Api from 'src/api';
 
 import useAppSettings from 'src/reducers/useAppSettings';
 
@@ -47,6 +48,8 @@ import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 
 import InteractIcon from 'src/components/InteractIcon';
+
+import { Toast, Content, Root } from 'native-base';
 
 import {
   sendComment,
@@ -77,12 +80,21 @@ const VideoView = forwardRef((props, ref) => {
   // const db = firebase.firestore();
   // prettier-ignore
   const [appTheme, setTheme] = useState('')
+  const [_userId, setUserId] = useState('');
+
   const getTheme = async () => {
     const res = await AsyncStorage.getItem('appTheme');
     setTheme(res);
   };
 
+  const getUserId = async () => {
+    const res = await AsyncStorage.getItem('userid');
+    setUserId(res);
+    // console.log(res);
+  };
+  getUserId();
   getTheme();
+  // console.log(_userId);
 
   const { data, viewHeight, navigation, t } = props;
 
@@ -164,6 +176,50 @@ const VideoView = forwardRef((props, ref) => {
     });
   };
 
+  const deletePost = async (entryId) => {
+    sheetRef.current.close();
+    Alert.alert(
+      'Delete Action',
+      'Are you sure you want to delete this post ?',
+      [
+        {
+          text: 'No',
+          // onPress: () => Alert.alert('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: async () => {
+            const res = await Api.deleteUserPosts(entryId);
+            if (res.statusCode == 200) {
+              //close sheet and bring up suceess toast
+              Toast.show({
+                text: 'Post successfully deleted',
+                buttonText: 'Okay',
+                position: 'bottom',
+                type: 'success',
+                duration: 3000,
+              });
+            } else {
+              //close sheet and bring up suceess toast
+              Toast.show({
+                text: 'Unable to delete post',
+                buttonText: 'Okay',
+                position: 'bottom',
+                type: 'success',
+                duration: 3000,
+              });
+            }
+          },
+          style: 'ok',
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  };
+
   const toggleBookmark = async () => {
     setBookmarked(!isBookmarked);
     // console.log(!isBookmarked);
@@ -221,6 +277,10 @@ const VideoView = forwardRef((props, ref) => {
     const userData = await getUserData(item.userId);
     const { data } = userData;
     await navigation.navigate('UserProfile', data);
+
+    // item.userId !== _userId
+    //   ? await navigation.navigate('UserProfile', data)
+    //   : await navigation.navigate('ProfileTab');
   };
 
   const routeComments = async () => {
@@ -400,7 +460,13 @@ const VideoView = forwardRef((props, ref) => {
             />
           </View>
         </View>
-        <TouchableWithoutFeedback onPress={() => toggleMute()}>
+        <TouchableWithoutFeedback
+          onPress={
+            data.item.type && data.item.type == 'video'
+              ? () => toggleMute()
+              : null
+          }
+        >
           <View
             style={{
               flex: 1,
@@ -437,8 +503,8 @@ const VideoView = forwardRef((props, ref) => {
             ) : (
               <Video
                 ref={videoRef}
-                isLooping={true}
-                shouldPlay={false}
+                isLooping
+                shouldPlay={true}
                 resizeMode="cover"
                 usePoster
                 posterSource={
@@ -470,19 +536,6 @@ const VideoView = forwardRef((props, ref) => {
               paddingHorizontal: 5,
             }}
           >
-            {/* <InteractIcon
-              style={{ marginHorizontal: 5 }}
-              Accessory={(evaProps) => (
-                <IconCHeart {...evaProps} active={isLiked} />
-              )}
-              textContent={totalLikes}
-              direction="row"
-              status={isLiked ? 'danger' : 'control'}
-              height={20}
-              width={20}
-              onPress={toggleLike}
-            /> */}
-
             <View
               style={{
                 display: 'flex',
@@ -649,7 +702,7 @@ const VideoView = forwardRef((props, ref) => {
             paddingBottom: 30,
           }}
         >
-          {item.userId !== item.userEntryData.userId ? (
+          {item.userId !== _userId ? (
             <Button
               appearance="ghost"
               status="basic"
@@ -671,7 +724,7 @@ const VideoView = forwardRef((props, ref) => {
                 width: '100%',
                 justifyContent: 'center',
               }}
-              // onPress={toggleFollow}
+              onPress={() => deletePost(item._id)}
             >
               <Text style={{ fontSize: 16 }} status="basic">
                 Delete Post

@@ -21,7 +21,7 @@ import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction
 
 import WithPaginatedFetch from 'src/components/DataFetch/WithPaginatedFetch';
 
-import { ProfilePosts } from 'src/components/SocialPosts';
+import { ProfilePosts, LikedProfilePosts } from 'src/components/SocialPosts';
 
 import InteractIcon from 'src/components/InteractIcon';
 
@@ -67,6 +67,8 @@ export default function Profile({ navigation }) {
     followingCount: '',
     videoCount: '',
   });
+
+  const [_userId, setUserId] = useState('');
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -129,6 +131,7 @@ export default function Profile({ navigation }) {
     const unsubscribe = navigation.addListener('focus', () => {
       AsyncStorage.getItem('userid')
         .then((response) => {
+          setUserId(response);
           getUserProfile(response);
         })
         .catch((err) => err);
@@ -384,7 +387,7 @@ export default function Profile({ navigation }) {
               <ProfilePostsArea testData={user} />
             </Tab>
             <Tab title={t('liked')} icon={IconHeart}>
-              <ProfilePostsArea testData={user} />
+              {/* <LikedProfilePosts userId={_userId} /> */}
             </Tab>
           </TabView>
         </View>

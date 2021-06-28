@@ -20,8 +20,7 @@ export default function MovieCard(props) {
 
   const IS_PORTRAIT = height > width;
 
-  return useMemo(
-    () => (
+  return(
       <View
         style={{
           width: IS_PORTRAIT
@@ -43,8 +42,8 @@ export default function MovieCard(props) {
           }}
         >
           <Image
-            source={require('assets/images/banner/placeholder-image.png')}
-            defaultSource={require('assets/images/banner/placeholder-image.png')}
+            source={{uri: data.posterURL[0]}}
+            defaultSource={require('assets/images/banner/movie_placeholder.png')}
             style={{
               height: 200,
               width: '100%',
@@ -86,7 +85,7 @@ export default function MovieCard(props) {
               }}
             >
               <Image
-                source={require('assets/images/banner/placeholder-image.png')}
+                 source={{uri: data.posterURL[0]}}
                 defaultSource={require('assets/images/banner/placeholder-image.png')}
                 style={{
                   height: 44,
@@ -105,7 +104,6 @@ export default function MovieCard(props) {
           </Text>
         </View>
       </View>
-    ),
-    [IS_PORTRAIT, data, extraWidth, width],
+  
   );
 }

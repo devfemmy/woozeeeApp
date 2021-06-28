@@ -161,6 +161,14 @@ export default {
       nextID: page + 1,
     };
   },
+  deleteUserPosts: async (id) => {
+    // return id;
+    const instance = await createInstance();
+
+    const res = await instance.delete(`entries/${id}`);
+    const { data } = res;
+    return data;
+  },
   getUserLikedPosts: async (page = 1, id) => {
     const instance = await createInstance();
 

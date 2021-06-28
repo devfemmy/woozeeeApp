@@ -35,6 +35,8 @@ import {
 
 import VideoCard from 'src/components/SocialCard';
 
+import Placeholders from 'src/components/Placeholders';
+
 import StoryCard from 'src/components/SocialCard/StoryCard';
 
 import { useNavigation } from '@react-navigation/native';
@@ -280,7 +282,22 @@ export const ProfilePosts = ({allEntries}) => {
 export const LikedProfilePosts = ({ userId }) => {
   // console.log('from props  -> ', userId);
   const t = useContext(LocaleContext);
+  const { width, height } = useWindowDimensions();
   const [likedData, setLikedData] = useState({});
+
+  const PLACEHOLDER_CONFIG = {
+    count: 4,
+    numColumns: 2,
+    maxHeight: 150,
+    mediaLeft: true,
+  };
+
+  const getMaxHeight = () => {
+    if (PLACEHOLDER_CONFIG.maxHeight <= 1) {
+      return height * PLACEHOLDER_CONFIG.maxHeight;
+    }
+    return PLACEHOLDER_CONFIG.maxHeight;
+  };
 
   const {
     status,
@@ -300,7 +317,7 @@ export const LikedProfilePosts = ({ userId }) => {
       const promise = await Api.getUserLikedPosts(pageParam, userId);
       if (data !== {} && data !== undefined) {
         setLikedData(data);
-        console.log('Data is -> ', data);
+        // console.log('Data is -> ', data);
       } else {
         setLikedData({ message: 'No data loaded' });
       }
@@ -316,22 +333,48 @@ export const LikedProfilePosts = ({ userId }) => {
     },
   );
 
-  // if (status === 'error') {
-  //   return (
-  //     <FetchFailed
-  //       onPress={refetch}
-  //       info={t('networkError')}
-  //       retry={t('retry')}
-  //     />
-  //   );
-  // }
-
   if (status === 'loading') {
-    console.log(likedData);
-    return <Text>Loading...</Text>;
+    // console.log(likedData);
+    return (
+      <Placeholders
+        mediaLeft={PLACEHOLDER_CONFIG.mediaLeft}
+        row
+        count={PLACEHOLDER_CONFIG.count || 4}
+        numColumns={PLACEHOLDER_CONFIG.numColumns || 2}
+        maxHeight={getMaxHeight()}
+        maxWidth={width}
+      />
+    );
   }
 
-  if (status === 'success') {
+  if (status === 'error') {
+    return (
+      <FetchFailed
+        onPress={refetch}
+        info={t('networkError')}
+        retry={t('retry')}
+      />
+    );
+  }
+
+  if (
+    status !== 'error' &&
+    status !== 'loading' &&
+    data.pages[0].pageData.data.length < 0
+  ) {
+    console.log('no liked data');
+
+    return (
+      <FetchFailed
+        onPress={refetch}
+        info={t('noVideos')}
+        retry={t('refresh')}
+      />
+    );
+  }
+
+  if (status !== 'error' && status !== 'loading') {
+    console.log(likedData);
     return (
       <List
         style={{
@@ -348,7 +391,12 @@ export const LikedProfilePosts = ({ userId }) => {
         data={data.pages[0].pageData.data}
         keyExtractor={(_, i) => i.toString()}
         renderItem={(renderData) => (
-          <UserPostLikedCard data={renderData} extraWidth={0} numColumns={3} />
+          <UserPostLikedCard
+            data={renderData}
+            extraWidth={0}
+            numColumns={3}
+            allLikedPosts={data.pages[0].pageData.data}
+          />
         )}
         getItemLayout={(data, index) => ({
           length: 200,
@@ -358,7 +406,7 @@ export const LikedProfilePosts = ({ userId }) => {
       />
     );
   }
-  console.log(data);
+  // console.log(data);
   return (
     <List
       style={{

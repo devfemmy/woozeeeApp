@@ -42,6 +42,7 @@ import Chats from 'src/screens/User/Common/Chats';
 import Rankings from 'src/screens/User/Common/Rankings';
 import UserProfile from 'src/screens/User/Common/UserProfile';
 import ProfilePostsWooz from 'src/screens/User/Common/UserProfile/ProfilePostsWooz';
+import ProfileLikedPosts from 'src/screens/User/Common/UserProfile/ProfileLikedPosts';
 import Follow from 'src/screens/User/Common/Follow';
 
 // Ask a doctor
@@ -131,6 +132,7 @@ export default function Router() {
       Rankings,
       UserProfile,
       ProfilePostsWooz,
+      ProfileLikedPosts,
       Follow,
       TransactionHistory,
       BillPaymentSuccess,

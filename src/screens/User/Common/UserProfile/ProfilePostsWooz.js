@@ -25,7 +25,7 @@ import Constants from 'expo-constants';
 
 import { Video } from 'expo-av';
 
-import { Layout } from '@ui-kitten/components';
+import { Layout, List } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
 
@@ -133,7 +133,7 @@ export default function ProfilePostsWooz({ route, navigation }) {
       hasNextPage,
       hasPreviousPage,
     } = useInfiniteQuery(
-      ['UserPosts', 1],
+      ['', 1],
       async ({ pageParam = 1 }) => {
         const promise = await Api.getUserPosts(pageParam, _id);
         if (data !== {} && data !== undefined) {
@@ -147,7 +147,7 @@ export default function ProfilePostsWooz({ route, navigation }) {
       {
         getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
         getNextPageParam: (lastPage) => lastPage.nextID ?? false,
-        keepPreviousData: true,
+        keepPreviousData: false,
         staleTime: 0,
         cacheTime: 0,
       },
@@ -160,7 +160,7 @@ export default function ProfilePostsWooz({ route, navigation }) {
       }
     };
 
-    console.log(status);
+    // console.log(status);
 
     if (status === 'error') {
       return (
@@ -178,6 +178,56 @@ export default function ProfilePostsWooz({ route, navigation }) {
         && data.pages[0].pageData.data.length > 0
     ) {
       videoLength.current = data.pages[0].pageData.data.length;
+      // return (
+      //   <View style={{ flex: 1 }}>
+      //     <List
+      //       style={{ flex: 1, backgroundColor: 'transparent' }}
+      //       vertical
+      //       showsHorizontalScrollIndicator={false}
+      //       showsVerticalScrollIndicator={false}
+      //       data={data.pages[0].pageData.data}
+      //       keyExtractor={(_, i) => i.toString()}
+      //       renderItem={(entry) => {
+      //         // console.log('entry is ', entry),
+      //         return (
+      //           // <Text style={{ color: 'white' }}>{entry.item.entryId}</Text>
+      //           <Animated.View
+      //             // key={index}
+      //             style={[
+      //               StyleSheet.absoluteFillObject,
+      //               {
+      //                 height: VIEW_HEIGHT,
+      //                 top: index * VIEW_HEIGHT,
+      //                 opacity,
+      //               },
+      //             ]}
+      //           >
+      //             <Video
+      //               ref={videoRef}
+      //               resizeMode="contain"
+      //               style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+      //               source={{ uri: entry.item.entryMediaURL }}
+      //               isLooping
+      //               shouldPlay={false}
+      //               onReadyForDisplay={() =>
+      //                 Animated.timing(opacity, {
+      //                   toValue: 1,
+      //                   useNativeDriver: true,
+      //                   duration: 500,
+      //                 }).start()
+      //               }
+      //             />
+      //           </Animated.View>
+      //         );
+      //       }}
+      //       getItemLayout={(data, index) => ({
+      //         length: 200,
+      //         offset: 200 * index,
+      //         index,
+      //       })}
+      //     />
+      //   </View>
+      // );
       return data.pages.map((page) => (
         <React.Fragment key={page.nextID}>
           <View style={{ flex: 1 }}>
@@ -186,6 +236,7 @@ export default function ProfilePostsWooz({ route, navigation }) {
                 flex: 1,
                 backgroundColor: 'transparent',
               }}
+              contentContainerStyle={{ flexGrow: 1 }}
               pagingEnabled
               disableIntervalMomentum
               showsHorizontalScrollIndicator={false}
@@ -212,6 +263,7 @@ export default function ProfilePostsWooz({ route, navigation }) {
                       style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
                       source={{ uri: entry.entryMediaURL }}
                       isLooping
+                      volume={0}
                       shouldPlay={true}
                       onReadyForDisplay={() =>
                         Animated.timing(opacity, {

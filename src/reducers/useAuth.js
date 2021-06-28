@@ -46,7 +46,7 @@ export default function useAuth() {
           const tokenAsync = await AsyncStorage.getItem('USER_AUTH_TOKEN');
 
           if (tokenAsync) {
-            // console.log('token Async222', tokenAsync);
+            // //('token Async222', tokenAsync);
             token = await tokenAsync;
           }
 
@@ -73,11 +73,30 @@ export default function useAuth() {
         });
 
         const result = await res.json();
-        // console.log(result);
         const email = result.user.email;
-        const user_id = result.user._id;
-        AsyncStorage.setItem('userid', user_id);
         AsyncStorage.setItem('email', email);
+        const user_id = result.user._id;
+        const insure_num = result.user.insurranceCard.cardNumber;
+        const insureamt = result.user.insurranceCard.credits;
+        const stringedAmt = insureamt.toString();
+        //(stringedAmt);
+        const wallet_num = result.user.walletCard.cardNumber;
+        const wallet_amt = result.user.walletCard.credits;
+        const stringedWallet = wallet_amt.toString();
+        //(stringedWallet);
+        const reward_num = result.user.rewardCard.cardNumber;
+        const reward_amt = result.user.rewardCard.credits
+        const stringedReward = reward_amt.toString();
+        //(stringedReward);
+        const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
+        AsyncStorage.setItem('insureCardNo', insure_num);
+        AsyncStorage.setItem('walletCardNo', wallet_num);
+        AsyncStorage.setItem('rewardCardNo', reward_num);
+        AsyncStorage.setItem('insureAmt', stringedAmt);
+        AsyncStorage.setItem('walletAmt', stringedWallet);
+        AsyncStorage.setItem('rewardAmt', stringedReward);
+        AsyncStorage.setItem('fullName', fullname);
+        AsyncStorage.setItem('userid', user_id);
         let token = null;
         let msg = null;
 
@@ -125,11 +144,32 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
-        // console.log('results', result);
-        const email = result.user.email;
-        const user_id = result.user._id;
-        AsyncStorage.setItem('userid', user_id);
-        AsyncStorage.setItem('email', email);
+        //('results', result);
+        // const result = await res.json();
+        // const email = result.user.email;
+        // AsyncStorage.setItem('email', email);
+        // const user_id = result.user._id;
+        // const insure_num = result.user.insurranceCard.cardNumber;
+        // const insureamt = result.user.insurranceCard.credits;
+        // const stringedAmt = insureamt.toString();
+        // //(stringedAmt);
+        // const wallet_num = result.user.walletCard.cardNumber;
+        // const wallet_amt = result.user.walletCard.credits;
+        // const stringedWallet = wallet_amt.toString();
+        // //(stringedWallet);
+        // const reward_num = result.user.rewardCard.cardNumber;
+        // const reward_amt = result.user.rewardCard.credits
+        // const stringedReward = reward_amt.toString();
+        // //(stringedReward);
+        // const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
+        // AsyncStorage.setItem('insureCardNo', insure_num);
+        // AsyncStorage.setItem('walletCardNo', wallet_num);
+        // AsyncStorage.setItem('rewardCardNo', reward_num);
+        // AsyncStorage.setItem('insureAmt', stringedAmt);
+        // AsyncStorage.setItem('walletAmt', stringedWallet);
+        // AsyncStorage.setItem('rewardAmt', stringedReward);
+        // AsyncStorage.setItem('fullName', fullname);
+        // AsyncStorage.setItem('userid', user_id);
 
         let token = null;
         let msg = null;
@@ -177,10 +217,31 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
+        // const result = await res.json();
         const email = result.user.email;
-        const user_id = result.user._id;
-        AsyncStorage.setItem('userid', user_id);
         AsyncStorage.setItem('email', email);
+        const user_id = result.user._id;
+        const insure_num = result.user.insurranceCard.cardNumber;
+        const insureamt = result.user.insurranceCard.credits;
+        const stringedAmt = insureamt.toString();
+        //(stringedAmt);
+        const wallet_num = result.user.walletCard.cardNumber;
+        const wallet_amt = result.user.walletCard.credits;
+        const stringedWallet = wallet_amt.toString();
+        //(stringedWallet);
+        const reward_num = result.user.rewardCard.cardNumber;
+        const reward_amt = result.user.rewardCard.credits
+        const stringedReward = reward_amt.toString();
+        //(stringedReward);
+        const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
+        AsyncStorage.setItem('insureCardNo', insure_num);
+        AsyncStorage.setItem('walletCardNo', wallet_num);
+        AsyncStorage.setItem('rewardCardNo', reward_num);
+        AsyncStorage.setItem('insureAmt', stringedAmt);
+        AsyncStorage.setItem('walletAmt', stringedWallet);
+        AsyncStorage.setItem('rewardAmt', stringedReward);
+        AsyncStorage.setItem('fullName', fullname);
+        AsyncStorage.setItem('userid', user_id);
         let token = null;
         let msg = null;
 
@@ -228,12 +289,32 @@ export default function useAuth() {
           },
         );
         const result = await res.json();
-        // console.log('results', result);
+        // //('results', result);
+        // const result = await res.json();
         const email = result.user.email;
-        const user_id = result.user._id;
-        AsyncStorage.setItem('userid', user_id);
         AsyncStorage.setItem('email', email);
-
+        const user_id = result.user._id;
+        const insure_num = result.user.insurranceCard.cardNumber;
+        const insureamt = result.user.insurranceCard.credits;
+        const stringedAmt = insureamt.toString();
+        //(stringedAmt);
+        const wallet_num = result.user.walletCard.cardNumber;
+        const wallet_amt = result.user.walletCard.credits;
+        const stringedWallet = wallet_amt.toString();
+        //(stringedWallet);
+        const reward_num = result.user.rewardCard.cardNumber;
+        const reward_amt = result.user.rewardCard.credits
+        const stringedReward = reward_amt.toString();
+        //(stringedReward);
+        const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
+        AsyncStorage.setItem('insureCardNo', insure_num);
+        AsyncStorage.setItem('walletCardNo', wallet_num);
+        AsyncStorage.setItem('rewardCardNo', reward_num);
+        AsyncStorage.setItem('insureAmt', stringedAmt);
+        AsyncStorage.setItem('walletAmt', stringedWallet);
+        AsyncStorage.setItem('rewardAmt', stringedReward);
+        AsyncStorage.setItem('fullName', fullname);
+        AsyncStorage.setItem('userid', user_id);
         let token = null;
         let msg = null;
 
@@ -273,7 +354,7 @@ export default function useAuth() {
         //   },
         // );
         // const result = await res.json();
-        // console.log('from forgotPassword fn -> ', data);
+        // //('from forgotPassword fn -> ', data);
       },
 
       verifyAction: async (verificationCode) => {
@@ -294,11 +375,32 @@ export default function useAuth() {
           },
         );
 
+        // const result = await res.json();
         const result = await res.json();
         const email = result.user.email;
-        const user_id = result.user._id;
-        AsyncStorage.setItem('userid', user_id);
         AsyncStorage.setItem('email', email);
+        const user_id = result.user._id;
+        const insure_num = result.user.insurranceCard.cardNumber;
+        const insureamt = result.user.insurranceCard.credits;
+        const stringedAmt = insureamt.toString();
+        //(stringedAmt);
+        const wallet_num = result.user.walletCard.cardNumber;
+        const wallet_amt = result.user.walletCard.credits;
+        const stringedWallet = wallet_amt.toString();
+        //(stringedWallet);
+        const reward_num = result.user.rewardCard.cardNumber;
+        const reward_amt = result.user.rewardCard.credits
+        const stringedReward = reward_amt.toString();
+        //(stringedReward);
+        const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
+        AsyncStorage.setItem('insureCardNo', insure_num);
+        AsyncStorage.setItem('walletCardNo', wallet_num);
+        AsyncStorage.setItem('rewardCardNo', reward_num);
+        AsyncStorage.setItem('insureAmt', stringedAmt);
+        AsyncStorage.setItem('walletAmt', stringedWallet);
+        AsyncStorage.setItem('rewardAmt', stringedReward);
+        AsyncStorage.setItem('fullName', fullname);
+        AsyncStorage.setItem('userid', user_id);
 
         let token = null;
         let msg = null;

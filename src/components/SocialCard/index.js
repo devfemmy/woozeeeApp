@@ -184,8 +184,7 @@ export function UserProfilePostCard(props) {
 }
 
 export function UserPostLikedCard(props) {
-  const { data, extraWidth, numColumns, allPosts } = props;
-  // console.log('from allPosts user UserProfilePostCard-> ', data);
+  const { data, extraWidth, numColumns, allLikedPosts } = props;
 
   const navigation = useNavigation();
 
@@ -195,13 +194,11 @@ export function UserPostLikedCard(props) {
 
   const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
 
-  const routeChallengeWooz = useCallback(
-    () => navigation.navigate('ProfilePostsWooz', allPosts),
+  const routeLikedDataWooz = useCallback(
+    () => navigation.navigate('ProfileLikedPosts', allLikedPosts),
     [navigation],
   );
-  // console.log('from video -> ', data);
-  // console.log('data ->', data.item.medialThumbnail);
-  // console.log(data.item.mediaURL);
+
   return useMemo(
     () => (
       <TouchableOpacity
@@ -216,7 +213,7 @@ export function UserPostLikedCard(props) {
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
-        onPress={routeChallengeWooz}
+        onPress={routeLikedDataWooz}
       >
         <Video
           poster={data.item.entryMediaURL}
@@ -231,7 +228,7 @@ export function UserPostLikedCard(props) {
         />
       </TouchableOpacity>
     ),
-    [COLUMN_COUNT, IS_PORTRAIT, extraWidth, width, data, routeChallengeWooz],
+    [COLUMN_COUNT, IS_PORTRAIT, extraWidth, width, data, routeLikedDataWooz],
   );
 }
 
