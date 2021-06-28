@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { View, useWindowDimensions, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
@@ -7,6 +7,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useInfiniteQuery } from 'react-query';
 
 import { Layout, List, Text } from '@ui-kitten/components';
+import { Overlay } from 'react-native-elements';
+import { ScrollView } from 'react-native-gesture-handler';
 
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
@@ -15,7 +17,7 @@ import Api from 'src/api';
 import { LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
-import { Overlay } from 'react-native-elements';
+
 
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
@@ -29,7 +31,8 @@ import { TextIcon } from 'src/components/IconPacks/TextIcon';
 import AllMovies from './AllMovies/index';
 import TvSeries from './TvSeries/index';
 import MyMovies from './MyMovies/index';
-import { ScrollView } from 'react-native-gesture-handler';
+import MyCategories from './Categories/index';
+
 
 // const MOVIE_CATEGORIES = [
 //   {
@@ -231,11 +234,11 @@ export default function Explore({ navigation }) {
     },
     activeTabTextColor: {
       color: 'rgba(255, 87, 87, 1)',
-      fontSize: 17,
+      fontSize: 15,
     },
     tabTextColor: {
       // color: '#494949',
-      fontSize: 17,
+      fontSize: 15,
     },
     overlay: {
       backgroundColor: 'transparent',
@@ -257,7 +260,8 @@ export default function Explore({ navigation }) {
       textAlign: 'center',
       marginVertical: 10
     }
-  })
+  });
+
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
@@ -265,12 +269,14 @@ export default function Explore({ navigation }) {
     { key: 'first', title: 'All' },
     { key: 'second', title: 'TV series' },
     { key: 'third', title: 'Movies' },
+    { key: 'fourth', title: 'Categories' }
   ]);
 
   const renderScene = SceneMap({
     first: AllMovies,
     second: TvSeries,
     third: MyMovies,
+    fourth: MyCategories
   });
 
   // Some Updates
@@ -290,19 +296,13 @@ export default function Explore({ navigation }) {
       )}
     />
   );
-  const [visible, setVisible] = useState(false);
-
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  };
-
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
         title="woozeee"
         navigation={navigation}
         icon="logout"
-        pressed= {toggleOverlay}
+        pressed= {() => navigation.navigate('MoreOptions')}
         screen="search"
       />
       {/* <View style= {styles.tabView}>
@@ -321,85 +321,6 @@ export default function Explore({ navigation }) {
             onIndexChange={setIndex}
             initialLayout={{ width: layout.width }}
           />
-      <Overlay 
-      fullScreen = {false}
-      overlayStyle= {styles.overlay}
-      backdropStyle= {styles.backdropStyle} 
-      isVisible={visible} onBackdropPress={() => {}}>
-        <ScrollView showsVerticalScrollIndicator= {false} style= {styles.scroll}>
-            <Text category= "c2" style= {styles.textStyle}>
-              All
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              My View
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              Comedy
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              Anime
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              All
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              All
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              Action
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              Anime
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              Comedy
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              All
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              All
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              My View
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              Comedy
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              Anime
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              All
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              All
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              My View
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              Comedy
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              Anime
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              All
-            </Text>
-            <Text category= "c2" style= {styles.textStyle}>
-              All
-            </Text>
-        </ScrollView>
-        <View>
-            <TouchableOpacity onPress= {toggleOverlay}>
-                <Image 
-                style= {{width: 40, height: 40}}
-                source= {require('../../../../assets/images/movies/Vector.png')} />
-            </TouchableOpacity>
-        </View>
-      </Overlay>
-
       {/* <SocialPostsArea /> */}
     </Layout>
   );

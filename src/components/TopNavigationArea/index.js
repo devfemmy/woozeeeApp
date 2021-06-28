@@ -38,6 +38,7 @@ export default function TopNavigationArea(props) {
     options,
     balanceVisible,
     toggleBalance,
+    pressed,
     // notification,
     onStreamClick,
   } = props;
@@ -142,9 +143,10 @@ export default function TopNavigationArea(props) {
         icon={IconOptions}
         accessibilityLiveRegion="polite"
         accessibilityLabel="Options"
+        onPress= {pressed}
       />
     ),
-    [props],
+    [props, pressed],
   );
 
   const renderAddStreamIcon = useCallback(

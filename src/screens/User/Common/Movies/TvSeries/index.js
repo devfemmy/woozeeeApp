@@ -29,12 +29,12 @@ const TvSeries = () => {
         }
     })
     return (
-        <Layout style= {{flex: 1}}>
+        <Layout level="6" style={{ flex: 1 }}>
             <ScrollView>
                 <View style= {styles.imageCon}>
                     <Image 
                     style= {{width: '100%'}}
-                    source= {require('../../../../../assets/images/movies/movie3.png')} />
+                    source= {require('../../../../../assets/images/movies/movie5.png')} />
                 </View>
                 <View style= {styles.description}>
                     <Text category= "h4" style= {{color: '#0959AB'}}>
