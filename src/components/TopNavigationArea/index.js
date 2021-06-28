@@ -143,9 +143,10 @@ export default function TopNavigationArea(props) {
         icon={IconOptions}
         accessibilityLiveRegion="polite"
         accessibilityLabel="Options"
+        onPress= {pressed}
       />
     ),
-    [props],
+    [props, pressed],
   );
 
   const renderAddStreamIcon = useCallback(

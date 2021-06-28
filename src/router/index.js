@@ -79,6 +79,10 @@ import CharityRoute from './User/HomeTab/Charity';
 import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/index';
 import Consultation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Consultation/index';
 import MoreOptions from 'src/screens/User/Common/Movies/More/index';
+import PreviouslyViewed from 'src/screens/User/Common/Movies/More/PreviouslyViewed/index';
+import MyList from 'src/screens/User/Common/Movies/More/MyList/index';
+import ComingSoon from 'src/screens/User/Common/Movies/More/ComingSoon/index';
+
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -124,6 +128,9 @@ export default function Router() {
       ViewMovies,
       MoviePage,
       MoreOptions,
+      PreviouslyViewed,
+      MyList,
+      ComingSoon,
       LiveStream,
       Messaging,
       Comments,
