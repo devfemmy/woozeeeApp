@@ -128,6 +128,7 @@ const AskADoctor = ({navigation}) => {
                         Categories
                     </Text>
                     <ScrollView horizontal>
+                        
                         <DocLabel 
                         text= "Talk to a Doctor"
                         image= {require('../../../../../../../assets/images/askADoc/label1.png')} />

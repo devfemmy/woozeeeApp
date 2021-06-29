@@ -55,9 +55,9 @@ const screens = {
     profile: IconCUser2,
   },
   askADoc: {
-    home: IconCHome,
+    askADoctor: IconCHome,
     appointments: IconGrid,
-    healthBlog: IconCWallet
+    // healthBlog: IconCWallet
   },
   charity: {
     charity: IconCCharity,

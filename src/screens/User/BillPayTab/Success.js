@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Image } from 'react-native';
 
 // prettier-ignore
 import {
@@ -41,11 +41,14 @@ export default function PictureUpload({ navigation }) {
               alignItems: 'center',
             }}
           >
+            <Image 
+            style= {{width: 120, height: 120, resizeMode: 'contain'}}
+            source= {require('../../../assets/images/askADoc/success.png')} />
             <Text category="h5">{t('transactionSuccess')}</Text>
           </View>
           <View style={{ paddingHorizontal: 20, paddingTop: 50 }}>
             <View style={{ paddingVertical: 10 }}>
-              <Button status="danger" accessoryRight={IconForward}>
+              <Button onPress= {() => navigation.popToTop()} status="danger" accessoryRight={IconForward}>
                 <Text category="h6" status="control">
                   {t('continue')}
                 </Text>

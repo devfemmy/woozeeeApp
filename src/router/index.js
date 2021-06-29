@@ -43,6 +43,7 @@ import Rankings from 'src/screens/User/Common/Rankings';
 import UserProfile from 'src/screens/User/Common/UserProfile';
 import Follow from 'src/screens/User/Common/Follow';
 
+
 // Ask a doctor
 
 // Onboarding
@@ -82,6 +83,11 @@ import MoreOptions from 'src/screens/User/Common/Movies/More/index';
 import PreviouslyViewed from 'src/screens/User/Common/Movies/More/PreviouslyViewed/index';
 import MyList from 'src/screens/User/Common/Movies/More/MyList/index';
 import ComingSoon from 'src/screens/User/Common/Movies/More/ComingSoon/index';
+import DoctorProfile from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/DoctorProfile/index';
+import PaymentPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Payment/index';
+import ConfirmationPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Confirmation/index';
+import Appointments from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/Appointments/index';
+import AppointmentDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/Appointments/AppointmentDetails';
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -147,6 +153,12 @@ export default function Router() {
       BillElectricity,
       Report,
       AskADoctor,
+      Appointments,
+      DoctorProfile,
+      PaymentPage,
+      ConfirmationPage,
+      AppointmentDetails
+      
     },
 
     Common: {
