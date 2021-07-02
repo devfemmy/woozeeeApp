@@ -44,9 +44,24 @@ const DocCard = (props) => {
                     {props.profile ? 
                 <View style= {{flexDirection: 'row', justifyContent: 'space-between', width: '90%'}}>
                     <Text style= {{color: 'rgba(4, 63, 124, 0.75)', fontWeight: 'bold'}} category= {"s2"}>{props.title}</Text>
-                    <RateLabel rate= "4.6" source= {require('../../assets/images/askADoc/rate.png')} />
-                </View>  : 
-                    <RateLabel rate= "4.6" source= {require('../../assets/images/askADoc/rate.png')} />
+                    {props.completed ? 
+                    <Text style= {{color: props.color}} category= {"s2"}>
+                        {props.status}
+                    </Text> :  
+                    <RateLabel rate= "4.6" source= {require('../../assets/images/askADoc/rate.png')} />    
+                }
+                  
+                </View>  :
+                <View>
+                    {props.hospital ? 
+                  <Text category= {"c2"}>
+                    {props.name}
+                  </Text> 
+                  :  <RateLabel rate= "4.6" source= {require('../../assets/images/askADoc/rate.png')} />
+                }
+                     
+                </View>
+                  
                 }
                 
 

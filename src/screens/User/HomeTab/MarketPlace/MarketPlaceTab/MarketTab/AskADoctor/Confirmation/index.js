@@ -11,7 +11,8 @@ import DoctorSlot from 'src/components/DoctorSlot/index';
 
 const ConfirmationPage = (props) => {
 
-    const [active, setActive] = useState(false)
+    const [active, setActive] = useState(false);
+
     return (
         <Layout level="6" style={{ flex: 1 }}>
             <TopNavigationArea
@@ -32,19 +33,19 @@ const ConfirmationPage = (props) => {
                             Appointment Details
                         </Text>
                         <View>
-                            <Text category= "h6">
+                            <Text style= {styles.header} category= "h6">
                             Date
                             </Text>
                             <Text style= {{marginBottom: 10}} category= "c1">
                             Friday, 30 April 2021 | 05:00 PM - 06:00 PM
                             </Text>
-                            <Text category= "h6">
+                            <Text style= {styles.header} category= "h6">
                             Type
                             </Text>
                             <Text style= {{marginBottom: 10}} category= "c1">
                             Video / Audio Consultation
                             </Text>
-                            <Text category= "h6">
+                            <Text style= {styles.header} category= "h6">
                             Payment Method
                             </Text>
                             <View style= {{flexDirection: 'row'}}>
@@ -60,7 +61,7 @@ const ConfirmationPage = (props) => {
                         <Text style= {styles.catText} category= "h5">
                             Cancellation Policy
                         </Text>
-                        <Text category= "h6">
+                        <Text style= {styles.header} category= "h6">
                         Non-refundable (₦ 20,000.00)
                         </Text>
                         <Text category= "c1">
@@ -110,7 +111,8 @@ const ConfirmationPage = (props) => {
                         accessibilityComponentType="button"
                         accessibilityLabel="Continue"
                         // disabled={isLoading}
-                        onPress= {() => props.navigation.navigate('BillPaymentSuccess')}
+                        onPress= {() => props.navigation.navigate('BillPaymentSuccess',
+                         {success: 'Your Hospital Visit appointment with Dr. Jules Wazobia has been successfully confirmed. A notification will be sent to your inbox'})}
                     >
                         <Text status="control">{'Complete'}</Text>
                 </Button>
@@ -133,6 +135,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%'
+    },
+    header: {
+        marginVertical: 8
     },
     lowerCon: {
         borderBottomWidth: 1,

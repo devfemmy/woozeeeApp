@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     text: {
-        color: 'rgba(4, 63, 124, 1)',
+        color: 'rgba(4, 63, 124, 0.8)',
         fontWeight: 'bold'
     }
 })

@@ -298,8 +298,8 @@ console.log(movie_data.item.posterURL[0])
                 onPress= {() => navigation.navigate('MoviePage', {item: movie_data.item})} 
                 bg= "#FF5757"
                 color= "white" fill= "white" 
-                text= "Play" 
-                icon_name= "play-circle-outline" />          
+                text= "Purchase" 
+                icon_name= "shopping-cart-outline" />          
           }
 
             </View>

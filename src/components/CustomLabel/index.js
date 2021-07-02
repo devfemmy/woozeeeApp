@@ -18,7 +18,8 @@ const CustomLabel = (props) => {
             marginRight: props.payment ? 10 : 5
         },
         textStyle: {
-        color: props.color ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.5)' ,
+        // color: props.color ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.5)' ,
+        opacity: 0.5
         }
     });
     return (

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { View, ScrollView, Image } from 'react-native';
+import { View, ScrollView, Image, StyleSheet } from 'react-native';
 
 // prettier-ignore
 import {
@@ -16,10 +16,18 @@ import {
   IconDownload,
   IconShare,
 } from 'src/components/CustomIcons';
+import { ProfilePosts } from 'src/components/SocialPosts/index';
 
-export default function PictureUpload({ navigation }) {
+export default function PictureUpload({ navigation, route }) {
+  const {success} = route.params
   const t = useContext(LocaleContext);
-
+  const styles = StyleSheet.create({
+    successText: {
+      opacity: 0.7,
+      textAlign: 'center',
+      marginVertical: 10
+    }
+  })
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea navigation={navigation} screen="default" />
@@ -45,6 +53,7 @@ export default function PictureUpload({ navigation }) {
             style= {{width: 120, height: 120, resizeMode: 'contain'}}
             source= {require('../../../assets/images/askADoc/success.png')} />
             <Text category="h5">{t('transactionSuccess')}</Text>
+            <Text style= {styles.successText}  category= "c1">{success}</Text>
           </View>
           <View style={{ paddingHorizontal: 20, paddingTop: 50 }}>
             <View style={{ paddingVertical: 10 }}>

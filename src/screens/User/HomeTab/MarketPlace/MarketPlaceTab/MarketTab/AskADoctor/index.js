@@ -12,9 +12,11 @@ import { GeneralSelect } from 'src/components/FormFields/index';
 import services from './services.json';
 import specialty from './specialty.json'
 import DocLabel from 'src/components/DocLabel/index';
-
+import BackgroundVideo from 'src/components/BackgroundVideo';
+import ConnectDocCard from 'src/components/ConnectDocCard/index';
 const AskADoctor = ({navigation}) => {
     const [date, setDate] = useState(new Date());
+    const [_carousel, setCarousel] = useState(null)
     const [form, setFormValues] = useState({
         fName: '',
         sName: '',
@@ -41,12 +43,45 @@ const AskADoctor = ({navigation}) => {
         },
       ];
 
+      const videoSliders = [
+        {
+          title: 'social',
+          banner: require('assets/images/banner/woozeee-socials.jpg'),
+          video:
+            'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fsocial.mp4?alt=media&token=afc818c3-7857-4368-88b9-3d2d16baea09',
+          screen: 'SocialRoute',
+        },
+        {
+          title: 'marketplace',
+          banner: require('assets/images/banner/woozeee-marketplace.jpg'),
+          video:
+            'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fmarket.mp4?alt=media&token=2709a1b4-8d3b-4d74-a364-63a276e94493',
+          screen: 'MarketPlaceRoute',
+          // screen: 'openComingSoonMarket',
+        },
+        {
+          title: 'charity',
+          banner: require('assets/images/banner/woozeee-charity.jpg'),
+          video:
+            'https://firebasestorage.googleapis.com/v0/b/woozeee-d7f6c.appspot.com/o/app-assets%2Fcharity.mp4?alt=media&token=c837385b-fef5-4df3-ad36-c36560fe0ee0',
+          // screen: 'CharityRoute',
+          screen: 'openComingSoonCharity',
+        },
+      ];
+
     const _renderItem = ({item, index}) => {
         return (
+            // <View key= {index}>
+            //     <BackgroundVideo
+            //     videoUri={item.video}
+            //     thumbUri={item.banner}
+            //     style={{ borderRadius: 5 }}
+            //     isMuted
+            // />
+            // </View>
             <View key= {index} style={styles.slide}>
                 <TouchableOpacity>
                     <Image  
-                    // defaultSource= {require('../assets/sliders/images/placeholder2.png')} 
                     style= {styles.slider} source= {item.banner} />
                 </TouchableOpacity>
             </View>
@@ -67,7 +102,7 @@ const AskADoctor = ({navigation}) => {
             />
             <View>
                 <Carousel
-                    // ref={(c) => { _carousel = c; }}
+                    ref={(c) => setCarousel(c)}
                     data={sliders}
                     renderItem={_renderItem}
                     sliderWidth={400}
@@ -129,19 +164,47 @@ const AskADoctor = ({navigation}) => {
                     </Text>
                     <ScrollView horizontal>
                         
-                        <DocLabel 
+                        <DocLabel
+                        onPress= {() => navigation.navigate('InnerPages', {title: 'Available Doctors', 
+                        address: null,
+                        name: 'Doctor Ade',
+                        image: require('../../../../../../../assets/images/askADoc/doc1.png')})} 
                         text= "Talk to a Doctor"
                         image= {require('../../../../../../../assets/images/askADoc/label1.png')} />
-                        <DocLabel 
+                        <DocLabel
+                        onPress= {() => navigation.navigate('InnerPages', {title: 'Hospitals', 
+                        name: 'Mayo Clinic',
+                        address: "15C Admiralty Way, Lekki Phase 1, Lagos",
+                        image: require('../../../../../../../assets/images/askADoc/item1.png')})}  
                         text= "Hospital"
                         image= {require('../../../../../../../assets/images/askADoc/label2.png')} />
-                        <DocLabel 
+                        <DocLabel
+                        onPress= {() => navigation.navigate('InnerPages', {title: 'Pharmacy', 
+                        name: 'Queens Park Pharmacy',
+                        address: "15C Admiralty Way, Lekki Phase 1, Lagos",
+                        image: require('../../../../../../../assets/images/askADoc/item2.png')})}  
                         text= "Pharmacy"
                         image= {require('../../../../../../../assets/images/askADoc/label3.png')} />
-                       <DocLabel 
-                        text= "Hospital"
+                       <DocLabel
+                        onPress= {() => navigation.navigate('InnerPages', {title: 'Laboratories', 
+                        name: 'Clina-Lancet Laboratories',
+                        address: "15C Admiralty Way, Lekki Phase 1, Lagos",
+                        image: require('../../../../../../../assets/images/askADoc/item3.png')})}  
+                        text= "Laboratories"
                         image= {require('../../../../../../../assets/images/askADoc/label2.png')} />
                     </ScrollView>
+                    <View style= {{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <Text category= "h5">
+                            Available Doctors
+                        </Text>
+                        <Text category= "h6" style= {{color: '#043F7C', fontWeight: 'bold'}}>
+                            See All
+                        </Text>
+                    </View>
+                    <ScrollView horizontal>
+                    <ConnectDocCard doc= "Dr Wazobia dred" />
+                    </ScrollView>
+                  
                 </View>
             </ScrollView>
 

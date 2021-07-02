@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const DocLabel = (props) => {
     return (
-        <TouchableOpacity style= {styles.container}>
+        <TouchableOpacity onPress= {props.onPress} style= {styles.container}>
             <Layout
             level="1"
             style={{

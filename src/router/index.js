@@ -88,6 +88,7 @@ import PaymentPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/Mar
 import ConfirmationPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Confirmation/index';
 import Appointments from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/Appointments/index';
 import AppointmentDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/Appointments/AppointmentDetails';
+import InnerPages from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/InnerPages/index';
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -157,7 +158,8 @@ export default function Router() {
       DoctorProfile,
       PaymentPage,
       ConfirmationPage,
-      AppointmentDetails
+      AppointmentDetails,
+      InnerPages
       
     },
 
