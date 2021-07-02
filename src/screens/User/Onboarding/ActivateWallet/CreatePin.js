@@ -31,7 +31,8 @@ export default function CreatePin({ route, navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const routeCare = () => navigation.navigate('ActivateCare');
+  const routeCare = () =>
+    navigation.navigate('Onboarding', { isActivated: true });
 
   return useMemo(() => {
     return (

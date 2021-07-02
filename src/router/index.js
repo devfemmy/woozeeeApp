@@ -41,6 +41,8 @@ import Comments from 'src/screens/User/Common/Comments';
 import Chats from 'src/screens/User/Common/Chats';
 import Rankings from 'src/screens/User/Common/Rankings';
 import UserProfile from 'src/screens/User/Common/UserProfile';
+import ProfilePostsWooz from 'src/screens/User/Common/UserProfile/ProfilePostsWooz';
+import ProfileLikedPosts from 'src/screens/User/Common/UserProfile/ProfileLikedPosts';
 import Follow from 'src/screens/User/Common/Follow';
 
 
@@ -145,6 +147,8 @@ export default function Router() {
       Search,
       Rankings,
       UserProfile,
+      ProfilePostsWooz,
+      ProfileLikedPosts,
       Follow,
       TransactionHistory,
       BillPaymentSuccess,

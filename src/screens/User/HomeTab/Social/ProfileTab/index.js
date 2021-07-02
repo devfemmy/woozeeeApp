@@ -21,7 +21,7 @@ import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction
 
 import WithPaginatedFetch from 'src/components/DataFetch/WithPaginatedFetch';
 
-import { ProfilePosts } from 'src/components/SocialPosts';
+import { ProfilePosts, LikedProfilePosts } from 'src/components/SocialPosts';
 
 import InteractIcon from 'src/components/InteractIcon';
 
@@ -68,6 +68,8 @@ export default function Profile({ navigation }) {
     videoCount: '',
   });
 
+  const [_userId, setUserId] = useState('');
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const shouldLoadComponent = (index) => index === selectedIndex;
@@ -87,7 +89,9 @@ export default function Profile({ navigation }) {
     AsyncStorage.getItem('USER_AUTH_TOKEN')
       .then((res) => {
         axios
-          .get(`user/user?userId=${user_id}`, { headers: { Authorization: res } })
+          .get(`user/user?userId=${user_id}`, {
+            headers: { Authorization: res },
+          })
           .then((response) => {
             // setLoading(false)
             const user_data = response.data.user;
@@ -96,7 +100,7 @@ export default function Profile({ navigation }) {
             const bio = user_data.bio;
             const email = user_data.email;
             const imageUrl = user_data.imgUrl;
-            const coverPhotoUrl = user_data.coverPhotoUrl
+            const coverPhotoUrl = user_data.coverPhotoUrl;
             const videoCount = user_data.videoCount;
             const followingCount = user_data.followingCount;
             const followersCount = user_data.followersCount;
@@ -127,6 +131,7 @@ export default function Profile({ navigation }) {
     const unsubscribe = navigation.addListener('focus', () => {
       AsyncStorage.getItem('userid')
         .then((response) => {
+          setUserId(response);
           getUserProfile(response);
         })
         .catch((err) => err);
@@ -155,7 +160,7 @@ export default function Profile({ navigation }) {
             }}
           >
             <Image
-               source={{ uri: form.coverPhotoUrl }}
+              source={{ uri: form.coverPhotoUrl }}
               defaultSource={require('assets/images/banner/profile.jpg')}
               style={{
                 height: '100%',
@@ -238,7 +243,7 @@ export default function Profile({ navigation }) {
               right: 0,
               width: '30%',
               justifyContent: 'flex-end',
-              flexDirection: 'row'
+              flexDirection: 'row',
             }}
           >
             {/* <Button
@@ -382,7 +387,7 @@ export default function Profile({ navigation }) {
               <ProfilePostsArea testData={user} />
             </Tab>
             <Tab title={t('liked')} icon={IconHeart}>
-              <ProfilePostsArea testData={user} />
+              {/* <LikedProfilePosts userId={_userId} /> */}
             </Tab>
           </TabView>
         </View>
