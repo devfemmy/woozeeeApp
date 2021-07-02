@@ -93,6 +93,55 @@ const AskADoctor = ({navigation}) => {
       }
     const SERVICES = services;
     const SPECIALTY = specialty;
+
+    const doctors = [
+      {
+        id: 1,
+        image: require('assets/images/askADoc/ad1.png'),
+        name: 'Dr Wazobia Faleti',
+        experience: '8 Years',
+        patients: '22.5k',
+        review: '3',
+        title: 'Neurosurgeon'
+      },
+      {
+        id: 2,
+        image: require('assets/images/askADoc/ad1.png'),
+        name: 'Dr Wazobia Faleti',
+        experience: '7 Years',
+        patients: '2.5k',
+        review: '3',
+        title: 'Dentist'
+      },
+      {
+        id: 3,
+        image: require('assets/images/askADoc/ad1.png'),
+        name: 'Dr Blessing Faleti',
+        experience: '6 Years',
+        patients: '22.1k',
+        review: '4',
+        title: 'Neurosurgeon'
+      },
+      {
+        id: 4,
+        image: require('assets/images/askADoc/ad1.png'),
+        name: 'Dr Wazobia Blessed',
+        experience: '8 Years',
+        patients: '22.5k',
+        review: '3',
+        title: 'Optician'
+      },
+      {
+        id: 5,
+        image: require('assets/images/askADoc/ad1.png'),
+        name: 'Dr Wazobia Faleti',
+        experience: '8 Years',
+        patients: '22.5k',
+        review: '3',
+        title: 'Orthopadician'
+      },
+
+    ]
     return (
         <Layout level="6" style={{ flex: 1 }}>
             <TopNavigationArea
@@ -197,12 +246,34 @@ const AskADoctor = ({navigation}) => {
                         <Text category= "h5">
                             Available Doctors
                         </Text>
-                        <Text category= "h6" style= {{color: '#043F7C', fontWeight: 'bold'}}>
+                        <Text
+                         onPress= {() => navigation.navigate('InnerPages', {title: 'Available Doctors', 
+                         address: null,
+                         name: 'Doctor Ade',
+                         image: require('../../../../../../../assets/images/askADoc/doc1.png')})} 
+                         text= "Talk to a Doctor"
+                         image= {require('../../../../../../../assets/images/askADoc/label1.png')} 
+                        category= "h6" style= {{color: '#043F7C', fontWeight: 'bold'}}>
                             See All
                         </Text>
                     </View>
                     <ScrollView horizontal>
-                    <ConnectDocCard doc= "Dr Wazobia dred" />
+                      {doctors.map(
+                        (item, index) => {
+                          return(
+                            <View key= {index}>
+                              <ConnectDocCard
+                              onPress= {() => navigation.navigate('DoctorProfile')}
+                              patient= {item.patients}
+                              review= {item.review}
+                              experience= {item.experience} 
+                              title= {item.title}
+                              source= {item.image} 
+                              doc= {item.name} />
+                            </View>
+                          )
+                        }
+                      )}
                     </ScrollView>
                   
                 </View>

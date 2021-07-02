@@ -8,7 +8,8 @@ const AppointmentBtn = (props) => {
     
         },
         btnContainer: {
-            minWidth: '45%',
+            minWidth: props.details ? '45%' :'45%',
+            // maxWidth: props.details ? '90%' : null,
             minHeight: 50,
             marginRight: 10,
             borderRadius: 7,

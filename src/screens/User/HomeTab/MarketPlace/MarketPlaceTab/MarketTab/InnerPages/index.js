@@ -54,11 +54,15 @@ const InnerPages = (props) => {
          doc= "Dr. Jules Wazobia" />
         </ScrollView>  
         : 
-        <ScrollView>
+        <ScrollView style= {styles.container}>
         <DocCard 
         hospital
         name= {address}
-        // onPress= {() => props.navigation.navigate('DoctorProfile')} 
+        onPress= {() => props.navigation.navigate('DetailsPage', {
+            name: name,
+            image: image,
+            address: address
+        })} 
         mheight= {100} 
         image= {image} 
         doc= {name} />

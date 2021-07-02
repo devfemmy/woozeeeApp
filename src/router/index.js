@@ -91,6 +91,7 @@ import ConfirmationPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTa
 import Appointments from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/Appointments/index';
 import AppointmentDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/Appointments/AppointmentDetails';
 import InnerPages from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/InnerPages/index';
+import DetailsPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/InnerPages/details';
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -163,7 +164,8 @@ export default function Router() {
       PaymentPage,
       ConfirmationPage,
       AppointmentDetails,
-      InnerPages
+      InnerPages,
+      DetailsPage
       
     },
 
