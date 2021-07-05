@@ -56,7 +56,7 @@ const screens = {
   },
   askADoc: {
     askADoctor: IconCHome,
-    appointments: IconGrid,
+    appointments: IconCWallet,
     // healthBlog: IconCWallet
   },
   charity: {

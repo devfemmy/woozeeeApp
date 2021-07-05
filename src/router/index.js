@@ -79,19 +79,19 @@ import SocialRoute from './User/HomeTab/Social';
 import MarketPlaceRoute from './User/HomeTab/MarketPlace';
 import AskADoctorRoute from './User/HomeTab/MarketPlace/AskDoctor';
 import CharityRoute from './User/HomeTab/Charity';
-import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/index';
-import Consultation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Consultation/index';
+import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/index';
+import Consultation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/Consultation/index';
 import MoreOptions from 'src/screens/User/Common/Movies/More/index';
 import PreviouslyViewed from 'src/screens/User/Common/Movies/More/PreviouslyViewed/index';
 import MyList from 'src/screens/User/Common/Movies/More/MyList/index';
 import ComingSoon from 'src/screens/User/Common/Movies/More/ComingSoon/index';
-import DoctorProfile from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/DoctorProfile/index';
-import PaymentPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Payment/index';
-import ConfirmationPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Confirmation/index';
-import Appointments from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/Appointments/index';
-import AppointmentDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/Appointments/AppointmentDetails';
-import InnerPages from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/InnerPages/index';
-import DetailsPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/InnerPages/details';
+import DoctorProfile from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/DoctorProfile/index';
+import PaymentPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/Payment/index';
+import ConfirmationPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/Confirmation/index';
+import Appointments from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/Appointments/index';
+import AppointmentDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/Appointments/AppointmentDetails';
+import InnerPages from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/InnerPages/index';
+import DetailsPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/InnerPages/details';
 
 
 const { Navigator, Screen } = createStackNavigator();
