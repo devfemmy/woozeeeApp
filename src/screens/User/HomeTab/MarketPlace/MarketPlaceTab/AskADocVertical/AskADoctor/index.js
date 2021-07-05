@@ -178,7 +178,7 @@ const AskADoctor = ({navigation}) => {
                         setFormValues={setFormValues}
                         />
                 </View>
-                <View style= {{marginVertical: 15}}>
+                <View style= {{marginVertical: 10}}>
                     <GeneralSelect
                         type="specialty"
                         label={'Select Specialty'}
@@ -186,6 +186,7 @@ const AskADoctor = ({navigation}) => {
                         setFormValues={setFormValues}
                         />
                 </View>
+                <View style= {{marginVertical: 10}}>
                     <Datepicker
                     label={'Select Date'}
                     date={date}
@@ -194,6 +195,7 @@ const AskADoctor = ({navigation}) => {
                     max= {new Date()}
                     accessoryLeft={IconCalendar}
                 />
+                </View>
                 <View style={{ paddingVertical: 20 }}>
                 <Button
                     status="danger"
@@ -208,7 +210,7 @@ const AskADoctor = ({navigation}) => {
                 </Button>
                 </View>
                 <View style= {styles.lowerContainer}>
-                    <Text category= "h5">
+                    <Text style= {{marginVertical: 5}} category= "h5">
                         Categories
                     </Text>
                     <ScrollView horizontal>
@@ -218,7 +220,7 @@ const AskADoctor = ({navigation}) => {
                         address: null,
                         name: 'Doctor Ade',
                         image: require('../../../../../../../assets/images/askADoc/doc1.png')})} 
-                        text= "Talk to a Doctor"
+                        text= "Doctor"
                         image= {require('../../../../../../../assets/images/askADoc/label1.png')} />
                         <DocLabel
                         onPress= {() => navigation.navigate('InnerPages', {title: 'Hospitals', 
