@@ -78,13 +78,18 @@ import SocialRoute from './User/HomeTab/Social';
 import MarketPlaceRoute from './User/HomeTab/MarketPlace';
 import AskADoctorRoute from './User/HomeTab/MarketPlace/AskDoctor';
 import CharityRoute from './User/HomeTab/Charity';
-import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/index';
-import Consultation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/Consultation/index';
+import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/index';
+import Consultation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/Consultation/index';
 import MoreOptions from 'src/screens/User/Common/Movies/More/index';
 import PreviouslyViewed from 'src/screens/User/Common/Movies/More/PreviouslyViewed/index';
 import MyList from 'src/screens/User/Common/Movies/More/MyList/index';
 import ComingSoon from 'src/screens/User/Common/Movies/More/ComingSoon/index';
-
+import MoneyMatters from 'src/router/User/HomeTab/MarketPlace/MoneyMatters/index';
+import MoneyMattersServices from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/MoneyMattersServices';
+import Duration from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/Duration';
+import SearchResults from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/SearchResults';
+import AdditionalInfo from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/AdditionalInfo';
+import MoneyMattersConfirmation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/Confirmation';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -118,10 +123,16 @@ export default function Router() {
       SocialRoute,
       MarketPlaceRoute,
       AskADoctorRoute,
+      MoneyMatters,
       CharityRoute,
       EditProfile,
       ChangePassword,
       Consultation,
+      MoneyMattersServices,
+      SearchResults,
+      Duration,
+      MoneyMattersConfirmation,
+      AdditionalInfo,
       UploadEntries,
       PreviewEntry,
       Settings,

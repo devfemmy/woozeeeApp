@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Image } from 'react-native';
 
 // prettier-ignore
 import {
   Layout, Button, Text,
 } from '@ui-kitten/components';
+
+import { Ionicons } from '@expo/vector-icons';
 
 import { LocaleContext } from 'src/contexts';
 
@@ -37,16 +39,46 @@ export default function PictureUpload({ navigation }) {
           <View
             style={{
               paddingHorizontal: 20,
-              paddingTop: 40,
+              paddingTop: 30,
               alignItems: 'center',
             }}
           >
             <Text category="h5">{t('transactionSuccess')}</Text>
+            {/* <Image
+              source={require('../../../assets/images/askADoc/success.png')}
+              style={{
+                width: 120,
+                height: 120,
+                resizeMode: 'contain',
+                marginTop: 30,
+              }}
+            /> */}
+            <View
+              style={{
+                backgroundColor: '#1CD699',
+                width: 100,
+                height: 100,
+                borderRadius: 150,
+                marginVertical: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Ionicons name="md-checkmark" size={50} color="white" />
+            </View>
+            <Text category="c1" status="basic" style={{ textAlign: 'center' }}>
+              Your loan application was successful. A notification has been sent
+              to your inbox.
+            </Text>
           </View>
           <View style={{ paddingHorizontal: 20, paddingTop: 50 }}>
             <View style={{ paddingVertical: 10 }}>
               <Button status="danger" accessoryRight={IconForward}>
-                <Text category="h6" status="control">
+                <Text
+                  category="h6"
+                  status="control"
+                  style={{ marginRight: 50 }}
+                >
                   {t('continue')}
                 </Text>
               </Button>

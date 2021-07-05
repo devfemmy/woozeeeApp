@@ -5,6 +5,9 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
+
+import { v4 as uuidv4 } from 'uuid';
+
 import { CheckBox, Text } from '@ui-kitten/components';
 
 function BankOptions({ logo, name, selected, onPress }) {

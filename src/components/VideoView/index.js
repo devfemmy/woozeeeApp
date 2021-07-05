@@ -81,6 +81,7 @@ const VideoView = forwardRef((props, ref) => {
   // prettier-ignore
   const [appTheme, setTheme] = useState('')
   const [_userId, setUserId] = useState('');
+  const [userImg, setUserImg] = useState('');
 
   const getTheme = async () => {
     const res = await AsyncStorage.getItem('appTheme');
@@ -92,8 +93,17 @@ const VideoView = forwardRef((props, ref) => {
     setUserId(res);
     // console.log(res);
   };
+
+  const getUserImg = async () => {
+    const res = await AsyncStorage.getItem('userImg');
+    setUserImg(res);
+    // console.log('image is ->', res);
+  };
+
   getUserId();
   getTheme();
+  getUserImg();
+
   // console.log(_userId);
 
   const { data, viewHeight, navigation, t } = props;
@@ -410,7 +420,7 @@ const VideoView = forwardRef((props, ref) => {
                 }}
               >
                 <Image
-                  source={require('assets/images/user/user2.png')}
+                  source={{ uri: item.userImageURL }}
                   defaultSource={require('assets/images/user/user2.png')}
                   style={{
                     height: 36,
@@ -503,9 +513,9 @@ const VideoView = forwardRef((props, ref) => {
             ) : (
               <Video
                 ref={videoRef}
-                isLooping
+                isLooping={true}
                 shouldPlay={true}
-                resizeMode="cover"
+                resizeMode="contain"
                 usePoster
                 posterSource={
                   item.medialThumbnail
@@ -627,7 +637,7 @@ const VideoView = forwardRef((props, ref) => {
               }}
             >
               <Image
-                source={require('assets/images/user/user1.png')}
+                source={{ uri: item.userEntryData.userImageURL }}
                 defaultSource={require('assets/images/user/user1.png')}
                 style={{
                   height: 30,

@@ -113,10 +113,14 @@ const InteractIcon = (props) => {
 const ChallengeVideo = forwardRef((props, ref) => {
   // prettier-ignore
   const {
-      data, height, videoRef, navigation
+      data, height, videoRef, navigation, viewComments
     } = props;
 
   const { item } = data;
+
+  const gotoComments = () => {
+    viewComments();
+  };
 
   // console.log('from challenge videoref -> ', videoRef);
 
@@ -346,6 +350,7 @@ const ChallengeVideo = forwardRef((props, ref) => {
                   style={{ marginBottom: 10 }}
                   Accessory={(evaProps) => <IconCChat {...evaProps} active />}
                   textContent={data.totalComments}
+                  onPress={gotoComments}
                 />
                 <InteractIcon
                   style={{ marginBottom: 15 }}

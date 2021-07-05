@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useRef } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 
 import { View, useWindowDimensions } from 'react-native';
 
@@ -14,6 +14,8 @@ import {
 } from '@ui-kitten/components';
 
 import Api from 'src/api';
+
+import { Video } from 'expo-av';
 
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
@@ -49,7 +51,7 @@ const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLD
 
 const VIEWABILITY_CONFIG = {
   minimumViewTime: 250,
-  itemVisiblePercentThreshold: 65,
+  itemVisiblePercentThreshold: 35,
 };
 
 export default function Social({ navigation }) {
@@ -58,6 +60,8 @@ export default function Social({ navigation }) {
   const { width, height } = useWindowDimensions();
 
   const { bottom, top } = useSafeAreaInsets();
+
+  const [entries, setEntries] = useState([]);
 
   const SPACING = 57 + bottom + top;
 
@@ -100,6 +104,7 @@ export default function Social({ navigation }) {
       status,
       data,
       error,
+      fetchMore,
       isFetching,
       isFetchingNextPage,
       isFetchingPreviousPage,
@@ -113,6 +118,8 @@ export default function Social({ navigation }) {
       async ({ pageParam = 1 }) => {
         const promise = await Api.getVideos(pageParam);
         promise.cancel = () => Api.cancelRequest('Request aborted');
+        // console.log(promise);
+
         return promise;
       },
       {
@@ -150,6 +157,7 @@ export default function Social({ navigation }) {
         && status !== 'error'
         && data.pages[0].pageData.data.length > 0
     ) {
+      console.log(data.pages);
       return data.pages.map((page) => (
         <React.Fragment key={page.nextID}>
           <View style={{ flex: 1 }}>
@@ -173,6 +181,8 @@ export default function Social({ navigation }) {
                 borderBottomWidth: 1,
                 borderColor: 'rgba(143, 155, 179, 0.08)',
               }}
+              onEndReached={() => fetchNextPage()}
+              onEndThreshold={0}
               data={page.pageData.data}
               keyExtractor={(_, i) => i.toString()}
               renderItem={({ item, index }) => (
@@ -186,7 +196,7 @@ export default function Social({ navigation }) {
                     navigation={navigation}
                     t={t}
                   />
-                  {index === 2 || index === 8 ? (
+                  {/* {index === 2 || index === 8 ? (
                     <MoviesSection
                       t={t}
                       navigation={navigation}
@@ -194,7 +204,7 @@ export default function Social({ navigation }) {
                       height={ITEM_HEIGHT}
                     />
                   ) : null}
-                  {index === 5 ? <StoryPostsArea /> : null}
+                  {index === 5 ? <StoryPostsArea /> : null} */}
                 </>
               )}
               getItemLayout={(data, index) => ({

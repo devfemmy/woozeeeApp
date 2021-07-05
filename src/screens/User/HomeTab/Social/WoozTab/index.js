@@ -307,27 +307,6 @@ export default function Wooz({ navigation }) {
                   { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
                 ]}
               >
-                {/* <CustomVideo
-                  ref={videoRef}
-                  resizeMode="contain"
-                  style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                  source={{ uri: page.pageData.data[index].mediaURL }}
-                  isLooping
-                  onPlaybackStatusUpdate={(playbackStatus) =>
-                    onPlaybackStatusUpdate(
-                      playbackStatus,
-                      page.pageData.data[index].userEntryData.entryId,
-                    )
-                  }
-                  isMuted={true}
-                  shouldPlay={isFocused}
-                  // prettier-ignore
-                  onReadyForDisplay={() => Animated.timing(opacity, {
-                    toValue: 1,
-                    useNativeDriver: true,
-                    duration: 500,
-                  }).start()}
-                /> */}
                 <Video
                   ref={videoRef}
                   resizeMode="contain"

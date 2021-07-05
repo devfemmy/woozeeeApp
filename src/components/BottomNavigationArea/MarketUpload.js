@@ -1,8 +1,8 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
 // prettier-ignore
 import {
-  Image, TouchableOpacity,
+  View, Image, TouchableOpacity,
 } from 'react-native';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -12,16 +12,24 @@ import {
   Layout, Divider, Button, Text,
 } from '@ui-kitten/components';
 
-import { LocaleContext } from 'src/contexts';
+import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import { IconVideoOutline, IconCloudUploadOutline } from '../CustomIcons';
+
+import { GeneralTextField } from 'src/components/FormFields';
 
 export default function MarketUpload(props) {
   const { navigation, theme } = props;
 
+  const [form, setFormValues] = useState({});
+
+  const { appState } = useContext(AppSettingsContext);
+
   const sheetRef = useRef(null);
 
   const t = useContext(LocaleContext);
+
+  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
   const handleOpenSheet = () => sheetRef.current.open();
 
@@ -45,30 +53,31 @@ export default function MarketUpload(props) {
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 6,
+        backgroundColor: '#FF5757',
       }}
     >
       <TouchableOpacity onPress={handleOpenSheet}>
         <Image
-          source={require('assets/images/icon/upload-market.png')}
+          source={require('assets/images/icon/scan.png')}
           defaultSource={require('assets/images/icon/upload-market.png')}
           style={{
-            width: 52,
-            height: 52,
-            borderRadius: 26,
+            width: 25,
+            height: 25,
+            // borderRadius: 25,
           }}
           resizeMode="cover"
         />
       </TouchableOpacity>
       <RBSheet
         ref={sheetRef}
-        height={180}
+        height={400}
         closeOnDragDown
         animationType="fade"
         customStyles={{
           container: {
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: theme,
+            backgroundColor: BG_THEME,
           },
         }}
       >
@@ -82,37 +91,47 @@ export default function MarketUpload(props) {
             paddingBottom: 30,
           }}
         >
-          <Button
-            appearance="ghost"
-            status="basic"
-            accessoryLeft={(evaProps) => (
-              <IconCloudUploadOutline {...evaProps} height={32} width={32} />
-            )}
+          <View
             style={{
+              flex: 1,
+              alignItems: 'center',
               width: '100%',
-              justifyContent: 'flex-start',
+              paddingHorizontal: 25,
             }}
           >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {t('upload')}
+            <Text category="h5" style={{ marginBottom: 20 }}>
+              Scan Product
             </Text>
-          </Button>
-          <Divider style={{ marginVertical: 2, width: '100%' }} />
-          <Button
-            appearance="ghost"
-            status="basic"
-            accessoryLeft={(evaProps) => (
-              <IconVideoOutline {...evaProps} height={32} width={32} />
-            )}
-            style={{
-              width: '100%',
-              justifyContent: 'flex-start',
-            }}
-          >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {t('record')}
+            <View style={{ flex: 1 }}>
+              <Image
+                source={require('assets/images/gifs/qr-code-scan.gif')}
+                defaultSource={require('assets/images/gifs/qr-code-scan.gif')}
+                resizeMode="cover"
+                style={{ height: '100%', width: 200, minHeight: 150 }}
+              />
+            </View>
+            <Text category="c2" style={{ marginVertical: 10 }}>
+              Have a code ?
             </Text>
-          </Button>
+            <GeneralTextField
+              type="qrCode"
+              placeholder={'Input code here'}
+              setFormValues={setFormValues}
+              style={{ marginVertical: 5 }}
+            />
+            {/* <Text >{t('completeTransfer')}</Text> */}
+            <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
+              <Button
+                status="danger"
+                size="small"
+                onPress={() => sheetRef.current.close()}
+              >
+                <Text status="control" category="h6">
+                  {t('continue')}
+                </Text>
+              </Button>
+            </View>
+          </View>
         </Layout>
       </RBSheet>
     </Layout>

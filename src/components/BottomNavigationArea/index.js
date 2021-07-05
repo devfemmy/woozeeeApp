@@ -30,6 +30,8 @@ import {
   IconCCampaign,
   IconCHero,
   IconGrid,
+  IconSettings,
+  IconClipboard,
 } from '../CustomIcons';
 
 // Screens
@@ -49,15 +51,20 @@ const screens = {
   },
   marketPlace: {
     market: IconCMarket,
-    cart: IconCCart,
-    upload: MarketUpload,
-    categories: IconCGrid,
-    profile: IconCUser2,
+    wallet: IconCWallet,
+    upload: MarketUpload, //change component to scan component
+    billPay: IconCList,
+    profile: IconCUser,
   },
   askADoc: {
     home: IconCHome,
     appointments: IconGrid,
-    healthBlog: IconCWallet
+    healthBlog: IconCWallet,
+  },
+  moneyMatters: {
+    moneyMatters: IconCHome,
+    history: IconClipboard,
+    manage: IconSettings,
   },
   charity: {
     charity: IconCCharity,

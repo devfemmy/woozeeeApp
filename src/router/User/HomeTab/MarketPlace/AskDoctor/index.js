@@ -8,7 +8,7 @@ import BottomNavigationArea from 'src/components/BottomNavigationArea';
 import MarketPlace from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab';
 
 import VideoUpload from 'src/screens/User/Common/VideoUpload';
-import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MarketTab/AskADoctor/index';
+import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/index';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
