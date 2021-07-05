@@ -25,15 +25,15 @@ import { Video } from 'expo-av';
 import { GeneralSelect } from 'src/components/FormFields/index';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 
-import loansImg from '../../../../../../../assets/images/moneyMatters/loansImg.png';
-import savingsImg from '../../../../../../../assets/images/moneyMatters/savingsImg.png';
-import insuranceImg from '../../../../../../../assets/images/moneyMatters/insuranceImg.png';
-import mutual2 from '../../../../../../../assets/images/moneyMatters/mutual2.png';
-import wallet from '../../../../../../../assets/images/moneyMatters/wallet.png';
-import deal1 from '../../../../../../../assets/images/moneyMatters/deal1.png';
-import deal2 from '../../../../../../../assets/images/moneyMatters/deal2.png';
-import deal3 from '../../../../../../../assets/images/moneyMatters/deal3.png';
-import deal4 from '../../../../../../../assets/images/moneyMatters/deal4.png';
+import loansImg from '../../../../../../assets/images/moneyMatters/loansImg.png';
+import savingsImg from '../../../../../../assets/images/moneyMatters/savingsImg.png';
+import insuranceImg from '../../../../../../assets/images/moneyMatters/insuranceImg.png';
+import mutual2 from '../../../../../../assets/images/moneyMatters/mutual2.png';
+import wallet from '../../../../../../assets/images/moneyMatters/wallet.png';
+import deal1 from '../../../../../../assets/images/moneyMatters/deal1.png';
+import deal2 from '../../../../../../assets/images/moneyMatters/deal2.png';
+import deal3 from '../../../../../../assets/images/moneyMatters/deal3.png';
+import deal4 from '../../../../../../assets/images/moneyMatters/deal4.png';
 
 const MoneyMatters = ({ route, navigation }) => {
   //   console.log(navigation, route);
@@ -77,15 +77,15 @@ const MoneyMatters = ({ route, navigation }) => {
   const sliders = [
     {
       id: 1,
-      banner: require('../../../../../../../assets/images/moneyMatters/money1.mp4'),
+      banner: require('../../../../../../assets/images/moneyMatters/money1.mp4'),
     },
     {
       id: 2,
-      banner: require('../../../../../../../assets/images/moneyMatters/money2.mp4'),
+      banner: require('../../../../../../assets/images/moneyMatters/money2.mp4'),
     },
     {
       id: 3,
-      banner: require('../../../../../../../assets/images/moneyMatters/money3.mp4'),
+      banner: require('../../../../../../assets/images/moneyMatters/money3.mp4'),
     },
   ];
 

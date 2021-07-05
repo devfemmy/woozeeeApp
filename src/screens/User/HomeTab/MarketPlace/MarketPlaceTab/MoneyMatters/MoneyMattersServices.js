@@ -10,11 +10,11 @@ import TopNavigationArea from 'src/components/TopNavigationArea/index';
 
 import { ScrollView } from 'react-native-gesture-handler';
 
-import insurance from '../../../../../../../assets/images/moneyMatters/insurance.png';
-import fixedDeposit from '../../../../../../..//assets/images/moneyMatters/fixedDeposit.png';
-import mutual from '../../../../../../../assets/images/moneyMatters/mutual.png';
-import loan from '../../../../../../../assets/images/moneyMatters/loan.png';
-import savings from '../../../../../../../assets/images/moneyMatters/savings.png';
+import insurance from '../../../../../../assets/images/moneyMatters/insurance.png';
+import fixedDeposit from '../../../../../../assets/images/moneyMatters/fixedDeposit.png';
+import mutual from '../../../../../../assets/images/moneyMatters/mutual.png';
+import loan from '../../../../../../assets/images/moneyMatters/loan.png';
+import savings from '../../../../../../assets/images/moneyMatters/savings.png';
 
 const MoneyMattersServices = (props) => {
   // console.log(props.route.params);

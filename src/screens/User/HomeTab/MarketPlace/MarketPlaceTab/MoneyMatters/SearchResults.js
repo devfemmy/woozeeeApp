@@ -30,25 +30,25 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
-import insurance from '../../../../../../../assets/images/moneyMatters/insurance.png';
+import insurance from '../../../../../../assets/images/moneyMatters/insurance.png';
 
-import fixedDeposit from '../../../../../../..//assets/images/moneyMatters/fixedDeposit.png';
+import fixedDeposit from '../../../../../../assets/images/moneyMatters/fixedDeposit.png';
 
-import mutual from '../../../../../../../assets/images/moneyMatters/mutual.png';
+import mutual from '../../../../../../assets/images/moneyMatters/mutual.png';
 
-import loan from '../../../../../../../assets/images/moneyMatters/loan.png';
+import loan from '../../../../../../assets/images/moneyMatters/loan.png';
 
-import savings from '../../../../../../../assets/images/moneyMatters/savings.png';
+import savings from '../../../../../../assets/images/moneyMatters/savings.png';
 
-import lapo from '../../../../../../../assets/images/moneyMatters/lapo.png';
+import lapo from '../../../../../../assets/images/moneyMatters/lapo.png';
 
-import lapoBig from '../../../../../../../assets/images/moneyMatters/lapoBig.png';
+import lapoBig from '../../../../../../assets/images/moneyMatters/lapoBig.png';
 
-import zed from '../../../../../../../assets/images/moneyMatters/zed.png';
+import zed from '../../../../../../assets/images/moneyMatters/zed.png';
 
-import reho from '../../../../../../../assets/images/moneyMatters/reho.png';
+import reho from '../../../../../../assets/images/moneyMatters/reho.png';
 
-import fina from '../../../../../../../assets/images/moneyMatters/fina.png';
+import fina from '../../../../../../assets/images/moneyMatters/fina.png';
 
 const SearchResults = (props) => {
   const { appState } = useContext(AppSettingsContext);

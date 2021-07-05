@@ -18,11 +18,11 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import { AntDesign } from '@expo/vector-icons';
 
-import insurance from '../../../../../../../assets/images/moneyMatters/insurance.png';
-import fixedDeposit from '../../../../../../..//assets/images/moneyMatters/fixedDeposit.png';
-import mutual from '../../../../../../../assets/images/moneyMatters/mutual.png';
-import loan from '../../../../../../../assets/images/moneyMatters/loan.png';
-import savings from '../../../../../../../assets/images/moneyMatters/savings.png';
+import insurance from '../../../../../../assets/images/moneyMatters/insurance.png';
+import fixedDeposit from '../../../../../../assets/images/moneyMatters/fixedDeposit.png';
+import mutual from '../../../../../../assets/images/moneyMatters/mutual.png';
+import loan from '../../../../../../assets/images/moneyMatters/loan.png';
+import savings from '../../../../../../assets/images/moneyMatters/savings.png';
 
 const Duration = (props) => {
   const routeBack = (data) =>

@@ -84,6 +84,7 @@ import MoreOptions from 'src/screens/User/Common/Movies/More/index';
 import PreviouslyViewed from 'src/screens/User/Common/Movies/More/PreviouslyViewed/index';
 import MyList from 'src/screens/User/Common/Movies/More/MyList/index';
 import ComingSoon from 'src/screens/User/Common/Movies/More/ComingSoon/index';
+// import MoneyMatters from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/index';
 import MoneyMatters from 'src/router/User/HomeTab/MarketPlace/MoneyMatters/index';
 import MoneyMattersServices from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/MoneyMattersServices';
 import Duration from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/Duration';

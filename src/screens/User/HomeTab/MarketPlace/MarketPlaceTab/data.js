@@ -3,7 +3,7 @@ const marketPlaceItems = [
     id: 1,
     title: 'moneyMatters',
     icon: require('assets/images/icon/atm-filled.png'),
-    route: 'MoneyMattersTab',
+    route: 'MoneyMatters',
   },
   {
     id: 2,
