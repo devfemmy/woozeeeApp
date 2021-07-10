@@ -242,6 +242,7 @@ const PreviewEntry = (props) => {
       appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
       measurementId: 'G-XQKMT94R9R',
     };
+    
 
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);

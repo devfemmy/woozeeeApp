@@ -92,6 +92,8 @@ import Appointments from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/As
 import AppointmentDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/Appointments/AppointmentDetails';
 import InnerPages from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/InnerPages/index';
 import DetailsPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/InnerPages/details';
+import ChatScreen from 'src/screens/User/Common/Messaging/ChatScreen';
+import MessageInbox from 'src/screens/User/Common/Messaging/messge_inbox';
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -165,7 +167,9 @@ export default function Router() {
       ConfirmationPage,
       AppointmentDetails,
       InnerPages,
-      DetailsPage
+      DetailsPage,
+      ChatScreen,
+      MessageInbox
       
     },
 

@@ -170,7 +170,7 @@ export default function UserProfile({ route, navigation }) {
   //     </View>
   //   );
   // };
-
+console.log("image", imgUrl)
   return (
     <Layout level="6" style={{ flex: 1 }}>
       {/* <PlayVideoModal /> */}
@@ -279,7 +279,8 @@ export default function UserProfile({ route, navigation }) {
             alignItems: 'center',
           }}
         >
-          <View
+          <TouchableOpacity
+            onPress= {() => navigation.navigate('ChatScreen', {guestUid: _id, name: `${fName} ${sName}`})}
             status="primary"
             style={{
               // backgroundColor: 'transparent',
@@ -295,7 +296,7 @@ export default function UserProfile({ route, navigation }) {
             }}
           >
             <SimpleLineIcons name="envelope" size={18} color="#003153" />
-          </View>
+          </TouchableOpacity>
           <Button
             status="primary"
             size="tiny"
