@@ -7,6 +7,7 @@ import React, {
   useRef,
   forwardRef,
   useImperativeHandle,
+  useEffect,
 } from 'react';
 
 import {
@@ -16,7 +17,10 @@ import {
   Share,
   TouchableWithoutFeedback,
   Alert,
+  ScrollView,
 } from 'react-native';
+
+import UserTemplate from '../UserTemplate/index';
 
 import Moment from 'react-moment';
 
@@ -34,7 +38,7 @@ import { Video } from 'expo-av';
 
 // prettier-ignore
 import {
-  Text, Button, Divider, Layout,
+  Text, Button, Divider, Layout, Input, List
 } from '@ui-kitten/components';
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -67,6 +71,7 @@ import {
   IconMoreHorizontal,
   IconPaperPlane,
   IconBookmark,
+  IconSearch,
   IconCEye,
 } from 'src/components/CustomIcons';
 
@@ -79,7 +84,11 @@ import { TextInput } from 'react-native';
 const VideoView = forwardRef((props, ref) => {
   // const db = firebase.firestore();
   // prettier-ignore
-  const [appTheme, setTheme] = useState('')
+  const { appState } = useContext(AppSettingsContext);
+
+  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
+
+  const [appTheme, setTheme] = useState('');
   const [_userId, setUserId] = useState('');
   const [userImg, setUserImg] = useState('');
 
@@ -110,8 +119,6 @@ const VideoView = forwardRef((props, ref) => {
 
   const { item } = data;
 
-  const { appState, appOptions } = useAppSettings();
-
   // console.log(item);
 
   const { userId } = item;
@@ -119,6 +126,8 @@ const VideoView = forwardRef((props, ref) => {
   const videoRef = useRef(null);
 
   const sheetRef = useRef(null);
+
+  const sendSheet = useRef(null);
 
   const isMounted = useRef(false);
 
@@ -141,12 +150,18 @@ const VideoView = forwardRef((props, ref) => {
     isLike: isLiked,
   };
 
-  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
+  const [userList, setUserList] = useState([]);
+
+  const fetchUsers = async () => {
+    const res = await Api.getAllUsers(searchForm.value);
+    const { users } = res;
+    setUserList([...users]);
+  };
 
   const handleShare = async () => {
     try {
       const result = await Share.share({
-        message: item.mediaURL,
+        message: `woozeee://entries/${item._id}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -307,6 +322,10 @@ const VideoView = forwardRef((props, ref) => {
     await viewVideo(item_id);
   };
 
+  const handleSend = async () => {
+    sendSheet.current.open();
+  };
+
   const handleOpenSheet = () => sheetRef.current.open();
 
   useImperativeHandle(ref, () => ({
@@ -382,7 +401,112 @@ const VideoView = forwardRef((props, ref) => {
     }, [item.mediaURL]),
   );
 
+  const handleChange = (inputSearch) => {
+    setSearchFormValues((prevState) => ({
+      ...prevState,
+      value: inputSearch,
+    }));
+  };
+
   const [text, setText] = useState('');
+
+  const [searchForm, setSearchFormValues] = useState({
+    value: '',
+    status: 'basic',
+  });
+
+  useEffect(() => {
+    fetchUsers();
+  }, [searchForm.value]);
+
+  const SendContent = () => {
+    return (
+      <View
+        style={{
+          height: '100%',
+        }}
+      >
+        <View
+          style={{
+            borderTopRightRadius: 5,
+            borderTopLeftRadius: 5,
+            marginHorizontal: 20,
+            // marginVertical: 15,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Text category="h6" status="primary">
+            Share Post
+          </Text>
+          <Feather
+            name="x"
+            size={24}
+            color="#2E5894"
+            onPress={() => sendSheet.current.close()}
+          />
+        </View>
+        <View
+          style={{
+            paddingVertical: 20,
+            paddingHorizontal: 20,
+          }}
+        >
+          <Input
+            style={{
+              width: '100%',
+            }}
+            size="medium"
+            value={searchForm.value}
+            accessibilityLabel="Search"
+            placeholder={'Search users'}
+            status={searchForm.status}
+            onChangeText={handleChange}
+            accessoryLeft={IconSearch}
+          />
+        </View>
+        {userList.length > 0 ? (
+          <List
+            style={{ backgroundColor: 'transparent', paddingVertical: 10 }}
+            alwaysBounceVertical
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            data={userList}
+            keyExtractor={(_, i) => i.toString()}
+            renderItem={(user, index) =>
+              searchForm.value.length > 1 && (
+                <UserTemplate
+                  key={index}
+                  userProfilePic={require('../../assets/images/user/user1.png')}
+                  displayName={`${user.item.fName} ${user.item.sName}`}
+                  userId={user.item._id}
+                  navigation={navigation}
+                />
+              )
+            }
+            getItemLayout={(data, index) => ({
+              length: 150,
+              offset: 150 * index,
+              index,
+            })}
+          />
+        ) : (
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text>User not found</Text>
+          </View>
+        )}
+      </View>
+    );
+  };
 
   return (
     <Root>
@@ -513,9 +637,8 @@ const VideoView = forwardRef((props, ref) => {
             ) : (
               <Video
                 ref={videoRef}
-                isLooping={true}
-                shouldPlay={true}
-                resizeMode="contain"
+                source={{ uri: item.mediaURL }}
+                resizeMode="cover"
                 usePoster
                 posterSource={
                   item.medialThumbnail
@@ -529,6 +652,7 @@ const VideoView = forwardRef((props, ref) => {
                 }}
                 style={{ flex: 1 }}
               />
+              // <Text>Video</Text>
             )}
           </View>
         </TouchableWithoutFeedback>
@@ -602,6 +726,10 @@ const VideoView = forwardRef((props, ref) => {
                 marginVertical: 2,
                 marginHorizontal: 8,
               }}
+              onPress={
+                () => handleSend()
+                // props.navigation.navigate('DeepLinkPost', { _id: item._id })
+              }
             />
           </View>
           <View>
@@ -782,6 +910,30 @@ const VideoView = forwardRef((props, ref) => {
               {t('shareTo')}
             </Text>
           </Button>
+        </Layout>
+      </RBSheet>
+      <RBSheet
+        ref={sendSheet}
+        height={400}
+        closeOnDragDown
+        animationType="fade"
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: BG_THEME,
+          },
+        }}
+      >
+        <Layout
+          level="5"
+          style={{
+            flex: 1,
+            width: '100%',
+            // paddingBottom: 30,
+          }}
+        >
+          <SendContent />
         </Layout>
       </RBSheet>
     </Root>

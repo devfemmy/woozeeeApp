@@ -43,7 +43,7 @@ const AllMovies = () => {
                         Exciting     Dramas     Comedy     Nollywood
                         </Text>
                     </View>
-                    <View style= {styles.buttonContainer}>
+                    {/* <View style= {styles.buttonContainer}>
                         <TextIcon 
                         width= "88%"
                         bg= "#FF5757"
@@ -58,7 +58,23 @@ const AllMovies = () => {
                         color= "#FF5757" fill= "#FF5757" 
                         text= "Info" 
                         icon_name= "alert-circle-outline" />  
-                    </View>
+                    </View> */}
+                </View>
+                <View style= {{paddingHorizontal: 20, paddingVertical: 5}}>
+                <TextIcon 
+                    // width= "88%"
+                    bg= "#FF5757"
+                    color= "white" fill= "white" 
+                    text= "Purchase" 
+                    icon_name= "shopping-cart-outline" /> 
+                <View style= {{marginVertical: 5, alignItems: 'center'}}>
+                <Text>
+                Cast: Sir Dee, Seyi Awolowo, Avala
+                </Text>
+                <Text>
+                Director: Stephanie Dadet
+                </Text>
+              </View> 
                 </View>
                 <View style= {styles.lowerContainer}>
                     <MovieScroll

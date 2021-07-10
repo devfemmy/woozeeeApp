@@ -9,6 +9,7 @@ import MarketPlace from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab';
 
 import VideoUpload from 'src/screens/User/Common/VideoUpload';
 import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/index';
+import Appointments from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/Appointments/index';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -18,8 +19,8 @@ export default function AskADoctorRoute() {
       detachInactiveScreens
       tabBar={(props) => <BottomNavigationArea {...props} page="askADoc" />}
     >
-      <Screen name="home" component={AskADoctor} />
-      <Screen name="appointments" component={AskADoctor} />
+      <Screen name="askADoctor" component={AskADoctor} />
+      <Screen name="appointments" component={Appointments} />
       <Screen name="healthBlog" component={AskADoctor} />
     </Navigator>
   );

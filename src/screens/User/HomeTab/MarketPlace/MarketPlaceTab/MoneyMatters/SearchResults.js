@@ -7,6 +7,8 @@ import {
   Button,
   Modal,
   Divider,
+  Radio,
+  RadioGroup,
 } from '@ui-kitten/components';
 
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
@@ -58,7 +60,11 @@ const SearchResults = (props) => {
 
   const sheetRef = useRef(null);
 
+  const sortSheetRef = useRef(null);
+
   const t = useContext(LocaleContext);
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [selectedService, setSelectedService] = useState([]);
 
@@ -298,7 +304,73 @@ const SearchResults = (props) => {
       </View>
     );
   };
-  //   <MaterialCommunityIcons name="transfer-up" size={24} color="black" />
+
+  const SortContent = () => {
+    return (
+      <View
+        style={{
+          height: '100%',
+        }}
+      >
+        <View
+          style={{
+            borderTopRightRadius: 5,
+            borderTopLeftRadius: 5,
+            marginHorizontal: 20,
+            // marginVertical: 15,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Text category="h6" status="primary">
+            Sort By
+          </Text>
+          <Feather
+            name="x"
+            size={24}
+            color="#2E5894"
+            onPress={() => sortSheetRef.current.close()}
+          />
+        </View>
+        <View
+          style={{
+            paddingVertical: 30,
+            paddingHorizontal: 20,
+          }}
+        >
+          <RadioGroup
+            selectedIndex={selectedIndex}
+            onChange={(index) => setSelectedIndex(index)}
+          >
+            <Radio>Low to High Interest</Radio>
+            <Divider />
+            <Radio>High to Low Interest</Radio>
+          </RadioGroup>
+          <Button
+            status="danger"
+            size="large"
+            accessibilityLiveRegion="assertive"
+            accessibilityComponentType="button"
+            accessibilityLabel="Continue"
+            // disabled={isLoading}
+            // onPress={routeAddInfo}
+            style={{
+              elevation: 5,
+              shadowColor: '#dcdcdc',
+              shadowOffset: { width: 0, height: 3 },
+              shadowOpacity: 1,
+              shadowRadius: 1,
+              marginTop: 30,
+            }}
+          >
+            <Text status="control">{'Get Loan'}</Text>
+          </Button>
+        </View>
+      </View>
+    );
+  };
 
   const LoanOptions = ({ img, interestRate, amount, level }) => {
     return (
@@ -421,12 +493,13 @@ const SearchResults = (props) => {
             <Text category="c1" status="basic" style={{ marginBottom: 5 }}>
               Sorted by
             </Text>
-            <View
+            <TouchableOpacity
               style={{
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
               }}
+              onPress={() => sortSheetRef.current.open()}
             >
               <Text category="c2" status="basic">
                 Low to High Interest
@@ -437,7 +510,7 @@ const SearchResults = (props) => {
                 color="#043F7C"
                 style={{ marginHorizontal: 5 }}
               />
-            </View>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity>
             <Fontisto
@@ -510,46 +583,19 @@ const SearchResults = (props) => {
             // paddingBottom: 30,
           }}
         >
-          <View
-            style={{
-              width: '100%',
-              justifyContent: 'flex-start',
-              // paddingBottom: 25,
-              paddingHorizontal: 20,
-            }}
-          ></View>
-          {/* <View style={{ paddingHorizontal: 20 }}></View> */}
-          {/* <View
-            style={{
-              paddingVertical: 20,
-              paddingHorizontal: 20,
-              width: '100%',
-            }}
-          >
-            <Button
-              status="danger"
-              accessibilityLiveRegion="assertive"
-              accessibilityComponentType="button"
-              accessibilityLabel="Continue"
-              style={{ width: '100%' }}
-              onPress={() => sheetRef.current.close()}
-            >
-              <Text status="control">{t('done')}</Text>
-            </Button>
-          </View> */}
           <ModalContent />
         </Layout>
       </RBSheet>
-      {/* <RBSheet
-        ref={sheetRef}
-        height={450}
+      <RBSheet
+        ref={sortSheetRef}
+        height={300}
         closeOnDragDown
         animationType="fade"
         customStyles={{
           container: {
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'transparent',
+            backgroundColor: BG_THEME,
           },
         }}
       >
@@ -558,11 +604,12 @@ const SearchResults = (props) => {
           style={{
             flex: 1,
             width: '100%',
+            // paddingBottom: 30,
           }}
         >
-          <ModalContent />
+          <SortContent />
         </Layout>
-      </RBSheet> */}
+      </RBSheet>
     </Layout>
   );
 };

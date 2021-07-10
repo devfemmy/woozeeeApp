@@ -44,6 +44,7 @@ import UserProfile from 'src/screens/User/Common/UserProfile';
 import ProfilePostsWooz from 'src/screens/User/Common/UserProfile/ProfilePostsWooz';
 import ProfileLikedPosts from 'src/screens/User/Common/UserProfile/ProfileLikedPosts';
 import Follow from 'src/screens/User/Common/Follow';
+import DeepLinkPost from '../components/DeepLinkVideo/index';
 
 // Ask a doctor
 
@@ -79,6 +80,13 @@ import MarketPlaceRoute from './User/HomeTab/MarketPlace';
 import AskADoctorRoute from './User/HomeTab/MarketPlace/AskDoctor';
 import CharityRoute from './User/HomeTab/Charity';
 import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/index';
+import Appointments from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/Appointments';
+import AppointmentDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/Appointments/AppointmentDetails';
+import DoctorProfile from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/DoctorProfile/index';
+import PaymentPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/Payment/index';
+import ConfirmationPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/Confirmation/index';
+import InnerPages from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/InnerPages/index';
+import DetailsPage from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/InnerPages/details';
 import Consultation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/Consultation/index';
 import MoreOptions from 'src/screens/User/Common/Movies/More/index';
 import PreviouslyViewed from 'src/screens/User/Common/Movies/More/PreviouslyViewed/index';
@@ -148,6 +156,7 @@ export default function Router() {
       LiveStream,
       Messaging,
       Comments,
+      DeepLinkPost,
       Chats,
       Search,
       Rankings,
@@ -163,6 +172,13 @@ export default function Router() {
       BillElectricity,
       Report,
       AskADoctor,
+      Appointments,
+      DoctorProfile,
+      PaymentPage,
+      ConfirmationPage,
+      AppointmentDetails,
+      InnerPages,
+      DetailsPage,
     },
 
     Common: {
@@ -178,8 +194,19 @@ export default function Router() {
     })();
   }, []);
 
+  const config = {
+    screens: {
+      DeepLinkPost: 'entries/:_id',
+    },
+  };
+
+  const linking = {
+    prefixes: ['app.woozeee.com/', 'woozeee://'],
+    config,
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Navigator detachInactiveScreens headerMode="none">
         {Object.entries({
           ...(authState.loginToken ? screens.User : screens.Auth),
