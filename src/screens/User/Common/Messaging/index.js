@@ -7,7 +7,7 @@ import { LocaleContext } from 'src/contexts';
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import Notifications from './Notifications';
-import Inbox from './Inbox';
+import Inbox from './messge_inbox';
 
 export default function Messaging({ navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(0);

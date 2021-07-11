@@ -423,7 +423,7 @@ const VideoView = forwardRef((props, ref) => {
     return (
       <View
         style={{
-          height: '100%',
+          height: '90%',
         }}
       >
         <View
@@ -431,7 +431,7 @@ const VideoView = forwardRef((props, ref) => {
             borderTopRightRadius: 5,
             borderTopLeftRadius: 5,
             marginHorizontal: 20,
-            // marginVertical: 15,
+            marginTop: 15,
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -450,7 +450,7 @@ const VideoView = forwardRef((props, ref) => {
         </View>
         <View
           style={{
-            paddingVertical: 20,
+            paddingTop: 20,
             paddingHorizontal: 20,
           }}
         >
@@ -921,7 +921,7 @@ const VideoView = forwardRef((props, ref) => {
           container: {
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: BG_THEME,
+            backgroundColor: 'transparent',
           },
         }}
       >
