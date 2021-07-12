@@ -179,7 +179,7 @@ export default function Social({ navigation }) {
             showsVerticalScrollIndicator={false}
             removeClippedSubviews
             onViewableItemsChanged={handleOnViewableItemsChanged}
-            viewabilityConfig={VIEWABILITY_CONFIG}
+            // viewabilityConfig={VIEWABILITY_CONFIG}
             ListHeaderComponent={StoryPostsArea}
             ListHeaderComponentStyle={{
               paddingVertical: 10,

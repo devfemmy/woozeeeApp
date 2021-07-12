@@ -51,6 +51,8 @@ import firebase from '@react-native-firebase/app';
 
 import firestore from '@react-native-firebase/firestore';
 
+import { SendMessage, RecieveMessage } from '../../services/Firebase/Message';
+
 import InteractIcon from 'src/components/InteractIcon';
 
 import { Toast, Content, Root } from 'native-base';
@@ -113,13 +115,9 @@ const VideoView = forwardRef((props, ref) => {
   getTheme();
   getUserImg();
 
-  // console.log(_userId);
-
   const { data, viewHeight, navigation, t } = props;
 
   const { item } = data;
-
-  // console.log(item);
 
   const { userId } = item;
 
@@ -137,7 +135,6 @@ const VideoView = forwardRef((props, ref) => {
 
   const [totalLikes, setTotalLikes] = useState(item.totalLikes);
 
-  // const [hideText, setHideText] = useState(true);
   const [form, setFormValues] = useState({
     comment: '',
     entryId: item.userId,
@@ -256,6 +253,7 @@ const VideoView = forwardRef((props, ref) => {
     setFollowing(!following);
     await handleFollow(userId, !following);
   };
+
   const sendComment = async (commentMessage) => {
     const userId = await AsyncStorage.getItem('userid');
     const userData = await getUserData(userId);
@@ -291,6 +289,27 @@ const VideoView = forwardRef((props, ref) => {
         delivered: false,
         sent: true,
       });
+  };
+
+  const sharePostToDm = async (currentUserId, guestUserId, postUrl) => {
+    // console.log(currentUserId, guestUserId, postUrl);
+    SendMessage(currentUserId, guestUserId, postUrl, '')
+      .then((res) => {
+        console.log(res);
+        // this.setState({ message: '' })
+      })
+      .catch((err) => {
+        alert(err);
+      });
+
+    RecieveMessage(currentUserId, guestUserId, postUrl, '')
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+    sendSheet.current.close();
   };
 
   const routeReport = () => {
@@ -334,10 +353,10 @@ const VideoView = forwardRef((props, ref) => {
         await videoRef.current.playAsync();
         await videoRef.current.getStatusAsync();
         // console.log(status);
-        if (status.isPlaying) {
-          handleView(item._id);
-          return;
-        }
+        // if (status.isPlaying) {
+        //   handleView(item._id);
+        //   return;
+        // }
       } catch (e) {
         const msg = e;
       }
@@ -401,13 +420,6 @@ const VideoView = forwardRef((props, ref) => {
     }, [item.mediaURL]),
   );
 
-  const handleChange = (inputSearch) => {
-    setSearchFormValues((prevState) => ({
-      ...prevState,
-      value: inputSearch,
-    }));
-  };
-
   const [text, setText] = useState('');
 
   const [searchForm, setSearchFormValues] = useState({
@@ -415,98 +427,23 @@ const VideoView = forwardRef((props, ref) => {
     status: 'basic',
   });
 
+  const handleChange = (inputSearch) => {
+    setSearchFormValues((prevState) => ({
+      ...prevState,
+      value: inputSearch,
+    }));
+  };
+
   useEffect(() => {
     fetchUsers();
   }, [searchForm.value]);
 
-  const SendContent = () => {
-    return (
-      <View
-        style={{
-          height: '90%',
-        }}
-      >
-        <View
-          style={{
-            borderTopRightRadius: 5,
-            borderTopLeftRadius: 5,
-            marginHorizontal: 20,
-            marginTop: 15,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Text category="h6" status="primary">
-            Share Post
-          </Text>
-          <Feather
-            name="x"
-            size={24}
-            color="#2E5894"
-            onPress={() => sendSheet.current.close()}
-          />
-        </View>
-        <View
-          style={{
-            paddingTop: 20,
-            paddingHorizontal: 20,
-          }}
-        >
-          <Input
-            style={{
-              width: '100%',
-            }}
-            size="medium"
-            value={searchForm.value}
-            accessibilityLabel="Search"
-            placeholder={'Search users'}
-            status={searchForm.status}
-            onChangeText={handleChange}
-            accessoryLeft={IconSearch}
-          />
-        </View>
-        {userList.length > 0 ? (
-          <List
-            style={{ backgroundColor: 'transparent', paddingVertical: 10 }}
-            alwaysBounceVertical
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            data={userList}
-            keyExtractor={(_, i) => i.toString()}
-            renderItem={(user, index) =>
-              searchForm.value.length > 1 && (
-                <UserTemplate
-                  key={index}
-                  userProfilePic={require('../../assets/images/user/user1.png')}
-                  displayName={`${user.item.fName} ${user.item.sName}`}
-                  userId={user.item._id}
-                  navigation={navigation}
-                />
-              )
-            }
-            getItemLayout={(data, index) => ({
-              length: 150,
-              offset: 150 * index,
-              index,
-            })}
-          />
-        ) : (
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text>User not found</Text>
-          </View>
-        )}
-      </View>
-    );
-  };
+  // const SendContent = () => {
+
+  //   return (
+
+  //   );
+  // };
 
   return (
     <Root>
@@ -636,9 +573,11 @@ const VideoView = forwardRef((props, ref) => {
               </View>
             ) : (
               <Video
-                ref={videoRef}
+                // ref={videoRef}
                 source={{ uri: item.mediaURL }}
                 resizeMode="cover"
+                shouldPlay={true}
+                isLooping={true}
                 usePoster
                 posterSource={
                   item.medialThumbnail
@@ -933,7 +872,97 @@ const VideoView = forwardRef((props, ref) => {
             // paddingBottom: 30,
           }}
         >
-          <SendContent />
+          <View
+            style={{
+              height: '90%',
+            }}
+          >
+            <View
+              style={{
+                borderTopRightRadius: 5,
+                borderTopLeftRadius: 5,
+                marginHorizontal: 20,
+                marginTop: 15,
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <Text category="h6" status="primary">
+                Share Post To
+              </Text>
+              <Feather
+                name="x"
+                size={24}
+                color="#2E5894"
+                onPress={() => sendSheet.current.close()}
+              />
+            </View>
+            <View
+              style={{
+                paddingTop: 20,
+                paddingHorizontal: 20,
+              }}
+            >
+              <Input
+                style={{
+                  width: '100%',
+                }}
+                size="medium"
+                value={searchForm.value}
+                accessibilityLabel="Search"
+                placeholder={'Search'}
+                status={searchForm.status}
+                onChangeText={handleChange}
+                accessoryLeft={IconSearch}
+              />
+            </View>
+            {userList.length > 0 ? (
+              <List
+                style={{ backgroundColor: 'transparent', paddingVertical: 10 }}
+                alwaysBounceVertical
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                data={userList}
+                keyExtractor={(_, i) => i.toString()}
+                renderItem={(user, index) =>
+                  searchForm.value.length > 1 && (
+                    <UserTemplate
+                      key={index}
+                      userProfilePic={require('../../assets/images/user/user1.png')}
+                      displayName={`${user.item.fName} ${user.item.sName}`}
+                      userId={user.item._id}
+                      navigation={navigation}
+                      sendTo={() =>
+                        sharePostToDm(
+                          _userId,
+                          user.item._id,
+                          `woozeee://entries/${item._id}`,
+                        )
+                      }
+                    />
+                  )
+                }
+                getItemLayout={(data, index) => ({
+                  length: 150,
+                  offset: 150 * index,
+                  index,
+                })}
+              />
+            ) : (
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Text>User not found</Text>
+              </View>
+            )}
+          </View>
         </Layout>
       </RBSheet>
     </Root>

@@ -39,6 +39,7 @@ import LiveStream from 'src/screens/User/Common/LiveStream';
 import Messaging from 'src/screens/User/Common/Messaging';
 import Comments from 'src/screens/User/Common/Comments';
 import Chats from 'src/screens/User/Common/Chats';
+import ChatScreen from '../screens/User/Common/Messaging/ChatScreen';
 import Rankings from 'src/screens/User/Common/Rankings';
 import UserProfile from 'src/screens/User/Common/UserProfile';
 import ProfilePostsWooz from 'src/screens/User/Common/UserProfile/ProfilePostsWooz';
@@ -158,6 +159,7 @@ export default function Router() {
       Comments,
       DeepLinkPost,
       Chats,
+      ChatScreen,
       Search,
       Rankings,
       UserProfile,

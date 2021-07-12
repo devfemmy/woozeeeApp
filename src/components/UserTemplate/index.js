@@ -8,9 +8,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { Input, Layout, List, Text, Divider } from '@ui-kitten/components';
 
-const UserTemplate = ({ userProfilePic, displayName, userId, navigation }) => {
+const UserTemplate = ({
+  userProfilePic,
+  displayName,
+  userId,
+  navigation,
+  sendTo,
+}) => {
   const sendMessage = async () => {
-    console.log('message sent');
+    // console.log('message sent');
+    sendTo();
     // const userData = await getUserData(userId);
     // const { data } = userData;
     // await navigation.navigate('UserProfile', data);
