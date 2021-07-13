@@ -77,7 +77,7 @@ class ChatScreen extends Component {
     // }
 
     sendMessage = async () => {
-        const {guestUid, name} = this.props.route.params;
+        const {guestUid, name, image} = this.props.route.params;
         if (this.state.message) {
             SendMessage(this.state.currentUid, this.state.guestUid, this.state.message, "").
                 then((res) => {
@@ -95,9 +95,9 @@ class ChatScreen extends Component {
                     alert(err)
                 })
 
-            AddUser(name, guestUid).
+            AddUser(name, guestUid, image).
                 then(async () => {
-                    this.setState({ loader: false });
+                    // this.setState({ loader: false });
                     // await AsyncStorage.setItem('UID', userUID);
                     // this.props.navigation.navigate('Login');
                 }).

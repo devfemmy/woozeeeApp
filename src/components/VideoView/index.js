@@ -79,9 +79,8 @@ import {
   IconCEye,
 } from 'src/components/CustomIcons';
 
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 
-import { Ionicons } from '@expo/vector-icons';
 
 import { TextInput } from 'react-native';
 

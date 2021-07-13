@@ -11,7 +11,7 @@ import DoctorSlot from 'src/components/DoctorSlot/index';
 
 const DoctorProfile = (props) => {
 
-    const [active, setActive] = useState(false)
+    const [active, setActive] = useState(true)
     return (
         <Layout level="6" style={{ flex: 1 }}>
             <TopNavigationArea
@@ -24,7 +24,7 @@ const DoctorProfile = (props) => {
                 profile 
                 title= "General Practitioner"
                 onPress= {() => props.navigation.navigate('DoctorProfile')} 
-                mheight= {100} image= {require('../../../../../../../../assets/images/askADoc/doc1.png')} 
+                mheight= {150} image= {require('../../../../../../../../assets/images/askADoc/doc1.png')} 
                 doc= "Dr. Jules Wazobia" />
                 <View style= {{marginVertical: 10}}>
                     <View style= {styles.lowerCon}>

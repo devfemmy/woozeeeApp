@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { View, ScrollView, Image } from 'react-native';
+import { View, ScrollView, Image, StyleSheet } from 'react-native';
 
 // prettier-ignore
 import {
@@ -51,11 +51,11 @@ export default function PictureUpload({ navigation, route }) {
               alignItems: 'center',
             }}
           >
-            <Image
+            {/* <Image
               style={{ width: 120, height: 120, resizeMode: 'contain' }}
               source={require('../../../assets/images/askADoc/success.png')}
-            />
-            <Text category="h5">{t('transactionSuccess')}</Text>
+            /> */}
+          
             {/* <Image
               source={require('../../../assets/images/askADoc/success.png')}
               style={{
@@ -78,7 +78,8 @@ export default function PictureUpload({ navigation, route }) {
             >
               <Ionicons name="md-checkmark" size={50} color="white" />
             </View>
-            <Text category="c1" status="basic" style={{ textAlign: 'center' }}>
+            <Text category="h5">{t('transactionSuccess')}</Text>
+            <Text category="c1" status="basic" style={{ textAlign: 'center', marginVertical: 10 }}>
               Your loan application was successful. A notification has been sent
               to your inbox.
             </Text>

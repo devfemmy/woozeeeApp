@@ -43,7 +43,7 @@ export default function TopNavigationArea(props) {
     onStreamClick,
   } = props;
 
-  const routeSearch = useCallback(() => navigation.navigate('Search'), [
+  const routeSearch = useCallback(() => navigation.navigate('Search', {chat: null}), [
     navigation,
   ]);
 

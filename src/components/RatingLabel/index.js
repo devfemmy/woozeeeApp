@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: 'rgba(4, 63, 124, 0.1)',
-        width: Dimensions.get('window').width/8,
-        paddingHorizontal: 5,
+        width: Dimensions.get('window').width/9,
+        paddingHorizontal: 2,
         borderRadius: 4
     },
     image: {
@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'rgba(4, 63, 124, 0.8)',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 12
     }
 })
 

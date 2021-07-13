@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View, Dimensions } from 'react-native';
 import {
     Layout, Text, List,
   } from '@ui-kitten/components';
@@ -27,7 +27,7 @@ const DocCard = (props) => {
             elevation: 2,
             // borderRadius: 5,
             width: '100%',
-            minHeight: props.mheight,
+            minHeight: 120,
             paddingHorizontal: 2,
             marginVertical: 10
             }}
@@ -36,8 +36,8 @@ const DocCard = (props) => {
             <View style= {styles.imagecard}>
                     <Image style= {styles.image} source= {props.image} />
                 </View>
-                <View style= {{width: '80%', marginLeft: 15}}>
-                    <Text category= "h5" style= {styles.text}>
+                <View style= {{width: '75%', marginLeft: 15}}>
+                    <Text category= "h6" style= {styles.text}>
                         {props.doc}
                     </Text>
                     <CustomLabel text= {props.upcoming ? props.hname : '5km Away'} source= {require('../../assets/images/askADoc/location.png')} />
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
         // marginRight: 5
     },
     image: {
-        width: 80,
-        height: 80,
+        width: '100%',
+        height: 120,
         resizeMode: 'contain'
     },
     text: {
@@ -110,6 +110,8 @@ const styles = StyleSheet.create({
     imagecard: {
         backgroundColor: '#EFF4F8',
         borderRadius: 5,
+        width: '25%'
+       
     }
 });
 

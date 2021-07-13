@@ -21,11 +21,20 @@ import { getUserData } from '../../../../services/Requests/index';
 import BackButton from '../../../../components/TopNavigationArea/components/BackButton';
 import UserRoute from 'src/router/User/index';
 
-const UserTemplate = ({ userProfilePic, displayName, userId, navigation }) => {
+const UserTemplate = ({ userProfilePic, displayName, userId, navigation, chat }) => {
   const routeUserProfile = async () => {
     const userData = await getUserData(userId);
     const { data } = userData;
-    await navigation.navigate('UserProfile', data);
+    console.log("my Data", data)
+    if (chat === true) {
+      await navigation.navigate('ChatScreen', 
+      { name: `${data.user.fName} ${data.user.sName}`, 
+        guestUid: data.user._id, 
+        image: data.user.imgUrl });
+    }else {
+      await navigation.navigate('UserProfile', data);
+    }
+    
   };
 
   return (
@@ -80,10 +89,10 @@ const UserTemplate = ({ userProfilePic, displayName, userId, navigation }) => {
   );
 };
 
-export default function Search({ navigation }) {
+export default function Search({ navigation, route }) {
   // prettier-ignore
   // const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
-
+  const {chat} = route.params;
   const [form, setFormValues] = useState({
     value: '',
     status: 'basic',
@@ -167,6 +176,7 @@ export default function Search({ navigation }) {
             ) : (
               <UserTemplate
                 key={index}
+                chat= {chat}
                 userProfilePic={require('../../../../assets/images/user/user1.png')}
                 displayName={`${user.item.fName} ${user.item.sName}`}
                 userId={user.item._id}
