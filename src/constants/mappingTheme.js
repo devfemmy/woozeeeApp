@@ -1,7 +1,7 @@
 const mappingTheme = {
   light: {
     'background-basic-color-5': '#F7F9FC',
-    'background-basic-color-6': '#FCFBFF',
+    'background-basic-color-6': '#FCFCFF',
     'border-basic-color-5': '#EDF1F7',
   },
   dark: {

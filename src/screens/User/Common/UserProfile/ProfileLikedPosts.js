@@ -31,7 +31,7 @@ import { LocaleContext } from 'src/contexts';
 
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
-import ChallengeVideo from 'src/components/ChallengeVideo';
+import LikeVideo from 'src/components/LikeVideo';
 
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
@@ -112,7 +112,7 @@ export default function ProfileLikedPosts({ route, navigation }) {
     return (
       <ScrollView
         style={{
-          flex: 1,
+          // flex: 1,
           backgroundColor: 'transparent',
         }}
         pagingEnabled
@@ -123,33 +123,43 @@ export default function ProfileLikedPosts({ route, navigation }) {
       >
         {likedData.map((page, index) => {
           return (
-            <Animated.View
-              key={page._id}
-              style={[
-                StyleSheet.absoluteFillObject,
-                {
-                  height: VIEW_HEIGHT,
-                  top: index * VIEW_HEIGHT,
-                  opacity,
-                },
-              ]}
-            >
-              <Video
-                ref={videoRef}
-                source={{ uri: page.entryMediaURL }}
-                resizeMode="contain"
-                style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                isLooping
-                shouldPlay={true}
-                onReadyForDisplay={() =>
-                  Animated.timing(opacity, {
-                    toValue: 1,
-                    useNativeDriver: true,
-                    duration: 500,
-                  }).start()
-                }
+            <>
+              <LikeVideo
+                ref={videoViewRef}
+                data={page}
+                height={VIEW_HEIGHT}
+                videoRef={videoRef}
+                navigation={navigation}
+                // viewComments={() => routeComments(entry)}
               />
-            </Animated.View>
+              <Animated.View
+                key={page._id}
+                style={[
+                  StyleSheet.absoluteFillObject,
+                  {
+                    height: VIEW_HEIGHT,
+                    top: index * VIEW_HEIGHT,
+                    opacity,
+                  },
+                ]}
+              >
+                <Video
+                  ref={videoRef}
+                  source={{ uri: page.entryMediaURL }}
+                  resizeMode="contain"
+                  style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+                  isLooping
+                  shouldPlay={true}
+                  onReadyForDisplay={() =>
+                    Animated.timing(opacity, {
+                      toValue: 1,
+                      useNativeDriver: true,
+                      duration: 500,
+                    }).start()
+                  }
+                />
+              </Animated.View>
+            </>
           );
         })}
       </ScrollView>
@@ -187,7 +197,9 @@ export default function ProfileLikedPosts({ route, navigation }) {
             onPress={goBack}
           />
         </View>
-        <LikedPostsArea />
+        <View style={{ height: VIEW_HEIGHT }}>
+          <LikedPostsArea />
+        </View>
       </View>
     </Layout>
   );

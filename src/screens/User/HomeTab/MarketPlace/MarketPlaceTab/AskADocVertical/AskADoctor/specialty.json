@@ -1,9 +1,8 @@
 [
-    { "title": "General Practitioner" },
-    { "title": "Cardiologist" },
-    { "title": "Dentist" },
-    { "title": "Optician" },
+    { "title": "Aerobic Instructors" },
+    { "title": "Allergist" },
     { "title": "Anesthesiologist" },
-    { "title": "Surgeon" },
-    { "title": "Behavioural Therapist" }
+    { "title": "Bariatric Surgeon" },
+    { "title": "Behavioural Therapist" },
+    { "title": "Cardiologist" }
   ]

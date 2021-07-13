@@ -21,19 +21,6 @@ import { getUserData } from '../../../../services/Requests/index';
 import BackButton from '../../../../components/TopNavigationArea/components/BackButton';
 import UserRoute from 'src/router/User/index';
 
-// import WithDefaultFetch from 'src/components/DataFetch';
-
-// import { UsersPosts } from 'src/components/VideoPosts';
-
-// import { challengeUrl } from 'src/api/dummy';
-
-// const PLACEHOLDER_CONFIG = {
-//   count: 6,
-//   numColumns: 2,
-//   maxHeight: 180,
-//   mediaLeft: true,
-// };
-
 const UserTemplate = ({ userProfilePic, displayName, userId, navigation }) => {
   const routeUserProfile = async () => {
     const userData = await getUserData(userId);

@@ -13,7 +13,18 @@ import {
   Text,
 } from 'react-native';
 
+import {
+  sendComment,
+  handleLike,
+  handleFollow,
+  getUserData,
+  viewVideo,
+  handleBookmark,
+} from '../../../../services/Requests/index';
+
 import { useInfiniteQuery } from 'react-query';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -44,8 +55,8 @@ import { IconBackIos, IconCMedal } from 'src/components/CustomIcons';
 import Api from 'src/api';
 
 export default function ProfilePostsWooz({ route, navigation }) {
-  // console.log('route params -> ', route.params);
   const { _id } = route.params;
+  // console.log('user id -> ', _id);
 
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
@@ -85,14 +96,15 @@ export default function ProfilePostsWooz({ route, navigation }) {
     const videoLength = useRef(0);
 
     const onMomentumScrollEnd = ({ nativeEvent }) => {
+      // console.log(nativeEvent);
       const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
       // console.log('new index is -> ', newIndex);
 
       if (
         // prettier-ignore
         newIndex !== index
-          && newIndex < videoLength.current
-          && newIndex >= 0
+        && newIndex < videoLength.current
+        && newIndex >= 0
       ) {
         opacity.setValue(0);
         setIndex(newIndex);
@@ -120,6 +132,17 @@ export default function ProfilePostsWooz({ route, navigation }) {
       }, [videoViewRef]),
     );
 
+    const routeComments = async (item) => {
+      // console.log('go to comment');
+      const userId = await AsyncStorage.getItem('userid');
+      const userData = await getUserData(userId);
+      const { data } = userData;
+      await navigation.navigate('Comments', {
+        currUserData: data,
+        postItem: item,
+      });
+    };
+
     const {
       status,
       data,
@@ -133,10 +156,11 @@ export default function ProfilePostsWooz({ route, navigation }) {
       hasNextPage,
       hasPreviousPage,
     } = useInfiniteQuery(
-      ['', 1],
+      ['userPosts', 1],
       async ({ pageParam = 1 }) => {
         const promise = await Api.getUserPosts(pageParam, _id);
         if (data !== {} && data !== undefined) {
+          console.log('data is =>', data);
           setWoozData(data);
         } else {
           setWoozData({ message: 'No challenge data loaded' });
@@ -161,6 +185,17 @@ export default function ProfilePostsWooz({ route, navigation }) {
     };
 
     // console.log(status);
+    if (status === 'loading') {
+      return (
+        <Placeholders
+          mediaLeft={false}
+          count={1}
+          numColumns={1}
+          maxHeight={height * 0.75}
+          maxWidth={width}
+        />
+      );
+    }
 
     if (status === 'error') {
       return (
@@ -178,76 +213,37 @@ export default function ProfilePostsWooz({ route, navigation }) {
         && data.pages[0].pageData.data.length > 0
     ) {
       videoLength.current = data.pages[0].pageData.data.length;
-      // return (
-      //   <View style={{ flex: 1 }}>
-      //     <List
-      //       style={{ flex: 1, backgroundColor: 'transparent' }}
-      //       vertical
-      //       showsHorizontalScrollIndicator={false}
-      //       showsVerticalScrollIndicator={false}
-      //       data={data.pages[0].pageData.data}
-      //       keyExtractor={(_, i) => i.toString()}
-      //       renderItem={(entry) => {
-      //         // console.log('entry is ', entry),
-      //         return (
-      //           // <Text style={{ color: 'white' }}>{entry.item.entryId}</Text>
-      //           <Animated.View
-      //             // key={index}
-      //             style={[
-      //               StyleSheet.absoluteFillObject,
-      //               {
-      //                 height: VIEW_HEIGHT,
-      //                 top: index * VIEW_HEIGHT,
-      //                 opacity,
-      //               },
-      //             ]}
-      //           >
-      //             <Video
-      //               ref={videoRef}
-      //               resizeMode="contain"
-      //               style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-      //               source={{ uri: entry.item.entryMediaURL }}
-      //               isLooping
-      //               shouldPlay={false}
-      //               onReadyForDisplay={() =>
-      //                 Animated.timing(opacity, {
-      //                   toValue: 1,
-      //                   useNativeDriver: true,
-      //                   duration: 500,
-      //                 }).start()
-      //               }
-      //             />
-      //           </Animated.View>
-      //         );
-      //       }}
-      //       getItemLayout={(data, index) => ({
-      //         length: 200,
-      //         offset: 200 * index,
-      //         index,
-      //       })}
-      //     />
-      //   </View>
-      // );
+      // console.log(VIEW_HEIGHT);
       return data.pages.map((page) => (
         <React.Fragment key={page.nextID}>
-          <View style={{ flex: 1 }}>
+          <View>
             <ScrollView
               style={{
-                flex: 1,
+                // flex: 1,
                 backgroundColor: 'transparent',
               }}
-              contentContainerStyle={{ flexGrow: 1 }}
               pagingEnabled
               disableIntervalMomentum
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
               onMomentumScrollEnd={onMomentumScrollEnd}
             >
-              {page.pageData.data.map((entry, index) => {
-                // console.log('entry is => ', entry, index);
-                return (
+              {page.pageData.data.map((entry, index) => (
+                <View
+                  key={index.toString()}
+                  style={{
+                    height: VIEW_HEIGHT,
+                  }}
+                >
+                  <ChallengeVideo
+                    ref={videoViewRef}
+                    data={entry}
+                    height={VIEW_HEIGHT}
+                    videoRef={videoRef}
+                    navigation={navigation}
+                    viewComments={() => routeComments(entry)}
+                  />
                   <Animated.View
-                    key={index}
                     style={[
                       StyleSheet.absoluteFillObject,
                       {
@@ -261,10 +257,9 @@ export default function ProfilePostsWooz({ route, navigation }) {
                       ref={videoRef}
                       resizeMode="contain"
                       style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                      source={{ uri: entry.entryMediaURL }}
+                      source={{ uri: entry.mediaURL }}
                       isLooping
-                      volume={0}
-                      shouldPlay={true}
+                      shouldPlay={isFocused}
                       onReadyForDisplay={() =>
                         Animated.timing(opacity, {
                           toValue: 1,
@@ -274,8 +269,8 @@ export default function ProfilePostsWooz({ route, navigation }) {
                       }
                     />
                   </Animated.View>
-                );
-              })}
+                </View>
+              ))}
             </ScrollView>
           </View>
         </React.Fragment>
@@ -321,7 +316,9 @@ export default function ProfilePostsWooz({ route, navigation }) {
             onPress={goBack}
           />
         </View>
-        <UserPostsArea />
+        <View style={{ height: VIEW_HEIGHT }}>
+          <UserPostsArea />
+        </View>
       </View>
     </Layout>
   );

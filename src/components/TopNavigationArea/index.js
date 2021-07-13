@@ -78,13 +78,6 @@ export default function TopNavigationArea(props) {
       <>
         <TopNavigationAction
           {...props}
-          icon={IconCSearch}
-          accessibilityLiveRegion="polite"
-          accessibilityLabel="Search"
-          onPress={routeSearch}
-        />
-        <TopNavigationAction
-          {...props}
           icon={IconCNotification}
           accessibilityLiveRegion="polite"
           accessibilityLabel="Notification"
@@ -143,7 +136,7 @@ export default function TopNavigationArea(props) {
         icon={IconOptions}
         accessibilityLiveRegion="polite"
         accessibilityLabel="Options"
-        onPress= {pressed}
+        onPress={pressed}
       />
     ),
     [props, pressed],

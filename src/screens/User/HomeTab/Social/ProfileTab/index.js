@@ -104,6 +104,9 @@ export default function Profile({ navigation }) {
             const videoCount = user_data.videoCount;
             const followingCount = user_data.followingCount;
             const followersCount = user_data.followersCount;
+
+            console.log('user profile is->', response.data);
+            AsyncStorage.setItem('userImg', imageUrl);
             setFormValues((prevState) => ({
               ...prevState,
               fName: first_name,

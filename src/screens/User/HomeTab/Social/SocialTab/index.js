@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useRef } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 
 import { View, useWindowDimensions } from 'react-native';
 
@@ -14,6 +14,8 @@ import {
 } from '@ui-kitten/components';
 
 import Api from 'src/api';
+
+import { Video } from 'expo-av';
 
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
@@ -49,7 +51,7 @@ const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLD
 
 const VIEWABILITY_CONFIG = {
   minimumViewTime: 250,
-  itemVisiblePercentThreshold: 65,
+  itemVisiblePercentThreshold: 35,
 };
 
 export default function Social({ navigation }) {
@@ -58,6 +60,8 @@ export default function Social({ navigation }) {
   const { width, height } = useWindowDimensions();
 
   const { bottom, top } = useSafeAreaInsets();
+
+  const [entries, setEntries] = useState([]);
 
   const SPACING = 57 + bottom + top;
 
@@ -100,6 +104,7 @@ export default function Social({ navigation }) {
       status,
       data,
       error,
+      fetchMore,
       isFetching,
       isFetchingNextPage,
       isFetchingPreviousPage,
@@ -113,6 +118,8 @@ export default function Social({ navigation }) {
       async ({ pageParam = 1 }) => {
         const promise = await Api.getVideos(pageParam);
         promise.cancel = () => Api.cancelRequest('Request aborted');
+        // console.log(promise);
+
         return promise;
       },
       {
@@ -150,62 +157,70 @@ export default function Social({ navigation }) {
         && status !== 'error'
         && data.pages[0].pageData.data.length > 0
     ) {
-      return data.pages.map((page) => (
-        <React.Fragment key={page.nextID}>
-          <View style={{ flex: 1 }}>
-            <List
-              style={{
-                flex: 1,
-                backgroundColor: 'transparent',
-              }}
-              initialNumToRender={3}
-              maxToRenderPerBatch={3}
-              windowSize={5}
-              alwaysBounceVertical
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              removeClippedSubviews
-              onViewableItemsChanged={handleOnViewableItemsChanged}
-              viewabilityConfig={VIEWABILITY_CONFIG}
-              ListHeaderComponent={StoryPostsArea}
-              ListHeaderComponentStyle={{
-                paddingVertical: 10,
-                borderBottomWidth: 1,
-                borderColor: 'rgba(143, 155, 179, 0.08)',
-              }}
-              data={page.pageData.data}
-              keyExtractor={(_, i) => i.toString()}
-              renderItem={({ item, index }) => (
-                <>
-                  <VideoView
-                    ref={(ref) => {
-                      cellRefs.current[index.toString()] = ref;
-                    }}
-                    data={{ item, index }}
-                    viewHeight={ITEM_HEIGHT}
-                    navigation={navigation}
+      // console.log(data.pages);
+      const res = data.pages.map((page) => page.pageData.data);
+      const final = res.reduce((acc, element) => {
+        return [...acc, ...element];
+      }, []);
+      // console.log(final);
+      return (
+        <View style={{ flex: 1 }}>
+          <List
+            style={{
+              flex: 1,
+              backgroundColor: 'transparent',
+            }}
+            initialNumToRender={3}
+            maxToRenderPerBatch={3}
+            windowSize={5}
+            showsVerticalScrollIndicator={true}
+            alwaysBounceVertical
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            removeClippedSubviews
+            onViewableItemsChanged={handleOnViewableItemsChanged}
+            // viewabilityConfig={VIEWABILITY_CONFIG}
+            ListHeaderComponent={StoryPostsArea}
+            ListHeaderComponentStyle={{
+              paddingVertical: 10,
+              borderBottomWidth: 1,
+              borderColor: 'rgba(143, 155, 179, 0.08)',
+            }}
+            onEndReached={() => fetchNextPage()}
+            onEndThreshold={0}
+            data={final}
+            keyExtractor={(_, i) => i.toString()}
+            renderItem={({ item, index }) => (
+              <>
+                <VideoView
+                  ref={(ref) => {
+                    cellRefs.current[index.toString()] = ref;
+                  }}
+                  data={{ item, index }}
+                  viewHeight={ITEM_HEIGHT}
+                  navigation={navigation}
+                  t={t}
+                />
+                {index === 2 || index === 8 ? (
+                  <MoviesSection
                     t={t}
+                    navigation={navigation}
+                    width={width}
+                    height={ITEM_HEIGHT}
                   />
-                  {index === 2 || index === 8 ? (
-                    <MoviesSection
-                      t={t}
-                      navigation={navigation}
-                      width={width}
-                      height={ITEM_HEIGHT}
-                    />
-                  ) : null}
-                  {index === 5 ? <StoryPostsArea /> : null}
-                </>
-              )}
-              getItemLayout={(data, index) => ({
-                length: ITEM_HEIGHT,
-                offset: ITEM_HEIGHT * index,
-                index,
-              })}
-            />
-          </View>
-        </React.Fragment>
-      ));
+                ) : null}
+                {index === 5 ? <StoryPostsArea /> : null}
+              </>
+            )}
+            getItemLayout={(data, index) => ({
+              length: ITEM_HEIGHT,
+              offset: ITEM_HEIGHT * index,
+              index,
+            })}
+          />
+        </View>
+      );
+      //
     }
     return (
       <FetchFailed

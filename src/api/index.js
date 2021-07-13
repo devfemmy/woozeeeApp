@@ -85,6 +85,15 @@ export default {
       nextID: page + 1,
     };
   },
+  getDeepLinkPost: async (entryId) => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`entries/${entryId}`);
+
+    const { data } = res;
+    return data;
+  },
+
   getWoozData: async (page = 1, id) => {
     const instance = await createInstance();
 
@@ -150,9 +159,7 @@ export default {
   getUserPosts: async (page = 1, id) => {
     const instance = await createInstance();
 
-    const res = await instance.get(
-      `entry-data?userId=${id}&pageNumber=${page}`,
-    );
+    const res = await instance.get(`entries?userId=${id}&pageNumber=${page}`);
     const { data } = res;
     // console.log('from fetch => ', );
     return {

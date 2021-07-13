@@ -36,6 +36,8 @@ import InteractIcon from 'src/components/InteractIcon';
 
 import { IconClose, IconPaperPlane } from 'src/components/CustomIcons';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function Comments({ route, navigation }) {
   const { height } = useWindowDimensions();
 
@@ -54,6 +56,15 @@ export default function Comments({ route, navigation }) {
   const [comments, setComments] = useState([]);
   const [replies, setReplies] = useState([]);
   const [commentId, setCommentId] = useState('');
+  const [userImg, setUserImg] = useState('');
+
+  const getUserImg = async () => {
+    const res = await AsyncStorage.getItem('userImg');
+    setUserImg(res);
+    console.log('image is ->', res);
+  };
+
+  getUserImg();
 
   const fetchComments = async () => {
     const firebaseConfig = {
@@ -579,6 +590,7 @@ export default function Comments({ route, navigation }) {
                     message={`${comment.item.text}`}
                     time={`${comment.item.sentAt}`}
                     replyId={comment.item.replyId}
+                    img={userImg}
                     parentCommentId={comment.item.parentCommentId}
                   />
                 )}

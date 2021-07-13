@@ -11,7 +11,6 @@ import VideoUpload from 'src/screens/User/Common/VideoUpload';
 import AskADoctor from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/index';
 import Appointments from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/Appointments/index';
 
-
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export default function AskADoctorRoute() {
