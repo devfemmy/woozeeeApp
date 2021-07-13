@@ -61,7 +61,7 @@ export default function Comments({ route, navigation }) {
   const getUserImg = async () => {
     const res = await AsyncStorage.getItem('userImg');
     setUserImg(res);
-    console.log('image is ->', res);
+    // console.log('image is ->', res);
   };
 
   getUserImg();
@@ -275,8 +275,8 @@ export default function Comments({ route, navigation }) {
           }}
         >
           <Image
-            source={require('assets/images/user/user1.png')}
-            defaultSource={require('assets/images/user/user1.png')}
+            source={{ uri: userImg }}
+            // defaultSource={require('assets/images/user/user1.png')}
             style={{
               height: 30,
               width: 30,
@@ -295,7 +295,7 @@ export default function Comments({ route, navigation }) {
               borderWidth: 0.5,
               height: 40,
               paddingHorizontal: 5,
-              borderColor: 'white',
+              borderColor: 'gray',
               borderRadius: 5,
               color: 'grey',
             }}
@@ -427,7 +427,7 @@ export default function Comments({ route, navigation }) {
                 }}
               >
                 <Image
-                  source={img}
+                  source={{uri: img}}
                   style={{
                     height: 30,
                     width: 30,
@@ -491,7 +491,7 @@ export default function Comments({ route, navigation }) {
                   marginLeft:40
                 }}
               >
-                <LinearGradient
+                {/* <LinearGradient
                   colors={['#043F7C', '#FF5757']}
                   style={{
                     height: 24,
@@ -510,7 +510,7 @@ export default function Comments({ route, navigation }) {
                       borderColor: 'white',
                     }}
                   />
-                </LinearGradient>
+                </LinearGradient> */}
                 <Layout
                   level="4"
                   style={{
@@ -590,7 +590,7 @@ export default function Comments({ route, navigation }) {
                     message={`${comment.item.text}`}
                     time={`${comment.item.sentAt}`}
                     replyId={comment.item.replyId}
-                    img={userImg}
+                    img={comment.item.imgUrl}
                     parentCommentId={comment.item.parentCommentId}
                   />
                 )}

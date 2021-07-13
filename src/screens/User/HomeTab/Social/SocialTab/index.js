@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+  useEffect,
+} from 'react';
 
 import { View, useWindowDimensions } from 'react-native';
 
@@ -78,6 +84,22 @@ export default function Social({ navigation }) {
   const sheetRef = useRef(null);
 
   const handleOpenSheet = () => sheetRef.current.open();
+
+  const [shouldRefetch, setShouldRefresh] = useState(false);
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  const refreshFeeds = useCallback(() => {
+    setShouldRefresh(true);
+    // console.log("pulled to refresh'");
+    wait(2000).then(() => setShouldRefresh(false));
+  }, []);
+
+  // useEffect(() => {
+  //   console.log('pulled to refresh');
+  // }, [shouldRefetch]);
 
   const routeLiveStream = useCallback(() => {
     sheetRef.current.close();
@@ -173,13 +195,15 @@ export default function Social({ navigation }) {
             initialNumToRender={3}
             maxToRenderPerBatch={3}
             windowSize={5}
+            onRefresh={() => refreshFeeds()}
+            refreshing={shouldRefetch}
             showsVerticalScrollIndicator={true}
             alwaysBounceVertical
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             removeClippedSubviews
             onViewableItemsChanged={handleOnViewableItemsChanged}
-            // viewabilityConfig={VIEWABILITY_CONFIG}
+            viewabilityConfig={VIEWABILITY_CONFIG}
             ListHeaderComponent={StoryPostsArea}
             ListHeaderComponentStyle={{
               paddingVertical: 10,

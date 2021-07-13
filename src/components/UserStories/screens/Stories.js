@@ -72,6 +72,8 @@ const Stories = (props) => {
     }
   };
 
+  // console.log('story is -> ', storyData);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -102,13 +104,13 @@ const Stories = (props) => {
                 }}
               >
                 <Image
+                  source={{ uri: storyData[index].userImageURL }}
                   style={{
                     height: 80,
                     width: 80,
                     borderRadius: 40,
                   }}
                   resizeMode="cover"
-                  source={{ uri: storyData[index].userImageURL }}
                   isHorizontal
                 />
               </LinearGradient>

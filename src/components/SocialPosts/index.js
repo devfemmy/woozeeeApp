@@ -19,6 +19,8 @@ import Api from 'src/api';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { List, Text } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
@@ -85,6 +87,14 @@ export const StoryPosts = ({ info }) => {
 
   const navigation = useNavigation();
 
+  const [userImg, setUserImg] = useState('');
+
+  const getUserImg = async () => {
+    const res = await AsyncStorage.getItem('userImg');
+    setUserImg(res);
+  };
+
+  getUserImg();
   // console.log('info from StoryPosts -> ', info);
 
   const RenderCategoryHeader = () => (
@@ -95,8 +105,8 @@ export const StoryPosts = ({ info }) => {
         style={{ position: 'relative' }}
       >
         <Image
-          source={require('assets/images/user/user2.png')}
-          defaultSource={require('assets/images/user/user2.png')}
+          source={{ uri: userImg }}
+          // defaultSource={require('assets/images/user/user2.png')}
           style={{
             height: 80,
             width: 80,

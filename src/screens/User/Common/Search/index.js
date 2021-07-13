@@ -110,7 +110,7 @@ export default function Search({ navigation }) {
     fetchUsers();
   }, [form.value]);
 
-  // console.log(userList);
+  console.log('USER LIST ', userList);
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -156,7 +156,15 @@ export default function Search({ navigation }) {
           data={userList}
           keyExtractor={(_, i) => i.toString()}
           renderItem={(user, index) =>
-            form.value.length > 1 && (
+            form.value.length > 1 ? (
+              <UserTemplate
+                key={index}
+                userProfilePic={require('../../../../assets/images/user/user1.png')}
+                displayName={`${user.item.fName} ${user.item.sName}`}
+                userId={user.item._id}
+                navigation={navigation}
+              />
+            ) : (
               <UserTemplate
                 key={index}
                 userProfilePic={require('../../../../assets/images/user/user1.png')}
@@ -172,18 +180,7 @@ export default function Search({ navigation }) {
             index,
           })}
         />
-      ) : (
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text>User not found</Text>
-        </View>
-      )}
+      ) : null}
 
       {/* <ScrollView
         style={{ flex: 1, paddingVertical: 10 }}

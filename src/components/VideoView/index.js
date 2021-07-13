@@ -53,6 +53,8 @@ import firestore from '@react-native-firebase/firestore';
 
 import { SendMessage, RecieveMessage } from '../../services/Firebase/Message';
 
+import { AddUser } from '../../services/Firebase/Users';
+
 import InteractIcon from 'src/components/InteractIcon';
 
 import { Toast, Content, Root } from 'native-base';
@@ -108,7 +110,6 @@ const VideoView = forwardRef((props, ref) => {
   const getUserImg = async () => {
     const res = await AsyncStorage.getItem('userImg');
     setUserImg(res);
-    // console.log('image is ->', res);
   };
 
   getUserId();
@@ -291,7 +292,7 @@ const VideoView = forwardRef((props, ref) => {
       });
   };
 
-  const sharePostToDm = async (currentUserId, guestUserId, postUrl) => {
+  const sharePostToDm = async (currentUserId, guestUserId, postUrl, name) => {
     // console.log(currentUserId, guestUserId, postUrl);
     SendMessage(currentUserId, guestUserId, postUrl, '')
       .then((res) => {
@@ -309,6 +310,9 @@ const VideoView = forwardRef((props, ref) => {
       .catch((err) => {
         alert(err);
       });
+
+    AddUser(name, guestUserId);
+
     sendSheet.current.close();
   };
 
@@ -438,13 +442,6 @@ const VideoView = forwardRef((props, ref) => {
     fetchUsers();
   }, [searchForm.value]);
 
-  // const SendContent = () => {
-
-  //   return (
-
-  //   );
-  // };
-
   return (
     <Root>
       <View
@@ -482,7 +479,7 @@ const VideoView = forwardRef((props, ref) => {
               >
                 <Image
                   source={{ uri: item.userImageURL }}
-                  defaultSource={require('assets/images/user/user2.png')}
+                  // defaultSource={require('assets/images/user/user2.png')}
                   style={{
                     height: 36,
                     width: 36,
@@ -532,11 +529,11 @@ const VideoView = forwardRef((props, ref) => {
           </View>
         </View>
         <TouchableWithoutFeedback
-          onPress={
-            data.item.type && data.item.type == 'video'
-              ? () => toggleMute()
-              : null
-          }
+        // onPress={
+        //   data.item.type && data.item.type == 'video'
+        //     ? () => toggleMute()
+        //     : null
+        // }
         >
           <View
             style={{
@@ -549,7 +546,7 @@ const VideoView = forwardRef((props, ref) => {
               <Text
                 // status="primary"
                 category="s2"
-                style={{ marginLeft: 10, marginBottom: 8 }}
+                style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
               >
                 {data.item.description}
               </Text>
@@ -573,7 +570,7 @@ const VideoView = forwardRef((props, ref) => {
               </View>
             ) : (
               <Video
-                // ref={videoRef}
+                ref={videoRef}
                 source={{ uri: item.mediaURL }}
                 resizeMode="cover"
                 shouldPlay={true}
@@ -704,8 +701,8 @@ const VideoView = forwardRef((props, ref) => {
               }}
             >
               <Image
-                source={{ uri: item.userEntryData.userImageURL }}
-                defaultSource={require('assets/images/user/user1.png')}
+                source={{ uri: userImg }}
+                // defaultSource={require('assets/images/user/user1.png')}
                 style={{
                   height: 30,
                   width: 30,
@@ -939,6 +936,7 @@ const VideoView = forwardRef((props, ref) => {
                           _userId,
                           user.item._id,
                           `woozeee://entries/${item._id}`,
+                          user.item.fName + user.item.sName,
                         )
                       }
                     />
