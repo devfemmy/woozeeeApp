@@ -97,7 +97,7 @@ class ChatScreen extends Component {
 
             AddUser(name, guestUid, image).
                 then(async () => {
-                    this.setState({ loader: false });
+                    // this.setState({ loader: false });
                     // await AsyncStorage.setItem('UID', userUID);
                     // this.props.navigation.navigate('Login');
                 }).

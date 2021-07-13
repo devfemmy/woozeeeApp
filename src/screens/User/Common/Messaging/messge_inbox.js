@@ -166,7 +166,7 @@ class MessageInbox extends Component {
                                 <View style={{ width: '15%', alignItems: 'center', justifyContent: 'center' }}>
                                     <Image 
                                     defaultSource= {require('assets/images/user/user1.png')}
-                                    // source={{ uri: item.imageUrl === '' ? 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50' : item.imageUrl }} 
+                                    source={{ uri: item.imageUrl === '' ? 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50' : item.imageUrl }} 
                                     style={{ height: 50, width: 50, borderRadius: 25 }}
                                      />
                                 </View>

@@ -20,8 +20,8 @@ export default function AskADoctorRoute() {
       tabBar={(props) => <BottomNavigationArea {...props} page="askADoc" />}
     >
       <Screen name="askADoctor" component={AskADoctor} />
+      {/* <Screen name="appointments" component={Appointments} /> */}
       <Screen name="appointments" component={Appointments} />
-      <Screen name="healthBlog" component={AskADoctor} />
     </Navigator>
   );
 }

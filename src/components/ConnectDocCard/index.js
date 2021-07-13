@@ -23,7 +23,9 @@ const ConnectDocCard = (props) => {
             paddingHorizontal: 10
         },
         text: {
-            textAlign: 'center'
+            textAlign: 'center',
+            fontSize: 13,
+            fontWeight: 'bold'
         },
         lowerContainer: {
             flexDirection: 'row',
@@ -67,7 +69,7 @@ const ConnectDocCard = (props) => {
             <Image style= {styles.image} source= {props.source} />
             <View>
                 <View style= {{ marginLeft: 15}}>
-                        <Text category= "h6" style= {styles.text}>
+                        <Text category= "s1" style= {styles.text}>
                             {props.doc}
                         </Text>
                         <Text style= {{marginBottom: 5}} category= "c1">

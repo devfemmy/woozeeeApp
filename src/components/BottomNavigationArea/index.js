@@ -58,8 +58,8 @@ const screens = {
   },
   askADoc: {
     home: IconCHome,
-    appointments: IconGrid,
-    healthBlog: IconCWallet,
+    appointments: IconCWallet,
+    // healthBlog: IconCWallet,
   },
   moneyMatters: {
     moneyMatters: IconCHome,
