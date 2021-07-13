@@ -243,8 +243,9 @@ const PreviewEntry = (props) => {
       measurementId: 'G-XQKMT94R9R',
     };
     
-
+    console.log('here2')
     if (!firebase.apps.length) {
+      console.log("here1")
       firebase.initializeApp(firebaseConfig);
     }
     // if (editorResult === null) {

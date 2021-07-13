@@ -85,6 +85,7 @@ export default function UserProfile({ route, navigation }) {
     followersCount,
     followingCount,
     imgUrl,
+    coverPhotoUrl,
     userData,
   } = user;
 
@@ -192,7 +193,7 @@ console.log("image", imgUrl)
           }}
         >
           <Image
-            source={require('assets/images/banner/profile.jpg')}
+            source={{uri: coverPhotoUrl}}
             defaultSource={require('assets/images/banner/profile.jpg')}
             style={{
               height: '100%',
@@ -242,7 +243,7 @@ console.log("image", imgUrl)
               }}
             >
               <Image
-                source={imgUrl}
+                source={{uri: imgUrl}}
                 defaultSource={imgUrl}
                 style={{
                   height: 100,
@@ -280,7 +281,7 @@ console.log("image", imgUrl)
           }}
         >
           <TouchableOpacity
-            onPress= {() => navigation.navigate('ChatScreen', {guestUid: _id, name: `${fName} ${sName}`})}
+            onPress= {() => navigation.navigate('ChatScreen', {guestUid: _id, name: `${fName} ${sName}`, image: imgUrl})}
             status="primary"
             style={{
               // backgroundColor: 'transparent',

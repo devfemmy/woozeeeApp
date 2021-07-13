@@ -59,6 +59,9 @@ class MessageInbox extends Component {
                                                 lastDate = '';
                                                 lastTime = '';
                                                 properDate = '';
+                                                // userName = '';
+                                                // userProPic= ''
+
                                             }
                                             newUser.userId = child.val().uuid;
                                             newUser.userName = child.val().name;
@@ -70,16 +73,27 @@ class MessageInbox extends Component {
                                             return resolve(newUser);
                                         });
                                 }).then((newUser) => {
-                                    users.push({
-                                        userName: newUser.userName,
-                                        uuid: newUser.userId,
-                                        imageUrl: newUser.userProPic,
-                                        lastMessage: newUser.lastMessage,
-                                        lastTime: newUser.lastTime,
-                                        lastDate: newUser.lastDate,
-                                        properDate: newUser.lastDate ? new Date(newUser.properDate) : null
-                                    });
-                                    this.setState({ allUsers: users.sort((a, b) => b.properDate - a.properDate) });
+                                    if (newUser.lastMessage === '') {
+                                         
+                                        users.push({
+                                            userName: '',
+                                            imageUrl: ''
+                                        })
+                                    } else {
+                                        users.push({
+                                            userName: newUser.userName,
+                                            uuid: newUser.userId,
+                                            imageUrl: newUser.userProPic,
+                                            lastMessage: newUser.lastMessage,
+                                            lastTime: newUser.lastTime,
+                                            lastDate: newUser.lastDate,
+                                            properDate: newUser.lastDate ? new Date(newUser.properDate) : null
+                                        });
+                                        this.setState({ allUsers: users.sort((a, b) => b.properDate - a.properDate) });
+
+                                    }
+
+                                   
                                 });
                                 return resolve(users);
                             }
@@ -144,14 +158,17 @@ class MessageInbox extends Component {
                     ListHeaderComponent={ null
                     }
                     renderItem={({ item }) => (
+                        
                         <View>
+                            {item.userName === '' ? null : 
+                        <>
                             <TouchableOpacity style={{ flexDirection: 'row', marginBottom: 20, marginTop: 20 }} onPress={() => this.props.navigation.navigate('ChatScreen', { name: item.userName, guestUid: item.uuid })}>
                                 <View style={{ width: '15%', alignItems: 'center', justifyContent: 'center' }}>
                                     <Image 
-                                    defaultSource= {require('assets/images/user/user1.png')}
-                                    // source={{ uri: item.imageUrl === '' ? 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50' : item.imageUrl }} 
+                                    defaultSource= {require('assets/images/banner/profile.jpg')}
+                                    source={{ uri: item.imageUrl === '' ? 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50' : item.imageUrl }} 
                                     style={{ height: 50, width: 50, borderRadius: 25 }}
-                                     />
+                                     /> 
                                 </View>
                                 <View style={{ width: '65%', alignItems: 'flex-start', justifyContent: 'center', marginLeft: 10 }}>
                                     <Text category= "h5" style={{ color: 'rgba(0, 0, 0, 0.8)', fontSize: 16, fontWeight: 'bold' }}>{item.userName}</Text>
@@ -162,8 +179,12 @@ class MessageInbox extends Component {
                                 </View>
                             </TouchableOpacity>
                             <View style={{ borderWidth: 0.5, borderColor: 'rgba(0, 0, 0, 0.2)' }} />
+                        </>      
+                            }
+
                         </View>
-                    )}
+                    )
+                }
                 />
                 <Spinner
                     visible={this.state.loader}

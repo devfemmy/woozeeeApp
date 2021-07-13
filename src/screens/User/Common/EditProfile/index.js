@@ -150,7 +150,6 @@ const updateProfile = () => {
     imgUrl: userImage,
     coverPhotoUrl: coverImage
   }
-  console.log("form", data);
   axios.put(`user/update/?userId=${user_id}`, data, {headers: {Authorization: token}})
   .then(res => {
     const message = res.data.message;
