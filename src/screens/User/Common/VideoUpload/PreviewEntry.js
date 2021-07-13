@@ -20,6 +20,7 @@ import { LocaleContext } from 'src/contexts';
 import { Platform } from 'react-native';
 import axios from '../../../../services/api/index';
 import CustomField from 'src/components/CustomField/index';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const PreviewEntry = (props) => {
   const { editorResult, imageUri, entries } = props.route.params;
@@ -458,6 +459,9 @@ const PreviewEntry = (props) => {
             )}
           </View>
         )}
+        <Spinner
+        visible={isLoading}
+          />
       </Layout>
     </Root>
   );

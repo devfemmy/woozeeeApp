@@ -7,6 +7,8 @@ import {
 import Firebase from '../../../../services/Firebase/firebaseConfig';
 import Spinner from 'react-native-loading-spinner-overlay';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
+import {MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleSheet } from 'react-native';
 
 class MessageInbox extends Component {
     state = {
@@ -186,6 +188,9 @@ class MessageInbox extends Component {
                     )
                 }
                 />
+                <TouchableOpacity onPress= {() => this.props.navigation.navigate('Search', {chat: true})} style= {styles.button}>
+                    <MaterialCommunityIcons name="chat-plus" size={30} color="white" />
+                </TouchableOpacity>
                 <Spinner
                     visible={this.state.loader}
                 />
@@ -194,7 +199,20 @@ class MessageInbox extends Component {
     }
 }
 
+const styles = StyleSheet.create({
+    button: {
+        backgroundColor: '#FF5757',
+        borderRadius: 50,
+        height: 50,
+        width: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom: 40,
+        right: 20
 
+    }
+})
 
 
 export default MessageInbox;
