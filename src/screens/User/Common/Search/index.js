@@ -21,20 +21,26 @@ import { getUserData } from '../../../../services/Requests/index';
 import BackButton from '../../../../components/TopNavigationArea/components/BackButton';
 import UserRoute from 'src/router/User/index';
 
-const UserTemplate = ({ userProfilePic, displayName, userId, navigation, chat }) => {
+const UserTemplate = ({
+  userProfilePic,
+  displayName,
+  userId,
+  navigation,
+  chat,
+}) => {
   const routeUserProfile = async () => {
     const userData = await getUserData(userId);
     const { data } = userData;
-    console.log("my Data", data)
+    console.log('my Data', data);
     if (chat === true) {
-      await navigation.navigate('ChatScreen', 
-      { name: `${data.user.fName} ${data.user.sName}`, 
-        guestUid: data.user._id, 
-        image: data.user.imgUrl });
-    }else {
+      await navigation.navigate('ChatScreen', {
+        name: `${data.user.fName} ${data.user.sName}`,
+        guestUid: data.user._id,
+        image: data.user.imgUrl,
+      });
+    } else {
       await navigation.navigate('UserProfile', data);
     }
-    
   };
 
   return (
@@ -70,7 +76,7 @@ const UserTemplate = ({ userProfilePic, displayName, userId, navigation, chat })
             }}
           >
             <Image
-              source={userProfilePic}
+              source={{ uri: userProfilePic }}
               style={{
                 height: 30,
                 width: 30,
@@ -168,7 +174,7 @@ export default function Search({ navigation, route }) {
             form.value.length > 1 ? (
               <UserTemplate
                 key={index}
-                userProfilePic={require('../../../../assets/images/user/user1.png')}
+                userProfilePic={user.item.imgUrl}
                 displayName={`${user.item.fName} ${user.item.sName}`}
                 userId={user.item._id}
                 navigation={navigation}
@@ -176,8 +182,8 @@ export default function Search({ navigation, route }) {
             ) : (
               <UserTemplate
                 key={index}
-                chat= {chat}
-                userProfilePic={require('../../../../assets/images/user/user1.png')}
+                chat={chat}
+                userProfilePic={user.item.imgUrl}
                 displayName={`${user.item.fName} ${user.item.sName}`}
                 userId={user.item._id}
                 navigation={navigation}

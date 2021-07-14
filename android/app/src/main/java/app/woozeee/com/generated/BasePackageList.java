@@ -1,4 +1,4 @@
-package com.econnectnp.woozeee.generated;
+package app.woozeee.com.generated;
 
 import java.util.Arrays;
 import java.util.List;

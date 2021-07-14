@@ -15,6 +15,8 @@ async function SignUpWithGoogle({ googleSignup }) {
     scopes: ['https://www.googleapis.com/auth/drive.readonly'],
     iosClientId:
       '979696525592-oi481tbbn0pp9htv408l99vh6fa08e3o.apps.googleusercontent.com',
+    // webClientId:
+    //   '979696525592-gjddn7tafhje4d5hn8o762d6s29f6ogg.apps.googleusercontent.com',
     // offlineAccess: false,
   });
   try {
@@ -38,7 +40,7 @@ async function SignUpWithGoogle({ googleSignup }) {
       console.log('service not available');
     } else {
       // some other error happened
-      console.log(error);
+      console.log('err is -> ', error);
     }
   }
 }
