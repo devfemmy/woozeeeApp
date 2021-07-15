@@ -125,7 +125,7 @@ class MessageInbox extends Component {
   async componentDidMount() {
     this.setState({ loader: true });
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
-      // do something
+      // fetch messages when screen is focused
       this.fetchMessages()
     });
 
