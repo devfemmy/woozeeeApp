@@ -100,7 +100,7 @@ export default function MovieCard(props) {
         </TouchableOpacity>
         <View style={{ marginTop: 20 }}>
           <Text numberOfLines={1} category="p2" style={{ textAlign: 'center', lineHeight: 20 }}>
-            {data.description}
+            {`${data.description}`}
           </Text>
         </View>
       </View>
