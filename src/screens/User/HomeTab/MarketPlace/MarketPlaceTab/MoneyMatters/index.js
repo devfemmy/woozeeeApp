@@ -77,15 +77,24 @@ const MoneyMatters = ({ route, navigation }) => {
   const sliders = [
     {
       id: 1,
-      banner: require('../../../../../../assets/images/moneyMatters/money1.mp4'),
+      banner: {
+        uri:
+          'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/money1.mp4',
+      },
     },
     {
       id: 2,
-      banner: require('../../../../../../assets/images/moneyMatters/money2.mp4'),
+      banner: {
+        uri:
+          'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/money2.mp4',
+      },
     },
     {
       id: 3,
-      banner: require('../../../../../../assets/images/moneyMatters/money3.mp4'),
+      banner: {
+        uri:
+          'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/money3.mp4.mp4',
+      },
     },
   ];
 

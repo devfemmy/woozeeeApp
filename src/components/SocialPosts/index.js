@@ -372,7 +372,7 @@ export const LikedProfilePosts = ({ userId }) => {
     status !== 'loading' &&
     data.pages[0].pageData.data.length < 0
   ) {
-    console.log('no liked data');
+    // console.log('no liked data');
 
     return (
       <FetchFailed
@@ -384,7 +384,7 @@ export const LikedProfilePosts = ({ userId }) => {
   }
 
   if (status !== 'error' && status !== 'loading') {
-    console.log(likedData);
+    // console.log(likedData);
     return (
       <List
         style={{
@@ -441,6 +441,7 @@ export const LikedProfilePosts = ({ userId }) => {
         index,
       })}
     />
+    // <Text>Liked</Text>
   );
 };
 

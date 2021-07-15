@@ -167,7 +167,6 @@ export function UserProfilePostCard(props) {
         onPress={routeChallengeWooz}
       >
         <Video
-          poster={data.item.medialThumbnail}
           source={{ uri: data.item.mediaURL }}
           paused={true}
           style={{
@@ -194,10 +193,15 @@ export function UserPostLikedCard(props) {
 
   const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
 
-  const routeLikedDataWooz = useCallback(
-    () => navigation.navigate('ProfileLikedPosts', allLikedPosts),
-    [navigation],
-  );
+  const routeLikedDataWooz = () => {
+    // console.log(data);
+    navigation.navigate('DeepLinkPost', { _id: data.item.entryId }),
+      [navigation];
+  };
+  // const routeLikedDataWooz = () => {
+  //   console.log(data);
+
+  // };
 
   return useMemo(
     () => (

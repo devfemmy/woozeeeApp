@@ -140,7 +140,6 @@ export default function Social({ navigation }) {
       async ({ pageParam = 1 }) => {
         const promise = await Api.getVideos(pageParam);
         promise.cancel = () => Api.cancelRequest('Request aborted');
-        // console.log(promise);
 
         return promise;
       },

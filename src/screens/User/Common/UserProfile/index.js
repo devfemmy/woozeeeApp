@@ -410,7 +410,7 @@ export default function UserProfile({ route, navigation }) {
                 <TouchableOpacity
                   activeOpacity={0.75}
                   style={{ alignItems: 'center', width: '33%' }}
-                  onPress={routeFollow}
+                  // onPress={routeFollow}
                 >
                   <Text category="h5">{followersCount}</Text>
                   <Text category="c2" appearance="hint">
@@ -420,7 +420,7 @@ export default function UserProfile({ route, navigation }) {
                 <TouchableOpacity
                   activeOpacity={0.75}
                   style={{ alignItems: 'center', width: '33%' }}
-                  onPress={routeFollow}
+                  // onPress={routeFollow}
                 >
                   <Text category="h5">{followingCount}</Text>
                   <Text category="c2" appearance="hint">
@@ -444,9 +444,9 @@ export default function UserProfile({ route, navigation }) {
           <Tab title={t('all')} icon={IconGrid}>
             <ProfilePostsArea userPostData={user} />
           </Tab>
-          <Tab title={t('saved')} icon={IconBookmark}>
+          {/* <Tab title={t('saved')} icon={IconBookmark}>
             <ProfilePostsSavedArea userSavedData={user} />
-          </Tab>
+          </Tab> */}
           <Tab title={t('liked')} icon={IconHeart}>
             <LikedProfilePosts userId={_id} />
           </Tab>
