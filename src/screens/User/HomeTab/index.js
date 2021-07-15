@@ -33,6 +33,7 @@ import OverlayLoader from 'src/components/OverlayLoader';
 import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
 import BackgroundVideo from 'src/components/BackgroundVideo';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 /* DATA */
 
@@ -670,7 +671,7 @@ export default function Home({ navigation }) {
       <Text
         category="c2"
         style={{
-          position: 'absolute', bottom: 75, color: 'white', right: 10,
+          position: 'absolute', bottom: hp('8%'), color: 'white', right: hp('1%'),
         }}
       >
         {` ${data.item.cardNum}`}
@@ -678,7 +679,7 @@ export default function Home({ navigation }) {
       <Text
         category="s2"
         style={{
-          position: 'absolute', bottom: 23, color: 'white', left: 20,
+          position: 'absolute', bottom: hp('2.6%'), color: 'white', left: hp('2%'),
         }}
       >
         {fullname}

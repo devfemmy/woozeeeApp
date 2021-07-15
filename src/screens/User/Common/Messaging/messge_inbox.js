@@ -15,10 +15,8 @@ class MessageInbox extends Component {
     imageUrl: '',
     loggedInUserName: '',
   };
-
-  async componentDidMount() {
+  async fetchMessages () {
     try {
-      this.setState({ loader: true });
       await Firebase.database()
         .ref('users')
         .on('value', async (datasnapshot) => {
@@ -124,18 +122,30 @@ class MessageInbox extends Component {
       this.setState({ loader: false });
     }
   }
+  async componentDidMount() {
+    this.setState({ loader: true });
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      // do something
+      this.fetchMessages()
+    });
 
-  logOut = async () => {
-    await Firebase.auth()
-      .signOut()
-      .then(async () => {
-        await AsyncStorage.removeItem('UID');
-        this.props.navigation.navigate('Login');
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  };
+  }
+  componentWillUnmount() {
+    this._unsubscribe();
+    this.setState({ loader: false });
+  }
+
+  // logOut = async () => {
+  //   await Firebase.auth()
+  //     .signOut()
+  //     .then(async () => {
+  //       await AsyncStorage.removeItem('UID');
+  //       this.props.navigation.navigate('Login');
+  //     })
+  //     .catch((err) => {
+  //       alert(err);
+  //     });
+  // };
 
   // openGallery() {
   //     launchImageLibrary('photo', (response) => {
