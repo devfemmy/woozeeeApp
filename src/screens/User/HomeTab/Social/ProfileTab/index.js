@@ -6,6 +6,7 @@ import {
   ScrollView,
   useWindowDimensions,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
@@ -24,6 +25,8 @@ import WithPaginatedFetch from 'src/components/DataFetch/WithPaginatedFetch';
 import { ProfilePosts, LikedProfilePosts } from 'src/components/SocialPosts';
 
 import InteractIcon from 'src/components/InteractIcon';
+
+// import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 import {
   IconGrid,
@@ -44,11 +47,30 @@ const PLACEHOLDER_CONFIG = {
 };
 
 // prettier-ignore
-const ProfilePostsArea = ({testData}) => (
-  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, testData)
+const ProfilePostsArea = ({_userPostData}) => (
+  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, _userPostData)
 );
 
+const styles = StyleSheet.create({
+  activeTabTextColor: {
+    color: '#0959AB',
+    fontSize: 17,
+  },
+  tabTextColor: {
+    // color: 'grey',
+    fontSize: 17,
+  },
+});
+
 export default function Profile({ navigation }) {
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: 'first', title: 'All' },
+    { key: 'second', title: 'Liked' },
+  ]);
+
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
   const { width, height } = useWindowDimensions();
@@ -142,6 +164,10 @@ export default function Profile({ navigation }) {
 
     return unsubscribe;
   }, [navigation]);
+
+  const [notOnAll, setNotOnAll] = useState(false);
+  _index = +notOnAll;
+
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <ScrollView>
@@ -354,7 +380,7 @@ export default function Profile({ navigation }) {
                   <TouchableOpacity
                     activeOpacity={0.75}
                     style={{ alignItems: 'center', width: '33%' }}
-                    onPress={routeFollow}
+                    // onPress={routeFollow}
                   >
                     <Text category="h5">{form.followersCount}</Text>
                     <Text category="c2" appearance="hint">
@@ -364,7 +390,7 @@ export default function Profile({ navigation }) {
                   <TouchableOpacity
                     activeOpacity={0.75}
                     style={{ alignItems: 'center', width: '33%' }}
-                    onPress={routeFollow}
+                    // onPress={routeFollow}
                   >
                     <Text category="h5">{form.followingCount}</Text>
                     <Text category="c2" appearance="hint">
@@ -376,21 +402,34 @@ export default function Profile({ navigation }) {
             </View>
           </View>
           <Divider />
+          {/* <TabView
+            renderTabBar={renderTabBar}
+            swipeEnabled={false}
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: layout.width }}
+          /> */}
+
           <TabView
             style={{ flex: 1 }}
             indicatorStyle={{ backgroundColor: 'transparent' }}
             selectedIndex={selectedIndex}
             shouldLoadComponent={shouldLoadComponent}
-            onSelect={(index) => setSelectedIndex(index)}
+            onSelect={(index) => {
+              setSelectedIndex(index);
+              console.log(index);
+            }}
           >
             <Tab title={t('all')} icon={IconGrid}>
-              <ProfilePostsArea testData={user} />
+              <ProfilePostsArea _userPostData={user} />
             </Tab>
-            <Tab title={t('saved')} icon={IconBookmark}>
-              <ProfilePostsArea testData={user} />
-            </Tab>
+            {/* <Tab title={t('saved')} icon={IconBookmark}>
+              <ProfilePostsArea _userPostData={user} />
+            </Tab> */}
             <Tab title={t('liked')} icon={IconHeart}>
-              {/* <LikedProfilePosts userId={_userId} /> */}
+              <LikedProfilePosts userId={_userId} />
+              {/* <Text>Likes</Text> */}
             </Tab>
           </TabView>
         </View>

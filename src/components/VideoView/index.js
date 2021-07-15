@@ -81,7 +81,6 @@ import {
 
 import { Feather, Ionicons } from '@expo/vector-icons';
 
-
 import { TextInput } from 'react-native';
 
 const VideoView = forwardRef((props, ref) => {
@@ -323,11 +322,11 @@ const VideoView = forwardRef((props, ref) => {
   const routeUserProfile = async () => {
     const userData = await getUserData(item.userId);
     const { data } = userData;
-    await navigation.navigate('UserProfile', data);
+    // await navigation.navigate('UserProfile', data);
 
-    // item.userId !== _userId
-    //   ? await navigation.navigate('UserProfile', data)
-    //   : await navigation.navigate('ProfileTab');
+    item.userId !== _userId
+      ? await navigation.navigate('UserProfile', data)
+      : await navigation.navigate('ProfileTab');
   };
 
   const routeComments = async () => {

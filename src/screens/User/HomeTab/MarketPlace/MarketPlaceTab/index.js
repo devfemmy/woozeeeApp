@@ -54,19 +54,31 @@ const woozeeeCards = [
 const sponsorsAd = [
   {
     id: 1,
-    banner: require('assets/images/sponsors/accessAd.mp4'),
+    banner: {
+      uri:
+        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/accessAd.mp4',
+    },
   },
   {
     id: 2,
-    banner: require('assets/images/sponsors/ubaAd.mp4'),
+    banner: {
+      uri:
+        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/ubaAd.mp4',
+    },
   },
   {
     id: 3,
-    banner: require('assets/images/sponsors/globusAd.mp4'),
+    banner: {
+      uri:
+        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/globusAd.mp4',
+    },
   },
   {
     id: 1,
-    banner: require('assets/images/sponsors/axaAd.mp4'),
+    banner: {
+      uri:
+        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/axaAd.mp4',
+    },
   },
 ];
 

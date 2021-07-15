@@ -28,6 +28,10 @@ const Stories = (props) => {
   const { width, height } = useWindowDimensions();
   const IS_PORTRAIT = height > width;
 
+  String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  };
+
   const onStorySelect = (index) => {
     setCurrentUserIndex(index);
     setModel(true);
@@ -115,10 +119,11 @@ const Stories = (props) => {
                 />
               </LinearGradient>
               <Text
+                numberOfLines={1}
                 category="c2"
                 style={{ marginTop: 10, textAlign: 'center' }}
               >
-                {storyData[index].userFirstName}
+                {storyData[index].userFirstName.toLowerCase().capitalize()}
               </Text>
             </View>
           </TouchableOpacity>

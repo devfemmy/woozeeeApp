@@ -139,22 +139,6 @@ export default function Wooz({ navigation }) {
 
     const videoLength = useRef(0);
 
-    const onMomentumScrollEnd = ({ nativeEvent }) => {
-      const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
-      // console.log('new index is -> ', newIndex);
-
-      if (
-        // prettier-ignore
-        newIndex !== index
-        && newIndex < videoLength.current
-        && newIndex >= 0
-      ) {
-        opacity.setValue(0);
-        setIndex(newIndex);
-        videoViewRef.current?.resetPlayState(true);
-      }
-    };
-
     const onPlaybackStatusUpdate = async (playbackStatus, entryId) => {
       if (playbackStatus.didJustFinish) {
         const res = await viewVideo(entryId);
@@ -233,6 +217,24 @@ export default function Wooz({ navigation }) {
       },
     );
 
+    const onMomentumScrollEnd = ({ nativeEvent }) => {
+      const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
+      // console.log('new index is -> ', newIndex);
+
+      if (
+        // prettier-ignore
+        newIndex !== index
+        && newIndex < videoLength.current
+        && newIndex >= 0
+      ) {
+        opacity.setValue(0);
+        setIndex(newIndex);
+        videoViewRef.current?.resetPlayState(true);
+      }
+
+      // (newIndex + 1) % 7 == 0 && fetchNextPage();
+    };
+
     if (status === 'loading') {
       return (
         <Placeholders
@@ -260,6 +262,13 @@ export default function Wooz({ navigation }) {
       && data.pages[0].pageData.data.length > 0
     ) {
       videoLength.current = data.pages[0].pageData.data.length;
+
+      const res = data.pages.map((page) => page.pageData.data);
+      const final = res.reduce((acc, element) => {
+        return [...acc, ...element];
+      }, []);
+
+      //without pagination
       return data.pages.map((page) => (
         <React.Fragment key={page.nextID}>
           <View style={{ flex: 1 }}>
@@ -333,6 +342,79 @@ export default function Wooz({ navigation }) {
           </View>
         </React.Fragment>
       ));
+
+      //for pagination but all videos are playing at the same time
+      // return (
+      //   <ScrollView
+      //     style={{
+      //       flex: 1,
+      //       backgroundColor: 'transparent',
+      //     }}
+      //     pagingEnabled
+      //     disableIntervalMomentum
+      //     showsHorizontalScrollIndicator={false}
+      //     showsVerticalScrollIndicator={false}
+      //     onMomentumScrollEnd={onMomentumScrollEnd}
+      //   >
+      //     {final.map((page) => (
+      //       <View key={page._id} style={{ flex: 1 }}>
+      //         <View>
+      //           {/* <Image
+      //             resizeMode="contain"
+      //             style={{
+      //               height: VIEW_HEIGHT,
+      //               width: '100%',
+      //               overflow: 'hidden',
+      //               position: 'absolute',
+      //             }}
+      //             source={
+      //               page
+      //                 ? { uri: page.mediaURL }
+      //                 : require('assets/images/banner/placeholder-image.png')
+      //             }
+      //           /> */}
+
+      //           <VideoFullscreen
+      //             // ref={videoViewRef}
+      //             data={page}
+      //             height={VIEW_HEIGHT}
+      //             // videoRef={videoRef}
+      //             navigation={navigation}
+      //           />
+      //         </View>
+
+      //         <Animated.View
+      //           style={[
+      //             StyleSheet.absoluteFillObject,
+      //             { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
+      //           ]}
+      //         >
+      //           <Video
+      //             ref={videoRef}
+      //             resizeMode="contain"
+      //             style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+      //             source={{ uri: page.mediaURL }}
+      //             isLooping
+      //             onPlaybackStatusUpdate={(playbackStatus) =>
+      //               onPlaybackStatusUpdate(
+      //                 playbackStatus,
+      //                 page.userEntryData.entryId,
+      //               )
+      //             }
+      //             isMuted={false}
+      //             shouldPlay={isFocused}
+      //             // prettier-ignore
+      //             onReadyForDisplay={() => Animated.timing(opacity, {
+      //               toValue: 1,
+      //               useNativeDriver: true,
+      //               duration: 500,
+      //             }).start()}
+      //           />
+      //         </Animated.View>
+      //       </View>
+      //     ))}
+      //   </ScrollView>
+      // );
     }
     return (
       <FetchFailed
