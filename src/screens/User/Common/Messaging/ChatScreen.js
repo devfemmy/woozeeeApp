@@ -5,6 +5,7 @@ import {
     Layout, List, Text, Divider,
   } from '@ui-kitten/components';
 import Icons from 'react-native-vector-icons/MaterialIcons';
+import Hyperlink from 'react-native-hyperlink';
 import { SendMessage, RecieveMessage } from '../../../../services/Firebase/Message';
 import Firebase from '../../../../services/Firebase/firebaseConfig';
 
@@ -133,17 +134,18 @@ class ChatScreen extends Component {
                     data={this.state.allMessages}
                     keyExtractor={(_, index) => index.toString()}
                     renderItem={({ item }) => (
-                        <View style={{ marginVertical: 10, maxWidth: Dimensions.get('window').width / 2 + 10, alignSelf: this.state.currentUid === item.sendBy ? 'flex-end' : 'flex-start' }}>
-                            <View style={{ borderRadius: 20, backgroundColor: this.state.currentUid === item.sendBy ? 'rgba(4, 63, 124, 0.1)' : 'rgba(4, 63, 124, 1)' }}>
-                                {item.image === "" ? <Text style={{ padding: 10, fontSize: 16, fontWeight: 'bold', color: this.state.currentUid === item.sendBy ? 'black': 'white' }}>
-                                    {item.msg} {"   "} 
-                                </Text> :
-                                    <View>
-                                        <Image source={{ uri: item.image }} style={{ width: Dimensions.get('window').width / 2 + 10, height: 150, resizeMode: 'stretch', borderRadius: 30 }} />
-                                        <Text style={{ fontSize: 12,position:'absolute',bottom:5,right:5 }}>{item.time}</Text>
-                                    </View>
-                                }
+                        <View style={{ marginVertical: 10, maxWidth: Dimensions.get('window').width / 1.2 + 10, alignSelf: this.state.currentUid === item.sendBy ? 'flex-end' : 'flex-start' }}>
+                            <View style={{ borderRadius: 20, backgroundColor: this.state.currentUid === 
+                                item.sendBy ? 'rgba(4, 63, 124, 0.1)' : 'rgba(4, 63, 124, 1)' }}>
+                              <Hyperlink
+                              linkStyle={ {textDecorationLine: 'underline' } } 
+                              linkDefault={ true }>
+                                <Text style={{ padding: 10, fontSize: 16, fontWeight: 'bold', color: this.state.currentUid === item.sendBy ? 'black': 'white' }}>
+                                    {item.msg}
+                                </Text> 
+                                </Hyperlink>
                             </View>
+                     
                             <Text style={{ fontSize: 12, textAlign: 'right', justifyContent: 'flex-end', alignItems: 'flex-end' }}>{item.time}</Text>
                         </View>
                     )}
