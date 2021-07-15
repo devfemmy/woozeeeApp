@@ -82,7 +82,7 @@ const MoviesSectionArea = (props) => {
           }}
         >
           <Text category="h6">{t('movies')}</Text>
-          <Button
+          {/* <Button
             size="tiny"
             appearance="ghost"
             accessoryRight={IconForwardIos}
@@ -91,7 +91,7 @@ const MoviesSectionArea = (props) => {
             <Text status="primary" category="s2">
               {t('viewAll')}
             </Text>
-          </Button>
+          </Button> */}
         </View>
         <List
           style={{ backgroundColor: 'transparent', maxHeight: 260 }}
@@ -106,7 +106,9 @@ const MoviesSectionArea = (props) => {
           data={data.pageData.data}
           keyExtractor={(_, i) => i.toString()}
           renderItem={(renderData) => (
-            <MovieSectionCard pressed={() => navigation.navigate('ViewMovies', {movie_data: renderData})}  data={renderData.item} extraWidth={0.5} />
+            <MovieSectionCard 
+            pressed={() => navigation.navigate('ViewMovies', 
+            {movie_data: renderData})}  data={renderData.item} extraWidth={0.5} />
           )}
           getItemLayout={(data, index) => ({
             length: 360,
