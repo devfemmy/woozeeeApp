@@ -1,12 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component } from 'react';
-import { View, TouchableOpacity, FlatList, Image } from 'react-native';
+import { View, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native';
 import { Layout, List, Text, Divider } from '@ui-kitten/components';
 import Firebase from '../../../../services/Firebase/firebaseConfig';
 import Spinner from 'react-native-loading-spinner-overlay';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { StyleSheet } from 'react-native';
+import moment from 'moment';
+
 
 class MessageInbox extends Component {
   state = {
@@ -29,7 +30,7 @@ class MessageInbox extends Component {
             let properDate = '';
             datasnapshot.forEach((child) => {
               if (child.val().uuid === uuid) {
-                console.log('ff', child.val().image);
+                // console.log('ff', child.val().image);
                 this.setState({
                   loggedInUserName: child.val().name,
                   imageUrl: child.val().image,
@@ -54,16 +55,12 @@ class MessageInbox extends Component {
                     .on('value', (dataSnapshots) => {
                       if (dataSnapshots.val()) {
                         dataSnapshots.forEach((child) => {
-                          lastMessage =
-                            child.val().messege.image !== ''
-                              ? 'Photo'
-                              : child.val().messege.msg;
+                          lastMessage = child.val().messege.msg;
                           lastDate = child.val().messege.date;
                           lastTime = child.val().messege.time;
                           properDate =
-                            child.val().messege.date +
-                            ' ' +
-                            child.val().messege.time;
+                            `${child.val().messege.date} ${child.val().messege.time}`
+                          
                         });
                       } else {
                         lastMessage = '';
@@ -88,6 +85,7 @@ class MessageInbox extends Component {
                       userName: '',
                       imageUrl: '',
                     });
+
                   } else {
                     users.push({
                       userName: newUser.userName,
@@ -97,9 +95,11 @@ class MessageInbox extends Component {
                       lastTime: newUser.lastTime,
                       lastDate: newUser.lastDate,
                       properDate: newUser.lastDate
-                        ? new Date(newUser.properDate)
+                        ? (newUser.properDate)
                         : null,
                     });
+                    // const todayDate = moment(newUser.properDate);
+                    // console.log("today, ", todayDate);
                     this.setState({
                       allUsers: users.sort(
                         (a, b) => b.properDate - a.properDate,
@@ -163,6 +163,19 @@ class MessageInbox extends Component {
   //     })
   // }
   render() {
+    const arr = this.state.allUsers;
+    const sortByDate = arr => {
+    const sorter = (a, b) => {
+        return new Date(b.properDate).getTime() - new Date(a.properDate).getTime();
+    }
+    arr.sort(sorter);
+  };
+  sortByDate(arr);
+    // const Moment = require('moment')
+    // const array = [{date:"2018-05-11"},{date:"2018-05-12"},{date:"2018-05-10"}]
+    // const sortedArray  = array.sort((a,b) => new Moment(a.date).format('YYYYMMDD') - new Moment(b.date).format('YYYYMMDD'))
+    // console.log(sortedArray)
+    
     return (
       <Layout
         level="6"
@@ -179,6 +192,12 @@ class MessageInbox extends Component {
                     screen="auth"
                 /> */}
         {/* <AppHeader title="Messages" navigation={this.props.navigation} onPress={() => this.logOut()} /> */}
+        {this.state.allUsers.length === 0 ? 
+      <View style= {{flex: 1, alignItems: 'center', marginVertical: 20}}>
+        <Text category= "h6">Start A New Conversation</Text>
+      </View>
+ : null
+      }
         <FlatList
           alwaysBounceVertical={false}
           data={this.state.allUsers}
@@ -209,16 +228,22 @@ class MessageInbox extends Component {
                         justifyContent: 'center',
                       }}
                     >
-                      <Image
-                        defaultSource={require('assets/images/user/user1.png')}
-                        source={{
-                          uri:
-                            item.imageUrl === ''
-                              ? 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50'
-                              : item.imageUrl,
-                        }}
-                        style={{ height: 50, width: 50, borderRadius: 25 }}
-                      />
+                      {item.imageUrl === undefined
+                      ? <Image
+                      defaultSource={require('../../../../assets/images/user/user1.png')}
+                      source={require('../../../../assets/images/user/user1.png')}
+                      style={{ height: 50, width: 50, borderRadius: 25 }}
+                                          /> 
+                    :   
+                    <Image
+                    defaultSource={require('../../../../assets/images/user/user1.png')}
+                    source={{
+                      uri: item.imageUrl,
+                    }}
+                    style={{ height: 50, width: 50, borderRadius: 25 }}
+                  />
+                    }
+
                     </View>
                     <View
                       style={{

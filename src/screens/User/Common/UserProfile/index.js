@@ -285,6 +285,7 @@ export default function UserProfile({ route, navigation }) {
               navigation.navigate('ChatScreen', {
                 guestUid: _id,
                 name: `${fName} ${sName}`,
+                image: imgUrl
               })
             }
             status="primary"
