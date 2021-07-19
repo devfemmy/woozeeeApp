@@ -12,6 +12,7 @@ import Firebase from '../../../../services/Firebase/firebaseConfig';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { AddUser } from 'src/services/Firebase/Users';
 
+
 class ChatScreen extends Component {
     state = {
         message: '',
@@ -43,10 +44,10 @@ class ChatScreen extends Component {
                             date: data.val().messege.date,
                             time: data.val().messege.time,
                         });
-                        console.log('fff', data.val().messege.image)
+                        // console.log('fff', data.val().messege.image)
                     })
                     this.setState({ allMessages: message.reverse() });
-                    console.log('allMessages', this.state.allMessages)
+                    // console.log('allMessages', this.state.allMessages)
                 })
         } catch (error) {
             alert(error);
@@ -82,7 +83,7 @@ class ChatScreen extends Component {
         if (this.state.message) {
             SendMessage(this.state.currentUid, this.state.guestUid, this.state.message, "").
                 then((res) => {
-                    console.log(res);
+                    // console.log(res);
                     this.setState({ message: '' })
                 }).catch((err) => {
                     alert(err)
@@ -90,7 +91,7 @@ class ChatScreen extends Component {
 
             RecieveMessage(this.state.currentUid, this.state.guestUid, this.state.message, "").
                 then((res) => {
-                    console.log(res);
+                    // console.log(res);
                     this.setState({ message: '' })
                 }).catch((err) => {
                     alert(err)
@@ -140,12 +141,11 @@ class ChatScreen extends Component {
                               <Hyperlink
                               linkStyle={ {textDecorationLine: 'underline' } } 
                               linkDefault={ true }>
-                                <Text style={{ padding: 10, fontSize: 16, fontWeight: 'bold', color: this.state.currentUid === item.sendBy ? 'black': 'white' }}>
+                                <Text style={{ padding: 10, fontSize: 16, color: this.state.currentUid === item.sendBy ? 'black': 'white' }}>
                                     {item.msg}
                                 </Text> 
                                 </Hyperlink>
                             </View>
-                     
                             <Text style={{ fontSize: 12, textAlign: 'right', justifyContent: 'flex-end', alignItems: 'flex-end' }}>{item.time}</Text>
                         </View>
                     )}

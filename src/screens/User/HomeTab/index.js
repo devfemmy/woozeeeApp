@@ -671,7 +671,7 @@ export default function Home({ navigation }) {
       <Text
         category="c2"
         style={{
-          position: 'absolute', bottom: hp('8%'), color: 'white', right: hp('1%'),
+          position: 'absolute', bottom: 75, color: 'white', right: 10,
         }}
       >
         {` ${data.item.cardNum}`}
@@ -679,7 +679,7 @@ export default function Home({ navigation }) {
       <Text
         category="s2"
         style={{
-          position: 'absolute', bottom: hp('2.6%'), color: 'white', left: hp('2%'),
+          position: 'absolute', bottom: 23, color: 'white', left: 20,
         }}
       >
         {fullname}
