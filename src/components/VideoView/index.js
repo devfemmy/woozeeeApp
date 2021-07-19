@@ -524,8 +524,9 @@ export default function VideoView({
                 source={{ uri: item.mediaURL }}
                 resizeMode="cover"
                 shouldPlay={
-                  screenIsFocused &
-                  (viewable.length && viewable[0]._id === item._id)
+                  screenIsFocused &&
+                  viewable.length &&
+                  viewable[0]._id === item._id
                 }
                 isLooping={true}
                 style={{ height: '100%' }}

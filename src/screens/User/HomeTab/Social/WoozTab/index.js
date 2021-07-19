@@ -10,6 +10,7 @@ import {
   useWindowDimensions,
   Image,
   StyleSheet,
+  FlatList,
 } from 'react-native';
 
 import { useInfiniteQuery } from 'react-query';
@@ -41,6 +42,7 @@ import { IconCMovie, IconCMedal } from 'src/components/CustomIcons';
 import Api from 'src/api';
 
 import { viewVideo } from '../../../../../services/Requests/index';
+
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const InteractIcon = (props) => {
@@ -219,6 +221,10 @@ export default function Wooz({ navigation }) {
 
     const onMomentumScrollEnd = ({ nativeEvent }) => {
       const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
+
+      if (newIndex != 0 && newIndex % 6 == 0) {
+        fetchNextPage();
+      }
       // console.log('new index is -> ', newIndex);
 
       if (
@@ -268,153 +274,227 @@ export default function Wooz({ navigation }) {
         return [...acc, ...element];
       }, []);
 
+      console.log('final is ', final);
+      data.pages.map((page) => console.log('page is', page));
+
       //without pagination
-      return data.pages.map((page) => (
-        <React.Fragment key={page.nextID}>
-          <View style={{ flex: 1 }}>
-            <ScrollView
-              style={{
-                flex: 1,
-                backgroundColor: 'transparent',
-              }}
-              pagingEnabled
-              disableIntervalMomentum
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              onMomentumScrollEnd={onMomentumScrollEnd}
-            >
-              {page.pageData.data.map((item, i) => (
-                <React.Fragment key={i.toString()}>
-                  <View style={{ position: 'relative' }}>
-                    <Image
-                      resizeMode="contain"
-                      style={{
-                        height: VIEW_HEIGHT,
-                        width: '100%',
-                        overflow: 'hidden',
-                        position: 'absolute',
-                      }}
-                      source={
-                        item
-                          ? { uri: item.mediaURL }
-                          : require('assets/images/banner/placeholder-image.png')
-                      }
-                    />
-                  </View>
-                  <VideoFullscreen
-                    ref={videoViewRef}
-                    data={item}
-                    height={VIEW_HEIGHT}
-                    videoRef={videoRef}
-                    navigation={navigation}
-                  />
-                </React.Fragment>
-              ))}
-              <Animated.View
-                style={[
-                  StyleSheet.absoluteFillObject,
-                  { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
-                ]}
+      return (
+        // <FlatList
+        //   style={{
+        //     flex: 1,
+        //     backgroundColor: 'transparent',
+        //   }}
+        //   initialNumToRender={3}
+        //   maxToRenderPerBatch={3}
+        //   windowSize={5}
+        //   showsHorizontalScrollIndicator={false}
+        //   showsVerticalScrollIndicator={false}
+        //   data={data.pages.pageData}
+        //   keyExtractor={(_, i) => i.toString()}
+        //   renderItem={({ page, index }) => {
+        //     <View>
+        //       {/* {final.map((item, i) => (
+        //         <React.Fragment key={i.toString()}>
+        //           <View style={{ position: 'relative' }}>
+        //             <Image
+        //               resizeMode="contain"
+        //               style={{
+        //                 height: VIEW_HEIGHT,
+        //                 width: '100%',
+        //                 overflow: 'hidden',
+        //                 position: 'absolute',
+        //               }}
+        //               source={
+        //                 item
+        //                   ? { uri: item.mediaURL }
+        //                   : require('assets/images/banner/placeholder-image.png')
+        //               }
+        //             />
+        //           </View>
+        //           <VideoFullscreen
+        //             // ref={videoViewRef}
+        //             data={item}
+        //             height={VIEW_HEIGHT}
+        //             // videoRef={videoRef}
+        //             navigation={navigation}
+        //           />
+        //         </React.Fragment>
+        //       ))} */}
+        //       <Animated.View
+        //         style={[
+        //           StyleSheet.absoluteFillObject,
+        //           { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
+        //         ]}
+        //       >
+        //         <Video
+        //           ref={videoRef}
+        //           resizeMode="contain"
+        //           style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+        //           source={{ uri: page.data[index].mediaURL }}
+        //           isLooping
+        //           onPlaybackStatusUpdate={(playbackStatus) =>
+        //             onPlaybackStatusUpdate(
+        //               playbackStatus,
+        //               page.data[index].userEntryData.entryId,
+        //             )
+        //           }
+        //           shouldPlay={true}
+        //           // prettier-ignore
+        //           onReadyForDisplay={() => Animated.timing(opacity, {
+        //           toValue: 1,
+        //           useNativeDriver: true,
+        //           duration: 500,
+        //         }).start()}
+        //         />
+        //       </Animated.View>
+        //     </View>;
+        //   }}
+        // />
+        data.pages.map((page) => (
+          <React.Fragment key={page.nextID}>
+            <View style={{ flex: 1 }}>
+              <ScrollView
+                style={{
+                  flex: 1,
+                  backgroundColor: 'transparent',
+                }}
+                pagingEnabled
+                disableIntervalMomentum
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+                onMomentumScrollEnd={onMomentumScrollEnd}
               >
-                <Video
-                  ref={videoRef}
-                  resizeMode="contain"
-                  style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                  source={{ uri: page.pageData.data[index].mediaURL }}
-                  isLooping
-                  onPlaybackStatusUpdate={(playbackStatus) =>
-                    onPlaybackStatusUpdate(
-                      playbackStatus,
-                      page.pageData.data[index].userEntryData.entryId,
-                    )
-                  }
-                  isMuted={false}
-                  shouldPlay={isFocused}
-                  // prettier-ignore
-                  onReadyForDisplay={() => Animated.timing(opacity, {
-                    toValue: 1,
-                    useNativeDriver: true,
-                    duration: 500,
-                  }).start()}
-                />
-              </Animated.View>
-            </ScrollView>
-          </View>
-        </React.Fragment>
-      ));
-
-      //for pagination but all videos are playing at the same time
-      // return (
-      //   <ScrollView
-      //     style={{
-      //       flex: 1,
-      //       backgroundColor: 'transparent',
-      //     }}
-      //     pagingEnabled
-      //     disableIntervalMomentum
-      //     showsHorizontalScrollIndicator={false}
-      //     showsVerticalScrollIndicator={false}
-      //     onMomentumScrollEnd={onMomentumScrollEnd}
-      //   >
-      //     {final.map((page) => (
-      //       <View key={page._id} style={{ flex: 1 }}>
-      //         <View>
-      //           {/* <Image
-      //             resizeMode="contain"
-      //             style={{
-      //               height: VIEW_HEIGHT,
-      //               width: '100%',
-      //               overflow: 'hidden',
-      //               position: 'absolute',
-      //             }}
-      //             source={
-      //               page
-      //                 ? { uri: page.mediaURL }
-      //                 : require('assets/images/banner/placeholder-image.png')
-      //             }
-      //           /> */}
-
-      //           <VideoFullscreen
-      //             // ref={videoViewRef}
-      //             data={page}
-      //             height={VIEW_HEIGHT}
-      //             // videoRef={videoRef}
-      //             navigation={navigation}
-      //           />
-      //         </View>
-
-      //         <Animated.View
-      //           style={[
-      //             StyleSheet.absoluteFillObject,
-      //             { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
-      //           ]}
-      //         >
-      //           <Video
-      //             ref={videoRef}
-      //             resizeMode="contain"
-      //             style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-      //             source={{ uri: page.mediaURL }}
-      //             isLooping
-      //             onPlaybackStatusUpdate={(playbackStatus) =>
-      //               onPlaybackStatusUpdate(
-      //                 playbackStatus,
-      //                 page.userEntryData.entryId,
-      //               )
-      //             }
-      //             isMuted={false}
-      //             shouldPlay={isFocused}
-      //             // prettier-ignore
-      //             onReadyForDisplay={() => Animated.timing(opacity, {
-      //               toValue: 1,
-      //               useNativeDriver: true,
-      //               duration: 500,
-      //             }).start()}
-      //           />
-      //         </Animated.View>
-      //       </View>
-      //     ))}
-      //   </ScrollView>
-      // );
+                {page.pageData.data.map((item, i) => (
+                  <React.Fragment key={i.toString()}>
+                    <View style={{ position: 'relative' }}>
+                      <Image
+                        resizeMode="contain"
+                        style={{
+                          height: VIEW_HEIGHT,
+                          width: '100%',
+                          overflow: 'hidden',
+                          position: 'absolute',
+                        }}
+                        source={
+                          item
+                            ? { uri: item.mediaURL }
+                            : require('assets/images/banner/placeholder-image.png')
+                        }
+                      />
+                    </View>
+                    <VideoFullscreen
+                      ref={videoViewRef}
+                      data={item}
+                      height={VIEW_HEIGHT}
+                      videoRef={videoRef}
+                      navigation={navigation}
+                    />
+                  </React.Fragment>
+                ))}
+                <Animated.View
+                  style={[
+                    StyleSheet.absoluteFillObject,
+                    { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
+                  ]}
+                >
+                  <Video
+                    ref={videoRef}
+                    resizeMode="contain"
+                    style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+                    source={{ uri: page.pageData.data[index].mediaURL }}
+                    isLooping
+                    onPlaybackStatusUpdate={(playbackStatus) =>
+                      onPlaybackStatusUpdate(
+                        playbackStatus,
+                        page.pageData.data[index].userEntryData.entryId,
+                      )
+                    }
+                    isMuted={false}
+                    shouldPlay={isFocused}
+                    // prettier-ignore
+                    onReadyForDisplay={() => Animated.timing(opacity, {
+                      toValue: 1,
+                      useNativeDriver: true,
+                      duration: 500,
+                    }).start()}
+                  />
+                </Animated.View>
+              </ScrollView>
+            </View>
+          </React.Fragment>
+        ))
+        // <ScrollView
+        //   style={{
+        //     flex: 1,
+        //     backgroundColor: 'transparent',
+        //   }}
+        //   pagingEnabled
+        //   disableIntervalMomentum
+        //   showsHorizontalScrollIndicator={false}
+        //   showsVerticalScrollIndicator={false}
+        //   onMomentumScrollEnd={onMomentumScrollEnd}
+        // >
+        //   {final.map((item) => (
+        //     <React.Fragment key={item._id}>
+        //       <View style={{ flex: 1 }}>
+        //         {/* {final.map((item, i) => ( */}
+        //         <React.Fragment>
+        //           <View style={{ position: 'relative' }}>
+        //             <Image
+        //               resizeMode="contain"
+        //               style={{
+        //                 height: VIEW_HEIGHT,
+        //                 width: '100%',
+        //                 overflow: 'hidden',
+        //                 position: 'absolute',
+        //               }}
+        //               source={
+        //                 item
+        //                   ? { uri: item.mediaURL }
+        //                   : require('assets/images/banner/placeholder-image.png')
+        //               }
+        //             />
+        //           </View>
+        //           <VideoFullscreen
+        //             ref={videoViewRef}
+        //             data={item}
+        //             height={VIEW_HEIGHT}
+        //             navigation={navigation}
+        //           />
+        //         </React.Fragment>
+        //         {/* ))} */}
+        //         <Animated.View
+        //           style={[
+        //             StyleSheet.absoluteFillObject,
+        //             { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
+        //           ]}
+        //         >
+        //           <Video
+        //             ref={videoRef}
+        //             resizeMode="contain"
+        //             style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+        //             source={{ uri: item.mediaURL }}
+        //             isLooping
+        //             onPlaybackStatusUpdate={(playbackStatus) =>
+        //               onPlaybackStatusUpdate(
+        //                 playbackStatus,
+        //                 item.userEntryData.entryId,
+        //               )
+        //             }
+        //             shouldPlay={isFocused}
+        //             // prettier-ignore
+        //             onReadyForDisplay={() => Animated.timing(opacity, {
+        //           toValue: 1,
+        //           useNativeDriver: true,
+        //           duration: 500,
+        //         }).start()}
+        //           />
+        //         </Animated.View>
+        //       </View>
+        //     </React.Fragment>
+        //   ))}
+        // </ScrollView>
+      );
     }
     return (
       <FetchFailed
