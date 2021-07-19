@@ -36,14 +36,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { Video } from 'expo-av';
 
-// import Video from 'react-native-video';
-
 // prettier-ignore
 import {
-  Text, Button, Divider, Layout, Input, List
-} from '@ui-kitten/components';
+    Text, Button, Divider, Layout, Input, List
+  } from '@ui-kitten/components';
 
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { AppSettingsContext } from 'src/contexts';
 
@@ -85,16 +83,9 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 
 import { TextInput } from 'react-native';
 
-export default function VideoView({
-  data,
-  viewHeight,
-  navigation,
-  t,
-  // onVideoPlay,
-  viewable,
-}) {
-  const screenIsFocused = useIsFocused();
-
+export default function ImageView({ data, viewHeight, navigation, t }) {
+  // const db = firebase.firestore();
+  // prettier-ignore
   const { appState } = useContext(AppSettingsContext);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
@@ -126,38 +117,6 @@ export default function VideoView({
   const { item } = data;
 
   const { userId } = item;
-
-  const videoRef = useRef(null);
-
-  console.log('screen is focused ', screenIsFocused);
-  console.log(videoRef.current);
-
-  useEffect(() => {
-    if (viewable && viewable.length) {
-      if (!screenIsFocused) {
-        videoRef.current.pauseAsync();
-      } else {
-        if (viewable[0]._id === item._id) {
-          videoRef.current.playAsync();
-        }
-      }
-    } else {
-      videoRef.current.pauseAsync();
-    }
-    // if (viewable) {
-    //   if (viewable.length) {
-    // if (viewable[0]._id === item._id) {
-    //   videoRef.current.playAsync();
-    // } else {
-    //   videoRef.current.pauseAsync();
-    // }
-    //   } else {
-    //     videoRef.current.pauseAsync();
-    //   }
-    // } else {
-    //   videoRef.current.pauseAsync();
-    // }
-  }, [viewable]);
 
   const sheetRef = useRef(null);
 
@@ -374,22 +333,11 @@ export default function VideoView({
     });
   };
 
-  const handleView = async (item_id) => {
-    await viewVideo(item_id);
-  };
-
   const handleSend = async () => {
     sendSheet.current.open();
   };
 
   const handleOpenSheet = () => sheetRef.current.open();
-
-  const [muteState, setIsMuted] = useState(false);
-
-  const toggleMute = () => {
-    setIsMuted(!muteState);
-    videoRef.current.setIsMutedAsync(muteState);
-  };
 
   const [text, setText] = useState('');
 
@@ -517,20 +465,26 @@ export default function VideoView({
                 {data.item.description}
               </Text>
             )}
-
             <View style={{ flex: 1 }}>
-              <Video
-                ref={videoRef}
-                source={{ uri: item.mediaURL }}
-                resizeMode="cover"
-                shouldPlay={
-                  screenIsFocused &
-                  (viewable.length && viewable[0]._id === item._id)
-                }
-                isLooping={true}
-                style={{ height: '100%' }}
-              />
+              {/* <Video
+                  ref={videoRef}
+                  source={{ uri: item.mediaURL }}
+                  resizeMode="cover"
+                  shouldPlay={true}
+                  isLooping={true}
+                  style={{ height: '100%' }}
+                /> */}
             </View>
+
+            <Image
+              source={{ uri: item.mediaURL }}
+              defaultSource={require('assets/images/banner/placeholder-image.png')}
+              style={{
+                height: '90%',
+                width: '100%',
+              }}
+              resizeMode="cover"
+            />
           </View>
         </TouchableWithoutFeedback>
         <View
@@ -761,18 +715,18 @@ export default function VideoView({
             </Text>
           </Button>
           {/* <Divider style={{ marginVertical: 2, width: '100%' }} />
-          <Button
-            appearance="ghost"
-            status="basic"
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {t('downloadMedia')}
-            </Text>
-          </Button> */}
+            <Button
+              appearance="ghost"
+              status="basic"
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+              }}
+            >
+              <Text style={{ fontSize: 16 }} status="basic">
+                {t('downloadMedia')}
+              </Text>
+            </Button> */}
           <Divider style={{ marginVertical: 2, width: '100%' }} />
           <Button
             appearance="ghost"

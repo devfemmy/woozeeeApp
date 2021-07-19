@@ -171,7 +171,6 @@ export default function UserProfile({ route, navigation }) {
   //     </View>
   //   );
   // };
-  console.log('image', imgUrl);
   return (
     <Layout level="6" style={{ flex: 1 }}>
       {/* <PlayVideoModal /> */}

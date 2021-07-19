@@ -18,15 +18,11 @@ import {
   TouchableWithoutFeedback,
   Alert,
   ScrollView,
+  StyleSheet,
+  TextInput,
 } from 'react-native';
 
-import UserTemplate from '../UserTemplate/index';
-
-import Moment from 'react-moment';
-
-import Api from 'src/api';
-
-import useAppSettings from 'src/reducers/useAppSettings';
+import { Toast, Content, Root } from 'native-base';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -36,39 +32,18 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { Video } from 'expo-av';
 
-// import Video from 'react-native-video';
+import { Feather, Ionicons } from '@expo/vector-icons';
 
-// prettier-ignore
 import {
-  Text, Button, Divider, Layout, Input, List
+  Text,
+  Button,
+  Divider,
+  Layout,
+  Input,
+  List,
 } from '@ui-kitten/components';
 
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-
-import { AppSettingsContext } from 'src/contexts';
-
-import { GeneralTextField } from 'src/components/FormFields';
-
-import firebase from '@react-native-firebase/app';
-
-import firestore from '@react-native-firebase/firestore';
-
-import { SendMessage, RecieveMessage } from '../../services/Firebase/Message';
-
-import { AddUser } from '../../services/Firebase/Users';
-
-import InteractIcon from 'src/components/InteractIcon';
-
-import { Toast, Content, Root } from 'native-base';
-
-import {
-  sendComment,
-  handleLike,
-  handleFollow,
-  getUserData,
-  viewVideo,
-  handleBookmark,
-} from '../../services/Requests/index';
+import Moment from 'react-moment';
 
 import {
   IconCHeart,
@@ -81,20 +56,19 @@ import {
   IconCEye,
 } from 'src/components/CustomIcons';
 
-import { Feather, Ionicons } from '@expo/vector-icons';
+import Api from 'src/api';
 
-import { TextInput } from 'react-native';
+import UserTemplate from '../UserTemplate/index';
 
-export default function VideoView({
-  data,
-  viewHeight,
-  navigation,
-  t,
-  // onVideoPlay,
-  viewable,
-}) {
-  const screenIsFocused = useIsFocused();
+import { AppSettingsContext } from 'src/contexts';
 
+import { SendMessage, RecieveMessage } from '../../services/Firebase/Message';
+
+import { AddUser } from '../../services/Firebase/Users';
+
+import InteractIcon from 'src/components/InteractIcon';
+
+function VideoComponent(props) {
   const { appState } = useContext(AppSettingsContext);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
@@ -123,297 +97,276 @@ export default function VideoView({
   getTheme();
   getUserImg();
 
-  const { item } = data;
+  const { videoData, focusVideoIndex, videoIndex } = props;
 
-  const { userId } = item;
+  console.log('videoData is ', videoData);
 
-  const videoRef = useRef(null);
+  //   const { item } = videoData;
 
-  console.log('screen is focused ', screenIsFocused);
-  console.log(videoRef.current);
+  //   const { userId } = item;
 
-  useEffect(() => {
-    if (viewable && viewable.length) {
-      if (!screenIsFocused) {
-        videoRef.current.pauseAsync();
-      } else {
-        if (viewable[0]._id === item._id) {
-          videoRef.current.playAsync();
-        }
-      }
-    } else {
-      videoRef.current.pauseAsync();
-    }
-    // if (viewable) {
-    //   if (viewable.length) {
-    // if (viewable[0]._id === item._id) {
-    //   videoRef.current.playAsync();
-    // } else {
-    //   videoRef.current.pauseAsync();
-    // }
-    //   } else {
-    //     videoRef.current.pauseAsync();
-    //   }
-    // } else {
-    //   videoRef.current.pauseAsync();
-    // }
-  }, [viewable]);
+  //   const videoRef = useRef(null);
 
-  const sheetRef = useRef(null);
+  //   const sheetRef = useRef(null);
 
-  const sendSheet = useRef(null);
+  //   const sendSheet = useRef(null);
 
-  const [isBookmarked, setBookmarked] = useState(item.userEntryData.isBookmark);
+  //   const isMounted = useRef(false);
 
-  const [isLiked, setLiked] = useState(item.userEntryData.isLike);
+  //   const [isBookmarked, setBookmarked] = useState(item.userEntryData.isBookmark);
 
-  const [totalLikes, setTotalLikes] = useState(item.totalLikes);
+  //   const [isLiked, setLiked] = useState(item.userEntryData.isLike);
 
-  const [form, setFormValues] = useState({
-    comment: '',
-    entryId: item.userId,
-  });
+  //   const [totalLikes, setTotalLikes] = useState(item.totalLikes);
 
-  const [following, setFollowing] = useState(item.userEntryData.isFollow);
+  //   const [form, setFormValues] = useState({
+  //     comment: '',
+  //     entryId: item.userId,
+  //   });
 
-  const likeData = {
-    entryId: item._id,
-    isLike: isLiked,
-  };
+  //   const [following, setFollowing] = useState(item.userEntryData.isFollow);
 
-  const [userList, setUserList] = useState([]);
+  //   const likeData = {
+  //     entryId: item._id,
+  //     isLike: isLiked,
+  //   };
 
-  const fetchUsers = async () => {
-    const res = await Api.getAllUsers(searchForm.value);
-    const { users } = res;
-    setUserList([...users]);
-  };
+  //   const [userList, setUserList] = useState([]);
 
-  const handleShare = async () => {
-    try {
-      const result = await Share.share({
-        message: `woozeee://entries/${item._id}`,
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // console.log(result.activityType);
-          alert('Done');
-          sheetRef.current.close();
-        } else {
-          // shared
-          alert('Post Shared!');
-          sheetRef.current.close();
-        }
-      } else if (result.action === Share.dismissedAction) {
-        alert('Action dismissed');
-      }
-      sheetRef.current.close();
-    } catch (error) {
-      alert('An error occured');
-      console.log(error.message);
-    }
-  };
+  //   const fetchUsers = async () => {
+  //     const res = await Api.getAllUsers(searchForm.value);
+  //     const { users } = res;
+  //     setUserList([...users]);
+  //   };
 
-  const toggleLike = async () => {
-    setLiked(!isLiked);
+  //   const handleShare = async () => {
+  //     try {
+  //       const result = await Share.share({
+  //         message: `woozeee://entries/${item._id}`,
+  //       });
+  //       if (result.action === Share.sharedAction) {
+  //         if (result.activityType) {
+  //           // console.log(result.activityType);
+  //           alert('Done');
+  //           sheetRef.current.close();
+  //         } else {
+  //           // shared
+  //           alert('Post Shared!');
+  //           sheetRef.current.close();
+  //         }
+  //       } else if (result.action === Share.dismissedAction) {
+  //         alert('Action dismissed');
+  //       }
+  //       sheetRef.current.close();
+  //     } catch (error) {
+  //       alert('An error occured');
+  //       console.log(error.message);
+  //     }
+  //   };
 
-    const newLikesCount = isLiked ? totalLikes - 1 : totalLikes + 1;
-    setTotalLikes(newLikesCount);
+  //   const toggleLike = async () => {
+  //     setLiked(!isLiked);
 
-    // We want to update the total like count that is returned from the server
-    // So we have fresh like count after interaction with the like icon (:
-    handleLike(likeData).then((resData) => {
-      // The meta contains new count for the entry
-      // resData.meta.totalLikes.totalLikes
-      // resData.meta.totalLikes.totalVotes
-      // resData.meta.totalLikes.totalViews
-      // resData.meta.totalLikes.totalComments
-      setTotalLikes(resData.meta.totalLikes);
-    });
-  };
+  //     const newLikesCount = isLiked ? totalLikes - 1 : totalLikes + 1;
+  //     setTotalLikes(newLikesCount);
 
-  const deletePost = async (entryId) => {
-    sheetRef.current.close();
-    Alert.alert(
-      'Delete Action',
-      'Are you sure you want to delete this post ?',
-      [
-        {
-          text: 'No',
-          // onPress: () => Alert.alert('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: 'Yes',
-          onPress: async () => {
-            const res = await Api.deleteUserPosts(entryId);
-            if (res.statusCode == 200) {
-              //close sheet and bring up suceess toast
-              Toast.show({
-                text: 'Post successfully deleted',
-                buttonText: 'Okay',
-                position: 'bottom',
-                type: 'success',
-                duration: 3000,
-              });
-            } else {
-              //close sheet and bring up suceess toast
-              Toast.show({
-                text: 'Unable to delete post',
-                buttonText: 'Okay',
-                position: 'bottom',
-                type: 'success',
-                duration: 3000,
-              });
-            }
-          },
-          style: 'ok',
-        },
-      ],
-      {
-        cancelable: true,
-      },
-    );
-  };
+  //     // We want to update the total like count that is returned from the server
+  //     // So we have fresh like count after interaction with the like icon (:
+  //     handleLike(likeData).then((resData) => {
+  //       // The meta contains new count for the entry
+  //       // resData.meta.totalLikes.totalLikes
+  //       // resData.meta.totalLikes.totalVotes
+  //       // resData.meta.totalLikes.totalViews
+  //       // resData.meta.totalLikes.totalComments
+  //       setTotalLikes(resData.meta.totalLikes);
+  //     });
+  //   };
 
-  const toggleBookmark = async () => {
-    setBookmarked(!isBookmarked);
-    // console.log(!isBookmarked);
-    const res = await handleBookmark(item.userEntryData.entryId, !isBookmarked);
-    // console.log(res);
-  };
+  //   const deletePost = async (entryId) => {
+  //     sheetRef.current.close();
+  //     Alert.alert(
+  //       'Delete Action',
+  //       'Are you sure you want to delete this post ?',
+  //       [
+  //         {
+  //           text: 'No',
+  //           // onPress: () => Alert.alert('Cancel Pressed'),
+  //           style: 'cancel',
+  //         },
+  //         {
+  //           text: 'Yes',
+  //           onPress: async () => {
+  //             const res = await Api.deleteUserPosts(entryId);
+  //             if (res.statusCode == 200) {
+  //               //close sheet and bring up suceess toast
+  //               Toast.show({
+  //                 text: 'Post successfully deleted',
+  //                 buttonText: 'Okay',
+  //                 position: 'bottom',
+  //                 type: 'success',
+  //                 duration: 3000,
+  //               });
+  //             } else {
+  //               //close sheet and bring up suceess toast
+  //               Toast.show({
+  //                 text: 'Unable to delete post',
+  //                 buttonText: 'Okay',
+  //                 position: 'bottom',
+  //                 type: 'success',
+  //                 duration: 3000,
+  //               });
+  //             }
+  //           },
+  //           style: 'ok',
+  //         },
+  //       ],
+  //       {
+  //         cancelable: true,
+  //       },
+  //     );
+  //   };
 
-  const toggleFollow = async () => {
-    setFollowing(!following);
-    await handleFollow(userId, !following);
-  };
+  //   const toggleBookmark = async () => {
+  //     setBookmarked(!isBookmarked);
+  //     // console.log(!isBookmarked);
+  //     const res = await handleBookmark(item.userEntryData.entryId, !isBookmarked);
+  //     // console.log(res);
+  //   };
 
-  const sendComment = async (commentMessage) => {
-    const userId = await AsyncStorage.getItem('userid');
-    const userData = await getUserData(userId);
+  //   const toggleFollow = async () => {
+  //     setFollowing(!following);
+  //     await handleFollow(userId, !following);
+  //   };
 
-    const firebaseConfig = {
-      apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
-      authDomain: 'woozeee-d7f6c.firebaseapp.com',
-      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
-      projectId: 'woozeee-d7f6c',
-      storageBucket: 'woozeee-d7f6c.appspot.com',
-      messagingSenderId: '979696525592',
-      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
-      measurementId: 'G-XQKMT94R9R',
-    };
+  //   const sendComment = async (commentMessage) => {
+  //     const userId = await AsyncStorage.getItem('userid');
+  //     const userData = await getUserData(userId);
 
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
+  //     const firebaseConfig = {
+  //       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+  //       authDomain: 'woozeee-d7f6c.firebaseapp.com',
+  //       databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+  //       projectId: 'woozeee-d7f6c',
+  //       storageBucket: 'woozeee-d7f6c.appspot.com',
+  //       messagingSenderId: '979696525592',
+  //       appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+  //       measurementId: 'G-XQKMT94R9R',
+  //     };
 
-    await firestore()
-      .collection('entryComments')
-      .doc(data.item._id.trim())
-      .collection('comments')
-      .doc()
-      .set({
-        senderId: userData.data.user._id,
-        text: commentMessage,
-        userFirstName: userData.data.user.fName,
-        userLastName: userData.data.user.sName,
-        userName: `@iam${userData.data.user.fName.toLowerCase()}${userData.data.user.sName.toLowerCase()}`,
-        imgUrl: userData.data.user.sName.imgUrl,
-        sentAt: Date(),
-        delivered: false,
-        sent: true,
-      });
-  };
+  //     if (!firebase.apps.length) {
+  //       firebase.initializeApp(firebaseConfig);
+  //     }
 
-  const sharePostToDm = async (currentUserId, guestUserId, postUrl, name) => {
-    // console.log(currentUserId, guestUserId, postUrl);
-    SendMessage(currentUserId, guestUserId, postUrl, '')
-      .then((res) => {
-        console.log(res);
-        // this.setState({ message: '' })
-      })
-      .catch((err) => {
-        alert(err);
-      });
+  //     await firestore()
+  //       .collection('entryComments')
+  //       .doc(data.item._id.trim())
+  //       .collection('comments')
+  //       .doc()
+  //       .set({
+  //         senderId: userData.data.user._id,
+  //         text: commentMessage,
+  //         userFirstName: userData.data.user.fName,
+  //         userLastName: userData.data.user.sName,
+  //         userName: `@iam${userData.data.user.fName.toLowerCase()}${userData.data.user.sName.toLowerCase()}`,
+  //         imgUrl: userData.data.user.sName.imgUrl,
+  //         sentAt: Date(),
+  //         delivered: false,
+  //         sent: true,
+  //       });
+  //   };
 
-    RecieveMessage(currentUserId, guestUserId, postUrl, '')
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        alert(err);
-      });
+  //   const sharePostToDm = async (currentUserId, guestUserId, postUrl, name) => {
+  //     // console.log(currentUserId, guestUserId, postUrl);
+  //     SendMessage(currentUserId, guestUserId, postUrl, '')
+  //       .then((res) => {
+  //         console.log(res);
+  //         // this.setState({ message: '' })
+  //       })
+  //       .catch((err) => {
+  //         alert(err);
+  //       });
 
-    AddUser(name, guestUserId);
+  //     RecieveMessage(currentUserId, guestUserId, postUrl, '')
+  //       .then((res) => {
+  //         console.log(res);
+  //       })
+  //       .catch((err) => {
+  //         alert(err);
+  //       });
 
-    sendSheet.current.close();
-  };
+  //     AddUser(name, guestUserId);
 
-  const routeReport = () => {
-    sheetRef.current.close();
-    navigation.navigate('Report', data);
-  };
+  //     sendSheet.current.close();
+  //   };
 
-  const routeUserProfile = async () => {
-    const userData = await getUserData(item.userId);
-    const { data } = userData;
-    // await navigation.navigate('UserProfile', data);
+  //   const routeReport = () => {
+  //     sheetRef.current.close();
+  //     props.navigation.navigate('Report', data);
+  //   };
 
-    item.userId !== _userId
-      ? await navigation.navigate('UserProfile', data)
-      : await navigation.navigate('ProfileTab');
-  };
+  //   const routeUserProfile = async () => {
+  //     const userData = await getUserData(item.userId);
+  //     const { data } = userData;
+  //     // await navigation.navigate('UserProfile', data);
 
-  const routeComments = async () => {
-    const userId = await AsyncStorage.getItem('userid');
-    const userData = await getUserData(userId);
-    const { data } = userData;
-    await navigation.navigate('Comments', {
-      currUserData: data,
-      postItem: item,
-    });
-  };
+  //     item.userId !== _userId
+  //       ? await navigation.navigate('UserProfile', data)
+  //       : await navigation.navigate('ProfileTab');
+  //   };
 
-  const handleView = async (item_id) => {
-    await viewVideo(item_id);
-  };
+  //   const routeComments = async () => {
+  //     const userId = await AsyncStorage.getItem('userid');
+  //     const userData = await getUserData(userId);
+  //     const { data } = userData;
+  //     await props.navigation.navigate('Comments', {
+  //       currUserData: data,
+  //       postItem: item,
+  //     });
+  //   };
 
-  const handleSend = async () => {
-    sendSheet.current.open();
-  };
+  //   const handleView = async (item_id) => {
+  //     await viewVideo(item_id);
+  //   };
 
-  const handleOpenSheet = () => sheetRef.current.open();
+  //   const handleSend = async () => {
+  //     sendSheet.current.open();
+  //   };
 
-  const [muteState, setIsMuted] = useState(false);
+  //   const handleOpenSheet = () => sheetRef.current.open();
 
-  const toggleMute = () => {
-    setIsMuted(!muteState);
-    videoRef.current.setIsMutedAsync(muteState);
-  };
+  //   const [muteState, setIsMuted] = useState(false);
 
-  const [text, setText] = useState('');
+  //   const toggleMute = () => {
+  //     setIsMuted(!muteState);
+  //     videoRef.current.setIsMutedAsync(muteState);
+  //   };
 
-  const [searchForm, setSearchFormValues] = useState({
-    value: '',
-    status: 'basic',
-  });
+  //   const [text, setText] = useState('');
 
-  const handleChange = (inputSearch) => {
-    setSearchFormValues((prevState) => ({
-      ...prevState,
-      value: inputSearch,
-    }));
-  };
+  //   const [searchForm, setSearchFormValues] = useState({
+  //     value: '',
+  //     status: 'basic',
+  //   });
 
-  // useEffect(() => {
-  //   fetchUsers();
-  // }, [searchForm.value]);
+  //   const handleChange = (inputSearch) => {
+  //     setSearchFormValues((prevState) => ({
+  //       ...prevState,
+  //       value: inputSearch,
+  //     }));
+  //   };
+
+  //   useEffect(() => {
+  //     fetchUsers();
+  //   }, [searchForm.value]);
+
+  //   console.log('item is ', item);
 
   return (
     <Root>
       <View
         style={{
           flex: 1,
+          height: 500,
           paddingVertical: 20,
           borderBottomWidth: 1,
           borderColor: 'rgba(143, 155, 179, 0.08)',
@@ -431,7 +384,7 @@ export default function VideoView({
             <TouchableOpacity
               activeOpacity={0.75}
               style={{ flexDirection: 'row', alignItems: 'center' }}
-              onPress={routeUserProfile}
+              // onPress={routeUserProfile}
             >
               <LinearGradient
                 colors={['#043F7C', '#FF5757']}
@@ -444,8 +397,7 @@ export default function VideoView({
                 }}
               >
                 <Image
-                  source={{ uri: item.userImageURL }}
-                  // defaultSource={require('assets/images/user/user2.png')}
+                  source={{ uri: videoData.userImageURL }}
                   style={{
                     height: 36,
                     width: 36,
@@ -465,7 +417,7 @@ export default function VideoView({
                 }}
               >
                 <Text status="primary" category="s2" style={{ marginRight: 5 }}>
-                  {item.userDisplayName}
+                  {videoData.userDisplayName}
                 </Text>
                 <Text status="danger" category="s2">
                   {/* {item.userDisplayName} */}
@@ -473,7 +425,6 @@ export default function VideoView({
               </View>
               <Image
                 source={require('assets/images/icon/verified-1.png')}
-                defaultSource={require('assets/images/icon/verified-1.png')}
                 style={{
                   height: 16,
                   width: 16,
@@ -490,7 +441,7 @@ export default function VideoView({
               status="basic"
               height={28}
               width={28}
-              onPress={handleOpenSheet}
+              // onPress={handleOpenSheet}
             />
           </View>
         </View>
@@ -505,32 +456,50 @@ export default function VideoView({
             style={{
               flex: 1,
               marginVertical: 10,
-              height: viewHeight - 100,
+              // position: 'relative',
             }}
           >
-            {data.item.description !== '' && (
+            {videoData.description !== '' && (
               <Text
                 // status="primary"
                 category="s2"
                 style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
               >
-                {data.item.description}
+                {videoData.description}
               </Text>
             )}
 
-            <View style={{ flex: 1 }}>
-              <Video
-                ref={videoRef}
-                source={{ uri: item.mediaURL }}
-                resizeMode="cover"
-                shouldPlay={
-                  screenIsFocused &
-                  (viewable.length && viewable[0]._id === item._id)
-                }
-                isLooping={true}
-                style={{ height: '100%' }}
-              />
-            </View>
+            {videoData.type && videoData.type == 'photo' ? (
+              <View
+                style={{
+                  height: 500,
+                }}
+              >
+                <Image
+                  source={{ uri: videoData.mediaURL }}
+                  defaultSource={require('assets/images/banner/placeholder-image.png')}
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                  }}
+                  resizeMode="cover"
+                />
+              </View>
+            ) : (
+              <View
+                style={{
+                  height: 500,
+                }}
+              >
+                <Video
+                  source={{ uri: videoData.mediaURL }}
+                  resizeMode="cover"
+                  shouldPlay={focusVideoIndex == videoIndex}
+                  isLooping={true}
+                  style={{ flex: 1 }}
+                />
+              </View>
+            )}
           </View>
         </TouchableWithoutFeedback>
         <View
@@ -556,7 +525,7 @@ export default function VideoView({
                 marginHorizontal: 8,
               }}
             >
-              {isLiked ? (
+              {/* {isLiked ? (
                 <Ionicons
                   name="md-heart-sharp"
                   style={{
@@ -565,7 +534,7 @@ export default function VideoView({
                   }}
                   size={22}
                   color="red"
-                  onPress={toggleLike}
+                  //   onPress={toggleLike}
                 />
               ) : (
                 <Ionicons
@@ -576,14 +545,14 @@ export default function VideoView({
                   }}
                   size={22}
                   color={appTheme === '#F7F9FC' ? 'black' : 'white'}
-                  onPress={toggleLike}
+                  //   onPress={toggleLike}
                 />
-              )}
-              {totalLikes > 0 && (
+              )} */}
+              {/* {totalLikes > 0 && (
                 <Text category="s2" style={{ color: isLiked ? 'red' : 'gray' }}>
                   {totalLikes}
                 </Text>
-              )}
+              )} */}
             </View>
             <Ionicons
               name="ios-chatbox-ellipses-outline"
@@ -593,7 +562,7 @@ export default function VideoView({
               }}
               size={21}
               color={appTheme === '#F7F9FC' ? 'black' : 'white'}
-              onPress={routeComments}
+              //   onPress={routeComments}
             />
             <Feather
               name="send"
@@ -603,23 +572,22 @@ export default function VideoView({
                 marginVertical: 2,
                 marginHorizontal: 8,
               }}
-              onPress={
-                () => handleSend()
-                // props.navigation.navigate('DeepLinkPost', { _id: item._id })
-              }
+              //   onPress={
+              //     () => handleSend()
+              //   }
             />
           </View>
           <View>
             <InteractIcon
               style={{ marginHorizontal: 5 }}
               Accessory={(evaProps) => (
-                <IconBookmark {...evaProps} active={isBookmarked} />
+                <IconBookmark {...evaProps} active={true} />
               )}
               direction="row"
-              status={isBookmarked ? 'danger' : 'basic'}
+              status="basic"
               height={24}
               width={24}
-              onPress={toggleBookmark}
+              //   onPress={toggleBookmark}
             />
           </View>
         </View>
@@ -656,13 +624,13 @@ export default function VideoView({
             <View style={{ flex: 1, marginHorizontal: 5 }}>
               <TextInput
                 placeholder="Leave a comment"
-                onChangeText={(text) => setText(text)}
+                // onChangeText={(text) => setText(text)}
                 style={{
                   height: 40,
                   paddingHorizontal: 5,
                   color: 'grey',
                 }}
-                defaultValue={text}
+                defaultValue={'text'}
               />
             </View>
             <View style={{ alignSelf: 'flex-start', marginTop: 4 }}>
@@ -689,13 +657,22 @@ export default function VideoView({
                 <Text category="c1" {...momentProps} style={{ fontSize: 10 }} />
               )}
             >
-              {item.createdAt}
+              {videoData.createdAt}
             </Moment>
           </View>
         </View>
+        {/* <View style={styles.container}>
+            <Video
+                source={videoData}
+                shouldPlay={focusVideoIndex == videoIndex}
+                isLooping={true}
+                resizeMode="cover"
+                style={{ flex: 1 }}
+            />
+        </View> */}
       </View>
       <RBSheet
-        ref={sheetRef}
+        // ref={sheetRef}
         height={205}
         closeOnDragDown
         animationType="fade"
@@ -717,7 +694,7 @@ export default function VideoView({
             paddingBottom: 30,
           }}
         >
-          {item.userId !== _userId ? (
+          {/* {item.userId !== _userId ? (
             <Button
               appearance="ghost"
               status="basic"
@@ -745,7 +722,7 @@ export default function VideoView({
                 Delete Post
               </Text>
             </Button>
-          )}
+          )} */}
           <Divider style={{ marginVertical: 2, width: '100%' }} />
           <Button
             appearance="ghost"
@@ -754,25 +731,25 @@ export default function VideoView({
               width: '100%',
               justifyContent: 'center',
             }}
-            onPress={routeReport}
+            // onPress={routeReport}
           >
             <Text style={{ fontSize: 16 }} status="basic">
-              {t('makeReport')}
+              {/* {t('makeReport')} */}
             </Text>
           </Button>
           {/* <Divider style={{ marginVertical: 2, width: '100%' }} />
-          <Button
-            appearance="ghost"
-            status="basic"
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {t('downloadMedia')}
-            </Text>
-          </Button> */}
+      <Button
+        appearance="ghost"
+        status="basic"
+        style={{
+          width: '100%',
+          justifyContent: 'center',
+        }}
+      >
+        <Text style={{ fontSize: 16 }} status="basic">
+          {t('downloadMedia')}
+        </Text>
+      </Button> */}
           <Divider style={{ marginVertical: 2, width: '100%' }} />
           <Button
             appearance="ghost"
@@ -781,16 +758,16 @@ export default function VideoView({
               width: '100%',
               justifyContent: 'center',
             }}
-            onPress={handleShare}
+            // onPress={handleShare}
           >
             <Text style={{ fontSize: 16 }} status="basic">
-              {t('shareTo')}
+              {/* {t('shareTo')} */}
             </Text>
           </Button>
         </Layout>
       </RBSheet>
       <RBSheet
-        ref={sendSheet}
+        // ref={sendSheet}
         height={400}
         closeOnDragDown
         animationType="fade"
@@ -834,7 +811,7 @@ export default function VideoView({
                 name="x"
                 size={24}
                 color="#2E5894"
-                onPress={() => sendSheet.current.close()}
+                // onPress={() => sendSheet.current.close()}
               />
             </View>
             <View
@@ -843,7 +820,7 @@ export default function VideoView({
                 paddingHorizontal: 20,
               }}
             >
-              <Input
+              {/* <Input
                 style={{
                   width: '100%',
                 }}
@@ -851,12 +828,12 @@ export default function VideoView({
                 value={searchForm.value}
                 accessibilityLabel="Search"
                 placeholder={'Search'}
-                status={searchForm.status}
-                onChangeText={handleChange}
+                // status={searchForm.status}
+                // onChangeText={handleChange}
                 accessoryLeft={IconSearch}
-              />
+              /> */}
             </View>
-            {userList.length > 0 ? (
+            {/* {userList.length > 0 ? (
               <List
                 style={{ backgroundColor: 'transparent', paddingVertical: 10 }}
                 alwaysBounceVertical
@@ -900,10 +877,22 @@ export default function VideoView({
               >
                 <Text>User not found</Text>
               </View>
-            )}
+            )} */}
           </View>
         </Layout>
       </RBSheet>
     </Root>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // padding: 20,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    height: 500,
+  },
+});
+
+export default VideoComponent;
