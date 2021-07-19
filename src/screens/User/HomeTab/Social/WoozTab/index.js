@@ -222,9 +222,9 @@ export default function Wooz({ navigation }) {
     const onMomentumScrollEnd = ({ nativeEvent }) => {
       const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
 
-      if (newIndex != 0 && newIndex % 6 == 0) {
-        fetchNextPage();
-      }
+      // if (newIndex != 0 && newIndex % 6 == 0) {
+      //   fetchNextPage();
+      // }
       // console.log('new index is -> ', newIndex);
 
       if (
