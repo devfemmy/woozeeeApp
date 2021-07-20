@@ -232,42 +232,22 @@ export default function Social({ navigation }) {
             data={final}
             keyExtractor={(_, i) => i.toString()}
             renderItem={({ item, index }) => {
-              if (item.type == 'video') {
-                return (
-                  <VideoView
-                    data={{ item, index }}
-                    viewHeight={ITEM_HEIGHT}
-                    navigation={navigation}
-                    t={t}
-                    viewable={Viewable}
-                  />
-                );
-              } else if (item.type == 'photo') {
-                return (
-                  <ImageView
-                    data={{ item, index }}
-                    viewHeight={ITEM_HEIGHT}
-                    navigation={navigation}
-                    t={t}
-                  />
-                );
-              } else {
-                return (
-                  <VideoView
-                    data={{ item, index }}
-                    viewHeight={ITEM_HEIGHT}
-                    navigation={navigation}
-                    t={t}
-                    id={item._id}
-                    // onVideoPlay={handleVideoPlay}
-                    viewable={Viewable}
-                  />
-                );
-              }
-
-              {
-                index === 5 ? <StoryPostsArea /> : null;
-              }
+              item.type == 'video' ? (
+                <VideoView
+                  data={{ item, index }}
+                  viewHeight={ITEM_HEIGHT}
+                  navigation={navigation}
+                  t={t}
+                  viewable={Viewable}
+                />
+              ) : (
+                <ImageView
+                  data={{ item, index }}
+                  viewHeight={ITEM_HEIGHT}
+                  navigation={navigation}
+                  t={t}
+                />
+              );
               {
                 index === 2 || index === 8 ? (
                   <MoviesSection
@@ -277,6 +257,10 @@ export default function Social({ navigation }) {
                     height={ITEM_HEIGHT}
                   />
                 ) : null;
+              }
+
+              {
+                index === 5 ? <StoryPostsArea /> : null;
               }
             }}
             ref={ref}
