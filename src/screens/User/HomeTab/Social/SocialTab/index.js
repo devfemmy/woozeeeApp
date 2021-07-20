@@ -232,36 +232,35 @@ export default function Social({ navigation }) {
             data={final}
             keyExtractor={(_, i) => i.toString()}
             renderItem={({ item, index }) => {
-              return item.type == 'video' ? (
-                <VideoView
-                  data={{ item, index }}
-                  viewHeight={ITEM_HEIGHT}
-                  navigation={navigation}
-                  t={t}
-                  viewable={Viewable}
-                />
-              ) : (
-                <ImageView
-                  data={{ item, index }}
-                  viewHeight={ITEM_HEIGHT}
-                  navigation={navigation}
-                  t={t}
-                />
+              return (
+                <>
+                  {item.type == 'video' ? (
+                    <VideoView
+                      data={{ item, index }}
+                      viewHeight={ITEM_HEIGHT}
+                      navigation={navigation}
+                      t={t}
+                      viewable={Viewable}
+                    />
+                  ) : (
+                    <ImageView
+                      data={{ item, index }}
+                      viewHeight={ITEM_HEIGHT}
+                      navigation={navigation}
+                      t={t}
+                    />
+                  )}
+                  {index === 2 || index === 8 ? (
+                    <MoviesSection
+                      t={t}
+                      navigation={navigation}
+                      width={width}
+                      height={ITEM_HEIGHT}
+                    />
+                  ) : null}
+                  {index === 5 ? <StoryPostsArea /> : null}
+                </>
               );
-              {
-                index === 2 || index === 8 ? (
-                  <MoviesSection
-                    t={t}
-                    navigation={navigation}
-                    width={width}
-                    height={ITEM_HEIGHT}
-                  />
-                ) : null;
-              }
-
-              {
-                index === 5 ? <StoryPostsArea /> : null;
-              }
             }}
             ref={ref}
             onViewableItemsChanged={onViewRef.current}
