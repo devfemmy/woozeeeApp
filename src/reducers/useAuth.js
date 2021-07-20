@@ -61,6 +61,28 @@ export default function useAuth() {
 
         return msg;
       },
+
+      signup: async (userData) => {
+        const userInfo = {
+          email: userData.email,
+          fName: userData.firstName,
+          sName: userData.lastName,
+          username: userData.firstName,
+          password: userData.password,
+        };
+
+        const res = await fetch('https://apis.woozeee.com/api/v1/user/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(userInfo),
+        });
+
+        console.log(res);
+      },
+
       // login user then set token (use login details) in storage
       login: async (userData) => {
         const res = await fetch('https://apis.woozeee.com/api/v1/user/login', {

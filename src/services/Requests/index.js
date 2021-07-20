@@ -185,7 +185,7 @@ export const getUserEntries = async (id) => {
 
 export const sendComment = async (comment) => {
   const res = await firestore().collection('entryComments').get();
-  console.log(res);
+  // console.log(res);
 };
 
 export const viewVideo = async (id) => {
