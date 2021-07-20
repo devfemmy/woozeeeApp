@@ -165,7 +165,7 @@ export default function Social({ navigation }) {
       SetViewable(Check);
     });
 
-    console.log('viewable is -> ', Viewable);
+    // console.log('viewable is -> ', Viewable);
 
     const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 80 });
 
@@ -232,7 +232,7 @@ export default function Social({ navigation }) {
             data={final}
             keyExtractor={(_, i) => i.toString()}
             renderItem={({ item, index }) => {
-              item.type == 'video' ? (
+              return item.type == 'video' ? (
                 <VideoView
                   data={{ item, index }}
                   viewHeight={ITEM_HEIGHT}

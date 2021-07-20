@@ -288,7 +288,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
     // console.log(currentUserId, guestUserId, postUrl);
     SendMessage(currentUserId, guestUserId, postUrl, '')
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // this.setState({ message: '' })
       })
       .catch((err) => {
@@ -297,7 +297,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
 
     RecieveMessage(currentUserId, guestUserId, postUrl, '')
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         alert(err);

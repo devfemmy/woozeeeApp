@@ -274,7 +274,7 @@ export default function Wooz({ navigation }) {
         return [...acc, ...element];
       }, []);
 
-      console.log('final is ', final);
+      // console.log('final is ', final);
       data.pages.map((page) => console.log('page is', page));
 
       //without pagination

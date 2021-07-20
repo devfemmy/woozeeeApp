@@ -107,7 +107,7 @@ export default function DeepLinkPost({ route, navigation }) {
 
   const { _id } = route.params;
 
-  console.log('from deep link, id is ', route.params);
+  // console.log('from deep link, id is ', route.params);
 
   const { width, height } = useWindowDimensions();
 

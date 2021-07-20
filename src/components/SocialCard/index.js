@@ -144,7 +144,7 @@ export function UserProfilePostCard(props) {
   const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
 
   const routeChallengeWooz = () => {
-    console.log(data.item);
+    // console.log(data.item);
     navigation.navigate('DeepLinkPost', { _id: data.item._id }), [navigation];
   };
 

@@ -93,7 +93,7 @@ export default function Comments({ route, navigation }) {
       .get();
 
     const _comments = [];
-    console.log(' allcomments is', allComments);
+    // console.log(' allcomments is', allComments);
     allComments.forEach((snap) => {
       let replies = Object.assign(snap._data, {
         replyId: snap.id,
@@ -143,7 +143,7 @@ export default function Comments({ route, navigation }) {
     });
 
     setReplies([..._replies]);
-    console.log('fetched replies are', _replies);
+    // console.log('fetched replies are', _replies);
   };
 
   useEffect(() => {
@@ -180,10 +180,10 @@ export default function Comments({ route, navigation }) {
   const sendComment = async (commentMessage) => {
     // console.log(entryId);
     if (commentId) {
-      console.log(commentMessage, commentId);
+      // console.log(commentMessage, commentId);
       setCommentId('');
     } else {
-      console.log(commentMessage);
+      // console.log(commentMessage);
     }
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',

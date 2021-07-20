@@ -160,7 +160,7 @@ export default function ProfilePostsWooz({ route, navigation }) {
       async ({ pageParam = 1 }) => {
         const promise = await Api.getUserPosts(pageParam, _id);
         if (data !== {} && data !== undefined) {
-          console.log('data is =>', data);
+          // console.log('data is =>', data);
           setWoozData(data);
         } else {
           setWoozData({ message: 'No challenge data loaded' });

@@ -31,7 +31,7 @@ const UserTemplate = ({
   const routeUserProfile = async () => {
     const userData = await getUserData(userId);
     const { data } = userData;
-    console.log('my Data', data);
+    // console.log('my Data', data);
     if (chat === true) {
       await navigation.navigate('ChatScreen', {
         name: `${data.user.fName} ${data.user.sName}`,
@@ -125,7 +125,7 @@ export default function Search({ navigation, route }) {
     fetchUsers();
   }, [form.value]);
 
-  console.log('USER LIST ', userList);
+  // console.log('USER LIST ', userList);
 
   return (
     <Layout level="6" style={{ flex: 1 }}>

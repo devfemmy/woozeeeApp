@@ -53,7 +53,7 @@ export default function Onboarding({ route, navigation }) {
   const [lastIndex, setLastIndex] = useState(false);
 
   if (route.params !== undefined) {
-    console.log(route.params);
+    // console.log(route.params);
     // setLastIndex(lastIndex + 1);
   }
   // isActivated !== undefined && setLastIndex(lastIndex + 1);

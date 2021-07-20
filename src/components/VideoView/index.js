@@ -129,8 +129,8 @@ export default function VideoView({
 
   const videoRef = useRef(null);
 
-  console.log('screen is focused ', screenIsFocused);
-  console.log(videoRef.current);
+  // console.log('screen is focused ', screenIsFocused);
+  // console.log(videoRef.current);
 
   useEffect(() => {
     if (viewable && viewable.length) {
@@ -329,7 +329,7 @@ export default function VideoView({
     // console.log(currentUserId, guestUserId, postUrl);
     SendMessage(currentUserId, guestUserId, postUrl, '')
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         // this.setState({ message: '' })
       })
       .catch((err) => {
@@ -338,7 +338,7 @@ export default function VideoView({
 
     RecieveMessage(currentUserId, guestUserId, postUrl, '')
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         alert(err);

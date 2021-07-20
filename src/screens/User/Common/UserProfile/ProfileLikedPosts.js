@@ -44,7 +44,7 @@ import { IconBackIos, IconCMedal } from 'src/components/CustomIcons';
 import Api from 'src/api';
 
 export default function ProfileLikedPosts({ route, navigation }) {
-  console.log('route params -> ', route.params);
+  // console.log('route params -> ', route.params);
   const likedData = route.params;
 
   useModifiedAndroidBackAction(navigation, 'SocialRoute');

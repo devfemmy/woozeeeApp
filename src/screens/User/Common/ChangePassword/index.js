@@ -14,21 +14,15 @@ import { LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
-
-import {
-  GeneralTextField,
-} from 'src/components/FormFields';
+import { GeneralTextField } from 'src/components/FormFields';
 
 import axios from '../../../../services/api/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
-
 export default function ChangePassword({ navigation }) {
   const [isLoading, setLoading] = useState(false);
   const [token, setToken] = useState('');
-  const [user_id, setUserId] = useState('')
+  const [user_id, setUserId] = useState('');
 
   const [form, setFormValues] = useState({
     oldPassword: '',
@@ -36,46 +30,41 @@ export default function ChangePassword({ navigation }) {
     confirmPassword: '',
   });
 
+  const updatePassword = () => {
+    setLoading(true);
+    const data = form;
+    axios
+      .put(`user/update-password?userId=${user_id}`, data, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        // console.log(res, "response")
+        setLoading(false);
+        const message = res.data.message;
+        alert(message);
+      })
+      .catch((err) => {
+        setLoading(false);
+        // console.log("err", err.response)
+      });
+  };
 
-const updatePassword = () => {
-  setLoading(true);
-  const data = form;
-  axios.put(`user/update-password?userId=${user_id}`, data, {headers: {Authorization: token}})
-  .then(res => {
-    console.log(res, "response")
-    setLoading(false);
-    const message = res.data.message;
-    alert(message)
-  }
-    )
-  .catch(err => {
-    setLoading(false);
-    console.log("err", err.response)
-  })
-
-}
-
-useEffect(() => {
-  const unsubscribe = navigation.addListener('focus', () => {
-    AsyncStorage.getItem('userid').then(
-      response => {
-        setUserId(response)
-      }
-    ).catch(
-      err => err
-    )
-    AsyncStorage.getItem('USER_AUTH_TOKEN').then(
-      res => {
-        setToken(res)
-      }
-    ).catch(
-      err => err
-    )
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      AsyncStorage.getItem('userid')
+        .then((response) => {
+          setUserId(response);
+        })
+        .catch((err) => err);
+      AsyncStorage.getItem('USER_AUTH_TOKEN')
+        .then((res) => {
+          setToken(res);
+        })
+        .catch((err) => err);
     });
 
-  
-  return unsubscribe;
-}, [navigation]);
+    return unsubscribe;
+  }, [navigation]);
 
   const t = useContext(LocaleContext);
   return (
@@ -95,18 +84,18 @@ useEffect(() => {
             flex: 1,
           }}
         >
-        <View style={{ padding: 15 }}>
+          <View style={{ padding: 15 }}>
             <View style={{ paddingVertical: 10 }}>
-                <GeneralTextField
-                    type="oldPassword"
-                    label={t('oldPassword')}
-                    autoCompleteType="password"
-                    textContentType="password"
-                    validate="password"
-                    secure
-                    value= {form.oldPassword}
-                    setFormValues={setFormValues}
-                />
+              <GeneralTextField
+                type="oldPassword"
+                label={t('oldPassword')}
+                autoCompleteType="password"
+                textContentType="password"
+                validate="password"
+                secure
+                value={form.oldPassword}
+                setFormValues={setFormValues}
+              />
             </View>
             <View style={{ paddingVertical: 10 }}>
               <GeneralTextField
@@ -116,7 +105,7 @@ useEffect(() => {
                 textContentType="password"
                 validate="password"
                 secure
-                value= {form.newPassword}
+                value={form.newPassword}
                 setFormValues={setFormValues}
               />
             </View>
@@ -128,7 +117,7 @@ useEffect(() => {
                 textContentType="password"
                 validate="password"
                 secure
-                value= {form.confirmPassword}
+                value={form.confirmPassword}
                 setFormValues={setFormValues}
               />
             </View>
@@ -138,8 +127,7 @@ useEffect(() => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}
-            >
-            </View>
+            ></View>
             <View style={{ paddingVertical: 20 }}>
               <Button
                 status="danger"
@@ -148,7 +136,7 @@ useEffect(() => {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
                 disabled={isLoading}
-                onPress= {() => updatePassword()}
+                onPress={() => updatePassword()}
               >
                 <Text status="control">{`Change Password`}</Text>
               </Button>
