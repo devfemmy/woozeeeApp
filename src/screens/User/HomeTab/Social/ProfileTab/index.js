@@ -82,12 +82,13 @@ export default function Profile({ navigation }) {
   const [form, setFormValues] = useState({
     fName: '',
     sName: '',
+    userName: '',
     email: '',
     bio: '',
     imgUrl: '',
     followersCount: '',
     followingCount: '',
-    videoCount: '',
+    totalEntries: '',
   });
 
   const [_userId, setUserId] = useState('');
@@ -102,7 +103,12 @@ export default function Profile({ navigation }) {
 
   const routeEditProfile = () => navigation.navigate('EditProfile');
 
-  const routeFollow = () => navigation.navigate('Follow');
+  const routeFollow = (action) =>
+    navigation.navigate('Follow', {
+      userID: _userId,
+      action,
+      username: form.userName,
+    });
 
   const routeSettings = () => navigation.navigate('Settings');
 
@@ -119,25 +125,26 @@ export default function Profile({ navigation }) {
             const user_data = response.data.user;
             const first_name = user_data.fName;
             const last_name = user_data.sName;
+            const user_name = user_data.displayName;
             const bio = user_data.bio;
             const email = user_data.email;
             const imageUrl = user_data.imgUrl;
             const coverPhotoUrl = user_data.coverPhotoUrl;
-            const videoCount = user_data.videoCount;
+            const totalEntries = user_data.totalEntries;
             const followingCount = user_data.followingCount;
             const followersCount = user_data.followersCount;
 
-            console.log('user profile is->', response.data);
-            AsyncStorage.setItem('userImg', imageUrl);
+            // console.log('user profile is->', response.data);
             setFormValues((prevState) => ({
               ...prevState,
               fName: first_name,
               sName: last_name,
+              userName: user_name,
               email: email,
               bio: bio,
               imageUrl: imageUrl,
               coverPhotoUrl: coverPhotoUrl,
-              videoCount: videoCount,
+              totalEntries: totalEntries,
               followersCount: followersCount,
               followingCount: followingCount,
             }));
@@ -165,12 +172,12 @@ export default function Profile({ navigation }) {
     return unsubscribe;
   }, [navigation]);
 
-  const [notOnAll, setNotOnAll] = useState(false);
-  _index = +notOnAll;
+  // const [notOnAll, setNotOnAll] = useState(false);
+  // _index = +notOnAll;
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             position: 'relative',
@@ -372,7 +379,7 @@ export default function Profile({ navigation }) {
                   }}
                 >
                   <View style={{ alignItems: 'center', width: '33%' }}>
-                    <Text category="h5">{form.videoCount}</Text>
+                    <Text category="h5">{form.totalEntries}</Text>
                     <Text category="c2" appearance="hint">
                       {t('posts')}
                     </Text>
@@ -380,7 +387,7 @@ export default function Profile({ navigation }) {
                   <TouchableOpacity
                     activeOpacity={0.75}
                     style={{ alignItems: 'center', width: '33%' }}
-                    // onPress={routeFollow}
+                    onPress={() => routeFollow('followers')}
                   >
                     <Text category="h5">{form.followersCount}</Text>
                     <Text category="c2" appearance="hint">
@@ -390,7 +397,7 @@ export default function Profile({ navigation }) {
                   <TouchableOpacity
                     activeOpacity={0.75}
                     style={{ alignItems: 'center', width: '33%' }}
-                    // onPress={routeFollow}
+                    onPress={() => routeFollow('following')}
                   >
                     <Text category="h5">{form.followingCount}</Text>
                     <Text category="c2" appearance="hint">

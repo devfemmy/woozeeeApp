@@ -92,7 +92,7 @@ const Stories = (props) => {
               width: IS_PORTRAIT
                 ? width / (4 + extraWidth)
                 : width / (6 + extraWidth),
-              paddingHorizontal: 10,
+              marginRight: 10,
             }}
             onPress={() => onStorySelect(index)}
           >

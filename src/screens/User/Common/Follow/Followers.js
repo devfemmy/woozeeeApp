@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { View, Image, TouchableOpacity } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
+
+import {
+  getUserData,
+  getFollowData,
+} from '../../../../services/Requests/index';
 
 // prettier-ignore
 import {
@@ -10,32 +15,26 @@ import {
 } from '@ui-kitten/components';
 import { t } from 'i18n-js';
 
-const FOLLOWS = [
-  {
-    img: require('assets/images/user/user2.png'),
-    fullName: 'Frank Wazobia',
-    userName: '@frankWazobia',
-    date: '2021-03-20',
-    following: true,
-  },
-  {
-    img: require('assets/images/user/user1.png'),
-    fullName: 'Suzzy Sue',
-    userName: '@suzzySue',
-    date: '2021-02-10',
-    following: false,
-  },
-  {
-    img: require('assets/images/user/user3.png'),
-    fullName: 'Micheal Angelo',
-    userName: '@michealAngelo',
-    date: '2020-05-10',
-    following: true,
-  },
-];
+export default function Followers({ userID, navigation }) {
+  String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  };
 
-export default function Followers({ navigation }) {
-  const routeChats = () => navigation.navigate('Chats');
+  const [followersList, setFollowersList] = useState([]);
+
+  const res = async () => {
+    const followers = await getFollowData(userID, 'followers');
+    setFollowersList(followers.data);
+  };
+
+  useEffect(() => {
+    res();
+  }, []);
+
+  const routeUserProfile = async (userId) => {
+    const userData = await getUserData(userId);
+    await navigation.navigate('UserProfile', userData.data);
+  };
 
   const renderItem = ({ index, item }) => (
     <>
@@ -56,7 +55,7 @@ export default function Followers({ navigation }) {
             paddingHorizontal: 5,
             paddingVertical: 5,
           }}
-          onPress={routeChats}
+          onPress={() => routeUserProfile(item.userId)}
         >
           <LinearGradient
             colors={['#043F7C', '#FF5757']}
@@ -69,7 +68,7 @@ export default function Followers({ navigation }) {
             }}
           >
             <Image
-              source={item.img}
+              source={item.imgUrl}
               style={{
                 height: 40,
                 width: 40,
@@ -80,36 +79,26 @@ export default function Followers({ navigation }) {
           </LinearGradient>
           <View style={{ flex: 1, marginHorizontal: 10 }}>
             <Text category="s2" style={{ marginBottom: 5 }}>
-              {item.fullName}
+              {`${item.userFirstName
+                .toLowerCase()
+                .capitalize()} ${item.userLastName.toLowerCase().capitalize()}`}
             </Text>
-            <Text category="c1" numberOfLines={1}>
-              {item.userName}
-            </Text>
+            {/* <Text category="c1" numberOfLines={1}>
+              {item.displayName}
+            </Text> */}
           </View>
-          <View style={{ width: 100 }}>
-            {item.following ? (
-              <Button
-                size="tiny"
-                status="primary"
-                style={{ paddingHorizontal: 0 }}
-              >
-                <Text category="c2" status="control">
-                  {t('following')}
-                </Text>
-              </Button>
-            ) : (
-              <Button
-                size="tiny"
-                status="primary"
-                appearance="outline"
-                style={{ paddingHorizontal: 0 }}
-              >
-                <Text category="c2" status="primary">
-                  {t('followBack')}
-                </Text>
-              </Button>
-            )}
-          </View>
+          {/* <View style={{ width: 100 }}>
+            <Button
+              size="tiny"
+              status="primary"
+              appearance="outline"
+              style={{ paddingHorizontal: 0 }}
+            >
+              <Text category="c2" status="primary">
+                {t('follow')}
+              </Text>
+            </Button>
+          </View> */}
         </TouchableOpacity>
       </Layout>
     </>
@@ -120,7 +109,7 @@ export default function Followers({ navigation }) {
       alwaysBounceVertical
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
-      data={FOLLOWS}
+      data={followersList}
       keyExtractor={(_, i) => i.toString()}
       renderItem={renderItem}
       getItemLayout={(data, index) => ({

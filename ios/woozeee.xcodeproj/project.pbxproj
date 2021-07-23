@@ -720,13 +720,13 @@
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = M838M74SW4;
+						DevelopmentTeam = FK9P92XRM5;
 						LastSwiftMigration = 1120;
 						ProvisioningStyle = Automatic;
 					};
 					573671AD26938D9100BC648D = {
 						CreatedOnToolsVersion = 12.4;
-						DevelopmentTeam = M838M74SW4;
+						DevelopmentTeam = TJNSRNUPZ7;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1130,7 +1130,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M838M74SW4;
+				DEVELOPMENT_TEAM = FK9P92XRM5;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1170,7 +1170,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M838M74SW4;
+				DEVELOPMENT_TEAM = FK9P92XRM5;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = woozeee/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -1207,7 +1207,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = M838M74SW4;
+				DEVELOPMENT_TEAM = TJNSRNUPZ7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1239,7 +1239,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = M838M74SW4;
+				DEVELOPMENT_TEAM = TJNSRNUPZ7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

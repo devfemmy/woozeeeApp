@@ -462,7 +462,7 @@ export default function useAuth() {
         try {
           await AsyncStorage.removeItem('USER_AUTH_TOKEN');
 
-          await dispatch({
+          dispatch({
             type: 'LOG_OUT',
           });
         } catch (e) {

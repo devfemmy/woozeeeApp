@@ -11,7 +11,9 @@ import Followers from './Followers';
 import Following from './Following';
 import Suggested from './Suggested';
 
-export default function Follow({ navigation }) {
+export default function Follow({ route, navigation }) {
+  console.log('follow ', route.params);
+  const { userID, action } = route.params;
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const t = useContext(LocaleContext);
@@ -19,7 +21,7 @@ export default function Follow({ navigation }) {
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
-        title="@Bukka101Official"
+        title={`@${route.params.username}`}
         navigation={navigation}
         screen="default"
         search
@@ -31,14 +33,14 @@ export default function Follow({ navigation }) {
         onSelect={(index) => setSelectedIndex(index)}
       >
         <Tab title={t('followers')} style={{ paddingVertical: 10 }}>
-          <Followers navigation={navigation} />
+          <Followers navigation={navigation} userID={route.params.userID} />
         </Tab>
         <Tab title={t('following')} style={{ paddingVertical: 10 }}>
-          <Following navigation={navigation} />
+          <Following navigation={navigation} userID={route.params.userID} />
         </Tab>
-        <Tab title={t('Suggested')} style={{ paddingVertical: 10 }}>
+        {/* <Tab title={t('Suggested')} style={{ paddingVertical: 10 }}>
           <Suggested navigation={navigation} />
-        </Tab>
+        </Tab> */}
       </TabView>
     </Layout>
   );

@@ -190,5 +190,6 @@ export default {
       nextID: page + 1,
     };
   },
+
   cancelRequest: (msg) => source.cancel(msg),
 };

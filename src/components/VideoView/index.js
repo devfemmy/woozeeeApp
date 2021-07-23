@@ -36,8 +36,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { Video } from 'expo-av';
 
-// import Video from 'react-native-video';
-
 // prettier-ignore
 import {
   Text, Button, Divider, Layout, Input, List
@@ -58,6 +56,8 @@ import { SendMessage, RecieveMessage } from '../../services/Firebase/Message';
 import { AddUser } from '../../services/Firebase/Users';
 
 import InteractIcon from 'src/components/InteractIcon';
+
+import getUserProfile from '../../services/Requests/FetchUserProfile';
 
 import { Toast, Content, Root } from 'native-base';
 
@@ -129,9 +129,6 @@ export default function VideoView({
 
   const videoRef = useRef(null);
 
-  // console.log('screen is focused ', screenIsFocused);
-  // console.log(videoRef.current);
-
   useEffect(() => {
     if (viewable && viewable.length) {
       if (!screenIsFocused) {
@@ -144,19 +141,6 @@ export default function VideoView({
     } else {
       videoRef.current.pauseAsync();
     }
-    // if (viewable) {
-    //   if (viewable.length) {
-    // if (viewable[0]._id === item._id) {
-    //   videoRef.current.playAsync();
-    // } else {
-    //   videoRef.current.pauseAsync();
-    // }
-    //   } else {
-    //     videoRef.current.pauseAsync();
-    //   }
-    // } else {
-    //   videoRef.current.pauseAsync();
-    // }
   }, [viewable]);
 
   const sheetRef = useRef(null);
@@ -405,9 +389,13 @@ export default function VideoView({
     }));
   };
 
-  // useEffect(() => {
-  //   fetchUsers();
-  // }, [searchForm.value]);
+  useEffect(() => {
+    getUserProfile(_userId);
+  }, []);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [searchForm.value]);
 
   return (
     <Root>
@@ -457,30 +445,56 @@ export default function VideoView({
               </LinearGradient>
               <View
                 style={{
-                  flexDirection: 'row',
+                  // flexDirection: 'row',
                   flexWrap: 'wrap',
                   paddingRight: 5,
                   paddingLeft: 5,
                   maxWidth: 190,
                 }}
               >
-                <Text status="primary" category="s2" style={{ marginRight: 5 }}>
-                  {item.userDisplayName}
-                </Text>
-                <Text status="danger" category="s2">
-                  {/* {item.userDisplayName} */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    paddingRight: 5,
+                    paddingLeft: 5,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    maxWidth: 190,
+                  }}
+                >
+                  <Text
+                    status="primary"
+                    category="s2"
+                    style={{ marginRight: 3 }}
+                  >
+                    {item.userFirstName}
+                  </Text>
+                  <Text status="danger" category="s2">
+                    {item.userLastName}
+                  </Text>
+                  <Image
+                    source={require('assets/images/icon/verified-1.png')}
+                    defaultSource={require('assets/images/icon/verified-1.png')}
+                    style={{
+                      height: 16,
+                      width: 16,
+                      borderRadius: 8,
+                      marginHorizontal: 5,
+                    }}
+                    resizeMode="cover"
+                  />
+                </View>
+                <Text
+                  status="basic"
+                  category="c1"
+                  style={{
+                    paddingRight: 5,
+                    paddingLeft: 5,
+                  }}
+                >
+                  @{item.userDisplayName}
                 </Text>
               </View>
-              <Image
-                source={require('assets/images/icon/verified-1.png')}
-                defaultSource={require('assets/images/icon/verified-1.png')}
-                style={{
-                  height: 16,
-                  width: 16,
-                  borderRadius: 8,
-                }}
-                resizeMode="cover"
-              />
             </TouchableOpacity>
           </View>
           <View>
@@ -495,11 +509,11 @@ export default function VideoView({
           </View>
         </View>
         <TouchableWithoutFeedback
-        // onPress={
-        //   data.item.type && data.item.type == 'video'
-        //     ? () => toggleMute()
-        //     : null
-        // }
+          onPress={
+            data.item.type && data.item.type == 'video'
+              ? () => toggleMute()
+              : null
+          }
         >
           <View
             style={{
