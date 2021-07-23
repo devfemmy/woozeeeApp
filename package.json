@@ -41,7 +41,7 @@
     "expo-camera": "^8.3.1",
     "expo-constants": "~9.3.3",
     "expo-font": "~8.4.0",
-    "expo-image-picker": "^9.2.0",
+    "expo-image-picker": "~9.2.0",
     "expo-linear-gradient": "~8.4.0",
     "expo-localization": "~9.1.0",
     "expo-screen-orientation": "~2.1.0",
