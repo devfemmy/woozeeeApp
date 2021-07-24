@@ -253,7 +253,7 @@ PODS:
     - React-Core
     - UMCore
     - UMImageLoaderInterface
-  - EXImagePicker (9.2.1):
+  - EXImagePicker (10.0.0):
     - UMCore
     - UMFileSystemInterface
     - UMPermissionsInterface
@@ -267,7 +267,7 @@ PODS:
     - UMCore
     - UMPermissionsInterface
     - UMTaskManagerInterface
-  - EXPermissions (10.0.0):
+  - EXPermissions (11.0.0):
     - UMCore
     - UMPermissionsInterface
   - EXScreenOrientation (2.1.0):
@@ -413,7 +413,6 @@ PODS:
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.6.1)
-  - imglyKit (10.24.0)
   - leveldb-library (1.22.1)
   - libbambuser-ios (1.0.2)
   - nanopb (2.30908.0):
@@ -697,15 +696,15 @@ PODS:
     - Firebase/Auth (= 7.11.0)
     - React-Core
     - RNFBApp
-  - RNFBDatabase (11.3.3):
+  - RNFBDatabase (11.5.0):
     - Firebase/Database (= 7.11.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (11.3.3):
+  - RNFBFirestore (11.5.0):
     - Firebase/Firestore (= 7.11.0)
     - React-Core
     - RNFBApp
-  - RNFBStorage (11.3.3):
+  - RNFBStorage (11.5.0):
     - Firebase/Storage (= 7.11.0)
     - React-Core
     - RNFBApp
@@ -724,10 +723,6 @@ PODS:
     - React
   - RNVectorIcons (8.1.0):
     - React-Core
-  - RNVideoEditorSDK (2.10.1):
-    - React
-    - React-RCTImage
-    - VideoEditorSDK (~> 10.24)
   - UMAppLoader (1.4.0)
   - UMBarCodeScannerInterface (5.4.0)
   - UMCameraInterface (5.4.0)
@@ -745,8 +740,6 @@ PODS:
     - UMFontInterface
   - UMSensorsInterface (5.4.0)
   - UMTaskManagerInterface (5.4.0)
-  - VideoEditorSDK (10.24.0):
-    - imglyKit (= 10.24.0)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -764,7 +757,7 @@ DEPENDENCIES:
   - EXLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - EXLocalization (from `../node_modules/expo-localization/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
-  - EXPermissions (from `../node_modules/expo-permissions/ios`)
+  - EXPermissions (from `../node_modules/expo-image-picker/node_modules/expo-permissions/ios`)
   - EXScreenOrientation (from `../node_modules/expo-screen-orientation/ios`)
   - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
@@ -821,7 +814,6 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
-  - RNVideoEditorSDK (from `../node_modules/react-native-videoeditorsdk`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
@@ -860,14 +852,12 @@ SPEC REPOS:
     - gRPC-Core
     - GTMAppAuth
     - GTMSessionFetcher
-    - imglyKit
     - leveldb-library
     - libbambuser-ios
     - nanopb
     - OneSignal
     - OneSignalXCFramework
     - PromisesObjC
-    - VideoEditorSDK
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -899,7 +889,7 @@ EXTERNAL SOURCES:
   EXLocation:
     :path: "../node_modules/expo-location/ios"
   EXPermissions:
-    :path: "../node_modules/expo-permissions/ios"
+    :path: "../node_modules/expo-image-picker/node_modules/expo-permissions/ios"
   EXScreenOrientation:
     :path: "../node_modules/expo-screen-orientation/ios"
   EXSecureStore:
@@ -1004,8 +994,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
-  RNVideoEditorSDK:
-    :path: "../node_modules/react-native-videoeditorsdk"
   UMAppLoader:
     :path: "../node_modules/unimodules-app-loader/ios"
   UMBarCodeScannerInterface:
@@ -1049,12 +1037,12 @@ SPEC CHECKSUMS:
   EXFileSystem: 0e4974ab77bff04cda68d2886d070cbe64b93a6b
   EXFont: 30c64ed8735a180e3f20046e4fdac4ea074d71d3
   EXImageLoader: f96ec9992733a4224418bbd9382e5485c8948944
-  EXImagePicker: 82fb929fb57b38de8d0a2d7fc3ca49726b9b8f78
+  EXImagePicker: 50e8688af1278af72d3235753a825a49465b4a84
   EXKeepAwake: 615c5a6fca5c2afedf611bb6f7f2ca323246de94
   EXLinearGradient: c803fbd1aa974be038177b1e45524bc35759fe9c
   EXLocalization: 8b9463c81843da214476b541a27811dd885c9a76
   EXLocation: d55e2a37f61bcfb4eba9c813b3f4621d896c4c00
-  EXPermissions: 17d4846ad1880f6891c74ae58ca1acb43e47ed47
+  EXPermissions: 015f1129f80266f6c38e3691102546232b641614
   EXScreenOrientation: 74ec9be3963b613eb37730d41ef0954e014b08ff
   EXSecureStore: 1b571851e6068b30b8ec097be848a04603c03bae
   EXSplashScreen: 8c7c1112ce7611a853486af4737fe2298eda7657
@@ -1081,7 +1069,6 @@ SPEC CHECKSUMS:
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
-  imglyKit: a40e1f569642aee7e7f126d4f8c30a3ed9ba8ba1
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   libbambuser-ios: a1e984609ee629d1ae4bafd6379ef7f6afa3ddf1
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
@@ -1121,9 +1108,9 @@ SPEC CHECKSUMS:
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNFBApp: 9c90f9d576861947ba75fe0830567c570bcbcf6d
   RNFBAuth: 99fdbce04ff3d39e57a7a3956d632ee69145685b
-  RNFBDatabase: de7c902da929d8b170930f23e2787ee3f5e75c4b
-  RNFBFirestore: 9c7fc9c42de2cc91d9b70cfc12ed00aa25ddb250
-  RNFBStorage: af7814531e503ea094f65f24fc5aa98491823bb8
+  RNFBDatabase: 64aaecd9e48c6378864ef7d0fe65cc5f312987ed
+  RNFBFirestore: bedb9727c0df9a1f1ec23b5e23988075a4cbea78
+  RNFBStorage: 052a32c5af38b106e4d6b0a296df304d97be995e
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNGoogleSignin: 111fd4792913208f338fe3178005f7a22e490ff9
   RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926
@@ -1131,7 +1118,6 @@ SPEC CHECKSUMS:
   RNShare: 755de6bac084428f8fd8fb54c376f126f40e560c
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
-  RNVideoEditorSDK: a55d7c66aae540b207f5f8b7f86797ef56bb62e4
   UMAppLoader: 92d044af52626af3d81a69796ad666fc7a9a7d78
   UMBarCodeScannerInterface: 3f6c1b09ef4b867ce752b8c0b3893bcf9cd85f32
   UMCameraInterface: d516032121192fee9a6c93bdfff0bb2cc7282796
@@ -1145,7 +1131,6 @@ SPEC CHECKSUMS:
   UMReactNativeAdapter: 172def7895b2cb44a7dd021336e316d5fa8ea958
   UMSensorsInterface: 4df9ec662134de5614ae61acc249d6912db87ca5
   UMTaskManagerInterface: 4c60b43eaf3cb05a164bc9113258a171c18b7bf7
-  VideoEditorSDK: b5c5ad9613e9b1250e042fe64c42ea4339f72e71
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
 PODFILE CHECKSUM: 77eb7048c9a0495787026632010ef1f8d59c901a

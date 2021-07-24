@@ -77,11 +77,6 @@ OneSignal.setAppId("7f2e4740-3498-4c48-8925-a8ffe8168c2b");
 //END OneSignal Init Code
 
 //Prompt for push on iOS
-if (Platform.OS === 'ios') {
-  OneSignal.promptForPushNotificationsWithUserResponse(response => {
-    console.log("Prompt response:", response);
-  });
-}
 
 
 
