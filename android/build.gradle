@@ -12,7 +12,6 @@ buildscript {
         google()
         jcenter()
         mavenCentral()
-
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://artifactory.img.ly/artifactory/imgly" }
     }
@@ -20,7 +19,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:4.1.0")
 
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10")
-        classpath("ly.img.android.sdk:plugin:8.1.0")
+        classpath("ly.img.android.sdk:plugin:8.3.1")
 
         // classpath 'com.android.tools.build:gradle:3.1.2' // <--- use this version or newer
         classpath 'com.google.gms:google-services:4.1.0' // <--- use this version or newer
