@@ -28,6 +28,10 @@ const Stories = (props) => {
   const { width, height } = useWindowDimensions();
   const IS_PORTRAIT = height > width;
 
+  String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  };
+
   const onStorySelect = (index) => {
     setCurrentUserIndex(index);
     setModel(true);
@@ -72,6 +76,8 @@ const Stories = (props) => {
     }
   };
 
+  // console.log('story is -> ', storyData);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -86,7 +92,7 @@ const Stories = (props) => {
               width: IS_PORTRAIT
                 ? width / (4 + extraWidth)
                 : width / (6 + extraWidth),
-              paddingHorizontal: 10,
+              marginRight: 10,
             }}
             onPress={() => onStorySelect(index)}
           >
@@ -102,21 +108,22 @@ const Stories = (props) => {
                 }}
               >
                 <Image
+                  source={{ uri: storyData[index].userImageURL }}
                   style={{
                     height: 80,
                     width: 80,
                     borderRadius: 40,
                   }}
                   resizeMode="cover"
-                  source={{ uri: storyData[index].userImageURL }}
                   isHorizontal
                 />
               </LinearGradient>
               <Text
+                numberOfLines={1}
                 category="c2"
                 style={{ marginTop: 10, textAlign: 'center' }}
               >
-                {storyData[index].userFirstName}
+                {storyData[index].userFirstName.toLowerCase().capitalize()}
               </Text>
             </View>
           </TouchableOpacity>

@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { Text } from '@ui-kitten/components';
+import { useState } from 'react';
 
 export default function VideoCard(props) {
   // prettier-ignore
@@ -131,11 +132,8 @@ export default function VideoCard(props) {
 }
 
 export function UserProfilePostCard(props) {
-  const { data, extraWidth, numColumns } = props;
-
-  // const { firstTenEntries } = data;
-
-  // console.log('from user UserProfilePostCard-> ', data);
+  const { data, extraWidth, numColumns, allPosts } = props;
+  // console.log('from allPosts user UserProfilePostCard-> ', data);
 
   const navigation = useNavigation();
 
@@ -145,10 +143,11 @@ export function UserProfilePostCard(props) {
 
   const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
 
-  const routeChallengeWooz = useCallback(
-    () => navigation.navigate('ChallengeWooz'),
-    [navigation],
-  );
+  const routeChallengeWooz = () => {
+    // console.log(data.item);
+    navigation.navigate('DeepLinkPost', { _id: data.item._id }), [navigation];
+  };
+
   // console.log('from video -> ', data);
   // console.log('data ->', data.item.medialThumbnail);
   // console.log(data.item.mediaURL);
@@ -166,9 +165,9 @@ export function UserProfilePostCard(props) {
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
+        onPress={routeChallengeWooz}
       >
         <Video
-          poster={data.item.medialThumbnail}
           source={{ uri: data.item.mediaURL }}
           paused={true}
           style={{
@@ -181,6 +180,60 @@ export function UserProfilePostCard(props) {
       </TouchableOpacity>
     ),
     [COLUMN_COUNT, IS_PORTRAIT, extraWidth, width, data, routeChallengeWooz],
+  );
+}
+
+export function UserPostLikedCard(props) {
+  const { data, extraWidth, numColumns, allLikedPosts } = props;
+
+  const navigation = useNavigation();
+
+  const { width, height } = useWindowDimensions();
+
+  const IS_PORTRAIT = height > width;
+
+  const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
+
+  const routeLikedDataWooz = () => {
+    // console.log(data);
+    navigation.navigate('DeepLinkPost', { _id: data.item.entryId }),
+      [navigation];
+  };
+  // const routeLikedDataWooz = () => {
+  //   console.log(data);
+
+  // };
+
+  return useMemo(
+    () => (
+      <TouchableOpacity
+        activeOpacity={0.75}
+        style={{
+          height: 180,
+          width: IS_PORTRAIT
+            ? width / (COLUMN_COUNT + extraWidth)
+            : width / (COLUMN_COUNT + extraWidth),
+          paddingHorizontal: 3,
+          position: 'relative',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+        }}
+        onPress={routeLikedDataWooz}
+      >
+        <Video
+          poster={data.item.entryMediaURL}
+          source={{ uri: data.item.entryMediaURL }}
+          paused={true}
+          style={{
+            height: 175,
+            width: '100%',
+            borderRadius: 5,
+          }}
+          resizeMode="cover"
+        />
+      </TouchableOpacity>
+    ),
+    [COLUMN_COUNT, IS_PORTRAIT, extraWidth, width, data, routeLikedDataWooz],
   );
 }
 
@@ -394,7 +447,7 @@ export function ExploreVideoCard(props) {
                 />
               )}
             >
-              {/* {challenge.createdAt} */}kvhmvk
+              {/* {challenge.createdAt} */}
             </Moment>
           </View>
         </View>

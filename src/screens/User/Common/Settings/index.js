@@ -25,6 +25,8 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { IconMoon, IconFlag } from 'src/components/CustomIcons';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import locales from './locales.json';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -88,8 +90,12 @@ export default function Settings({ navigation }) {
     }
   };
 
+  //reversed situation when switched
+  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
+
   const handleSwitchTheme = async () => {
     await changeAppSettings({ darkMode: !darkMode });
+    // await AsyncStorage.setItem('appTheme', BG_THEME); //revisit switch fix with interaction icons in feeds
   };
 
   const handleSwitchLocale = async (index) => {
@@ -242,12 +248,12 @@ export default function Settings({ navigation }) {
           </View>
           <Divider style={{ marginVertical: 10 }} />
           <TouchableOpacity
-          onPress= {() => navigation.navigate('ChangePassword')}
+            onPress={() => navigation.navigate('ChangePassword')}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              paddingVertical: 5
+              paddingVertical: 5,
             }}
           >
             <View

@@ -33,10 +33,9 @@ import OverlayLoader from 'src/components/OverlayLoader';
 import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
 import BackgroundVideo from 'src/components/BackgroundVideo';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 /* DATA */
-
-
 
 const woozeeeCategories = [
   {
@@ -90,7 +89,7 @@ export default function Home({ navigation }) {
   const [isBalanceVisible, setBalanceVisible] = useState(true);
   const [insureCardNo, setInsureCardNo] = useState(null);
   const [walletCardNo, setWalletCardNo] = useState(null);
-  const [rewardCardNo, setRewardCardNo] = useState(null)
+  const [rewardCardNo, setRewardCardNo] = useState(null);
   const [insureAmt, setInsureAmt] = useState(null);
   const [walletAmt, setWalletAmt] = useState(null);
   const [rewardAmt, setRewardAmt] = useState(null);
@@ -112,83 +111,82 @@ export default function Home({ navigation }) {
     {
       balance: parseInt(insureAmt).toFixed(2),
       cardNum: insureCardNo,
-      banner: require('assets/images/card/card1.jpg'),
+      banner: require('assets/images/card/card3.png'),
       action: 'openCare',
     },
     {
       balance: parseInt(walletAmt).toFixed(2),
       cardNum: walletCardNo,
-      banner: require('assets/images/card/card2.png'),
+      banner: require('assets/images/card/card1.png'),
       action: 'openWallet',
     },
     {
       balance: parseInt(rewardAmt).toFixed(2),
       cardNum: rewardCardNo,
-      banner: require('assets/images/card/card3.png'),
+      banner: require('assets/images/card/card2.png'),
       action: 'openRewards',
     },
   ];
 
   const fetchFromAsyncStorage = () => {
-        // Fetch Data from Asynchstorage
+    // Fetch Data from Asynchstorage
 
-        AsyncStorage.getItem('fullName').then(
-          res => {
-            setFullName(res)
-          }
-        ).catch(
-          err => err
-        );
-        AsyncStorage.getItem('insureCardNo').then(
-          res => {
-            setInsureCardNo(res)
-          }
-        ).catch(
-          err => err
-        );
-        AsyncStorage.getItem('walletCardNo').then(
-          res => {
-            setWalletCardNo(res)
-          }
-        ).catch(
-          err => err
-        );
-        AsyncStorage.getItem('rewardCardNo').then(
-          res => {
-            setRewardCardNo(res)
-          }
-        ).catch(
-          err => err
-        );
-        AsyncStorage.getItem('insureAmt').then(
-          res => {
-            setInsureAmt(res)
-          }
-        ).catch(
-          err => err
-        );
-        AsyncStorage.getItem('walletAmt').then(
-          res => {
-            setWalletAmt(res)
-          }
-        ).catch(
-          err => err
-        );
-        AsyncStorage.getItem('rewardAmt').then(
-          res => {
-            setRewardAmt(res)
-          }
-        ).catch(
-          err => err
-        );
-  }
+    AsyncStorage.getItem('fullName').then(
+      (res) => {
+        setFullName(res);
+      },
+    ).catch(
+      (err) => err,
+    );
+    AsyncStorage.getItem('insureCardNo').then(
+      (res) => {
+        setInsureCardNo(res);
+      },
+    ).catch(
+      (err) => err,
+    );
+    AsyncStorage.getItem('walletCardNo').then(
+      (res) => {
+        setWalletCardNo(res);
+      },
+    ).catch(
+      (err) => err,
+    );
+    AsyncStorage.getItem('rewardCardNo').then(
+      (res) => {
+        setRewardCardNo(res);
+      },
+    ).catch(
+      (err) => err,
+    );
+    AsyncStorage.getItem('insureAmt').then(
+      (res) => {
+        setInsureAmt(res);
+      },
+    ).catch(
+      (err) => err,
+    );
+    AsyncStorage.getItem('walletAmt').then(
+      (res) => {
+        setWalletAmt(res);
+      },
+    ).catch(
+      (err) => err,
+    );
+    AsyncStorage.getItem('rewardAmt').then(
+      (res) => {
+        setRewardAmt(res);
+      },
+    ).catch(
+      (err) => err,
+    );
+  };
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      fetchFromAsyncStorage()
-      });
+      fetchFromAsyncStorage();
+    });
 
-    
     return unsubscribe;
   }, [navigation]);
 
@@ -261,7 +259,9 @@ export default function Home({ navigation }) {
               />
             </View>
             <Text category="h6" style={{ marginVertical: 5 }}>
-              Hello {fullname}
+              Hello
+              {' '}
+              {fullname}
             </Text>
             <Text style={{ marginVertical: 5 }}>{t('redeem')}</Text>
             <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
@@ -327,7 +327,9 @@ export default function Home({ navigation }) {
               />
             </View>
             <Text category="h6" style={{ marginVertical: 5 }}>
-              Hello {fullname}
+              Hello
+              {' '}
+              {fullname}
             </Text>
             <Text style={{ marginVertical: 5 }}>{t('acceptCharge')}</Text>
             <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
@@ -393,7 +395,9 @@ export default function Home({ navigation }) {
               />
             </View>
             <Text category="h6" style={{ marginVertical: 5 }}>
-              Hello {fullname}
+              Hello
+              {' '}
+              {fullname}
             </Text>
             <Text style={{ marginVertical: 5 }}>{t('completeTransfer')}</Text>
             <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
@@ -485,7 +489,9 @@ export default function Home({ navigation }) {
                 />
               </View>
               <Text category="h6" style={{ marginVertical: 5 }}>
-                Hello {fullname}
+                Hello
+                {' '}
+                {fullname}
               </Text>
               <Text style={{ marginVertical: 5, textAlign: 'center' }}>
                 {t('marketComing')}
@@ -582,7 +588,9 @@ export default function Home({ navigation }) {
                 />
               </View>
               <Text category="h6" style={{ marginVertical: 5 }}>
-                Hello {fullname}
+                Hello
+                {' '}
+                {fullname}
               </Text>
               <Text style={{ marginVertical: 5, textAlign: 'center' }}>
                 {t('charityComing')}
@@ -660,8 +668,22 @@ export default function Home({ navigation }) {
         }}
         resizeMode="cover"
       />
-       <Text category= "s1" style= {{position: 'absolute', bottom: 65, color: 'white', left: 20}}>{`****  ****  ****  ****  ${data.item.cardNum}`}</Text>
-      <Text category= "s2" style= {{position: 'absolute', bottom: 23, color: 'white', left: 20}}>{fullname}</Text>
+      <Text
+        category="c2"
+        style={{
+          position: 'absolute', bottom: 75, color: 'white', right: 10,
+        }}
+      >
+        {` ${data.item.cardNum}`}
+      </Text>
+      <Text
+        category="s2"
+        style={{
+          position: 'absolute', bottom: 23, color: 'white', left: 20,
+        }}
+      >
+        {fullname}
+      </Text>
     </TouchableOpacity>
   );
 

@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 
 import {
   View,
   Image,
+  StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
@@ -12,7 +13,15 @@ import {
   Layout, Text, List,
 } from '@ui-kitten/components';
 
-import { LocaleContext } from 'src/contexts';
+import { Video } from 'expo-av';
+
+import Carousel from 'react-native-snap-carousel';
+
+import {
+  LoadingContext,
+  LocaleContext,
+  AppSettingsContext,
+} from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
@@ -30,17 +39,79 @@ import marketPlaceItems from './data';
 const woozeeeCards = [
   {
     id: 1,
-    banner: require('assets/images/banner/woozeee-ad.jpg'),
+    banner: require('assets/images/banner/mega-sale.jpg'),
   },
   {
     id: 2,
-    banner: require('assets/images/banner/mega-sale.jpg'),
+    banner: require('assets/images/banner/wooozeeAd.png'),
   },
   {
     id: 3,
     banner: require('assets/images/banner/valentine.jpg'),
   },
 ];
+
+const sponsorsAd = [
+  {
+    id: 1,
+    banner: {
+      uri:
+        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/accessAd.mp4',
+    },
+  },
+  {
+    id: 2,
+    banner: {
+      uri:
+        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/ubaAd.mp4',
+    },
+  },
+  {
+    id: 3,
+    banner: {
+      uri:
+        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/globusAd.mp4',
+    },
+  },
+  {
+    id: 1,
+    banner: {
+      uri:
+        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/axaAd.mp4',
+    },
+  },
+];
+
+const _renderItem = ({ item, index }) => {
+  return (
+    <View key={index} style={styles.slide}>
+      <TouchableOpacity>
+        <Image
+          // defaultSource= {require('../assets/sliders/images/placeholder2.png')}
+          style={styles.slider}
+          source={item.banner}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const _renderItemAds = ({ item, index }) => {
+  return (
+    <View key={index} style={styles.slide}>
+      <TouchableOpacity style={{ marginTop: 5 }}>
+        <Video
+          // defaultSource= {require('../assets/sliders/images/placeholder2.png')}
+          style={styles.slider}
+          source={item.banner}
+          isLooping={true}
+          shouldPlay={true}
+          resizeMode="cover"
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const PLACEHOLDER_CONFIG = {
   count: 4,
@@ -53,7 +124,13 @@ const PLACEHOLDER_CONFIG = {
 const DealsPostsArea = () => WithDefaultFetch(DealsPosts, marketDealsUrl, PLACEHOLDER_CONFIG);
 
 export default function MarketPlace({ navigation }) {
+  const { appState } = useContext(AppSettingsContext);
+
   useDisableAndroidExit();
+
+  const t = useContext(LocaleContext);
+
+  const sheetRefWallet = useRef(null);
 
   const { width, height } = useWindowDimensions();
 
@@ -61,13 +138,13 @@ export default function MarketPlace({ navigation }) {
 
   const CARD_HEIGHT = IS_PORTRAIT ? 160 : 120;
 
-  const t = useContext(LocaleContext);
+  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
   const routeTo = (route) => navigation.navigate(route, { navigation });
 
   const MarketplaceItem = ({ data, navigation }) => (
     <TouchableOpacity
-      onPress = {() => navigation.navigate(data.route)}
+      onPress={() => navigation.navigate(data.route)}
       activeOpacity={0.75}
       style={{
         justifyContent: 'flex-start',
@@ -107,50 +184,18 @@ export default function MarketPlace({ navigation }) {
       </Text>
     </TouchableOpacity>
   );
-
-  const WoozeeeCardsAds = (data) => (
-    <View
-      style={{
-        height: CARD_HEIGHT,
-        width: IS_PORTRAIT ? width / 1.25 : width / 3,
-        paddingHorizontal: 5,
-        position: 'relative',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-      }}
-    >
-      <Image
-        source={data.item.banner}
-        defaultSource={data.item.banner}
-        style={{
-          height: IS_PORTRAIT ? 150 : 110,
-          width: '100%',
-          borderRadius: 5,
-        }}
-        resizeMode="cover"
-      />
-    </View>
-  );
-
   const renderHeaderArea = () => (
     <View style={{ flex: 1, paddingTop: 10, paddingBottom: 10 }}>
       <View style={{ flex: 1, Height: 180 }}>
-        <List
-          style={{ backgroundColor: 'transparent' }}
-          contentContainerStyle={{ paddingHorizontal: 5 }}
-          alwaysBounceHorizontal
-          alwaysBounceVertical
-          horizontal={IS_PORTRAIT}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
+        <Carousel
+          // ref={(c) => { _carousel = c; }}
           data={woozeeeCards}
-          keyExtractor={(_, i) => i.toString()}
-          renderItem={WoozeeeCardsAds}
-          getItemLayout={(data, index) => ({
-            length: CARD_HEIGHT,
-            offset: CARD_HEIGHT * index,
-            index,
-          })}
+          renderItem={_renderItem}
+          sliderWidth={400}
+          itemWidth={350}
+          autoplay={true}
+          lockScrollWhileSnapping={true}
+          loop={true}
         />
       </View>
       <View
@@ -166,6 +211,27 @@ export default function MarketPlace({ navigation }) {
         {marketPlaceItems.map((data) => (
           <MarketplaceItem data={data} key={data.id} navigation={navigation} />
         ))}
+      </View>
+      <Text
+        category="s2"
+        status="basic"
+        style={{ flex: 1, marginBottom: 10, marginHorizontal: 10 }}
+      >
+        Our Partners
+      </Text>
+      <View style={{ flex: 1, Height: 180, marginBottom: 15 }}>
+        <Carousel
+          // ref={(c) => { _carousel = c; }}
+          data={sponsorsAd}
+          renderItem={_renderItemAds}
+          sliderWidth={400}
+          itemWidth={350}
+          autoplay={true}
+          lockScrollWhileSnapping={true}
+          loop={true}
+          autoplayDelay={2000}
+          autoplayInterval={20000}
+        />
       </View>
     </View>
   );
@@ -185,8 +251,8 @@ export default function MarketPlace({ navigation }) {
           // ListFooterComponent={DealsPostsArea}
           ListFooterComponentStyle={{ paddingBottom: 10 }}
           horizontal={!IS_PORTRAIT}
-          alwaysBounceHorizontal
-          alwaysBounceVertical
+          // alwaysBounceHorizontal
+          // alwaysBounceVertical
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />
@@ -194,3 +260,17 @@ export default function MarketPlace({ navigation }) {
     </Layout>
   );
 }
+const styles = StyleSheet.create({
+  slide: {
+    height: 200,
+  },
+  slider: {
+    width: '100%',
+    borderRadius: 5,
+    resizeMode: 'cover',
+    height: '100%',
+  },
+  container: {
+    paddingHorizontal: 20,
+  },
+});

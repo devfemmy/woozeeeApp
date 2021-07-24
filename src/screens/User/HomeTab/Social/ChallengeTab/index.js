@@ -13,6 +13,8 @@ import Explore from 'src/screens/User/HomeTab/Social/ChallengeTab/ExploreWooz';
 import TopNavigationArea from 'src/components/TopNavigationArea';
 import { t } from 'i18n-js';
 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 export default function Challenge({ navigation }) {
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
@@ -50,12 +52,19 @@ export default function Challenge({ navigation }) {
       indicatorStyle={{ backgroundColor: '#0959AB' }}
       style={{ backgroundColor: 'transparent' }}
       renderLabel={({ route, focused, color }) => (
-        <Text
-          style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}
-          status="basic"
-        >
-          {route.title}
-        </Text>
+        <>
+          {/* <MaterialCommunityIcons
+            name="view-dashboard"
+            size={24}
+            color="black"
+          /> */}
+          <Text
+            style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}
+            status="basic"
+          >
+            {route.title}
+          </Text>
+        </>
       )}
     />
   );

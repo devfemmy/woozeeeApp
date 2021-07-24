@@ -36,6 +36,8 @@ import InteractIcon from 'src/components/InteractIcon';
 
 import { IconClose, IconPaperPlane } from 'src/components/CustomIcons';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function Comments({ route, navigation }) {
   const { height } = useWindowDimensions();
 
@@ -54,6 +56,15 @@ export default function Comments({ route, navigation }) {
   const [comments, setComments] = useState([]);
   const [replies, setReplies] = useState([]);
   const [commentId, setCommentId] = useState('');
+  const [userImg, setUserImg] = useState('');
+
+  const getUserImg = async () => {
+    const res = await AsyncStorage.getItem('userImg');
+    setUserImg(res);
+    // console.log('image is ->', res);
+  };
+
+  getUserImg();
 
   const fetchComments = async () => {
     const firebaseConfig = {
@@ -82,7 +93,7 @@ export default function Comments({ route, navigation }) {
       .get();
 
     const _comments = [];
-    console.log(' allcomments is', allComments);
+    // console.log(' allcomments is', allComments);
     allComments.forEach((snap) => {
       let replies = Object.assign(snap._data, {
         replyId: snap.id,
@@ -132,7 +143,7 @@ export default function Comments({ route, navigation }) {
     });
 
     setReplies([..._replies]);
-    console.log('fetched replies are', _replies);
+    // console.log('fetched replies are', _replies);
   };
 
   useEffect(() => {
@@ -169,10 +180,10 @@ export default function Comments({ route, navigation }) {
   const sendComment = async (commentMessage) => {
     // console.log(entryId);
     if (commentId) {
-      console.log(commentMessage, commentId);
+      // console.log(commentMessage, commentId);
       setCommentId('');
     } else {
-      console.log(commentMessage);
+      // console.log(commentMessage);
     }
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
@@ -264,8 +275,8 @@ export default function Comments({ route, navigation }) {
           }}
         >
           <Image
-            source={require('assets/images/user/user1.png')}
-            defaultSource={require('assets/images/user/user1.png')}
+            source={{ uri: userImg }}
+            // defaultSource={require('assets/images/user/user1.png')}
             style={{
               height: 30,
               width: 30,
@@ -284,7 +295,7 @@ export default function Comments({ route, navigation }) {
               borderWidth: 0.5,
               height: 40,
               paddingHorizontal: 5,
-              borderColor: 'white',
+              borderColor: 'gray',
               borderRadius: 5,
               color: 'grey',
             }}
@@ -416,7 +427,7 @@ export default function Comments({ route, navigation }) {
                 }}
               >
                 <Image
-                  source={img}
+                  source={{uri: img}}
                   style={{
                     height: 30,
                     width: 30,
@@ -480,7 +491,7 @@ export default function Comments({ route, navigation }) {
                   marginLeft:40
                 }}
               >
-                <LinearGradient
+                {/* <LinearGradient
                   colors={['#043F7C', '#FF5757']}
                   style={{
                     height: 24,
@@ -499,7 +510,7 @@ export default function Comments({ route, navigation }) {
                       borderColor: 'white',
                     }}
                   />
-                </LinearGradient>
+                </LinearGradient> */}
                 <Layout
                   level="4"
                   style={{
@@ -579,6 +590,7 @@ export default function Comments({ route, navigation }) {
                     message={`${comment.item.text}`}
                     time={`${comment.item.sentAt}`}
                     replyId={comment.item.replyId}
+                    img={comment.item.imgUrl}
                     parentCommentId={comment.item.parentCommentId}
                   />
                 )}

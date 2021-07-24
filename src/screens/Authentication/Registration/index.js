@@ -192,7 +192,7 @@ export default function Register({ navigation }) {
                   Google
                 </Text>
               </Button>
-              {/* <Button
+              <Button
                 status="primary"
                 size="medium"
                 accessoryLeft={() => (
@@ -207,7 +207,7 @@ export default function Register({ navigation }) {
                 <Text category="s1" status="control">
                   Facebook
                 </Text>
-              </Button> */}
+              </Button>
               {/* <Button
                 status="info"
                 size="medium"

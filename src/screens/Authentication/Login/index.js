@@ -231,7 +231,7 @@ export default function Login({ navigation }) {
                   Google
                 </Text>
               </Button>
-              {/* <Button
+              <Button
                 status="primary"
                 size="medium"
                 accessoryLeft={() => (
@@ -246,7 +246,7 @@ export default function Login({ navigation }) {
                 <Text category="s1" status="control">
                   Facebook
                 </Text>
-              </Button> */}
+              </Button>
               {/* <Button
                 status="info"
                 size="medium"

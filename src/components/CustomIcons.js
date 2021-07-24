@@ -224,6 +224,14 @@ export const IconCHome = (props) => {
   return <Icon {...otherProps} name={type} pack="assets" />;
 };
 
+// export const IconSetting = (props) => {
+//   const { active, ...otherProps } = props;
+
+//   const type = active ? 'home' : 'home-outline';
+
+//   return <Icon {...props} name="settings-2-outline" name={type}/>
+// }
+
 export const IconCWallet = (props) => {
   const { active, ...otherProps } = props;
 
@@ -269,6 +277,14 @@ export const IconCCup = (props) => {
   const type = active ? 'supercup' : 'supercup-outline';
 
   return <Icon {...otherProps} name={type} pack="assets" />;
+};
+
+export const IconHistory = (props) => {
+  const { active, ...otherProps } = props;
+
+  // const type = active ? 'history' : 'history-outline';
+
+  return <Icon {...otherProps} name="history-outline" />;
 };
 
 export const IconCUser = (props) => {
@@ -352,9 +368,9 @@ export const IconCSearch = (props) => {
 export const IconCMarket = (props) => {
   const { active, ...otherProps } = props;
 
-  const type = active ? 'market' : 'market-outline';
+  // const type = active ? 'market-outline' : 'market-outline';
 
-  return <Icon {...otherProps} name={type} pack="assets" />;
+  return <Icon {...otherProps} name="market-outline" pack="assets" />;
 };
 export const IconCCart = (props) => {
   const { active, ...otherProps } = props;

@@ -42,7 +42,7 @@ async function SignUpWithFacebook({ facebookSignup }) {
 
     // Sign-in the user with the credential
     const res = await auth().signInWithCredential(facebookCredential);
-    // console.log(`Res -> ${res}`);
+    console.log(`Res -> ${res}`);
   } catch (e) {
     console.log(e);
   }

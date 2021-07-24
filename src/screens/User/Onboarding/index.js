@@ -46,8 +46,17 @@ const RenderImage = ({ src }) => (
   />
 );
 
-export default function Onboarding({ navigation }) {
+export default function Onboarding({ route, navigation }) {
+  // const { isActivated } = route.params;
+  // console.log(route);
+  const [prevAction, setPrevAction] = useState(false);
   const [lastIndex, setLastIndex] = useState(false);
+
+  if (route.params !== undefined) {
+    // console.log(route.params);
+    // setLastIndex(lastIndex + 1);
+  }
+  // isActivated !== undefined && setLastIndex(lastIndex + 1);
 
   const t = useContext(LocaleContext);
 

@@ -8,17 +8,6 @@ import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 const MyCategories = (props) => {
     const [visible, setVisible] = useState(true);
     const navigation = useNavigation()
-
-    useEffect(() => {
-        const unsubscribe = props.route.key;
-        console.log(unsubscribe)
-        if (unsubscribe === 'fourth') {
-            setVisible(true)
-        }else if (unsubscribe === 'first') {
-            setVisible(false)
-        }
-   
-      });
     //   useEffect(() => {
     //     const unsubscribe = navigation.addListener('focus', () => {
     //           setVisible(true)

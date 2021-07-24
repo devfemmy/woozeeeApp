@@ -1,6 +1,12 @@
-import React, { useCallback, useContext, useRef } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+  useEffect,
+} from 'react';
 
-import { View, useWindowDimensions } from 'react-native';
+import { View, useWindowDimensions, FlatList } from 'react-native';
 
 import { useInfiniteQuery } from 'react-query';
 
@@ -14,6 +20,8 @@ import {
 } from '@ui-kitten/components';
 
 import Api from 'src/api';
+
+import { Video } from 'expo-av';
 
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
@@ -31,11 +39,17 @@ import { StoryPosts } from 'src/components/SocialPosts';
 
 import VideoView from 'src/components/VideoView';
 
+import ImageView from 'src/components/ImageView';
+
 import MoviesSection from 'src/components/MoviesSection';
 
 import { trendingUrl } from 'src/api/dummy';
 
 import { IconCStartStream, IconCLiveStreams } from 'src/components/CustomIcons';
+
+import VideoComponent from 'src/components/VideoComponent/VideoComponent';
+
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 
 const PLACEHOLDER_CONFIG1 = {
   count: 2,
@@ -49,7 +63,7 @@ const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLD
 
 const VIEWABILITY_CONFIG = {
   minimumViewTime: 250,
-  itemVisiblePercentThreshold: 65,
+  itemVisiblePercentThreshold: 35,
 };
 
 export default function Social({ navigation }) {
@@ -58,6 +72,8 @@ export default function Social({ navigation }) {
   const { width, height } = useWindowDimensions();
 
   const { bottom, top } = useSafeAreaInsets();
+
+  const [entries, setEntries] = useState([]);
 
   const SPACING = 57 + bottom + top;
 
@@ -74,6 +90,18 @@ export default function Social({ navigation }) {
   const sheetRef = useRef(null);
 
   const handleOpenSheet = () => sheetRef.current.open();
+
+  const [shouldRefetch, setShouldRefresh] = useState(false);
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  const refreshFeeds = useCallback(() => {
+    setShouldRefresh(true);
+    // console.log("pulled to refresh'");
+    wait(2000).then(() => setShouldRefresh(false));
+  }, []);
 
   const routeLiveStream = useCallback(() => {
     sheetRef.current.close();
@@ -100,6 +128,7 @@ export default function Social({ navigation }) {
       status,
       data,
       error,
+      fetchMore,
       isFetching,
       isFetchingNextPage,
       isFetchingPreviousPage,
@@ -113,16 +142,40 @@ export default function Social({ navigation }) {
       async ({ pageParam = 1 }) => {
         const promise = await Api.getVideos(pageParam);
         promise.cancel = () => Api.cancelRequest('Request aborted');
+
         return promise;
       },
       {
         getPreviousPageParam: (firstPage) => firstPage.previousID ?? false,
         getNextPageParam: (lastPage) => lastPage.nextID ?? false,
         keepPreviousData: true,
-        cacheTime: 0,
+        cacheTime: 5000,
         staleTime: 0,
       },
     );
+
+    const [Viewable, SetViewable] = useState([]);
+    const ref = useRef(null);
+
+    const onViewRef = useRef((viewableItems) => {
+      let Check = [];
+      for (var i = 0; i < viewableItems.viewableItems.length; i++) {
+        Check.push(viewableItems.viewableItems[i].item, { shouldPlay: true });
+      }
+      SetViewable(Check);
+    });
+
+    // console.log('viewable is -> ', Viewable);
+
+    const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 80 });
+
+    const screenIsFocused = useIsFocused();
+
+    const [lastPlayedVideo, setLastPlayedVideo] = useState();
+
+    const handleVideoPlay = (itemData) => {
+      // setLastPlayedVideo(itemData)
+    };
 
     if (status === 'loading') {
       return (
@@ -144,48 +197,59 @@ export default function Social({ navigation }) {
         />
       );
     }
+
     if (
       // prettier-ignore
       status !== 'loading'
         && status !== 'error'
         && data.pages[0].pageData.data.length > 0
     ) {
-      return data.pages.map((page) => (
-        <React.Fragment key={page.nextID}>
-          <View style={{ flex: 1 }}>
-            <List
-              style={{
-                flex: 1,
-                backgroundColor: 'transparent',
-              }}
-              initialNumToRender={3}
-              maxToRenderPerBatch={3}
-              windowSize={5}
-              alwaysBounceVertical
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              removeClippedSubviews
-              onViewableItemsChanged={handleOnViewableItemsChanged}
-              viewabilityConfig={VIEWABILITY_CONFIG}
-              ListHeaderComponent={StoryPostsArea}
-              ListHeaderComponentStyle={{
-                paddingVertical: 10,
-                borderBottomWidth: 1,
-                borderColor: 'rgba(143, 155, 179, 0.08)',
-              }}
-              data={page.pageData.data}
-              keyExtractor={(_, i) => i.toString()}
-              renderItem={({ item, index }) => (
+      // console.log(data.pages);
+      const res = data.pages.map((page) => page.pageData.data);
+      const final = res.reduce((acc, element) => {
+        return [...acc, ...element];
+      }, []);
+
+      // console.log(final);
+      return (
+        <View style={{ flex: 1 }}>
+          <FlatList
+            initialNumToRender={3}
+            maxToRenderPerBatch={3}
+            windowSize={5}
+            onRefresh={() => refreshFeeds()}
+            refreshing={shouldRefetch}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={StoryPostsArea}
+            ListHeaderComponentStyle={{
+              paddingVertical: 10,
+              borderBottomWidth: 1,
+              borderColor: 'rgba(143, 155, 179, 0.08)',
+            }}
+            onEndReached={() => fetchNextPage()}
+            onEndThreshold={0}
+            data={final}
+            keyExtractor={(_, i) => i.toString()}
+            renderItem={({ item, index }) => {
+              return (
                 <>
-                  <VideoView
-                    ref={(ref) => {
-                      cellRefs.current[index.toString()] = ref;
-                    }}
-                    data={{ item, index }}
-                    viewHeight={ITEM_HEIGHT}
-                    navigation={navigation}
-                    t={t}
-                  />
+                  {item.type == 'video' ? (
+                    <VideoView
+                      data={{ item, index }}
+                      viewHeight={ITEM_HEIGHT}
+                      navigation={navigation}
+                      t={t}
+                      viewable={Viewable}
+                    />
+                  ) : (
+                    <ImageView
+                      data={{ item, index }}
+                      viewHeight={ITEM_HEIGHT}
+                      navigation={navigation}
+                      t={t}
+                    />
+                  )}
                   {index === 2 || index === 8 ? (
                     <MoviesSection
                       t={t}
@@ -196,16 +260,15 @@ export default function Social({ navigation }) {
                   ) : null}
                   {index === 5 ? <StoryPostsArea /> : null}
                 </>
-              )}
-              getItemLayout={(data, index) => ({
-                length: ITEM_HEIGHT,
-                offset: ITEM_HEIGHT * index,
-                index,
-              })}
-            />
-          </View>
-        </React.Fragment>
-      ));
+              );
+            }}
+            ref={ref}
+            onViewableItemsChanged={onViewRef.current}
+            viewabilityConfig={viewConfigRef.current}
+          />
+        </View>
+      );
+      //
     }
     return (
       <FetchFailed

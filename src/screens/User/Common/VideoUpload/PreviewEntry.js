@@ -20,6 +20,7 @@ import { LocaleContext } from 'src/contexts';
 import { Platform } from 'react-native';
 import axios from '../../../../services/api/index';
 import CustomField from 'src/components/CustomField/index';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const PreviewEntry = (props) => {
   const { editorResult, imageUri, entries } = props.route.params;
@@ -242,8 +243,10 @@ const PreviewEntry = (props) => {
       appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
       measurementId: 'G-XQKMT94R9R',
     };
-
+    
+    console.log('here2')
     if (!firebase.apps.length) {
+      console.log("here1")
       firebase.initializeApp(firebaseConfig);
     }
     // if (editorResult === null) {
@@ -456,6 +459,9 @@ const PreviewEntry = (props) => {
             )}
           </View>
         )}
+        <Spinner
+        visible={isLoading}
+          />
       </Layout>
     </Root>
   );

@@ -19,15 +19,7 @@
           "client_type": 1,
           "android_info": {
             "package_name": "app.woozeee.com",
-            "certificate_hash": "4ddf1696c19b3a2c0d67bf2ed6688d4a666599bd"
-          }
-        },
-        {
-          "client_id": "979696525592-m09e4ghh9s7727vsktagoe35tdomk96g.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "app.woozeee.com",
-            "certificate_hash": "159db8cb53414e5c97322b5487dd69ff39ca3181"
+            "certificate_hash": "9349973d02d322cabfcf945bafb005df6e6ab316"
           }
         },
         {
@@ -37,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAIVka9Z_UGHzFmsadTNgqbU6t2_9vg6FA"
+          "current_key": "AIzaSyBObrAwCMVNTlmKSrdg0M1kqe7ou4GRgSU"
         }
       ],
       "services": {

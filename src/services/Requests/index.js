@@ -183,9 +183,27 @@ export const getUserEntries = async (id) => {
   return res;
 };
 
+export const getFollowData = async (userId, action) => {
+  const config = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `${await getToken()}`,
+    },
+  };
+  const res = await axios.get(
+    baseUrl + `user-data?userId=${userId}&action=${action}`,
+    config,
+  );
+
+  const { data } = res;
+  return data;
+};
+
 export const sendComment = async (comment) => {
   const res = await firestore().collection('entryComments').get();
-  console.log(res);
+  // console.log(res);
 };
 
 export const viewVideo = async (id) => {

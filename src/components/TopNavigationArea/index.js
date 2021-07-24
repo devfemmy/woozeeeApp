@@ -43,7 +43,7 @@ export default function TopNavigationArea(props) {
     onStreamClick,
   } = props;
 
-  const routeSearch = useCallback(() => navigation.navigate('Search'), [
+  const routeSearch = useCallback(() => navigation.navigate('Search', {chat: null}), [
     navigation,
   ]);
 
@@ -76,13 +76,6 @@ export default function TopNavigationArea(props) {
   const renderMarketPlaceTools = useCallback(
     () => (
       <>
-        <TopNavigationAction
-          {...props}
-          icon={IconCSearch}
-          accessibilityLiveRegion="polite"
-          accessibilityLabel="Search"
-          onPress={routeSearch}
-        />
         <TopNavigationAction
           {...props}
           icon={IconCNotification}
@@ -143,9 +136,10 @@ export default function TopNavigationArea(props) {
         icon={IconOptions}
         accessibilityLiveRegion="polite"
         accessibilityLabel="Options"
+        onPress={pressed}
       />
     ),
-    [props],
+    [props, pressed],
   );
 
   const renderAddStreamIcon = useCallback(

@@ -262,9 +262,6 @@ export default function Explore({ navigation }) {
     }
   });
 
-  const toggleOverlay = () => {
-    alert('hello')
-  }
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
@@ -305,7 +302,7 @@ export default function Explore({ navigation }) {
         title="woozeee"
         navigation={navigation}
         icon="logout"
-        pressed= {() => console.log('hey')}
+        pressed= {() => navigation.navigate('MoreOptions')}
         screen="search"
       />
       {/* <View style= {styles.tabView}>

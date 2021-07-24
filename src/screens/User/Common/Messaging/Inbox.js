@@ -33,7 +33,7 @@ const MESSAGES = [
 ];
 
 export default function Inbox({ navigation }) {
-  const routeChats = () => navigation.navigate('Chats');
+  const routeChats = () => navigation.navigate('MessageInbox');
 
   const renderItem = ({ index, item }) => (
     <>

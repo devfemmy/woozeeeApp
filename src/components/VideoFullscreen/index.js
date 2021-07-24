@@ -18,6 +18,8 @@ import {
 
 import { Button, Text } from '@ui-kitten/components';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   IconCHeartToggle,
   IconCShare,
@@ -218,6 +220,15 @@ const VideoView = forwardRef((props, ref) => {
     }
   };
 
+  const routeComments = async () => {
+    const userId = await AsyncStorage.getItem('userid');
+    const userData = await getUserData(userId);
+    await navigation.navigate('Comments', {
+      currUserData: userData.data,
+      postItem: data,
+    });
+  };
+
   return useMemo(
     () => (
       <View
@@ -319,6 +330,7 @@ const VideoView = forwardRef((props, ref) => {
                   style={{ marginBottom: 10 }}
                   Accessory={(evaProps) => <IconCChat {...evaProps} active />}
                   textContent={data.totalComments}
+                  onPress={routeComments}
                 />
                 <InteractIcon
                   style={{ marginBottom: 15 }}
