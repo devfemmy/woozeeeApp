@@ -6,7 +6,7 @@ import { enableScreens } from 'react-native-screens';
 
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-import { VESDK } from 'react-native-videoeditorsdk';
+// import { VESDK } from 'react-native-videoeditorsdk';
 
 import { QueryClientProvider, QueryClient } from 'react-query';
 
@@ -66,15 +66,15 @@ i18n.translations = { en, fr };
 
 i18n.fallbacks = true;
 
-let VESDKLicense = null;
+// let VESDKLicense = null;
 
-if (Constants.platform.android) {
-  VESDKLicense = require('src/constants/vesdk_android_license.json');
-} else if (Constants.platform.ios) {
-  VESDKLicense = require('src/constants/vesdk_ios_license.json');
-}
+// if (Constants.platform.android) {
+//   VESDKLicense = require('src/constants/vesdk_android_license.json');
+// } else if (Constants.platform.ios) {
+//   VESDKLicense = require('src/constants/vesdk_ios_license.json');
+// }
 
-VESDK.unlockWithLicense(VESDKLicense);
+// VESDK.unlockWithLicense(VESDKLicense);
 
 export default function App() {
   SplashScreen.preventAutoHideAsync()

@@ -12,7 +12,7 @@ import {
   Layout, Divider, Button, Text,
 } from '@ui-kitten/components';
 
-import { VESDK, Configuration } from 'react-native-videoeditorsdk';
+// import { VESDK, Configuration } from 'react-native-videoeditorsdk';
 
 import { LocaleContext } from 'src/contexts';
 
@@ -28,10 +28,10 @@ const libraryVideoPicker = ImageVideoPicker('Videos');
 
 const cameraVideoRecorder = ImageVideoCamera('Videos');
 
-const configuration = {
-  ...Configuration,
-  // tools: ['filter'],
-};
+// const configuration = {
+//   ...Configuration,
+//   // tools: ['filter'],
+// };
 
 export default function SocialUpload(props) {
   const { navigation, theme } = props;
@@ -45,36 +45,36 @@ export default function SocialUpload(props) {
 
     const videoFile = await libraryVideoPicker();
 
-    if (!videoFile?.uri) return;
+    // if (!videoFile?.uri) return;
 
-    if (videoFile.duration > 60 * 1000) {
-      Alert.alert(
-        'Video too long',
-        'Video file should not be greater than 60secs',
-        [{ text: 'Ok', style: 'default' }],
-      );
-      return;
-    }
+    // if (videoFile.duration > 60 * 1000) {
+    //   Alert.alert(
+    //     'Video too long',
+    //     'Video file should not be greater than 60secs',
+    //     [{ text: 'Ok', style: 'default' }],
+    //   );
+    //   return;
+    // }
 
-    const editorResult = await VESDK.openEditor(videoFile.uri, configuration);
+    // const editorResult = await VESDK.openEditor(videoFile.uri, configuration);
 
-    if (!editorResult?.video) return;
+    // if (!editorResult?.video) return;
 
-    navigation.navigate('VideoUpload', { editorResult });
+    // navigation.navigate('VideoUpload', { editorResult });
   };
 
   const handleRecordVideo = async () => {
     await getCameraPermission();
 
-    const videoFile = await cameraVideoRecorder();
+    // const videoFile = await cameraVideoRecorder();
 
-    if (!videoFile) return;
+    // if (!videoFile) return;
 
-    const editorResult = await VESDK.openEditor(videoFile, configuration);
+    // const editorResult = await VESDK.openEditor(videoFile, configuration);
 
-    if (!editorResult?.video) return;
+    // if (!editorResult?.video) return;
 
-    navigation.navigate('VideoUpload', { editorResult });
+    // navigation.navigate('VideoUpload', { editorResult });
   };
 
   const handleOpenSheet = () => sheetRef.current.open();

@@ -253,7 +253,7 @@ PODS:
     - React-Core
     - UMCore
     - UMImageLoaderInterface
-  - EXImagePicker (10.1.4):
+  - EXImagePicker (9.2.1):
     - UMCore
     - UMFileSystemInterface
     - UMPermissionsInterface
@@ -306,26 +306,26 @@ PODS:
     - FBSDKShareKit/Share (= 8.2.0)
   - FBSDKShareKit/Share (8.2.0):
     - FBSDKCoreKit (~> 8.2.0)
-  - Firebase/Auth (7.10.0):
+  - Firebase/Auth (7.11.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 7.10.0)
-  - Firebase/CoreOnly (7.10.0):
-    - FirebaseCore (= 7.10.0)
-  - Firebase/Database (7.10.0):
+    - FirebaseAuth (~> 7.11.0)
+  - Firebase/CoreOnly (7.11.0):
+    - FirebaseCore (= 7.11.0)
+  - Firebase/Database (7.11.0):
     - Firebase/CoreOnly
-    - FirebaseDatabase (~> 7.10.0)
-  - Firebase/Firestore (7.10.0):
+    - FirebaseDatabase (~> 7.11.0)
+  - Firebase/Firestore (7.11.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (~> 7.10.0)
-  - Firebase/Storage (7.10.0):
+    - FirebaseFirestore (~> 7.11.0)
+  - Firebase/Storage (7.11.0):
     - Firebase/CoreOnly
-    - FirebaseStorage (~> 7.10.0)
-  - FirebaseAuth (7.10.0):
+    - FirebaseStorage (~> 7.11.0)
+  - FirebaseAuth (7.11.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
-  - FirebaseCore (7.10.0):
+  - FirebaseCore (7.11.0):
     - FirebaseCoreDiagnostics (~> 7.4)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
@@ -334,10 +334,10 @@ PODS:
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
     - nanopb (~> 2.30908.0)
-  - FirebaseDatabase (7.10.0):
+  - FirebaseDatabase (7.11.0):
     - FirebaseCore (~> 7.0)
     - leveldb-library (~> 1.22)
-  - FirebaseFirestore (7.10.0):
+  - FirebaseFirestore (7.11.0):
     - abseil/algorithm (= 0.20200225.0)
     - abseil/base (= 0.20200225.0)
     - abseil/memory (= 0.20200225.0)
@@ -349,7 +349,7 @@ PODS:
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
-  - FirebaseStorage (7.10.0):
+  - FirebaseStorage (7.11.0):
     - FirebaseCore (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
   - Folly (2020.01.13.00):
@@ -681,27 +681,27 @@ PODS:
     - React-Core
   - RNAppleAuthentication (2.1.2):
     - React-Core
-  - RNCAsyncStorage (1.14.1):
+  - RNCAsyncStorage (1.15.5):
     - React-Core
   - RNCMaskedView (0.1.10):
     - React
-  - RNFBApp (11.3.3):
-    - Firebase/CoreOnly (= 7.10.0)
+  - RNFBApp (11.5.0):
+    - Firebase/CoreOnly (= 7.11.0)
     - React-Core
-  - RNFBAuth (11.3.3):
-    - Firebase/Auth (= 7.10.0)
+  - RNFBAuth (11.5.0):
+    - Firebase/Auth (= 7.11.0)
     - React-Core
     - RNFBApp
   - RNFBDatabase (11.3.3):
-    - Firebase/Database (= 7.10.0)
+    - Firebase/Database (= 7.11.0)
     - React-Core
     - RNFBApp
   - RNFBFirestore (11.3.3):
-    - Firebase/Firestore (= 7.10.0)
+    - Firebase/Firestore (= 7.11.0)
     - React-Core
     - RNFBApp
   - RNFBStorage (11.3.3):
-    - Firebase/Storage (= 7.10.0)
+    - Firebase/Storage (= 7.11.0)
     - React-Core
     - RNFBApp
   - RNGestureHandler (1.8.0):
@@ -1038,7 +1038,7 @@ SPEC CHECKSUMS:
   EXFileSystem: 0e4974ab77bff04cda68d2886d070cbe64b93a6b
   EXFont: 30c64ed8735a180e3f20046e4fdac4ea074d71d3
   EXImageLoader: f96ec9992733a4224418bbd9382e5485c8948944
-  EXImagePicker: dd05b8a5cb782c79d07d1d72e5850c6acc2b9a37
+  EXImagePicker: 82fb929fb57b38de8d0a2d7fc3ca49726b9b8f78
   EXKeepAwake: 615c5a6fca5c2afedf611bb6f7f2ca323246de94
   EXLinearGradient: c803fbd1aa974be038177b1e45524bc35759fe9c
   EXLocalization: 8b9463c81843da214476b541a27811dd885c9a76
@@ -1054,13 +1054,13 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 4afd6ff53d8133a433dbcda44451c9498f8c6ce4
   FBSDKLoginKit: 7181765f2524d7ebf82d9629066c8e6caafc99d0
   FBSDKShareKit: 0c0d51b3af47075a85ed9bea0e28b2fc70e3594b
-  Firebase: fffddd0bab8677d07376538365faa93ff3889b39
-  FirebaseAuth: 675f2c4eb4426e7c58a78a89965a6530e7863535
-  FirebaseCore: ec566d917b2195fc2610aeb148dae99f57a788f9
+  Firebase: c121feb35e4126c0b355e3313fa9b487d47319fd
+  FirebaseAuth: 5fe4585c2ed847319f0ea68bd1d82c77e49ff9a0
+  FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
   FirebaseCoreDiagnostics: 68ad972f99206cef818230f3f3179d52ccfb7f8c
-  FirebaseDatabase: ed9c5fc2568e92a22a40cab1ccaf4e0e9e9c8ae6
-  FirebaseFirestore: 0ce9dafe53565dbbd678986d6f0c05086334183b
-  FirebaseStorage: d88ef8e9f152c6a17e44540ae2b93c3be74e9b60
+  FirebaseDatabase: 6c39fbf1c8514a2f32e610f9bf9ef30c535dc15a
+  FirebaseFirestore: f495bb336b23eca23ea5d3605dce2a4cc214fde9
+  FirebaseStorage: 8542711850ca181a3931c0ed483006a7b46039e7
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
   GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
@@ -1103,13 +1103,13 @@ SPEC CHECKSUMS:
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNAppleAuthentication: e95bcfbd044013667f35c5ca20ae17d39500c009
-  RNCAsyncStorage: fe58eec522885718d6b297b7b658bf87d7ca557b
+  RNCAsyncStorage: 56a3355a10b5d660c48c6e37325ac85ebfd09885
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
-  RNFBApp: 8b1b4308daa657b8ea87dbed517e31215f5f1456
-  RNFBAuth: b86ae9875cf59cc895fb0ca7f554390dfed1a44a
-  RNFBDatabase: 8ab2ed8a7f4eae0703ea9a9ff6f3370bae28e7e1
-  RNFBFirestore: ba030add4e316ff3e7c80c0f2bddcf7570d3ebea
-  RNFBStorage: 184ff9f1f7b8fbeea194274153eb0ae4681b4419
+  RNFBApp: 9c90f9d576861947ba75fe0830567c570bcbcf6d
+  RNFBAuth: 99fdbce04ff3d39e57a7a3956d632ee69145685b
+  RNFBDatabase: de7c902da929d8b170930f23e2787ee3f5e75c4b
+  RNFBFirestore: 9c7fc9c42de2cc91d9b70cfc12ed00aa25ddb250
+  RNFBStorage: af7814531e503ea094f65f24fc5aa98491823bb8
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNGoogleSignin: 111fd4792913208f338fe3178005f7a22e490ff9
   RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926
