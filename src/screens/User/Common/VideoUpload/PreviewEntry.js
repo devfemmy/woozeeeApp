@@ -102,7 +102,6 @@ const PreviewEntry = (props) => {
         description: caption,
         type: type,
       };
-      console.log('data', data);
       axios
         .post(`entries`, data, { headers: { Authorization: token } })
         .then((res) => {

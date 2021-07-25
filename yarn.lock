@@ -11694,13 +11694,6 @@
   dependencies:
     "prop-types" "^15.5.10"
 
-"react-native-onesignal@^4.1.1":
-  "integrity" "sha512-Rc9LmnT9Hpbz4AxbILnWg8ElbErhftFi+eDW54NoEMi6n5uDodGn5kEQv1nEcP3ET0CmTDNYClB4n8M12X6NgQ=="
-  "resolved" "https://registry.npmjs.org/react-native-onesignal/-/react-native-onesignal-4.1.1.tgz"
-  "version" "4.1.1"
-  dependencies:
-    "invariant" "^2.2.2"
-
 "react-native-pager-view@*", "react-native-pager-view@^5.1.7":
   "integrity" "sha512-mb7xa0XnMlNXrIE422vWKPBVlt0GBP21744zT8yEv6Xe/0aAM/dsDugD3dy9z4vybyp2yszAzw9XP0bIsfS6LA=="
   "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.1.7.tgz"

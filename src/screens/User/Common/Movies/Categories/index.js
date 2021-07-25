@@ -130,7 +130,7 @@ const MyCategories = (props) => {
         </Overlay> */}
         <View style= {styles.overlay}>  
         <ScrollView showsVerticalScrollIndicator= {false} style= {styles.scroll}>
-              <Text onPress= {() => navigation.navigate('EditProfile')} category= "c2" style= {styles.textStyle}>
+              <Text onPress= {() => null} category= "c2" style= {styles.textStyle}>
                 All
               </Text>
               <Text category= "c2" style= {styles.textStyle}>
