@@ -12,7 +12,6 @@ export default async function getLibraryPermission() {
       const {
         status,
       } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
       if (status !== 'granted') {
         Alert.alert(
           'Permission Denied',

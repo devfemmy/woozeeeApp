@@ -55,8 +55,8 @@ import Router from 'src/router';
 
 import firebase from '@react-native-firebase/app';
 
-import firestore from '@react-native-firebase/firestore';
-import OneSignal from 'react-native-onesignal';
+// import firestore from '@react-native-firebase/firestore';
+// import OneSignal from 'react-native-onesignal';
 
 import en from 'src/translations/en.json';
 import fr from 'src/translations/fr.json';
@@ -72,8 +72,8 @@ i18n.fallbacks = true;
 
 // one signal
 
-OneSignal.setLogLevel(6, 0);
-OneSignal.setAppId("7f2e4740-3498-4c48-8925-a8ffe8168c2b");
+// OneSignal.setLogLevel(6, 0);
+// OneSignal.setAppId("7f2e4740-3498-4c48-8925-a8ffe8168c2b");
 //END OneSignal Init Code
 
 //Prompt for push on iOS
@@ -81,20 +81,20 @@ OneSignal.setAppId("7f2e4740-3498-4c48-8925-a8ffe8168c2b");
 
 
 //Method for handling notifications received while app in foreground
-OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent => {
-  console.log("OneSignal: notification will show in foreground:", notificationReceivedEvent);
-  let notification = notificationReceivedEvent.getNotification();
-  console.log("notification: ", notification);
-  const data = notification.additionalData
-  console.log("additionalData: ", data);
-  // Complete with null means don't show a notification.
-  notificationReceivedEvent.complete(notification);
-});
+// OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent => {
+//   console.log("OneSignal: notification will show in foreground:", notificationReceivedEvent);
+//   let notification = notificationReceivedEvent.getNotification();
+//   console.log("notification: ", notification);
+//   const data = notification.additionalData
+//   console.log("additionalData: ", data);
+//   // Complete with null means don't show a notification.
+//   notificationReceivedEvent.complete(notification);
+// });
 
-//Method for handling notifications opened
-OneSignal.setNotificationOpenedHandler(notification => {
-  console.log("OneSignal: notification opened:", notification);
-});
+// //Method for handling notifications opened
+// OneSignal.setNotificationOpenedHandler(notification => {
+//   console.log("OneSignal: notification opened:", notification);
+// });
 
 // if (Constants.platform.android) {
 //   VESDKLicense = require('src/constants/vesdk_android_license.json');

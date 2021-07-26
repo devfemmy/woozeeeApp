@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button, Dimensions, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import getLibraryPermission from 'src/utilities/getLibraryPermission';
 import { Icon } from '@ui-kitten/components';
 import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
 
@@ -19,22 +20,19 @@ export default function UploadEntries(props) {
   const [resetTimer, setResetTimer] = useState(false);
   const [resetStopwatch, setResetStopwatch] = useState(false);
   const [video_on, setVideoOn] = useState(false);
-  console.log("entries", entries)
+
   useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       (async () => {
-        if (Platform.OS !== 'web') {
-          const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-          if (status !== 'granted') {
-            alert('Sorry, we need camera roll permissions to make this work!');
-          }
-        }
+        await getLibraryPermission();
       })();
+    
       });
   
     
     return unsubscribe;
   }, [props.navigation]);
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -43,10 +41,8 @@ export default function UploadEntries(props) {
       quality: 1,
     });
 
-    console.log(result);
 
     if (!result.cancelled) {
-      console.log(result.type, "type");
       if (result.type === 'video') {
         props.navigation.navigate('PreviewEntry', {editorResult: result.uri, imageUri: null, entries: entries})
       }else {
@@ -61,7 +57,6 @@ export default function UploadEntries(props) {
         const data = await cameraRef.takePictureAsync(null);
         setImage(data.uri);
         props.navigation.navigate('PreviewEntry', {imageUri: data.uri, editorResult: null, entries: entries})
-        console.log(data.uri)
       }
   }
   // const recordCamera = async () => {
@@ -72,16 +67,11 @@ export default function UploadEntries(props) {
 
 
   useEffect(() => {
-    const unsubscribe = props.navigation.addListener('focus', () => {
-      (async () => {
-        const { status } = await Camera.requestPermissionsAsync();
-        setHasPermission(status === 'granted');
-      })();
-      });
-  
-    
-    return unsubscribe;
-  }, [props.navigation]);
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
 
   if (hasPermission === null) {
     return <View />;
@@ -89,6 +79,7 @@ export default function UploadEntries(props) {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+  console.log("has permission", hasPermission)
   return (
     <View style={styles.container}>
       {image && <Image source={{ uri: image }} style={{ flex: 1 }} />}

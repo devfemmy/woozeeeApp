@@ -36,9 +36,9 @@ const styles = StyleSheet.create({
   },
   brandMotto: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap',
     marginBottom: 25,
   },
 });
