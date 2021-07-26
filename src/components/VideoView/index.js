@@ -121,7 +121,6 @@ export default function VideoView({
 
   getUserId();
   getTheme();
-  getUserImg();
 
   const { item } = data;
 
@@ -388,10 +387,6 @@ export default function VideoView({
       value: inputSearch,
     }));
   };
-
-  useEffect(() => {
-    getUserProfile(_userId);
-  }, []);
 
   useEffect(() => {
     fetchUsers();

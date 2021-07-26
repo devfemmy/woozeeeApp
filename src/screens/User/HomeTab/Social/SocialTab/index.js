@@ -49,7 +49,11 @@ import { IconCStartStream, IconCLiveStreams } from 'src/components/CustomIcons';
 
 import VideoComponent from 'src/components/VideoComponent/VideoComponent';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+
+import getUserProfile from '../../../../../services/Requests/FetchUserProfile';
 
 const PLACEHOLDER_CONFIG1 = {
   count: 2,
@@ -73,7 +77,9 @@ export default function Social({ navigation }) {
 
   const { bottom, top } = useSafeAreaInsets();
 
-  const [entries, setEntries] = useState([]);
+  const [_userId, setUserId] = useState('');
+
+  const [userImg, setUserImg] = useState('');
 
   const SPACING = 57 + bottom + top;
 
@@ -96,6 +102,23 @@ export default function Social({ navigation }) {
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
+
+  const getUserId = async () => {
+    const res = await AsyncStorage.getItem('userid');
+    setUserId(res);
+    // console.log(res);
+  };
+
+  const getUserImg = async () => {
+    const res = await AsyncStorage.getItem('userImg');
+    setUserImg(res);
+  };
+
+  useEffect(() => {
+    getUserProfile(_userId);
+  }, []);
+
+  getUserImg();
 
   const refreshFeeds = useCallback(() => {
     setShouldRefresh(true);

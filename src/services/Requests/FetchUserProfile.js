@@ -3,9 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../services/api';
 
 export default function getUserProfile(user_id) {
-  console.log('function called to get image');
-  //   const [userInfo, setUserInfo] = useState([]);
-  // setLoading(true)
   AsyncStorage.getItem('USER_AUTH_TOKEN')
     .then((res) => {
       axios
@@ -16,6 +13,7 @@ export default function getUserProfile(user_id) {
           // setLoading(false)
           const user_data = response.data.user;
           //   setUserInfo(user_data);
+          console.log('user image is ', user_data);
           AsyncStorage.setItem('userImg', user_data.imgUrl);
         })
         .catch((err) => {
