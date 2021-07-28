@@ -111,16 +111,16 @@ export default function VideoView({
   const getUserId = async () => {
     const res = await AsyncStorage.getItem('userid');
     setUserId(res);
-    // console.log(res);
   };
 
   const getUserImg = async () => {
-    const res = await AsyncStorage.getItem('userImg');
+    const res = await AsyncStorage.getItem('userImage');
     setUserImg(res);
   };
 
   getUserId();
   getTheme();
+  getUserImg();
 
   const { item } = data;
 
@@ -653,7 +653,7 @@ export default function VideoView({
             >
               <Image
                 source={{ uri: userImg }}
-                // defaultSource={require('assets/images/user/user1.png')}
+                defaultSource={require('assets/images/user/user1.png')}
                 style={{
                   height: 30,
                   width: 30,

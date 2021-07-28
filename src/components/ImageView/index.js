@@ -106,7 +106,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
   };
 
   const getUserImg = async () => {
-    const res = await AsyncStorage.getItem('userImg');
+    const res = await AsyncStorage.getItem('userImage');
     setUserImg(res);
   };
 

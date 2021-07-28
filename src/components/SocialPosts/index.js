@@ -90,7 +90,7 @@ export const StoryPosts = ({ info }) => {
   const [userImg, setUserImg] = useState('');
 
   const getUserImg = async () => {
-    const res = await AsyncStorage.getItem('userImg');
+    const res = await AsyncStorage.getItem('userImage');
     setUserImg(res);
   };
 
@@ -262,7 +262,7 @@ export const ChallengePosts = ({ chaData }) => {
 // prettier-ignore
 export const ProfilePosts = (props) => {
   const { allEntries, origin } = props;
-  console.log("prop is ", props);
+  // console.log("prop is ", props);
 
   const {firstTenEntries} = allEntries
   return (

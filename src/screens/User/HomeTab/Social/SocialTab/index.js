@@ -114,11 +114,21 @@ export default function Social({ navigation }) {
     setUserImg(res);
   };
 
-  useEffect(() => {
-    getUserProfile(_userId);
-  }, []);
+  // useEffect(() => {
+  //   getUserProfile(_userId);
+  // }, [navigation]);
 
   getUserImg();
+
+  //view all async stuff
+  // AsyncStorage.getAllKeys((err, keys) => {
+  //   AsyncStorage.multiGet(keys, (error, stores) => {
+  //     stores.map((result, i, store) => {
+  //       console.log('async stuff ', { [store[i][0]]: store[i][1] });
+  //       return true;
+  //     });
+  //   });
+  // });
 
   const refreshFeeds = useCallback(() => {
     setShouldRefresh(true);

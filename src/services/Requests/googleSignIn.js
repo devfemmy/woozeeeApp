@@ -4,7 +4,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 
 async function SignUpWithGoogle({ googleSignup }) {
-  alert('google sign up called');
+  // alert('google sign up called');
   const userData = {
     email: '',
     fName: '',
@@ -23,18 +23,12 @@ async function SignUpWithGoogle({ googleSignup }) {
   try {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
-    alert('=========');
-    alert('userInfo is ', userInfo);
-    alert('=========');
     token = JSON.stringify(userInfo.idToken);
     userData.email = await userInfo.user.email;
     userData.fName = await userInfo.user.givenName;
     userData.sName = await userInfo.user.familyName;
 
     const result = await googleSignup(userData);
-    alert('=========');
-    alert('result is ', userInfo);
-    alert('=========');
   } catch (error) {
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       // user cancelled the login flow

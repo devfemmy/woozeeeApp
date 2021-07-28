@@ -13,7 +13,6 @@ export default function getUserProfile(user_id) {
           // setLoading(false)
           const user_data = response.data.user;
           //   setUserInfo(user_data);
-          console.log('user image is ', user_data);
           AsyncStorage.setItem('userImg', user_data.imgUrl);
         })
         .catch((err) => {

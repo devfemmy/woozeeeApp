@@ -114,7 +114,7 @@ export default function App() {
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
 
-  console.log('height=', height, 'width=', width);
+  // console.log('height=', height, 'width=', width);
 
   const { appState, appOptions } = useAppSettings();
 
