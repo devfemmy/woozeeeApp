@@ -63,7 +63,7 @@ export default function TopNavigationGlobalMenu(props) {
       accessibilityLiveRegion="polite"
       accessibilityHint="Extras"
     >
-      <MenuItem
+      {/* <MenuItem
         selected={selected === 'marketPlace'}
         accessoryLeft={() => (
           <IconCMarket
@@ -82,7 +82,7 @@ export default function TopNavigationGlobalMenu(props) {
         )}
         title={t('charity')}
         onPress={routeCharity}
-      />
+      /> */}
       <MenuItem
         selected={selected === 'social'}
         accessoryLeft={() => (

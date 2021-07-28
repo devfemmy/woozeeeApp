@@ -128,7 +128,12 @@ export default function UserProfile({ route, navigation }) {
 
   const IS_PORTRAIT = height > width;
 
-  const routeFollow = () => navigation.navigate('Follow');
+  const routeFollow = (action) =>
+    navigation.navigate('Follow', {
+      userID: _id,
+      action,
+      username: displayName,
+    });
 
   const goBack = () => navigation.goBack();
 
@@ -284,7 +289,7 @@ export default function UserProfile({ route, navigation }) {
               navigation.navigate('ChatScreen', {
                 guestUid: _id,
                 name: `${fName} ${sName}`,
-                image: imgUrl
+                image: imgUrl,
               })
             }
             status="primary"
@@ -410,7 +415,7 @@ export default function UserProfile({ route, navigation }) {
                 <TouchableOpacity
                   activeOpacity={0.75}
                   style={{ alignItems: 'center', width: '33%' }}
-                  // onPress={routeFollow}
+                  onPress={() => routeFollow('followers')}
                 >
                   <Text category="h5">{followersCount}</Text>
                   <Text category="c2" appearance="hint">
@@ -420,7 +425,7 @@ export default function UserProfile({ route, navigation }) {
                 <TouchableOpacity
                   activeOpacity={0.75}
                   style={{ alignItems: 'center', width: '33%' }}
-                  // onPress={routeFollow}
+                  onPress={() => routeFollow('following')}
                 >
                   <Text category="h5">{followingCount}</Text>
                   <Text category="c2" appearance="hint">
