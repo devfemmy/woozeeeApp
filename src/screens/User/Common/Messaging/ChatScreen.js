@@ -68,13 +68,15 @@ class ChatScreen extends Component {
     try {
       Firebase.database()
         .ref('signaling')
-        .child(currentUid)
         .child(guestUid)
+        .child(currentUid)
         .on('value', (dataSnapshot) => {
+            console.log(dataSnapshot)
             if (dataSnapshot.val().signal === true) {
               if (this.state.currentUid === dataSnapshot.val().sender) {
                 this.setState({status: false})
               }else {
+                console.log("receiver here", dataSnapshot.val().signal)
                 this.setState({status: true})
               }
             } else {
