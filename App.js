@@ -2,6 +2,8 @@ import 'react-native-gesture-handler';
 
 import React, { Component, useState, useEffect } from 'react';
 
+import { Dimensions } from 'react-native';
+
 import { enableScreens } from 'react-native-screens';
 
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -78,8 +80,6 @@ i18n.fallbacks = true;
 
 //Prompt for push on iOS
 
-
-
 //Method for handling notifications received while app in foreground
 // OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent => {
 //   console.log("OneSignal: notification will show in foreground:", notificationReceivedEvent);
@@ -110,6 +110,11 @@ export default function App() {
     .catch(() => {});
 
   const isPreloaded = usePreFetchResources();
+
+  const width = Dimensions.get('window').width;
+  const height = Dimensions.get('window').height;
+
+  // console.log('height=', height, 'width=', width);
 
   const { appState, appOptions } = useAppSettings();
 
@@ -203,8 +208,20 @@ export default function App() {
             <LocaleContext.Provider value={t}>
               <QueryClientProvider client={queryClient}>
                 <LoadingContext.Provider value={{ isLoading, setLoading }}>
-                  <Layout level="5" style={{ flex: 1 }}>
-                    <SafeAreaView style={{ flex: 1 }}>
+                  <Layout
+                    level="5"
+                    style={{
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <SafeAreaView
+                      style={{
+                        flex: 1,
+                        width: width > 720 ? 720 : width,
+                      }}
+                    >
                       <Router />
                     </SafeAreaView>
                   </Layout>

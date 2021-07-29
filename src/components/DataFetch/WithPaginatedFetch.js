@@ -17,6 +17,7 @@ export default function WithPaginatedFetch(
   fetchUrl,
   placeholderProp,
   userPostData,
+  origin,
 ) {
   const { width, height } = useWindowDimensions();
 
@@ -72,7 +73,11 @@ export default function WithPaginatedFetch(
   if (!isLoading && !isError && data.pageData.data.length > 0) {
     return (
       <>
-        <WrappedComponent info={data.pageData.data} allEntries={userPostData} />
+        <WrappedComponent
+          info={data.pageData.data}
+          allEntries={userPostData}
+          origin={origin}
+        />
       </>
     );
   }

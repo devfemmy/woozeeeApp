@@ -36,6 +36,7 @@ export default function Login({ navigation }) {
   const { googleSignup, facebookSignup, appleSignup } = authOptions;
 
   function callSigunp() {
+    alert('google sign up called!!');
     SignUpWithGoogle({ googleSignup });
   }
 
@@ -206,7 +207,7 @@ export default function Login({ navigation }) {
                 accessibilityLiveRegion="polite"
                 accessibilityComponentType="button"
                 accessibilityLabel="Sign up with Access Bank"
-                onPress={SignUpWithGoogle}
+                // onPress={SignUpWithGoogle}
                 style={{ marginVertical: 5, backgroundColor: '#F5821E' }}
               >
                 <Text category="s1" style={{ color: 'white' }}>
@@ -223,7 +224,6 @@ export default function Login({ navigation }) {
                 accessibilityLiveRegion="polite"
                 accessibilityComponentType="button"
                 accessibilityLabel="Sign up with Google"
-                onPress={SignUpWithGoogle}
                 style={{ marginVertical: 5, backgroundColor: 'white' }}
                 onPress={callSigunp}
               >

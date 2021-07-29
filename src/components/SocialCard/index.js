@@ -144,13 +144,8 @@ export function UserProfilePostCard(props) {
   const COLUMN_COUNT = numColumns ?? (IS_PORTRAIT ? 3 : 5);
 
   const routeChallengeWooz = () => {
-    // console.log(data.item);
     navigation.navigate('DeepLinkPost', { _id: data.item._id }), [navigation];
   };
-
-  // console.log('from video -> ', data);
-  // console.log('data ->', data.item.medialThumbnail);
-  // console.log(data.item.mediaURL);
   return useMemo(
     () => (
       <TouchableOpacity

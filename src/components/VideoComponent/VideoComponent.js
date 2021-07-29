@@ -99,7 +99,7 @@ function VideoComponent(props) {
 
   const { videoData, focusVideoIndex, videoIndex } = props;
 
-  console.log('videoData is ', videoData);
+  // console.log('videoData is ', videoData);
 
   //   const { item } = videoData;
 

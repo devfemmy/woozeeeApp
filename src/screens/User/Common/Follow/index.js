@@ -12,7 +12,7 @@ import Following from './Following';
 import Suggested from './Suggested';
 
 export default function Follow({ route, navigation }) {
-  console.log('follow ', route.params);
+  // console.log('follow ', route.params);
   const { userID, action } = route.params;
   const [selectedIndex, setSelectedIndex] = useState(0);
 

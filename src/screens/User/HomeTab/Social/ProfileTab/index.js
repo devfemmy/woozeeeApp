@@ -47,9 +47,17 @@ const PLACEHOLDER_CONFIG = {
 };
 
 // prettier-ignore
-const ProfilePostsArea = ({_userPostData}) => (
-  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, _userPostData)
+const ProfilePostsArea = ({_userPostData, _origin}) => (
+  WithPaginatedFetch(ProfilePosts, trendingUrl, PLACEHOLDER_CONFIG, _userPostData, _origin)
 );
+
+const LikedPostsArea = ({ userId }) =>
+  WithPaginatedFetch(
+    LikedProfilePosts,
+    trendingUrl,
+    PLACEHOLDER_CONFIG,
+    userId,
+  );
 
 const styles = StyleSheet.create({
   activeTabTextColor: {
@@ -409,14 +417,6 @@ export default function Profile({ navigation }) {
             </View>
           </View>
           <Divider />
-          {/* <TabView
-            renderTabBar={renderTabBar}
-            swipeEnabled={false}
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={{ width: layout.width }}
-          /> */}
 
           <TabView
             style={{ flex: 1 }}
@@ -425,19 +425,18 @@ export default function Profile({ navigation }) {
             shouldLoadComponent={shouldLoadComponent}
             onSelect={(index) => {
               setSelectedIndex(index);
-              console.log(index);
+              // console.log(index);
             }}
           >
             <Tab title={t('all')} icon={IconGrid}>
-              <ProfilePostsArea _userPostData={user} />
+              <ProfilePostsArea _userPostData={user} _origin="all" />
+            </Tab>
+            <Tab title={t('liked')} icon={IconHeart}>
+              <ProfilePostsArea _userPostData={user} _origin="liked" />
             </Tab>
             {/* <Tab title={t('saved')} icon={IconBookmark}>
-              <ProfilePostsArea _userPostData={user} />
+              <LikedPostsArea userId={_userId} _userPostData={user}/>
             </Tab> */}
-            <Tab title={t('liked')} icon={IconHeart}>
-              <LikedProfilePosts userId={_userId} />
-              {/* <Text>Likes</Text> */}
-            </Tab>
           </TabView>
         </View>
       </ScrollView>

@@ -90,7 +90,7 @@ export const StoryPosts = ({ info }) => {
   const [userImg, setUserImg] = useState('');
 
   const getUserImg = async () => {
-    const res = await AsyncStorage.getItem('userImg');
+    const res = await AsyncStorage.getItem('userImage');
     setUserImg(res);
   };
 
@@ -260,9 +260,12 @@ export const ChallengePosts = ({ chaData }) => {
 };
 
 // prettier-ignore
-export const ProfilePosts = ({allEntries}) => {
+export const ProfilePosts = (props) => {
+  const { allEntries, origin } = props;
+  // console.log("prop is ", props);
+
   const {firstTenEntries} = allEntries
-  return(
+  return (
     <List
     style={{
       backgroundColor: 'transparent',
@@ -285,7 +288,8 @@ export const ProfilePosts = ({allEntries}) => {
       offset: 200 * index,
       index,
     })}
-  />
+  /> 
+
   )
 }
 
