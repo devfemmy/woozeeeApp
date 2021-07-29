@@ -183,7 +183,7 @@ export default function Login({ navigation }) {
                 <Text status="control">{t('continue')}</Text>
               </Button>
             </View>
-            <View
+            {/* <View
               style={{
                 alignItems: 'center',
                 paddingTop: 50,
@@ -191,8 +191,8 @@ export default function Login({ navigation }) {
               }}
             >
               <Text>{t('orContinueWith')}</Text>
-            </View>
-            <View style={{ paddingVertical: 10 }}>
+            </View> */}
+            {/* <View style={{ paddingVertical: 10 }}>
               <Button
                 status="primary"
                 size="medium"
@@ -247,7 +247,7 @@ export default function Login({ navigation }) {
                   Facebook
                 </Text>
               </Button>
-              {/* <Button
+              <Button
                 status="info"
                 size="medium"
                 accessoryLeft={() => (
@@ -261,7 +261,7 @@ export default function Login({ navigation }) {
                 <Text category="s1" status="control">
                   Twitter
                 </Text>
-              </Button> */}
+              </Button>
               {Constants.platform.ios && (
                 <Button
                   size="medium"
@@ -279,7 +279,7 @@ export default function Login({ navigation }) {
                   </Text>
                 </Button>
               )}
-            </View>
+            </View> */}
           </View>
           <View>
             <View

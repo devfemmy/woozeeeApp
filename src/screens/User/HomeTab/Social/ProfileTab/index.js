@@ -97,7 +97,12 @@ export default function Profile({ navigation }) {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const shouldLoadComponent = (index) => index === selectedIndex;
+  const shouldLoadComponent = (index) => {
+    console.log('====================================');
+    console.log(index);
+    console.log('====================================');
+    return index === selectedIndex;
+  };
 
   const IS_PORTRAIT = height > width;
 
@@ -417,7 +422,7 @@ export default function Profile({ navigation }) {
             shouldLoadComponent={shouldLoadComponent}
             onSelect={(index) => {
               setSelectedIndex(index);
-              // console.log(index);
+              console.log('index is => ', index);
             }}
           >
             <Tab title={t('all')} icon={IconGrid}>
@@ -427,7 +432,11 @@ export default function Profile({ navigation }) {
               <ProfilePostsArea _userPostData={user} _origin="liked" />
             </Tab> */}
             <Tab title={t('liked')} icon={IconHeart}>
-              <LikedPostsArea userId={_userId} />
+              <LikedPostsArea
+                // _userPostData={user}
+                userId={_userId}
+              />
+              <></>
             </Tab>
           </TabView>
         </View>

@@ -24,9 +24,10 @@ import { IconForwardIos } from 'src/components/CustomIcons';
 const MoviesSectionArea = (props) => {
   const { t, navigation, width, height } = props;
 
-  const routeMovies = useCallback(() => navigation.navigate('Movies'), [
-    navigation,
-  ]);
+  const routeMovies = useCallback(
+    () => navigation.navigate('Movies'),
+    [navigation],
+  );
 
   const { status, data, refetch } = useQuery(
     ['moviesSection', 1],
@@ -81,7 +82,9 @@ const MoviesSectionArea = (props) => {
             alignItems: 'center',
           }}
         >
-          <Text category="h6">{t('movies')}</Text>
+          <Text category="h6" status="danger">
+            Trending Movies
+          </Text>
           <Button
             size="tiny"
             appearance="ghost"

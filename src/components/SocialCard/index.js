@@ -160,7 +160,7 @@ export function UserProfilePostCard(props) {
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
-        onPress={routeChallengeWooz}
+        // onPress={routeChallengeWooz}
       >
         <Video
           source={{ uri: data.item.mediaURL }}
@@ -269,7 +269,7 @@ export function ChallengeVideoCard(props) {
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
-        onPress={routeChallengeWooz}
+        // onPress={routeChallengeWooz}
       >
         <Image
           source={{ uri: challenge.imageURL }}

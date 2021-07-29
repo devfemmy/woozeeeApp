@@ -180,7 +180,11 @@ export const UsersPosts = ({ info, exploreData }) => {
                 {`${sub.totalEntries} Video(s)`}
               </Text>
             </View> */}
+
             <View style={{ paddingHorizontal: 10 }}>
+            <Text category="h6" status="danger" style={{ marginBottom: 15 }}>
+                {/* {sub.categoryName} */}Coming Soon
+              </Text>
               <Text category="c1" style={{ marginBottom: 5 }}>
                 {`${sub.categoryName} ${sub.entries.length} clip(s)`}
               </Text>
@@ -225,7 +229,7 @@ export const ChallengePosts = ({ chaData }) => {
           >
             <View style={{ paddingHorizontal: 10 }}>
               <Text category="h6" status="danger" style={{ marginBottom: 15 }}>
-                {sub.categoryName}
+                {/* {sub.categoryName} */}Coming Soon
               </Text>
               <Text category="c1" style={{ marginBottom: 5 }}>
                 {`${sub.totalEntries} Video(s)`}
