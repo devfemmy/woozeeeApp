@@ -6,6 +6,7 @@ import {
   TextInput,
   FlatList,
   Dimensions,
+  StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Layout, List, Text, Divider } from '@ui-kitten/components';
@@ -14,6 +15,8 @@ import Hyperlink from 'react-native-hyperlink';
 import {
   SendMessage,
   RecieveMessage,
+  SendTypingSignal,
+  UpdateTypingSignal,
 } from '../../../../services/Firebase/Message';
 import Firebase from '../../../../services/Firebase/firebaseConfig';
 
@@ -27,6 +30,8 @@ class ChatScreen extends Component {
     currentUid: '',
     allMessages: [],
     image: '',
+    signal: false,
+    status: false
   };
 
   async componentDidMount() {
@@ -54,37 +59,57 @@ class ChatScreen extends Component {
             // console.log('fff', data.val().messege.image)
           });
           this.setState({ allMessages: message.reverse() });
+          
           // console.log('allMessages', this.state.allMessages)
         });
     } catch (error) {
       alert(error);
     }
+    try {
+      Firebase.database()
+        .ref('signaling')
+        .child(currentUid)
+        .child(guestUid)
+        .on('value', (dataSnapshot) => {
+            if (dataSnapshot.val().signal === true) {
+              if (this.state.currentUid === dataSnapshot.val().sender) {
+                this.setState({status: false})
+              }else {
+                this.setState({status: true})
+              }
+            } else {
+              this.setState({status: false})
+            }
+        });
+    } catch (error) {
+      alert(error);
+    }
   }
-
-  // openGallery() {
-  //     launchImageLibrary('photo', (response) => {
-  //         this.setState({ loader: true });
-  //         ImgToBase64.getBase64String(response.uri)
-  //             .then(async (base64String) => {
-  //                 let source = "data:image/jpeg;base64," + base64String;
-  //                 SendMessage(this.state.currentUid, this.state.guestUid, "", source).
-  //                     then((res) => {
-  //                         this.setState({ loader: false })
-  //                     }).catch((err) => {
-  //                         alert(err)
-  //                     })
-
-  //                 RecieveMessage(this.state.currentUid, this.state.guestUid, "", source).
-  //                     then((res) => {
-  //                         this.setState({ loader: false })
-  //                     }).catch((err) => {
-  //                         alert(err)
-  //                     })
-  //             })
-  //             .catch(err => this.setState({ loader: false }));
-  //     })
-  // }
-
+  
+  sendOnlineSignal = async () => {
+    this.setState({signal: true});
+    if (this.state.signal === true) {
+      SendTypingSignal(
+        this.state.currentUid,
+        this.state.guestUid,
+        this.state.signal
+      ).then((res) => res)
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+  }
+  upDateOnlineSignal = async () => {
+    this.setState({signal: false});
+      UpdateTypingSignal(
+        this.state.currentUid,
+        this.state.guestUid,
+        false
+      ).then((res) => res)
+      .catch((err) => {
+        (err)
+      })
+  }
   sendMessage = async () => {
     const { guestUid, name, image } = this.props.route.params;
     if (this.state.message) {
@@ -99,8 +124,17 @@ class ChatScreen extends Component {
           this.setState({ message: '' });
         })
         .catch((err) => {
-          alert(err);
+          console.log(err);
         });
+
+        UpdateTypingSignal(
+          this.state.currentUid,
+          this.state.guestUid,
+          false
+        ).then((res) => res)
+        .catch((err) => {
+          (err)
+        })
 
       RecieveMessage(
         this.state.currentUid,
@@ -113,7 +147,7 @@ class ChatScreen extends Component {
           this.setState({ message: '' });
         })
         .catch((err) => {
-          alert(err);
+          console.log(err);
         });
 
       AddUser(name, guestUid, image)
@@ -126,11 +160,21 @@ class ChatScreen extends Component {
           // this.setState({ loader: false });
           alert(error);
         });
+
     }
   };
 
   render() {
     const { name } = this.props.route.params;
+    const styles = StyleSheet.create({
+      status: {
+        textAlign: 'center',
+        opacity: 0.5,
+        fontStyle: 'italic',
+        position: 'relative',
+        top: -28
+      }
+    })
     return (
       <Layout
         level="6"
@@ -141,11 +185,28 @@ class ChatScreen extends Component {
           flex: 1,
         }}
       >
-        <TopNavigationArea
+        {
+          !this.state.status ? 
+          <>
+          <TopNavigationArea
           title={name}
+          // status= {null}
           navigation={this.props.navigation}
           screen="auth"
         />
+        <Text style= {styles.status} >{null}</Text>
+        </>
+        : 
+        <>
+        <TopNavigationArea
+        title={name}
+        // status= {'is typing'}
+        navigation={this.props.navigation}
+        screen="auth"
+      />
+      <Text style= {styles.status}>is typing...</Text>
+      </>
+        }
         {/* <AppHeader title={this.props.navigation.getParam('UserName')} navigation={this.props.navigation} onPress={() => this.logOut()} /> */}
         <FlatList
           inverted
@@ -219,6 +280,8 @@ class ChatScreen extends Component {
           <View style={{ width: '90%', justifyContent: 'center' }}>
             <TextInput
               value={this.state.message}
+              onKeyPress = {() => this.sendOnlineSignal()}
+              onBlur={() => this.upDateOnlineSignal()}
               onChangeText={(text) => this.setState({ message: text })}
               placeholder="Enter Message"
               placeholderTextColor="#000"

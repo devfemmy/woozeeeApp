@@ -31,6 +31,7 @@ export default function TopNavigationArea(props) {
   const {
     navigation,
     title,
+    status,
     icon,
     style,
     screen,
@@ -169,7 +170,7 @@ export default function TopNavigationArea(props) {
       <Layout level="5">
         <TopNavigation
           alignment="center"
-          title={(evaProps) => <Title {...evaProps} title={title} />}
+          title={(evaProps) => <Title {...evaProps} status= {status} title={title} />}
           accessoryLeft={(evaProps) => (
             <BackButton {...evaProps} navigation={navigation} icon={icon} />
           )}
