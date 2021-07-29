@@ -421,7 +421,6 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - OneSignal (3.5.3)
-  - OneSignalXCFramework (3.4.4)
   - PromisesObjC (1.2.12)
   - RCTRequired (0.63.4)
   - RCTTypeSafety (0.63.4):
@@ -609,9 +608,6 @@ PODS:
   - react-native-fbsdk/Share (3.0.0):
     - FBSDKShareKit (~> 8.1)
     - React
-  - react-native-onesignal (4.1.1):
-    - OneSignalXCFramework (= 3.4.4)
-    - React (< 1.0.0, >= 0.13.0)
   - react-native-pager-view (5.1.7):
     - React-Core
   - react-native-safe-area-context (3.1.9):
@@ -784,7 +780,6 @@ DEPENDENCIES:
   - react-native-bambuser-broadcaster (from `../node_modules/react-native-bambuser-broadcaster`)
   - react-native-bambuser-player (from `../node_modules/react-native-bambuser-player`)
   - react-native-fbsdk (from `../node_modules/react-native-fbsdk`)
-  - react-native-onesignal (from `../node_modules/react-native-onesignal`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-video (from `../node_modules/react-native-video`)
@@ -856,7 +851,6 @@ SPEC REPOS:
     - libbambuser-ios
     - nanopb
     - OneSignal
-    - OneSignalXCFramework
     - PromisesObjC
 
 EXTERNAL SOURCES:
@@ -934,8 +928,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-bambuser-player"
   react-native-fbsdk:
     :path: "../node_modules/react-native-fbsdk"
-  react-native-onesignal:
-    :path: "../node_modules/react-native-onesignal"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
@@ -1073,7 +1065,6 @@ SPEC CHECKSUMS:
   libbambuser-ios: a1e984609ee629d1ae4bafd6379ef7f6afa3ddf1
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OneSignal: e12773ef3dfc68f42103c8cd28ad50660209528f
-  OneSignalXCFramework: eaf286b7438aa1f030f03e5fa9f1c79ede5d8f04
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
   RCTTypeSafety: 8c9c544ecbf20337d069e4ae7fd9a377aadf504b
@@ -1088,7 +1079,6 @@ SPEC CHECKSUMS:
   react-native-bambuser-broadcaster: b144e46412025cbdb41b579e9f92f00dd75c683a
   react-native-bambuser-player: 11325262f770c2a077dcfd3cb0ff6bdc5dfc2187
   react-native-fbsdk: 8e92c7a334fd8d9c2b5d8b8fcd7ae2c314161099
-  react-native-onesignal: 2a7c3a5f2aa1c599d94cda6cc583205e1548828d
   react-native-pager-view: c60a26be051a4b88427f2475e173b5c112e98d17
   react-native-safe-area-context: b6e0e284002381d2ff29fa4fff42b4d8282e3c94
   react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e

@@ -666,8 +666,8 @@ export default function Home({ navigation }) {
           height: IS_PORTRAIT ? 140 : 120,
           width: '100%',
           borderRadius: 5,
+          resizeMode: 'contain'
         }}
-        resizeMode="cover"
       />
       <Text
         category="c2"
