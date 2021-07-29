@@ -110,7 +110,7 @@ export default function Social({ navigation }) {
   };
 
   const getUserImg = async () => {
-    const res = await AsyncStorage.getItem('userImg');
+    const res = await AsyncStorage.getItem('userImage');
     setUserImg(res);
   };
 

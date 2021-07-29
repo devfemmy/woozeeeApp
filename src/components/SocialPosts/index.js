@@ -265,7 +265,9 @@ export const ProfilePosts = (props) => {
   // console.log("prop is ", props);
 
   const {firstTenEntries} = allEntries
+  
   return (
+    firstTenEntries && firstTenEntries.length ? 
     <List
     style={{
       backgroundColor: 'transparent',
@@ -288,7 +290,27 @@ export const ProfilePosts = (props) => {
       offset: 200 * index,
       index,
     })}
-  /> 
+  /> :  <View
+          style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <Image
+            source={require('../../assets/images/banner/noPost.png')}
+            resizeMode="contain"
+            style={{
+              width: 200,
+              height: 200,
+              marginTop: 50,
+            }}
+          />
+          <Text category="s2" status="basic" style={{marginTop: 20}}>
+            User has no posts yet
+          </Text>
+        </View>
 
   )
 }

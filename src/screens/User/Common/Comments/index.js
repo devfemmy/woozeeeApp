@@ -59,7 +59,7 @@ export default function Comments({ route, navigation }) {
   const [userImg, setUserImg] = useState('');
 
   const getUserImg = async () => {
-    const res = await AsyncStorage.getItem('userImg');
+    const res = await AsyncStorage.getItem('userImage');
     setUserImg(res);
     // console.log('image is ->', res);
   };
@@ -600,7 +600,29 @@ export default function Comments({ route, navigation }) {
                   index,
                 })}
               />
-            ) : null}
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  source={require('../../../../assets/images/banner/addComment.png')}
+                  resizeMode="contain"
+                  style={{
+                    width: 200,
+                    height: 200,
+                    marginVertical: 20,
+                  }}
+                />
+                <Text category="s2" status="basic">
+                  No comments. Add comment
+                </Text>
+              </View>
+            )}
           </View>
         </Card>
       </Layout>

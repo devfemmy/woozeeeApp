@@ -73,12 +73,6 @@ const styles = StyleSheet.create({
 export default function Profile({ navigation }) {
   const layout = useWindowDimensions();
 
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: 'first', title: 'All' },
-    { key: 'second', title: 'Liked' },
-  ]);
-
   useModifiedAndroidBackAction(navigation, 'SocialRoute');
 
   const { width, height } = useWindowDimensions();
@@ -106,8 +100,6 @@ export default function Profile({ navigation }) {
   const shouldLoadComponent = (index) => index === selectedIndex;
 
   const IS_PORTRAIT = height > width;
-
-  const routeMessaging = () => navigation.navigate('Messaging');
 
   const routeEditProfile = () => navigation.navigate('EditProfile');
 
@@ -431,12 +423,12 @@ export default function Profile({ navigation }) {
             <Tab title={t('all')} icon={IconGrid}>
               <ProfilePostsArea _userPostData={user} _origin="all" />
             </Tab>
-            <Tab title={t('liked')} icon={IconHeart}>
+            {/* <Tab title={t('saved')} icon={IconBookmark}  >
               <ProfilePostsArea _userPostData={user} _origin="liked" />
-            </Tab>
-            {/* <Tab title={t('saved')} icon={IconBookmark}>
-              <LikedPostsArea userId={_userId} _userPostData={user}/>
             </Tab> */}
+            <Tab title={t('liked')} icon={IconHeart}>
+              <LikedPostsArea userId={_userId} />
+            </Tab>
           </TabView>
         </View>
       </ScrollView>

@@ -36,7 +36,7 @@ export default function Login({ navigation }) {
   const { googleSignup, facebookSignup, appleSignup } = authOptions;
 
   function callSigunp() {
-    alert('google sign up called!!');
+    // alert('google sign up called!!');
     SignUpWithGoogle({ googleSignup });
   }
 
