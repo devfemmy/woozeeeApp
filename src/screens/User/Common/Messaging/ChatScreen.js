@@ -32,6 +32,7 @@ class ChatScreen extends Component {
     image: '',
     signal: false,
     status: false
+
   };
 
   async componentDidMount() {
@@ -63,7 +64,7 @@ class ChatScreen extends Component {
           // console.log('allMessages', this.state.allMessages)
         });
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
     try {
       Firebase.database()
@@ -72,11 +73,10 @@ class ChatScreen extends Component {
         .child(currentUid)
         .on('value', (dataSnapshot) => {
             console.log(dataSnapshot)
-            if (dataSnapshot.val().signal === true) {
+            if (dataSnapshot?.val()?.signal === true) {
               if (this.state.currentUid === dataSnapshot.val().sender) {
                 this.setState({status: false})
               }else {
-                console.log("receiver here", dataSnapshot.val().signal)
                 this.setState({status: true})
               }
             } else {
@@ -84,7 +84,7 @@ class ChatScreen extends Component {
             }
         });
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   }
   
@@ -160,7 +160,7 @@ class ChatScreen extends Component {
         })
         .catch((error) => {
           // this.setState({ loader: false });
-          alert(error);
+          // alert(error);
         });
 
     }
@@ -226,33 +226,52 @@ class ChatScreen extends Component {
                     : 'flex-start',
               }}
             >
+              {this.state.currentUid === item.sendBy ? 
+               <Layout
+               level="4"
+               style={{
+                //  flex: 1,
+                borderRadius: 20,
+               }}
+             >
+               <Hyperlink
+                 linkStyle={{ textDecorationLine: 'underline' }}
+                 linkDefault={true}
+               >
+                 <Text
+                   style={{
+                     padding: 10,
+                     fontSize: 16,
+                    //  color:'black'
+                   }}
+                 >
+                   {item.msg}
+                 </Text>
+               </Hyperlink>
+             </Layout>: 
               <View
-                style={{
-                  borderRadius: 20,
-                  backgroundColor:
-                    this.state.currentUid === item.sendBy
-                      ? 'rgba(4, 63, 124, 0.1)'
-                      : 'rgba(4, 63, 124, 1)',
-                }}
+              style={{
+                borderRadius: 20,
+                backgroundColor: 'rgba(4, 63, 124, 1)',
+              }}
+            >
+              <Hyperlink
+                linkStyle={{ textDecorationLine: 'underline' }}
+                linkDefault={true}
               >
-                <Hyperlink
-                  linkStyle={{ textDecorationLine: 'underline' }}
-                  linkDefault={true}
+                <Text
+                  style={{
+                    padding: 10,
+                    fontSize: 16,
+                    color: 'white',
+                  }}
                 >
-                  <Text
-                    style={{
-                      padding: 10,
-                      fontSize: 16,
-                      color:
-                        this.state.currentUid === item.sendBy
-                          ? 'black'
-                          : 'white',
-                    }}
-                  >
-                    {item.msg}
-                  </Text>
-                </Hyperlink>
-              </View>
+                  {item.msg}
+                </Text>
+              </Hyperlink>
+            </View>
+            }
+
               <Text
                 style={{
                   fontSize: 12,
@@ -290,8 +309,11 @@ class ChatScreen extends Component {
               style={{
                 height: 40,
                 borderRadius: 20,
-                backgroundColor: 'rgba(4, 63, 124, 0.1)',
+                // backgroundColor: 'rgba(4, 63, 124, 0.1)',
                 paddingHorizontal: 20,
+                borderColor: 'gray',
+                color: 'gray',
+                borderWidth: 0.5
               }}
             />
           </View>
