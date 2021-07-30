@@ -43,7 +43,7 @@ const TrendingSectionArea = (props) => {
     },
   );
 
-  console.log('data is', data.pageData.data[1].subs[0]);
+  //   console.log('data is', data.pageData.data[1].subs[0]);
   //   data.length &&
   //     data.pageData.data[0].subs[3].map((item) => {
   //       setChallengeData(...challengeData, item.mediaURL);
@@ -91,7 +91,7 @@ const TrendingSectionArea = (props) => {
             alignItems: 'center',
           }}
         >
-          <Text category="h6" status="danger">
+          <Text category="h6" status="basic">
             Trending Challenges
           </Text>
           <Button

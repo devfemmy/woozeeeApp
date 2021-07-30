@@ -182,8 +182,8 @@ export const UsersPosts = ({ info, exploreData }) => {
             </View> */}
 
             <View style={{ paddingHorizontal: 10 }}>
-            <Text category="h6" status="danger" style={{ marginBottom: 15 }}>
-                {/* {sub.categoryName} */}Coming Soon
+            <Text category="h6" status="basic" style={{ marginBottom: 15 }}>
+                {sub.categoryName}
               </Text>
               <Text category="c1" style={{ marginBottom: 5 }}>
                 {`${sub.categoryName} ${sub.entries.length} clip(s)`}
@@ -228,7 +228,7 @@ export const ChallengePosts = ({ chaData }) => {
             key={uuidv4()}
           >
             <View style={{ paddingHorizontal: 10 }}>
-              <Text category="h6" status="danger" style={{ marginBottom: 15 }}>
+              <Text category="h6" status="basic" style={{ marginBottom: 15 }}>
                 {/* {sub.categoryName} */}Coming Soon
               </Text>
               <Text category="c1" style={{ marginBottom: 5 }}>

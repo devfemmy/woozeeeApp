@@ -82,7 +82,7 @@ const MoviesSectionArea = (props) => {
             alignItems: 'center',
           }}
         >
-          <Text category="h6" status="danger">
+          <Text category="h6" status="basic">
             Trending Movies
           </Text>
           <Button
