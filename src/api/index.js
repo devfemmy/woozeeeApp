@@ -62,6 +62,16 @@ export default {
       pageData: data,
     };
   },
+  getTrendingChallenges: async () => {
+    const instance = await createInstance();
+
+    const res = await instance.get('category-groups');
+
+    const { data } = res;
+    return {
+      pageData: data,
+    };
+  },
   getChallenges: async () => {
     const instance = await createInstance();
 

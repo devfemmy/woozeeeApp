@@ -43,6 +43,8 @@ import ImageView from 'src/components/ImageView';
 
 import MoviesSection from 'src/components/MoviesSection';
 
+import TrendingChallenges from 'src/components/TrendingChallenges';
+
 import { trendingUrl } from 'src/api/dummy';
 
 import { IconCStartStream, IconCLiveStreams } from 'src/components/CustomIcons';
@@ -292,6 +294,14 @@ export default function Social({ navigation }) {
                     />
                   ) : null}
                   {index === 5 ? <StoryPostsArea /> : null}
+                  {index === 12 ? (
+                    <TrendingChallenges
+                      t={t}
+                      navigation={navigation}
+                      width={width}
+                      height={ITEM_HEIGHT}
+                    />
+                  ) : null}
                 </>
               );
             }}

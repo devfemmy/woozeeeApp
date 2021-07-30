@@ -657,7 +657,6 @@ export default function VideoView({
               >
                 <Image
                   source={{ uri: userImg }}
-                  defaultSource={require('assets/images/user/user1.png')}
                   style={{
                     height: 30,
                     width: 30,
