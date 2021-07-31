@@ -72,7 +72,6 @@ class ChatScreen extends Component {
         .child(guestUid)
         .child(currentUid)
         .on('value', (dataSnapshot) => {
-            console.log(dataSnapshot)
             if (dataSnapshot?.val()?.signal === true) {
               if (this.state.currentUid === dataSnapshot.val().sender) {
                 this.setState({status: false})
@@ -206,13 +205,13 @@ class ChatScreen extends Component {
         navigation={this.props.navigation}
         screen="auth"
       />
-      <Text style= {styles.status}>is typing...</Text>
+      <Text style= {styles.status}>{null}</Text>
       </>
         }
         {/* <AppHeader title={this.props.navigation.getParam('UserName')} navigation={this.props.navigation} onPress={() => this.logOut()} /> */}
         <FlatList
           inverted
-          style={{ marginBottom: 60 }}
+          style={{ marginBottom: !this.state.status ? 60: 80 }}
           data={this.state.allMessages}
           keyExtractor={(_, index) => index.toString()}
           renderItem={({ item }) => (
@@ -285,6 +284,12 @@ class ChatScreen extends Component {
             </View>
           )}
         />
+        {!this.state.status ? 
+      null: 
+      <View style= {{position: 'absolute', bottom: 40, margin: 15, height: 30 }}>
+      <Text style= {{opacity: 0.5}}>{name} is typing...</Text>
+      </View>
+      }
         <View
           style={{
             bottom: 0,

@@ -8,6 +8,7 @@ import co.apptailor.googlesignin.RNGoogleSigninPackage;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.github.yamill.orientation.OrientationPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
