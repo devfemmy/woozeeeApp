@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState } from 'react';
 
 import { View } from 'react-native';
 
@@ -11,28 +11,30 @@ import {
 
 import Api from 'src/api';
 
-import FetchFailed from 'src/components/DataFetch/FetchFailed';
+import FetchFailed from '../../components/DataFetch/FetchFailed';
 
-import Placeholders from 'src/components/Placeholders';
+import Placeholders from '../../components/Placeholders';
+
+import TrendingChallengesCard from '../SocialCard/TrendingChallengesCard';
 
 import MovieSectionCard from 'src/components/SocialCard/MovieSectionCard';
 
-import { moviesUrl } from 'src/api/dummy';
+import { IconForwardIos } from '../../components/CustomIcons';
 
-import { IconForwardIos } from 'src/components/CustomIcons';
-
-const MoviesSectionArea = (props) => {
+const TrendingSectionArea = (props) => {
   const { t, navigation, width, height } = props;
 
-  const routeMovies = useCallback(
-    () => navigation.navigate('Movies'),
+  const [challengeData, setChallengeData] = useState([]);
+
+  const routeChallenges = useCallback(
+    () => navigation.navigate('ChallengeTab'),
     [navigation],
   );
 
   const { status, data, refetch } = useQuery(
-    ['moviesSection', 1],
+    ['challengesSection', 1],
     async () => {
-      const promise = await Api.getMovies();
+      const promise = await Api.getTrendingChallenges();
       promise.cancel = () => Api.cancelRequest('Request aborted');
       return promise;
     },
@@ -40,6 +42,13 @@ const MoviesSectionArea = (props) => {
       cacheTime: 1000 * 60 * 1,
     },
   );
+
+  //   console.log('data is', data.pageData.data[1].subs[0]);
+  //   data.length &&
+  //     data.pageData.data[0].subs[3].map((item) => {
+  //       setChallengeData(...challengeData, item.mediaURL);
+  //     });
+  //   console.log('challengeData => ', challengeData);
 
   if (status === 'loading') {
     return (
@@ -83,13 +92,13 @@ const MoviesSectionArea = (props) => {
           }}
         >
           <Text category="h6" status="basic">
-            Trending Movies
+            Trending Challenges
           </Text>
           <Button
             size="tiny"
             appearance="ghost"
             accessoryRight={IconForwardIos}
-            onPress={routeMovies}
+            onPress={routeChallenges}
           >
             <Text status="primary" category="s2">
               {t('viewAll')}
@@ -106,13 +115,13 @@ const MoviesSectionArea = (props) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          data={data.pageData.data}
+          data={data.pageData.data[1].subs[0].entries}
           keyExtractor={(_, i) => i.toString()}
           renderItem={(renderData) => (
-            <MovieSectionCard
-              pressed={() =>
-                navigation.navigate('ViewMovies', { movie_data: renderData })
-              }
+            <TrendingChallengesCard
+              //   pressed={() =>
+              //     navigation.navigate('ViewMovies', { movie_data: renderData })
+              //   }
               data={renderData.item}
               extraWidth={0.5}
             />
@@ -131,11 +140,11 @@ const MoviesSectionArea = (props) => {
   );
 };
 
-export default function MoviesSection(props) {
+export default function TrendingChallenges(props) {
   return useMemo(
     () => (
       <View style={{ flex: 1 }}>
-        <MoviesSectionArea {...props} />
+        <TrendingSectionArea {...props} />
         <Divider />
       </View>
     ),

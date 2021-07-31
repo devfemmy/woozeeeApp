@@ -148,7 +148,7 @@ export default function BillPay({ navigation }) {
         <View>
           <data.icon style={{ height: 40, width: 40 }} />
         </View>
-        <Text status="primary" style={{ textAlign: 'center', marginTop: 20 }}>
+        <Text status="basic" style={{ textAlign: 'center', marginTop: 20 }}>
           {t(data.content)}
         </Text>
       </Layout>

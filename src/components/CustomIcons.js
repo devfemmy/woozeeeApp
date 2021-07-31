@@ -551,7 +551,9 @@ export const IconCLiveStreams = (props) => {
 export const IconCMobileTopUp = (props) => {
   const { active, ...otherProps } = props;
 
-  return <Icon {...otherProps} name="mobile-topup" pack="assets" />;
+  return (
+    <Icon {...otherProps} name="mobile-topup" pack="assets" fill="#8F9BB3" />
+  );
 };
 export const IconCCoin = (props) => {
   const { active, ...otherProps } = props;

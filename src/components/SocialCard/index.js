@@ -146,6 +146,7 @@ export function UserProfilePostCard(props) {
   const routeChallengeWooz = () => {
     navigation.navigate('DeepLinkPost', { _id: data.item._id }), [navigation];
   };
+
   return useMemo(
     () => (
       <TouchableOpacity
@@ -269,7 +270,7 @@ export function ChallengeVideoCard(props) {
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
-        onPress={routeChallengeWooz}
+        // onPress={routeChallengeWooz}
       >
         <Image
           source={{ uri: challenge.imageURL }}

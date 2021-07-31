@@ -25,12 +25,8 @@ import SignUpWithApple from 'src/services/Requests/appleSignIn';
 
 export default function Register({ navigation }) {
   const { authOptions } = useContext(AuthContext);
-  const {
-    signupWithGoogle,
-    googleSignup,
-    facebookSignup,
-    appleSignup,
-  } = authOptions;
+  const { signupWithGoogle, googleSignup, facebookSignup, appleSignup } =
+    authOptions;
   const [isLoading, setLoading] = useState(false);
 
   function callGoogleSigunp() {
@@ -49,7 +45,8 @@ export default function Register({ navigation }) {
   });
 
   const isEmailValid = (emailAddress) => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(emailAddress).toLowerCase());
   };
 
@@ -144,7 +141,7 @@ export default function Register({ navigation }) {
                 </Text>
               </Button>
             </View>
-            <View
+            {/* <View
               style={{
                 alignItems: 'center',
                 paddingTop: 50,
@@ -152,8 +149,8 @@ export default function Register({ navigation }) {
               }}
             >
               <Text>{t('orContinueWith')}</Text>
-            </View>
-            <View style={{ paddingVertical: 10 }}>
+            </View> */}
+            {/* <View style={{ paddingVertical: 10 }}>
               <Button
                 status="primary"
                 size="medium"
@@ -208,7 +205,7 @@ export default function Register({ navigation }) {
                   Facebook
                 </Text>
               </Button>
-              {/* <Button
+              <Button
                 status="info"
                 size="medium"
                 accessoryLeft={() => (
@@ -222,7 +219,7 @@ export default function Register({ navigation }) {
                 <Text category="s1" status="control">
                   Twitter
                 </Text>
-              </Button> */}
+              </Button>
               {Constants.platform.ios && (
                 <Button
                   size="medium"
@@ -240,7 +237,7 @@ export default function Register({ navigation }) {
                   </Text>
                 </Button>
               )}
-            </View>
+            </View> */}
             <View
               style={{
                 flexDirection: 'row',
