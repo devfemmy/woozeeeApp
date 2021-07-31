@@ -35,7 +35,9 @@ const MoviePage = ({navigation, route}) => {
 
 
   return(
-<View  style={styles.fullScreen}>
+<View onLayout={(event) => {
+   const { width, height } = Dimensions.get('window')
+}}  style={styles.fullScreen}>
     {/* <TopNavigationArea
         title={item.title}
         // navigation={navigation}
@@ -46,10 +48,11 @@ const MoviePage = ({navigation, route}) => {
                   // poster= {item.posterURL[0]} 
                   controls= {true}
                   resizeMode= {Platform.OS === 'android' ? 'cover' : 'contain'}
-                  fullscreen= {true}
+                  // fullscreen= {true}
                   onReadyForDisplay = {onReadyForDisplay}
-                  fullscreenOrientation= "landscape"
+                  // fullscreenOrientation= "landscape"
                   source={{uri: item.mediaURL}}
+                  // source= {{uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}}
                 ref={(ref) => {
                   setVideoPlayer(ref)
                 }}                                      // Store reference
@@ -70,22 +73,22 @@ var styles = StyleSheet.create({
     // right: 0,
     // flex: 1,
     backgroundColor: 'black',
-    width: Dimensions.get('screen').width,
-    height: Dimensions.get('screen').height
+    height: Dimensions.get('screen').width,
+    width: Dimensions.get('screen').height
     // alignItems: 'center',
     // justifyContent: 'center'
   },
   videoView: {
-    flex: 1,
+    // flex: 1,
     // justifyContent: "center",
     // alignItems: "center",
     // backgroundColor: 'yellow'
 },
   fullScreen: {
     flex: 1,
-    // backgroundColor: "blue",
-    width: Dimensions.get('window').width,
-    // height: Dimensions.get('window').width,
+    backgroundColor: 'black',
+    height: Dimensions.get('screen').width,
+    width: Dimensions.get('screen').height
     
 },
 });
