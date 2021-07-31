@@ -70,14 +70,21 @@ export default function Login({ navigation }) {
 
     try {
       setLoading(true);
+      // console.log('loadinnnnnnnnnnn');
 
       if (form.email && form.password) {
-        loginError = await login(form);
+        let res = await login(form);
+        res === 'loginNotFound' &&
+          setErrorMsg((prevState) => ({
+            ...prevState,
+            auth: 'invalidLogin',
+          }));
       } else {
         loginError = 'loginRequired';
       }
     } catch (e) {
       loginError = e;
+      console.log('from loginErr is ', loginError);
     } finally {
       if (loginError) {
         setErrorMsg((prevState) => ({

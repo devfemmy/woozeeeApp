@@ -11,6 +11,7 @@
   "signupError": "Error Signing up",
   "loginRequired": "Email and Password fields are required",
   "loginNotFound": "Email / password is incorrect",
+  "invalidLogin": "Invalid Email / Password",
   "tokenError": "Code Mismatch",
   "error": "Error",
   "unfollow": "Unfollow",

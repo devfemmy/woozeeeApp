@@ -95,6 +95,18 @@ export default {
       nextID: page + 1,
     };
   },
+  getWoozVideos: async () => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`entries?pageSize=100`);
+
+    const { data } = res;
+    return {
+      pageData: data,
+      previousID: 1,
+      // nextID: page + 1,
+    };
+  },
   getDeepLinkPost: async (entryId) => {
     const instance = await createInstance();
 

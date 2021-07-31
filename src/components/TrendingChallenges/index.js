@@ -24,8 +24,6 @@ import { IconForwardIos } from '../../components/CustomIcons';
 const TrendingSectionArea = (props) => {
   const { t, navigation, width, height } = props;
 
-  const [challengeData, setChallengeData] = useState([]);
-
   const routeChallenges = useCallback(
     () => navigation.navigate('ChallengeTab'),
     [navigation],
