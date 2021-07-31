@@ -123,8 +123,6 @@ export default function Explore({ navigation, route }) {
   const {movie_data} = route.params;
   const [paid, setPaid] = useState(false);
 
-console.log("moshdsk", movie_data)
-console.log(movie_data.item.posterURL[0])
   const { bottom, top } = useSafeAreaInsets();
 
   const t = useContext(LocaleContext);

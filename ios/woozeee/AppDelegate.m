@@ -5,6 +5,7 @@
 #import <React/RCTRootView.h>
 #import <React/RCTLinkingManager.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "Orientation.h"
 
 // #import <FBSDKLoginKit/FBSDKLoginKit.h>
 // #import <FBSDKShareKit/FBSDKShareKit.h>
@@ -137,5 +138,9 @@ static void InitializeFlipper(UIApplication *application) {
                   continueUserActivity:userActivity
                     restorationHandler:restorationHandler];
 }
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+  return [Orientation getOrientation];
+}
+
 
 @end

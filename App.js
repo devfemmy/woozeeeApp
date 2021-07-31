@@ -212,14 +212,15 @@ export default function App() {
                     level="5"
                     style={{
                       flex: 1,
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      // alignItems: 'center',
+                      // justifyContent: 'center',
                     }}
                   >
                     <SafeAreaView
                       style={{
                         flex: 1,
-                        width: width > 720 ? 720 : width,
+                        // width: width > 720 ? 720 : width,
+                        // backgroundColor: 'red'
                       }}
                     >
                       <Router />
