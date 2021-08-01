@@ -4,7 +4,7 @@ import { View, ScrollView } from 'react-native';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
 
-import { LocaleContext } from 'src/contexts';
+import { AuthContext, LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
@@ -13,6 +13,10 @@ import { GeneralTextField } from 'src/components/FormFields';
 export default function RecoverWithEmail({ navigation }) {
   const [isLoading, setLoading] = useState(false);
 
+  const { authOptions } = useContext(AuthContext);
+
+  const { forgotPassword } = authOptions;
+
   const [email, setFormValues] = useState('');
 
   const t = useContext(LocaleContext);
@@ -20,14 +24,19 @@ export default function RecoverWithEmail({ navigation }) {
   const routeRegister = () => navigation.navigate('Register');
 
   const isEmailValid = (emailAddress) => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(emailAddress).toLowerCase());
   };
 
-  const routeRecoveryFull = () =>
-    isEmailValid(email.email)
-      ? navigation.navigate('RecoveryFull', email)
-      : null;
+  const routeRecoveryFull = async () => {
+    if (isEmailValid(email.email)) {
+      const res = await forgotPassword(email.email);
+      // console.log(res);
+      navigation.navigate('RecoveryFull', email);
+    }
+    return;
+  };
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -55,7 +64,9 @@ export default function RecoverWithEmail({ navigation }) {
                 autoCompleteType="email"
                 textContentType="emailAddress"
                 validate="email"
-                // onChangeText={isEmailValid(email) ? setDisabled(false) : setDisabled(true)}
+                // onChangeText={
+                //   isEmailValid(email) ? setDisabled(false) : setDisabled(true)
+                // }
                 setFormValues={setFormValues}
               />
             </View>

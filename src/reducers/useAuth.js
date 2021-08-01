@@ -379,19 +379,31 @@ export default function useAuth() {
       },
 
       forgotPassword: async (data) => {
-        // const res = await fetch(
-        //   'https://apis.woozeee.com/api/v1/reset',
-        //   {
-        //     method: 'PUT',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //       Accept: 'application/json',
-        //     },
-        //     body: data,
-        //   },
-        // );
-        // const result = await res.json();
-        // //('from forgotPassword fn -> ', data);
+        const reqData = { email: data };
+        const res = await fetch('https://apis.woozeee.com/api/v1/reset', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(reqData),
+        });
+        const result = await res.json();
+        return result;
+      },
+
+      verifyNewPassword: async (form) => {
+        console.log(form);
+        const res = await fetch('https://apis.woozeee.com/api/v1/reset', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(form),
+        });
+        const result = await res.json();
+        return result;
       },
 
       verifyAction: async (verificationCode) => {
