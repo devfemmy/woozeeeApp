@@ -49,7 +49,7 @@ export default function UploadEntries(props) {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
     });
@@ -90,7 +90,6 @@ export default function UploadEntries(props) {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
-  console.log("has permission", hasPermission)
   return (
     <View style={styles.container}>
       {image && <Image source={{ uri: image }} style={{ flex: 1 }} />}

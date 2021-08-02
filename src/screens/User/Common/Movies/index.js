@@ -288,6 +288,7 @@ export default function Explore({ navigation }) {
       style={{ backgroundColor: 'transparent' }}
       renderLabel={({ route, focused, color }) => (
         <Text
+          numberOfLines= {1}
           style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}
           status="basic"
         >
