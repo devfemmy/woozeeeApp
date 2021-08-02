@@ -295,7 +295,7 @@ export default function Comments({ route, navigation }) {
               borderWidth: 0.5,
               height: 40,
               paddingHorizontal: 5,
-              
+
               borderColor: 'gray',
               borderRadius: 5,
               color: 'grey',

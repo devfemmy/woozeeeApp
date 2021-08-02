@@ -27,7 +27,6 @@ export default function Profile({ navigation }) {
           .then((response) => {
             // setLoading(false)
             const user_data = response.data.user;
-            console.log('user profile is->', response.data);
             setUser(user_data);
           })
           .catch((err) => {
@@ -39,14 +38,14 @@ export default function Profile({ navigation }) {
       });
   };
   useEffect(() => {
-    AsyncStorage.getAllKeys((err, keys) => {
-      AsyncStorage.multiGet(keys, (error, stores) => {
-        stores.map((result, i, store) => {
-          console.log('async stuff ', { [store[i][0]]: store[i][1] });
-          return true;
-        });
-      });
-    });
+    // AsyncStorage.getAllKeys((err, keys) => {
+    //   AsyncStorage.multiGet(keys, (error, stores) => {
+    //     stores.map((result, i, store) => {
+    //       console.log('async stuff ', { [store[i][0]]: store[i][1] });
+    //       return true;
+    //     });
+    //   });
+    // });
     const unsubscribe = navigation.addListener('focus', () => {
       AsyncStorage.getItem('userid')
         .then((response) => {

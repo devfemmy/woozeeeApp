@@ -285,7 +285,7 @@ export default function Social({ navigation }) {
                       t={t}
                     />
                   )}
-                  {index === 2 || index === 8 ? (
+                  {index === 2 || index === 12 ? (
                     <MoviesSection
                       t={t}
                       navigation={navigation}
@@ -294,7 +294,7 @@ export default function Social({ navigation }) {
                     />
                   ) : null}
                   {index === 5 ? <StoryPostsArea /> : null}
-                  {index === 12 ? (
+                  {index === 8 ? (
                     <TrendingChallenges
                       t={t}
                       navigation={navigation}

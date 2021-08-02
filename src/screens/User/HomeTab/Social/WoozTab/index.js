@@ -33,6 +33,8 @@ import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction
 
 import VideoFullscreen from 'src/components/VideoFullscreen';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
 import Placeholders from 'src/components/Placeholders';
@@ -207,7 +209,7 @@ export default function Wooz({ navigation }) {
     } = useInfiniteQuery(
       ['inFiniteWoozVideos', 1],
       async ({ pageParam = 1 }) => {
-        const promise = await Api.getVideos(pageParam);
+        const promise = await Api.getWoozVideos();
         promise.cancel = () => Api.cancelRequest('Request aborted');
         return promise;
       },
@@ -275,7 +277,7 @@ export default function Wooz({ navigation }) {
       }, []);
 
       // console.log('final is ', final);
-      data.pages.map((page) => console.log('page is', page));
+      // data.pages.map((page) => console.log('page is', page));
 
       //without pagination
       return (
@@ -350,20 +352,20 @@ export default function Wooz({ navigation }) {
         //     </View>;
         //   }}
         // />
-        data.pages.map((page) => (
-          <React.Fragment key={page.nextID}>
-            <View style={{ flex: 1 }}>
-              <ScrollView
-                style={{
-                  flex: 1,
-                  backgroundColor: 'transparent',
-                }}
-                pagingEnabled
-                disableIntervalMomentum
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                onMomentumScrollEnd={onMomentumScrollEnd}
-              >
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            style={{
+              flex: 1,
+              backgroundColor: 'transparent',
+            }}
+            pagingEnabled
+            disableIntervalMomentum
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            onMomentumScrollEnd={onMomentumScrollEnd}
+          >
+            {data.pages.map((page) => (
+              <React.Fragment key={uuidv4()}>
                 {page.pageData.data.map((item, i) => (
                   <React.Fragment key={i.toString()}>
                     <View style={{ position: 'relative' }}>
@@ -419,10 +421,11 @@ export default function Wooz({ navigation }) {
                     }).start()}
                   />
                 </Animated.View>
-              </ScrollView>
-            </View>
-          </React.Fragment>
-        ))
+              </React.Fragment>
+            ))}
+          </ScrollView>
+        </View>
+
         // <ScrollView
         //   style={{
         //     flex: 1,

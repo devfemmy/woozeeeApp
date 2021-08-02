@@ -95,32 +95,7 @@ export default function useAuth() {
         });
 
         const result = await res.json();
-        const email = result.user.email;
-        const userImage = result.user.imgUrl;
-        AsyncStorage.setItem('email', email);
-        const user_id = result.user._id;
 
-        const insure_num = result.user.insurranceCard.cardNumber;
-        const insureamt = result.user.insurranceCard.credits;
-        const stringedAmt = insureamt.toString();
-        //(stringedAmt);
-        const wallet_num = result.user.walletCard.cardNumber;
-        const wallet_amt = result.user.walletCard.credits;
-        const stringedWallet = wallet_amt.toString();
-        //(stringedWallet);
-        const reward_num = result.user.rewardCard.cardNumber;
-        const reward_amt = result.user.rewardCard.credits;
-        const stringedReward = reward_amt.toString();
-        //(stringedReward);
-        const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
-        AsyncStorage.setItem('insureCardNo', insure_num);
-        AsyncStorage.setItem('walletCardNo', wallet_num);
-        AsyncStorage.setItem('rewardCardNo', reward_num);
-        AsyncStorage.setItem('insureAmt', stringedAmt);
-        AsyncStorage.setItem('walletAmt', stringedWallet);
-        AsyncStorage.setItem('rewardAmt', stringedReward);
-        AsyncStorage.setItem('fullName', fullname);
-        AsyncStorage.setItem('userid', user_id);
         let token = null;
         let msg = null;
 
@@ -128,18 +103,45 @@ export default function useAuth() {
           //  TODO: implement authenticate login details:{email, password}
 
           // prettier-ignore
-          msg = await result.error == true 
+          msg = await result.error == true
             ? 'loginNotFound'
             : null;
 
           if (!msg) {
             token = await result.token;
+            const userImage = await result.user.imgUrl;
+            const email = await result.user.email;
 
             await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
             await AsyncStorage.setItem('userImage', userImage);
+            AsyncStorage.setItem('email', email);
+
+            const user_id = result.user._id;
+
+            const insure_num = result.user.insurranceCard.cardNumber;
+            const insureamt = result.user.insurranceCard.credits;
+            const stringedAmt = insureamt.toString();
+            //(stringedAmt);
+            const wallet_num = result.user.walletCard.cardNumber;
+            const wallet_amt = result.user.walletCard.credits;
+            const stringedWallet = wallet_amt.toString();
+            //(stringedWallet);
+            const reward_num = result.user.rewardCard.cardNumber;
+            const reward_amt = result.user.rewardCard.credits;
+            const stringedReward = reward_amt.toString();
+            //(stringedReward);
+            const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
+            AsyncStorage.setItem('insureCardNo', insure_num);
+            AsyncStorage.setItem('walletCardNo', wallet_num);
+            AsyncStorage.setItem('rewardCardNo', reward_num);
+            AsyncStorage.setItem('insureAmt', stringedAmt);
+            AsyncStorage.setItem('walletAmt', stringedWallet);
+            AsyncStorage.setItem('rewardAmt', stringedReward);
+            AsyncStorage.setItem('fullName', fullname);
+            AsyncStorage.setItem('userid', user_id);
           }
 
-          await dispatch({
+          dispatch({
             type: 'LOG_IN',
             token,
           });
@@ -377,19 +379,31 @@ export default function useAuth() {
       },
 
       forgotPassword: async (data) => {
-        // const res = await fetch(
-        //   'https://apis.woozeee.com/api/v1/reset',
-        //   {
-        //     method: 'PUT',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //       Accept: 'application/json',
-        //     },
-        //     body: data,
-        //   },
-        // );
-        // const result = await res.json();
-        // //('from forgotPassword fn -> ', data);
+        const reqData = { email: data };
+        const res = await fetch('https://apis.woozeee.com/api/v1/reset', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(reqData),
+        });
+        const result = await res.json();
+        return result;
+      },
+
+      verifyNewPassword: async (form) => {
+        console.log(form);
+        const res = await fetch('https://apis.woozeee.com/api/v1/reset', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(form),
+        });
+        const result = await res.json();
+        return result;
       },
 
       verifyAction: async (verificationCode) => {

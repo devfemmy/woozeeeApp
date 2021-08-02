@@ -17,8 +17,6 @@ import { Video } from 'expo-av';
 export default function TrendingChallengesCard(props) {
   const { data, extraWidth, navigation } = props;
 
-  console.log('from tcc => ', data);
-
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;
