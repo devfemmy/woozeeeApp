@@ -251,14 +251,14 @@ export default function BillPay({ navigation }) {
           <BillPayItem data={data} key={data.id} />
         ))}
       </View>
-      <View style={{ marginTop: 15, paddingHorizontal: 15 }}>
+      {/* <View style={{ marginTop: 15, paddingHorizontal: 15 }}>
         <Text category="s1">{t('frequentTrans')}</Text>
-      </View>
-      <View style={{ marginVertical: 5, paddingHorizontal: 15 }}>
+      </View> */}
+      {/* <View style={{ marginVertical: 5, paddingHorizontal: 15 }}>
         {BILLS_HISTORY.map((data) => (
           <HistoryItem data={data} key={data.id} />
         ))}
-      </View>
+      </View> */}
     </View>
   );
 

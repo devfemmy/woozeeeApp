@@ -151,7 +151,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
   const handleShare = async () => {
     try {
       const result = await Share.share({
-        message: `woozeee://entries/${item._id}`,
+        message: `https://app.woozeee.com/entries/${item._id}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -845,7 +845,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                           sharePostToDm(
                             _userId,
                             user.item._id,
-                            `woozeee://entries/${item._id}`,
+                            `https://app.woozeee.com/entries/${item._id}`,
                             user.item.fName + user.item.sName,
                           )
                         }

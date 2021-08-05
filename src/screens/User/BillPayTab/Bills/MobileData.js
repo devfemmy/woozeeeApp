@@ -427,6 +427,7 @@ export default function MobileData({ navigation }) {
                       style={{ height: 25, width: 25 }}
                     />
                   </View>
+                  <Text>{}</Text>
                 </Radio>
               ))}
             </RadioGroup>

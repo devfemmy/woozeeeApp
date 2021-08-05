@@ -1,4 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+
+import { Alert, Platform } from 'react-native';
+
+import { useNetInfo } from '@react-native-community/netinfo';
 
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -7,6 +11,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { AuthContext } from 'src/contexts';
+
+import { Toast, Content, Root } from 'native-base';
 
 /* Screens import */
 import Intro from 'src/screens/Authentication';
@@ -106,6 +112,41 @@ const { Navigator, Screen } = createStackNavigator();
 export default function Router() {
   const { authState } = useContext(AuthContext);
 
+  const netInfo = useNetInfo();
+
+  const checkForConnectivity = () => {
+    if (netInfo.isConnected == false || netInfo.isInternetReachable == false) {
+      Toast.show({
+        text: 'You are offline',
+        // buttonText: ',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+      console.log(netInfo);
+    } else if (
+      netInfo.isConnected == true &&
+      netInfo.isInternetReachable == false
+    ) {
+      Toast.show({
+        text: 'You are offline',
+        // buttonText: ',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+      console.log('from else ', netInfo);
+    } else {
+      Toast.show({
+        text: 'You are online',
+        // buttonText: ',
+        position: 'top',
+        type: 'success',
+        duration: 3000,
+      });
+    }
+  };
+
   const screens = {
     Auth: {
       Intro,
@@ -118,17 +159,17 @@ export default function Router() {
     },
 
     User: {
-      Onboarding,
-      ActivateWallet,
-      ActivateWalletPictureUpload,
-      ActivateWalletSelectBanks,
-      ActivateWalletCreatePin,
-      ActivateWalletOTPVerification,
-      ActivateCare,
-      ActivateCareSoloLitePlan,
-      ActivateCareSoloPlan,
-      ActivateCareFamilyPlan,
-      ActivateCareElitePlan,
+      // Onboarding,
+      // ActivateWallet,
+      // ActivateWalletPictureUpload,
+      // ActivateWalletSelectBanks,
+      // ActivateWalletCreatePin,
+      // ActivateWalletOTPVerification,
+      // ActivateCare,
+      // ActivateCareSoloLitePlan,
+      // ActivateCareSoloPlan,
+      // ActivateCareFamilyPlan,
+      // ActivateCareElitePlan,
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,
@@ -194,7 +235,8 @@ export default function Router() {
     (async () => {
       await SplashScreen.hideAsync();
     })();
-  }, []);
+    checkForConnectivity();
+  }, [netInfo]);
 
   const config = {
     screens: {
@@ -203,20 +245,22 @@ export default function Router() {
   };
 
   const linking = {
-    prefixes: ['app.woozeee.com/', 'woozeee://'],
+    prefixes: ['https://app.woozeee.com/', 'woozeee://'],
     config,
   };
 
   return (
-    <NavigationContainer linking={linking}>
-      <Navigator detachInactiveScreens headerMode="none">
-        {Object.entries({
-          ...(authState.loginToken ? screens.User : screens.Auth),
-          ...screens.Common,
-        }).map(([name, component]) => (
-          <Screen name={name} component={component} key={name} />
-        ))}
-      </Navigator>
-    </NavigationContainer>
+    <Root>
+      <NavigationContainer linking={linking}>
+        <Navigator detachInactiveScreens headerMode="none">
+          {Object.entries({
+            ...(authState.loginToken ? screens.User : screens.Auth),
+            ...screens.Common,
+          }).map(([name, component]) => (
+            <Screen name={name} component={component} key={name} />
+          ))}
+        </Navigator>
+      </NavigationContainer>
+    </Root>
   );
 }
