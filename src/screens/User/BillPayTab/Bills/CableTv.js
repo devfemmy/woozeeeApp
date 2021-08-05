@@ -39,7 +39,10 @@ import {
   IconCPhoneBookFill,
   IconClose,
 } from 'src/components/CustomIcons';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const ACCOUNTS = [
   {
@@ -358,6 +361,7 @@ export default function CableTv({ navigation }) {
                       style={{ height: 25, width: 25 }}
                     />
                   </View>
+                  <Text>{}</Text>
                 </Radio>
               ))}
             </RadioGroup>

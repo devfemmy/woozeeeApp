@@ -31,7 +31,10 @@ import InteractIcon from 'src/components/InteractIcon';
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import { GeneralTextField } from 'src/components/FormFields';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import {
   IconArrowDown,
@@ -40,7 +43,6 @@ import {
   IconCPhoneBookFill,
   IconClose,
 } from 'src/components/CustomIcons';
-
 
 const ACCOUNTS = [
   {
@@ -100,7 +102,6 @@ const woozeeeCards = [
 ];
 
 export default function Airtime({ navigation }) {
-
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;
@@ -159,7 +160,7 @@ export default function Airtime({ navigation }) {
   const ConfirmSheet = () => (
     <RBSheet
       ref={confirmSheetRef}
-      height={380}
+      height={400}
       closeOnDragDown
       animationType="fade"
       customStyles={{
@@ -319,8 +320,8 @@ export default function Airtime({ navigation }) {
           style={{
             flex: 1,
             width: '100%',
-            // alignItems: 'flex-start',
-            // justifyContent: 'flex-end',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-end',
             paddingBottom: 30,
           }}
         >
@@ -359,6 +360,7 @@ export default function Airtime({ navigation }) {
                       style={{ height: 25, width: 25 }}
                     />
                   </View>
+                  <Text>{}</Text>
                 </Radio>
               ))}
             </RadioGroup>
