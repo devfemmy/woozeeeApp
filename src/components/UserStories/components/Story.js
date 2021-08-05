@@ -40,9 +40,10 @@ Story.propTypes = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: '100%',
+    // height: '100%',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   content: { width: '100%', height: '100%', flex: 1 },
   imageContent: {
