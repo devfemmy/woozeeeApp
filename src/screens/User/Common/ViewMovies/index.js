@@ -293,7 +293,9 @@ export default function Explore({ navigation, route }) {
           :
                 <TextIcon
                 // onPress= {() => console.log('Hello')}
+                
                 onPress= {() => navigation.navigate('MoviePage', {item: movie_data.item})} 
+                // onPress= {() => navigation.navigate('FlutterPay', {item: movie_data.item, price: `$${5}`})} 
                 bg= "#FF5757"
                 color= "white" fill= "white" 
                 text= "Purchase" 

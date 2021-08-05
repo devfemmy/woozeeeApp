@@ -349,7 +349,7 @@ export default function Airtime({ navigation }) {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      width: wp('80%'),
+                      width: '100%',
                     }}
                   >
                     <Text category="s2">{option.title}</Text>
