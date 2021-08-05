@@ -18,7 +18,7 @@ const Story = (props) => {
           source={{ uri: srcURL }}
           onLoadEnd={props.onImageLoaded}
           style={styles.content}
-          resizeMode="contain"
+          resizeMode="cover"
         />
       ) : (
         <Video
@@ -26,6 +26,7 @@ const Story = (props) => {
           paused={props.pause || props.isNewStory}
           onLoad={(item) => props.onVideoLoaded(item)}
           style={styles.content}
+          resizeMode="cover"
         />
       )}
     </View>
@@ -39,8 +40,7 @@ Story.propTypes = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    backgroundColor: 'gray',
+    // width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -49,13 +49,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     flex: 1,
-  },
-  loading: {
-    backgroundColor: 'black',
-    height: '100%',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 
