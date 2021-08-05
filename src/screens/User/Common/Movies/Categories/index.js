@@ -134,19 +134,7 @@ const MyCategories = (props) => {
                 All
               </Text>
               <Text category= "c2" style= {styles.textStyle}>
-                My View
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Comedy
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Anime
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
+               My List
               </Text>
               <Text category= "c2" style= {styles.textStyle}>
                 Action
@@ -155,43 +143,52 @@ const MyCategories = (props) => {
                 Anime
               </Text>
               <Text category= "c2" style= {styles.textStyle}>
-                Comedy
+                Children
               </Text>
               <Text category= "c2" style= {styles.textStyle}>
-                All
+                Comedies
               </Text>
               <Text category= "c2" style= {styles.textStyle}>
-                All
+                Crime
               </Text>
               <Text category= "c2" style= {styles.textStyle}>
-                My View
+                Documentaries
               </Text>
               <Text category= "c2" style= {styles.textStyle}>
-                Comedy
+                Drama
+              </Text>
+              <Text category= "c2" style= {styles.textStyle}>
+                Fantasy
+              </Text>
+              <Text category= "c2" style= {styles.textStyle}>
+                Family
+              </Text>
+              <Text category= "c2" style= {styles.textStyle}>
+                Horror
+              </Text>
+              <Text category= "c2" style= {styles.textStyle}>
+                Music & Musical
+              </Text>
+              <Text category= "c2" style= {styles.textStyle}>
+                Reality
+              </Text>
+              <Text category= "c2" style= {styles.textStyle}>
+                Romance
+              </Text>
+              <Text category= "c2" style= {styles.textStyle}>
+                Sci-Fi
+              </Text>
+              <Text category= "c2" style= {styles.textStyle}>
+                Stand-Up
+              </Text>
+              <Text category= "c2" style= {styles.textStyle}>
+                Thrillers
               </Text>
               <Text category= "c2" style= {styles.textStyle}>
                 Anime
               </Text>
               <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                My View
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Comedy
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Anime
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
+                Audio Description
               </Text>
           </ScrollView>
           <View>

@@ -100,6 +100,7 @@ import Duration from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyM
 import SearchResults from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/SearchResults';
 import AdditionalInfo from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/AdditionalInfo';
 import MoneyMattersConfirmation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/Confirmation';
+import FlutterPay from '../screens/Common/FlutterPay';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -181,6 +182,8 @@ export default function Router() {
       AppointmentDetails,
       InnerPages,
       DetailsPage,
+      FlutterPay
+    
     },
 
     Common: {
