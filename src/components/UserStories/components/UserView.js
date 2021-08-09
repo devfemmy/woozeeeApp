@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   userView: {
     flexDirection: 'row',
     position: 'absolute',
-    top: 55,
+    top: Platform.OS === 'android' ? 35 : 65,
     width: '98%',
     alignItems: 'center',
   },

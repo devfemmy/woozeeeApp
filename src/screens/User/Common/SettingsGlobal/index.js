@@ -73,6 +73,7 @@ export default function Settings({ navigation }) {
               borderColor: 'transparent',
             }}
             accessoryRight={IconForwardIos}
+            onPress={() => navigation.navigate('Settings')}
           >
             <Text category="s2" status="" style={{ marginLeft: 10 }}>
               {t('account')}

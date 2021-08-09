@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useContext, useState, useRef, useCallback,
+  useContext, useState, useRef, useCallback, useEffect
 } from 'react';
 
 import {
@@ -24,13 +24,19 @@ import {
   RadioGroup,
 } from '@ui-kitten/components';
 
+import { Toast, Content, Root } from 'native-base';
+
+import { v4 as uuidv4 } from 'uuid';
+
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import InteractIcon from 'src/components/InteractIcon';
 
-import { LocaleContext, AppSettingsContext } from 'src/contexts';
+import { LocaleContext, AppSettingsContext, AuthContext } from 'src/contexts';
 
 import { GeneralTextField } from 'src/components/FormFields';
+
+import { getEmail, getToken } from '../../../../api/index';
 
 import {
   IconArrowDown,
@@ -44,38 +50,38 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const ACCOUNTS = [
-  {
-    id: 1,
-    title: 'woozeee Wallet - ₦ 99,394.99',
-    image: require('assets/images/banks/woozeee.png'),
-  },
-  {
-    id: 2,
-    title: 'Access Bank - ₦ 34,677.02',
-    image: require('assets/images/banks/access.png'),
-  },
-  {
-    id: 3,
-    title: 'UBA - ₦ 25,500.44',
-    image: require('assets/images/banks/uba.png'),
-  },
-  {
-    id: 4,
-    title: 'Globus Bank -₦ 24,222.18',
-    image: require('assets/images/banks/globus.png'),
-  },
-  {
-    id: 5,
-    title: 'Zenith Bank -₦ 1,000.00',
-    image: require('assets/images/banks/zenith.png'),
-  },
-  {
-    id: 6,
-    title: 'Pay with other Banks',
-    image: require('assets/images/banks/others.png'),
-  },
-];
+// const ACCOUNTS = [
+//   {
+//     id: 1,
+//     title: 'woozeee Wallet - ₦ 99,394.99',
+//     image: require('assets/images/banks/woozeee.png'),
+//   },
+//   {
+//     id: 2,
+//     title: 'Access Bank - ₦ 34,677.02',
+//     image: require('assets/images/banks/access.png'),
+//   },
+//   {
+//     id: 3,
+//     title: 'UBA - ₦ 25,500.44',
+//     image: require('assets/images/banks/uba.png'),
+//   },
+//   {
+//     id: 4,
+//     title: 'Globus Bank -₦ 24,222.18',
+//     image: require('assets/images/banks/globus.png'),
+//   },
+//   {
+//     id: 5,
+//     title: 'Zenith Bank -₦ 1,000.00',
+//     image: require('assets/images/banks/zenith.png'),
+//   },
+//   {
+//     id: 6,
+//     title: 'Pay with other Banks',
+//     image: require('assets/images/banks/others.png'),
+//   },
+// ];
 
 /* DATA */
 const woozeeeCards = [
@@ -83,21 +89,25 @@ const woozeeeCards = [
     id: 1,
     banner: require('assets/images/card/mtn.png'),
     title: 'MTN',
+    serviceId: 'mtn-data',
   },
   {
     id: 2,
     banner: require('assets/images/card/airtel.png'),
     title: 'airtel',
+    serviceId: 'airtel-data',
   },
   {
     id: 3,
     banner: require('assets/images/card/glo.png'),
     title: 'glo',
+    serviceId: 'glo-data',
   },
   {
     id: 4,
     banner: require('assets/images/card/9mobile.png'),
     title: '9mobile',
+    serviceId: 'etisalat-data',
   },
 ];
 
@@ -107,6 +117,16 @@ export default function MobileData({ navigation }) {
   const IS_PORTRAIT = height > width;
 
   const CARD_HEIGHT = IS_PORTRAIT ? 180 : 160;
+
+  const { authOptions } = useContext(AuthContext);
+
+  const { verifyPin } = authOptions;
+
+  const [serviceId, setServiceId] = useState(null);
+
+  const [dataBundles, setDataBundles] = useState([]);
+
+  const [variationCode, setVariationCode] = useState('');
 
   const [activeOperator, setActiveOperator] = useState(null);
 
@@ -129,22 +149,50 @@ export default function MobileData({ navigation }) {
     amount: '',
     pin: '',
     product: '',
-    account: '',
+    variationCode: '',
+    serviceId: '',
+    requestId: '',
   });
 
-  const handleAccountChange = (index) => {
-    setSelectedOption(index);
-    setFormValues((prevState) => ({
-      ...prevState,
-      account: ACCOUNTS[index].title,
-    }));
+  const fetchDataBundle = async () => {
+    const result = await fetch(
+      `https://apis.woozeee.com/api/v1/bill-payment/variants?serviceId=${serviceId}&`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `${await getToken()}`,
+        },
+      },
+    );
+
+    const response = await result.json();
+
+    const {
+      variants: { content },
+    } = response;
+    setDataBundles(content.varations);
   };
+
+  useEffect(() => {
+    fetchDataBundle();
+  }, [serviceId]);
+
+  // const handleAccountChange = (index) => {
+  //   setSelectedOption(index);
+  //   setFormValues((prevState) => ({
+  //     ...prevState,
+  //     account: ACCOUNTS[index].title,
+  //   }));
+  // };
 
   const onClickOperator = (i) => {
     if (i === activeOperator) {
       setActiveOperator(null);
     } else {
       setActiveOperator(i);
+      setServiceId(woozeeeCards[i - 1].serviceId);
     }
   };
 
@@ -156,16 +204,39 @@ export default function MobileData({ navigation }) {
 
   const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
 
-  const handleConfirmTransaction = () => {
+  const handleConfirmTransaction = async () => {
     confirmSheetRef.current.close();
-    routeSuccess();
+    const res = await verifyPin(form.pin);
+    // console.log(form);
+
+    if (res.message === 'User pin is Incorrect') {
+      Toast.show({
+        text: 'User pin is Incorrect',
+        // buttonText: 'Okay',
+        position: 'bottom',
+        type: 'danger',
+        duration: 3000,
+      });
+    } else {
+      //suceess
+      navigation.navigate('DataFlutterPay', {
+        title: 'Data Purchase',
+        requestId: form.requestId,
+        variationCode: form.variationCode,
+        amount: form.amount,
+        phone: form.mobile,
+        serviceId: form.serviceId,
+        pin: form.pin,
+      });
+    }
+    // routeSuccess();
   };
 
   // prettier-ignore
   const ProductSheet = () => (
     <RBSheet
       ref={productSheetRef}
-      height={160}
+      height={450}
       closeOnDragDown
       animationType="fade"
       customStyles={{
@@ -199,26 +270,43 @@ export default function MobileData({ navigation }) {
           </Text>
         </View>
         <Divider style={{ marginBottom: 20, width: '100%' }} />
-        <TouchableOpacity
-          activeOpacity={0.75}
-          style={{
-            width: '100%',
-            justifyContent: 'flex-start',
-            flexDirection: 'column',
-            paddingHorizontal: 20,
-            marginBottom: 15,
-          }}
-          onPress={() => setFormValues((prevState) => ({
-            ...prevState,
-            product: '100GB',
-            amount: '50000',
-          }))}
-        >
-          <Text style={{ fontSize: 16 }} status="basic" category="h6">
-            100GB
-          </Text>
-          <Text category="c2">₦ 50,000.00</Text>
-        </TouchableOpacity>
+        {/* {console.log(dataBundles)} */}
+        <List
+           style={{ backgroundColor: 'transparent' }}
+         
+           vertical
+           showsHorizontalScrollIndicator={false}
+           showsVerticalScrollIndicator={false}
+           data={dataBundles}
+           keyExtractor={(_, i) => i.toString()}
+           renderItem={(renderData) => (
+            <TouchableOpacity
+            activeOpacity={0.75}
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              flexDirection: 'column',
+              paddingHorizontal: 20,
+              marginBottom: 15,
+            }}
+            onPress={() => {
+              setFormValues((prevState) => ({
+                ...prevState,
+                product: renderData.item.name,
+                amount: renderData.item.variation_amount,
+                variationCode: renderData.item.variation_code,
+                requestId: uuidv4(),
+                serviceId: serviceId,
+              }));
+            }}
+          >
+            <Text style={{ fontSize: 16 }} status="basic" category="h6">
+              {renderData.item.name}
+            </Text>
+            <Text category="c2">₦ {renderData.item.variation_amount}</Text>
+          </TouchableOpacity>
+           )}
+        />
       </Layout>
     </RBSheet>
   );
@@ -227,7 +315,7 @@ export default function MobileData({ navigation }) {
   const ConfirmSheet = () => (
     <RBSheet
       ref={confirmSheetRef}
-      height={380}
+      height={300}
       closeOnDragDown
       animationType="fade"
       customStyles={{
@@ -290,7 +378,7 @@ export default function MobileData({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {woozeeeCards[activeOperator - 1]?.title || 'none'}
+              {woozeeeCards[activeOperator - 1]?.title || '----'}
             </Text>
           </View>
           <View
@@ -313,7 +401,7 @@ export default function MobileData({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {form.mobile || 'none'}
+              {form.mobile || '----'}
             </Text>
           </View>
           <View
@@ -341,7 +429,7 @@ export default function MobileData({ navigation }) {
           </View>
         </View>
         <View style={{ width: '100%', paddingHorizontal: 15, paddingTop: 10 }}>
-          <View style={{ paddingVertical: 5 }}>
+          {/* <View style={{ paddingVertical: 5 }}>
             <GeneralTextField
               type="pin"
               label={t('transactionPin')}
@@ -349,7 +437,7 @@ export default function MobileData({ navigation }) {
               validate="required"
               setFormValues={setFormValues}
             />
-          </View>
+          </View> */}
           <View style={{ paddingTop: 10 }}>
             <Button
               status="danger"
@@ -494,80 +582,81 @@ export default function MobileData({ navigation }) {
   );
 
   return (
-    <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title={t('mobileData')}
-        navigation={navigation}
-        screen="default"
-      />
-      <ScrollView
-        style={{ flex: 1 }}
-        alwaysBounceVertical
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, paddingTop: 20 }}>
-            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-              <Text category="s1">{t('operatorChoice')}</Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <List
-                style={{ backgroundColor: 'transparent' }}
-                contentContainerStyle={{ paddingHorizontal: 5 }}
-                horizontal
-                alwaysBounceHorizontal
-                alwaysBounceVertical
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                data={woozeeeCards}
-                keyExtractor={(_, i) => i.toString()}
-                renderItem={WoozeeeCards}
-                getItemLayout={(data, index) => ({
-                  length: CARD_HEIGHT,
-                  offset: CARD_HEIGHT * index,
-                  index,
-                })}
-              />
-            </View>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              paddingBottom: 20,
-              marginTop: 10,
-            }}
-          >
-            <View style={{ paddingHorizontal: 15 }}>
-              <View style={{ paddingBottom: 10 }}>
-                <Text
-                  category="label"
-                  appearance="hint"
-                  style={{ marginBottom: 5 }}
-                >
-                  {t('selectBundle')}
-                </Text>
-                <Button
-                  appearance="outline"
-                  accessoryRight={IconArrowDown}
-                  style={{ justifyContent: 'space-between' }}
-                  onPress={handleOpenProductSheet}
-                >
-                  <Text>{form.product || t('bundle')}</Text>
-                </Button>
+    <Root>
+      <Layout level="6" style={{ flex: 1 }}>
+        <TopNavigationArea
+          title={t('mobileData')}
+          navigation={navigation}
+          screen="default"
+        />
+        <ScrollView
+          style={{ flex: 1 }}
+          alwaysBounceVertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, paddingTop: 20 }}>
+              <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+                <Text category="s1">{t('operatorChoice')}</Text>
               </View>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="mobile"
-                  label={t('mobileNum')}
-                  autoCompleteType="tel"
-                  textContentType="telephoneNumber"
-                  validate="required"
-                  setFormValues={setFormValues}
-                  accessoryRight={IconCPhoneBookFill}
+              <View style={{ flex: 1 }}>
+                <List
+                  style={{ backgroundColor: 'transparent' }}
+                  contentContainerStyle={{ paddingHorizontal: 5 }}
+                  horizontal
+                  alwaysBounceHorizontal
+                  alwaysBounceVertical
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  data={woozeeeCards}
+                  keyExtractor={(_, i) => i.toString()}
+                  renderItem={WoozeeeCards}
+                  getItemLayout={(data, index) => ({
+                    length: CARD_HEIGHT,
+                    offset: CARD_HEIGHT * index,
+                    index,
+                  })}
                 />
               </View>
-              <View style={{ paddingVertical: 10 }}>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                paddingBottom: 20,
+                marginTop: 10,
+              }}
+            >
+              <View style={{ paddingHorizontal: 15 }}>
+                <View style={{ paddingBottom: 10 }}>
+                  <Text
+                    category="label"
+                    appearance="hint"
+                    style={{ marginBottom: 5 }}
+                  >
+                    {t('selectBundle')}
+                  </Text>
+                  <Button
+                    appearance="outline"
+                    accessoryRight={IconArrowDown}
+                    style={{ justifyContent: 'space-between' }}
+                    onPress={handleOpenProductSheet}
+                  >
+                    <Text>{form.product || t('bundle')}</Text>
+                  </Button>
+                </View>
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="mobile"
+                    label={t('mobileNum')}
+                    autoCompleteType="tel"
+                    textContentType="telephoneNumber"
+                    validate="required"
+                    setFormValues={setFormValues}
+                    accessoryRight={IconCPhoneBookFill}
+                  />
+                </View>
+                {/* <View style={{ paddingVertical: 10 }}>
                 <Text
                   category="label"
                   appearance="hint"
@@ -583,26 +672,43 @@ export default function MobileData({ navigation }) {
                 >
                   <Text>{form.account || t('paymentAccount')}</Text>
                 </Button>
-              </View>
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  onPress={handleOpenConfirmSheet}
-                >
-                  <Text status="control">{t('proceed')}</Text>
-                </Button>
+              </View> */}
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="pin"
+                    label={t('transactionPin')}
+                    autoCompleteType="password"
+                    textContentType="password"
+                    keyboardType="numeric"
+                    maxLength={4}
+                    validate="password"
+                    secure
+                    value={form.pin}
+                    setFormValues={setFormValues}
+                    validate="required"
+                    // accessoryLeft={IconCNaira}
+                  />
+                </View>
+                <View style={{ paddingVertical: 20 }}>
+                  <Button
+                    status="danger"
+                    size="large"
+                    accessibilityLiveRegion="assertive"
+                    accessibilityComponentType="button"
+                    accessibilityLabel="Continue"
+                    onPress={handleOpenConfirmSheet}
+                  >
+                    <Text status="control">{t('proceed')}</Text>
+                  </Button>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-      <ProductSheet />
-      <AccountSheet />
-      <ConfirmSheet />
-    </Layout>
+        </ScrollView>
+        <ProductSheet />
+        {/* <AccountSheet /> */}
+        <ConfirmSheet />
+      </Layout>
+    </Root>
   );
 }

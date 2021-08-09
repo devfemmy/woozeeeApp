@@ -11,6 +11,10 @@ export const getToken = () => {
   return AsyncStorage.getItem('USER_AUTH_TOKEN');
 };
 
+export const getEmail = () => {
+  return AsyncStorage.getItem('email');
+};
+
 const createInstance = async () => {
   return axios.create({
     baseURL: `https://apis.woozeee.com/api/v1/`,

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, StyleSheet } from 'react-native';
+import { Animated, StyleSheet, Platform } from 'react-native';
 import ProgressBar from './ProgressBar';
 
 const ProgressArray = (props) => {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   progressBarArray: {
     flexDirection: 'row',
     position: 'absolute',
-    top: 30,
+    top: Platform.OS === 'android' ? 15 : 45,
     width: '98%',
     height: 10,
     justifyContent: 'space-between',
