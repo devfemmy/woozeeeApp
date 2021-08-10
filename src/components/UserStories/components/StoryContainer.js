@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modalbox';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import { LinearGradient } from 'expo-linear-gradient';
+
 import Story from './Story';
 import UserView from './UserView';
 import Readmore from './Readmore';
@@ -88,7 +90,10 @@ const StoryContainer = (props) => {
   const loading = () => {
     if (!isLoaded) {
       return (
-        <View style={styles.loading}>
+        <LinearGradient
+          colors={['#043F7C', '#FF5757']}
+          style={[styles.loading, { backgroundColor: 'red' }]}
+        >
           <View style={{ width: 1, height: 1 }}>
             <Story
               onImageLoaded={onImageLoaded}
@@ -98,7 +103,7 @@ const StoryContainer = (props) => {
             />
           </View>
           <ActivityIndicator color="white" />
-        </View>
+        </LinearGradient>
       );
     }
   };
@@ -192,7 +197,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'transparent',
-    marginTop: Platform.OS == 'android' ? 25 : 14,
   },
   progressBarArray: {
     flexDirection: 'row',
@@ -225,7 +229,7 @@ const styles = StyleSheet.create({
   },
   content: { width: '100%', height: '100%' },
   loading: {
-    backgroundColor: 'black',
+    // backgroundColor: '#FF5757',
     height: '100%',
     width: '100%',
     alignItems: 'center',

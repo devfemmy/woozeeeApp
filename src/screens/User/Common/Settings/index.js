@@ -75,7 +75,7 @@ export default function Settings({ navigation }) {
 
   const changeAppSettings = async (option) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const settingsError = await updateSettings({
         ...option,
       });
@@ -86,12 +86,9 @@ export default function Settings({ navigation }) {
     } catch (e) {
       setError(true);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
-
-  //reversed situation when switched
-  const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
   const handleSwitchTheme = async () => {
     await changeAppSettings({ darkMode: !darkMode });
@@ -268,12 +265,33 @@ export default function Settings({ navigation }) {
             </View>
           </TouchableOpacity>
           <Divider style={{ marginVertical: 10 }} />
+          <TouchableOpacity
+            onPress={() => navigation.navigate('GeneratePin')}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingVertical: 5,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <Text category="s2" style={{ marginLeft: 10 }}>
+                Generate Account Pin
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <Divider style={{ marginVertical: 10 }} />
           <View style={{ marginBottom: 10, marginTop: 20 }}>
             <Text status="primary" category="c2">
               {t('appSettings')}
             </Text>
           </View>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -292,7 +310,7 @@ export default function Settings({ navigation }) {
               </Text>
             </View>
             <Toggle checked={darkMode} onChange={handleSwitchTheme} />
-          </View>
+          </View> */}
           <Divider style={{ marginVertical: 10 }} />
           <View
             style={{

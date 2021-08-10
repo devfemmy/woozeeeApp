@@ -33,6 +33,7 @@ import Settings from 'src/screens/User/Common/Settings';
 import SettingsGlobal from 'src/screens/User/Common/SettingsGlobal';
 import EditProfile from 'src/screens/User/Common/EditProfile';
 import ChangePassword from 'src/screens/User/Common/ChangePassword';
+import GeneratePin from 'src/screens/User/Common/GeneratePin';
 import UploadEntries from 'src/screens/User/Common/VideoUpload/UploadEntries';
 import PreviewEntry from 'src/screens/User/Common/VideoUpload/PreviewEntry';
 
@@ -107,6 +108,7 @@ import SearchResults from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/M
 import AdditionalInfo from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/AdditionalInfo';
 import MoneyMattersConfirmation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/Confirmation';
 import FlutterPay from '../screens/Common/FlutterPay';
+import DataFlutterPay from '../screens/Common/DataFlutterPay';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -138,13 +140,14 @@ export default function Router() {
       });
       console.log('from else ', netInfo);
     } else {
-      Toast.show({
-        text: 'You are online',
-        // buttonText: ',
-        position: 'top',
-        type: 'success',
-        duration: 3000,
-      });
+      return;
+      // Toast.show({
+      //   text: 'You are online',
+      //   // buttonText: ',
+      //   position: 'top',
+      //   type: 'success',
+      //   duration: 3000,
+      // });
     }
   };
 
@@ -179,6 +182,7 @@ export default function Router() {
       CharityRoute,
       EditProfile,
       ChangePassword,
+      GeneratePin,
       Consultation,
       MoneyMattersServices,
       SearchResults,
@@ -223,8 +227,8 @@ export default function Router() {
       AppointmentDetails,
       InnerPages,
       DetailsPage,
-      FlutterPay
-    
+      FlutterPay,
+      DataFlutterPay,
     },
 
     Common: {
@@ -243,7 +247,7 @@ export default function Router() {
 
   const config = {
     screens: {
-      DeepLinkPost: 'entries/:_id',
+      DeepLinkPost: 'entry/:_id',
     },
   };
 

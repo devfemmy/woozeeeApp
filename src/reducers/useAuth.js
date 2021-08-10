@@ -24,6 +24,8 @@ import {
   initializeState,
 } from 'src/store/Authentication';
 
+import { getToken } from '../api/index';
+
 export default function useAuth() {
   const [authState, dispatch] = useReducer(
     reducer,
@@ -402,6 +404,25 @@ export default function useAuth() {
           },
           body: JSON.stringify(form),
         });
+        const result = await res.json();
+        return result;
+      },
+
+      verifyPin: async (pin) => {
+        const form = { pin };
+        // console.log(JSON.stringify(form));
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/user/verify-pin',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `${await getToken()}`,
+            },
+            body: JSON.stringify(form),
+          },
+        );
         const result = await res.json();
         return result;
       },

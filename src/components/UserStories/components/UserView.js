@@ -16,7 +16,7 @@ class UserView extends React.PureComponent {
         <Image source={{ uri: props.profile }} style={styles.image} />
         <View style={{ flex: 1 }}>
           <Text style={styles.name}>{props.name}</Text>
-          {/* <Text style={styles.time}>{props.details.createdAt}</Text> */}
+          {/* <Text style={styles.time}>Created at</Text> */}
         </View>
         <TouchableOpacity onPress={props.onClosePress}>
           <Icon
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   userView: {
     flexDirection: 'row',
     position: 'absolute',
-    top: 55,
+    top: Platform.OS === 'android' ? 35 : 65,
     width: '98%',
     alignItems: 'center',
   },

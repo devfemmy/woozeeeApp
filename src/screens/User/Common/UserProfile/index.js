@@ -38,6 +38,7 @@ import {
   IconBookmark,
   IconHeart,
   IconBackIos,
+  IconSettings,
 } from 'src/components/CustomIcons';
 
 import {
@@ -71,6 +72,8 @@ const ProfilePostsSavedArea = ({ userSavedData }) =>
 
 export default function UserProfile({ route, navigation }) {
   const { user } = route.params;
+
+  const routeSettings = () => navigation.navigate('Settings');
 
   const routeEditProfile = () => navigation.navigate('EditProfile');
 
@@ -214,6 +217,7 @@ export default function UserProfile({ route, navigation }) {
             resizeMode="cover"
           />
         </View>
+
         <View
           style={{
             position: 'absolute',
@@ -228,6 +232,22 @@ export default function UserProfile({ route, navigation }) {
             height={26}
             width={26}
             onPress={goBack}
+          />
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            zIndex: 5,
+            margin: 15,
+            right: 0,
+            top: 0,
+          }}
+        >
+          <InteractIcon
+            Accessory={(evaProps) => <IconSettings {...evaProps} />}
+            height={26}
+            width={26}
+            onPress={routeSettings}
           />
         </View>
         <View

@@ -123,7 +123,7 @@ const Stories = (props) => {
                 category="c2"
                 style={{ marginTop: 10, textAlign: 'center' }}
               >
-                {storyData[index].userFirstName.toLowerCase().capitalize()}
+                {storyData[index].userLastName.toLowerCase().capitalize()}
               </Text>
             </View>
           </TouchableOpacity>
