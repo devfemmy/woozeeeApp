@@ -77,7 +77,7 @@ const AllMovies = () => {
               </View> 
                 </View>
                 <View style= {styles.lowerContainer}>
-                    <MovieScroll
+                    {/* <MovieScroll
                         show
                         title = "Popular on woozeee"
                         img= {require('../../../../../assets/images/movies/movie2.png')}
@@ -106,7 +106,7 @@ const AllMovies = () => {
                         show
                         title = "Coming soon"
                         img= {require('../../../../../assets/images/movies/movie3.png')}
-                        />
+                        /> */}
                         <MovieScroll
                         show
                         title = "Because you watched My name is Tayo"

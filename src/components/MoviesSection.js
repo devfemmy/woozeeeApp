@@ -111,7 +111,7 @@ const MoviesSectionArea = (props) => {
           renderItem={(renderData) => (
             <MovieSectionCard
               pressed={() =>
-                navigation.navigate('ViewMovies', { movie_data: renderData })
+                navigation.navigate('ViewMovies', { movie_data: renderData, signal: false })
               }
               data={renderData.item}
               extraWidth={0.5}
