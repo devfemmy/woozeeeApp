@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Image, View, ActivityIndicator } from 'react-native';
-import { Text } from '@ui-kitten/components';
+import { Text, Layout } from '@ui-kitten/components';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -14,6 +14,12 @@ const MovieScroll = (props) => {
     const [popularArray, setPopularArray] = useState([]);
     const [comingSoon, setComingSoon] = useState(null);
     const [comingSoonData, setComingSoonData] = useState([]);
+    const [recommended, setRecommended] = useState(null);
+    const [recommendedData, setRecommendedData] = useState([]);
+    const [myList, setList] = useState(null);
+    const [myListData, setMyListData] = useState([]);
+    const [prevList, setPrevList] = useState(null);
+    const [prevListData, setPrevListData] = useState([]);
 
     const navigation = useNavigation();
 
@@ -89,11 +95,87 @@ const MovieScroll = (props) => {
             console.log(err);
           });
       };
+      const getRecommended = () => {
+        setLoading(true);
+        AsyncStorage.getItem('USER_AUTH_TOKEN')
+          .then((res) => {
+            axios
+              .get(`movies/groupings/recommended`, {
+                headers: { Authorization: res },
+              })
+              .then((response) => {
+                setLoading(false);
+                const recommended = response.data.message;
+                const data = response.data.data;
+                setRecommended(recommended);
+                setRecommendedData(data)
+              })
+              .catch((err) => {
+                setLoading(false);
+                console.log(err.response);
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+      const getPrevViewed = () => {
+        setLoading(true);
+        AsyncStorage.getItem('USER_AUTH_TOKEN')
+          .then((res) => {
+            axios
+              .get(`movies/groupings/viewed`, {
+                headers: { Authorization: res },
+              })
+              .then((response) => {
+                setLoading(false);
+                const prevViewd = response.data.message;
+                const data = response.data.data;
+                setPrevList(prevViewd);
+                setPrevListData(data)
+              })
+              .catch((err) => {
+                setLoading(false);
+                console.log(err.response);
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+      
+      const getMyList = () => {
+        setLoading(true);
+        AsyncStorage.getItem('USER_AUTH_TOKEN')
+          .then((res) => {
+            axios
+              .get(`movies/groupings/mylist`, {
+                headers: { Authorization: res },
+              })
+              .then((response) => {
+                setLoading(false);
+                const myList = response.data.message;
+                const data = response.data.data;
+                setList(myList);
+                setMyListData(data)
+              })
+              .catch((err) => {
+                setLoading(false);
+                console.log(err.response);
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
 
       useEffect(() => {
         getPopularMovies();
         getTopTenMovies();
         getComingSoon();
+        getRecommended();
+        getMyList();
+        getPrevViewed()
 
       }, []);
       if (loading) {
@@ -104,11 +186,11 @@ const MovieScroll = (props) => {
         );
       }
     return (
-        <>
-                <View style= {{marginVertical: 10}}>
+        <View>
+          <View style= {{marginVertical: 10}}>
             {props.show ? 
             <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
-               {"Top Ten in woozeee"}
+               {topTen}
              </Text>  : null     
         }
 
@@ -120,7 +202,7 @@ const MovieScroll = (props) => {
                           key= {index}>
                             <Image 
                             defaultSource={require('../assets/images/movies/movie_placeholder.png')}
-                            style= {{width: 130, height: 150, resizeMode: 'contain'}} 
+                            style= {{width: 100, height: 140, resizeMode: 'contain', marginRight: 5}} 
                             source= {{uri: data.posterURL[0]}} />
                         </TouchableOpacity>
                         )
@@ -158,6 +240,60 @@ const MovieScroll = (props) => {
         <View style= {{marginVertical: 10}}>
             {props.show ? 
             <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
+               {recommended}
+             </Text>  : null     
+        }
+            {recommendedData.length === 0 ? 
+        <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
+        <ScrollView horizontal>
+        {recommendedData.map(
+            (data, index) => {
+                return(
+                <TouchableOpacity onPress= {() =>
+                    navigation.navigate('ViewMovies', { movie_data: data })
+                  } key= {index}>
+                    <Image 
+                    defaultSource={require('../assets/images/movies/movie_placeholder.png')}
+                    style= {{width: 130, height: 150, resizeMode: 'contain'}} 
+                    source= {{uri: data.posterURL[0]}} />
+                </TouchableOpacity>
+                )
+            }
+        )}
+      </ScrollView>    
+        
+        }
+        </View>
+        <View style= {{marginVertical: 10}}>
+            {props.show ? 
+            <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
+               {myList}
+             </Text>  : null     
+        }
+            {myListData.length === 0 ? 
+        <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
+        <ScrollView horizontal>
+        {myListData.map(
+            (data, index) => {
+                return(
+                <TouchableOpacity onPress= {() =>
+                    navigation.navigate('ViewMovies', { movie_data: data })
+                  } key= {index}>
+                    <Image 
+                    defaultSource={require('../assets/images/movies/movie_placeholder.png')}
+                    style= {{width: 130, height: 150, resizeMode: 'contain'}} 
+                    source= {{uri: data.posterURL[0]}} />
+                </TouchableOpacity>
+                )
+            }
+        )}
+      </ScrollView>    
+        
+        }
+        </View>
+        <View style= {{marginVertical: 10}}>
+            {props.show ? 
+            <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {comingSoon}
              </Text>  : null     
         }
@@ -177,11 +313,38 @@ const MovieScroll = (props) => {
                 )
             }
         )}
-    </ScrollView>    
+      </ScrollView>    
         
         }
         </View>
-        </>
+        <View style= {{marginVertical: 10}}>
+            {props.show ? 
+            <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
+               {prevList}
+             </Text>  : null     
+        }
+            {prevListData.length === 0 ? 
+        <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
+        <ScrollView horizontal>
+        {prevListData.map(
+            (data, index) => {
+                return(
+                <TouchableOpacity onPress= {() =>
+                    navigation.navigate('ViewMovies', { movie_data: data })
+                  } key= {index}>
+                    <Image 
+                    defaultSource={require('../assets/images/movies/movie_placeholder.png')}
+                    style= {{width: 130, height: 150, resizeMode: 'contain'}} 
+                    source= {{uri: data.posterURL[0]}} />
+                </TouchableOpacity>
+                )
+            }
+        )}
+      </ScrollView>    
+        
+        }
+        </View>
+        </View>
     )
 }
 

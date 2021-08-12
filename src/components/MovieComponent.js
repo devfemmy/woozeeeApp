@@ -31,7 +31,7 @@ const MovieComponent = (props) => {
             color: '#809DBE'
         },
         lowerContainer: {
-            width: wp('58%'),
+            width: wp(55),
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -78,7 +78,7 @@ const MovieComponent = (props) => {
                 </Text>
             </View>
         </View>
-        <View style= {styles.lowerContainer}>
+        {/* <View style= {styles.lowerContainer}>
             <View style= {styles.banner}>
                 <Text style = {styles.topText} category= "p2">
                     TOP
@@ -90,7 +90,7 @@ const MovieComponent = (props) => {
             <Text style= {styles.trend} category= "h4">
             {props.trend} in woozeee today
             </Text>
-        </View>
+        </View> */}
     </>
     )
 }

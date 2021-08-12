@@ -4,8 +4,12 @@ import { Layout, List, Text } from '@ui-kitten/components';
 import { TextIcon } from 'src/components/IconPacks/TextIcon';
 import MovieScroll from 'src/components/MovieScroll';
 import { ScrollView } from 'react-native-gesture-handler';
+import TopNavigationArea from 'src/components/TopNavigationArea/index';
 
-const MyMovies = () => {
+// Some test
+
+const OtherCategories = (props) => {
+    const {name, category_id} = props.route.params;
     const styles = StyleSheet.create({
         imageCon: {
             paddingVertical: 15
@@ -28,11 +32,16 @@ const MyMovies = () => {
     })
     return (
         <Layout level="6" style={{ flex: 1 }}>
+            <TopNavigationArea
+                title={name}
+                navigation={props.navigation}
+                screen="auth"
+            />
             <ScrollView>
                 <View style= {styles.imageCon}>
                     <Image 
                     style= {{width: '100%'}}
-                    source= {require('../../../../../assets/images/movies/movie4.png')} />
+                    source= {require('../../../../../assets/images/movies/movie5.png')} />
                 </View>
                 <View style= {styles.description}>
                     <Text category= "h4" style= {{color: '#0959AB'}}>
@@ -62,24 +71,24 @@ const MyMovies = () => {
                     
                 </View>
                 <View style= {{paddingHorizontal: 20, paddingVertical: 5}}>
-                    <TextIcon 
-                        // width= "88%"
-                        bg= "#FF5757"
-                        color= "white" fill= "white" 
-                        text= "Purchase" 
-                        icon_name= "play-circle-outline" /> 
-                    <View style= {{marginVertical: 5, alignItems: 'center'}}>
-                    <Text>
-                    Cast: Sir Dee, Seyi Awolowo, Avala
-                    </Text>
-                    <Text>
-                    Director: Stephanie Dadet
-                    </Text>
-                </View> 
+                <TextIcon 
+                    // width= "88%"
+                    bg= "#FF5757"
+                    color= "white" fill= "white" 
+                    text= "Purchase" 
+                    icon_name= "shopping-cart-outline" /> 
+                <View style= {{marginVertical: 5, alignItems: 'center'}}>
+                <Text>
+                Cast: Sir Dee, Seyi Awolowo, Avala
+                </Text>
+                <Text>
+                Director: Stephanie Dadet
+                </Text>
+              </View> 
                 </View>
                 <View style= {styles.lowerContainer}>
-                    <MovieScroll
-                        show
+                <MovieScroll
+                show
                         />
                 </View>
             </ScrollView>
@@ -88,4 +97,4 @@ const MyMovies = () => {
     )
 }
 
-export default MyMovies
+export default OtherCategories

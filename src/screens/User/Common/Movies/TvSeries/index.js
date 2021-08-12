@@ -80,40 +80,8 @@ const TvSeries = () => {
               </View> 
                 </View>
                 <View style= {styles.lowerContainer}>
-                    <MovieScroll
-                        show
-                        title = "Popular on woozeee"
-                        img= {require('../../../../../assets/images/movies/movie2.png')}
-                        />
-                        <MovieScroll
-                        show
-                        title = "Continue Watching"
-                        img= {require('../../../../../assets/images/movies/movie3.png')}
-                        />
-                        <MovieScroll
-                        show
-                        title = "Top 10 in woozeee today"
-                        img= {require('../../../../../assets/images/movies/movie2.png')}
-                        />
-                        <MovieScroll
-                        show
-                        title = "Trending Now"
-                        img= {require('../../../../../assets/images/movies/movie3.png')}
-                        />
-                        <MovieScroll
-                        show
-                        title = "My list"
-                        img= {require('../../../../../assets/images/movies/movie2.png')}
-                        />
-                        <MovieScroll
-                        show
-                        title = "Coming soon"
-                        img= {require('../../../../../assets/images/movies/movie3.png')}
-                        />
-                        <MovieScroll
-                        show
-                        title = "Because you watched My name is Tayo"
-                        img= {require('../../../../../assets/images/movies/movie2.png')}
+                <MovieScroll
+                show
                         />
                 </View>
             </ScrollView>

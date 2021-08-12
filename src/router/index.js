@@ -109,6 +109,7 @@ import AdditionalInfo from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/
 import MoneyMattersConfirmation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/Confirmation';
 import FlutterPay from '../screens/Common/FlutterPay';
 import DataFlutterPay from '../screens/Common/DataFlutterPay';
+import OtherCategories from 'src/screens/User/Common/Movies/OtherCategories/index';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -195,6 +196,7 @@ export default function Router() {
       SettingsGlobal,
       Movies,
       ViewMovies,
+      OtherCategories,
       MoviePage,
       MoreOptions,
       PreviouslyViewed,
