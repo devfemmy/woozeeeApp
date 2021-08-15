@@ -123,9 +123,9 @@ const MyList = (props) => {
         navigation={props.navigation}
         screen="auth"
             />
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Layout level= "6" style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
            <ActivityIndicator  size="large" color="#FF5757" />
-          </View>
+          </Layout>
         </>
         );
       }

@@ -28,7 +28,7 @@ const MovieScroll = (props) => {
         AsyncStorage.getItem('USER_AUTH_TOKEN')
           .then((res) => {
             axios
-              .get(`movies/groupings/topten`, {
+              .get(`movies/groupings/topten?categoryId=${props.category_id}`, {
                 headers: { Authorization: res },
               })
               .then((response) => {
@@ -52,7 +52,7 @@ const MovieScroll = (props) => {
         AsyncStorage.getItem('USER_AUTH_TOKEN')
           .then((res) => {
             axios
-              .get(`movies/groupings/popular`, {
+              .get(`movies/groupings/popular?categoryId=${props.category_id}`, {
                 headers: { Authorization: res },
               })
               .then((response) => {
@@ -76,7 +76,7 @@ const MovieScroll = (props) => {
         AsyncStorage.getItem('USER_AUTH_TOKEN')
           .then((res) => {
             axios
-              .get(`movies/groupings/soon`, {
+              .get(`movies/groupings/soon?categoryId=${props.category_id}`, {
                 headers: { Authorization: res },
               })
               .then((response) => {
@@ -100,7 +100,7 @@ const MovieScroll = (props) => {
         AsyncStorage.getItem('USER_AUTH_TOKEN')
           .then((res) => {
             axios
-              .get(`movies/groupings/recommended`, {
+              .get(`movies/groupings/recommended?categoryId=${props.category_id}`, {
                 headers: { Authorization: res },
               })
               .then((response) => {
@@ -124,7 +124,7 @@ const MovieScroll = (props) => {
         AsyncStorage.getItem('USER_AUTH_TOKEN')
           .then((res) => {
             axios
-              .get(`movies/groupings/viewed`, {
+              .get(`movies/groupings/viewed?categoryId=${props.category_id}`, {
                 headers: { Authorization: res },
               })
               .then((response) => {

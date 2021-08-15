@@ -24,7 +24,7 @@ const MyCategories = (props) => {
       AsyncStorage.getItem('USER_AUTH_TOKEN')
         .then((res) => {
           axios
-            .get(`/movies/categories`, {
+            .get(`/movies/categories?pageSize=40&pageNumber=1`, {
               headers: { Authorization: res },
             })
             .then((response) => {
@@ -67,7 +67,8 @@ const MyCategories = (props) => {
           },
           scroll: {
             paddingVertical: 20,
-            marginVertical: 5
+            marginVertical: 5,
+            paddingBottom: 50
           },
           textStyle: {
             color: 'white',

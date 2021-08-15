@@ -4,6 +4,7 @@ import { Layout} from '@ui-kitten/components';
 import MovieScroll from 'src/components/MovieScroll';
 import { ScrollView } from 'react-native-gesture-handler';
 import MovieDescription from 'src/components/MovieDescription';
+import FeaturedMovie from 'src/components/FeaturedMovie';
 
 const AllMovies = () => {
     const styles = StyleSheet.create({
@@ -30,9 +31,7 @@ const AllMovies = () => {
         <Layout level="6" style={{ flex: 1 }}>
             <ScrollView>
                 <View style= {styles.imageCon}>
-                    <Image 
-                    style= {{width: '100%'}}
-                    source= {require('../../../../../assets/images/movies/movie1.png')} />
+                    <FeaturedMovie />
                 </View>
                 <MovieDescription 
                 price = "$1.00"

@@ -21,7 +21,7 @@ const MoreOptions = ({navigation}) => {
             more
             bold= "bold"
             bg= "transparent"
-            color= "#494949" fill= "#494949" 
+            color= "grey" fill= "grey" 
             text= "Previously Viewed" 
             icon_name= "tv-outline" />
         <TextIcon 
@@ -31,7 +31,7 @@ const MoreOptions = ({navigation}) => {
             start
             more
             bg= "transparent"
-            color= "#494949" fill= "#494949" 
+            color= "grey" fill= "grey" 
             text= "My List" 
             icon_name= "checkmark-outline" />
         <TextIcon 
@@ -41,7 +41,7 @@ const MoreOptions = ({navigation}) => {
             start
             more
             bg= "transparent"
-            color= "#494949" fill= "#494949" 
+            color= "grey" fill= "grey" 
             text= "Coming Soon" 
             icon_name= "film-outline" />
         {/* <TextIcon 
@@ -50,7 +50,7 @@ const MoreOptions = ({navigation}) => {
             start
             more
             bg= "transparent"
-            color= "#494949" fill= "#494949" 
+            color= "grey" fill= "grey" 
             text= "Woozeee Care" 
             icon_name= "shield-outline" />
 
@@ -60,7 +60,7 @@ const MoreOptions = ({navigation}) => {
             start
             more
             bg= "transparent"
-            color= "#494949" fill= "#494949" 
+            color= "grey" fill= "grey" 
             text= "Help" 
             icon_name= "question-mark-circle-outline" /> */}
 
