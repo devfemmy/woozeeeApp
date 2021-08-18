@@ -1,4 +1,4 @@
-import React, {useRef, useContext, useState} from 'react';
+import React, {useRef, useContext, useState, useEffect} from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import {widthPercentageToDP as wp, 
     heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -8,46 +8,57 @@ import MovieComponent from './MovieComponent';
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from '../services/api/index'
 
 
 const MovieDescription = (props) => {
   const sheetRef = useRef(null);
-  const [inlist, setInList] = useState(false);
+  const [inlist, setInList] = useState(true);
+  const [token, setToken] = useState(null)
 
   const handleOpenSheet = () => sheetRef.current.open();
   const { appState } = useContext(AppSettingsContext);
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
-  console.log("movie data", props.data);
-  const movie_data = props.data;
+  let movie_data;
+  if (props.featured) {
+    movie_data = null
+  } else {
+    movie_data = props.data
+  }
 
-    const styles = StyleSheet.create({
-        container: {
-            padding: 10,
-            paddingTop: 0
-          },
-          textStyle: {
-            fontSize: 20,
-            fontWeight: '700'
-          },
-          actions: {
-            width: wp('70%'),
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          },
-          textAlign: {
-            textAlign: 'center'
-          },
-          ratingContainer: {
-            // backgroundColor: 'red',
-            height: 150,
-            paddingBottom: 50,
-            paddingHorizontal: 10
-          }
-    });
-    const  ratingCompleted = (rating) => {
-      // setRatings(rating)
-    }
+  const addToMyList = () => {
+    setInList(false);
+    upDateMyList()
+  }
+  const removeFromMyList = () => {
+    setInList(true);
+    upDateMyList()
+  }
+
+  const upDateMyList = () => {
+    const data = {
+      movieId: '6052fcc59c7243434c6939e0',
+      inList: inlist
+    };
+    axios
+      .post(`movie-data`, data, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        console.log(res, "response")
+      })
+      .catch((err) => {
+        console.log("err", err.response)
+      });
+  };
+  useEffect(() => {
+      AsyncStorage.getItem('USER_AUTH_TOKEN')
+        .then((res) => {
+          setToken(res);
+        })
+        .catch((err) => err);
+  }, []);
     return (
         <Layout level= "6" style= {styles.container}>
             <Text category='h1' style= {styles.textStyle}>
@@ -55,8 +66,8 @@ const MovieDescription = (props) => {
                 {/* {movie_data.title} */}
             </Text>  
             <MovieComponent
-                data = {props.data}
-                label= {props.label}
+                data = {movie_data}
+                label= {"New"}
                 year= {props.year}
                 rating= "13+"
                 duration= "1hr 44min"
@@ -103,11 +114,25 @@ const MovieDescription = (props) => {
                 </Text>
               </View>
               <View style= {styles.actions}>
+                {!inlist ? 
                 <TextIcon 
+                onPress = {removeFromMyList}
                 bg= "transparent"
                 color= "grey" fill= "grey" 
                 text= "My List" 
-                icon_name= "checkmark-outline" />
+                icon_name= {"checkmark-outline"}
+                
+                />  
+                : 
+                <TextIcon 
+                onPress = {addToMyList}
+                bg= "transparent"
+                color= "grey" fill= "grey" 
+                text= "My List" 
+                icon_name= {"plus-outline" }
+                
+                />      
+              }
                 {/* <TextIcon 
                 onPress= {handleOpenSheet}
                 bg= "transparent"
@@ -151,6 +176,30 @@ const MovieDescription = (props) => {
         </Layout>
     )
 }
-
+const styles = StyleSheet.create({
+  container: {
+      padding: 10,
+      paddingTop: 0
+    },
+    textStyle: {
+      fontSize: 20,
+      fontWeight: '700'
+    },
+    actions: {
+      width: wp('70%'),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    },
+    textAlign: {
+      textAlign: 'center'
+    },
+    ratingContainer: {
+      // backgroundColor: 'red',
+      height: 150,
+      paddingBottom: 50,
+      paddingHorizontal: 10
+    }
+});
 
 export default MovieDescription

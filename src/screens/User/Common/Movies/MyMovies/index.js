@@ -34,14 +34,15 @@ const MyMovies = () => {
                 <View style= {styles.imageCon}>
                 <FeaturedMovie />
                 </View>
-                <MovieDescription
+                {/* <MovieDescription
                 title = "Movies" 
                 label= "New"
                 price = "$1.00"
                 description = "After applying for 200 job application, he decided to go for something different . But things don’t go as smoothly as planned."
-                paid />
+                paid /> */}
                 <View style= {styles.lowerContainer}>
                     <MovieScroll
+                        category_id = ""
                         show
                         />
                 </View>

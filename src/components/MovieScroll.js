@@ -33,6 +33,7 @@ const MovieScroll = (props) => {
               })
               .then((response) => {
                 setLoading(false);
+                console.log("response", response)
                 const topTen = response.data.message;
                 const data = response.data.data;
                 setTopTen(topTen);
@@ -193,7 +194,8 @@ const MovieScroll = (props) => {
                {topTen}
              </Text>  : null     
         }
-
+            {TopTenArr.length === 0 ? 
+            <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
             <ScrollView horizontal>
                 {TopTenArr.map(
                     (data, index) => {
@@ -209,6 +211,7 @@ const MovieScroll = (props) => {
                     }
                 )}
             </ScrollView>
+            }     
         </View>
         <View style= {{marginVertical: 10}}>
             {props.show ? 

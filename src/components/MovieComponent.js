@@ -58,9 +58,9 @@ const MovieComponent = (props) => {
     return(
         <>
         <View style= {styles.container}>
-            {/* <Text category='label' style= {styles.newLabel}>
+            <Text category='label' style= {styles.newLabel}>
                {props.label}
-            </Text> */}
+            </Text>
             <Text category= "p1">
                {props.year}
             </Text>

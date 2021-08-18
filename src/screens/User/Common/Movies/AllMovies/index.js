@@ -31,14 +31,15 @@ const AllMovies = () => {
         <Layout level="6" style={{ flex: 1 }}>
             <ScrollView>
                 <View style= {styles.imageCon}>
-                    <FeaturedMovie />
+                    <FeaturedMovie  />
                 </View>
-                <MovieDescription 
+                {/* <MovieDescription 
                 price = "$1.00"
                 description = "After applying for 200 job application, he decided to go for something different . But things don’t go as smoothly as planned."
-                paid />
+                paid /> */}
                 <View style= {{paddingHorizontal: 10}}>
                     <MovieScroll
+                    category_id = ""
                     show
                     />
                 </View>
