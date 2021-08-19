@@ -66,6 +66,7 @@
     "react-native-bambuser-player": "^0.0.20",
     "react-native-easy-toast": "^2.0.0",
     "react-native-elements": "^3.4.1",
+    "react-native-fast-image": "^8.3.7",
     "react-native-fbsdk": "^3.0.0",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-hyperlink": "^0.0.19",

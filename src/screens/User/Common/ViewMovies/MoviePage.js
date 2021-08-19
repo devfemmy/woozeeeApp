@@ -4,19 +4,43 @@ import { Dimensions, StyleSheet, Platform, View } from 'react-native';
 import { Layout, List, Text } from '@ui-kitten/components';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import Orientation from "react-native-orientation";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from '../../../../services/api/index'
 // import {  } from 'react-native';
 
 
 const MoviePage = ({navigation, route}) => {
   const {item} = route.params;
   const [videoPlayer, setVideoPlayer] = useState(null);
+  const [token, setToken] = useState(null)
 
+  const upDateMovieList = () => {
+    const data = {
+      movieId: item?._id,
+      status: 'viewed'
+    };
+    axios.post(`movie-data`, data, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        console.log(res, "response")
+      })
+      .catch((err) => {
+        console.log("err", err.response)
+      });
+  };
   const onReadyForDisplay = () => {
-  // setTimeout(() => videoPlayer.presentFullscreenPlayer(), 1000)
-  
-  }
+    // setTimeout(() => videoPlayer.presentFullscreenPlayer(), 1000)
+    upDateMovieList()
+    }
 
   useEffect(() => {
+    AsyncStorage.getItem('USER_AUTH_TOKEN')
+    .then((res) => {
+      setToken(res);
+      // setInList(props.inList)
+    })
+    .catch((err) => err);
     if (Platform.OS === 'android') {
       const subscribe = navigation.addListener('focus', () => {
         Orientation.lockToLandscape()
@@ -51,8 +75,8 @@ const MoviePage = ({navigation, route}) => {
                   // fullscreen= {true}
                   onReadyForDisplay = {onReadyForDisplay}
                   // fullscreenOrientation= "landscape"
-                  source={{uri: item.mediaURL}}
-                  // source= {{uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}}
+                  // source={{uri: item.mediaURL}}
+                  source= {{uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}}
                 ref={(ref) => {
                   setVideoPlayer(ref)
                 }}                                      // Store reference

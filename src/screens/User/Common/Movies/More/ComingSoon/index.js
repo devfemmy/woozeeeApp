@@ -5,6 +5,8 @@ import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../../../../../services/api/index';
+import FastImage from 'react-native-fast-image'
+
 const ComingSoon = (props) => {
     const [comingSoonData, setComingSoonData] = useState([]);
     const [loading, setLoading] = useState(false)
@@ -20,7 +22,8 @@ const ComingSoon = (props) => {
               .then((response) => {
                 setLoading(false);
                 const data = response.data.data;
-                setComingSoonData(data)
+                setComingSoonData(data);
+                console.log("coming soon", data)
               })
               .catch((err) => {
                 setLoading(false);
@@ -32,39 +35,12 @@ const ComingSoon = (props) => {
           });
       };
     useEffect(() => {
+      const unsubscribe = props.navigation.addListener('focus', () => {
         getComingSoon()
-    }, [])
-    const banner = [
-        {
-            id: 1,
-            image: require('../../../../../../assets/images/movies/soon1.png'),
-            type: 'New Arrival',
-            title: 'Oloture',
-            release: '5 days ago'
-        },
-        {
-            id: 2,
-            image: require('../../../../../../assets/images/movies/soon2.png'),
-            type: 'New Arrival',
-            title: 'Omo Ghetto',
-            release: '5 days ago'
-        },
-        {
-            id: 3,
-            image: require('../../../../../../assets/images/movies/soon3.png'),
-            type: 'New Arrival',
-            title: 'Sugar Rush',
-            release: '5 days ago'
-        },
-        {
-            id: 4,
-            image: require('../../../../../../assets/images/movies/soon4.png'),
-            type: 'New Arrival',
-            title: 'King of Boys',
-            release: '5 days ago'
-        },
+        });
+      return unsubscribe;
+    }, [props.navigation]);
 
-    ]
     if (loading) {
         return (
         <>
@@ -91,14 +67,21 @@ const ComingSoon = (props) => {
         <Text>No Coming Soon Data</Text>
     </View>  : 
       <ScrollView>
-      {banner.map(
+      {comingSoonData.map(
           item => {
             return (
                 <View style= {styles.flexCont}>
-                    <Image style= {styles.image} source= {item.image} />
+                    <FastImage
+                      style={styles.image}
+                      source={{
+                      uri: item.landscapePosterURL[0],
+                      priority: FastImage.priority.normal,
+                      }}
+                                    // resizeMode={FastImage.resizeMode.contain}
+                                />
                     <View style= {{width: '60%'}}>
                         <Text>
-                            {item.type}
+                            {"New Arrival"}
                         </Text>
                         <Text category= "h5">
                             {item.title}
@@ -128,7 +111,9 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(148, 148, 149, 0.3)'
     },
     image: {
-        resizeMode: 'contain'
+        resizeMode: 'cover',
+        width: 100,
+        height:80
     }
 })
 export default ComingSoon;

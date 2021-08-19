@@ -4,12 +4,13 @@ import { Video } from 'expo-av';
 import MovieDescription from './MovieDescription';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../services/api/index';
+import { useNavigation } from '@react-navigation/native';
 
 const FeaturedMovie = (props) => {
     const handleVideoRef = React.useRef(null);
     const [loading, setLoading] = useState(false);
     const [movieData, setMovieData] = useState([]);
-
+    const navigation = useNavigation();
     const videoUri = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
 
     const shuffleArray = (a) => {
@@ -21,19 +22,23 @@ const FeaturedMovie = (props) => {
   }
 
     const getFeaturedMovies = () => {
+      console.log("category id", props.category_id)
       setLoading(true);
       AsyncStorage.getItem('USER_AUTH_TOKEN')
         .then((res) => {
-          axios
-            .get(`movies/groupings/featured?categoryId=${props.category_id}`, {
+          if (props.category_id === '') {
+            axios
+            .get(`movies/groupings/featured?movieType=${props.movieType}`, {
               headers: { Authorization: res },
             })
             .then((response) => {
               setLoading(false);
-              // const movieDataArr = response.data.data;
-              const movieDataArr = [1,2, 3,4]
+              const movieDataArr = response.data.data;
+              // const movieDataArr = [1,2, 3,4]
               const shuffledArr = shuffleArray(movieDataArr);
-              console.log(shuffledArr, "shuffled Arr")
+              const firstIndexArr = shuffledArr[0];
+              console.log(firstIndexArr, "shuffled Arr");
+              setMovieData(firstIndexArr)
               // setMovieData(movieDataArr)
 
               console.log(response)
@@ -42,6 +47,49 @@ const FeaturedMovie = (props) => {
               setLoading(false);
               console.log(err.response);
             });
+          }else if (props.category_id === 'all') {
+            axios
+            .get(`movies/groupings/featured`, {
+              headers: { Authorization: res },
+            })
+            .then((response) => {
+              setLoading(false);
+              const movieDataArr = response.data.data;
+              // const movieDataArr = [1,2, 3,4]
+              const shuffledArr = shuffleArray(movieDataArr);
+              const firstIndexArr = shuffledArr[0];
+              console.log(firstIndexArr, "shuffled Arr");
+              setMovieData(firstIndexArr)
+              // setMovieData(movieDataArr)
+
+              console.log(response)
+            })
+            .catch((err) => {
+              setLoading(false);
+              console.log(err.response);
+            });
+          }else {
+            axios
+            .get(`movies/groupings/featured?categoryId=${props.category_id}`, {
+              headers: { Authorization: res },
+            })
+            .then((response) => {
+              setLoading(false);
+              const movieDataArr = response.data.data;
+              // const movieDataArr = [1,2, 3,4]
+              const shuffledArr = shuffleArray(movieDataArr);
+              const firstIndexArr = shuffledArr[0];
+              console.log(firstIndexArr, "shuffled Arr");
+              setMovieData(firstIndexArr)
+              // setMovieData(movieDataArr)
+
+              console.log(response)
+            })
+            .catch((err) => {
+              setLoading(false);
+              console.log(err.response);
+            });
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -64,6 +112,7 @@ const FeaturedMovie = (props) => {
               ref={handleVideoRef}
               isLooping
               isMuted
+              // source = {{uri: movieData.landscapePreviewURL}}
               source = {{uri: videoUri}}
               shouldPlay
               resizeMode="cover"
@@ -88,10 +137,12 @@ const FeaturedMovie = (props) => {
             <VideoPreview />
             {props.active ? 
             null: 
-            <MovieDescription 
+            <MovieDescription
+            onPress= {() => navigation.navigate('FlutterPay', {data:movieData})} 
+            inList= {movieData?.movieData?.inList} 
             featured = {movieData}
-            price = "$1.00"
-            description = "After applying for 200 job application, he decided to go for something different . But things don’t go as smoothly as planned."
+            price = {`$${movieData?.price}`}
+            description = {movieData?.description}
             paid />     
           }
         </View>

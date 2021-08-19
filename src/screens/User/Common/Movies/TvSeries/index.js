@@ -34,7 +34,9 @@ const TvSeries = () => {
         <Layout level="6" style={{ flex: 1 }}>
             <ScrollView>
                 <View style= {styles.imageCon}>
-                    <FeaturedMovie />
+                    <FeaturedMovie 
+                    movieType = "series"
+                    category_id= {""} />
                 </View>
                 {/* <MovieDescription
                 title = "TV Series" 

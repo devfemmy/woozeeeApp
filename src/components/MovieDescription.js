@@ -21,12 +21,28 @@ const MovieDescription = (props) => {
   const { appState } = useContext(AppSettingsContext);
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
   let movie_data;
+  let duration;
+  // console.log("inlist", props.inList)
+  function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hour " : " hours ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " min " : " mins ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " sec" : " sec") : "";
+    return hDisplay + mDisplay + sDisplay; 
+}
   if (props.featured) {
-    movie_data = null
+    movie_data = props.featured
+    // duration = new Date(props.featured?.duration * 1000).toISOString().substr(11, 5);
+    duration = secondsToHms(props.featured?.duration)
   } else {
     movie_data = props.data
+    // duration = new Date(props.data?.duration * 1000).toISOString().substr(11, 5);
+    duration = secondsToHms(props.data?.duration)
   }
-
   const addToMyList = () => {
     setInList(false);
     upDateMyList()
@@ -38,7 +54,7 @@ const MovieDescription = (props) => {
 
   const upDateMyList = () => {
     const data = {
-      movieId: '6052fcc59c7243434c6939e0',
+      movieId: movie_data?._id,
       inList: inlist
     };
     axios
@@ -56,31 +72,34 @@ const MovieDescription = (props) => {
       AsyncStorage.getItem('USER_AUTH_TOKEN')
         .then((res) => {
           setToken(res);
+          // setInList(props.inList)
         })
         .catch((err) => err);
   }, []);
     return (
         <Layout level= "6" style= {styles.container}>
             <Text category='h1' style= {styles.textStyle}>
-                   {props.title}
-                {/* {movie_data.title} */}
+                   {/* {props.title} */}
+                {movie_data?.title}
             </Text>  
             <MovieComponent
-                data = {movie_data}
+                // data = {movie_data}
                 label= {"New"}
-                year= {props.year}
-                rating= "13+"
-                duration= "1hr 44min"
+                year= {movie_data?.year}
+                rating= "18+"
+                duration={duration}
+                // duration= {new Date(movie_data?.duration * 1000).toISOString().substr(11, 8)}
                 quality= "HD"
                 toplist= "10"
                 trend= "#1"/>
 
             <Text category= "h4">
-                {props.price}
+                {props.price === '$undefined' ? null : props.price}
             </Text>
             <View>
             {props.paid ? 
                 <TextIcon 
+                onPress= {props.onPress}
                 bg= "#FF5757"
                 color= "white" fill= "white" 
                 text= "Purchase" 
@@ -107,11 +126,11 @@ const MovieDescription = (props) => {
                     {props.description}
                 </Text>
                 <Text numberOfLines= {1}>
-                {`Casts: ${props.casts}`}
+                {`Casts: `}
                 </Text>
-                <Text numberOfLines= {1}>
+                {/* <Text numberOfLines= {1}>
                 Director: {props.director}
-                </Text>
+                </Text> */}
               </View>
               <View style= {styles.actions}>
                 {!inlist ? 
@@ -164,11 +183,14 @@ const MovieDescription = (props) => {
               <View style= {styles.ratingContainer}>
                 <View>
                   <Text style= {styles.textAlign} category= "h5">
-                    {/* {movie_data.title} */}
+                    {movie_data?.title}
                   </Text>
                   <Text style= {styles.textAlign}>
-                      {/* {movie_data.description} */}
+                      {movie_data?.description}
                   </Text>
+                  {/* <Text>
+                    casts: {movie_data.casts[0]}
+                  </Text> */}
                 </View>
               </View>
             </RBSheet>

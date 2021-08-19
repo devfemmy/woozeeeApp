@@ -5,6 +5,7 @@ import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../../../../../services/api/index';
+import FastImage from 'react-native-fast-image';
 
 const PreviouslyViewed = (props) => {
     const [prevList, setPrevList] = useState(null);
@@ -36,84 +37,13 @@ const PreviouslyViewed = (props) => {
             console.log(err);
           });
       };
-    useEffect(() => {
-        getPrevViewed()
-    }, [])
-    const data = [
-        {
-            id: 1,
-            imageSource: require('../../../../../../assets/images/movies/list.png')
-        },
-        {
-            id: 2,
-            imageSource: require('../../../../../../assets/images/movies/list6.png')
-        },
-        {
-            id: 3,
-            imageSource: require('../../../../../../assets/images/movies/list.png')
-        },
-        {
-            id: 4,
-            imageSource: require('../../../../../../assets/images/movies/list6.png')
-        },
-        {
-            id: 5,
-            imageSource: require('../../../../../../assets/images/movies/list5.png')
-        },
-        {
-            id: 6,
-            imageSource: require('../../../../../../assets/images/movies/list4.png')
-        },
-        {
-            id: 7,
-            imageSource: require('../../../../../../assets/images/movies/list3.png')
-        },
-        {
-            id: 8,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 9,
-            imageSource: require('../../../../../../assets/images/movies/list.png')
-        },
-        {
-            id: 10,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 7,
-            imageSource: require('../../../../../../assets/images/movies/list3.png')
-        },
-        {
-            id: 8,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 9,
-            imageSource: require('../../../../../../assets/images/movies/list.png')
-        },
-        {
-            id: 10,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 7,
-            imageSource: require('../../../../../../assets/images/movies/list3.png')
-        },
-        {
-            id: 8,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 9,
-            imageSource: require('../../../../../../assets/images/movies/list.png')
-        },
-        {
-            id: 10,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
+      useEffect(() => {
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            getPrevViewed()
+          });
+        return unsubscribe;
+      }, [props.navigation]);
 
-    ]
     if (loading) {
         return (
         <>
@@ -141,13 +71,21 @@ const PreviouslyViewed = (props) => {
             <Text>You have no Previously Viewed</Text>
         </View> : 
         <View style= {styles.flexContainer} >
-                   {data.map (
-                       item => {
+                   {prevListData.map (
+                       (item, index) => {
                            return (
-                               <TouchableOpacity>
-                               <Image 
+                               <TouchableOpacity onPress= {() => props.navigation.navigate('ViewMovies', {movie_data: item, signal: true})} key= {index}>
+                               {/* <Image 
                                style= {styles.image}
-                               source= {item.imageSource} />
+                               source= {{uri: item.posterURL[0]}} /> */}
+                                   <FastImage
+                                    style={styles.image}
+                                    source={{
+                                        uri: item.posterURL[0],
+                                        priority: FastImage.priority.normal,
+                                    }}
+                                    // resizeMode={FastImage.resizeMode.contain}
+                                />
                                </TouchableOpacity>
                            )
                        }

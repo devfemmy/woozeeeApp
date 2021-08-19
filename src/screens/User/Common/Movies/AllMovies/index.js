@@ -31,7 +31,9 @@ const AllMovies = () => {
         <Layout level="6" style={{ flex: 1 }}>
             <ScrollView>
                 <View style= {styles.imageCon}>
-                    <FeaturedMovie  />
+                    <FeaturedMovie 
+                    movieType = "all"
+                    category_id= {"all"}   />
                 </View>
                 {/* <MovieDescription 
                 price = "$1.00"

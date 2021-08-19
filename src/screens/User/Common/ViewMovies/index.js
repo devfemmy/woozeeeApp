@@ -238,6 +238,9 @@ export default function Explore({ navigation, route }) {
       justifyContent: 'space-between',
       alignItems: 'center'
     },
+    imageCon: {
+      minHeight: hp(20)
+    }
     // textshadow:{
     //   fontSize:100,
     //   color:'#FFFFFF',
@@ -257,7 +260,7 @@ export default function Explore({ navigation, route }) {
         
         screen="auth"
       />
-      {/* <View> */}
+      <View style= {styles.imageCon}>
       {signal === true ?
             <TouchableOpacity>
               <FeaturedMovie active />
@@ -278,20 +281,23 @@ export default function Explore({ navigation, route }) {
                   /> */}
           </TouchableOpacity>
     }
-
+      </View>
         <ScrollView style= {styles.container}>
           {signal === true ?
               <MovieDescription
+              onPress= {() => navigation.navigate('FlutterPay', {data:movie_data})} 
                 data = {movie_data}
                 // label = {movie_data?.casts[0][0]?.__isNew__ === true ? 'New' : 'Classic'}
-                year = {movie_data.year}
+                year = {movie_data?.year}
                 // casts = {movie_data?.casts[0][0]?.value} 
                 title= {movie_data?.title}
                 price = {`$${movie_data?.price}`}
                 description = {movie_data?.description}
                 paid /> :
                 <MovieDescription 
-                data = {movie_data.item}
+                onPress= {() => navigation.navigate('FlutterPay', {data:movie_data.item})} 
+                // inList= {movieData.item?.movieData?.inList} 
+                data = {movie_data?.item}
                 // label = {movie_data?.item?.casts[0][0]?.__isNew__ === true ? 'New' : 'Classic'}
                 year = {movie_data?.item?.year}
                 // casts = {movie_data?.item?.casts[0][0]?.value}
@@ -303,8 +309,7 @@ export default function Explore({ navigation, route }) {
             <View>
                 <MovieScroll
                 show
-                title = "Recommended for you"
-                img= {require('../../../../assets/images/movies/movie2.png')}
+                category_id= ""
                 />
                 {/* <MovieScroll
                 img= {require('../../../../assets/images/movies/movie3.png')}
