@@ -34,7 +34,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { Video } from 'expo-av';
+import FastImage from 'react-native-fast-image';
 
 // prettier-ignore
 import {
@@ -82,6 +82,8 @@ import {
 import { Feather, Ionicons } from '@expo/vector-icons';
 
 import { TextInput } from 'react-native';
+
+import Search from '../../screens/User/Common/Search/index';
 
 export default function ImageView({ data, viewHeight, navigation, t }) {
   // const db = firebase.firestore();
@@ -284,8 +286,13 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
       });
   };
 
-  const sharePostToDm = async (currentUserId, guestUserId, postUrl, name) => {
-    // console.log(currentUserId, guestUserId, postUrl);
+  const sharePostToDm = async (
+    currentUserId,
+    guestUserId,
+    postUrl,
+    name,
+    guestUserImg,
+  ) => {
     SendMessage(currentUserId, guestUserId, postUrl, '')
       .then((res) => {
         // console.log(res);
@@ -303,7 +310,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
         alert(err);
       });
 
-    AddUser(name, guestUserId);
+    AddUser(name, guestUserId, guestUserImg);
 
     sendSheet.current.close();
   };
@@ -353,9 +360,8 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
     }));
   };
 
-  // useEffect(() => {
-  //   fetchUsers();
-  // }, [searchForm.value]);
+  let params = { chat: null };
+  let _route = { params };
 
   return useMemo(
     () => (
@@ -392,16 +398,18 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                     justifyContent: 'center',
                   }}
                 >
-                  <Image
-                    source={{ uri: item.userImageURL }}
-                    // defaultSource={require('assets/images/user/user2.png')}
+                  <FastImage
                     style={{
                       height: 36,
                       width: 36,
                       borderRadius: 18,
                       borderColor: 'white',
                     }}
-                    resizeMode="cover"
+                    source={{
+                      uri: item.userImageURL,
+                      priority: FastImage.priority.normal,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
                   />
                 </LinearGradient>
                 <View
@@ -424,7 +432,19 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                     {/* {item.userDisplayName} */}
                   </Text>
                 </View>
-                <Image
+                {/* <FastImage
+                style={{
+                  height: 16,
+                  width: 16,
+                  borderRadius: 8,
+                }}
+                source={{
+                  uri: item.mediaURL,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              /> */}
+                {/* <Image
                   source={require('assets/images/icon/verified-1.png')}
                   defaultSource={require('assets/images/icon/verified-1.png')}
                   style={{
@@ -433,7 +453,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                     borderRadius: 8,
                   }}
                   resizeMode="cover"
-                />
+                /> */}
               </TouchableOpacity>
             </View>
             <View>
@@ -481,7 +501,18 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                 /> */}
               </View>
 
-              <Image
+              <FastImage
+                style={{
+                  height: '90%',
+                  width: '100%',
+                }}
+                source={{
+                  uri: item.mediaURL,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+              {/* <Image
                 source={{ uri: item.mediaURL }}
                 defaultSource={require('assets/images/banner/placeholder-image.png')}
                 style={{
@@ -489,7 +520,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   width: '100%',
                 }}
                 resizeMode="cover"
-              />
+              /> */}
             </View>
           </TouchableWithoutFeedback>
           <View
@@ -603,16 +634,18 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   justifyContent: 'center',
                 }}
               >
-                <Image
-                  source={{ uri: userImg }}
-                  // defaultSource={require('assets/images/user/user1.png')}
+                <FastImage
+                  source={{
+                    uri: userImg,
+                    priority: FastImage.priority.normal,
+                  }}
                   style={{
-                    height: 30,
-                    width: 30,
-                    borderRadius: 15,
+                    height: 36,
+                    width: 36,
+                    borderRadius: 18,
                     borderColor: 'white',
                   }}
-                  resizeMode="cover"
+                  resizeMode={FastImage.resizeMode.cover}
                 />
               </LinearGradient>
               <View style={{ flex: 1, marginHorizontal: 5 }}>
@@ -803,73 +836,19 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   onPress={() => sendSheet.current.close()}
                 />
               </View>
-              <View
-                style={{
-                  paddingTop: 20,
-                  paddingHorizontal: 20,
-                }}
-              >
-                <Input
-                  style={{
-                    width: '100%',
-                  }}
-                  size="medium"
-                  value={searchForm.value}
-                  accessibilityLabel="Search"
-                  placeholder={'Search'}
-                  status={searchForm.status}
-                  onChangeText={handleChange}
-                  accessoryLeft={IconSearch}
-                />
-              </View>
-              {userList.length > 0 ? (
-                <List
-                  style={{
-                    backgroundColor: 'transparent',
-                    paddingVertical: 10,
-                  }}
-                  alwaysBounceVertical
-                  showsHorizontalScrollIndicator={false}
-                  showsVerticalScrollIndicator={false}
-                  data={userList}
-                  keyExtractor={(_, i) => i.toString()}
-                  renderItem={(user, index) =>
-                    searchForm.value.length > 1 && (
-                      <UserTemplate
-                        key={index}
-                        userProfilePic={require('../../assets/images/user/user1.png')}
-                        displayName={`${user.item.fName} ${user.item.sName}`}
-                        userId={user.item._id}
-                        navigation={navigation}
-                        sendTo={() =>
-                          sharePostToDm(
-                            _userId,
-                            user.item._id,
-                            `https://app.woozeee.com/entry/${item._id}`,
-                            user.item.fName + user.item.sName,
-                          )
-                        }
-                      />
-                    )
-                  }
-                  getItemLayout={(data, index) => ({
-                    length: 150,
-                    offset: 150 * index,
-                    index,
-                  })}
-                />
-              ) : (
-                <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Text>User not found</Text>
-                </View>
-              )}
+              <Search
+                route={_route}
+                shareToDm={true}
+                shareToDmFn={(_name, _guestUserId, _guestUserImg) =>
+                  sharePostToDm(
+                    _userId,
+                    _guestUserId, //user's dm
+                    `https://app.woozeee.com/entry/${item._id}`,
+                    _name,
+                    _guestUserImg,
+                  )
+                }
+              />
             </View>
           </Layout>
         </RBSheet>

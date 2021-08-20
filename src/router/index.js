@@ -75,7 +75,7 @@ import ActivateCareElitePlan from 'src/screens/User/Onboarding/ActivateCare/Elit
 import TransactionHistory from 'src/screens/User/WalletTab/TransactionHistory';
 
 // BillPay Screens
-import BillPaymentSuccess from 'src/screens/User/BillPayTab/Success';
+import Success from 'src/screens/User/BillPayTab/Success';
 import BillAirtime from 'src/screens/User/BillPayTab/Bills/Airtime';
 import BillMobileData from 'src/screens/User/BillPayTab/Bills/MobileData';
 import BillCableTv from 'src/screens/User/BillPayTab/Bills/CableTv';
@@ -109,6 +109,8 @@ import AdditionalInfo from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/
 import MoneyMattersConfirmation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/Confirmation';
 import FlutterPay from '../screens/Common/FlutterPay';
 import DataFlutterPay from '../screens/Common/DataFlutterPay';
+import CableFlutterPay from '../screens/Common/CableFlutterPay';
+import ElectricFlutterPay from '../screens/Common/ElectricFlutterPay';
 import OtherCategories from 'src/screens/User/Common/Movies/OtherCategories/index';
 
 const { Navigator, Screen } = createStackNavigator();
@@ -215,7 +217,7 @@ export default function Router() {
       ProfileLikedPosts,
       Follow,
       TransactionHistory,
-      BillPaymentSuccess,
+      Success,
       BillAirtime,
       BillMobileData,
       BillCableTv,
@@ -231,6 +233,8 @@ export default function Router() {
       DetailsPage,
       FlutterPay,
       DataFlutterPay,
+      ElectricFlutterPay,
+      CableFlutterPay,
     },
 
     Common: {
@@ -254,7 +258,7 @@ export default function Router() {
   };
 
   const linking = {
-    prefixes: ['https://app.woozeee.com/', 'woozeee://'],
+    prefixes: ['https://app.woozeee.com/entry', 'woozeee://'],
     config,
   };
 

@@ -22,6 +22,7 @@ import {
   Divider,
   Radio,
   RadioGroup,
+  Spinner,
 } from '@ui-kitten/components';
 
 import { Toast, Content, Root } from 'native-base';
@@ -50,38 +51,44 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-// const ACCOUNTS = [
-//   {
-//     id: 1,
-//     title: 'woozeee Wallet - ₦ 99,394.99',
-//     image: require('assets/images/banks/woozeee.png'),
-//   },
-//   {
-//     id: 2,
-//     title: 'Access Bank - ₦ 34,677.02',
-//     image: require('assets/images/banks/access.png'),
-//   },
-//   {
-//     id: 3,
-//     title: 'UBA - ₦ 25,500.44',
-//     image: require('assets/images/banks/uba.png'),
-//   },
-//   {
-//     id: 4,
-//     title: 'Globus Bank -₦ 24,222.18',
-//     image: require('assets/images/banks/globus.png'),
-//   },
-//   {
-//     id: 5,
-//     title: 'Zenith Bank -₦ 1,000.00',
-//     image: require('assets/images/banks/zenith.png'),
-//   },
-//   {
-//     id: 6,
-//     title: 'Pay with other Banks',
-//     image: require('assets/images/banks/others.png'),
-//   },
-// ];
+import {
+  FlutterwaveInit,
+  PayWithFlutterwave,
+  FlutterwaveButton,
+} from 'flutterwave-react-native';
+
+const ACCOUNTS = [
+  {
+    id: 1,
+    title: 'woozeee Wallet - ₦ 99,394.99',
+    image: require('assets/images/banks/woozeee.png'),
+  },
+  {
+    id: 2,
+    title: 'Access Bank - ₦ 34,677.02',
+    image: require('assets/images/banks/access.png'),
+  },
+  // {
+  //   id: 3,
+  //   title: 'UBA - ₦ 25,500.44',
+  //   image: require('assets/images/banks/uba.png'),
+  // },
+  {
+    id: 4,
+    title: 'Globus Bank -₦ 24,222.18',
+    image: require('assets/images/banks/globus.png'),
+  },
+  {
+    id: 5,
+    title: 'Zenith Bank -₦ 1,000.00',
+    image: require('assets/images/banks/zenith.png'),
+  },
+  {
+    id: 6,
+    title: 'Online Payment',
+    image: require('assets/images/banks/others.png'),
+  },
+];
 
 /* DATA */
 const woozeeeCards = [
@@ -112,6 +119,17 @@ const woozeeeCards = [
 ];
 
 export default function MobileData({ navigation }) {
+  const renderSpinner = () => <Spinner size="tiny" status="basic" />;
+
+  const [emailAddress, setEmail] = useState('');
+
+  const email = async () => {
+    const res = await getEmail();
+    setEmail(res);
+  };
+
+  email();
+
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;
@@ -121,6 +139,8 @@ export default function MobileData({ navigation }) {
   const { authOptions } = useContext(AuthContext);
 
   const { verifyPin } = authOptions;
+
+  const [isLoading, setLoading] = useState(false);
 
   const [serviceId, setServiceId] = useState(null);
 
@@ -179,57 +199,143 @@ export default function MobileData({ navigation }) {
     fetchDataBundle();
   }, [serviceId]);
 
-  // const handleAccountChange = (index) => {
-  //   setSelectedOption(index);
-  //   setFormValues((prevState) => ({
-  //     ...prevState,
-  //     account: ACCOUNTS[index].title,
-  //   }));
-  // };
+  const handleAccountChange = (index) => {
+    setSelectedOption(index);
+    setFormValues((prevState) => ({
+      ...prevState,
+      account: ACCOUNTS[index].title,
+    }));
+  };
 
   const onClickOperator = (i) => {
     if (i === activeOperator) {
       setActiveOperator(null);
     } else {
       setActiveOperator(i);
+      setFormValues((prevState) => ({
+        ...prevState,
+        product: '',
+      }));
       setServiceId(woozeeeCards[i - 1].serviceId);
     }
   };
 
   const handleOpenProductSheet = () => productSheetRef.current.open();
 
-  const handleOpenAccountSheet = () => accountSheetRef.current.open();
+  // const handleOpenAccountSheet = async () => {
+  //   const res = await verifyPin(form.pin);
 
-  const handleOpenConfirmSheet = () => confirmSheetRef.current.open();
+  //   if (res.message === 'User pin is Incorrect' || res.error === true) {
+  //     Toast.show({
+  //       text: 'User pin is Incorrect/Invalid',
+  //       position: 'bottom',
+  //       type: 'danger',
+  //       duration: 3000,
+  //     });
+  //   } else {
+  //     accountSheetRef.current.open();
+  //   }
+  // };
 
-  const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
-
-  const handleConfirmTransaction = async () => {
-    confirmSheetRef.current.close();
+  const handleOpenAccountSheet = async () => {
     const res = await verifyPin(form.pin);
-    // console.log(form);
 
-    if (res.message === 'User pin is Incorrect') {
+    if (
+      form.mobile !== '' &&
+      form.amount !== '' &&
+      form.pin !== '' &&
+      form.variationCode !== '' &&
+      form.serviceId !== ''
+    ) {
+      if (res.message === 'User pin is Incorrect' || res.error === true) {
+        Toast.show({
+          text: 'User pin is Incorrect/Invalid',
+          position: 'bottom',
+          type: 'danger',
+          duration: 3000,
+        });
+      } else {
+        accountSheetRef.current.open();
+      }
+    } else {
       Toast.show({
-        text: 'User pin is Incorrect',
-        // buttonText: 'Okay',
-        position: 'bottom',
+        text: 'All fields must be filled to proceed',
+        position: 'top',
         type: 'danger',
         duration: 3000,
       });
-    } else {
-      //suceess
-      navigation.navigate('DataFlutterPay', {
-        title: 'Data Purchase',
-        requestId: form.requestId,
-        variationCode: form.variationCode,
-        amount: form.amount,
-        phone: form.mobile,
-        serviceId: form.serviceId,
-        pin: form.pin,
-      });
     }
-    // routeSuccess();
+  };
+
+  const handleOpenConfirmSheet = async () => {
+    setLoading(true);
+
+    if (
+      form.mobile !== '' &&
+      form.amount !== '' &&
+      form.pin !== '' &&
+      form.product !== '' &&
+      form.variationCode !== '' &&
+      form.serviceId !== ''
+    ) {
+      setTimeout(() => {
+        confirmSheetRef.current.open();
+      }, 1000);
+      setLoading(false);
+    } else {
+      Toast.show({
+        text: 'All fields must be filled to proceed',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+      setLoading(false);
+    }
+  };
+
+  const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
+
+  const [btnState, setBtnState] = useState(false);
+
+  useEffect(() => {
+    if (form.account === 'Online Payment') {
+      setBtnState(true);
+    } else {
+      setBtnState(false);
+    }
+  }, [form.account]);
+
+  const handleConfirmTransaction = async () => {
+    confirmSheetRef.current.close();
+    setLoading(false);
+  };
+
+  const handleRedirect = async (res) => {
+    const reqBody = {
+      requestId: res.transaction_id,
+      variationCode: form.variationCode,
+      amount: form.amount,
+      phone: '08011111111',
+      //   phone: form.mobile,
+      serviceId: form.serviceId,
+      pin: form.pin,
+    };
+
+    const result = await fetch(
+      'https://apis.woozeee.com/api/v1/bill-payment/load',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `${await getToken()}`,
+        },
+        body: JSON.stringify(reqBody),
+      },
+    );
+
+    const response = await result.json();
+    // console.log(response);
   };
 
   // prettier-ignore
@@ -273,7 +379,6 @@ export default function MobileData({ navigation }) {
         {/* {console.log(dataBundles)} */}
         <List
            style={{ backgroundColor: 'transparent' }}
-         
            vertical
            showsHorizontalScrollIndicator={false}
            showsVerticalScrollIndicator={false}
@@ -459,7 +564,7 @@ export default function MobileData({ navigation }) {
     () => (
       <RBSheet
         ref={accountSheetRef}
-        height={425}
+        height={410}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -476,7 +581,7 @@ export default function MobileData({ navigation }) {
             flex: 1,
             width: '100%',
             alignItems: 'flex-start',
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start',
             paddingBottom: 30,
           }}
         >
@@ -520,9 +625,10 @@ export default function MobileData({ navigation }) {
               ))}
             </RadioGroup>
           </View>
+          <Divider style={{ marginVertical: 20, width: '100%', height: 2 }} />
+
           <View
             style={{
-              paddingVertical: 20,
               paddingHorizontal: 20,
               width: '100%',
             }}
@@ -656,23 +762,7 @@ export default function MobileData({ navigation }) {
                     accessoryRight={IconCPhoneBookFill}
                   />
                 </View>
-                {/* <View style={{ paddingVertical: 10 }}>
-                <Text
-                  category="label"
-                  appearance="hint"
-                  style={{ marginBottom: 5 }}
-                >
-                  {t('paymentAccount')}
-                </Text>
-                <Button
-                  appearance="outline"
-                  accessoryRight={IconArrowDown}
-                  style={{ justifyContent: 'space-between' }}
-                  onPress={handleOpenAccountSheet}
-                >
-                  <Text>{form.account || t('paymentAccount')}</Text>
-                </Button>
-              </View> */}
+
                 <View style={{ paddingVertical: 5 }}>
                   <GeneralTextField
                     type="pin"
@@ -689,24 +779,62 @@ export default function MobileData({ navigation }) {
                     // accessoryLeft={IconCNaira}
                   />
                 </View>
-                <View style={{ paddingVertical: 20 }}>
-                  <Button
-                    status="danger"
-                    size="large"
-                    accessibilityLiveRegion="assertive"
-                    accessibilityComponentType="button"
-                    accessibilityLabel="Continue"
-                    onPress={handleOpenConfirmSheet}
+                <View style={{ paddingVertical: 10 }}>
+                  <Text
+                    category="label"
+                    appearance="hint"
+                    style={{ marginBottom: 5 }}
                   >
-                    <Text status="control">{t('proceed')}</Text>
+                    {t('paymentAccount')}
+                  </Text>
+                  <Button
+                    appearance="outline"
+                    accessoryRight={IconArrowDown}
+                    style={{ justifyContent: 'space-between' }}
+                    onPress={handleOpenAccountSheet}
+                  >
+                    <Text>{form.account || t('paymentAccount')}</Text>
                   </Button>
                 </View>
+                {btnState ? (
+                  <View style={{ marginTop: 20 }}>
+                    <PayWithFlutterwave
+                      onInitializeError={(e) => console.log(e)}
+                      onRedirect={(res) => handleRedirect(res)}
+                      options={{
+                        tx_ref: uuidv4(),
+                        authorization:
+                          'FLWPUBK_TEST-6de3d70ac2e4f0b11def04ff70ca74fd-X',
+                        customer: {
+                          email: emailAddress,
+                        },
+                        amount: +form.amount,
+                        currency: 'NGN',
+                        payment_options: 'card',
+                      }}
+                    />
+                  </View>
+                ) : (
+                  <View style={{ paddingVertical: 20 }}>
+                    <Button
+                      status="danger"
+                      size="large"
+                      accessibilityLiveRegion="assertive"
+                      accessibilityComponentType="button"
+                      accessoryLeft={isLoading ? renderSpinner : null}
+                      accessibilityLabel="Continue"
+                      onPress={handleOpenConfirmSheet}
+                    >
+                      <Text status="control">{t('proceed')}</Text>
+                    </Button>
+                  </View>
+                )}
               </View>
             </View>
           </View>
         </ScrollView>
         <ProductSheet />
-        {/* <AccountSheet /> */}
+        <AccountSheet />
         <ConfirmSheet />
       </Layout>
     </Root>

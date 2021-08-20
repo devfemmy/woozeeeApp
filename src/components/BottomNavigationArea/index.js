@@ -38,9 +38,9 @@ import {
 const screens = {
   user: {
     home: IconCHome,
-    // wallet: IconCWallet,
+    wallet: IconCWallet,
     billPay: IconCList,
-    // activities: IconCClock,
+    activities: IconCClock,
   },
   social: {
     social: IconCSocial,

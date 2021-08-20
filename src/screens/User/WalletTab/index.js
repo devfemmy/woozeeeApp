@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import {
   View,
@@ -16,6 +16,8 @@ import { LocaleContext } from 'src/contexts';
 
 import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   IconCCard,
   IconCPlus,
@@ -29,23 +31,6 @@ import {
 } from 'src/components/CustomIcons';
 
 /* DATA */
-const woozeeeCards = [
-  {
-    id: 1,
-    banner: require('assets/images/card/insure.jpg'),
-    action: 'openCare',
-  },
-  {
-    id: 2,
-    banner: require('assets/images/card/wallet.jpg'),
-    action: 'openWallet',
-  },
-  {
-    id: 3,
-    banner: require('assets/images/card/rewards.jpg'),
-    action: 'openRewards',
-  },
-];
 
 const WALLET_ITEMS = [
   {
@@ -107,6 +92,88 @@ const TRANSACTION_HISTORY = [
 ];
 
 export default function Wallet({ navigation }) {
+  const [isBalanceVisible, setBalanceVisible] = useState(true);
+  const [insureCardNo, setInsureCardNo] = useState(null);
+  const [walletCardNo, setWalletCardNo] = useState(null);
+  const [rewardCardNo, setRewardCardNo] = useState(null);
+  const [insureAmt, setInsureAmt] = useState(null);
+  const [walletAmt, setWalletAmt] = useState(null);
+  const [rewardAmt, setRewardAmt] = useState(null);
+  const [userImg, setUserImg] = useState(null);
+  const [fullname, setFullName] = useState(null);
+
+  const fetchFromAsyncStorage = () => {
+    // Fetch Data from Asynchstorage
+
+    AsyncStorage.getItem('fullName')
+      .then((res) => {
+        setFullName(res);
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('insureCardNo')
+      .then((res) => {
+        setInsureCardNo(res);
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('walletCardNo')
+      .then((res) => {
+        setWalletCardNo(res);
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('rewardCardNo')
+      .then((res) => {
+        setRewardCardNo(res);
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('insureAmt')
+      .then((res) => {
+        setInsureAmt(res);
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('walletAmt')
+      .then((res) => {
+        setWalletAmt(res);
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('rewardAmt').then((res) => {
+      setRewardAmt(res);
+    });
+    AsyncStorage.getItem('userImage')
+      .then((res) => {
+        setUserImg(res);
+      })
+      .catch((err) => err);
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchFromAsyncStorage();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  const woozeeeCards = [
+    {
+      balance: parseInt(insureAmt).toFixed(2),
+      cardNum: insureCardNo,
+      banner: require('assets/images/card/card3.png'),
+      action: 'openCare',
+    },
+    {
+      balance: parseInt(walletAmt).toFixed(2),
+      cardNum: walletCardNo,
+      banner: require('assets/images/card/card1.png'),
+      action: 'openWallet',
+    },
+    {
+      balance: parseInt(rewardAmt).toFixed(2),
+      cardNum: rewardCardNo,
+      banner: require('assets/images/card/card2.png'),
+      action: 'openRewards',
+    },
+  ];
+
   useDisableAndroidExit();
 
   const { width, height } = useWindowDimensions();
@@ -168,10 +235,32 @@ export default function Wallet({ navigation }) {
     </View>
   );
 
+  const renderWoozeeeCards = () => (
+    <View style={{ flex: 1, paddingTop: 15, Height: 180 }}>
+      <List
+        style={{ backgroundColor: 'transparent' }}
+        contentContainerStyle={{ paddingHorizontal: 5 }}
+        alwaysBounceHorizontal
+        alwaysBounceVertical
+        horizontal={IS_PORTRAIT}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        data={woozeeeCards}
+        keyExtractor={(_, i) => i.toString()}
+        renderItem={WoozeeeCards}
+        getItemLayout={(data, index) => ({
+          length: CARD_HEIGHT,
+          offset: CARD_HEIGHT * index,
+          index,
+        })}
+      />
+    </View>
+  );
+
   const WalletItem = ({ data }) => (
     <View
       style={{
-        padding: 5,
+        paddingHorizontal: 5,
         width: '25%',
         alignItems: 'center',
       }}
@@ -195,34 +284,56 @@ export default function Wallet({ navigation }) {
     <TouchableOpacity
       activeOpacity={0.75}
       style={{
-        width: IS_PORTRAIT ? width / 1.15 : width / 3,
+        height: CARD_HEIGHT,
+        width: IS_PORTRAIT ? width / 1.75 : width / 3,
         paddingHorizontal: 5,
         position: 'relative',
         alignItems: 'center',
         justifyContent: 'flex-start',
       }}
+      // onPress={ACTION_SHEETS[data.item.action]}
     >
       <Image
         source={data.item.banner}
         defaultSource={data.item.banner}
         style={{
-          height: IS_PORTRAIT ? 200 : 180,
+          height: IS_PORTRAIT ? 140 : 120,
           width: '100%',
-          borderRadius: 10,
+          borderRadius: 5,
+          resizeMode: 'contain',
         }}
-        resizeMode="cover"
       />
+      <Text
+        category="c2"
+        style={{
+          position: 'absolute',
+          bottom: IS_PORTRAIT ? 140 / 1.9 : 120 / 1.9,
+          color: 'white',
+          right: 10,
+        }}
+      >
+        {` ${data.item.cardNum}`}
+      </Text>
+      <Text
+        category="s2"
+        style={{
+          position: 'absolute',
+          bottom: IS_PORTRAIT ? 220 / 5 : 120 / 5,
+          color: 'white',
+          left: 20,
+        }}
+      >
+        {fullname}
+      </Text>
     </TouchableOpacity>
   );
 
   const renderHeaderArea = () => (
-    <View style={{ flex: 1, paddingTop: 10, paddingBottom: 10 }}>
+    <View style={{ flex: 1, paddingTop: 10 }}>
       <View style={{ flex: 1 }}>
         <List
           style={{ backgroundColor: 'transparent' }}
           contentContainerStyle={{ paddingHorizontal: 5 }}
-          alwaysBounceHorizontal
-          alwaysBounceVertical
           horizontal={IS_PORTRAIT}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -236,20 +347,19 @@ export default function Wallet({ navigation }) {
           })}
         />
       </View>
-      <View
+      {/* <View
         style={{
           flex: 1,
           flexDirection: 'row',
           flexWrap: 'wrap',
           alignItems: 'flex-start',
-          paddingVertical: 20,
           paddingHorizontal: 5,
         }}
       >
         {WALLET_ITEMS.map((data) => (
           <WalletItem data={data} key={data.id} />
         ))}
-      </View>
+      </View> */}
     </View>
   );
 
@@ -264,25 +374,28 @@ export default function Wallet({ navigation }) {
       }}
     >
       <Text category="s1">{t('transactionHistory')}</Text>
-      <Button
+      {/* <Button
         size="tiny"
         appearance="ghost"
         accessoryRight={IconForwardIos}
-        onPress={routeAllHistory}
+        // onPress={routeAllHistory}
       >
         <Text status="primary" category="s2">
           {t('viewAll')}
         </Text>
-      </Button>
+      </Button> */}
     </View>
   );
 
   const renderFooterArea = () => (
     <Card header={renderTransactionHeader}>
       <View style={{ marginHorizontal: -10, marginVertical: -5 }}>
-        {TRANSACTION_HISTORY.map((data) => (
+        {/* {TRANSACTION_HISTORY.map((data) => (
           <HistoryItem data={data} key={data.id} />
-        ))}
+        ))} */}
+        <Text category="c1" status="basic" style={{ textAlign: 'center' }}>
+          No history available
+        </Text>
       </View>
     </Card>
   );
@@ -301,12 +414,12 @@ export default function Wallet({ navigation }) {
         <View>
           <Text category="c1">{t('balance')}</Text>
           <Text category="h5" status="primary">
-            {isBalanceShown ? '₦ 249,238,134.34' : '₦ xxx,xxx.xx'}
+            {isBalanceShown ? `₦ ${walletAmt}` : '₦ xxx,xxx.xx'}
           </Text>
         </View>
         <View>
           <Image
-            source={require('assets/images/user/user2.png')}
+            source={{ uri: userImg }}
             style={{
               height: 60,
               width: 60,
@@ -324,8 +437,6 @@ export default function Wallet({ navigation }) {
           ListFooterComponent={renderFooterArea}
           ListFooterComponentStyle={{ paddingBottom: 10 }}
           horizontal={!IS_PORTRAIT}
-          alwaysBounceHorizontal
-          alwaysBounceVertical
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />

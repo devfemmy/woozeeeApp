@@ -20,8 +20,9 @@ import {
 } from 'src/components/CustomIcons';
 import { ProfilePosts } from 'src/components/SocialPosts/index';
 
-export default function PictureUpload({ navigation, route }) {
+export default function Success({ navigation, route }) {
   const { success } = route.params;
+  // console.log(success);
   const t = useContext(LocaleContext);
   const styles = StyleSheet.create({
     successText: {
@@ -55,7 +56,7 @@ export default function PictureUpload({ navigation, route }) {
               style={{ width: 120, height: 120, resizeMode: 'contain' }}
               source={require('../../../assets/images/askADoc/success.png')}
             /> */}
-          
+
             {/* <Image
               source={require('../../../assets/images/askADoc/success.png')}
               style={{
@@ -78,11 +79,14 @@ export default function PictureUpload({ navigation, route }) {
             >
               <Ionicons name="md-checkmark" size={50} color="white" />
             </View>
-            <Text category="h5">{t('transactionSuccess')}</Text>
-            <Text category="c1" status="basic" style={{ textAlign: 'center', marginVertical: 10 }}>
-              Your loan application was successful. A notification has been sent
-              to your inbox.
-            </Text>
+            <Text category="h6">{success}</Text>
+            {/* <Text
+              category="c1"
+              status="basic"
+              style={{ textAlign: 'center', marginVertical: 10 }}
+            >
+              {success}
+            </Text> */}
           </View>
           <View style={{ paddingHorizontal: 20, paddingTop: 50 }}>
             <View style={{ paddingVertical: 10 }}>

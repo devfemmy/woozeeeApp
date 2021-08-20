@@ -7,7 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { getEmail, getToken } from '../../api/index';
 
-const FlutterPay = ({ route, navigation }) => {
+const CableFlutterPay = ({ route, navigation }) => {
+  //   console.log(route.params);
   const [emailAddress, setEmail] = useState('');
   const email = async () => {
     const res = await getEmail();
@@ -16,14 +17,17 @@ const FlutterPay = ({ route, navigation }) => {
   email();
 
   const handleRedirect = async (res) => {
+    // console.log(res);
     const reqBody = {
       requestId: res.transaction_id,
-      // amount: route.params.price,
-      phone: '08011111111',
-      //   phone: route.params.phoneNumber,
-      // serviceId: route.params.network,
-      // pin: route.params.pin,
-      //   transaction_id: res.transaction_id,
+      variationCode: route.params.variationCode,
+      amount: route.params.amount,
+      phone: '08120254644',
+      // phone: route.params.phone,
+      billerCode: route.params.billerCode,
+      //   billerCode: "1010101010101",
+      serviceId: route.params.serviceId,
+      pin: route.params.pin,
     };
 
     const result = await fetch(
@@ -59,7 +63,7 @@ const FlutterPay = ({ route, navigation }) => {
             customer: {
               email: emailAddress,
             },
-            amount: 30,
+            amount: +route.params.amount,
             currency: 'NGN',
             payment_options: 'card',
           }}
@@ -69,4 +73,4 @@ const FlutterPay = ({ route, navigation }) => {
   );
 };
 
-export default FlutterPay;
+export default CableFlutterPay;

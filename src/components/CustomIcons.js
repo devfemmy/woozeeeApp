@@ -237,7 +237,7 @@ export const IconCWallet = (props) => {
 
   const type = active ? 'wallet' : 'wallet-outline';
 
-  return <Icon {...otherProps} name="wallet-outline" pack="assets" />;
+  return <Icon {...otherProps} name={type} pack="assets" />;
 };
 export const IconCList = (props) => {
   const { active, ...otherProps } = props;
