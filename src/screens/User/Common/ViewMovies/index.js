@@ -263,7 +263,7 @@ export default function Explore({ navigation, route }) {
       <View style= {styles.imageCon}>
       {signal === true ?
             <TouchableOpacity>
-              <FeaturedMovie active />
+              <FeaturedMovie  url={movie_data} active />
               {/* <Image
               defaultSource= {require('../../../../assets/images/movies/movie_placeholder.png')}
               style= {{width: Dimensions.get('window').width, height: Dimensions.get('window').height/4, resizeMode: 'contain'}}
@@ -272,7 +272,7 @@ export default function Explore({ navigation, route }) {
               /> */}
           </TouchableOpacity> : 
           <TouchableOpacity>
-             <FeaturedMovie active />
+             <FeaturedMovie url={movie_data.item} active />
                   {/* <Image
                   defaultSource= {require('../../../../assets/images/movies/movie_placeholder.png')}
                   style= {{width: Dimensions.get('window').width, height: Dimensions.get('window').height/4, resizeMode: 'contain'}}
@@ -291,7 +291,7 @@ export default function Explore({ navigation, route }) {
                 year = {movie_data?.year}
                 // casts = {movie_data?.casts[0][0]?.value} 
                 title= {movie_data?.title}
-                price = {`$${movie_data?.price}`}
+                price = {`₦${movie_data?.price}`}
                 description = {movie_data?.description}
                 paid /> :
                 <MovieDescription 
@@ -302,7 +302,7 @@ export default function Explore({ navigation, route }) {
                 year = {movie_data?.item?.year}
                 // casts = {movie_data?.item?.casts[0][0]?.value}
                 title= {movie_data?.item?.title}
-                price = {`$${movie_data?.item.price}`}
+                price = {`₦${movie_data?.item.price}`}
                 description = {movie_data?.item.description}
                 paid />       
         }

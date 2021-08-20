@@ -11,8 +11,6 @@ const FeaturedMovie = (props) => {
     const [loading, setLoading] = useState(false);
     const [movieData, setMovieData] = useState([]);
     const navigation = useNavigation();
-    const videoUri = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
-
     const shuffleArray = (a) => {
       for (let i = a.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -22,7 +20,6 @@ const FeaturedMovie = (props) => {
   }
 
     const getFeaturedMovies = () => {
-      console.log("category id", props.category_id)
       setLoading(true);
       AsyncStorage.getItem('USER_AUTH_TOKEN')
         .then((res) => {
@@ -110,10 +107,10 @@ const FeaturedMovie = (props) => {
           >
             <Video
               ref={handleVideoRef}
+              // isMuted={false}
               isLooping
-              isMuted
-              // source = {{uri: movieData.landscapePreviewURL}}
-              source = {{uri: videoUri}}
+              source = {{uri: props.uri ? movieData.landscapePreviewURL : props?.url?.landscapePreviewURL}}
+              // source = {{uri: videoUri}}
               shouldPlay
               resizeMode="cover"
               style={{ height: 250, width: '100%' }}
@@ -141,7 +138,7 @@ const FeaturedMovie = (props) => {
             onPress= {() => navigation.navigate('FlutterPay', {data:movieData})} 
             inList= {movieData?.movieData?.inList} 
             featured = {movieData}
-            price = {`$${movieData?.price}`}
+            price = {`₦${movieData?.price}`}
             description = {movieData?.description}
             paid />     
           }

@@ -68,7 +68,7 @@ const FlutterPay = ({ route, navigation }) => {
             customer: {
               email: emailAddress,
             },
-            amount: data.price + 450,
+            amount: data.price,
             currency: 'NGN',
             payment_options: 'card',
           }}

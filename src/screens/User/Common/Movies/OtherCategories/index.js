@@ -41,7 +41,10 @@ const OtherCategories = (props) => {
             />
             <ScrollView>
                 <View style= {styles.imageCon}>
-                <FeaturedMovie  category_id= {category_id} />
+                <FeaturedMovie 
+                mute={false}
+                uri 
+                category_id= {category_id} />
                 </View>
                 {/* <MovieDescription
                 // title = {name}

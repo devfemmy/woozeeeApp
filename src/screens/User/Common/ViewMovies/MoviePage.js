@@ -67,22 +67,22 @@ const MoviePage = ({navigation, route}) => {
         // navigation={navigation}
         screen="auth"
       /> */}
-          <View style= {styles.videoView}>
+    <View style= {styles.videoView}>
           <Video
-                  // poster= {item.posterURL[0]} 
-                  controls= {true}
-                  resizeMode= {Platform.OS === 'android' ? 'cover' : 'contain'}
-                  // fullscreen= {true}
-                  onReadyForDisplay = {onReadyForDisplay}
-                  // fullscreenOrientation= "landscape"
-                  // source={{uri: item.mediaURL}}
-                  source= {{uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}}
-                ref={(ref) => {
-                  setVideoPlayer(ref)
-                }}                                      // Store reference
-              //    onBuffer={this.onBuffer}                // Callback when remote video is buffering
-              //    onError={this.videoError}               // Callback when video cannot be loaded
-                style={styles.backgroundVideo} />
+        // poster= {item.posterURL[0]} 
+        controls= {true}
+        resizeMode= "contain"
+        fullscreen= {true}
+        onReadyForDisplay = {onReadyForDisplay}
+        fullscreenOrientation= "landscape"
+        source={{uri: item.mediaURL}}   // Can be a URL or a local file.
+       ref={(ref) => {
+          setVideoPlayer(ref)
+       }}                                      // Store reference
+    //    onBuffer={this.onBuffer}                // Callback when remote video is buffering
+    //    onError={this.videoError}               // Callback when video cannot be loaded
+       style={styles.backgroundVideo} />
+
           </View>
 
 </View>
@@ -90,31 +90,17 @@ const MoviePage = ({navigation, route}) => {
 }
 var styles = StyleSheet.create({
   backgroundVideo: {
-    // position: 'absolute',
-    // top: 0,
-    // left: 0,
-    // bottom: 0,
-    // right: 0,
-    // flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    flex: 1,
     backgroundColor: 'black',
-    height: Dimensions.get('screen').width,
-    width: Dimensions.get('screen').height
     // alignItems: 'center',
     // justifyContent: 'center'
   },
-  videoView: {
-    // flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // backgroundColor: 'yellow'
-},
-  fullScreen: {
-    flex: 1,
-    backgroundColor: 'black',
-    height: Dimensions.get('screen').width,
-    width: Dimensions.get('screen').height
-    
-},
 });
+
 
 export default MoviePage;

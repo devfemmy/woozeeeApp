@@ -14,6 +14,7 @@ const MoreOptions = ({navigation}) => {
       />
        <View>
         <TextIcon 
+        
             borderWidth= {1}
             onPress= {() => navigation.navigate('PreviouslyViewed')}
             borderColor= "transparent"

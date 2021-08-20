@@ -1,13 +1,15 @@
-import React from 'react';
-import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import { Dimensions, Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 import { Layout, List, Text } from '@ui-kitten/components';
 import { TextIcon } from 'src/components/IconPacks/TextIcon';
 import MovieScroll from 'src/components/MovieScroll';
 import { ScrollView } from 'react-native-gesture-handler';
 import FeaturedMovie from 'src/components/FeaturedMovie';
 import MovieDescription from 'src/components/MovieDescription';
+import { Octicons } from '@expo/vector-icons'; 
 
 const MyMovies = () => {
+    const [mute, setMuted] = useState(true)
     const styles = StyleSheet.create({
         imageCon: {
             paddingVertical: 15
@@ -32,7 +34,12 @@ const MyMovies = () => {
         <Layout level="6" style={{ flex: 1 }}>
             <ScrollView>
                 <View style= {styles.imageCon}>
+                {/* <TouchableOpacity onPress= {() => setMuted(!mute)} style={{flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 5}}>
+                    <Octicons name={mute ? 'mute': 'unmute'} size={24} color="white" />
+                </TouchableOpacity> */}
                 <FeaturedMovie
+                mute={true}
+                uri
                 movieType= "movie" 
                 category_id= {""} />
                 </View>
