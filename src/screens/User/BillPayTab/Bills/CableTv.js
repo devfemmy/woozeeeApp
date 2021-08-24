@@ -250,6 +250,7 @@ export default function CableTv({ navigation }) {
 
   const handleOpenConfirmSheet = async () => {
     setLoading(true);
+    const res = await verifyPin(form.pin);
 
     if (
       form.mobile !== '' &&
@@ -259,10 +260,30 @@ export default function CableTv({ navigation }) {
       form.variationCode !== '' &&
       form.serviceId !== ''
     ) {
-      setTimeout(() => {
-        confirmSheetRef.current.open();
-      }, 1000);
-      setLoading(false);
+      if (res.message === 'User pin is Incorrect' || res.error === true) {
+        Toast.show({
+          text: 'User pin is Incorrect/Invalid',
+          position: 'bottom',
+          type: 'danger',
+          duration: 3000,
+        });
+      } else {
+        setTimeout(() => {
+          navigation.navigate('TransactionSummary', {
+            form: {
+              network: form.serviceId,
+              amount: form.amount,
+              mobile: form.mobile,
+              variationCode: form.variationCode,
+              pin: form.pin,
+              cardNumber: form.cardNumber,
+              serviceId: form.serviceId,
+            },
+            serviceType: 'Cable Bill Payment',
+          });
+        }, 1000);
+      }
+      // setLoading(false);
     } else {
       Toast.show({
         text: 'All fields must be filled to proceed',
@@ -270,23 +291,13 @@ export default function CableTv({ navigation }) {
         type: 'danger',
         duration: 3000,
       });
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const handleOpenProductSheet = () => productSheetRef.current.open();
 
   const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
-
-  const [btnState, setBtnState] = useState(false);
-
-  useEffect(() => {
-    if (form.account === 'Online Payment') {
-      setBtnState(true);
-    } else {
-      setBtnState(false);
-    }
-  }, [form.account]);
 
   const handleConfirmTransaction = async () => {
     confirmSheetRef.current.close();
@@ -770,57 +781,20 @@ export default function CableTv({ navigation }) {
                     // accessoryLeft={IconCNaira}
                   />
                 </View>
-                <View style={{ paddingVertical: 10 }}>
-                  <Text
-                    category="label"
-                    appearance="hint"
-                    style={{ marginBottom: 5 }}
-                  >
-                    {t('paymentAccount')}
-                  </Text>
+
+                <View style={{ paddingVertical: 20 }}>
                   <Button
-                    appearance="outline"
-                    accessoryRight={IconArrowDown}
-                    style={{ justifyContent: 'space-between' }}
-                    onPress={handleOpenAccountSheet}
+                    status="danger"
+                    size="large"
+                    accessibilityLiveRegion="assertive"
+                    accessibilityComponentType="button"
+                    accessoryLeft={isLoading ? renderSpinner : null}
+                    accessibilityLabel="Continue"
+                    onPress={handleOpenConfirmSheet}
                   >
-                    <Text>{form.account || t('paymentAccount')}</Text>
+                    <Text status="control">{t('proceed')}</Text>
                   </Button>
                 </View>
-
-                {btnState ? (
-                  <View style={{ marginTop: 20 }}>
-                    <PayWithFlutterwave
-                      onInitializeError={(e) => console.log(e)}
-                      onRedirect={(res) => handleRedirect(res)}
-                      options={{
-                        tx_ref: uuidv4(),
-                        authorization:
-                          'FLWPUBK_TEST-6de3d70ac2e4f0b11def04ff70ca74fd-X',
-                        customer: {
-                          email: emailAddress,
-                        },
-                        amount: +form.amount,
-                        currency: 'NGN',
-                        payment_options: 'card',
-                      }}
-                    />
-                  </View>
-                ) : (
-                  <View style={{ paddingVertical: 20 }}>
-                    <Button
-                      status="danger"
-                      size="large"
-                      accessibilityLiveRegion="assertive"
-                      accessibilityComponentType="button"
-                      accessoryLeft={isLoading ? renderSpinner : null}
-                      accessibilityLabel="Continue"
-                      onPress={handleOpenConfirmSheet}
-                    >
-                      <Text status="control">{t('proceed')}</Text>
-                    </Button>
-                  </View>
-                )}
               </View>
             </View>
           </View>

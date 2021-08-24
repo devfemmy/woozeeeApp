@@ -18,11 +18,11 @@ const FlutterPay = ({ route, navigation }) => {
   const handleRedirect = async (res) => {
     const reqBody = {
       requestId: res.transaction_id,
-      // amount: route.params.price,
+      amount: route.params.price,
       phone: '08011111111',
       //   phone: route.params.phoneNumber,
-      // serviceId: route.params.network,
-      // pin: route.params.pin,
+      serviceId: route.params.network,
+      pin: route.params.pin,
       //   transaction_id: res.transaction_id,
     };
 
@@ -52,7 +52,7 @@ const FlutterPay = ({ route, navigation }) => {
       />
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <PayWithFlutterwave
-          onRedirect={(res) => handleRedirect(res)}
+          onRedirect={handleRedirect}
           options={{
             tx_ref: uuidv4(),
             authorization: 'FLWPUBK_TEST-6de3d70ac2e4f0b11def04ff70ca74fd-X',

@@ -38,14 +38,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import {
-  FlutterwaveInit,
-  PayWithFlutterwave,
-  FlutterwaveButton,
-} from 'flutterwave-react-native';
-
-import { v4 as uuidv4 } from 'uuid';
-
 import { getEmail, getToken } from '../../../../api/index';
 
 import {
@@ -116,7 +108,7 @@ const woozeeeCards = [
 ];
 
 export default function Airtime({ navigation }) {
-  const renderSpinner = () => <Spinner size="tiny" status="basic" />;
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
   const [emailAddress, setEmail] = useState('');
 
@@ -180,7 +172,8 @@ export default function Airtime({ navigation }) {
     }
   };
 
-  const handleOpenAccountSheet = async () => {
+  const handleOpenConfirmSheet = async () => {
+    setLoading(true);
     const res = await verifyPin(form.pin);
 
     if (
@@ -197,8 +190,14 @@ export default function Airtime({ navigation }) {
           duration: 3000,
         });
       } else {
-        accountSheetRef.current.open();
+        setTimeout(() => {
+          navigation.navigate('TransactionSummary', {
+            form,
+            serviceType: 'Airtime Purchase',
+          });
+        }, 1000);
       }
+      // setLoading(false);
     } else {
       Toast.show({
         text: 'All fields must be filled to proceed',
@@ -207,89 +206,12 @@ export default function Airtime({ navigation }) {
         duration: 3000,
       });
     }
+    setLoading(false);
   };
-
-  const [btnState, setBtnState] = useState(false);
-
-  useEffect(() => {
-    if (form.account === 'Online Payment') {
-      setBtnState(true);
-    } else {
-      setBtnState(false);
-    }
-  }, [form.account]);
-
-  const handleOpenConfirmSheet = () => {
-    setLoading(true);
-
-    if (
-      form.mobile !== '' &&
-      form.account !== '' &&
-      form.pin !== '' &&
-      form.network !== '' &&
-      form.amount !== ''
-    ) {
-      setTimeout(() => {
-        confirmSheetRef.current.open();
-      }, 3000);
-      setLoading(false);
-    } else {
-      Toast.show({
-        text: 'All fields must be filled to proceed',
-        position: 'top',
-        type: 'danger',
-        duration: 3000,
-      });
-      setLoading(false);
-    }
-  };
-
-  const routeSuccess = () =>
-    navigation.navigate('Success', {
-      success: 'Your billpay transaction was successful!',
-    });
 
   const handleConfirmTransaction = async () => {
     confirmSheetRef.current.close();
     setLoading(false);
-  };
-
-  const handleRedirect = async (res) => {
-    console.log(res);
-    res.status === 'successful' && routeSuccess();
-    const reqBody = {
-      requestId: res.transaction_id,
-      amount: form.amount,
-      phone: '08011111111',
-      //   phone: form.mobile,
-      serviceId: form.network,
-      pin: form.pin,
-      //   transaction_id: res.transaction_id,
-    };
-
-    const result = await fetch(
-      'https://apis.woozeee.com/api/v1/bill-payment/load',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Authorization: `${await getToken()}`,
-        },
-        body: JSON.stringify(reqBody),
-      },
-    );
-
-    const response = await result.json();
-    const { error, message } = response;
-    // if (error) {
-    //   //there's an console.error;
-    //   console.log(error, message);
-    // } else {
-    //   routeSuccess();
-    // }
-
-    console.log('response', response);
   };
 
   // prettier-ignore
@@ -621,7 +543,6 @@ export default function Airtime({ navigation }) {
                     keyboardType="number-pad"
                     validate="required"
                     setFormValues={setFormValues}
-                    // accessoryLeft={IconCNaira}
                   />
                 </View>
 
@@ -638,59 +559,22 @@ export default function Airtime({ navigation }) {
                     value={form.pin}
                     setFormValues={setFormValues}
                     validate="required"
-                    // accessoryLeft={IconCNaira}
                   />
                 </View>
-                <View style={{ paddingVertical: 10 }}>
-                  <Text
-                    category="label"
-                    appearance="hint"
-                    style={{ marginBottom: 5 }}
-                  >
-                    {t('paymentAccount')}
-                  </Text>
+                <View style={{ paddingVertical: 20 }}>
                   <Button
-                    appearance="outline"
-                    accessoryRight={IconArrowDown}
-                    style={{ justifyContent: 'space-between' }}
-                    onPress={handleOpenAccountSheet}
+                    status="danger"
+                    size="large"
+                    accessibilityLiveRegion="assertive"
+                    accessibilityComponentType="button"
+                    accessoryLeft={isLoading ? renderSpinner : null}
+                    accessibilityLabel="Continue"
+                    onPress={handleOpenConfirmSheet}
+                    disabled={isLoading}
                   >
-                    <Text>{form.account || t('paymentAccount')}</Text>
+                    <Text status="control">{t('proceed')}</Text>
                   </Button>
                 </View>
-                {btnState ? (
-                  <View style={{ marginTop: 20 }}>
-                    <PayWithFlutterwave
-                      onInitializeError={(e) => console.log(e)}
-                      onRedirect={(res) => handleRedirect(res)}
-                      options={{
-                        tx_ref: uuidv4(),
-                        authorization:
-                          'FLWPUBK_TEST-6de3d70ac2e4f0b11def04ff70ca74fd-X',
-                        customer: {
-                          email: emailAddress,
-                        },
-                        amount: +form.amount,
-                        currency: 'NGN',
-                        // payment_options: 'card',
-                      }}
-                    />
-                  </View>
-                ) : (
-                  <View style={{ paddingVertical: 20 }}>
-                    <Button
-                      status="danger"
-                      size="large"
-                      accessibilityLiveRegion="assertive"
-                      accessibilityComponentType="button"
-                      accessoryLeft={isLoading ? renderSpinner : null}
-                      accessibilityLabel="Continue"
-                      onPress={handleOpenConfirmSheet}
-                    >
-                      <Text status="control">{t('proceed')}</Text>
-                    </Button>
-                  </View>
-                )}
               </View>
             </View>
           </View>

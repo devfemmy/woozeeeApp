@@ -223,7 +223,8 @@ export default function Electricity({ navigation }) {
     }
   };
 
-  const handleOpenAccountSheet = async () => {
+  const handleOpenConfirmSheet = async () => {
+    setLoading(true);
     const res = await verifyPin(form.pin);
 
     if (
@@ -242,8 +243,22 @@ export default function Electricity({ navigation }) {
           duration: 3000,
         });
       } else {
-        accountSheetRef.current.open();
+        setTimeout(() => {
+          navigation.navigate('TransactionSummary', {
+            form: {
+              network: form.serviceId,
+              amount: form.amount,
+              mobile: form.mobile,
+              selectType: form.selectType,
+              serviceId: form.serviceId,
+              pin: form.pin,
+              meterNumber: form.meterNumber,
+            },
+            serviceType: 'Electricity Bill Payment',
+          });
+        }, 1000);
       }
+      // setLoading(false);
     } else {
       Toast.show({
         text: 'All fields must be filled to proceed',
@@ -252,32 +267,7 @@ export default function Electricity({ navigation }) {
         duration: 3000,
       });
     }
-  };
-
-  const handleOpenConfirmSheet = async () => {
-    setLoading(true);
-
-    if (
-      form.mobile !== '' &&
-      form.pin !== '' &&
-      form.meterNumber !== '' &&
-      form.amount !== '' &&
-      form.selectType !== '' &&
-      form.serviceId !== ''
-    ) {
-      setTimeout(() => {
-        confirmSheetRef.current.open();
-      }, 1000);
-      setLoading(false);
-    } else {
-      Toast.show({
-        text: 'All fields must be filled to proceed',
-        position: 'top',
-        type: 'danger',
-        duration: 3000,
-      });
-      setLoading(false);
-    }
+    setLoading(false);
   };
 
   const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
@@ -729,57 +719,20 @@ export default function Electricity({ navigation }) {
                     // accessoryLeft={IconCNaira}
                   />
                 </View>
-                <View style={{ paddingVertical: 10 }}>
-                  <Text
-                    category="label"
-                    appearance="hint"
-                    style={{ marginBottom: 5 }}
-                  >
-                    {t('paymentAccount')}
-                  </Text>
+
+                <View style={{ paddingVertical: 20 }}>
                   <Button
-                    appearance="outline"
-                    accessoryRight={IconArrowDown}
-                    style={{ justifyContent: 'space-between' }}
-                    onPress={handleOpenAccountSheet}
+                    status="danger"
+                    size="large"
+                    accessibilityLiveRegion="assertive"
+                    accessibilityComponentType="button"
+                    accessoryLeft={isLoading ? renderSpinner : null}
+                    accessibilityLabel="Continue"
+                    onPress={handleOpenConfirmSheet}
                   >
-                    <Text>{form.account || t('paymentAccount')}</Text>
+                    <Text status="control">{t('proceed')}</Text>
                   </Button>
                 </View>
-
-                {btnState ? (
-                  <View style={{ marginTop: 20 }}>
-                    <PayWithFlutterwave
-                      onInitializeError={(e) => console.log(e)}
-                      onRedirect={(res) => handleRedirect(res)}
-                      options={{
-                        tx_ref: uuidv4(),
-                        authorization:
-                          'FLWPUBK_TEST-6de3d70ac2e4f0b11def04ff70ca74fd-X',
-                        customer: {
-                          email: emailAddress,
-                        },
-                        amount: +form.amount,
-                        currency: 'NGN',
-                        payment_options: 'card',
-                      }}
-                    />
-                  </View>
-                ) : (
-                  <View style={{ paddingVertical: 20 }}>
-                    <Button
-                      status="danger"
-                      size="large"
-                      accessibilityLiveRegion="assertive"
-                      accessibilityComponentType="button"
-                      accessoryLeft={isLoading ? renderSpinner : null}
-                      accessibilityLabel="Continue"
-                      onPress={handleOpenConfirmSheet}
-                    >
-                      <Text status="control">{t('proceed')}</Text>
-                    </Button>
-                  </View>
-                )}
               </View>
             </View>
           </View>

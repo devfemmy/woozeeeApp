@@ -112,6 +112,7 @@ import DataFlutterPay from '../screens/Common/DataFlutterPay';
 import CableFlutterPay from '../screens/Common/CableFlutterPay';
 import ElectricFlutterPay from '../screens/Common/ElectricFlutterPay';
 import OtherCategories from 'src/screens/User/Common/Movies/OtherCategories/index';
+import TransactionSummary from '../screens/User/Common/TransactionSummary';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -235,6 +236,7 @@ export default function Router() {
       DataFlutterPay,
       ElectricFlutterPay,
       CableFlutterPay,
+      TransactionSummary,
     },
 
     Common: {
