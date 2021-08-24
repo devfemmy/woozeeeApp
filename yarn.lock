@@ -11727,7 +11727,7 @@
   "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.1.7.tgz"
   "version" "5.1.7"
 
-"react-native-ratings@^7.3.0":
+"react-native-ratings@^7.3.0", "react-native-ratings@^7.6.1":
   "integrity" "sha512-V3y19iIifwemMr87KfovFIIzy/Rotqcds9k+ECaayQvrlucm/mXFC69R8xl/NivEdnxX7K87iurigByhpE37EQ=="
   "resolved" "https://registry.npmjs.org/react-native-ratings/-/react-native-ratings-7.6.1.tgz"
   "version" "7.6.1"

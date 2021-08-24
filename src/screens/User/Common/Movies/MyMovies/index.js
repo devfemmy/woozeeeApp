@@ -1,11 +1,15 @@
-import React from 'react';
-import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import { Dimensions, Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 import { Layout, List, Text } from '@ui-kitten/components';
 import { TextIcon } from 'src/components/IconPacks/TextIcon';
 import MovieScroll from 'src/components/MovieScroll';
 import { ScrollView } from 'react-native-gesture-handler';
+import FeaturedMovie from 'src/components/FeaturedMovie';
+import MovieDescription from 'src/components/MovieDescription';
+import { Octicons } from '@expo/vector-icons'; 
 
 const MyMovies = () => {
+    const [mute, setMuted] = useState(true)
     const styles = StyleSheet.create({
         imageCon: {
             paddingVertical: 15
@@ -30,55 +34,24 @@ const MyMovies = () => {
         <Layout level="6" style={{ flex: 1 }}>
             <ScrollView>
                 <View style= {styles.imageCon}>
-                    <Image 
-                    style= {{width: '100%'}}
-                    source= {require('../../../../../assets/images/movies/movie4.png')} />
+                {/* <TouchableOpacity onPress= {() => setMuted(!mute)} style={{flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 5}}>
+                    <Octicons name={mute ? 'mute': 'unmute'} size={24} color="white" />
+                </TouchableOpacity> */}
+                <FeaturedMovie
+                mute={true}
+                uri
+                movieType= "movie" 
+                category_id= {""} />
                 </View>
-                <View style= {styles.description}>
-                    <Text category= "h4" style= {{color: '#0959AB'}}>
-                        #1 in woozeee today
-                    </Text>
-                    <View>
-                        <Text>
-                        Exciting     Dramas     Comedy     Nollywood
-                        </Text>
-                    </View>
-                    {/* <View style= {styles.buttonContainer}>
-                        <TextIcon 
-                        width= "88%"
-                        bg= "#FF5757"
-                        color= "white" fill= "white" 
-                        text= "Play" 
-                        icon_name= "play-circle-outline" />   
-                        <TextIcon
-                        width= "88%"
-                        borderColor= "#FF5757" 
-                        borderWidth= {1}
-                        bg= "transparent"
-                        color= "#FF5757" fill= "#FF5757" 
-                        text= "Info" 
-                        icon_name= "alert-circle-outline" />  
-                    </View> */}
-                    
-                </View>
-                <View style= {{paddingHorizontal: 20, paddingVertical: 5}}>
-                    <TextIcon 
-                        // width= "88%"
-                        bg= "#FF5757"
-                        color= "white" fill= "white" 
-                        text= "Purchase" 
-                        icon_name= "play-circle-outline" /> 
-                    <View style= {{marginVertical: 5, alignItems: 'center'}}>
-                    <Text>
-                    Cast: Sir Dee, Seyi Awolowo, Avala
-                    </Text>
-                    <Text>
-                    Director: Stephanie Dadet
-                    </Text>
-                </View> 
-                </View>
+                {/* <MovieDescription
+                title = "Movies" 
+                label= "New"
+                price = "$1.00"
+                description = "After applying for 200 job application, he decided to go for something different . But things don’t go as smoothly as planned."
+                paid /> */}
                 <View style= {styles.lowerContainer}>
                     <MovieScroll
+                        category_id = ""
                         show
                         />
                 </View>

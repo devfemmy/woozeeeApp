@@ -8,6 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { getEmail, getToken } from '../../api/index';
 
 const FlutterPay = ({ route, navigation }) => {
+  const { data } = route.params;
+  console.log('data payment', data);
   const [emailAddress, setEmail] = useState('');
   const email = async () => {
     const res = await getEmail();
@@ -15,32 +17,39 @@ const FlutterPay = ({ route, navigation }) => {
   };
   email();
 
-  const handleRedirect = async (res) => {
-    const reqBody = {
-      requestId: res.transaction_id,
-      amount: route.params.price,
-      phone: '08011111111',
-      //   phone: route.params.phoneNumber,
-      serviceId: route.params.network,
-      pin: route.params.pin,
-      //   transaction_id: res.transaction_id,
-    };
+  // const handleRedirect = async (res) => {
+  //   const reqBody = {
+  //     requestId: res.transaction_id,
+  //     amount: route.params.price,
+  //     phone: '08011111111',
+  //     //   phone: route.params.phoneNumber,
+  //     serviceId: route.params.network,
+  //     pin: route.params.pin,
+  //     //   transaction_id: res.transaction_id,
+  //   };
 
-    const result = await fetch(
-      'https://apis.woozeee.com/api/v1/bill-payment/load',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Authorization: `${await getToken()}`,
-        },
-        body: JSON.stringify(reqBody),
-      },
-    );
+  //   const result = await fetch(
+  //     'https://apis.woozeee.com/api/v1/bill-payment/load',
+  //     {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Accept: 'application/json',
+  //         Authorization: `${await getToken()}`,
+  //       },
+  //       body: JSON.stringify(reqBody),
+  //     },
+  //   );
 
-    const response = await result.json();
-    console.log(response);
+  //   const response = await result.json();
+  //   console.log(response);
+  // };
+  const handleRedirect = (response) => {
+    if (response.status === 'cancelled') {
+      return;
+    } else {
+      navigation.navigate('MoviePage', { item: data });
+    }
   };
 
   return (

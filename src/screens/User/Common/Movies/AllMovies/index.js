@@ -4,6 +4,8 @@ import { Layout } from '@ui-kitten/components';
 import MovieScroll from 'src/components/MovieScroll';
 import { ScrollView } from 'react-native-gesture-handler';
 import MovieDescription from 'src/components/MovieDescription';
+import FeaturedMovie from 'src/components/FeaturedMovie';
+import { Octicons } from '@expo/vector-icons';
 
 const AllMovies = () => {
   const styles = StyleSheet.create({

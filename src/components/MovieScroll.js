@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Image, View, ActivityIndicator } from 'react-native';
+import { Image, View, ActivityIndicator, StyleSheet } from 'react-native';
 import { Text, Layout } from '@ui-kitten/components';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from '../services/api/index';
+import FastImage from 'react-native-fast-image'
 
 const MovieScroll = (props) => {
     const [loading, setLoading] = useState(true);
@@ -28,11 +29,12 @@ const MovieScroll = (props) => {
         AsyncStorage.getItem('USER_AUTH_TOKEN')
           .then((res) => {
             axios
-              .get(`movies/groupings/topten`, {
+              .get(`movies/groupings/topten?categoryId=${props.category_id}`, {
                 headers: { Authorization: res },
               })
               .then((response) => {
                 setLoading(false);
+                // console.log("response", response)
                 const topTen = response.data.message;
                 const data = response.data.data;
                 setTopTen(topTen);
@@ -52,7 +54,7 @@ const MovieScroll = (props) => {
         AsyncStorage.getItem('USER_AUTH_TOKEN')
           .then((res) => {
             axios
-              .get(`movies/groupings/popular`, {
+              .get(`movies/groupings/popular?categoryId=${props.category_id}`, {
                 headers: { Authorization: res },
               })
               .then((response) => {
@@ -76,7 +78,7 @@ const MovieScroll = (props) => {
         AsyncStorage.getItem('USER_AUTH_TOKEN')
           .then((res) => {
             axios
-              .get(`movies/groupings/soon`, {
+              .get(`movies/groupings/soon?categoryId=${props.category_id}`, {
                 headers: { Authorization: res },
               })
               .then((response) => {
@@ -100,7 +102,7 @@ const MovieScroll = (props) => {
         AsyncStorage.getItem('USER_AUTH_TOKEN')
           .then((res) => {
             axios
-              .get(`movies/groupings/recommended`, {
+              .get(`movies/groupings/recommended?categoryId=${props.category_id}`, {
                 headers: { Authorization: res },
               })
               .then((response) => {
@@ -124,7 +126,7 @@ const MovieScroll = (props) => {
         AsyncStorage.getItem('USER_AUTH_TOKEN')
           .then((res) => {
             axios
-              .get(`movies/groupings/viewed`, {
+              .get(`movies/groupings/viewed?categoryId=${props.category_id}`, {
                 headers: { Authorization: res },
               })
               .then((response) => {
@@ -185,6 +187,9 @@ const MovieScroll = (props) => {
           </View>
         );
       }
+      // return (
+      //   null
+      // )
     return (
         <View>
           <View style= {{marginVertical: 10}}>
@@ -193,22 +198,32 @@ const MovieScroll = (props) => {
                {topTen}
              </Text>  : null     
         }
-
+            {TopTenArr.length === 0 ? 
+            <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
             <ScrollView horizontal>
                 {TopTenArr.map(
                     (data, index) => {
                         return(
                         <TouchableOpacity  onPress= {() => navigation.navigate('ViewMovies', {movie_data: data, signal: true})}
                           key= {index}>
-                            <Image 
+                            {/* <Image 
                             defaultSource={require('../assets/images/movies/movie_placeholder.png')}
                             style= {{width: 100, height: 140, resizeMode: 'contain', marginRight: 5}} 
-                            source= {{uri: data.posterURL[0]}} />
+                            source= {{uri: data.posterURL[0]}} /> */}
+                    <FastImage
+                    style={styles.image}
+                    source={{
+                        uri: data.posterURL[0],
+                        priority: FastImage.priority.normal,
+                    }}
+                    // resizeMode={FastImage.resizeMode.contain}
+                />
                         </TouchableOpacity>
                         )
                     }
                 )}
             </ScrollView>
+            }     
         </View>
         <View style= {{marginVertical: 10}}>
             {props.show ? 
@@ -222,13 +237,15 @@ const MovieScroll = (props) => {
         {popularArray.map(
             (data, index) => {
                 return(
-                <TouchableOpacity onPress= {() =>
-                    navigation.navigate('ViewMovies', { movie_data: data })
-                  } key= {index}>
-                    <Image 
-                    defaultSource={require('../assets/images/movies/movie_placeholder.png')}
-                    style= {{width: 130, height: 150, resizeMode: 'contain'}} 
-                    source= {{uri: data.posterURL[0]}} />
+                <TouchableOpacity  onPress= {() => navigation.navigate('ViewMovies', {movie_data: data, signal: true})} key= {index}>
+                    <FastImage
+                    style={styles.image}
+                    source={{
+                        uri: data.posterURL[0],
+                        priority: FastImage.priority.normal,
+                    }}
+                    // resizeMode={FastImage.resizeMode.contain}
+                />
                 </TouchableOpacity>
                 )
             }
@@ -249,13 +266,15 @@ const MovieScroll = (props) => {
         {recommendedData.map(
             (data, index) => {
                 return(
-                <TouchableOpacity onPress= {() =>
-                    navigation.navigate('ViewMovies', { movie_data: data })
-                  } key= {index}>
-                    <Image 
-                    defaultSource={require('../assets/images/movies/movie_placeholder.png')}
-                    style= {{width: 130, height: 150, resizeMode: 'contain'}} 
-                    source= {{uri: data.posterURL[0]}} />
+                <TouchableOpacity  onPress= {() => navigation.navigate('ViewMovies', {movie_data: data, signal: true})} key= {index}>
+                    <FastImage
+                    style={styles.image}
+                    source={{
+                        uri: data.posterURL[0],
+                        priority: FastImage.priority.normal,
+                    }}
+                    // resizeMode={FastImage.resizeMode.contain}
+                />
                 </TouchableOpacity>
                 )
             }
@@ -266,7 +285,7 @@ const MovieScroll = (props) => {
         </View>
         <View style= {{marginVertical: 10}}>
             {props.show ? 
-            <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
+            <Text  onPress= {() => navigation.navigate('MyList')} style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {myList}
              </Text>  : null     
         }
@@ -276,13 +295,15 @@ const MovieScroll = (props) => {
         {myListData.map(
             (data, index) => {
                 return(
-                <TouchableOpacity onPress= {() =>
-                    navigation.navigate('ViewMovies', { movie_data: data })
-                  } key= {index}>
-                    <Image 
-                    defaultSource={require('../assets/images/movies/movie_placeholder.png')}
-                    style= {{width: 130, height: 150, resizeMode: 'contain'}} 
-                    source= {{uri: data.posterURL[0]}} />
+                <TouchableOpacity onPress= {() => navigation.navigate('ViewMovies', {movie_data: data, signal: true})} key= {index}>
+                    <FastImage
+                    style={styles.image}
+                    source={{
+                        uri: data.posterURL[0],
+                        priority: FastImage.priority.normal,
+                    }}
+                    // resizeMode={FastImage.resizeMode.contain}
+                />
                 </TouchableOpacity>
                 )
             }
@@ -293,7 +314,7 @@ const MovieScroll = (props) => {
         </View>
         <View style= {{marginVertical: 10}}>
             {props.show ? 
-            <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
+            <Text onPress= {() => navigation.navigate('ComingSoon')} style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {comingSoon}
              </Text>  : null     
         }
@@ -301,14 +322,17 @@ const MovieScroll = (props) => {
         <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
         <ScrollView horizontal>
         {comingSoonData.map(
-            (data, index) => {
-
+            (data, index) => { 
                 return(
-                <TouchableOpacity onPress= {() => navigation.navigate('MoviePage', {item: movie_data.item})}  key= {index}>
-                    <Image 
-                    defaultSource={require('../assets/images/movies/movie_placeholder.png')}
-                    style= {{width: 130, height: 150, resizeMode: 'contain'}} 
-                    source= {{uri: data.posterURL[0]}} />
+                <TouchableOpacity  onPress= {() => navigation.navigate('ViewMovies', {movie_data: data, signal: true})}  key= {index}>
+                    <FastImage
+                    style={styles.image}
+                    source={{
+                        uri: data.posterURL[0],
+                        priority: FastImage.priority.normal,
+                    }}
+                    // resizeMode={FastImage.resizeMode.contain}
+                />
                 </TouchableOpacity>
                 )
             }
@@ -319,7 +343,7 @@ const MovieScroll = (props) => {
         </View>
         <View style= {{marginVertical: 10}}>
             {props.show ? 
-            <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
+            <Text  onPress= {() => navigation.navigate('PreviouslyViewed')} style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {prevList}
              </Text>  : null     
         }
@@ -329,13 +353,15 @@ const MovieScroll = (props) => {
         {prevListData.map(
             (data, index) => {
                 return(
-                <TouchableOpacity onPress= {() =>
-                    navigation.navigate('ViewMovies', { movie_data: data })
-                  } key= {index}>
-                    <Image 
-                    defaultSource={require('../assets/images/movies/movie_placeholder.png')}
-                    style= {{width: 130, height: 150, resizeMode: 'contain'}} 
-                    source= {{uri: data.posterURL[0]}} />
+                <TouchableOpacity  onPress= {() => navigation.navigate('ViewMovies', {movie_data: data, signal: true})} key= {index}>
+                    <FastImage
+                    style={styles.image}
+                    source={{
+                        uri: data.posterURL[0],
+                        priority: FastImage.priority.normal,
+                    }}
+                    // resizeMode={FastImage.resizeMode.contain}
+                />
                 </TouchableOpacity>
                 )
             }
@@ -347,5 +373,13 @@ const MovieScroll = (props) => {
         </View>
     )
 }
+const styles = StyleSheet.create({
+  image: {
+    width: 100,
+    height: 140,
+    marginRight: 5,
+    resizeMode: 'cover',
+  }
+})
 
 export default MovieScroll

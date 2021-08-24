@@ -7,6 +7,11 @@ import {
 import { Layout, List, Text } from '@ui-kitten/components';
 import { TextIcon } from './IconPacks/TextIcon';
 import MovieComponent from './MovieComponent';
+import { LocaleContext, AppSettingsContext } from 'src/contexts';
+import { Rating, AirbnbRating } from 'react-native-ratings';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from '../services/api/index';
 
 const MovieDescription = (props) => {
   const styles = StyleSheet.create({

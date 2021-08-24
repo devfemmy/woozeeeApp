@@ -5,6 +5,7 @@ import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../../../../../services/api/index';
+import FastImage from 'react-native-fast-image'
 
 const MyList = (props) => {
 
@@ -26,6 +27,7 @@ const MyList = (props) => {
                 const data = response.data.data;
                 setList(myList);
                 setMyListData(data)
+                console.log("my List", data)
               })
               .catch((err) => {
                 setLoading(false);
@@ -36,85 +38,12 @@ const MyList = (props) => {
             console.log(err);
           });
       };
-    useEffect(() => {
-        getMyList()
-    }, [])
-    const data = [
-        {
-            id: 8,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 9,
-            imageSource: require('../../../../../../assets/images/movies/list.png')
-        },
-        {
-            id: 10,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 7,
-            imageSource: require('../../../../../../assets/images/movies/list3.png')
-        },
-        {
-            id: 8,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 9,
-            imageSource: require('../../../../../../assets/images/movies/list.png')
-        },
-        {
-            id: 10,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 1,
-            imageSource: require('../../../../../../assets/images/movies/list.png')
-        },
-        {
-            id: 2,
-            imageSource: require('../../../../../../assets/images/movies/list6.png')
-        },
-        {
-            id: 3,
-            imageSource: require('../../../../../../assets/images/movies/list.png')
-        },
-        {
-            id: 4,
-            imageSource: require('../../../../../../assets/images/movies/list6.png')
-        },
-        {
-            id: 5,
-            imageSource: require('../../../../../../assets/images/movies/list5.png')
-        },
-        {
-            id: 6,
-            imageSource: require('../../../../../../assets/images/movies/list4.png')
-        },
-        {
-            id: 7,
-            imageSource: require('../../../../../../assets/images/movies/list3.png')
-        },
-        {
-            id: 8,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 9,
-            imageSource: require('../../../../../../assets/images/movies/list.png')
-        },
-        {
-            id: 10,
-            imageSource: require('../../../../../../assets/images/movies/list2.png')
-        },
-        {
-            id: 7,
-            imageSource: require('../../../../../../assets/images/movies/list3.png')
-        },
-
-
-    ]
+      useEffect(() => {
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            getMyList()
+          });
+        return unsubscribe;
+      }, [props.navigation]);
     if (loading) {
         return (
         <>
@@ -123,9 +52,9 @@ const MyList = (props) => {
         navigation={props.navigation}
         screen="auth"
             />
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Layout level= "6" style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
            <ActivityIndicator  size="large" color="#FF5757" />
-          </View>
+          </Layout>
         </>
         );
       }
@@ -142,13 +71,21 @@ const MyList = (props) => {
             <Text>You have no movies in your list</Text>
         </View> : 
         <View style= {styles.flexContainer} >
-                   {data.map (
-                       item => {
+                   {myListData.map (
+                       (item, index) => {
                            return (
-                               <TouchableOpacity>
-                               <Image 
+                               <TouchableOpacity onPress= {() => props.navigation.navigate('ViewMovies', {movie_data: item, signal: true})} key= {index}>
+                               {/* <Image 
                                style= {styles.image}
-                               source= {item.imageSource} />
+                               source= {{uri: item.posterURL[0]}} /> */}
+                                   <FastImage
+                                    style={styles.image}
+                                    source={{
+                                        uri: item.posterURL[0],
+                                        priority: FastImage.priority.normal,
+                                    }}
+                                    // resizeMode={FastImage.resizeMode.contain}
+                                />
                                </TouchableOpacity>
                            )
                        }
@@ -172,8 +109,8 @@ const styles = StyleSheet.create({
         margin: 4
     },
     image: {
-        width: wp('31%'),
-        height: hp('20%'),
+        width: wp(31),
+        height: hp(25),
         resizeMode: 'cover',
         margin: 2
     }
