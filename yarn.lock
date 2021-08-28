@@ -6131,7 +6131,7 @@
   "resolved" "https://registry.npmjs.org/expo-linear-gradient/-/expo-linear-gradient-8.4.0.tgz"
   "version" "8.4.0"
 
-"expo-linking@~2.0.1":
+"expo-linking@^2.0.1", "expo-linking@~2.0.1":
   "integrity" "sha512-S+Bb5u1rlld6ZICKOQ4B/htHiIbtd9eJMpwXoWMcl68V+UNNxJisB5lUZePXWSoHlb0QbQfVOAf48u2WD588lQ=="
   "resolved" "https://registry.npmjs.org/expo-linking/-/expo-linking-2.0.1.tgz"
   "version" "2.0.1"

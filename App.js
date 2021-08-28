@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 
 import React, { Component, useState, useEffect } from 'react';
 
-import { Dimensions } from 'react-native';
+import { Dimensions, Linking } from 'react-native';
 
 import { enableScreens } from 'react-native-screens';
 

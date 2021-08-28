@@ -49,7 +49,7 @@ import { GeneralTextField } from 'src/components/FormFields';
 
 import firebase from '@react-native-firebase/app';
 
-import dynamicLinks from '@react-native-firebase/dynamic-links';
+import dl from '@react-native-firebase/dynamic-links';
 
 import '@react-native-firebase/auth';
 
@@ -82,6 +82,8 @@ import {
   IconSearch,
   IconCEye,
 } from 'src/components/CustomIcons';
+
+import axios from 'axios';
 
 import { Feather, Ionicons } from '@expo/vector-icons';
 
@@ -154,39 +156,54 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
     setUserList([...users]);
   };
 
-  // const generateLink = async (param, value) => {
-  //   const firebaseConfig = {
-  //     apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
-  //     authDomain: 'woozeee-d7f6c.firebaseapp.com',
-  //     databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
-  //     projectId: 'woozeee-d7f6c',
-  //     storageBucket: 'woozeee-d7f6c.appspot.com',
-  //     messagingSenderId: '979696525592',
-  //     appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
-  //     measurementId: 'G-XQKMT94R9R',
-  //   };
+  const generateLink = async (params, value) => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
 
-  //   if (!firebase.apps.length) {
-  //     firebase.initializeApp(firebaseConfig);
-  //   }
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
 
-  //   const links = firebase.dynamicLinks();
-  //   // console.log(links);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      json: true,
+      body: JSON.stringify({
+        dynamicLinkInfo: {
+          // ios: {
+          //   bundleId: 'app.woozeee.com',
+          //   appStoreId: '1549457766',
+          // },
+          // android: {
+          //   packageName: 'app.woozeee.com',
+          // },
+          domainUriPrefix: 'https://app.woozeee.com',
+          link: `https://app.woozeee.com/entry/?${params}=${value}`,
+          // social: JSON.stringify({
+          //   title: 'woozeee Challenges',
+          //   descriptionText: 'Challenge entry on woozeee',
+          //   imageUrl:
+          //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxO_eYxfA2ZQaIuJIIEuYm8d72bH2jgHwvBA&usqp=CAU',
+          // }),
+        },
+      }),
+    };
 
-  //   const _link = await firebase.dynamicLinks().buildShortLink({
-  //     link: `https://app.woozeee.com/?${param}=${value}`,
-  //     ios: {
-  //       bundleId: 'app.woozeee.com',
-  //       appStoreId: '1549457766',
-  //     },
-  //     android: {
-  //       packageName: 'app.woozeee.com',
-  //     },
-  //     domainUriPrefix: 'https://app.woozeee.com',
-  //   });
-
-  //   console.log(_link);
-  // };
+    const res = await fetch(
+      'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      requestOptions,
+    );
+    const _res = await res.json();
+    console.log(_res);
+  };
 
   const handleShare = async () => {
     try {
@@ -204,12 +221,13 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
           sheetRef.current.close();
         }
       } else if (result.action === Share.dismissedAction) {
-        alert('Action dismissed');
+        // alert('Action dismissed');
       }
       sheetRef.current.close();
     } catch (error) {
-      alert('An error occured');
-      console.log(error.message);
+      return;
+      // alert('An error occured');
+      // console.log(error.message);
     }
   };
 
@@ -818,7 +836,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                 width: '100%',
                 justifyContent: 'center',
               }}
-              onPress={handleShare}
+              onPress={() => generateLink('entries', item._id)}
             >
               <Text style={{ fontSize: 16 }} status="basic">
                 {t('shareTo')}

@@ -104,7 +104,7 @@ export default function MovieCard(props) {
           category="p2"
           style={{ textAlign: 'center', lineHeight: 20 }}
         >
-          {`${data.description}`}
+          {`${data.title}`}
         </Text>
       </View>
     </View>

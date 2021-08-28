@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "979696525592-fpbv2odsaupcljp7fuaqloaa73dbk0bi.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "app.woozeee.com",
-            "certificate_hash": "9349973d02d322cabfcf945bafb005df6e6ab316"
-          }
-        },
-        {
           "client_id": "979696525592-gjddn7tafhje4d5hn8o762d6s29f6ogg.apps.googleusercontent.com",
           "client_type": 3
         }
