@@ -33,7 +33,10 @@ import OverlayLoader from 'src/components/OverlayLoader';
 import useDisableAndroidExit from 'src/hooks/useDisableAndroidExit';
 
 import BackgroundVideo from 'src/components/BackgroundVideo';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 /* DATA */
 
@@ -131,55 +134,41 @@ export default function Home({ navigation }) {
   const fetchFromAsyncStorage = () => {
     // Fetch Data from Asynchstorage
 
-    AsyncStorage.getItem('fullName').then(
-      (res) => {
+    AsyncStorage.getItem('fullName')
+      .then((res) => {
         setFullName(res);
-      },
-    ).catch(
-      (err) => err,
-    );
-    AsyncStorage.getItem('insureCardNo').then(
-      (res) => {
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('insureCardNo')
+      .then((res) => {
         setInsureCardNo(res);
-      },
-    ).catch(
-      (err) => err,
-    );
-    AsyncStorage.getItem('walletCardNo').then(
-      (res) => {
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('walletCardNo')
+      .then((res) => {
         setWalletCardNo(res);
-      },
-    ).catch(
-      (err) => err,
-    );
-    AsyncStorage.getItem('rewardCardNo').then(
-      (res) => {
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('rewardCardNo')
+      .then((res) => {
         setRewardCardNo(res);
-      },
-    ).catch(
-      (err) => err,
-    );
-    AsyncStorage.getItem('insureAmt').then(
-      (res) => {
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('insureAmt')
+      .then((res) => {
         setInsureAmt(res);
-      },
-    ).catch(
-      (err) => err,
-    );
-    AsyncStorage.getItem('walletAmt').then(
-      (res) => {
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('walletAmt')
+      .then((res) => {
         setWalletAmt(res);
-      },
-    ).catch(
-      (err) => err,
-    );
-    AsyncStorage.getItem('rewardAmt').then(
-      (res) => {
+      })
+      .catch((err) => err);
+    AsyncStorage.getItem('rewardAmt')
+      .then((res) => {
         setRewardAmt(res);
-      },
-    ).catch(
-      (err) => err,
-    );
+      })
+      .catch((err) => err);
   };
 
   useEffect(() => {
@@ -260,9 +249,7 @@ export default function Home({ navigation }) {
               />
             </View>
             <Text category="h6" style={{ marginVertical: 5 }}>
-              Hello
-              {' '}
-              {fullname}
+              Hello {fullname}
             </Text>
             <Text style={{ marginVertical: 5 }}>{t('redeem')}</Text>
             <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
@@ -328,9 +315,7 @@ export default function Home({ navigation }) {
               />
             </View>
             <Text category="h6" style={{ marginVertical: 5 }}>
-              Hello
-              {' '}
-              {fullname}
+              Hello {fullname}
             </Text>
             <Text style={{ marginVertical: 5 }}>{t('acceptCharge')}</Text>
             <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
@@ -396,9 +381,7 @@ export default function Home({ navigation }) {
               />
             </View>
             <Text category="h6" style={{ marginVertical: 5 }}>
-              Hello
-              {' '}
-              {fullname}
+              Hello {fullname}
             </Text>
             <Text style={{ marginVertical: 5 }}>{t('completeTransfer')}</Text>
             <View style={{ marginTop: 10, alignSelf: 'center', width: '100%' }}>
@@ -490,9 +473,7 @@ export default function Home({ navigation }) {
                 />
               </View>
               <Text category="h6" style={{ marginVertical: 5 }}>
-                Hello
-                {' '}
-                {fullname}
+                Hello {fullname}
               </Text>
               <Text style={{ marginVertical: 5, textAlign: 'center' }}>
                 {t('marketComing')}
@@ -589,9 +570,7 @@ export default function Home({ navigation }) {
                 />
               </View>
               <Text category="h6" style={{ marginVertical: 5 }}>
-                Hello
-                {' '}
-                {fullname}
+                Hello {fullname}
               </Text>
               <Text style={{ marginVertical: 5, textAlign: 'center' }}>
                 {t('charityComing')}
@@ -666,13 +645,16 @@ export default function Home({ navigation }) {
           height: IS_PORTRAIT ? 140 : 120,
           width: '100%',
           borderRadius: 5,
-          resizeMode: 'contain'
+          resizeMode: 'contain',
         }}
       />
       <Text
         category="c2"
         style={{
-          position: 'absolute', bottom: IS_PORTRAIT ? 140/1.9 : 120/1.9, color: 'white', right: 10,
+          position: 'absolute',
+          bottom: IS_PORTRAIT ? 140 / 1.9 : 120 / 1.9,
+          color: 'white',
+          right: 10,
         }}
       >
         {` ${data.item.cardNum}`}
@@ -680,7 +662,10 @@ export default function Home({ navigation }) {
       <Text
         category="s2"
         style={{
-          position: 'absolute', bottom: IS_PORTRAIT ? 140/5 : 120/5, color: 'white', left: 20,
+          position: 'absolute',
+          bottom: IS_PORTRAIT ? 140 / 5 : 120 / 5,
+          color: 'white',
+          left: 20,
         }}
       >
         {fullname}

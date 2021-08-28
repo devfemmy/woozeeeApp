@@ -5,12 +5,15 @@ import {
   Image,
   TouchableOpacity,
   useWindowDimensions,
+  StyleSheet,
 } from 'react-native';
 
 // prettier-ignore
 import {
   Layout, Text, List, Button,
 } from '@ui-kitten/components';
+
+import { Video } from 'expo-av';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
@@ -29,6 +32,8 @@ import {
   IconCElectricity,
 } from 'src/components/CustomIcons';
 
+import Carousel from 'react-native-snap-carousel';
+
 /* DATA */
 const woozeeeCards = [
   {
@@ -42,6 +47,33 @@ const woozeeeCards = [
   {
     id: 3,
     banner: require('assets/images/banner/airtel-ad.png'),
+  },
+];
+
+const sponsorsAd = [
+  {
+    id: 1,
+    banner: {
+      uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/accessAd.mp4',
+    },
+  },
+  {
+    id: 2,
+    banner: {
+      uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/ubaAd.mp4',
+    },
+  },
+  {
+    id: 3,
+    banner: {
+      uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/globusAd.mp4',
+    },
+  },
+  {
+    id: 1,
+    banner: {
+      uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/axaAd.mp4',
+    },
   },
 ];
 
@@ -262,6 +294,22 @@ export default function BillPay({ navigation }) {
     </View>
   );
 
+  const _renderItemAds = ({ item, index }) => {
+    return (
+      <View key={index} style={styles.slide}>
+        <TouchableOpacity style={{ marginTop: 5 }}>
+          <Video
+            style={styles.slider}
+            source={item.banner}
+            isLooping={true}
+            shouldPlay={true}
+            resizeMode="cover"
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
@@ -273,13 +321,57 @@ export default function BillPay({ navigation }) {
         <List
           style={{ backgroundColor: 'transparent' }}
           ListHeaderComponent={renderHeaderArea}
+          ListFooterComponent={
+            <>
+              <Text
+                category="s1"
+                status="basic"
+                style={{
+                  // flex: 1,
+                  marginBottom: 10,
+                  // marginHorizontal: 10,
+                  marginLeft: 15,
+                }}
+              >
+                Our Partners
+              </Text>
+              <Carousel
+                // ref={(c) => { _carousel = c; }}
+                data={sponsorsAd}
+                renderItem={_renderItemAds}
+                sliderWidth={400}
+                itemWidth={350}
+                autoplay={true}
+                lockScrollWhileSnapping={true}
+                loop={true}
+                autoplayDelay={1000}
+                autoplayInterval={10000}
+              />
+            </>
+          }
           horizontal={!IS_PORTRAIT}
-          alwaysBounceHorizontal
-          alwaysBounceVertical
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />
+        {/* <View style={{ flex: 1, marginBottom: 15 }}>
+          
+        </View> */}
       </View>
     </Layout>
   );
 }
+
+const styles = StyleSheet.create({
+  slide: {
+    height: 200,
+  },
+  slider: {
+    width: '100%',
+    borderRadius: 5,
+    resizeMode: 'cover',
+    height: '100%',
+  },
+  container: {
+    paddingHorizontal: 20,
+  },
+});

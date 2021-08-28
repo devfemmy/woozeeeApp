@@ -2523,6 +2523,11 @@
   "resolved" "https://registry.npmjs.org/@react-native-firebase/database/-/database-11.5.0.tgz"
   "version" "11.5.0"
 
+"@react-native-firebase/dynamic-links@^11.5.0":
+  "integrity" "sha512-YzRiCazX2Gggs97+bAmSB/jGtafJqlPJvAPQ8YtNZw2UxWQ7crC25L2ueRj6+OJN9YcE4iPCYfrwYCerVJ8wnQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/dynamic-links/-/dynamic-links-11.5.0.tgz"
+  "version" "11.5.0"
+
 "@react-native-firebase/firestore@^11.5.0":
   "integrity" "sha512-yZv5bxTNICckRtEucb9SSX0slXN4CbN5ZT7tFh9Pm1CTEtU2jVcSC7qhG5l5SqmcoMOBnFavm8Mbti6BY5/1cg=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-11.5.0.tgz"

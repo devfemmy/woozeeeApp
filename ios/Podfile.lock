@@ -314,6 +314,9 @@ PODS:
   - Firebase/Database (7.11.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 7.11.0)
+  - Firebase/DynamicLinks (7.11.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 7.11.0)
   - Firebase/Firestore (7.11.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 7.11.0)
@@ -337,6 +340,8 @@ PODS:
   - FirebaseDatabase (7.11.0):
     - FirebaseCore (~> 7.0)
     - leveldb-library (~> 1.22)
+  - FirebaseDynamicLinks (7.11.0):
+    - FirebaseCore (~> 7.0)
   - FirebaseFirestore (7.11.0):
     - abseil/algorithm (= 0.20200225.0)
     - abseil/base (= 0.20200225.0)
@@ -715,6 +720,11 @@ PODS:
     - Firebase/Database (= 7.11.0)
     - React-Core
     - RNFBApp
+  - RNFBDynamicLinks (11.5.0):
+    - Firebase/DynamicLinks (= 7.11.0)
+    - GoogleUtilities/AppDelegateSwizzler
+    - React-Core
+    - RNFBApp
   - RNFBFirestore (11.5.0):
     - Firebase/Firestore (= 7.11.0)
     - React-Core
@@ -829,6 +839,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
+  - "RNFBDynamicLinks (from `../node_modules/@react-native-firebase/dynamic-links`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -867,6 +878,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseDatabase
+    - FirebaseDynamicLinks
     - FirebaseFirestore
     - FirebaseStorage
     - GoogleDataTransport
@@ -1008,6 +1020,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/auth"
   RNFBDatabase:
     :path: "../node_modules/@react-native-firebase/database"
+  RNFBDynamicLinks:
+    :path: "../node_modules/@react-native-firebase/dynamic-links"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBStorage:
@@ -1090,6 +1104,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
   FirebaseCoreDiagnostics: 68ad972f99206cef818230f3f3179d52ccfb7f8c
   FirebaseDatabase: 6c39fbf1c8514a2f32e610f9bf9ef30c535dc15a
+  FirebaseDynamicLinks: 07f101c20bb40fd39f6b3e5278a64a5f2f660dc1
   FirebaseFirestore: f495bb336b23eca23ea5d3605dce2a4cc214fde9
   FirebaseStorage: 8542711850ca181a3931c0ed483006a7b46039e7
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
@@ -1144,6 +1159,7 @@ SPEC CHECKSUMS:
   RNFBApp: 9c90f9d576861947ba75fe0830567c570bcbcf6d
   RNFBAuth: 99fdbce04ff3d39e57a7a3956d632ee69145685b
   RNFBDatabase: 64aaecd9e48c6378864ef7d0fe65cc5f312987ed
+  RNFBDynamicLinks: 53f5621a2ab44b6f967f2240f1b7d56f8b6c74de
   RNFBFirestore: bedb9727c0df9a1f1ec23b5e23988075a4cbea78
   RNFBStorage: 052a32c5af38b106e4d6b0a296df304d97be995e
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39

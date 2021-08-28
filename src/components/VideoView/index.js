@@ -85,6 +85,8 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 
 import { TextInput } from 'react-native';
 
+import Search from '../../screens/User/Common/Search/index';
+
 export default function VideoView({
   data,
   viewHeight,
@@ -98,6 +100,8 @@ export default function VideoView({
   const { appState } = useContext(AppSettingsContext);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
+
+  const [shareData, setShareData] = useState(null);
 
   const [appTheme, setTheme] = useState('');
   const [_userId, setUserId] = useState('');
@@ -308,8 +312,15 @@ export default function VideoView({
       });
   };
 
-  const sharePostToDm = async (currentUserId, guestUserId, postUrl, name) => {
-    // console.log(currentUserId, guestUserId, postUrl);
+  const sharePostToDm = async (
+    currentUserId,
+    guestUserId,
+    postUrl,
+    name,
+    guestUserImg,
+  ) => {
+    // console.log('shareData', shareData);
+    console.log(currentUserId, guestUserId, postUrl, name);
     SendMessage(currentUserId, guestUserId, postUrl, '')
       .then((res) => {
         // console.log(res);
@@ -327,7 +338,7 @@ export default function VideoView({
         alert(err);
       });
 
-    AddUser(name, guestUserId);
+    AddUser(name, guestUserId, guestUserImg);
 
     sendSheet.current.close();
   };
@@ -361,8 +372,9 @@ export default function VideoView({
     await viewVideo(item_id);
   };
 
-  const handleSend = async () => {
+  const handleSend = async (data) => {
     sendSheet.current.open();
+    setShareData(data.item);
   };
 
   const handleOpenSheet = () => sheetRef.current.open();
@@ -391,6 +403,9 @@ export default function VideoView({
   useEffect(() => {
     fetchUsers();
   }, [searchForm.value]);
+
+  let params = { chat: null };
+  let _route = { params };
 
   return useMemo(
     () => (
@@ -618,7 +633,7 @@ export default function VideoView({
                   marginHorizontal: 8,
                 }}
                 onPress={
-                  () => handleSend()
+                  () => handleSend(data)
                   // props.navigation.navigate('DeepLinkPost', { _id: item._id })
                 }
               />
@@ -777,19 +792,6 @@ export default function VideoView({
                 {t('makeReport')}
               </Text>
             </Button>
-            {/* <Divider style={{ marginVertical: 2, width: '100%' }} />
-          <Button
-            appearance="ghost"
-            status="basic"
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {t('downloadMedia')}
-            </Text>
-          </Button> */}
             <Divider style={{ marginVertical: 2, width: '100%' }} />
             <Button
               appearance="ghost"
@@ -854,73 +856,19 @@ export default function VideoView({
                   onPress={() => sendSheet.current.close()}
                 />
               </View>
-              <View
-                style={{
-                  paddingTop: 20,
-                  paddingHorizontal: 20,
-                }}
-              >
-                <Input
-                  style={{
-                    width: '100%',
-                  }}
-                  size="medium"
-                  value={searchForm.value}
-                  accessibilityLabel="Search"
-                  placeholder={'Search'}
-                  status={searchForm.status}
-                  onChangeText={handleChange}
-                  accessoryLeft={IconSearch}
-                />
-              </View>
-              {userList.length > 0 ? (
-                <List
-                  style={{
-                    backgroundColor: 'transparent',
-                    paddingVertical: 10,
-                  }}
-                  alwaysBounceVertical
-                  showsHorizontalScrollIndicator={false}
-                  showsVerticalScrollIndicator={false}
-                  data={userList}
-                  keyExtractor={(_, i) => i.toString()}
-                  renderItem={(user, index) =>
-                    searchForm.value.length > 1 && (
-                      <UserTemplate
-                        key={index}
-                        userProfilePic={require('../../assets/images/user/user1.png')}
-                        displayName={`${user.item.fName} ${user.item.sName}`}
-                        userId={user.item._id}
-                        navigation={navigation}
-                        sendTo={() =>
-                          sharePostToDm(
-                            _userId,
-                            user.item._id,
-                            `https://app.woozeee.com/entry/${item._id}`,
-                            user.item.fName + user.item.sName,
-                          )
-                        }
-                      />
-                    )
-                  }
-                  getItemLayout={(data, index) => ({
-                    length: 150,
-                    offset: 150 * index,
-                    index,
-                  })}
-                />
-              ) : (
-                <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Text>User not found</Text>
-                </View>
-              )}
+              <Search
+                route={_route}
+                shareToDm={true}
+                shareToDmFn={(_name, _guestUserId, _guestUserImg) =>
+                  sharePostToDm(
+                    _userId,
+                    _guestUserId, //user's dm
+                    `https://app.woozeee.com/entry/${item._id}`,
+                    _name,
+                    _guestUserImg,
+                  )
+                }
+              />
             </View>
           </Layout>
         </RBSheet>

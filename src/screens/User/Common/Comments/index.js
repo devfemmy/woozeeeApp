@@ -90,6 +90,7 @@ export default function Comments({ route, navigation }) {
       .collection('entryComments')
       .doc(postItem._id.trim())
       .collection('comments')
+      .orderBy('sentAt', 'asc')
       .get();
 
     const _comments = [];

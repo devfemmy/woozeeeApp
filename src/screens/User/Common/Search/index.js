@@ -19,86 +19,96 @@ import { IconSearch } from 'src/components/CustomIcons';
 import { getUserData } from '../../../../services/Requests/index';
 
 import BackButton from '../../../../components/TopNavigationArea/components/BackButton';
+
 import UserRoute from 'src/router/User/index';
 
-const UserTemplate = ({
-  userProfilePic,
-  displayName,
-  userId,
-  navigation,
-  chat,
-}) => {
-  const routeUserProfile = async () => {
-    const userData = await getUserData(userId);
-    const { data } = userData;
-    // console.log('my Data', data);
-    if (chat === true) {
-      await navigation.navigate('ChatScreen', {
-        name: `${data.user.fName} ${data.user.sName}`,
-        guestUid: data.user._id,
-        image: data.user.imgUrl,
-      });
-    } else {
-      await navigation.navigate('UserProfile', data);
-    }
+export default function Search({ navigation, route, shareToDm, shareToDmFn }) {
+  const UserTemplate = ({
+    userProfilePic,
+    displayName,
+    userId,
+    navigation,
+    chat,
+    _shareToDm,
+    shareFn,
+  }) => {
+    const share = () => {
+      // displayName, userId
+      shareFn(displayName, userId, userProfilePic);
+      // return;
+    };
+
+    const routeUserProfile = async () => {
+      const userData = await getUserData(userId);
+      const { data } = userData;
+      // console.log('my Data', data);
+      if (chat === true) {
+        await navigation.navigate('ChatScreen', {
+          name: `${data.user.fName} ${data.user.sName}`,
+          guestUid: data.user._id,
+          image: data.user.imgUrl,
+        });
+      } else if (_shareToDm == true) {
+        // console.log(displayName, userId);
+        share();
+      } else {
+        await navigation.navigate('UserProfile', data);
+      }
+    };
+
+    return (
+      <>
+        <Layout
+          level="6"
+          style={{
+            marginVertical: 5,
+            paddingHorizontal: 10,
+            paddingVertical: 5,
+          }}
+        >
+          <TouchableOpacity
+            activeOpacity={0.75}
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              // justifyContent: 'center',
+              paddingHorizontal: 5,
+              // paddingVertical: 5,
+            }}
+            onPress={routeUserProfile}
+          >
+            <LinearGradient
+              colors={['#043F7C', '#FF5757']}
+              style={{
+                height: 34,
+                width: 34,
+                borderRadius: 17,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Image
+                source={{ uri: userProfilePic }}
+                style={{
+                  height: 30,
+                  width: 30,
+                  borderRadius: 15,
+                  borderColor: 'white',
+                }}
+              />
+            </LinearGradient>
+            <View style={{ flex: 1, marginHorizontal: 10 }}>
+              <Text category="s2">{displayName}</Text>
+            </View>
+          </TouchableOpacity>
+        </Layout>
+        <Divider />
+      </>
+    );
   };
 
-  return (
-    <>
-      <Layout
-        level="6"
-        style={{
-          marginVertical: 5,
-          paddingHorizontal: 10,
-          paddingVertical: 5,
-        }}
-      >
-        <TouchableOpacity
-          activeOpacity={0.75}
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            // justifyContent: 'center',
-            paddingHorizontal: 5,
-            // paddingVertical: 5,
-          }}
-          onPress={routeUserProfile}
-        >
-          <LinearGradient
-            colors={['#043F7C', '#FF5757']}
-            style={{
-              height: 34,
-              width: 34,
-              borderRadius: 17,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Image
-              source={{ uri: userProfilePic }}
-              style={{
-                height: 30,
-                width: 30,
-                borderRadius: 15,
-                borderColor: 'white',
-              }}
-            />
-          </LinearGradient>
-          <View style={{ flex: 1, marginHorizontal: 10 }}>
-            <Text category="s2">{displayName}</Text>
-          </View>
-        </TouchableOpacity>
-      </Layout>
-      <Divider />
-    </>
-  );
-};
-
-export default function Search({ navigation, route }) {
-  // prettier-ignore
-  // const UserPostsArea = () => WithDefaultFetch(UsersPosts, challengeUrl, PLACEHOLDER_CONFIG);
-  const {chat} = route.params;
+  const { chat } = route.params;
   const [form, setFormValues] = useState({
     value: '',
     status: 'basic',
@@ -138,19 +148,22 @@ export default function Search({ navigation, route }) {
           flexDirection: 'row',
           alignItems: 'center',
           marginVertical: 10,
-          marginHorizontal: 15,
+          marginHorizontal: navigation ? 15 : 0,
         }}
       >
-        <BackButton
-          style={{
-            marginLeft: 10,
-          }}
-          navigation={navigation}
-        />
+        {navigation && (
+          <BackButton
+            style={{
+              marginLeft: 10,
+            }}
+            navigation={navigation}
+          />
+        )}
         <Input
           style={{
-            width: '70%',
-            marginHorizontal: 20,
+            width: navigation ? '70%' : '100%',
+            marginHorizontal: navigation ? 20 : 0,
+            paddingHorizontal: navigation ? 0 : 15,
           }}
           size="medium"
           value={form.value}
@@ -174,6 +187,9 @@ export default function Search({ navigation, route }) {
             form.value.length > 1 ? (
               <UserTemplate
                 key={index}
+                chat={chat}
+                _shareToDm={shareToDm}
+                shareFn={shareToDmFn}
                 userProfilePic={user.item.imgUrl}
                 displayName={`${user.item.fName} ${user.item.sName}`}
                 userId={user.item._id}
@@ -183,6 +199,8 @@ export default function Search({ navigation, route }) {
               <UserTemplate
                 key={index}
                 chat={chat}
+                _shareToDm={shareToDm}
+                shareFn={shareToDmFn}
                 userProfilePic={user.item.imgUrl}
                 displayName={`${user.item.fName} ${user.item.sName}`}
                 userId={user.item._id}
@@ -197,27 +215,6 @@ export default function Search({ navigation, route }) {
           })}
         />
       ) : null}
-
-      {/* <ScrollView
-        style={{ flex: 1, paddingVertical: 10 }}
-        alwaysBounceVertical
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      >
-        <View style={{ paddingBottom: 20 }}>
-          <View style={{ paddingHorizontal: 15 }}>
-            {userList.map((user, index) => (
-              <UserTemplate
-                key={index}
-                userProfilePic={require('../../../../assets/images/user/user1.png')}
-                displayName={`${user.fName} ${user.sName}`}
-                userId={user._id}
-                navigation={navigation}
-              />
-            ))}
-          </View>
-        </View>
-      </ScrollView> */}
     </Layout>
   );
 }

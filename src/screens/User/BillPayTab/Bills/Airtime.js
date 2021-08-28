@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useContext, useState, useRef, useCallback,
+  useContext, useState, useRef, useCallback, useEffect
 } from 'react';
 
 import {
@@ -22,6 +22,7 @@ import {
   Divider,
   Radio,
   RadioGroup,
+  Spinner,
 } from '@ui-kitten/components';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
@@ -31,10 +32,13 @@ import InteractIcon from 'src/components/InteractIcon';
 import { LocaleContext, AppSettingsContext, AuthContext } from 'src/contexts';
 
 import { GeneralTextField } from 'src/components/FormFields';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
+import { getEmail, getToken } from '../../../../api/index';
 
 import {
   IconArrowDown,
@@ -49,43 +53,35 @@ import { Toast, Content, Root } from 'native-base';
 const ACCOUNTS = [
   {
     id: 1,
+    title: 'woozeee Wallet - ₦ 99,394.99',
+    image: require('assets/images/banks/woozeee.png'),
+  },
+  {
+    id: 2,
+    title: 'Access Bank - ₦ 34,677.02',
+    image: require('assets/images/banks/access.png'),
+  },
+  // {
+  //   id: 3,
+  //   title: 'UBA - ₦ 25,500.44',
+  //   image: require('assets/images/banks/uba.png'),
+  // },
+  {
+    id: 4,
+    title: 'Globus Bank -₦ 24,222.18',
+    image: require('assets/images/banks/globus.png'),
+  },
+  {
+    id: 5,
+    title: 'Zenith Bank -₦ 1,000.00',
+    image: require('assets/images/banks/zenith.png'),
+  },
+  {
+    id: 6,
     title: 'Online Payment',
-    // image: require('assets/images/banks/woozeee.png'),
+    image: require('assets/images/banks/others.png'),
   },
 ];
-
-// const ACCOUNTS = [
-//   {
-//     id: 1,
-//     title: 'woozeee Wallet - ₦ 99,394.99',
-//     image: require('assets/images/banks/woozeee.png'),
-//   },
-//   {
-//     id: 2,
-//     title: 'Access Bank - ₦ 34,677.02',
-//     image: require('assets/images/banks/access.png'),
-//   },
-//   {
-//     id: 3,
-//     title: 'UBA - ₦ 25,500.44',
-//     image: require('assets/images/banks/uba.png'),
-//   },
-//   {
-//     id: 4,
-//     title: 'Globus Bank -₦ 24,222.18',
-//     image: require('assets/images/banks/globus.png'),
-//   },
-//   {
-//     id: 5,
-//     title: 'Zenith Bank -₦ 1,000.00',
-//     image: require('assets/images/banks/zenith.png'),
-//   },
-//   {
-//     id: 6,
-//     title: 'Pay with other Banks',
-//     image: require('assets/images/banks/others.png'),
-//   },
-// ];
 
 /* DATA */
 const woozeeeCards = [
@@ -112,7 +108,19 @@ const woozeeeCards = [
 ];
 
 export default function Airtime({ navigation }) {
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
+
+  const [emailAddress, setEmail] = useState('');
+
+  const email = async () => {
+    const res = await getEmail();
+    setEmail(res);
+  };
+  email();
+
   const { width, height } = useWindowDimensions();
+
+  const [isLoading, setLoading] = useState(false);
 
   const IS_PORTRAIT = height > width;
 
@@ -141,6 +149,7 @@ export default function Airtime({ navigation }) {
     amount: '',
     pin: '',
     network: '',
+    account: '',
   });
 
   const handleAccountChange = (index) => {
@@ -163,37 +172,46 @@ export default function Airtime({ navigation }) {
     }
   };
 
-  const handleOpenAccountSheet = () => accountSheetRef.current.open();
-
-  const handleOpenConfirmSheet = () => confirmSheetRef.current.open();
-
-  const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
-
-  const handleConfirmTransaction = async () => {
-    confirmSheetRef.current.close();
+  const handleOpenConfirmSheet = async () => {
+    setLoading(true);
     const res = await verifyPin(form.pin);
 
-    const { error } = res;
-
-    console.log(res);
-
-    if (res.message === 'User pin is Incorrect') {
+    if (
+      form.mobile !== '' &&
+      form.pin !== '' &&
+      form.network !== '' &&
+      form.amount !== ''
+    ) {
+      if (res.message === 'User pin is Incorrect' || res.error === true) {
+        Toast.show({
+          text: 'User pin is Incorrect/Invalid',
+          position: 'bottom',
+          type: 'danger',
+          duration: 3000,
+        });
+      } else {
+        setTimeout(() => {
+          navigation.navigate('TransactionSummary', {
+            form,
+            serviceType: 'Airtime Purchase',
+          });
+        }, 1000);
+      }
+      // setLoading(false);
+    } else {
       Toast.show({
-        text: 'User pin is Incorrect',
-        // buttonText: 'Okay',
-        position: 'bottom',
+        text: 'All fields must be filled to proceed',
+        position: 'top',
         type: 'danger',
         duration: 3000,
       });
-    } else {
-      navigation.navigate('FlutterPay', {
-        title: 'Airtime Purchase',
-        price: form.amount,
-        phoneNumber: form.mobile,
-        pin: form.pin,
-        network: form.network,
-      });
     }
+    setLoading(false);
+  };
+
+  const handleConfirmTransaction = async () => {
+    confirmSheetRef.current.close();
+    setLoading(false);
   };
 
   // prettier-ignore
@@ -314,21 +332,7 @@ export default function Airtime({ navigation }) {
           </View>
         </View>
         <View style={{ width: '100%', paddingHorizontal: 15, paddingTop: 10 }}>
-          {/* <View style={{ paddingVertical: 5 }}>
-            <GeneralTextField
-              type="pin"
-              label={t('transactionPin')}
-              autoCompleteType="password"
-              textContentType="password"
-              keyboardType="numeric"
-              maxLength={4}
-              validate="password"
-              secure
-              value={form.pin}
-              setFormValues={(fn)=> setFormValues(fn(form))}
-              validate="required"
-            />
-          </View> */}
+          
           <View style={{ paddingTop: 10 }}>
             <Button
               status="danger"
@@ -350,7 +354,7 @@ export default function Airtime({ navigation }) {
     () => (
       <RBSheet
         ref={accountSheetRef}
-        height={250}
+        height={410}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -367,7 +371,7 @@ export default function Airtime({ navigation }) {
             flex: 1,
             width: '100%',
             alignItems: 'flex-start',
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start',
             paddingBottom: 30,
           }}
         >
@@ -395,7 +399,7 @@ export default function Airtime({ navigation }) {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      width: '100%',
+                      width: wp('80%'),
                     }}
                   >
                     <Text category="s2">{option.title}</Text>
@@ -411,13 +415,15 @@ export default function Airtime({ navigation }) {
               ))}
             </RadioGroup>
           </View>
+          <Divider style={{ marginVertical: 20, width: '100%', height: 2 }} />
           <View
             style={{
-              paddingVertical: 20,
               paddingHorizontal: 20,
               width: '100%',
             }}
           >
+            {/* <Button onPress={() => console.log('+++++')}>Press</Button> */}
+
             <Button
               status="danger"
               accessibilityLiveRegion="assertive"
@@ -537,9 +543,9 @@ export default function Airtime({ navigation }) {
                     keyboardType="number-pad"
                     validate="required"
                     setFormValues={setFormValues}
-                    // accessoryLeft={IconCNaira}
                   />
                 </View>
+
                 <View style={{ paddingVertical: 5 }}>
                   <GeneralTextField
                     type="pin"
@@ -553,34 +559,18 @@ export default function Airtime({ navigation }) {
                     value={form.pin}
                     setFormValues={setFormValues}
                     validate="required"
-                    // accessoryLeft={IconCNaira}
                   />
                 </View>
-                {/* <View style={{ paddingVertical: 10 }}>
-                <Text
-                  category="label"
-                  appearance="hint"
-                  style={{ marginBottom: 5 }}
-                >
-                  {t('paymentAccount')}
-                </Text>
-                <Button
-                  appearance="outline"
-                  accessoryRight={IconArrowDown}
-                  style={{ justifyContent: 'space-between' }}
-                  onPress={handleOpenAccountSheet}
-                >
-                  <Text>{form.account || t('paymentAccount')}</Text>
-                </Button>
-              </View> */}
                 <View style={{ paddingVertical: 20 }}>
                   <Button
                     status="danger"
                     size="large"
                     accessibilityLiveRegion="assertive"
                     accessibilityComponentType="button"
+                    accessoryLeft={isLoading ? renderSpinner : null}
                     accessibilityLabel="Continue"
                     onPress={handleOpenConfirmSheet}
+                    disabled={isLoading}
                   >
                     <Text status="control">{t('proceed')}</Text>
                   </Button>

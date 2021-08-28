@@ -427,6 +427,46 @@ export default function useAuth() {
         return result;
       },
 
+      //electric bill pay
+      verifyMeter: async (data) => {
+        // const form = { d };
+        // console.log(JSON.stringify(data));
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/bill-payment/verify-meter',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `${await getToken()}`,
+            },
+            body: JSON.stringify(data),
+          },
+        );
+        const result = await res.json();
+        return result;
+      },
+
+      //tv bill subscriptions
+      verifyCard: async (data) => {
+        // const form = { d };
+        // console.log(JSON.stringify(data));
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/bill-payment/verify-card',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `${await getToken()}`,
+            },
+            body: JSON.stringify(data),
+          },
+        );
+        const result = await res.json();
+        return result;
+      },
+
       verifyAction: async (verificationCode) => {
         const tokenValue = {
           email: verificationCode.emailAddress,

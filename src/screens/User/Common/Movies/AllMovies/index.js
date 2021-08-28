@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from 'react';
-import { Dimensions, Image, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { Layout} from '@ui-kitten/components';
+import React, { useState } from 'react';
+import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import { Layout } from '@ui-kitten/components';
 import MovieScroll from 'src/components/MovieScroll';
 import { ScrollView } from 'react-native-gesture-handler';
 import MovieDescription from 'src/components/MovieDescription';
 import FeaturedMovie from 'src/components/FeaturedMovie';
-import { Octicons } from '@expo/vector-icons'; 
+import { Octicons } from '@expo/vector-icons';
 
 const AllMovies = () => {
     const [mute, setMuted] = useState(false);
@@ -59,4 +59,4 @@ const AllMovies = () => {
             </Layout>)
 }
 
-export default AllMovies
+export default AllMovies;

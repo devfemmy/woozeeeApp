@@ -8,8 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { getEmail, getToken } from '../../api/index';
 
 const FlutterPay = ({ route, navigation }) => {
-  const {data} = route.params
-  console.log("data payment", data)
+  const { data } = route.params;
+  console.log('data payment', data);
   const [emailAddress, setEmail] = useState('');
   const email = async () => {
     const res = await getEmail();
@@ -46,11 +46,11 @@ const FlutterPay = ({ route, navigation }) => {
   // };
   const handleRedirect = (response) => {
     if (response.status === 'cancelled') {
-      return 
+      return;
     } else {
-    navigation.navigate('MoviePage', {item:data})
+      navigation.navigate('MoviePage', { item: data });
     }
-  }
+  };
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -61,14 +61,14 @@ const FlutterPay = ({ route, navigation }) => {
       />
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <PayWithFlutterwave
-          onRedirect={(res) => handleRedirect(res)}
+          onRedirect={handleRedirect}
           options={{
             tx_ref: uuidv4(),
             authorization: 'FLWPUBK_TEST-6de3d70ac2e4f0b11def04ff70ca74fd-X',
             customer: {
               email: emailAddress,
             },
-            amount: data.price,
+            amount: 30,
             currency: 'NGN',
             payment_options: 'card',
           }}

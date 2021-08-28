@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useContext, useState, useRef, useCallback,
+  useContext, useState, useRef, useCallback, useEffect
 } from 'react';
 
 import {
@@ -22,15 +22,18 @@ import {
   Divider,
   Radio,
   RadioGroup,
+  Spinner,
 } from '@ui-kitten/components';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import InteractIcon from 'src/components/InteractIcon';
 
-import { LocaleContext, AppSettingsContext } from 'src/contexts';
+import { LocaleContext, AppSettingsContext, AuthContext } from 'src/contexts';
 
 import { GeneralTextField } from 'src/components/FormFields';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   IconArrowDown,
@@ -39,10 +42,21 @@ import {
   IconCPhoneBookFill,
   IconClose,
 } from 'src/components/CustomIcons';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
+import {
+  FlutterwaveInit,
+  PayWithFlutterwave,
+  FlutterwaveButton,
+} from 'flutterwave-react-native';
+
+import { getEmail, getToken } from '../../../../api/index';
+
+import { Toast, Content, Root } from 'native-base';
 
 const ACCOUNTS = [
   {
@@ -55,11 +69,11 @@ const ACCOUNTS = [
     title: 'Access Bank - ₦ 34,677.02',
     image: require('assets/images/banks/access.png'),
   },
-  {
-    id: 3,
-    title: 'UBA - ₦ 25,500.44',
-    image: require('assets/images/banks/uba.png'),
-  },
+  // {
+  //   id: 3,
+  //   title: 'UBA - ₦ 25,500.44',
+  //   image: require('assets/images/banks/uba.png'),
+  // },
   {
     id: 4,
     title: 'Globus Bank -₦ 24,222.18',
@@ -72,7 +86,7 @@ const ACCOUNTS = [
   },
   {
     id: 6,
-    title: 'Pay with other Banks',
+    title: 'Online Payment',
     image: require('assets/images/banks/others.png'),
   },
 ];
@@ -83,26 +97,35 @@ const woozeeeCards = [
     id: 1,
     banner: require('assets/images/card/dstv.png'),
     title: 'DSTV',
+    serviceId: 'dstv',
   },
   {
     id: 2,
     banner: require('assets/images/card/gotv.png'),
     title: 'GOTV',
+    serviceId: 'gotv',
   },
   {
     id: 3,
-    banner: require('assets/images/card/irokotv.png'),
-    title: 'IROKO TV',
-  },
-  {
-    id: 4,
-    banner: require('assets/images/card/lindaikejitv.png'),
-    title: 'LINDAIKEJI TV',
+    banner: require('assets/images/card/startimes.jpg'),
+    title: 'StarTimes',
+    serviceId: 'startimes',
   },
 ];
 
 export default function CableTv({ navigation }) {
+  const renderSpinner = () => <Spinner size="tiny" status="basic" />;
+
   const { width, height } = useWindowDimensions();
+
+  const [emailAddress, setEmail] = useState('');
+
+  const email = async () => {
+    const res = await getEmail();
+    setEmail(res);
+  };
+
+  email();
 
   const IS_PORTRAIT = height > width;
 
@@ -110,7 +133,19 @@ export default function CableTv({ navigation }) {
 
   const [activeOperator, setActiveOperator] = useState(null);
 
+  const [isLoading, setLoading] = useState(false);
+
+  const [customerName, setCustomerName] = useState('');
+
+  const { authOptions } = useContext(AuthContext);
+
+  const { verifyPin, verifyCard } = authOptions;
+
   const [selectedOption, setSelectedOption] = useState(0);
+
+  const [serviceId, setServiceId] = useState(null);
+
+  const [bundles, setBundles] = useState([]);
 
   const t = useContext(LocaleContext);
 
@@ -120,15 +155,46 @@ export default function CableTv({ navigation }) {
 
   const accountSheetRef = useRef(null);
 
+  const productSheetRef = useRef(null);
+
   const confirmSheetRef = useRef(null);
 
   const [form, setFormValues] = useState({
     cardNumber: '',
-    channelDesc: '',
+    // channelDesc: '',
+    mobile: '',
     amount: '',
     pin: '',
-    account: '',
+    product: '',
+    variationCode: '',
+    serviceId: '',
+    requestId: '',
   });
+
+  const fetchBundles = async () => {
+    const result = await fetch(
+      `https://apis.woozeee.com/api/v1/bill-payment/variants?serviceId=${serviceId}&`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `${await getToken()}`,
+        },
+      },
+    );
+
+    const response = await result.json();
+
+    const {
+      variants: { content },
+    } = response;
+    setBundles(content.varations);
+  };
+
+  useEffect(() => {
+    fetchBundles();
+  }, [serviceId]);
 
   const handleAccountChange = (index) => {
     setSelectedOption(index);
@@ -143,25 +209,213 @@ export default function CableTv({ navigation }) {
       setActiveOperator(null);
     } else {
       setActiveOperator(i);
+      setFormValues((prevState) => ({
+        ...prevState,
+        product: '',
+      }));
+      setServiceId(woozeeeCards[i - 1].serviceId);
     }
   };
 
-  const handleOpenAccountSheet = () => accountSheetRef.current.open();
+  const handleOpenAccountSheet = async () => {
+    const res = await verifyPin(form.pin);
 
-  const handleOpenConfirmSheet = () => confirmSheetRef.current.open();
+    if (
+      form.mobile !== '' &&
+      form.pin !== '' &&
+      form.cardNumber !== '' &&
+      form.product !== '' &&
+      form.variationCode !== '' &&
+      form.serviceId !== ''
+    ) {
+      if (res.message === 'User pin is Incorrect' || res.error === true) {
+        Toast.show({
+          text: 'User pin is Incorrect/Invalid',
+          position: 'bottom',
+          type: 'danger',
+          duration: 3000,
+        });
+      } else {
+        accountSheetRef.current.open();
+      }
+    } else {
+      Toast.show({
+        text: 'All fields must be filled to proceed',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+    }
+  };
+
+  const handleOpenConfirmSheet = async () => {
+    setLoading(true);
+    const res = await verifyPin(form.pin);
+
+    if (
+      form.mobile !== '' &&
+      form.pin !== '' &&
+      form.cardNumber !== '' &&
+      form.product !== '' &&
+      form.variationCode !== '' &&
+      form.serviceId !== ''
+    ) {
+      if (res.message === 'User pin is Incorrect' || res.error === true) {
+        Toast.show({
+          text: 'User pin is Incorrect/Invalid',
+          position: 'bottom',
+          type: 'danger',
+          duration: 3000,
+        });
+      } else {
+        setTimeout(() => {
+          navigation.navigate('TransactionSummary', {
+            form: {
+              network: form.serviceId,
+              amount: form.amount,
+              mobile: form.mobile,
+              variationCode: form.variationCode,
+              pin: form.pin,
+              cardNumber: form.cardNumber,
+              serviceId: form.serviceId,
+            },
+            serviceType: 'Cable Bill Payment',
+          });
+        }, 1000);
+      }
+      // setLoading(false);
+    } else {
+      Toast.show({
+        text: 'All fields must be filled to proceed',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+    }
+    setLoading(false);
+  };
+
+  const handleOpenProductSheet = () => productSheetRef.current.open();
 
   const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
 
-  const handleConfirmTransaction = () => {
+  const handleConfirmTransaction = async () => {
     confirmSheetRef.current.close();
-    routeSuccess();
+    setLoading(false);
   };
+
+  const handleRedirect = async (res) => {
+    const reqBody = {
+      requestId: res.transaction_id,
+      variationCode: form.variationCode.toLowerCase(),
+      amount: form.amount,
+      phone: '08120254644',
+      amount: form.amount,
+      // phone: form.mobile,
+      billerCode: form.cardNumber,
+      serviceId: form.serviceId,
+      pin: form.pin,
+    };
+
+    const result = await fetch(
+      'https://apis.woozeee.com/api/v1/bill-payment/load',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `${await getToken()}`,
+        },
+        body: JSON.stringify(reqBody),
+      },
+    );
+
+    const response = await result.json();
+    console.log(response);
+  };
+
+  const ProductSheet = () => (
+    <RBSheet
+      ref={productSheetRef}
+      height={450}
+      closeOnDragDown
+      animationType="fade"
+      customStyles={{
+        container: {
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: BG_THEME,
+        },
+      }}
+    >
+      <Layout
+        level="5"
+        style={{
+          flex: 1,
+          width: '100%',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+          paddingBottom: 30,
+        }}
+      >
+        <View
+          style={{
+            width: '100%',
+            justifyContent: 'flex-start',
+            paddingBottom: 15,
+            paddingHorizontal: 20,
+          }}
+        >
+          <Text category="h6" style={{ fontSize: 16 }} status="primary">
+            {t('selectBundle')}
+          </Text>
+        </View>
+        <Divider style={{ marginBottom: 20, width: '100%' }} />
+        {/* {console.log(dataBundles)} */}
+        <List
+          style={{ backgroundColor: 'transparent' }}
+          vertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          data={bundles}
+          keyExtractor={(_, i) => i.toString()}
+          renderItem={(renderData) => (
+            <TouchableOpacity
+              activeOpacity={0.75}
+              style={{
+                width: '100%',
+                justifyContent: 'flex-start',
+                flexDirection: 'column',
+                paddingHorizontal: 20,
+                marginBottom: 15,
+              }}
+              onPress={() => {
+                setFormValues((prevState) => ({
+                  ...prevState,
+                  product: renderData.item.name,
+                  amount: renderData.item.variation_amount,
+                  variationCode: renderData.item.variation_code,
+                  requestId: uuidv4(),
+                  serviceId: serviceId,
+                }));
+              }}
+            >
+              <Text style={{ fontSize: 16 }} status="basic" category="h6">
+                {renderData.item.name}
+              </Text>
+              <Text category="c2">₦ {renderData.item.variation_amount}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      </Layout>
+    </RBSheet>
+  );
 
   // prettier-ignore
   const ConfirmSheet = () => (
     <RBSheet
       ref={confirmSheetRef}
-      height={380}
+      height={320}
       closeOnDragDown
       animationType="fade"
       customStyles={{
@@ -224,7 +478,7 @@ export default function CableTv({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {woozeeeCards[activeOperator - 1]?.title || 'none'}
+              {woozeeeCards[activeOperator - 1]?.title || '----'}
             </Text>
           </View>
           <View
@@ -247,7 +501,7 @@ export default function CableTv({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {form.cardNumber || 'none'}
+              {form.cardNumber || '----'}
             </Text>
           </View>
           <View
@@ -275,7 +529,7 @@ export default function CableTv({ navigation }) {
           </View>
         </View>
         <View style={{ width: '100%', paddingHorizontal: 15, paddingTop: 10 }}>
-          <View style={{ paddingVertical: 5 }}>
+          {/* <View style={{ paddingVertical: 5 }}>
             <GeneralTextField
               type="pin"
               label={t('transactionPin')}
@@ -283,7 +537,7 @@ export default function CableTv({ navigation }) {
               validate="required"
               setFormValues={setFormValues}
             />
-          </View>
+          </View> */}
           <View style={{ paddingTop: 10 }}>
             <Button
               status="danger"
@@ -305,7 +559,7 @@ export default function CableTv({ navigation }) {
     () => (
       <RBSheet
         ref={accountSheetRef}
-        height={425}
+        height={410}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -322,7 +576,7 @@ export default function CableTv({ navigation }) {
             flex: 1,
             width: '100%',
             alignItems: 'flex-start',
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start',
             paddingBottom: 30,
           }}
         >
@@ -366,9 +620,10 @@ export default function CableTv({ navigation }) {
               ))}
             </RadioGroup>
           </View>
+          <Divider style={{ marginVertical: 20, width: '100%', height: 2 }} />
+
           <View
             style={{
-              paddingVertical: 20,
               paddingHorizontal: 20,
               width: '100%',
             }}
@@ -428,134 +683,126 @@ export default function CableTv({ navigation }) {
   );
 
   return (
-    <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title={t('cableTv')}
-        navigation={navigation}
-        screen="default"
-      />
-      <ScrollView
-        style={{ flex: 1 }}
-        alwaysBounceVertical
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, paddingTop: 20 }}>
-            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-              <Text category="s1">{t('selectBiller')}</Text>
+    <Root>
+      <Layout level="6" style={{ flex: 1 }}>
+        <TopNavigationArea
+          title={t('cableTv')}
+          navigation={navigation}
+          screen="default"
+        />
+        <ScrollView
+          style={{ flex: 1 }}
+          alwaysBounceVertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, paddingTop: 20 }}>
+              <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+                <Text category="s1">{t('selectBiller')}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <List
+                  style={{ backgroundColor: 'transparent' }}
+                  contentContainerStyle={{ paddingHorizontal: 5 }}
+                  horizontal
+                  alwaysBounceHorizontal
+                  alwaysBounceVertical
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  data={woozeeeCards}
+                  keyExtractor={(_, i) => i.toString()}
+                  renderItem={WoozeeeCards}
+                  getItemLayout={(data, index) => ({
+                    length: CARD_HEIGHT,
+                    offset: CARD_HEIGHT * index,
+                    index,
+                  })}
+                />
+              </View>
             </View>
-            <View style={{ flex: 1 }}>
-              <List
-                style={{ backgroundColor: 'transparent' }}
-                contentContainerStyle={{ paddingHorizontal: 5 }}
-                horizontal
-                alwaysBounceHorizontal
-                alwaysBounceVertical
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                data={woozeeeCards}
-                keyExtractor={(_, i) => i.toString()}
-                renderItem={WoozeeeCards}
-                getItemLayout={(data, index) => ({
-                  length: CARD_HEIGHT,
-                  offset: CARD_HEIGHT * index,
-                  index,
-                })}
-              />
-            </View>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              paddingBottom: 20,
-              marginTop: 10,
-            }}
-          >
-            <View style={{ paddingHorizontal: 15 }}>
-              {/* <View style={{ paddingBottom: 10 }}>
-          <Text category="label" appearance="hint" style={{ marginBottom: 5 }}>
-            {t('selectProduct')}
-          </Text>
-          <Button
-            appearance="outline"
-            accessoryRight={IconArrowDown}
-            style={{ justifyContent: 'space-between' }}
-            onPress={handleOpenProductSheet}
-          >
-            <Text>{form.product}</Text>
-          </Button>
-        </View> */}
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="cardNumber"
-                  label={t('cardNumber')}
-                  validate="required"
-                  setFormValues={setFormValues}
-                />
-              </View>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="channelDesc"
-                  label={t('channelDesc')}
-                  validate="required"
-                  setFormValues={setFormValues}
-                />
-              </View>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="amount"
-                  label={t('amount')}
-                  keyboardType="number-pad"
-                  validate="required"
-                  setFormValues={setFormValues}
-                  // accessoryLeft={IconCNaira}
-                />
-              </View>
-              <View style={{ paddingVertical: 10 }}>
-                <Text
-                  category="label"
-                  appearance="hint"
-                  style={{ marginBottom: 5 }}
-                >
-                  {t('paymentAccount')}
-                </Text>
-                <Button
-                  appearance="outline"
-                  accessoryRight={IconArrowDown}
-                  style={{ justifyContent: 'space-between' }}
-                  onPress={handleOpenAccountSheet}
-                >
-                  <Text>{form.account || t('paymentAccount')}</Text>
-                </Button>
-              </View>
-              {/* <View style={{ paddingVertical: 5 }}>
-          <GeneralTextField
-            type="pin"
-            label={t('transactionPin')}
-            keyboardType="number-pad"
-            validate="required"
-            setFormValues={setFormValues}
-          />
-        </View> */}
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  onPress={handleOpenConfirmSheet}
-                >
-                  <Text status="control">{t('proceed')}</Text>
-                </Button>
+            <View
+              style={{
+                flex: 1,
+                paddingBottom: 20,
+                marginTop: 10,
+              }}
+            >
+              <View style={{ paddingHorizontal: 15 }}>
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="cardNumber"
+                    label={t('cardNumber')}
+                    validate="required"
+                    setFormValues={setFormValues}
+                  />
+                </View>
+                <View style={{ paddingBottom: 10 }}>
+                  <Text
+                    category="label"
+                    appearance="hint"
+                    style={{ marginBottom: 5 }}
+                  >
+                    {t('selectBundle')}
+                  </Text>
+                  <Button
+                    appearance="outline"
+                    accessoryRight={IconArrowDown}
+                    style={{ justifyContent: 'space-between' }}
+                    onPress={handleOpenProductSheet}
+                  >
+                    <Text>{form.product || t('bundle')}</Text>
+                  </Button>
+                </View>
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="mobile"
+                    label={t('mobileNum')}
+                    autoCompleteType="tel"
+                    textContentType="telephoneNumber"
+                    validate="required"
+                    setFormValues={setFormValues}
+                    accessoryRight={IconCPhoneBookFill}
+                  />
+                </View>
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="pin"
+                    label={t('transactionPin')}
+                    autoCompleteType="password"
+                    textContentType="password"
+                    keyboardType="numeric"
+                    maxLength={4}
+                    validate="password"
+                    secure
+                    value={form.pin}
+                    setFormValues={setFormValues}
+                    validate="required"
+                    // accessoryLeft={IconCNaira}
+                  />
+                </View>
+
+                <View style={{ paddingVertical: 20 }}>
+                  <Button
+                    status="danger"
+                    size="large"
+                    accessibilityLiveRegion="assertive"
+                    accessibilityComponentType="button"
+                    accessoryLeft={isLoading ? renderSpinner : null}
+                    accessibilityLabel="Continue"
+                    onPress={handleOpenConfirmSheet}
+                  >
+                    <Text status="control">{t('proceed')}</Text>
+                  </Button>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-      <AccountSheet />
-      <ConfirmSheet />
-    </Layout>
+        </ScrollView>
+        <AccountSheet />
+        <ProductSheet />
+        <ConfirmSheet />
+      </Layout>
+    </Root>
   );
 }
