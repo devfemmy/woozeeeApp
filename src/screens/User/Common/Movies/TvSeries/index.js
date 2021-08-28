@@ -41,6 +41,7 @@ const TvSeries = () => {
                 </TouchableOpacity> */}
                     <FeaturedMovie
                     // mute={mute}
+                    mute={true}
                     uri 
                     movieType = "series"
                     category_id= {""} />

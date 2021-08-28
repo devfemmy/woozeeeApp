@@ -40,7 +40,7 @@ const AllMovies = () => {
                         <Octicons name={mute ? 'mute': 'unmute'} size={24} color="white" />
                     </TouchableOpacity> */}
                         <FeaturedMovie 
-                        // mute={false}
+                        mute={false}
                         uri
                         movieType = "all"
                         category_id= {"all"}   />

@@ -252,6 +252,7 @@ export default function Explore({ navigation, route }) {
     //   textShadowRadius:5,
     // },
   })
+  console.log("Movie Data", movie_data)
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
@@ -263,7 +264,7 @@ export default function Explore({ navigation, route }) {
       <View style= {styles.imageCon}>
       {signal === true ?
             <TouchableOpacity>
-              <FeaturedMovie  url={movie_data} active />
+              <FeaturedMovie poster={movie_data.posterURL[0]}  url={movie_data} active />
               {/* <Image
               defaultSource= {require('../../../../assets/images/movies/movie_placeholder.png')}
               style= {{width: Dimensions.get('window').width, height: Dimensions.get('window').height/4, resizeMode: 'contain'}}
@@ -272,7 +273,7 @@ export default function Explore({ navigation, route }) {
               /> */}
           </TouchableOpacity> : 
           <TouchableOpacity>
-             <FeaturedMovie url={movie_data.item} active />
+             <FeaturedMovie poster={movie_data.item.posterURL[0]} url={movie_data.item} active />
                   {/* <Image
                   defaultSource= {require('../../../../assets/images/movies/movie_placeholder.png')}
                   style= {{width: Dimensions.get('window').width, height: Dimensions.get('window').height/4, resizeMode: 'contain'}}
@@ -285,7 +286,7 @@ export default function Explore({ navigation, route }) {
         <ScrollView style= {styles.container}>
           {signal === true ?
               <MovieDescription
-              onPress= {() => navigation.navigate('FlutterPay', {data:movie_data})} 
+              onPress= {() => navigation.replace('MoviePage', {data:movie_data})} 
                 data = {movie_data}
                 // label = {movie_data?.casts[0][0]?.__isNew__ === true ? 'New' : 'Classic'}
                 year = {movie_data?.year}
@@ -295,7 +296,7 @@ export default function Explore({ navigation, route }) {
                 description = {movie_data?.description}
                 paid /> :
                 <MovieDescription 
-                onPress= {() => navigation.navigate('FlutterPay', {data:movie_data.item})} 
+                onPress= {() => navigation.replace('MoviePage', {data:movie_data.item})} 
                 // inList= {movieData.item?.movieData?.inList} 
                 data = {movie_data?.item}
                 // label = {movie_data?.item?.casts[0][0]?.__isNew__ === true ? 'New' : 'Classic'}

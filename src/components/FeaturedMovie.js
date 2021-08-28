@@ -7,6 +7,7 @@ import axios from '../services/api/index';
 import { useNavigation } from '@react-navigation/native';
 
 const FeaturedMovie = (props) => {
+    
     const handleVideoRef = React.useRef(null);
     const [loading, setLoading] = useState(false);
     const [movieData, setMovieData] = useState([]);
@@ -18,7 +19,6 @@ const FeaturedMovie = (props) => {
       }
       return a;
   }
-
     const getFeaturedMovies = () => {
       setLoading(true);
       AsyncStorage.getItem('USER_AUTH_TOKEN')
@@ -76,7 +76,6 @@ const FeaturedMovie = (props) => {
               // const movieDataArr = [1,2, 3,4]
               const shuffledArr = shuffleArray(movieDataArr);
               const firstIndexArr = shuffledArr[0];
-              console.log(firstIndexArr, "shuffled Arr");
               setMovieData(firstIndexArr)
               // setMovieData(movieDataArr)
 
@@ -106,8 +105,10 @@ const FeaturedMovie = (props) => {
             }}
           >
             <Video
+              posterSource={{uri: props.poster}}
+              usePoster
               ref={handleVideoRef}
-              // isMuted={false}
+              isMuted={props.mute}
               isLooping
               source = {{uri: props.uri ? movieData.landscapePreviewURL : props?.url?.landscapePreviewURL}}
               // source = {{uri: videoUri}}
@@ -135,7 +136,7 @@ const FeaturedMovie = (props) => {
             {props.active ? 
             null: 
             <MovieDescription
-            onPress= {() => navigation.navigate('FlutterPay', {data:movieData})} 
+            onPress= {() => navigation.replace('MoviePage', {data:movieData})} 
             inList= {movieData?.movieData?.inList} 
             featured = {movieData}
             price = {`₦${movieData?.price}`}

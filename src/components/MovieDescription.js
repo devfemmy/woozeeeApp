@@ -97,13 +97,14 @@ const MovieDescription = (props) => {
                 {props.price === '$undefined' ? null : props.price}
             </Text>
             <View>
+              
             {props.paid ? 
                 <TextIcon 
                 onPress= {props.onPress}
                 bg= "#FF5757"
                 color= "white" fill= "white" 
-                text= "Purchase" 
-                icon_name= "shopping-cart-outline" />
+                text= "Watch" 
+                icon_name= "play-circle-outline" />
           :
                 <TextIcon
                 // onPress= {() => console.log('Hello')}
@@ -112,8 +113,8 @@ const MovieDescription = (props) => {
                 onPress= {() => navigation.navigate('FlutterPay')} 
                 bg= "#FF5757"
                 color= "white" fill= "white" 
-                text= "Purchase" 
-                icon_name= "shopping-cart-outline" />          
+                text= "Watch" 
+                icon_name= "play-circle-outline" />          
           }
 
             </View>
@@ -126,7 +127,9 @@ const MovieDescription = (props) => {
                     {props.description}
                 </Text>
                 <Text numberOfLines= {1}>
-                {`Casts: `}
+                Casts: {movie_data?.casts?.map(
+                  (cast) => (`${cast.name},`)
+                )}
                 </Text>
                 {/* <Text numberOfLines= {1}>
                 Director: {props.director}
@@ -185,7 +188,7 @@ const MovieDescription = (props) => {
                   <Text style= {styles.textAlign} category= "h5">
                     {movie_data?.title}
                   </Text>
-                  <Text style= {styles.textAlign}>
+                  <Text numberOfLines= {5} style= {styles.textAlign}>
                       {movie_data?.description}
                   </Text>
                   {/* <Text>
