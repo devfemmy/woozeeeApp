@@ -76,6 +76,7 @@ export default function EditProfile({ navigation }) {
     imgUrl: '',
   });
 
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevState) => ({
@@ -94,6 +95,7 @@ export default function EditProfile({ navigation }) {
           })
           .then((response) => {
             setLoading(false);
+            console.log("response", response)
             const user_data = response.data.user;
             const first_name = user_data.fName;
             const last_name = user_data.sName;

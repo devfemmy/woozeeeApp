@@ -9,7 +9,6 @@ import { getEmail, getToken } from '../../api/index';
 
 const FlutterPay = ({ route, navigation }) => {
   const { data } = route.params;
-  console.log('data payment', data);
   const [emailAddress, setEmail] = useState('');
   const email = async () => {
     const res = await getEmail();

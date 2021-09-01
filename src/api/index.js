@@ -36,6 +36,13 @@ export default {
     const { data } = res;
     return data;
   },
+  getUserByEmail: async (email) => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`user/user?email=${email}`);
+    const { data } = res;
+    return data;
+  },
   getComments: async () => {
     // const [comments, setComments] = useState([]);
     // const res = db.collection('entryComments');

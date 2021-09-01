@@ -311,8 +311,11 @@ export const GeneralDatePicker = (props) => {
         {...otherProps}
         size={size || 'large'}
         label={label}
+
         date={selectedDate}
         onSelect={handleSelect}
+        min={new Date('12-05-1880')}
+        max={new Date()}
       />
     ),
     [handleSelect, label, size, selectedDate, otherProps],

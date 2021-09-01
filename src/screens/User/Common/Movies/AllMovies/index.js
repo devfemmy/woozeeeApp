@@ -9,9 +9,9 @@ import { Octicons } from '@expo/vector-icons';
 
 const AllMovies = () => {
     const [mute, setMuted] = useState(false);
-    const toggleMuted =  useCallback(() => {
-        setMuted(!mute)
-    }, [mute])
+    // const toggleMuted =  useCallback(() => {
+    //     setMuted(!mute)
+    // }, [mute])
     const styles = StyleSheet.create({
         imageCon: {
             paddingVertical: 15
@@ -32,6 +32,7 @@ const AllMovies = () => {
             paddingHorizontal: 10
         },
     })
+    
     return (
             <Layout level="6" style={{ flex: 1 }}>
                 <ScrollView>

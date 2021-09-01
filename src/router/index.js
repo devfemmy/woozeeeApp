@@ -113,6 +113,9 @@ import CableFlutterPay from '../screens/Common/CableFlutterPay';
 import ElectricFlutterPay from '../screens/Common/ElectricFlutterPay';
 import OtherCategories from 'src/screens/User/Common/Movies/OtherCategories/index';
 import TransactionSummary from '../screens/User/Common/TransactionSummary';
+import PaymentSchedule from 'src/screens/User/Onboarding/ActivateCare/PaymentSchedule';
+import WoozeePaySummary from 'src/screens/User/Onboarding/ActivateCare/PaySummary';
+
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -167,17 +170,19 @@ export default function Router() {
     },
 
     User: {
-      // Onboarding,
-      // ActivateWallet,
-      // ActivateWalletPictureUpload,
-      // ActivateWalletSelectBanks,
-      // ActivateWalletCreatePin,
-      // ActivateWalletOTPVerification,
-      // ActivateCare,
-      // ActivateCareSoloLitePlan,
-      // ActivateCareSoloPlan,
-      // ActivateCareFamilyPlan,
-      // ActivateCareElitePlan,
+      Onboarding,
+      ActivateWallet,
+      ActivateWalletPictureUpload,
+      ActivateWalletSelectBanks,
+      ActivateWalletCreatePin,
+      ActivateWalletOTPVerification,
+      PaymentSchedule,
+      ActivateCare,
+      ActivateCareSoloLitePlan,
+      ActivateCareSoloPlan,
+      ActivateCareFamilyPlan,
+      ActivateCareElitePlan,
+      WoozeePaySummary,
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,
