@@ -15,7 +15,7 @@ export const getEmail = () => {
   return AsyncStorage.getItem('email');
 };
 
-const createInstance = async () => {
+export const createInstance = async () => {
   return axios.create({
     baseURL: `https://apis.woozeee.com/api/v1/`,
     timeout: 60000,

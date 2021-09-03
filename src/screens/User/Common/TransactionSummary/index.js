@@ -145,7 +145,10 @@ function TransactionSummary(props) {
 
   const confirmSheetRef = useRef(null);
 
-  const routeSuccess = () => props.navigation.navigate('BillPaymentSuccess');
+  const routeSuccess = () =>
+    props.navigation.navigate('BillPaymentSuccess', {
+      success: 'Transaction Complete!',
+    });
 
   const handleOpenAccountSheet = async () => accountSheetRef.current.open();
 
@@ -200,7 +203,7 @@ function TransactionSummary(props) {
         },
       );
       const response = await result.json();
-      console.log(response);
+      routeSuccess();
     } else if (params.serviceType == 'Data Purchase') {
       const reqBody = {
         requestId: res.transaction_id,
@@ -226,7 +229,7 @@ function TransactionSummary(props) {
       );
 
       const response = await result.json();
-      console.log(response);
+      routeSuccess();
     } else if (params.serviceType == 'Cable Bill Payment') {
       const reqBody = {
         requestId: res.transaction_id,
@@ -253,7 +256,7 @@ function TransactionSummary(props) {
       );
 
       const response = await result.json();
-      console.log(response);
+      routeSuccess();
     } else {
       const reqBody = {
         requestId: res.transaction_id,
@@ -280,7 +283,8 @@ function TransactionSummary(props) {
       );
 
       const response = await result.json();
-      console.log(response);
+
+      routeSuccess();
     }
   };
 

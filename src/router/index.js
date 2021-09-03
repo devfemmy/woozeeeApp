@@ -14,6 +14,8 @@ import { AuthContext } from 'src/contexts';
 
 import { Toast, Content, Root } from 'native-base';
 
+import { firebase as fb } from '@react-native-firebase/dynamic-links';
+
 /* Screens import */
 import Intro from 'src/screens/Authentication';
 import Login from 'src/screens/Authentication/Login';
@@ -115,7 +117,6 @@ import OtherCategories from 'src/screens/User/Common/Movies/OtherCategories/inde
 import TransactionSummary from '../screens/User/Common/TransactionSummary';
 import PaymentSchedule from 'src/screens/User/Onboarding/ActivateCare/PaymentSchedule';
 import WoozeePaySummary from 'src/screens/User/Onboarding/ActivateCare/PaySummary';
-
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -242,6 +243,8 @@ export default function Router() {
       ElectricFlutterPay,
       CableFlutterPay,
       TransactionSummary,
+      TransferMoney,
+      Accounts,
     },
 
     Common: {
@@ -260,14 +263,34 @@ export default function Router() {
 
   const config = {
     screens: {
-      DeepLinkPost: 'entry/:_id',
+      DeepLinkPost: '/:_id',
     },
   };
 
   const linking = {
-    prefixes: ['https://app.woozeee.com/entry', 'woozeee://'],
+    prefixes: ['https://app.woozeee.com/entry'],
     config,
   };
+
+  const getAppLaunchLink = async () => {
+    // Linking.addEventListener('verify', (url) => {
+    //   alert(url);
+    // });
+
+    // const res = await Linking.getInitialURL();
+    // alert(res);
+
+    try {
+      const res = await fb.dynamicLinks().getInitialLink();
+      alert(res.url);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getAppLaunchLink();
+  }, []);
 
   return (
     <Root>

@@ -6,7 +6,7 @@ import firestore from '@react-native-firebase/firestore';
 
 import { getToken } from '../../api/index';
 
-const baseUrl = 'https://apis.woozeee.com/api/v1/';
+export const baseUrl = 'https://apis.woozeee.com/api/v1/';
 
 const axiosReq = async (methodType, reqData) => {
   const config = {

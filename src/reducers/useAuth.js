@@ -113,9 +113,19 @@ export default function useAuth() {
             token = await result.token;
             const userImage = await result.user.imgUrl;
             const email = await result.user.email;
+            const banks = (await result.globus) ? result.globus : [];
+
+            console.log('banks => ', banks);
 
             await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
             await AsyncStorage.setItem('userImage', userImage);
+            await AsyncStorage.setItem('globusAcn', banks.result.accountNo);
+            await AsyncStorage.setItem(
+              'globusBal',
+              JSON.stringify(banks.result.balance),
+            );
+            await AsyncStorage.setItem('globusAccName', banks.result.accTitle);
+
             AsyncStorage.setItem('email', email);
 
             const user_id = result.user._id;

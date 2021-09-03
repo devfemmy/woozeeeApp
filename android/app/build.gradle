@@ -263,6 +263,9 @@ dependencies {
 
     implementation 'androidx.multidex:multidex:2.0.1'
 
+    implementation "com.google.firebase:firebase-dynamic-links:19.0.0" //Add this line
+    implementation "com.google.firebase:firebase-invites:17.0.0"
+
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     implementation(project(":react-native-google-signin"))
     implementation project(path: ':libbambuser')
