@@ -113,7 +113,10 @@ const FeaturedMovie = (props) => {
         });
     };
     const watchMovie = (data) => {
-      if (!userData.isPinSet){
+      if (userData?.accounts.length === 0 || !userData?.hasCare) {
+        navigation.replace('Onboarding')
+      }
+      else if (userData.isPinSet === false){
         navigation.navigate('GeneratePin')
       }else if (userData?.accounts.length === 0 || !userData?.hasCare){
         navigation.replace('Onboarding')
