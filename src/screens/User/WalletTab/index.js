@@ -88,22 +88,22 @@ const WALLET_ITEMS = [
     content: 'accounts',
     action: 'showAccounts',
   },
-  {
-    id: 2,
-    icon: IconCPlus,
-    content: 'addMoney',
-  },
-  {
-    id: 3,
-    icon: IconCArrowUp,
-    content: 'transferMoney',
-    action: 'transferMoney',
-  },
-  {
-    id: 4,
-    icon: IconCSnow,
-    content: 'freeze',
-  },
+  // {
+  //   id: 2,
+  //   icon: IconCPlus,
+  //   content: 'addMoney',
+  // },
+  // {
+  //   id: 3,
+  //   icon: IconCArrowUp,
+  //   content: 'transferMoney',
+  //   action: 'transferMoney',
+  // },
+  // {
+  //   id: 4,
+  //   icon: IconCSnow,
+  //   content: 'freeze',
+  // },
 ];
 
 const ACCOUNTS = [
