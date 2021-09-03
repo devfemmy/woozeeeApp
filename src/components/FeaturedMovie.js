@@ -116,7 +116,7 @@ const FeaturedMovie = (props) => {
       if (!userData.isPinSet){
         navigation.navigate('GeneratePin')
       }else if (userData?.accounts.length === 0 || !userData?.hasCare){
-        navigation.navigate('ActivateWallet')
+        navigation.replace('Onboarding')
       }else {
         navigation.replace('MoviePage', {data:data})
       }

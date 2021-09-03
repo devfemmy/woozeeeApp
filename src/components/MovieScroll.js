@@ -260,7 +260,7 @@ const MovieScroll = (props) => {
         
         }
         </View>
-        {/* <View style= {{marginVertical: 10}}>
+        <View style= {{marginVertical: 10}}>
             {props.show ? 
             <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {recommended}
@@ -288,7 +288,7 @@ const MovieScroll = (props) => {
       </ScrollView>    
         
         }
-        </View> */}
+        </View>
         <View style= {{marginVertical: 10}}>
             {props.show ? 
             <Text  onPress= {() => navigation.navigate('MyList')} style={{color: '#0959AB', marginBottom: 5}} category= "h5">

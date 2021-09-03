@@ -20,6 +20,16 @@ const WoozeePaySummary = (props) => {
     const navigateToNext = () => {
         props.navigation.replace('ActivateCareSoloPlan', {slug: slug, amount: amount,trans_id: null})
     }
+    const repaymentArr = []
+    for(let i = 0; i < numberOfDays; i++) {
+        var obj = {};
+        obj.monthlyRepayments = total/numberOfDays;
+        obj.monthlyInterest = (total - amount)/numberOfDays;
+        obj.hasPaid = false
+        obj.dueDate = ''
+        repaymentArr.push(obj)
+    }
+    console.log('replayment Arr', repaymentArr)
     const requestLoan = () => {
         setIsLoading(true)
         AsyncStorage.getItem('USER_AUTH_TOKEN').then(res => {
@@ -28,7 +38,9 @@ const WoozeePaySummary = (props) => {
                 paymentDetails: {
                     amount: amount,
                     interest: rate/100,
-                    numberOfDays: numberOfDays,
+                    numberOfMonths: numberOfDays,
+                    totalToBePaid: total,
+                    repaymentSchedule: repaymentArr
                 },
                 offer: slug,
             }
@@ -98,10 +110,18 @@ const WoozeePaySummary = (props) => {
                 </View>
                 <View style= {styles.flexContainer}>
                     <Text style= {styles.opacity}>
-                        Number of Days to be repayed
+                        Number of months to be repayed
                     </Text>
                     <Text>
-                        {numberOfDays} days
+                        {numberOfDays} month(s)
+                    </Text>
+                </View>
+                <View style= {styles.flexContainer}>
+                    <Text style= {styles.opacity}>
+                       Amount to pay back monthly
+                    </Text>
+                    <Text>
+                    ₦{total/numberOfDays} / month
                     </Text>
                 </View>
                 <View style= {styles.flexContainer}>
