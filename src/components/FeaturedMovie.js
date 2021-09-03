@@ -113,13 +113,11 @@ const FeaturedMovie = (props) => {
         });
     };
     const watchMovie = (data) => {
-      if (userData.isPinSet === false){
+      if (!userData.isPinSet){
         navigation.navigate('GeneratePin')
-      }else if (userData.accounts.length === 0){
+      }else if (userData?.accounts.length === 0 || !userData?.hasCare){
         navigation.navigate('ActivateWallet')
-        
-      }
-      else {
+      }else {
         navigation.replace('MoviePage', {data:data})
       }
     }

@@ -125,6 +125,10 @@ export default function ActivateWallet({ navigation }) {
     navigation.navigate('PaymentSchedule', {amount: loanAmt, scheme: scheme, interestRate: interest, title: title, slug: slug})
 
   }
+  const handleFullPayment = () => {
+    handleCloseSheet();
+    navigation.navigate('FlutterPay', {amount: loanAmt, scheme: scheme, interestRate: interest, title: title, slug: slug})
+  }
   // prettier-ignore
   const routeTo = (route) => navigation.navigate(route);
   const renderCardFooter = (interest, scheme, slug, loanAmtTo, title) => {
@@ -403,6 +407,7 @@ export default function ActivateWallet({ navigation }) {
           }}
         >
           <Button
+            onPress={handleFullPayment}
             appearance="ghost"
             status="basic"
             style={{

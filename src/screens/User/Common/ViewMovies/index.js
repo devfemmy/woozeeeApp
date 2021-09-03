@@ -60,17 +60,15 @@ export default function Explore({ navigation, route }) {
   };
 
   const watchMovie = (data) => {
-    if (userData.isPinSet === false){
+    console.log("Movies", userData)
+    if (!userData.isPinSet){
       navigation.navigate('GeneratePin')
-    }else if (userData.accounts.length === 0){
-      navigation.navigate('ActivateWallet')
-      
-    }
-    else {
+    }else if (userData?.accounts.length === 0 || !userData?.hasCare){
+      navigation.replace('Onboarding')
+    }else {
       navigation.replace('MoviePage', {data:data})
     }
-   
-  }
+   }
   useEffect(() => {
     const subscribe = navigation.addListener('focus', () => {
       AsyncStorage.getItem('userid')

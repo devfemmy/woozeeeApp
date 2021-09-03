@@ -65,7 +65,7 @@ const LGAS = STATES_LGAS.map((data) => ({
 
 export default function SoloPlan({ navigation, route }) {
   const [isLoading, setLoading] = useState(false);
-  const {amount, slug} = route.params
+  const {amount, slug, trans_id} = route.params
 
   const [form, setFormValues] = useState({
     firstName: '',
@@ -82,9 +82,11 @@ export default function SoloPlan({ navigation, route }) {
     secondBeneficiaryName: '',
     thirdBeneficiaryName: '',
     fourthBeneficiaryName: '',
-
-  });
-  console.log("form", form);
+    transactionId: trans_id
+});
+if (trans_id === null) {
+  delete form.transactionId
+}
 
 
   const t = useContext(LocaleContext);
@@ -129,7 +131,6 @@ export default function SoloPlan({ navigation, route }) {
             headers: { Authorization: res },
           }).then(res => {
               setLoading(false)
-              console.log("loan", res);
               Toast.show({
                 text: 'Subscribtion completed successfully',
                 buttonText: 'Okay',
@@ -141,7 +142,8 @@ export default function SoloPlan({ navigation, route }) {
                 navigateToNext()
               }, 2000)
           }).catch(err => {
-            setLoading(false)
+            setLoading(false);
+            console.log(err.response)
             Toast.show({
                 text: 'Loan Request Failed',
                 buttonText: 'Okay',

@@ -18,7 +18,7 @@ const WoozeePaySummary = (props) => {
     // /loan/request
     // title: title, total: total, numberOfDays: numOfDays, amount: amount, rate: interestRate, scheme: scheme;
     const navigateToNext = () => {
-        props.navigation.replace('ActivateCareSoloPlan', {slug: slug, amount: amount,})
+        props.navigation.replace('ActivateCareSoloPlan', {slug: slug, amount: amount,trans_id: null})
     }
     const requestLoan = () => {
         setIsLoading(true)

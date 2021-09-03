@@ -34,6 +34,7 @@ const MovieScroll = (props) => {
               })
               .then((response) => {
                 setLoading(false);
+                console.log("response", response)
                 // console.log("response", response)
                 const topTen = response.data.message;
                 const data = response.data.data;
@@ -59,6 +60,7 @@ const MovieScroll = (props) => {
               })
               .then((response) => {
                 setLoading(false);
+                console.log("response", response)
                 const popular = response.data.message;
                 const data = response.data.data;
                 setPopular(popular);
@@ -83,6 +85,7 @@ const MovieScroll = (props) => {
               })
               .then((response) => {
                 setLoading(false);
+                console.log("response", response)
                 const comingSoon = response.data.message;
                 const data = response.data.data;
                 setComingSoon(comingSoon);
@@ -107,6 +110,7 @@ const MovieScroll = (props) => {
               })
               .then((response) => {
                 setLoading(false);
+                console.log("response", response)
                 const recommended = response.data.message;
                 const data = response.data.data;
                 setRecommended(recommended);
@@ -131,6 +135,7 @@ const MovieScroll = (props) => {
               })
               .then((response) => {
                 setLoading(false);
+                console.log("response", response)
                 const prevViewd = response.data.message;
                 const data = response.data.data;
                 setPrevList(prevViewd);
@@ -156,6 +161,7 @@ const MovieScroll = (props) => {
               })
               .then((response) => {
                 setLoading(false);
+                console.log("response", response)
                 const myList = response.data.message;
                 const data = response.data.data;
                 setList(myList);
@@ -213,7 +219,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data.posterURL[0],
+                        uri: data?.posterURL[0],
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
@@ -241,7 +247,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data.posterURL[0],
+                        uri: data?.posterURL[0],
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
@@ -254,7 +260,7 @@ const MovieScroll = (props) => {
         
         }
         </View>
-        <View style= {{marginVertical: 10}}>
+        {/* <View style= {{marginVertical: 10}}>
             {props.show ? 
             <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {recommended}
@@ -270,7 +276,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data.posterURL[0],
+                        uri: data?.posterURL[0],
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
@@ -282,7 +288,7 @@ const MovieScroll = (props) => {
       </ScrollView>    
         
         }
-        </View>
+        </View> */}
         <View style= {{marginVertical: 10}}>
             {props.show ? 
             <Text  onPress= {() => navigation.navigate('MyList')} style={{color: '#0959AB', marginBottom: 5}} category= "h5">
@@ -299,7 +305,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data.posterURL[0],
+                        uri: data?.posterURL[0],
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
@@ -328,7 +334,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data.posterURL[0],
+                        uri: data?.posterURL[0],
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
@@ -357,7 +363,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data.posterURL[0],
+                        uri: data?.posterURL[0],
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
