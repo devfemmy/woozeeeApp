@@ -36,6 +36,23 @@ export default {
     const { data } = res;
     return data;
   },
+  getUserByEmail: async (email) => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`user/user?email=${email}`);
+    const { data } = res;
+    return data;
+  },
+  getComments: async () => {
+    // const [comments, setComments] = useState([]);
+    // const res = db.collection('entryComments');
+    // const data = await res.get();
+    // console.log(data);
+    // data.docs.forEach((comment) => {
+    //   console.log(setComments(comment));
+    // });
+    // return comments;
+  },
   getStories: async () => {
     const instance = await createInstance();
 

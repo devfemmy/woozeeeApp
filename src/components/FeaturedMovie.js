@@ -11,6 +11,7 @@ const FeaturedMovie = (props) => {
     const handleVideoRef = React.useRef(null);
     const [loading, setLoading] = useState(false);
     const [movieData, setMovieData] = useState([]);
+    const [userData, setUserData] = useState([])
     const navigation = useNavigation();
     const shuffleArray = (a) => {
       for (let i = a.length - 1; i > 0; i--) {
@@ -19,6 +20,25 @@ const FeaturedMovie = (props) => {
       }
       return a;
   }
+  const getUserProfile = (user_id) => {
+    AsyncStorage.getItem('USER_AUTH_TOKEN')
+      .then((res) => {
+        axios
+          .get(`user/user?userId=${user_id}`, {
+            headers: { Authorization: res },
+          })
+          .then((response) => {
+            const userData = response.data.user;
+            setUserData(userData)
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
     const getFeaturedMovies = () => {
       setLoading(true);
       AsyncStorage.getItem('USER_AUTH_TOKEN')
@@ -76,6 +96,7 @@ const FeaturedMovie = (props) => {
               // const movieDataArr = [1,2, 3,4]
               const shuffledArr = shuffleArray(movieDataArr);
               const firstIndexArr = shuffledArr[0];
+              console.log(firstIndexArr, "shuffled Arr");
               setMovieData(firstIndexArr)
               // setMovieData(movieDataArr)
 
@@ -91,8 +112,22 @@ const FeaturedMovie = (props) => {
           console.log(err);
         });
     };
+    const watchMovie = (data) => {
+      if (!userData.isPinSet){
+        navigation.navigate('GeneratePin')
+      }else if (userData?.accounts.length === 0 || !userData?.hasCare){
+        navigation.navigate('ActivateWallet')
+      }else {
+        navigation.replace('MoviePage', {data:data})
+      }
+    }
     useEffect(() => {
       getFeaturedMovies()
+      AsyncStorage.getItem('userid')
+      .then((response) => {
+        getUserProfile(response);
+      })
+      .catch((err) => err);
     }, [])
     
     const VideoPreview = () => (
@@ -105,12 +140,12 @@ const FeaturedMovie = (props) => {
             }}
           >
             <Video
-              posterSource={{uri: props.poster}}
+              posterSource={{uri: props.uri ? null : props.poster}}
               usePoster
               ref={handleVideoRef}
               isMuted={props.mute}
               isLooping
-              source = {{uri: props.uri ? movieData.landscapePreviewURL : props?.url?.landscapePreviewURL}}
+              source = {{uri: props.uri ? movieData.landscapePreviewURL === undefined ? null :  movieData.posterURL[0]: props?.url?.landscapePreviewURL}}
               // source = {{uri: videoUri}}
               shouldPlay
               resizeMode="cover"
@@ -136,7 +171,7 @@ const FeaturedMovie = (props) => {
             {props.active ? 
             null: 
             <MovieDescription
-            onPress= {() => navigation.replace('MoviePage', {data:movieData})} 
+            onPress= {() => watchMovie(movieData)} 
             inList= {movieData?.movieData?.inList} 
             featured = {movieData}
             price = {`₦${movieData?.price}`}

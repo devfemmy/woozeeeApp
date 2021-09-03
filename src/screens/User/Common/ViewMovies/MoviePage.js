@@ -6,6 +6,7 @@ import Orientation from "react-native-orientation";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../../../services/api/index';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { getEmail } from 'src/api/index';
 
 
 const MoviePage = ({navigation, route}) => {
@@ -38,11 +39,12 @@ const MoviePage = ({navigation, route}) => {
     AsyncStorage.getItem('USER_AUTH_TOKEN')
     .then((res) => {
       setToken(res);
+
     })
     .catch((err) => err);
     if (Platform.OS === 'android') {
       const subscribe = navigation.addListener('focus', () => {
-        Orientation.lockToLandscape()
+        Orientation.lockToLandscape();
         });
   
       const unsubscribe = navigation.addListener('blur', () => {

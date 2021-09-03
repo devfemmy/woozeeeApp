@@ -8,8 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { getEmail, getToken } from '../../api/index';
 
 const FlutterPay = ({ route, navigation }) => {
-  const { data } = route.params;
-  console.log('data payment', data);
+  const {amount, scheme, interestRate,title, slug } = route.params;
   const [emailAddress, setEmail] = useState('');
   const email = async () => {
     const res = await getEmail();
@@ -45,10 +44,15 @@ const FlutterPay = ({ route, navigation }) => {
   //   console.log(response);
   // };
   const handleRedirect = (response) => {
+    console.log("response", response)
     if (response.status === 'cancelled') {
       return;
-    } else {
-      navigation.navigate('MoviePage', { item: data });
+    } else if (response.status === 'successful') {
+      // navigation.navigate('MoviePage', { item: data });
+      navigation.replace('ActivateCareSoloPlan', 
+      {slug: slug, amount: amount, trans_id: response.transaction_id })
+    }else {
+      return;
     }
   };
 
@@ -68,7 +72,7 @@ const FlutterPay = ({ route, navigation }) => {
             customer: {
               email: emailAddress,
             },
-            amount: 30,
+            amount: amount,
             currency: 'NGN',
             payment_options: 'card',
           }}
