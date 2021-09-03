@@ -836,7 +836,10 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                 width: '100%',
                 justifyContent: 'center',
               }}
-              onPress={() => generateLink('entries', item._id)}
+              onPress={
+                handleShare
+                // () => generateLink('entries', item._id)
+              }
             >
               <Text style={{ fontSize: 16 }} status="basic">
                 {t('shareTo')}
