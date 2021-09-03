@@ -60,15 +60,17 @@ export default function Explore({ navigation, route }) {
   };
 
   const watchMovie = (data) => {
-    console.log("Movies", userData)
-    if (!userData.isPinSet){
+    if (userData?.accounts.length === 0 || !userData?.hasCare) {
+      navigation.replace('Onboarding')
+    }
+    else if (userData.isPinSet === false){
       navigation.navigate('GeneratePin')
     }else if (userData?.accounts.length === 0 || !userData?.hasCare){
       navigation.replace('Onboarding')
     }else {
       navigation.replace('MoviePage', {data:data})
     }
-   }
+  }
   useEffect(() => {
     const subscribe = navigation.addListener('focus', () => {
       AsyncStorage.getItem('userid')
