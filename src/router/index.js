@@ -115,6 +115,8 @@ import CableFlutterPay from '../screens/Common/CableFlutterPay';
 import ElectricFlutterPay from '../screens/Common/ElectricFlutterPay';
 import OtherCategories from 'src/screens/User/Common/Movies/OtherCategories/index';
 import TransactionSummary from '../screens/User/Common/TransactionSummary';
+import TransferMoney from '../screens/User/WalletTab/TransferMoney';
+import Accounts from '../screens/User/WalletTab/Accounts';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -169,17 +171,17 @@ export default function Router() {
     },
 
     User: {
-      // Onboarding,
-      // ActivateWallet,
-      // ActivateWalletPictureUpload,
-      // ActivateWalletSelectBanks,
-      // ActivateWalletCreatePin,
-      // ActivateWalletOTPVerification,
-      // ActivateCare,
-      // ActivateCareSoloLitePlan,
-      // ActivateCareSoloPlan,
-      // ActivateCareFamilyPlan,
-      // ActivateCareElitePlan,
+      Onboarding,
+      ActivateWallet,
+      ActivateWalletPictureUpload,
+      ActivateWalletSelectBanks,
+      ActivateWalletCreatePin,
+      ActivateWalletOTPVerification,
+      ActivateCare,
+      ActivateCareSoloLitePlan,
+      ActivateCareSoloPlan,
+      ActivateCareFamilyPlan,
+      ActivateCareElitePlan,
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,
@@ -239,6 +241,8 @@ export default function Router() {
       ElectricFlutterPay,
       CableFlutterPay,
       TransactionSummary,
+      TransferMoney,
+      Accounts,
     },
 
     Common: {

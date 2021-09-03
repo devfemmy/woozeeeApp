@@ -15,7 +15,7 @@ export const getEmail = () => {
   return AsyncStorage.getItem('email');
 };
 
-const createInstance = async () => {
+export const createInstance = async () => {
   return axios.create({
     baseURL: `https://apis.woozeee.com/api/v1/`,
     timeout: 60000,
@@ -35,16 +35,6 @@ export default {
     const res = await instance.get(`user/search?q=${name}`);
     const { data } = res;
     return data;
-  },
-  getComments: async () => {
-    // const [comments, setComments] = useState([]);
-    // const res = db.collection('entryComments');
-    // const data = await res.get();
-    // console.log(data);
-    // data.docs.forEach((comment) => {
-    //   console.log(setComments(comment));
-    // });
-    // return comments;
   },
   getStories: async () => {
     const instance = await createInstance();
