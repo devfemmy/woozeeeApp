@@ -71,6 +71,13 @@ function TransferMoney(props) {
     }
   }
 
+  const routeConfirm = () => {
+    console.log(props);
+    props.navigation.navigate('MoneyMattersConfirmation');
+  };
+
+  const t = useContext(LocaleContext);
+
   const WalletTab = () => {
     return (
       <View
@@ -158,6 +165,24 @@ function TransferMoney(props) {
         </TouchableOpacity>
       </View>
       {!isWalletSelected ? <BankProcess /> : <WalletProcess />}
+      <View
+        style={{
+          marginVertical: 30,
+          width: '100%',
+          paddingHorizontal: 15,
+        }}
+      >
+        <Button
+          status="primary"
+          accessibilityLiveRegion="assertive"
+          accessibilityComponentType="button"
+          accessibilityLabel="Continue"
+          style={{ width: '100%' }}
+          onPress={routeConfirm}
+        >
+          <Text status="control">{t('proceed')}</Text>
+        </Button>
+      </View>
     </Layout>
   );
 }

@@ -25,10 +25,12 @@ import {
   Divider,
   Radio,
   RadioGroup,
-  Spinner,
+  Spinner as Sp,
 } from '@ui-kitten/components';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
+
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import InteractIcon from 'src/components/InteractIcon';
 
@@ -64,29 +66,29 @@ import { Toast, Content, Root } from 'native-base';
 const ACCOUNTS = [
   {
     id: 1,
-    title: 'woozeee Wallet - ₦ 99,394.99',
-    image: require('assets/images/banks/woozeee.png'),
+    title: 'Select',
+    // image: require('assets/images/banks/woozeee.png'),
   },
-  {
-    id: 2,
-    title: 'Access Bank - ₦ 34,677.02',
-    image: require('assets/images/banks/access.png'),
-  },
+  // {
+  //   id: 2,
+  //   title: 'Access Bank - ₦ 34,677.02',
+  //   image: require('assets/images/banks/access.png'),
+  // },
   // {
   //   id: 3,
   //   title: 'UBA - ₦ 25,500.44',
   //   image: require('assets/images/banks/uba.png'),
   // },
-  {
-    id: 4,
-    title: 'Globus Bank -₦ 24,222.18',
-    image: require('assets/images/banks/globus.png'),
-  },
-  {
-    id: 5,
-    title: 'Zenith Bank -₦ 1,000.00',
-    image: require('assets/images/banks/zenith.png'),
-  },
+  // {
+  //   id: 4,
+  //   title: 'Globus Bank -₦ 24,222.18',
+  //   image: require('assets/images/banks/globus.png'),
+  // },
+  // {
+  //   id: 5,
+  //   title: 'Zenith Bank -₦ 1,000.00',
+  //   image: require('assets/images/banks/zenith.png'),
+  // },
   {
     id: 6,
     title: 'Online Payment',
@@ -95,7 +97,9 @@ const ACCOUNTS = [
 ];
 
 function TransactionSummary(props) {
-  const renderSpinner = () => <Spinner size="tiny" status="basic" />;
+  const renderSpinner = () => <Sp size="tiny" status="basic" />;
+
+  const [isLoadingSpin, setIsLoading] = useState(false);
 
   const [emailAddress, setEmail] = useState('');
 
@@ -146,7 +150,7 @@ function TransactionSummary(props) {
   const confirmSheetRef = useRef(null);
 
   const routeSuccess = () =>
-    props.navigation.navigate('BillPaymentSuccess', {
+    props.navigation.navigate('Success', {
       success: 'Transaction Complete!',
     });
 
@@ -180,6 +184,8 @@ function TransactionSummary(props) {
   const handleRedirect = async (res) => {
     if (params.serviceType == 'Airtime Purchase') {
       //   res.status === 'successful' && routeSuccess();
+      setIsLoading(true);
+
       const reqBody = {
         requestId: res.transaction_id,
         amount: params.form.amount,
@@ -203,8 +209,12 @@ function TransactionSummary(props) {
         },
       );
       const response = await result.json();
+      setIsLoading(false);
+
       routeSuccess();
     } else if (params.serviceType == 'Data Purchase') {
+      setIsLoading(true);
+
       const reqBody = {
         requestId: res.transaction_id,
         variationCode: params.form.variationCode,
@@ -229,8 +239,11 @@ function TransactionSummary(props) {
       );
 
       const response = await result.json();
+      setIsLoading(false);
+
       routeSuccess();
     } else if (params.serviceType == 'Cable Bill Payment') {
+      setIsLoading(true);
       const reqBody = {
         requestId: res.transaction_id,
         variationCode: params.form.variationCode.toLowerCase(),
@@ -256,8 +269,11 @@ function TransactionSummary(props) {
       );
 
       const response = await result.json();
+      setIsLoading(false);
+
       routeSuccess();
     } else {
+      setIsLoading(true);
       const reqBody = {
         requestId: res.transaction_id,
         variationCode: params.form.selectType.toLowerCase(),
@@ -283,6 +299,7 @@ function TransactionSummary(props) {
       );
 
       const response = await result.json();
+      setIsLoading(false);
 
       routeSuccess();
     }
@@ -292,7 +309,7 @@ function TransactionSummary(props) {
     () => (
       <RBSheet
         ref={accountSheetRef}
-        height={410}
+        height={300}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -659,6 +676,7 @@ function TransactionSummary(props) {
               accessoryLeft={isLoading ? renderSpinner : null}
               accessibilityLabel="Continue"
               onPress={handleOpenConfirmSheet}
+              disabled={true}
             >
               <Text status="control">{t('confirm')}</Text>
             </Button>
@@ -667,6 +685,7 @@ function TransactionSummary(props) {
       </View>
       <AccountSheet />
       <ConfirmSheet />
+      <Spinner visible={isLoadingSpin} />
     </Layout>
   );
 }

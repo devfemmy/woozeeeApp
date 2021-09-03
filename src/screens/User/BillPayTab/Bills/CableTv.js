@@ -114,7 +114,7 @@ const woozeeeCards = [
 ];
 
 export default function CableTv({ navigation }) {
-  const renderSpinner = () => <Spinner size="tiny" status="basic" />;
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
   const { width, height } = useWindowDimensions();
 
@@ -297,7 +297,7 @@ export default function CableTv({ navigation }) {
 
   const handleOpenProductSheet = () => productSheetRef.current.open();
 
-  const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
+  const routeSuccess = () => navigation.navigate('Success');
 
   const handleConfirmTransaction = async () => {
     confirmSheetRef.current.close();
@@ -791,6 +791,7 @@ export default function CableTv({ navigation }) {
                     accessoryLeft={isLoading ? renderSpinner : null}
                     accessibilityLabel="Continue"
                     onPress={handleOpenConfirmSheet}
+                    disabled={isLoading}
                   >
                     <Text status="control">{t('proceed')}</Text>
                   </Button>

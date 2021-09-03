@@ -21,7 +21,7 @@ import {
 import { ProfilePosts } from 'src/components/SocialPosts/index';
 
 export default function Success({ navigation, route }) {
-  const { success } = route.params;
+  // const { success } = route.params;
   // console.log(success);
   const t = useContext(LocaleContext);
   const styles = StyleSheet.create({
@@ -79,7 +79,7 @@ export default function Success({ navigation, route }) {
             >
               <Ionicons name="md-checkmark" size={50} color="white" />
             </View>
-            <Text category="h6">{success}</Text>
+            <Text category="h6">Transaction completed!</Text>
             {/* <Text
               category="c1"
               status="basic"

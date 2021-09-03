@@ -38,8 +38,12 @@ import { IconClose, IconPaperPlane } from 'src/components/CustomIcons';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Spinner from 'react-native-loading-spinner-overlay';
+
 export default function Comments({ route, navigation }) {
   const { height } = useWindowDimensions();
+
+  const [isLoading, setLoading] = useState(false);
 
   const replyRef = useRef(null);
 
@@ -67,6 +71,7 @@ export default function Comments({ route, navigation }) {
   getUserImg();
 
   const fetchComments = async () => {
+    setLoading(true);
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
       authDomain: 'woozeee-d7f6c.firebaseapp.com',
@@ -105,6 +110,7 @@ export default function Comments({ route, navigation }) {
 
     setComments([..._comments]);
     // console.log('fetched comments is', _comments);
+    setLoading(false);
   };
 
   const fetchReplies = async (commentId) => {
@@ -571,8 +577,7 @@ export default function Comments({ route, navigation }) {
               justifyContent: 'flex-end',
             }}
           >
-            {/* {console.log('comments in here is => ', comments)} */}
-            {comments.length > 0 ? (
+            {!isLoading && comments.length > 0 ? (
               <List
                 style={{
                   backgroundColor: 'transparent',
@@ -627,6 +632,7 @@ export default function Comments({ route, navigation }) {
             )}
           </View>
         </Card>
+        <Spinner visible={isLoading} />
       </Layout>
     ),
     [height, INSETS, renderCardFooter, renderCardHeader],

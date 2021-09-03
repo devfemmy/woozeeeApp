@@ -26,7 +26,7 @@ import {
 } from 'src/components/FormFields';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../../../services/api/index';
-import { Toast,  Root } from 'native-base';
+import { Toast, Root } from 'native-base';
 
 import { IconCalendar } from 'src/components/CustomIcons';
 
@@ -65,7 +65,7 @@ const LGAS = STATES_LGAS.map((data) => ({
 
 export default function SoloPlan({ navigation, route }) {
   const [isLoading, setLoading] = useState(false);
-  const {amount, slug, trans_id} = route.params
+  const { amount, slug, trans_id } = route.params;
 
   const [form, setFormValues] = useState({
     firstName: '',
@@ -74,7 +74,7 @@ export default function SoloPlan({ navigation, route }) {
     DOB: '',
     address: '',
     SumAssured: 100,
-    PremiumAmount:100,
+    PremiumAmount: 100,
     amount: amount,
     plan: slug,
     title: '',
@@ -82,12 +82,11 @@ export default function SoloPlan({ navigation, route }) {
     secondBeneficiaryName: '',
     thirdBeneficiaryName: '',
     fourthBeneficiaryName: '',
-    transactionId: trans_id
-});
-if (trans_id === null) {
-  delete form.transactionId
-}
-
+    // transactionId: trans_id
+  });
+  // if (trans_id === null) {
+  //   delete form.transactionId;
+  // }
 
   const t = useContext(LocaleContext);
 
@@ -120,64 +119,68 @@ if (trans_id === null) {
     <Text>{LGAS[selectedStateLga].lgas[selectedLga.row]}</Text>
   );
   const navigateToNext = () => {
-    navigation.replace('UserRoute')
-}
+    navigation.replace('UserRoute');
+  };
 
   const subscribeToInsurance = () => {
-    setLoading(true)
-    AsyncStorage.getItem('USER_AUTH_TOKEN').then(res => {
+    setLoading(true);
+    AsyncStorage.getItem('USER_AUTH_TOKEN')
+      .then((res) => {
         const data = form;
-        axios.post(`insurance/subscribe`, data, {
+        axios
+          .post(`insurance/subscribe`, data, {
             headers: { Authorization: res },
-          }).then(res => {
-              setLoading(false)
-              Toast.show({
-                text: 'Subscribtion completed successfully',
-                buttonText: 'Okay',
-                position: 'top',
-                type: 'success',
-                duration: 2000,
-              });
-              setTimeout(() => {
-                navigateToNext()
-              }, 2000)
-          }).catch(err => {
-            setLoading(false);
-            console.log(err.response)
-            Toast.show({
-                text: 'Loan Request Failed',
-                buttonText: 'Okay',
-                position: 'bottom',
-                type: 'danger',
-                duration: 2000,
-              });
-            //   alert('Network Error')
           })
-    }
-    ).catch(err => err)
-}
+          .then((res) => {
+            setLoading(false);
+            Toast.show({
+              text: 'Subscribtion completed successfully',
+              buttonText: 'Okay',
+              position: 'top',
+              type: 'success',
+              duration: 2000,
+            });
+            setTimeout(() => {
+              navigateToNext();
+            }, 2000);
+          })
+          .catch((err) => {
+            setLoading(false);
+            console.log(err.response);
+            Toast.show({
+              text: 'Loan Request Failed',
+              buttonText: 'Okay',
+              position: 'bottom',
+              type: 'danger',
+              duration: 2000,
+            });
+            //   alert('Network Error')
+          });
+      })
+      .catch((err) => err);
+  };
 
   return (
     <>
       <Root>
-      <Layout level="6" style={{ flex: 1 }}>
-        <TopNavigationArea
-          title={t('fillDetails')}
-          navigation={navigation}
-          screen="auth"
-        />
-        <ScrollView
-          alwaysBounceVertical
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-        >
-          <View
-            style={{
-              flex: 1,
-              padding: 15,
-            }}
+        <Layout level="6" style={{ flex: 1 }}>
+          <TopNavigationArea
+            title={t('fillDetails')}
+            navigation={navigation}
+            screen="auth"
+          />
+          <ScrollView
+            alwaysBounceVertical
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
           >
-           <View style={{ paddingVertical: 10 }}>
+            <View
+              style={{
+                flex: 1,
+                padding: 15,
+              }}
+            >
+              <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="title"
                   label={'Title'}
@@ -185,121 +188,121 @@ if (trans_id === null) {
                   setFormValues={setFormValues}
                 />
               </View>
-            <View style={{ paddingBottom: 10 }}>
-              <View
-                style={{
-                  paddingVertical: 10,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <GeneralTextField
-                    type="firstName"
-                    label={t('firstName')}
-                    validate="required"
-                    setFormValues={setFormValues}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 5 }}>
-                  <GeneralTextField
-                    type="surname"
-                    label={'Surname'}
-                    autoCompleteType="name"
-                    textContentType="familyName"
-                    validate="required"
-                    setFormValues={setFormValues}
-                  />
-                </View>
-              </View>
-              {/* hERE */}
-              <View
-                style={{
-                  paddingVertical: 10,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <GeneralTextField
-                    type="beneficiaryName"
-                    label= "First Beneficiary Name"
-                    validate="required"
-                    setFormValues={setFormValues}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 5 }}>
-                  <GeneralTextField
-                    type="secondBeneficiaryName"
-                    label= "Second Beneficiary Name"
-                    autoCompleteType="name"
-                    textContentType="familyName"
-                    validate="required"
-                    setFormValues={setFormValues}
-                  />
-                </View>
-              </View>
-              <View
-                style={{
-                  paddingVertical: 10,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <View style={{ flex: 1, marginRight: 5 }}>
-                  <GeneralTextField
-                    type="thirdBeneficiaryName"
-                    label= "Third Beneficiary Name"
-                    validate="required"
-                    setFormValues={setFormValues}
-                  />
-                </View>
-                <View style={{ flex: 1, marginLeft: 5 }}>
-                  <GeneralTextField
-                    type="fourthBeneficiaryName"
-                    label= "Fourth Beneficiary Name"
-                    autoCompleteType="name"
-                    textContentType="familyName"
-                    validate="required"
-                    setFormValues={setFormValues}
-                  />
-                </View>
-              </View>
-              <View style={{ paddingVertical: 10 }}>
-                <GeneralTextField
-                  type="mobileNumber"
-                  label={t('mobileNum')}
-                  keyboardType="number-pad"
-                  validate="required"
-                  setFormValues={setFormValues}
-                />
-              </View>
-              <View style={{ paddingVertical: 10 }}>
+              <View style={{ paddingBottom: 10 }}>
                 <View
                   style={{
+                    paddingVertical: 10,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}
                 >
                   <View style={{ flex: 1, marginRight: 5 }}>
-                    <GeneralRadioGroup
-                      type="gender"
-                      label={t('gender')}
-                      data={GENDERS}
+                    <GeneralTextField
+                      type="firstName"
+                      label={t('firstName')}
+                      validate="required"
                       setFormValues={setFormValues}
                     />
                   </View>
                   <View style={{ flex: 1, marginLeft: 5 }}>
-                    <GeneralDatePicker
-                      type="DOB"
-                      label={t('dob')}
+                    <GeneralTextField
+                      type="surname"
+                      label={'Surname'}
+                      autoCompleteType="name"
+                      textContentType="familyName"
+                      validate="required"
                       setFormValues={setFormValues}
-                      accessoryRight={IconCalendar}
                     />
                   </View>
                 </View>
-              </View>
-              {/* <View style={{ paddingVertical: 10 }}>
+                {/* hERE */}
+                <View
+                  style={{
+                    paddingVertical: 10,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <View style={{ flex: 1, marginRight: 5 }}>
+                    <GeneralTextField
+                      type="beneficiaryName"
+                      label="First Beneficiary Name"
+                      validate="required"
+                      setFormValues={setFormValues}
+                    />
+                  </View>
+                  <View style={{ flex: 1, marginLeft: 5 }}>
+                    <GeneralTextField
+                      type="secondBeneficiaryName"
+                      label="Second Beneficiary Name"
+                      autoCompleteType="name"
+                      textContentType="familyName"
+                      validate="required"
+                      setFormValues={setFormValues}
+                    />
+                  </View>
+                </View>
+                <View
+                  style={{
+                    paddingVertical: 10,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <View style={{ flex: 1, marginRight: 5 }}>
+                    <GeneralTextField
+                      type="thirdBeneficiaryName"
+                      label="Third Beneficiary Name"
+                      validate="required"
+                      setFormValues={setFormValues}
+                    />
+                  </View>
+                  <View style={{ flex: 1, marginLeft: 5 }}>
+                    <GeneralTextField
+                      type="fourthBeneficiaryName"
+                      label="Fourth Beneficiary Name"
+                      autoCompleteType="name"
+                      textContentType="familyName"
+                      validate="required"
+                      setFormValues={setFormValues}
+                    />
+                  </View>
+                </View>
+                <View style={{ paddingVertical: 10 }}>
+                  <GeneralTextField
+                    type="mobileNumber"
+                    label={t('mobileNum')}
+                    keyboardType="number-pad"
+                    validate="required"
+                    setFormValues={setFormValues}
+                  />
+                </View>
+                <View style={{ paddingVertical: 10 }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <View style={{ flex: 1, marginRight: 5 }}>
+                      <GeneralRadioGroup
+                        type="gender"
+                        label={t('gender')}
+                        data={GENDERS}
+                        setFormValues={setFormValues}
+                      />
+                    </View>
+                    <View style={{ flex: 1, marginLeft: 5 }}>
+                      <GeneralDatePicker
+                        type="DOB"
+                        label={t('dob')}
+                        setFormValues={setFormValues}
+                        accessoryRight={IconCalendar}
+                      />
+                    </View>
+                  </View>
+                </View>
+                {/* <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="email"
                   label={t('emailAddress')}
@@ -310,15 +313,15 @@ if (trans_id === null) {
                   setFormValues={setFormValues}
                 />
               </View> */}
-              <View style={{ paddingVertical: 10 }}>
-                <GeneralTextField
-                  type="address"
-                  label={t('address')}
-                  validate="required"
-                  setFormValues={setFormValues}
-                />
-              </View>
-              {/* <View style={{ paddingVertical: 10 }}>
+                <View style={{ paddingVertical: 10 }}>
+                  <GeneralTextField
+                    type="address"
+                    label={t('address')}
+                    validate="required"
+                    setFormValues={setFormValues}
+                  />
+                </View>
+                {/* <View style={{ paddingVertical: 10 }}>
                 <GeneralSelect
                   type="maritalStatus"
                   label={t('maritalStatus')}
@@ -326,7 +329,7 @@ if (trans_id === null) {
                   setFormValues={setFormValues}
                 />
               </View> */}
-              {/* <View style={{ paddingVertical: 10 }}>
+                {/* <View style={{ paddingVertical: 10 }}>
                 <GeneralTextField
                   type="profession"
                   label={t('profession')}
@@ -347,7 +350,7 @@ if (trans_id === null) {
                   ))}
                 </Select>
               </View> */}
-              {/* <View style={{ paddingVertical: 10 }}>
+                {/* <View style={{ paddingVertical: 10 }}>
                 <Select
                   size="large"
                   label="LGA"
@@ -360,23 +363,23 @@ if (trans_id === null) {
                   ))}
                 </Select>
               </View> */}
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  disabled={isLoading}
-                  onPress={subscribeToInsurance}
-                >
-                  <Text status="control">{t('proceedToPayment')}</Text>
-                </Button>
+                <View style={{ paddingVertical: 20 }}>
+                  <Button
+                    status="danger"
+                    size="large"
+                    accessibilityLiveRegion="assertive"
+                    accessibilityComponentType="button"
+                    accessibilityLabel="Continue"
+                    disabled={isLoading}
+                    onPress={subscribeToInsurance}
+                  >
+                    <Text status="control">{t('proceedToPayment')}</Text>
+                  </Button>
+                </View>
               </View>
             </View>
-          </View>
-        </ScrollView>
-      </Layout>
+          </ScrollView>
+        </Layout>
       </Root>
     </>
   );

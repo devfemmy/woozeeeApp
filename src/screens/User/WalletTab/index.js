@@ -28,6 +28,10 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 
 import FastImage from 'react-native-fast-image';
 
+import Api from 'src/api';
+
+import { getEmail } from '../../../api/index';
+
 import {
   IconCCard,
   IconCPlus,
@@ -122,11 +126,19 @@ export default function Wallet({ navigation }) {
   const [rewardAmt, setRewardAmt] = useState(null);
   const [userImg, setUserImg] = useState(null);
   const [fullname, setFullName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [userData, setUserData] = useState({});
 
   const accountsRef = useRef(null);
 
   const fetchFromAsyncStorage = () => {
     // Fetch Data from Asynchstorage
+
+    AsyncStorage.getItem('email')
+      .then((res) => {
+        setEmail(res);
+      })
+      .catch((err) => err);
 
     AsyncStorage.getItem('fullName')
       .then((res) => {
@@ -167,6 +179,8 @@ export default function Wallet({ navigation }) {
       })
       .catch((err) => err);
   };
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
