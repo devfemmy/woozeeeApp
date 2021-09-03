@@ -501,23 +501,7 @@ function BankProcess(props) {
           })
         }
       />
-      <View
-        style={{
-          marginVertical: 30,
-          width: '100%',
-        }}
-      >
-        <Button
-          status="primary"
-          accessibilityLiveRegion="assertive"
-          accessibilityComponentType="button"
-          accessibilityLabel="Continue"
-          style={{ width: '100%' }}
-          //   onPress={() => accountSheetRef.current.close()}
-        >
-          <Text status="control">{t('proceed')}</Text>
-        </Button>
-      </View>
+
       <SendTo />
       <AccountSheet />
       <ReceipientAccountSheet />

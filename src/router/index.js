@@ -117,6 +117,8 @@ import OtherCategories from 'src/screens/User/Common/Movies/OtherCategories/inde
 import TransactionSummary from '../screens/User/Common/TransactionSummary';
 import PaymentSchedule from 'src/screens/User/Onboarding/ActivateCare/PaymentSchedule';
 import WoozeePaySummary from 'src/screens/User/Onboarding/ActivateCare/PaySummary';
+import TransferMoney from '../screens/User/WalletTab/TransferMoney';
+import Accounts from '../screens/User/WalletTab/Accounts';
 
 const { Navigator, Screen } = createStackNavigator();
 

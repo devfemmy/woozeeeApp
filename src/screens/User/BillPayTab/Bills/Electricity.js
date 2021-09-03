@@ -150,7 +150,7 @@ const PLACE = [
 const TYPE = [{ title: 'Select' }, { title: 'Prepaid' }, { title: 'Postpaid' }];
 
 export default function Electricity({ navigation }) {
-  const renderSpinner = () => <Spinner size="tiny" status="basic" />;
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
   const [emailAddress, setEmail] = useState('');
 
@@ -270,7 +270,7 @@ export default function Electricity({ navigation }) {
     setLoading(false);
   };
 
-  const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
+  const routeSuccess = () => navigation.navigate('Success');
 
   const [btnState, setBtnState] = useState(false);
 
@@ -729,6 +729,7 @@ export default function Electricity({ navigation }) {
                     accessoryLeft={isLoading ? renderSpinner : null}
                     accessibilityLabel="Continue"
                     onPress={handleOpenConfirmSheet}
+                    disabled={isLoading}
                   >
                     <Text status="control">{t('proceed')}</Text>
                   </Button>

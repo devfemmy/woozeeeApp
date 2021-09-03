@@ -24,8 +24,18 @@ import savings from '../../../../../../assets/images/moneyMatters/savings.png';
 import lapo2 from '../../../../../../assets/images/moneyMatters/lapo2.png';
 import access from '../../../../../../assets/images/banks/access.png';
 
-const MoneyMattersConfirmation = (props) => {
-  const LoaneeDetailsBlock = ({ name, party, img }) => {
+const MoneyMattersConfirmation = ({
+  currUser,
+  currInfo,
+  currImg,
+  guestUser,
+  guestInfo,
+  guestImg,
+  navigation,
+  action,
+  amount,
+}) => {
+  const LoaneeDetailsBlock = ({ currUserName, currUserInfo, img }) => {
     return (
       <View style={{ display: 'flex' }}>
         <View
@@ -49,16 +59,16 @@ const MoneyMattersConfirmation = (props) => {
         >
           <View>
             <Text category="c2" style={{ color: '#043F7C', marginVertical: 5 }}>
-              Lapo Microfinance Bank
+              {currUserName}
             </Text>
             <Text
               category="c1"
               style={{ color: 'rgba(0, 0, 0, 0.8)', marginVertical: 5 }}
             >
-              Loanee
+              {currUserInfo}
             </Text>
           </View>
-          <Image source={lapo2} resizeMode="contain" />
+          <Image source={img} resizeMode="contain" />
         </View>
         <View
           style={{
@@ -81,7 +91,7 @@ const MoneyMattersConfirmation = (props) => {
     );
   };
 
-  const UserDetailBlock = () => {
+  const UserDetailBlock = ({ guestUserName, guestUserInfo, img }) => {
     return (
       <View
         style={{
@@ -104,17 +114,17 @@ const MoneyMattersConfirmation = (props) => {
       >
         <View>
           <Text category="c2" style={{ color: '#043F7C', marginVertical: 5 }}>
-            Jace Wazobia
+            {guestUserName}
           </Text>
           <Text
             category="c1"
             style={{ color: 'rgba(0, 0, 0, 0.8)', marginVertical: 5 }}
           >
-            4189 4169 4597 1122 (Access Bank)
+            {guestUserInfo}
           </Text>
         </View>
         <Image
-          source={access}
+          source={img}
           resizeMode="contain"
           style={{ width: 50, height: 50 }}
         />
@@ -123,23 +133,33 @@ const MoneyMattersConfirmation = (props) => {
   };
 
   const routeSuccess = () => {
-    props.navigation.navigate('BillPaymentSuccess');
+    navigation.navigate('Success', {
+      params: { success: 'Transaction Successful!' },
+    });
   };
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
         title={`Confirmation`}
-        navigation={props.navigation}
+        navigation={navigation}
         screen="auth"
       />
       <View style={styles.container}>
-        <Text category="h6">Loan</Text>
-        <Text category="h5">₦ 100,000.00</Text>
+        <Text category="h6">{action}</Text>
+        <Text category="h5">₦ {amount}</Text>
       </View>
       <View style={styles.Loancontainer}>
-        <LoaneeDetailsBlock />
-        <UserDetailBlock />
+        <LoaneeDetailsBlock
+          currUserName={currUser}
+          currUserInfo={currInfo}
+          img={currImg}
+        />
+        <UserDetailBlock
+          guestUserName={guestUser}
+          guestUserInfo={guestInfo}
+          img={guestImg}
+        />
       </View>
       <View
         style={{
