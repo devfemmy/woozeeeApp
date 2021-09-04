@@ -14,14 +14,18 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { IconEye } from 'src/components/CustomIcons';
 import { Video } from 'expo-av';
 
+import { ChallengeVideoCard } from './index';
+
 export default function TrendingChallengesCard(props) {
   const { data, extraWidth, navigation } = props;
 
+  console.log('data', data);
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;
 
   return (
+    // <ChallengeVideoCard data={data} extraWidth={extraWidth} numColumns={e}/>
     <View
       style={{
         width: IS_PORTRAIT
@@ -42,8 +46,8 @@ export default function TrendingChallengesCard(props) {
           justifyContent: 'flex-start',
         }}
       >
-        <Video
-          source={{ uri: data.mediaURL }}
+        <Image
+          source={{ uri: data.imageURL }}
           shouldPlay={true}
           isLooping={true}
           volume={0}

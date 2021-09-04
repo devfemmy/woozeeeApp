@@ -51,28 +51,28 @@ function BankProcess(props) {
   const { appState } = useContext(AppSettingsContext);
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
-  async function getBankDetails() {
-    AsyncStorage.getItem('globusAcn').then((res) => {
-      setAccountNumber(res);
-    });
+  // async function getBankDetails() {
+  //   AsyncStorage.getItem('globusAcn').then((res) => {
+  //     setAccountNumber(res);
+  //   });
 
-    AsyncStorage.getItem('globusBal').then((res) => {
-      setAccountBalance(res);
-    });
-  }
+  //   AsyncStorage.getItem('globusBal').then((res) => {
+  //     setAccountBalance(res);
+  //   });
+  // }
 
   useEffect(() => {
-    getBankDetails();
+    // getBankDetails();
   }, []);
 
-  const ACCOUNTS = [
-    {
-      id: 4,
-      title: `Globus Bank - ₦${accountBalance}`,
-      acctNo: accountNumber,
-      image: require('assets/images/banks/globus.png'),
-    },
-  ];
+  // const ACCOUNTS = [
+  //   {
+  //     id: 4,
+  //     title: `Globus Bank - ₦${accountBalance}`,
+  //     acctNo: accountNumber,
+  //     image: require('assets/images/banks/globus.png'),
+  //   },
+  // ];
 
   const [form, setFormValues] = useState({
     _sendTo: '',
@@ -502,9 +502,9 @@ function BankProcess(props) {
         }
       />
 
-      <SendTo />
+      {/* <SendTo />
       <AccountSheet />
-      <ReceipientAccountSheet />
+      <ReceipientAccountSheet /> */}
     </Layout>
   );
 }

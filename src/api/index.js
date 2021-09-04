@@ -76,7 +76,7 @@ export default {
   getTrendingChallenges: async () => {
     const instance = await createInstance();
 
-    const res = await instance.get('category-groups');
+    const res = await instance.get('challenges-category');
 
     const { data } = res;
     return {

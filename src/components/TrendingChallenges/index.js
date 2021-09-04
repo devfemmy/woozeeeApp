@@ -21,6 +21,8 @@ import MovieSectionCard from 'src/components/SocialCard/MovieSectionCard';
 
 import { IconForwardIos } from '../../components/CustomIcons';
 
+import { ChallengesVideoCard } from '../../components/SocialCard/index';
+
 const TrendingSectionArea = (props) => {
   const { t, navigation, width, height } = props;
 
@@ -30,18 +32,18 @@ const TrendingSectionArea = (props) => {
   );
 
   const { status, data, refetch } = useQuery(
-    ['challengesSection', 1],
+    ['challengesSec', 1],
     async () => {
       const promise = await Api.getTrendingChallenges();
       promise.cancel = () => Api.cancelRequest('Request aborted');
       return promise;
     },
     {
-      cacheTime: 1000 * 60 * 1,
+      // cacheTime: 1000 * 60 * 1,
     },
   );
 
-  //   console.log('data is', data.pageData.data[1].subs[0]);
+  // console.log('data is', data.pageData.data);
   //   data.length &&
   //     data.pageData.data[0].subs[3].map((item) => {
   //       setChallengeData(...challengeData, item.mediaURL);
@@ -90,8 +92,9 @@ const TrendingSectionArea = (props) => {
           }}
         >
           <Text category="h6" status="basic">
-            Trending Challenges
+            Coming Soon Challenges
           </Text>
+
           <Button
             size="tiny"
             appearance="ghost"
@@ -105,28 +108,18 @@ const TrendingSectionArea = (props) => {
         </View>
         <List
           style={{ backgroundColor: 'transparent', maxHeight: 260 }}
-          contentContainerStyle={{
-            alignItems: 'center',
-            padding: 5,
-          }}
           alwaysBounceHorizontal
           horizontal
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          data={data.pageData.data[1].subs[0].entries}
+          data={data.pageData.data[0].challenges}
           keyExtractor={(_, i) => i.toString()}
           renderItem={(renderData) => (
-            <TrendingChallengesCard
-              //   pressed={() =>
-              //     navigation.navigate('ViewMovies', { movie_data: renderData })
-              //   }
-              data={renderData.item}
-              extraWidth={0.5}
-            />
+            <ChallengesVideoCard data={renderData} extraWidth={0.5} />
           )}
           getItemLayout={(data, index) => ({
-            length: 360,
-            offset: 360 * index,
+            length: 200,
+            offset: 200 * index,
             index,
           })}
         />

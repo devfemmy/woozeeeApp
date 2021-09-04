@@ -96,6 +96,14 @@ const BankOptions = ({ name, logo, balance, acctNo }) => {
 };
 
 function Accounts(props) {
+  console.log('props', props);
+  const {
+    route: { params },
+  } = props;
+  const {
+    userAccounts: { accounts },
+  } = params;
+  // console.log(accounts);
   const [accountNumber, setAccountNumber] = useState('');
   const [accountBalance, setAccountBalance] = useState('');
 
@@ -151,12 +159,16 @@ function Accounts(props) {
         </TouchableOpacity>
       </View>
       {/* fetch card and account details from user obj */}
-      <BankOptions
-        name="Globus Bank"
-        balance={accountBalance}
-        logo={globus}
-        acctNo={accountNumber}
-      />
+      {accounts.length &&
+        accounts.map((account, index) => (
+          <BankOptions
+            key={index}
+            name={account.bankName}
+            balance={JSON.stringify(account.accountBalance)}
+            logo={globus}
+            acctNo={account.custAccount}
+          />
+        ))}
     </Layout>
   );
 }

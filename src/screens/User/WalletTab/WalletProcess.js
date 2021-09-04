@@ -52,58 +52,58 @@ function WalletProcess(props) {
   const { appState } = useContext(AppSettingsContext);
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
-  async function getBankDetails() {
-    AsyncStorage.getItem('globusAcn').then((res) => {
-      setAccountNumber(res);
-    });
+  // async function getBankDetails() {
+  //   AsyncStorage.getItem('globusAcn').then((res) => {
+  //     setAccountNumber(res);
+  //   });
 
-    AsyncStorage.getItem('globusBal').then((res) => {
-      setAccountBalance(res);
-    });
-  }
+  //   AsyncStorage.getItem('globusBal').then((res) => {
+  //     setAccountBalance(res);
+  //   });
+  // }
 
   useEffect(() => {
-    getBankDetails();
+    // getBankDetails();
   }, []);
 
-  const ACCOUNTS = [
-    {
-      id: 1,
-      title: 'woozeee Wallet - ₦ 99,394.99',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/woozeee.png'),
-    },
-    {
-      id: 2,
-      title: 'Access Bank - ₦ 34,677.02',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/access.png'),
-    },
-    {
-      id: 3,
-      title: 'UBA - ₦ 25,500.44',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/uba.png'),
-    },
-    {
-      id: 4,
-      title: 'Globus Bank -₦ 24,222.18',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/globus.png'),
-    },
-    {
-      id: 5,
-      title: 'Zenith Bank -₦ 1,000.00',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/zenith.png'),
-    },
-    {
-      id: 6,
-      title: 'Online Payment',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/others.png'),
-    },
-  ];
+  // const ACCOUNTS = [
+  //   {
+  //     id: 1,
+  //     title: 'woozeee Wallet - ₦ 99,394.99',
+  //     acctNo: accountNumber,
+  //     image: require('assets/images/banks/woozeee.png'),
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Access Bank - ₦ 34,677.02',
+  //     acctNo: accountNumber,
+  //     image: require('assets/images/banks/access.png'),
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'UBA - ₦ 25,500.44',
+  //     acctNo: accountNumber,
+  //     image: require('assets/images/banks/uba.png'),
+  //   },
+  //   {
+  //     id: 4,
+  //     title: 'Globus Bank -₦ 24,222.18',
+  //     acctNo: accountNumber,
+  //     image: require('assets/images/banks/globus.png'),
+  //   },
+  //   {
+  //     id: 5,
+  //     title: 'Zenith Bank -₦ 1,000.00',
+  //     acctNo: accountNumber,
+  //     image: require('assets/images/banks/zenith.png'),
+  //   },
+  //   {
+  //     id: 6,
+  //     title: 'Online Payment',
+  //     acctNo: accountNumber,
+  //     image: require('assets/images/banks/others.png'),
+  //   },
+  // ];
   //   const ACCOUNTS = [
   //     {
   //       id: 4,
@@ -580,9 +580,9 @@ function WalletProcess(props) {
         }
       />
 
-      <SendTo />
-      <AccountSheet />
-      <ReceipientAccountSheet />
+      {/* <SendTo /> */}
+      {/* <AccountSheet />
+      <ReceipientAccountSheet /> */}
     </Layout>
   );
 }

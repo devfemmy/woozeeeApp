@@ -127,18 +127,13 @@ export default function Wallet({ navigation }) {
   const [userImg, setUserImg] = useState(null);
   const [fullname, setFullName] = useState(null);
   const [email, setEmail] = useState(null);
-  const [userData, setUserData] = useState({});
+  const [userAccounts, setUserAccount] = useState([]);
+  const acc = [];
 
   const accountsRef = useRef(null);
 
   const fetchFromAsyncStorage = () => {
     // Fetch Data from Asynchstorage
-
-    AsyncStorage.getItem('email')
-      .then((res) => {
-        setEmail(res);
-      })
-      .catch((err) => err);
 
     AsyncStorage.getItem('fullName')
       .then((res) => {
@@ -180,13 +175,37 @@ export default function Wallet({ navigation }) {
       .catch((err) => err);
   };
 
-  useEffect(() => {}, []);
+  const fetchUserData = async () => {
+    AsyncStorage.getItem('email')
+      .then(async (res) => {
+        setEmail(res);
+        console.log('email is', res);
+        const result = await Api.getUserByEmail(res);
+        const {
+          user: { accounts },
+        } = await result;
+        setUserAccount((prevState) => {
+          return {
+            ...prevState,
+            accounts,
+          };
+        });
+        console.log(result);
+      })
+      .catch((err) => err);
+  };
+
+  useEffect(() => {
+    fetchUserData();
+    // console.log('effect called!!');
+  }, []);
+
+  // console.log('acc', acc);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       fetchFromAsyncStorage();
     });
-
     return unsubscribe;
   }, [navigation]);
 
@@ -232,7 +251,7 @@ export default function Wallet({ navigation }) {
   };
 
   const showAccounts = () => {
-    navigation.navigate('Accounts');
+    navigation.navigate('Accounts', { userAccounts });
     // accountsRef.current.open();
   };
 
@@ -416,9 +435,9 @@ export default function Wallet({ navigation }) {
           paddingHorizontal: 5,
         }}
       >
-        {WALLET_ITEMS.map((data) => (
+        {/* {WALLET_ITEMS.map((data) => (
           <WalletItem data={data} key={data.id} />
-        ))}
+        ))} */}
       </View>
     </View>
   );

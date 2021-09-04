@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 
-import { Alert, Platform } from 'react-native';
+import { Alert, Platform, BackHandler } from 'react-native';
 
 import { useNetInfo } from '@react-native-community/netinfo';
 

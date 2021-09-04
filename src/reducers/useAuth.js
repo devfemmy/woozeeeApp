@@ -113,21 +113,13 @@ export default function useAuth() {
             token = result.token;
             const userImage = result?.user.imgUrl;
             const email = result?.user.email;
-            const banks = result?.globus ? result.globus : '';
-            const globusAccNum = banks?.result?.accountNo;
-            const gloBal = banks?.result?.balance.toString();
-            const gloAccount = banks?.result?.accTitle
-            console.log('banks => ', banks);
+            // const bankAccounts = result?.user.accounts;
+
+            // console.log('bankAccounts', JSON.stringify(bankAccounts));
 
             AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
             AsyncStorage.setItem('userImage', userImage);
-            AsyncStorage.setItem('globusAcn', globusAccNum);
-            AsyncStorage.setItem(
-              'globusBal',
-              gloBal,
-            );
-            AsyncStorage.setItem('globusAccName', gloAccount);
-
+            // AsyncStorage.setItem('bankAccounts', JSON.stringify(bankAccounts));
 
             AsyncStorage.setItem('email', email);
 
@@ -153,8 +145,7 @@ export default function useAuth() {
             AsyncStorage.setItem('walletAmt', stringedWallet);
             AsyncStorage.setItem('rewardAmt', stringedReward);
             AsyncStorage.setItem('fullName', fullname);
-            console.log("end here")
-
+            console.log('end here');
           }
 
           dispatch({
