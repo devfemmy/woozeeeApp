@@ -126,6 +126,7 @@ export default function useAuth() {
             );
             await AsyncStorage.setItem('globusAccName', banks.result.accTitle);
 
+
             AsyncStorage.setItem('email', email);
 
             const user_id = result.user._id;

@@ -1754,11 +1754,6 @@
   "resolved" "https://registry.npmjs.org/@istanbuljs/schema/-/schema-0.1.3.tgz"
   "version" "0.1.3"
 
-"@jesster2k10/react-native-range-slider@^0.3.1":
-  "integrity" "sha512-84N/GxYH9/NtqnJ93MjhUKiyYvjMfsJOBWW1gkZaR7rR0j2oYlXuQd0c7WAOkPKh66aiNX0QEg3tY/XEjia9eA=="
-  "resolved" "https://registry.npmjs.org/@jesster2k10/react-native-range-slider/-/react-native-range-slider-0.3.1.tgz"
-  "version" "0.3.1"
-
 "@jest/console@^24.9.0":
   "integrity" "sha512-Zuj6b8TnKXi3q4ymac8EQfc3ea/uhLeCGThFqXeC8H9/raaH8ARPUTdId+XyGd03Z4In0/VjD2OYFcBF09fNLQ=="
   "resolved" "https://registry.npmjs.org/@jest/console/-/console-24.9.0.tgz"

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { ScrollView } from 'react-native-gesture-handler';
-import RangeSlider from '@jesster2k10/react-native-range-slider';
+
 
 const PaymentSchedule = (props) => {
     const {amount, scheme, interestRate,title, slug } = props.route.params;
