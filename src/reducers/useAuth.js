@@ -110,26 +110,29 @@ export default function useAuth() {
             : null;
 
           if (!msg) {
-            token = await result.token;
-            const userImage = await result.user.imgUrl;
-            const email = await result.user.email;
-            const banks = (await result.globus) ? result.globus : [];
-
+            token = result.token;
+            const userImage = result?.user.imgUrl;
+            const email = result?.user.email;
+            const banks = result?.globus ? result.globus : '';
+            const globusAccNum = banks?.result?.accountNo;
+            const gloBal = banks?.result?.balance.toString();
+            const gloAccount = banks?.result?.accTitle
             console.log('banks => ', banks);
 
-            await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
-            await AsyncStorage.setItem('userImage', userImage);
-            await AsyncStorage.setItem('globusAcn', banks.result.accountNo);
-            await AsyncStorage.setItem(
+            AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
+            AsyncStorage.setItem('userImage', userImage);
+            AsyncStorage.setItem('globusAcn', globusAccNum);
+            AsyncStorage.setItem(
               'globusBal',
-              JSON.stringify(banks.result.balance),
+              gloBal,
             );
-            await AsyncStorage.setItem('globusAccName', banks.result.accTitle);
+            AsyncStorage.setItem('globusAccName', gloAccount);
+
 
             AsyncStorage.setItem('email', email);
 
             const user_id = result.user._id;
-
+            AsyncStorage.setItem('userid', user_id);
             const insure_num = result.user.insurranceCard.cardNumber;
             const insureamt = result.user.insurranceCard.credits;
             const stringedAmt = insureamt.toString();
@@ -150,7 +153,8 @@ export default function useAuth() {
             AsyncStorage.setItem('walletAmt', stringedWallet);
             AsyncStorage.setItem('rewardAmt', stringedReward);
             AsyncStorage.setItem('fullName', fullname);
-            AsyncStorage.setItem('userid', user_id);
+            console.log("end here")
+
           }
 
           dispatch({

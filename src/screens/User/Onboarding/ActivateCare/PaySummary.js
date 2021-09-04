@@ -60,6 +60,7 @@ const WoozeePaySummary = (props) => {
                     navigateToNext()
                   }, 2000)
               }).catch(err => {
+                console.log("err.response", err.response)
                 setIsLoading(false)
                 Toast.show({
                     text: 'Loan Request Failed',
