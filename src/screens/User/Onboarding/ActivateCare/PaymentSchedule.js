@@ -10,10 +10,6 @@ import {
 import { StyleSheet, View } from 'react-native';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { ScrollView } from 'react-native-gesture-handler';
-<<<<<<< HEAD
-
-=======
->>>>>>> 6f6101f1496a5f44f2258f49366dfa4729caac9e
 
 const PaymentSchedule = (props) => {
   const { amount, scheme, interestRate, title, slug } = props.route.params;

@@ -123,8 +123,18 @@ export default function SoloPlan({ navigation, route }) {
   };
 
   const subscribeToInsurance = () => {
-    setLoading(true);
-    AsyncStorage.getItem('USER_AUTH_TOKEN')
+    if (form.firstName === '' || form.surname === '' || 
+    form.mobileNumber === '' || form.DOB === '' || form.address === '' || form.title === '') {
+      Toast.show({
+        text: 'Please fill all the form',
+        buttonText: 'Important!',
+        position: 'top',
+        type: 'warning',
+        duration: 2000,
+      });
+    }else {
+      setLoading(true);
+      AsyncStorage.getItem('USER_AUTH_TOKEN')
       .then((res) => {
         const data = form;
         axios
@@ -158,6 +168,7 @@ export default function SoloPlan({ navigation, route }) {
           });
       })
       .catch((err) => err);
+    }
   };
 
   return (
