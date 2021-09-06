@@ -75,25 +75,30 @@ i18n.fallbacks = true;
 // one signal
 
 OneSignal.setLogLevel(6, 0);
-OneSignal.setAppId("7f2e4740-3498-4c48-8925-a8ffe8168c2b");
+OneSignal.setAppId('7f2e4740-3498-4c48-8925-a8ffe8168c2b');
 // END OneSignal Init Code
 
 // Prompt for push on iOS
 
 // Method for handling notifications received while app in foreground
-OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent => {
-  console.log("OneSignal: notification will show in foreground:", notificationReceivedEvent);
-  let notification = notificationReceivedEvent.getNotification();
-  console.log("notification: ", notification);
-  const data = notification.additionalData
-  console.log("additionalData: ", data);
-  // Complete with null means don't show a notification.
-  notificationReceivedEvent.complete(notification);
-});
+OneSignal.setNotificationWillShowInForegroundHandler(
+  (notificationReceivedEvent) => {
+    console.log(
+      'OneSignal: notification will show in foreground:',
+      notificationReceivedEvent,
+    );
+    let notification = notificationReceivedEvent.getNotification();
+    console.log('notification: ', notification);
+    const data = notification.additionalData;
+    console.log('additionalData: ', data);
+    // Complete with null means don't show a notification.
+    notificationReceivedEvent.complete(notification);
+  },
+);
 
 //Method for handling notifications opened
-OneSignal.setNotificationOpenedHandler(notification => {
-  console.log("OneSignal: notification opened:", notification);
+OneSignal.setNotificationOpenedHandler((notification) => {
+  console.log('OneSignal: notification opened:', notification);
 });
 
 // if (Constants.platform.android) {

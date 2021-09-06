@@ -465,9 +465,21 @@ export default function VideoView({
 
   const [muteState, setIsMuted] = useState(false);
 
-  const toggleMute = () => {
-    setIsMuted(!muteState);
-    videoRef.current.setIsMutedAsync(muteState);
+  let lastTap = null;
+
+  const toggleMute = async () => {
+    let val = await videoRef.current.setIsMutedAsync();
+    await videoRef.current.setIsMutedAsync(!val.isMuted);
+  };
+
+  const handleDoubleTap = () => {
+    const now = Date.now();
+    const DOUBLE_PRESS_DELAY = 300;
+    if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
+      toggleMute();
+    } else {
+      lastTap = now;
+    }
   };
 
   const [text, setText] = useState('');
@@ -603,13 +615,7 @@ export default function VideoView({
               />
             </View>
           </View>
-          <TouchableWithoutFeedback
-            onPress={
-              data.item.type && data.item.type == 'video'
-                ? () => toggleMute()
-                : null
-            }
-          >
+          <TouchableWithoutFeedback onPress={() => handleDoubleTap()}>
             <View
               style={{
                 flex: 1,

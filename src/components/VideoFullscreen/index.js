@@ -297,7 +297,7 @@ const VideoView = forwardRef((props, ref) => {
                     />
                     <InteractIcon
                       Accessory={(evaProps) => <IconEye {...evaProps} />}
-                      textContent={data.totalViews}
+                      textContent={JSON.stringify(data.totalViews)}
                       height={20}
                       width={20}
                       direction="row"

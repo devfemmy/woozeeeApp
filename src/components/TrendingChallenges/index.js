@@ -92,7 +92,7 @@ const TrendingSectionArea = (props) => {
           }}
         >
           <Text category="h6" status="basic">
-            Coming Soon Challenges
+            Challenges Coming Soon
           </Text>
 
           <Button
