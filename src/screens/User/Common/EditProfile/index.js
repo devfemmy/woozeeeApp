@@ -13,6 +13,7 @@ import {
 } from '@ui-kitten/components';
 import RNFetchBlob from 'rn-fetch-blob';
 import firebase from '@react-native-firebase/app';
+import { Toast, Content, Root } from 'native-base';
 import storage from '@react-native-firebase/storage';
 
 import { LocaleContext } from 'src/contexts';
@@ -21,8 +22,6 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import ImageVideoPicker from 'src/utilities/ImageVideoPicker';
 import getLibraryPermission from 'src/utilities/getLibraryPermission';
-
-
 
 import {
   GeneralTextField,
@@ -38,7 +37,6 @@ import states from './states.json';
 import axios from '../../../../services/api/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomField from 'src/components/CustomField/index';
-import { Toast, Content, Root } from 'native-base';
 
 const COUNTRIES = countries;
 
@@ -76,7 +74,6 @@ export default function EditProfile({ navigation }) {
     imgUrl: '',
   });
 
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues((prevState) => ({
@@ -95,7 +92,7 @@ export default function EditProfile({ navigation }) {
           })
           .then((response) => {
             setLoading(false);
-            console.log("response", response)
+            console.log('response', response);
             const user_data = response.data.user;
             const first_name = user_data.fName;
             const last_name = user_data.sName;
@@ -212,7 +209,9 @@ export default function EditProfile({ navigation }) {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           if (user === true) {
             setUserImage(downloadURL);
+            AsyncStorage.setItem('userImage', downloadURL);
           } else {
+            // AsyncStorage.setItem('userImage', downloadURL);
             setCoverImage(downloadURL);
           }
           console.log('File available at', downloadURL);
@@ -462,7 +461,7 @@ export default function EditProfile({ navigation }) {
                     label={t('dob')}
                     date={date}
                     onSelect={(nextDate) => setNewDateHandler(nextDate)}
-                    min = {new Date ('12-05-1870')}
+                    min={new Date('12-05-1870')}
                     // max= {new Date('22-06-2022')}
                     accessoryRight={IconCalendar}
                   />
