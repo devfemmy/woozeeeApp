@@ -145,7 +145,7 @@ export default function useAuth() {
             AsyncStorage.setItem('walletAmt', stringedWallet);
             AsyncStorage.setItem('rewardAmt', stringedReward);
             AsyncStorage.setItem('fullName', fullname);
-            console.log('end here');
+            // console.log('end here');
           }
 
           dispatch({
@@ -550,6 +550,7 @@ export default function useAuth() {
 
         try {
           await AsyncStorage.removeItem('USER_AUTH_TOKEN');
+          await AsyncStorage.removeItem('userImage');
 
           dispatch({
             type: 'LOG_OUT',
