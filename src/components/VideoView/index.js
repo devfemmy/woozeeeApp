@@ -106,6 +106,7 @@ export default function VideoView({
   const [appTheme, setTheme] = useState('');
   const [_userId, setUserId] = useState('');
   const [userImg, setUserImg] = useState('');
+  const [shareLink, setShareLink] = useState('');
 
   const getTheme = async () => {
     const res = await AsyncStorage.getItem('appTheme');
@@ -176,10 +177,56 @@ export default function VideoView({
     setUserList([...users]);
   };
 
-  const handleShare = async () => {
+  const handleShare = async (params, value) => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
     try {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        json: true,
+        body: JSON.stringify({
+          dynamicLinkInfo: {
+            // ios: {
+            //   bundleId: 'app.woozeee.com',
+            //   appStoreId: '1549457766',
+            // },
+            // android: {
+            //   packageName: 'app.woozeee.com',
+            // },
+            domainUriPrefix: 'https://app.woozeee.com',
+            link: `https://app.woozeee.com/entry/?${params}=${value}`,
+            // social: JSON.stringify({
+            //   title: 'woozeee Challenges',
+            //   descriptionText: 'Challenge entry on woozeee',
+            //   imageUrl:
+            //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxO_eYxfA2ZQaIuJIIEuYm8d72bH2jgHwvBA&usqp=CAU',
+            // }),
+          },
+        }),
+      };
+
+      const res = await fetch(
+        'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+        requestOptions,
+      );
+      const _res = await res.json();
+      // console.log(_res);
+
       const result = await Share.share({
-        message: `https://app.woozeee.com/entry/${item._id}`,
+        message: _res.shortLink,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -192,12 +239,11 @@ export default function VideoView({
           sheetRef.current.close();
         }
       } else if (result.action === Share.dismissedAction) {
-        alert('Action dismissed');
+        // alert('Action dismissed');
       }
       sheetRef.current.close();
-    } catch (error) {
-      alert('An error occured');
-      console.log(error.message);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -373,6 +419,44 @@ export default function VideoView({
   };
 
   const handleSend = async (data) => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    try {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        json: true,
+        body: JSON.stringify({
+          dynamicLinkInfo: {
+            domainUriPrefix: 'https://app.woozeee.com',
+            link: `https://app.woozeee.com/entry/?$entries=${item._id}`,
+          },
+        }),
+      };
+
+      const res = await fetch(
+        'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+        requestOptions,
+      );
+      const _res = await res.json();
+      setShareLink(_res.shortLink);
+    } catch (e) {
+      console.log(e);
+    }
+
     sendSheet.current.open();
     setShareData(data.item);
   };
@@ -800,7 +884,7 @@ export default function VideoView({
                 width: '100%',
                 justifyContent: 'center',
               }}
-              onPress={handleShare}
+              onPress={() => handleShare('entries', item._id)}
             >
               <Text style={{ fontSize: 16 }} status="basic">
                 {t('shareTo')}
@@ -863,7 +947,7 @@ export default function VideoView({
                   sharePostToDm(
                     _userId,
                     _guestUserId, //user's dm
-                    `https://app.woozeee.com/entry/${item._id}`,
+                    shareLink,
                     _name,
                     _guestUserImg,
                   )
