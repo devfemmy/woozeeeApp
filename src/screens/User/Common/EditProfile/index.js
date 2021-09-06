@@ -462,7 +462,7 @@ export default function EditProfile({ navigation }) {
                     label={t('dob')}
                     date={date}
                     onSelect={(nextDate) => setNewDateHandler(nextDate)}
-                    // min = {new Date ('12-05-1880')}
+                    min = {new Date ('12-05-1870')}
                     // max= {new Date('22-06-2022')}
                     accessoryRight={IconCalendar}
                   />

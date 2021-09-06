@@ -19,26 +19,6 @@ const FeaturedMovie = (props) => {
     }
     return a;
   };
-  const getUserProfile = (user_id) => {
-    AsyncStorage.getItem('USER_AUTH_TOKEN')
-      .then((res) => {
-        axios
-          .get(`user/user?userId=${user_id}`, {
-            headers: { Authorization: res },
-          })
-          .then((response) => {
-            const userData = response.data.user;
-            setUserData(userData);
-            console.log('userData', userData);
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   const getFeaturedMovies = () => {
     setLoading(true);
     AsyncStorage.getItem('USER_AUTH_TOKEN')
@@ -113,7 +93,8 @@ const FeaturedMovie = (props) => {
       });
   };
   const watchMovie = (data) => {
-    if (userData?.accounts === [] && userData?.hasCare) {
+    console.log("userData?.accounts", userData)
+    if (userData?.accounts.length != 0 && userData?.hasCare) {
       //if I have account and I have care,
       if (userData.isPinSet === false) {
         //then check if I have a pin set up
@@ -125,13 +106,19 @@ const FeaturedMovie = (props) => {
       navigation.replace('Onboarding'); //if I don't have an account or I don't have care
     }
   };
+
+  const getUserData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('userData')
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch(e) {
+      // error reading value
+    }
+  }
   useEffect(() => {
     getFeaturedMovies();
-    AsyncStorage.getItem('userid')
-      .then((response) => {
-        getUserProfile(response);
-      })
-      .catch((err) => err);
+    const userData = getUserData()
+    userData.then(res => setUserData(res)).catch(err => err);
   }, []);
 
   const VideoPreview = () => (

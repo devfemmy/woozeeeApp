@@ -36,6 +36,7 @@ import MovieDescription from 'src/components/MovieDescription';
 import FeaturedMovie from 'src/components/FeaturedMovie';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../../../services/api/index';
+import { Toast, Root } from 'native-base';
 
 // const StoryPostsArea = () => WithDefaultFetch(StoryPosts, trendingUrl, PLACEHOLDER_CONFIG1);
 
@@ -46,46 +47,53 @@ export default function Explore({ navigation, route }) {
   const { bottom, top } = useSafeAreaInsets();
 
   const t = useContext(LocaleContext);
-  const getUserProfile = (user_id) => {
-    AsyncStorage.getItem('USER_AUTH_TOKEN')
-      .then((res) => {
-        axios
-          .get(`user/user?userId=${user_id}`, {
-            headers: { Authorization: res },
-          })
-          .then((response) => {
-            const userData = response.data.user;
-            setUserData(userData);
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   const watchMovie = (data) => {
-    if (userData?.accounts === [] && userData?.hasCare) {
+    console.log("userData?.accounts", userData)
+    if (userData?.accounts.length != 0 && userData?.hasCare) {
       //if I have account and I have care,
       if (userData.isPinSet === false) {
         //then check if I have a pin set up
-        navigation.navigate('GeneratePin'); //if I don't
+        Toast.show({
+          text: 'You need to set your pin',
+          buttonText: 'Ok!',
+          position: 'top',
+          type: 'danger',
+          duration: 3000,
+        });
+        setTimeout(() => {
+          navigation.navigate('GeneratePin'); 
+        }, 3000)
+      //if I don't
       } else {
         navigation.replace('MoviePage', { data: data }); //if I do
       }
     } else {
-      navigation.replace('Onboarding'); //if I don't have an account or I don't have care
+      Toast.show({
+        text: 'You need to activate your care and wallet',
+        buttonText: 'Ok!',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+      setTimeout(() => {
+        navigation.replace('Onboarding');
+      }, 3000) //if I don't have an account or I don't have care
     }
   };
+
+  const getUserData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('userData')
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch(e) {
+      // error reading value
+    }
+  }
   useEffect(() => {
     const subscribe = navigation.addListener('focus', () => {
-      AsyncStorage.getItem('userid')
-        .then((response) => {
-          getUserProfile(response);
-        })
-        .catch((err) => err);
+      const userData = getUserData()
+      userData.then(res => setUserData(res)).catch(err => err);
     });
     return subscribe;
   }, [navigation]);
@@ -119,6 +127,7 @@ export default function Explore({ navigation, route }) {
     // },
   });
   return (
+    <Root>
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea title="Movie" navigation={navigation} screen="auth" />
       <View style={styles.imageCon}>
@@ -172,5 +181,6 @@ export default function Explore({ navigation, route }) {
         </View>
       </ScrollView>
     </Layout>
+    </Root>
   );
 }

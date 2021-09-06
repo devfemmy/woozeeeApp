@@ -101,6 +101,15 @@ export default function useAuth() {
         let token = null;
         let msg = null;
 
+        const storeData = async (value) => {
+          try {
+            const jsonValue = JSON.stringify(value)
+            await AsyncStorage.setItem('userData', jsonValue)
+          } catch (e) {
+            // saving error
+          }
+        }
+
         try {
           //  TODO: implement authenticate login details:{email, password}
 
@@ -111,6 +120,7 @@ export default function useAuth() {
 
           if (!msg) {
             token = result.token;
+            storeData(result?.user)
             const userImage = result?.user.imgUrl;
             const email = result?.user.email;
             // const bankAccounts = result?.user.accounts;

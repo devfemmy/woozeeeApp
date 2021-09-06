@@ -73,7 +73,7 @@ const MoviePage = ({navigation, route}) => {
   
   }
   const onError = () => {
-    Alert.alert('Network failure, please try again')
+    // Alert.alert('Network failure, please try again')
   }
 
   return(
