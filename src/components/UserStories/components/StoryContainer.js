@@ -5,12 +5,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  TextInput,
   Platform,
   StatusBar,
 } from 'react-native';
 import Modal from 'react-native-modalbox';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Feather } from '@expo/vector-icons';
 
 import Story from './Story';
 import UserView from './UserView';
@@ -30,6 +32,8 @@ const StoryContainer = (props) => {
   const [duration, setDuration] = useState(3);
   const story = items.length ? items[currentIndex] : {};
   const { isReadMore, url } = story || {};
+
+  const [reply, setReply] = useState('');
 
   // const onVideoLoaded = (length) => {
   //   props.onVideoLoaded(length.duration);
@@ -159,7 +163,50 @@ const StoryContainer = (props) => {
             onClosePress={props.onClose}
             details={items}
           />
+          {/* <View
+            style={{
+              position: 'absolute',
+              backgroundColor: 'transparent',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingHorizontal: 15,
+              width: '100%',
+              top: 800,
+            }}
+          >
+            <TextInput
+              placeholder="Reply..."
+              onFocus={() => setIsPause(true)}
+              placeholderTextColor="black"
+              onChangeText={(text) => setReply(text)}
+              style={{
+                width: '85%',
+                borderRadius: 50,
+                height: 55,
+                color: 'black',
+                backgroundColor: 'white',
+                paddingHorizontal: 15,
+              }}
+              defaultValue={reply}
+            />
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'white',
+                height: 50,
+                width: 50,
+                borderRadius: 25,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={() => console.log(reply, story)}
+            >
+              <Feather name="send" size={24} color="black" />
+            </TouchableOpacity>
+          </View> */}
 
+          {/* <Readmore onReadMore={onReadMoreOpen} /> */}
           {/* {isReadMore && <Readmore onReadMore={onReadMoreOpen} />} */}
 
           <ProgressArray

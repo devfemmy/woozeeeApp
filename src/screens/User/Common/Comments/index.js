@@ -153,8 +153,14 @@ export default function Comments({ route, navigation }) {
     // console.log('fetched replies are', _replies);
   };
 
-  useEffect(() => {
+  setTimeout(() => {
     fetchComments();
+
+    setLoading(false);
+  }, 3000);
+
+  useEffect(() => {
+    setLoading(true);
   }, []);
 
   const closeComments = useCallback(() => navigation.pop(), [navigation]);

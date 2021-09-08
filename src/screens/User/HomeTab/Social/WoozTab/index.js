@@ -133,9 +133,13 @@ export default function Wooz({ navigation }) {
 
     const [index, setIndex] = useState(0);
 
+    const [autoIndex, setAutoIndex] = useState(0);
+
     const videoRef = useRef(null);
 
     const videoViewRef = useRef(null);
+
+    const scrollViewRef = useRef(null);
 
     const isMounted = useRef(false);
 
@@ -145,8 +149,11 @@ export default function Wooz({ navigation }) {
 
     const onPlaybackStatusUpdate = async (playbackStatus, entryId) => {
       if (playbackStatus.didJustFinish) {
-        const res = await viewVideo(entryId);
-        // console.log(res);
+        // toNext();
+        // setAutoIndex(autoIndex + 1);
+        // onMomentumScrollEnd();
+        // const res = await viewVideo(entryId);
+        // console.log('res from wooz is', res);
       }
     };
 
@@ -221,7 +228,17 @@ export default function Wooz({ navigation }) {
       },
     );
 
+    const toNext = () => {
+      if (scrollViewRef.current !== null) {
+        scrollViewRef.current.scrollTo({
+          y: index + 1,
+          animated: true,
+        });
+      }
+    };
+
     const onMomentumScrollEnd = ({ nativeEvent }) => {
+      console.log(nativeEvent);
       const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
 
       // if (newIndex != 0 && newIndex % 6 == 0) {
@@ -358,7 +375,9 @@ export default function Wooz({ navigation }) {
               flex: 1,
               backgroundColor: 'transparent',
             }}
+            ref={scrollViewRef}
             pagingEnabled
+            // scrollToIndex={autoIndex}
             disableIntervalMomentum
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}

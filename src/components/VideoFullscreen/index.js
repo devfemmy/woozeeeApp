@@ -18,6 +18,8 @@ import {
 
 import { Button, Text } from '@ui-kitten/components';
 
+import firebase from '@react-native-firebase/app';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
@@ -150,24 +152,61 @@ const VideoView = forwardRef((props, ref) => {
     });
   };
 
-  const handleShare = async () => {
+  const handleShare = async (params, value) => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
     try {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        json: true,
+        body: JSON.stringify({
+          dynamicLinkInfo: {
+            domainUriPrefix: 'https://app.woozeee.com',
+            link: `https://app.woozeee.com/entry/?${params}=${value}`,
+          },
+        }),
+      };
+
+      const res = await fetch(
+        'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+        requestOptions,
+      );
+      const _res = await res.json();
+      // console.log(_res);
+
       const result = await Share.share({
-        message: data.mediaURL,
+        message: _res.shortLink,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
-          alert(result.activityType);
+          // console.log(result.activityType);
+          // alert('Done');
+          sheetRef.current.close();
         } else {
           // shared
-          alert('Shared');
+          // alert('Post Shared!');
+          sheetRef.current.close();
         }
       } else if (result.action === Share.dismissedAction) {
-        // dismissed
         // alert('Action dismissed');
+        sheetRef.current.close();
       }
-    } catch (error) {
-      console.log(error.message);
+      sheetRef.current.close();
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -335,7 +374,7 @@ const VideoView = forwardRef((props, ref) => {
                 <InteractIcon
                   style={{ marginBottom: 15 }}
                   Accessory={(evaProps) => <IconCShare {...evaProps} active />}
-                  onPress={handleShare}
+                  onPress={() => handleShare('entries', data._id)}
                 />
 
                 <TouchableOpacity
