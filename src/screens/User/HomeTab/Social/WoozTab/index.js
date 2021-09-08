@@ -23,7 +23,7 @@ import Constants from 'expo-constants';
 
 import CustomVideo from '../../../../../components/CustomVideo';
 
-import { Video } from 'expo-av';
+import { Video, Audio } from 'expo-av';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
 
@@ -46,6 +46,8 @@ import Api from 'src/api';
 import { viewVideo } from '../../../../../services/Requests/index';
 
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
+import sound from '../../../../../assets/audio/sound.mp3';
 
 const InteractIcon = (props) => {
   const {
@@ -237,10 +239,19 @@ export default function Wooz({ navigation }) {
       }
     };
 
-    const onMomentumScrollEnd = ({ nativeEvent }) => {
-      console.log(nativeEvent);
+    const onMomentumScrollEnd = async ({ nativeEvent }) => {
+      // console.log(nativeEvent);
       const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
 
+      try {
+        const { sound: soundObject, status } = await Audio.Sound.createAsync(
+          sound,
+          { shouldPlay: true },
+        );
+        await soundObject.playAsync();
+      } catch (error) {
+        console.log(error);
+      }
       // if (newIndex != 0 && newIndex % 6 == 0) {
       //   fetchNextPage();
       // }

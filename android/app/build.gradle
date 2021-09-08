@@ -2,12 +2,12 @@ buildscript {
     repositories {
         gradlePluginPortal()
     }
-    dependencies {
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]'
-    }
+    // dependencies {
+    //     classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]'
+    // }
 }
 
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+// apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 apply plugin: "com.android.application"
 
 apply plugin: 'ly.img.android.sdk'
@@ -280,7 +280,7 @@ dependencies {
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
     }
-    api "com.theartofdev.edmodo:android-image-cropper:2.8.+"
+    // api "com.theartofdev.edmodo:android-image-cropper:2.8.+"
     addUnimodulesDependencies()
 
     if (enableHermes) {
