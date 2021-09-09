@@ -44,6 +44,7 @@ buck-out/
 *.keystore
 !debug.keystore
 woozeee-key.keystore
+my-release-key.keystore
 
 # fastlane
 #
