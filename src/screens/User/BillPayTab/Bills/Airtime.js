@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useContext, useState, useRef, useCallback,
+  useContext, useState, useRef, useCallback, useEffect
 } from 'react';
 
 import {
@@ -22,16 +22,23 @@ import {
   Divider,
   Radio,
   RadioGroup,
+  Spinner,
 } from '@ui-kitten/components';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import InteractIcon from 'src/components/InteractIcon';
 
-import { LocaleContext, AppSettingsContext } from 'src/contexts';
+import { LocaleContext, AppSettingsContext, AuthContext } from 'src/contexts';
 
 import { GeneralTextField } from 'src/components/FormFields';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
+import { getEmail, getToken } from '../../../../api/index';
 
 import {
   IconArrowDown,
@@ -41,6 +48,7 @@ import {
   IconClose,
 } from 'src/components/CustomIcons';
 
+import { Toast, Content, Root } from 'native-base';
 
 const ACCOUNTS = [
   {
@@ -53,11 +61,11 @@ const ACCOUNTS = [
     title: 'Access Bank - ₦ 34,677.02',
     image: require('assets/images/banks/access.png'),
   },
-  {
-    id: 3,
-    title: 'UBA - ₦ 25,500.44',
-    image: require('assets/images/banks/uba.png'),
-  },
+  // {
+  //   id: 3,
+  //   title: 'UBA - ₦ 25,500.44',
+  //   image: require('assets/images/banks/uba.png'),
+  // },
   {
     id: 4,
     title: 'Globus Bank -₦ 24,222.18',
@@ -70,7 +78,7 @@ const ACCOUNTS = [
   },
   {
     id: 6,
-    title: 'Pay with other Banks',
+    title: 'Online Payment',
     image: require('assets/images/banks/others.png'),
   },
 ];
@@ -100,10 +108,25 @@ const woozeeeCards = [
 ];
 
 export default function Airtime({ navigation }) {
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
+
+  const [emailAddress, setEmail] = useState('');
+
+  const email = async () => {
+    const res = await getEmail();
+    setEmail(res);
+  };
+  email();
 
   const { width, height } = useWindowDimensions();
 
+  const [isLoading, setLoading] = useState(false);
+
   const IS_PORTRAIT = height > width;
+
+  const { authOptions } = useContext(AuthContext);
+
+  const { verifyPin } = authOptions;
 
   const CARD_HEIGHT = IS_PORTRAIT ? 180 : 160;
 
@@ -125,6 +148,7 @@ export default function Airtime({ navigation }) {
     mobile: '',
     amount: '',
     pin: '',
+    network: '',
     account: '',
   });
 
@@ -141,25 +165,60 @@ export default function Airtime({ navigation }) {
       setActiveOperator(null);
     } else {
       setActiveOperator(i);
+      setFormValues((prevState) => ({
+        ...prevState,
+        network: woozeeeCards[i - 1].title,
+      }));
     }
   };
 
-  const handleOpenAccountSheet = () => accountSheetRef.current.open();
+  const handleOpenConfirmSheet = async () => {
+    setLoading(true);
+    const res = await verifyPin(form.pin);
 
-  const handleOpenConfirmSheet = () => confirmSheetRef.current.open();
+    if (
+      form.mobile !== '' &&
+      form.pin !== '' &&
+      form.network !== '' &&
+      form.amount !== ''
+    ) {
+      if (res.message === 'User pin is Incorrect' || res.error === true) {
+        Toast.show({
+          text: 'User pin is Incorrect/Invalid',
+          position: 'bottom',
+          type: 'danger',
+          duration: 3000,
+        });
+      } else {
+        setTimeout(() => {
+          navigation.navigate('TransactionSummary', {
+            form,
+            serviceType: 'Airtime Purchase',
+          });
+        }, 1000);
+      }
+      // setLoading(false);
+    } else {
+      Toast.show({
+        text: 'All fields must be filled to proceed',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+    }
+    setLoading(false);
+  };
 
-  const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
-
-  const handleConfirmTransaction = () => {
+  const handleConfirmTransaction = async () => {
     confirmSheetRef.current.close();
-    routeSuccess();
+    setLoading(false);
   };
 
   // prettier-ignore
   const ConfirmSheet = () => (
     <RBSheet
       ref={confirmSheetRef}
-      height={380}
+      height={320}
       closeOnDragDown
       animationType="fade"
       customStyles={{
@@ -177,7 +236,7 @@ export default function Airtime({ navigation }) {
           width: '100%',
           alignItems: 'flex-start',
           justifyContent: 'flex-start',
-          paddingBottom: 30,
+          // paddingBottom: 20,
         }}
       >
         <View
@@ -222,7 +281,7 @@ export default function Airtime({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {woozeeeCards[activeOperator - 1]?.title || 'none'}
+              {woozeeeCards[activeOperator - 1]?.title.toUpperCase() || '----'}
             </Text>
           </View>
           <View
@@ -245,7 +304,7 @@ export default function Airtime({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {form.mobile || 'none'}
+              {form.mobile || '----'}
             </Text>
           </View>
           <View
@@ -273,15 +332,7 @@ export default function Airtime({ navigation }) {
           </View>
         </View>
         <View style={{ width: '100%', paddingHorizontal: 15, paddingTop: 10 }}>
-          <View style={{ paddingVertical: 5 }}>
-            <GeneralTextField
-              type="pin"
-              label={t('transactionPin')}
-              keyboardType="number-pad"
-              validate="required"
-              setFormValues={setFormValues}
-            />
-          </View>
+          
           <View style={{ paddingTop: 10 }}>
             <Button
               status="danger"
@@ -303,7 +354,7 @@ export default function Airtime({ navigation }) {
     () => (
       <RBSheet
         ref={accountSheetRef}
-        height={425}
+        height={410}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -319,8 +370,8 @@ export default function Airtime({ navigation }) {
           style={{
             flex: 1,
             width: '100%',
-            // alignItems: 'flex-start',
-            // justifyContent: 'flex-end',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
             paddingBottom: 30,
           }}
         >
@@ -359,17 +410,20 @@ export default function Airtime({ navigation }) {
                       style={{ height: 25, width: 25 }}
                     />
                   </View>
+                  <Text>{}</Text>
                 </Radio>
               ))}
             </RadioGroup>
           </View>
+          <Divider style={{ marginVertical: 20, width: '100%', height: 2 }} />
           <View
             style={{
-              paddingVertical: 20,
               paddingHorizontal: 20,
               width: '100%',
             }}
           >
+            {/* <Button onPress={() => console.log('+++++')}>Press</Button> */}
+
             <Button
               status="danger"
               accessibilityLiveRegion="assertive"
@@ -425,107 +479,109 @@ export default function Airtime({ navigation }) {
   );
 
   return (
-    <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title={t('airtime')}
-        navigation={navigation}
-        screen="default"
-      />
-      <ScrollView
-        style={{ flex: 1 }}
-        alwaysBounceVertical
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, paddingTop: 20 }}>
-            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-              <Text category="s1">{t('operatorChoice')}</Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <List
-                style={{ backgroundColor: 'transparent' }}
-                contentContainerStyle={{ paddingHorizontal: 5 }}
-                horizontal
-                alwaysBounceHorizontal
-                alwaysBounceVertical
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                data={woozeeeCards}
-                keyExtractor={(_, i) => i.toString()}
-                renderItem={WoozeeeCards}
-                getItemLayout={(data, index) => ({
-                  length: CARD_HEIGHT,
-                  offset: CARD_HEIGHT * index,
-                  index,
-                })}
-              />
-            </View>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              paddingBottom: 20,
-              marginTop: 10,
-            }}
-          >
-            <View style={{ paddingHorizontal: 15 }}>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="mobile"
-                  label={t('mobileNum')}
-                  autoCompleteType="tel"
-                  textContentType="telephoneNumber"
-                  validate="required"
-                  setFormValues={setFormValues}
-                  accessoryRight={IconCPhoneBookFill}
+    <Root>
+      <Layout level="6" style={{ flex: 1 }}>
+        <TopNavigationArea
+          title={t('airtime')}
+          navigation={navigation}
+          screen="default"
+        />
+        <ScrollView
+          style={{ flex: 1 }}
+          alwaysBounceVertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, paddingTop: 20 }}>
+              <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+                <Text category="s1">{t('operatorChoice')}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <List
+                  style={{ backgroundColor: 'transparent' }}
+                  contentContainerStyle={{ paddingHorizontal: 5 }}
+                  horizontal
+                  alwaysBounceHorizontal
+                  alwaysBounceVertical
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  data={woozeeeCards}
+                  keyExtractor={(_, i) => i.toString()}
+                  renderItem={WoozeeeCards}
+                  getItemLayout={(data, index) => ({
+                    length: CARD_HEIGHT,
+                    offset: CARD_HEIGHT * index,
+                    index,
+                  })}
                 />
               </View>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="amount"
-                  label={t('amount')}
-                  keyboardType="number-pad"
-                  validate="required"
-                  setFormValues={setFormValues}
-                  // accessoryLeft={IconCNaira}
-                />
-              </View>
-              <View style={{ paddingVertical: 10 }}>
-                <Text
-                  category="label"
-                  appearance="hint"
-                  style={{ marginBottom: 5 }}
-                >
-                  {t('paymentAccount')}
-                </Text>
-                <Button
-                  appearance="outline"
-                  accessoryRight={IconArrowDown}
-                  style={{ justifyContent: 'space-between' }}
-                  onPress={handleOpenAccountSheet}
-                >
-                  <Text>{form.account || t('paymentAccount')}</Text>
-                </Button>
-              </View>
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  onPress={handleOpenConfirmSheet}
-                >
-                  <Text status="control">{t('proceed')}</Text>
-                </Button>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                paddingBottom: 20,
+                marginTop: 10,
+              }}
+            >
+              <View style={{ paddingHorizontal: 15 }}>
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="mobile"
+                    label={t('mobileNum')}
+                    autoCompleteType="tel"
+                    textContentType="telephoneNumber"
+                    validate="required"
+                    setFormValues={setFormValues}
+                    accessoryRight={IconCPhoneBookFill}
+                  />
+                </View>
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="amount"
+                    label={t('amount')}
+                    keyboardType="number-pad"
+                    validate="required"
+                    setFormValues={setFormValues}
+                  />
+                </View>
+
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="pin"
+                    label={t('transactionPin')}
+                    autoCompleteType="password"
+                    textContentType="password"
+                    keyboardType="numeric"
+                    maxLength={4}
+                    validate="password"
+                    secure
+                    value={form.pin}
+                    setFormValues={setFormValues}
+                    validate="required"
+                  />
+                </View>
+                <View style={{ paddingVertical: 20 }}>
+                  <Button
+                    status="danger"
+                    size="large"
+                    accessibilityLiveRegion="assertive"
+                    accessibilityComponentType="button"
+                    accessoryLeft={isLoading ? renderSpinner : null}
+                    accessibilityLabel="Continue"
+                    onPress={handleOpenConfirmSheet}
+                    disabled={isLoading}
+                  >
+                    <Text status="control">{t('proceed')}</Text>
+                  </Button>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-      <AccountSheet />
-      <ConfirmSheet />
-    </Layout>
+        </ScrollView>
+        <AccountSheet />
+        <ConfirmSheet />
+      </Layout>
+    </Root>
   );
 }

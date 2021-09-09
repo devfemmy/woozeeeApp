@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import {
   View,
@@ -38,6 +38,7 @@ import {
   IconBookmark,
   IconHeart,
   IconBackIos,
+  IconSettings,
 } from 'src/components/CustomIcons';
 
 import {
@@ -46,7 +47,8 @@ import {
 } from '../../../../services/Requests/index';
 
 import { userPostsUrl } from 'src/api/dummy';
-import { useEffect } from 'react';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PLACEHOLDER_CONFIG = {
   count: 4,
@@ -71,6 +73,12 @@ const ProfilePostsSavedArea = ({ userSavedData }) =>
 export default function UserProfile({ route, navigation }) {
   const { user } = route.params;
 
+  const routeSettings = () => navigation.navigate('Settings');
+
+  const routeEditProfile = () => navigation.navigate('EditProfile');
+
+  const [currUserId, setCurrUserId] = useState('');
+
   let likedData = [];
 
   const {
@@ -89,10 +97,6 @@ export default function UserProfile({ route, navigation }) {
     userData,
   } = user;
 
-  const [videoData, setVideoData] = useState({});
-
-  // console.log(videoData);
-
   const getLikedData = async () => {
     const res = await Api.getLikedPosts(_id);
     const {
@@ -102,6 +106,12 @@ export default function UserProfile({ route, navigation }) {
     data.forEach((entry) => likedData.push(entry));
   };
 
+  const getUserId = async () => {
+    const res = await AsyncStorage.getItem('userid');
+    setCurrUserId(res);
+  };
+
+  getUserId();
   useEffect(() => {
     getLikedData();
   }, []);
@@ -128,7 +138,12 @@ export default function UserProfile({ route, navigation }) {
 
   const IS_PORTRAIT = height > width;
 
-  const routeFollow = () => navigation.navigate('Follow');
+  const routeFollow = (action) =>
+    navigation.navigate('Follow', {
+      userID: _id,
+      action,
+      username: displayName,
+    });
 
   const goBack = () => navigation.goBack();
 
@@ -202,6 +217,7 @@ export default function UserProfile({ route, navigation }) {
             resizeMode="cover"
           />
         </View>
+
         <View
           style={{
             position: 'absolute',
@@ -216,6 +232,22 @@ export default function UserProfile({ route, navigation }) {
             height={26}
             width={26}
             onPress={goBack}
+          />
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            zIndex: 5,
+            margin: 15,
+            right: 0,
+            top: 0,
+          }}
+        >
+          <InteractIcon
+            Accessory={(evaProps) => <IconSettings {...evaProps} />}
+            height={26}
+            width={26}
+            onPress={routeSettings}
           />
         </View>
         <View
@@ -267,57 +299,86 @@ export default function UserProfile({ route, navigation }) {
             />
           </View>
         </View>
-        <View
-          style={{
-            bottom: 0,
-            position: 'absolute',
-            zIndex: 3,
-            right: 0,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('ChatScreen', {
-                guestUid: _id,
-                name: `${fName} ${sName}`,
-                image: imgUrl
-              })
-            }
-            status="primary"
+        {currUserId !== _id ? (
+          <View
             style={{
-              // backgroundColor: 'transparent',
-              borderColor: '#003153',
-              borderWidth: 1,
-              marginHorizontal: 5,
-              width: 30,
-              height: 30,
-              borderRadius: 30,
-              alignItems: 'center',
-              // padding: 5,
+              bottom: 0,
+              position: 'absolute',
+              zIndex: 3,
+              right: 0,
+              display: 'flex',
+              flexDirection: 'row',
               justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <SimpleLineIcons name="envelope" size={18} color="#003153" />
-          </TouchableOpacity>
-          <Button
-            status="primary"
-            size="tiny"
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ChatScreen', {
+                  guestUid: _id,
+                  name: `${fName} ${sName}`,
+                  image: imgUrl,
+                })
+              }
+              status="primary"
+              style={{
+                // backgroundColor: 'transparent',
+                borderColor: '#003153',
+                borderWidth: 1,
+                marginHorizontal: 5,
+                width: 30,
+                height: 30,
+                borderRadius: 30,
+                alignItems: 'center',
+                // padding: 5,
+                justifyContent: 'center',
+              }}
+            >
+              <SimpleLineIcons name="envelope" size={18} color="#003153" />
+            </TouchableOpacity>
+            <Button
+              status="primary"
+              size="tiny"
+              style={{
+                marginHorizontal: 15,
+                width: 100,
+                minHeight: 35,
+              }}
+              onPress={toggleFollow}
+            >
+              <Text status="control" category="c2">
+                {following ? t('following') : t('follow')}
+              </Text>
+            </Button>
+          </View>
+        ) : (
+          <View
             style={{
-              marginHorizontal: 15,
-              width: 100,
-              minHeight: 35,
+              bottom: 0,
+              position: 'absolute',
+              zIndex: 3,
+              right: 0,
+              width: '30%',
+              justifyContent: 'flex-end',
+              flexDirection: 'row',
             }}
-            onPress={toggleFollow}
           >
-            <Text status="control" category="c2">
-              {following ? t('following') : t('follow')}
-            </Text>
-          </Button>
-        </View>
+            <Button
+              status="primary"
+              size="tiny"
+              style={{
+                marginHorizontal: 15,
+                width: '100%',
+                minHeight: 35,
+              }}
+              onPress={routeEditProfile}
+            >
+              <Text status="control" category="c2">
+                {`${t('edit')} ${t('profile')}`}
+              </Text>
+            </Button>
+          </View>
+        )}
       </View>
       <View
         style={{
@@ -332,12 +393,7 @@ export default function UserProfile({ route, navigation }) {
             width: IS_PORTRAIT ? '100%' : '40%',
           }}
         >
-          <ScrollView
-            style={{ flex: 1 }}
-            alwaysBounceVertical
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-          >
+          <View style={{ flex: 1 }}>
             <View
               style={{
                 paddingHorizontal: 15,
@@ -382,8 +438,8 @@ export default function UserProfile({ route, navigation }) {
                 </View>
               </View>
               <View style={{ marginBottom: 10 }}>
-                <Text category="h6" status="primary">
-                  {/* {referralCode.toUpperCase()} */}
+                <Text category="s2" status="primary">
+                  {referralCode.toUpperCase()}
                 </Text>
               </View>
               <View
@@ -410,7 +466,7 @@ export default function UserProfile({ route, navigation }) {
                 <TouchableOpacity
                   activeOpacity={0.75}
                   style={{ alignItems: 'center', width: '33%' }}
-                  // onPress={routeFollow}
+                  onPress={() => routeFollow('followers')}
                 >
                   <Text category="h5">{followersCount}</Text>
                   <Text category="c2" appearance="hint">
@@ -420,7 +476,7 @@ export default function UserProfile({ route, navigation }) {
                 <TouchableOpacity
                   activeOpacity={0.75}
                   style={{ alignItems: 'center', width: '33%' }}
-                  // onPress={routeFollow}
+                  onPress={() => routeFollow('following')}
                 >
                   <Text category="h5">{followingCount}</Text>
                   <Text category="c2" appearance="hint">
@@ -429,7 +485,7 @@ export default function UserProfile({ route, navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
-          </ScrollView>
+          </View>
         </View>
         <Divider />
         {/* {console.log('from ... -> ', likedData)} */}

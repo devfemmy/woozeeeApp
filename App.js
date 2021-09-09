@@ -2,6 +2,8 @@ import 'react-native-gesture-handler';
 
 import React, { Component, useState, useEffect } from 'react';
 
+import { Dimensions, Linking } from 'react-native';
+
 import { enableScreens } from 'react-native-screens';
 
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -56,7 +58,7 @@ import Router from 'src/router';
 import firebase from '@react-native-firebase/app';
 
 // import firestore from '@react-native-firebase/firestore';
-// import OneSignal from 'react-native-onesignal';
+import OneSignal from 'react-native-onesignal';
 
 import en from 'src/translations/en.json';
 import fr from 'src/translations/fr.json';
@@ -72,29 +74,32 @@ i18n.fallbacks = true;
 
 // one signal
 
-// OneSignal.setLogLevel(6, 0);
-// OneSignal.setAppId("7f2e4740-3498-4c48-8925-a8ffe8168c2b");
-//END OneSignal Init Code
+OneSignal.setLogLevel(6, 0);
+OneSignal.setAppId('7f2e4740-3498-4c48-8925-a8ffe8168c2b');
+// END OneSignal Init Code
 
-//Prompt for push on iOS
+// Prompt for push on iOS
 
+// Method for handling notifications received while app in foreground
+OneSignal.setNotificationWillShowInForegroundHandler(
+  (notificationReceivedEvent) => {
+    console.log(
+      'OneSignal: notification will show in foreground:',
+      notificationReceivedEvent,
+    );
+    let notification = notificationReceivedEvent.getNotification();
+    console.log('notification: ', notification);
+    const data = notification.additionalData;
+    console.log('additionalData: ', data);
+    // Complete with null means don't show a notification.
+    notificationReceivedEvent.complete(notification);
+  },
+);
 
-
-//Method for handling notifications received while app in foreground
-// OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent => {
-//   console.log("OneSignal: notification will show in foreground:", notificationReceivedEvent);
-//   let notification = notificationReceivedEvent.getNotification();
-//   console.log("notification: ", notification);
-//   const data = notification.additionalData
-//   console.log("additionalData: ", data);
-//   // Complete with null means don't show a notification.
-//   notificationReceivedEvent.complete(notification);
-// });
-
-// //Method for handling notifications opened
-// OneSignal.setNotificationOpenedHandler(notification => {
-//   console.log("OneSignal: notification opened:", notification);
-// });
+//Method for handling notifications opened
+OneSignal.setNotificationOpenedHandler((notification) => {
+  console.log('OneSignal: notification opened:', notification);
+});
 
 // if (Constants.platform.android) {
 //   VESDKLicense = require('src/constants/vesdk_android_license.json');
@@ -110,6 +115,11 @@ export default function App() {
     .catch(() => {});
 
   const isPreloaded = usePreFetchResources();
+
+  const width = Dimensions.get('window').width;
+  const height = Dimensions.get('window').height;
+
+  // console.log('height=', height, 'width=', width);
 
   const { appState, appOptions } = useAppSettings();
 
@@ -203,8 +213,21 @@ export default function App() {
             <LocaleContext.Provider value={t}>
               <QueryClientProvider client={queryClient}>
                 <LoadingContext.Provider value={{ isLoading, setLoading }}>
-                  <Layout level="5" style={{ flex: 1 }}>
-                    <SafeAreaView style={{ flex: 1 }}>
+                  <Layout
+                    level="5"
+                    style={{
+                      flex: 1,
+                      // alignItems: 'center',
+                      // justifyContent: 'center',
+                    }}
+                  >
+                    <SafeAreaView
+                      style={{
+                        flex: 1,
+                        // width: width > 720 ? 720 : width,
+                        // backgroundColor: 'red'
+                      }}
+                    >
                       <Router />
                     </SafeAreaView>
                   </Layout>

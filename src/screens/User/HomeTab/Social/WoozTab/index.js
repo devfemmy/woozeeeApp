@@ -23,7 +23,7 @@ import Constants from 'expo-constants';
 
 import CustomVideo from '../../../../../components/CustomVideo';
 
-import { Video } from 'expo-av';
+import { Video, Audio } from 'expo-av';
 
 import { Layout, Button, Text } from '@ui-kitten/components';
 
@@ -32,6 +32,8 @@ import { LocaleContext } from 'src/contexts';
 import useModifiedAndroidBackAction from 'src/hooks/useModifiedAndroidBackAction';
 
 import VideoFullscreen from 'src/components/VideoFullscreen';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
@@ -44,6 +46,8 @@ import Api from 'src/api';
 import { viewVideo } from '../../../../../services/Requests/index';
 
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
+import sound from '../../../../../assets/audio/sound.mp3';
 
 const InteractIcon = (props) => {
   const {
@@ -131,9 +135,13 @@ export default function Wooz({ navigation }) {
 
     const [index, setIndex] = useState(0);
 
+    const [autoIndex, setAutoIndex] = useState(0);
+
     const videoRef = useRef(null);
 
     const videoViewRef = useRef(null);
+
+    const scrollViewRef = useRef(null);
 
     const isMounted = useRef(false);
 
@@ -143,8 +151,11 @@ export default function Wooz({ navigation }) {
 
     const onPlaybackStatusUpdate = async (playbackStatus, entryId) => {
       if (playbackStatus.didJustFinish) {
-        const res = await viewVideo(entryId);
-        // console.log(res);
+        // toNext();
+        // setAutoIndex(autoIndex + 1);
+        // onMomentumScrollEnd();
+        // const res = await viewVideo(entryId);
+        // console.log('res from wooz is', res);
       }
     };
 
@@ -207,7 +218,7 @@ export default function Wooz({ navigation }) {
     } = useInfiniteQuery(
       ['inFiniteWoozVideos', 1],
       async ({ pageParam = 1 }) => {
-        const promise = await Api.getVideos(pageParam);
+        const promise = await Api.getWoozVideos();
         promise.cancel = () => Api.cancelRequest('Request aborted');
         return promise;
       },
@@ -219,9 +230,28 @@ export default function Wooz({ navigation }) {
       },
     );
 
-    const onMomentumScrollEnd = ({ nativeEvent }) => {
+    const toNext = () => {
+      if (scrollViewRef.current !== null) {
+        scrollViewRef.current.scrollTo({
+          y: index + 1,
+          animated: true,
+        });
+      }
+    };
+
+    const onMomentumScrollEnd = async ({ nativeEvent }) => {
+      // console.log(nativeEvent);
       const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
 
+      try {
+        const { sound: soundObject, status } = await Audio.Sound.createAsync(
+          sound,
+          { shouldPlay: true },
+        );
+        await soundObject.playAsync();
+      } catch (error) {
+        console.log(error);
+      }
       // if (newIndex != 0 && newIndex % 6 == 0) {
       //   fetchNextPage();
       // }
@@ -275,7 +305,7 @@ export default function Wooz({ navigation }) {
       }, []);
 
       // console.log('final is ', final);
-      data.pages.map((page) => console.log('page is', page));
+      // data.pages.map((page) => console.log('page is', page));
 
       //without pagination
       return (
@@ -350,20 +380,22 @@ export default function Wooz({ navigation }) {
         //     </View>;
         //   }}
         // />
-        data.pages.map((page) => (
-          <React.Fragment key={page.nextID}>
-            <View style={{ flex: 1 }}>
-              <ScrollView
-                style={{
-                  flex: 1,
-                  backgroundColor: 'transparent',
-                }}
-                pagingEnabled
-                disableIntervalMomentum
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                onMomentumScrollEnd={onMomentumScrollEnd}
-              >
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            style={{
+              flex: 1,
+              backgroundColor: 'transparent',
+            }}
+            ref={scrollViewRef}
+            pagingEnabled
+            // scrollToIndex={autoIndex}
+            disableIntervalMomentum
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            onMomentumScrollEnd={onMomentumScrollEnd}
+          >
+            {data.pages.map((page) => (
+              <React.Fragment key={uuidv4()}>
                 {page.pageData.data.map((item, i) => (
                   <React.Fragment key={i.toString()}>
                     <View style={{ position: 'relative' }}>
@@ -419,10 +451,11 @@ export default function Wooz({ navigation }) {
                     }).start()}
                   />
                 </Animated.View>
-              </ScrollView>
-            </View>
-          </React.Fragment>
-        ))
+              </React.Fragment>
+            ))}
+          </ScrollView>
+        </View>
+
         // <ScrollView
         //   style={{
         //     flex: 1,

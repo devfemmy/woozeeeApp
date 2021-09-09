@@ -70,6 +70,7 @@ export const GeneralTextField = (props) => {
 
   const handleChange = useCallback(
     (input) => {
+      // console.log(input);
       const currentState = verifyWithoutCaption(input, validate);
 
       setInputVal((prevState) => ({
@@ -78,10 +79,13 @@ export const GeneralTextField = (props) => {
         value: input,
       }));
 
-      setFormValues((prevState) => ({ ...prevState, [type]: input }));
+      try {
+        setFormValues((prevState) => ({ ...prevState, [type]: input }));
+      } catch (e) {
+        console.log(e);
+      }
     },
     [validate],
-    
   );
 
   const handleChangeNoValidate = useCallback((input) => {
@@ -307,8 +311,11 @@ export const GeneralDatePicker = (props) => {
         {...otherProps}
         size={size || 'large'}
         label={label}
+
         date={selectedDate}
         onSelect={handleSelect}
+        min={new Date('12-05-1880')}
+        max={new Date()}
       />
     ),
     [handleSelect, label, size, selectedDate, otherProps],

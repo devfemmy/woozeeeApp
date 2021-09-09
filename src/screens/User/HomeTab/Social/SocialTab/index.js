@@ -43,13 +43,19 @@ import ImageView from 'src/components/ImageView';
 
 import MoviesSection from 'src/components/MoviesSection';
 
+import TrendingChallenges from 'src/components/TrendingChallenges';
+
 import { trendingUrl } from 'src/api/dummy';
 
 import { IconCStartStream, IconCLiveStreams } from 'src/components/CustomIcons';
 
 import VideoComponent from 'src/components/VideoComponent/VideoComponent';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+
+import getUserProfile from '../../../../../services/Requests/FetchUserProfile';
 
 const PLACEHOLDER_CONFIG1 = {
   count: 2,
@@ -73,7 +79,9 @@ export default function Social({ navigation }) {
 
   const { bottom, top } = useSafeAreaInsets();
 
-  const [entries, setEntries] = useState([]);
+  const [_userId, setUserId] = useState('');
+
+  const [userImg, setUserImg] = useState('');
 
   const SPACING = 57 + bottom + top;
 
@@ -96,6 +104,33 @@ export default function Social({ navigation }) {
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
+
+  const getUserId = async () => {
+    const res = await AsyncStorage.getItem('userid');
+    setUserId(res);
+    // console.log(res);
+  };
+
+  const getUserImg = async () => {
+    const res = await AsyncStorage.getItem('userImage');
+    setUserImg(res);
+  };
+
+  // useEffect(() => {
+  //   getUserProfile(_userId);
+  // }, [navigation]);
+
+  getUserImg();
+
+  //view all async stuff
+  // AsyncStorage.getAllKeys((err, keys) => {
+  //   AsyncStorage.multiGet(keys, (error, stores) => {
+  //     stores.map((result, i, store) => {
+  //       console.log('async stuff ', { [store[i][0]]: store[i][1] });
+  //       return true;
+  //     });
+  //   });
+  // });
 
   const refreshFeeds = useCallback(() => {
     setShouldRefresh(true);
@@ -250,7 +285,7 @@ export default function Social({ navigation }) {
                       t={t}
                     />
                   )}
-                  {index === 2 || index === 8 ? (
+                  {index === 2 || index === 12 ? (
                     <MoviesSection
                       t={t}
                       navigation={navigation}
@@ -259,6 +294,14 @@ export default function Social({ navigation }) {
                     />
                   ) : null}
                   {index === 5 ? <StoryPostsArea /> : null}
+                  {index === 8 ? (
+                    <TrendingChallenges
+                      t={t}
+                      navigation={navigation}
+                      width={width}
+                      height={ITEM_HEIGHT}
+                    />
+                  ) : null}
                 </>
               );
             }}

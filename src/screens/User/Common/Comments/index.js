@@ -38,8 +38,12 @@ import { IconClose, IconPaperPlane } from 'src/components/CustomIcons';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Spinner from 'react-native-loading-spinner-overlay';
+
 export default function Comments({ route, navigation }) {
   const { height } = useWindowDimensions();
+
+  const [isLoading, setLoading] = useState(false);
 
   const replyRef = useRef(null);
 
@@ -59,7 +63,7 @@ export default function Comments({ route, navigation }) {
   const [userImg, setUserImg] = useState('');
 
   const getUserImg = async () => {
-    const res = await AsyncStorage.getItem('userImg');
+    const res = await AsyncStorage.getItem('userImage');
     setUserImg(res);
     // console.log('image is ->', res);
   };
@@ -67,6 +71,7 @@ export default function Comments({ route, navigation }) {
   getUserImg();
 
   const fetchComments = async () => {
+    setLoading(true);
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
       authDomain: 'woozeee-d7f6c.firebaseapp.com',
@@ -90,6 +95,7 @@ export default function Comments({ route, navigation }) {
       .collection('entryComments')
       .doc(postItem._id.trim())
       .collection('comments')
+      .orderBy('sentAt', 'asc')
       .get();
 
     const _comments = [];
@@ -104,6 +110,7 @@ export default function Comments({ route, navigation }) {
 
     setComments([..._comments]);
     // console.log('fetched comments is', _comments);
+    setLoading(false);
   };
 
   const fetchReplies = async (commentId) => {
@@ -146,8 +153,14 @@ export default function Comments({ route, navigation }) {
     // console.log('fetched replies are', _replies);
   };
 
-  useEffect(() => {
+  setTimeout(() => {
     fetchComments();
+
+    setLoading(false);
+  }, 3000);
+
+  useEffect(() => {
+    setLoading(true);
   }, []);
 
   const closeComments = useCallback(() => navigation.pop(), [navigation]);
@@ -295,6 +308,7 @@ export default function Comments({ route, navigation }) {
               borderWidth: 0.5,
               height: 40,
               paddingHorizontal: 5,
+
               borderColor: 'gray',
               borderRadius: 5,
               color: 'grey',
@@ -569,8 +583,7 @@ export default function Comments({ route, navigation }) {
               justifyContent: 'flex-end',
             }}
           >
-            {/* {console.log('comments in here is => ', comments)} */}
-            {comments.length > 0 ? (
+            {!isLoading && comments.length > 0 ? (
               <List
                 style={{
                   backgroundColor: 'transparent',
@@ -600,9 +613,32 @@ export default function Comments({ route, navigation }) {
                   index,
                 })}
               />
-            ) : null}
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Image
+                  source={require('../../../../assets/images/banner/addComment.png')}
+                  resizeMode="contain"
+                  style={{
+                    width: 200,
+                    height: 200,
+                    marginVertical: 20,
+                  }}
+                />
+                <Text category="s2" status="basic">
+                  No comments. Add comment
+                </Text>
+              </View>
+            )}
           </View>
         </Card>
+        <Spinner visible={isLoading} />
       </Layout>
     ),
     [height, INSETS, renderCardFooter, renderCardHeader],

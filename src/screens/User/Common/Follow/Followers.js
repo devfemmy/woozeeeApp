@@ -23,7 +23,7 @@ export default function Followers({ userID, navigation }) {
   const [followersList, setFollowersList] = useState([]);
 
   const res = async () => {
-    const followers = await getFollowData(userID, 'followers');
+    const followers = await getFollowData(userID, 'following');
     setFollowersList(followers.data);
   };
 

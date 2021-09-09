@@ -1,6 +1,6 @@
 // prettier-ignore
 import React, {
-  useContext, useState, useRef, useCallback,
+  useContext, useState, useRef, useCallback, useEffect
 } from 'react';
 
 import {
@@ -22,22 +22,39 @@ import {
   Divider,
   Radio,
   RadioGroup,
+  Spinner,
 } from '@ui-kitten/components';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import InteractIcon from 'src/components/InteractIcon';
 
-import { LocaleContext, AppSettingsContext } from 'src/contexts';
+import { LocaleContext, AppSettingsContext, AuthContext } from 'src/contexts';
 
 import { GeneralTextField, GeneralSelect } from 'src/components/FormFields';
+
+import { Toast, Content, Root } from 'native-base';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   IconArrowDown,
   IconCCheck,
   IconClose,
 } from 'src/components/CustomIcons';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
+import {
+  FlutterwaveInit,
+  PayWithFlutterwave,
+  FlutterwaveButton,
+} from 'flutterwave-react-native';
+
+import { getEmail, getToken } from '../../../../api/index';
 
 const ACCOUNTS = [
   {
@@ -50,11 +67,11 @@ const ACCOUNTS = [
     title: 'Access Bank - ₦ 34,677.02',
     image: require('assets/images/banks/access.png'),
   },
-  {
-    id: 3,
-    title: 'UBA - ₦ 25,500.44',
-    image: require('assets/images/banks/uba.png'),
-  },
+  // {
+  //   id: 3,
+  //   title: 'UBA - ₦ 25,500.44',
+  //   image: require('assets/images/banks/uba.png'),
+  // },
   {
     id: 4,
     title: 'Globus Bank -₦ 24,222.18',
@@ -67,7 +84,7 @@ const ACCOUNTS = [
   },
   {
     id: 6,
-    title: 'Pay with other Banks',
+    title: 'Online Payment',
     image: require('assets/images/banks/others.png'),
   },
 ];
@@ -78,22 +95,50 @@ const woozeeeCards = [
     id: 1,
     banner: require('assets/images/card/ekedc.png'),
     title: 'EKEDC',
+    serviceId: 'eko-electric',
   },
   {
     id: 2,
     banner: require('assets/images/card/iedc.png'),
     title: 'IEDC',
+    serviceId: 'ikeja-electric',
   },
   {
     id: 3,
     banner: require('assets/images/card/aedc.png'),
     title: 'AEDC',
+    serviceId: 'abuja-electric',
   },
   {
-    id: 4,
-    banner: require('assets/images/card/irecharge.png'),
-    title: 'iRECHARGE',
+    id: 5,
+    banner: require('assets/images/card/pedc.jpg'),
+    title: 'PHED',
+    serviceId: 'portharcourt-electric"',
   },
+  {
+    id: 6,
+    banner: require('assets/images/card/kedc.jpg'),
+    title: 'KAEDCO',
+    serviceId: 'kaduna-electric',
+  },
+  {
+    id: 7,
+    banner: require('assets/images/card/jedc.jpg'),
+    title: 'JED',
+    serviceId: 'jos-electric',
+  },
+  {
+    id: 8,
+    banner: require('assets/images/card/kaedc.jpg'),
+    title: 'KEDCO',
+    serviceId: 'kano-electric',
+  },
+  // {
+  //   id: 4,
+  //   banner: require('assets/images/card/irecharge.png'),
+  //   title: 'iRECHARGE',
+  //   serviceId: 'ir-electric',
+  // },
 ];
 
 const PLACE = [
@@ -102,9 +147,20 @@ const PLACE = [
   { title: 'PLACE 3' },
 ];
 
-const TYPE = [{ title: 'TYPE 1' }, { title: 'TYPE 2' }, { title: 'TYPE 3' }];
+const TYPE = [{ title: 'Select' }, { title: 'Prepaid' }, { title: 'Postpaid' }];
 
 export default function Electricity({ navigation }) {
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
+
+  const [emailAddress, setEmail] = useState('');
+
+  const email = async () => {
+    const res = await getEmail();
+    setEmail(res);
+  };
+
+  email();
+
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;
@@ -112,6 +168,14 @@ export default function Electricity({ navigation }) {
   const CARD_HEIGHT = IS_PORTRAIT ? 180 : 160;
 
   const [activeOperator, setActiveOperator] = useState(null);
+
+  const { authOptions } = useContext(AuthContext);
+
+  const { verifyPin, verifyMeter } = authOptions;
+
+  const [serviceId, setServiceId] = useState(null);
+
+  const [isLoading, setLoading] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState(0);
 
@@ -123,16 +187,19 @@ export default function Electricity({ navigation }) {
 
   const accountSheetRef = useRef(null);
 
+  const [customerName, setCustomerName] = useState('');
+
   const confirmSheetRef = useRef(null);
 
   const [form, setFormValues] = useState({
     mobile: '',
     meterNumber: '',
-    selectPlace: '',
+    // selectPlace: '',
     selectType: '',
     amount: '',
     pin: '',
-    account: '',
+    serviceId: '',
+    // account: '',
   });
 
   const handleAccountChange = (index) => {
@@ -148,25 +215,112 @@ export default function Electricity({ navigation }) {
       setActiveOperator(null);
     } else {
       setActiveOperator(i);
+      setServiceId(woozeeeCards[i - 1].serviceId);
+      setFormValues((prevState) => ({
+        ...prevState,
+        serviceId: woozeeeCards[i - 1].serviceId,
+      }));
     }
   };
 
-  const handleOpenAccountSheet = () => accountSheetRef.current.open();
+  const handleOpenConfirmSheet = async () => {
+    setLoading(true);
+    const res = await verifyPin(form.pin);
 
-  const handleOpenConfirmSheet = () => confirmSheetRef.current.open();
+    if (
+      form.mobile !== '' &&
+      form.pin !== '' &&
+      form.meterNumber !== '' &&
+      form.amount !== '' &&
+      form.selectType !== '' &&
+      form.serviceId !== ''
+    ) {
+      if (res.message === 'User pin is Incorrect' || res.error === true) {
+        Toast.show({
+          text: 'User pin is Incorrect/Invalid',
+          position: 'bottom',
+          type: 'danger',
+          duration: 3000,
+        });
+      } else {
+        setTimeout(() => {
+          navigation.navigate('TransactionSummary', {
+            form: {
+              network: form.serviceId,
+              amount: form.amount,
+              mobile: form.mobile,
+              selectType: form.selectType,
+              serviceId: form.serviceId,
+              pin: form.pin,
+              meterNumber: form.meterNumber,
+            },
+            serviceType: 'Electricity Bill Payment',
+          });
+        }, 1000);
+      }
+      // setLoading(false);
+    } else {
+      Toast.show({
+        text: 'All fields must be filled to proceed',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+    }
+    setLoading(false);
+  };
 
-  const routeSuccess = () => navigation.navigate('BillPaymentSuccess');
+  const routeSuccess = () => navigation.navigate('Success');
 
-  const handleConfirmTransaction = () => {
+  const [btnState, setBtnState] = useState(false);
+
+  useEffect(() => {
+    if (form.account === 'Online Payment') {
+      setBtnState(true);
+    } else {
+      setBtnState(false);
+    }
+  }, [form.account]);
+
+  const handleConfirmTransaction = async () => {
     confirmSheetRef.current.close();
-    routeSuccess();
+    setLoading(false);
+  };
+
+  const handleRedirect = async (res) => {
+    const reqBody = {
+      requestId: res.transaction_id,
+      variationCode: form.selectType.toLowerCase(),
+      amount: form.amount,
+      phone: '08120254644',
+      // phone: form.mobile,
+      billerCode: form.meterNumber,
+      serviceId: form.serviceId,
+      pin: form.pin,
+    };
+
+    const result = await fetch(
+      'https://apis.woozeee.com/api/v1/bill-payment/load',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `${await getToken()}`,
+        },
+        body: JSON.stringify(reqBody),
+      },
+    );
+
+    const response = await result.json();
+    console.log(response);
   };
 
   // prettier-ignore
   const ConfirmSheet = () => (
     <RBSheet
       ref={confirmSheetRef}
-      height={380}
+      height={320}
       closeOnDragDown
       animationType="fade"
       customStyles={{
@@ -229,7 +383,7 @@ export default function Electricity({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {woozeeeCards[activeOperator - 1]?.title || 'none'}
+              {woozeeeCards[activeOperator - 1]?.title || '----'}
             </Text>
           </View>
           <View
@@ -252,7 +406,31 @@ export default function Electricity({ navigation }) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {form.meterNumber || 'none'}
+              {form.meterNumber || '----'}
+            </Text>
+          </View>
+          <View
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 10,
+            }}
+          >
+            <Text
+              category="s2"
+              appearance="hint"
+              style={{ flex: 1, marginHorizontal: 5, textAlign: 'right' }}
+            >
+              Customer Name
+            </Text>
+           
+            <Text
+              category="s2"
+              style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
+            >
+              {customerName || '----'}
             </Text>
           </View>
           <View
@@ -280,7 +458,7 @@ export default function Electricity({ navigation }) {
           </View>
         </View>
         <View style={{ width: '100%', paddingHorizontal: 15, paddingTop: 10 }}>
-          <View style={{ paddingVertical: 5 }}>
+          {/* <View style={{ paddingVertical: 5 }}>
             <GeneralTextField
               type="pin"
               label={t('transactionPin')}
@@ -288,7 +466,7 @@ export default function Electricity({ navigation }) {
               validate="required"
               setFormValues={setFormValues}
             />
-          </View>
+          </View> */}
           <View style={{ paddingTop: 10 }}>
             <Button
               status="danger"
@@ -310,7 +488,7 @@ export default function Electricity({ navigation }) {
     () => (
       <RBSheet
         ref={accountSheetRef}
-        height={425}
+        height={420}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -327,7 +505,7 @@ export default function Electricity({ navigation }) {
             flex: 1,
             width: '100%',
             alignItems: 'flex-start',
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start',
             paddingBottom: 30,
           }}
         >
@@ -366,13 +544,15 @@ export default function Electricity({ navigation }) {
                       style={{ height: 25, width: 25 }}
                     />
                   </View>
+                  <Text>{}</Text>
                 </Radio>
               ))}
             </RadioGroup>
           </View>
+          <Divider style={{ marginVertical: 20, width: '100%', height: 2 }} />
+
           <View
             style={{
-              paddingVertical: 20,
               paddingHorizontal: 20,
               width: '100%',
             }}
@@ -414,8 +594,10 @@ export default function Electricity({ navigation }) {
           width: '100%',
           borderRadius: 10,
           maxHeight: 100,
+          borderWidth: 0.8,
+          borderColor: 'grey',
         }}
-        resizeMode="contain"
+        resizeMode="cover"
       />
       {item.id === activeOperator && (
         <View style={{ position: 'absolute', top: 0, right: 0 }}>
@@ -432,130 +614,133 @@ export default function Electricity({ navigation }) {
   );
 
   return (
-    <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title={t('electricity')}
-        navigation={navigation}
-        screen="default"
-      />
-      <ScrollView
-        style={{ flex: 1 }}
-        alwaysBounceVertical
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, paddingTop: 20 }}>
-            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-              <Text category="s1">{t('selectBiller')}</Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <List
-                style={{ backgroundColor: 'transparent' }}
-                contentContainerStyle={{ paddingHorizontal: 5 }}
-                horizontal
-                alwaysBounceHorizontal
-                alwaysBounceVertical
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                data={woozeeeCards}
-                keyExtractor={(_, i) => i.toString()}
-                renderItem={WoozeeeCards}
-                getItemLayout={(data, index) => ({
-                  length: CARD_HEIGHT,
-                  offset: CARD_HEIGHT * index,
-                  index,
-                })}
-              />
-            </View>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              paddingBottom: 20,
-              marginTop: 10,
-            }}
-          >
-            <View style={{ paddingHorizontal: 15 }}>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="meterNumber"
-                  label={t('meterNumber')}
-                  validate="required"
-                  setFormValues={setFormValues}
+    <Root>
+      <Layout level="6" style={{ flex: 1 }}>
+        <TopNavigationArea
+          title={t('electricity')}
+          navigation={navigation}
+          screen="default"
+        />
+        <ScrollView
+          style={{ flex: 1 }}
+          alwaysBounceVertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, paddingTop: 20 }}>
+              <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+                <Text category="s1">{t('selectBiller')}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <List
+                  style={{ backgroundColor: 'transparent' }}
+                  contentContainerStyle={{ paddingHorizontal: 5 }}
+                  horizontal
+                  alwaysBounceHorizontal
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  data={woozeeeCards}
+                  keyExtractor={(_, i) => i.toString()}
+                  renderItem={WoozeeeCards}
+                  getItemLayout={(data, index) => ({
+                    length: CARD_HEIGHT,
+                    offset: CARD_HEIGHT * index,
+                    index,
+                  })}
                 />
               </View>
-              <View style={{ paddingVertical: 10 }}>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                paddingBottom: 20,
+                marginTop: 10,
+              }}
+            >
+              <View style={{ paddingHorizontal: 15 }}>
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="meterNumber"
+                    label={t('meterNumber')}
+                    validate="required"
+                    setFormValues={setFormValues}
+                  />
+                </View>
+                {/* <View style={{ paddingVertical: 10 }}>
                 <GeneralSelect
                   type="selectPlace"
                   label={t('selectPlace')}
                   data={PLACE}
                   setFormValues={setFormValues}
                 />
-              </View>
-              <View style={{ paddingVertical: 10 }}>
-                <GeneralSelect
-                  type="selectType"
-                  label={t('selectType')}
-                  data={TYPE}
-                  setFormValues={setFormValues}
-                />
-              </View>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="mobile"
-                  label={t('mobileNum')}
-                  autoCompleteType="tel"
-                  textContentType="telephoneNumber"
-                  validate="required"
-                  setFormValues={setFormValues}
-                />
-              </View>
-              <View style={{ paddingVertical: 5 }}>
-                <GeneralTextField
-                  type="amount"
-                  label={t('amount')}
-                  keyboardType="number-pad"
-                  validate="required"
-                  setFormValues={setFormValues}
-                  // accessoryLeft={IconCNaira}
-                />
-              </View>
-              <View style={{ paddingVertical: 10 }}>
-                <Text
-                  category="label"
-                  appearance="hint"
-                  style={{ marginBottom: 5 }}
-                >
-                  {t('paymentAccount')}
-                </Text>
-                <Button
-                  appearance="outline"
-                  accessoryRight={IconArrowDown}
-                  style={{ justifyContent: 'space-between' }}
-                  onPress={handleOpenAccountSheet}
-                >
-                  <Text>{form.account || t('paymentAccount')}</Text>
-                </Button>
-              </View>
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  onPress={handleOpenConfirmSheet}
-                >
-                  <Text status="control">{t('proceed')}</Text>
-                </Button>
+              </View>*/}
+                <View style={{ paddingVertical: 10 }}>
+                  <GeneralSelect
+                    type="selectType"
+                    label={t('selectType')}
+                    data={TYPE}
+                    setFormValues={setFormValues}
+                  />
+                </View>
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="mobile"
+                    label={t('mobileNum')}
+                    autoCompleteType="tel"
+                    textContentType="telephoneNumber"
+                    validate="required"
+                    setFormValues={setFormValues}
+                  />
+                </View>
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="amount"
+                    label={t('amount')}
+                    keyboardType="number-pad"
+                    validate="required"
+                    setFormValues={setFormValues}
+                    // accessoryLeft={IconCNaira}
+                  />
+                </View>
+                <View style={{ paddingVertical: 5 }}>
+                  <GeneralTextField
+                    type="pin"
+                    label={t('transactionPin')}
+                    autoCompleteType="password"
+                    textContentType="password"
+                    keyboardType="numeric"
+                    maxLength={4}
+                    validate="password"
+                    secure
+                    value={form.pin}
+                    setFormValues={setFormValues}
+                    validate="required"
+                    // accessoryLeft={IconCNaira}
+                  />
+                </View>
+
+                <View style={{ paddingVertical: 20 }}>
+                  <Button
+                    status="danger"
+                    size="large"
+                    accessibilityLiveRegion="assertive"
+                    accessibilityComponentType="button"
+                    accessoryLeft={isLoading ? renderSpinner : null}
+                    accessibilityLabel="Continue"
+                    onPress={handleOpenConfirmSheet}
+                    disabled={isLoading}
+                  >
+                    <Text status="control">{t('proceed')}</Text>
+                  </Button>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-      <AccountSheet />
-      <ConfirmSheet />
-    </Layout>
+        </ScrollView>
+        <AccountSheet />
+        <ConfirmSheet />
+      </Layout>
+    </Root>
   );
 }

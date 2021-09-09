@@ -89,9 +89,9 @@ const Stories = (props) => {
           <TouchableOpacity
             activeOpacity={0.75}
             style={{
-              width: IS_PORTRAIT
-                ? width / (4 + extraWidth)
-                : width / (6 + extraWidth),
+              // width: IS_PORTRAIT
+              //   ? width / (4 + extraWidth)
+              //   : width / (6 + extraWidth),
               marginRight: 10,
             }}
             onPress={() => onStorySelect(index)}
@@ -123,7 +123,7 @@ const Stories = (props) => {
                 category="c2"
                 style={{ marginTop: 10, textAlign: 'center' }}
               >
-                {storyData[index].userFirstName.toLowerCase().capitalize()}
+                {storyData[index].userLastName.toLowerCase().capitalize()}
               </Text>
             </View>
           </TouchableOpacity>

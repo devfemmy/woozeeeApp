@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
-import { Layout, List, Text } from '@ui-kitten/components';
-import { TextIcon } from 'src/components/IconPacks/TextIcon';
+import { Layout } from '@ui-kitten/components';
 import MovieScroll from 'src/components/MovieScroll';
 import { ScrollView } from 'react-native-gesture-handler';
+import MovieDescription from 'src/components/MovieDescription';
+import FeaturedMovie from 'src/components/FeaturedMovie';
+import { Octicons } from '@expo/vector-icons';
 
 const AllMovies = () => {
+    const [mute, setMuted] = useState(false);
+    // const toggleMuted =  useCallback(() => {
+    //     setMuted(!mute)
+    // }, [mute])
     const styles = StyleSheet.create({
         imageCon: {
             paddingVertical: 15
@@ -24,99 +30,34 @@ const AllMovies = () => {
         },
         lowerContainer: {
             paddingHorizontal: 10
-        }
+        },
     })
+    
     return (
-        <Layout level="6" style={{ flex: 1 }}>
-            <ScrollView>
-                <View style= {styles.imageCon}>
-                    <Image 
-                    style= {{width: '100%'}}
-                    source= {require('../../../../../assets/images/movies/movie1.png')} />
-                </View>
-                <View style= {styles.description}>
-                    <Text category= "h4" style= {{color: '#0959AB'}}>
-                        #1 in woozeee today
-                    </Text>
-                    <View>
-                        <Text>
-                        Exciting     Dramas     Comedy     Nollywood
-                        </Text>
+            <Layout level="6" style={{ flex: 1 }}>
+                <ScrollView>
+                    <View style= {styles.imageCon}>
+                    {/* <TouchableOpacity onPress= {toggleMuted} style={{flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 5}}>
+                        <Octicons name={mute ? 'mute': 'unmute'} size={24} color="white" />
+                    </TouchableOpacity> */}
+                        <FeaturedMovie 
+                        mute={false}
+                        uri
+                        movieType = "all"
+                        category_id= {"all"}   />
                     </View>
-                    {/* <View style= {styles.buttonContainer}>
-                        <TextIcon 
-                        width= "88%"
-                        bg= "#FF5757"
-                        color= "white" fill= "white" 
-                        text= "Play" 
-                        icon_name= "play-circle-outline" />   
-                        <TextIcon
-                        width= "88%"
-                        borderColor= "#FF5757" 
-                        borderWidth= {1}
-                        bg= "transparent"
-                        color= "#FF5757" fill= "#FF5757" 
-                        text= "Info" 
-                        icon_name= "alert-circle-outline" />  
-                    </View> */}
-                </View>
-                <View style= {{paddingHorizontal: 20, paddingVertical: 5}}>
-                <TextIcon 
-                    // width= "88%"
-                    bg= "#FF5757"
-                    color= "white" fill= "white" 
-                    text= "Purchase" 
-                    icon_name= "shopping-cart-outline" /> 
-                <View style= {{marginVertical: 5, alignItems: 'center'}}>
-                <Text>
-                Cast: Sir Dee, Seyi Awolowo, Avala
-                </Text>
-                <Text>
-                Director: Stephanie Dadet
-                </Text>
-              </View> 
-                </View>
-                <View style= {styles.lowerContainer}>
-                    <MovieScroll
-                        show
-                        title = "Popular on woozeee"
-                        img= {require('../../../../../assets/images/movies/movie2.png')}
-                        />
+                    {/* <MovieDescription 
+                    price = "$1.00"
+                    description = "After applying for 200 job application, he decided to go for something different . But things don’t go as smoothly as planned."
+                    paid /> */}
+                    <View style= {{paddingHorizontal: 10}}>
                         <MovieScroll
+                        category_id = ""
                         show
-                        title = "Continue Watching"
-                        img= {require('../../../../../assets/images/movies/movie3.png')}
                         />
-                        <MovieScroll
-                        show
-                        title = "Top 10 in woozeee today"
-                        img= {require('../../../../../assets/images/movies/movie2.png')}
-                        />
-                        <MovieScroll
-                        show
-                        title = "Trending Now"
-                        img= {require('../../../../../assets/images/movies/movie3.png')}
-                        />
-                        <MovieScroll
-                        show
-                        title = "My list"
-                        img= {require('../../../../../assets/images/movies/movie2.png')}
-                        />
-                        <MovieScroll
-                        show
-                        title = "Coming soon"
-                        img= {require('../../../../../assets/images/movies/movie3.png')}
-                        />
-                        <MovieScroll
-                        show
-                        title = "Because you watched My name is Tayo"
-                        img= {require('../../../../../assets/images/movies/movie2.png')}
-                        />
-                </View>
-            </ScrollView>
-
-        </Layout>
-    )
+                    </View>
+                </ScrollView>
+            </Layout>)
 }
 
-export default AllMovies
+export default AllMovies;

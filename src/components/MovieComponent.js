@@ -6,7 +6,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 const MovieComponent = (props) => {
     const styles = StyleSheet.create({
         container: {
-            width: wp('63%'),
+            width: wp(50),
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -31,7 +31,7 @@ const MovieComponent = (props) => {
             color: '#809DBE'
         },
         lowerContainer: {
-            width: wp('58%'),
+            width: wp(55),
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -69,16 +69,16 @@ const MovieComponent = (props) => {
                     {props.rating}
                 </Text>
             </View>
-            <Text category= "p1">
-                {props.duration}
-            </Text>
             <View style= {styles.Hdlabel}>
                 <Text style= {styles.textStyle} category= "p1">
                   {props.quality}
                 </Text>
             </View>
         </View>
-        <View style= {styles.lowerContainer}>
+        <Text category= "p1">
+                {props.duration}
+        </Text>
+        {/* <View style= {styles.lowerContainer}>
             <View style= {styles.banner}>
                 <Text style = {styles.topText} category= "p2">
                     TOP
@@ -90,7 +90,7 @@ const MovieComponent = (props) => {
             <Text style= {styles.trend} category= "h4">
             {props.trend} in woozeee today
             </Text>
-        </View>
+        </View> */}
     </>
     )
 }

@@ -90,7 +90,7 @@ export const StoryPosts = ({ info }) => {
   const [userImg, setUserImg] = useState('');
 
   const getUserImg = async () => {
-    const res = await AsyncStorage.getItem('userImg');
+    const res = await AsyncStorage.getItem('userImage');
     setUserImg(res);
   };
 
@@ -180,7 +180,11 @@ export const UsersPosts = ({ info, exploreData }) => {
                 {`${sub.totalEntries} Video(s)`}
               </Text>
             </View> */}
+
             <View style={{ paddingHorizontal: 10 }}>
+            <Text category="h6" status="basic" style={{ marginBottom: 15 }}>
+                {sub.categoryName}
+              </Text>
               <Text category="c1" style={{ marginBottom: 5 }}>
                 {`${sub.categoryName} ${sub.entries.length} clip(s)`}
               </Text>
@@ -224,8 +228,8 @@ export const ChallengePosts = ({ chaData }) => {
             key={uuidv4()}
           >
             <View style={{ paddingHorizontal: 10 }}>
-              <Text category="h6" status="danger" style={{ marginBottom: 15 }}>
-                {sub.categoryName}
+              <Text category="h6" status="basic" style={{ marginBottom: 15 }}>
+                {/* {sub.categoryName} */}Coming Soon
               </Text>
               <Text category="c1" style={{ marginBottom: 5 }}>
                 {`${sub.totalEntries} Video(s)`}
@@ -260,9 +264,14 @@ export const ChallengePosts = ({ chaData }) => {
 };
 
 // prettier-ignore
-export const ProfilePosts = ({allEntries}) => {
+export const ProfilePosts = (props) => {
+  const { allEntries, origin } = props;
+  // console.log("prop is ", props);
+
   const {firstTenEntries} = allEntries
-  return(
+  
+  return (
+    firstTenEntries && firstTenEntries.length ? 
     <List
     style={{
       backgroundColor: 'transparent',
@@ -285,7 +294,28 @@ export const ProfilePosts = ({allEntries}) => {
       offset: 200 * index,
       index,
     })}
-  />
+  /> :  <View
+          style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <Image
+            source={require('../../assets/images/banner/noPost.png')}
+            resizeMode="contain"
+            style={{
+              width: 200,
+              height: 200,
+              marginTop: 50,
+            }}
+          />
+          <Text category="s2" status="basic" style={{marginTop: 20}}>
+            User has no posts yet
+          </Text>
+        </View>
+
   )
 }
 

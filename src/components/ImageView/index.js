@@ -34,7 +34,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { Video } from 'expo-av';
+import FastImage from 'react-native-fast-image';
 
 // prettier-ignore
 import {
@@ -48,6 +48,10 @@ import { AppSettingsContext } from 'src/contexts';
 import { GeneralTextField } from 'src/components/FormFields';
 
 import firebase from '@react-native-firebase/app';
+
+import dl from '@react-native-firebase/dynamic-links';
+
+import '@react-native-firebase/auth';
 
 import firestore from '@react-native-firebase/firestore';
 
@@ -79,9 +83,13 @@ import {
   IconCEye,
 } from 'src/components/CustomIcons';
 
+import axios from 'axios';
+
 import { Feather, Ionicons } from '@expo/vector-icons';
 
 import { TextInput } from 'react-native';
+
+import Search from '../../screens/User/Common/Search/index';
 
 export default function ImageView({ data, viewHeight, navigation, t }) {
   // const db = firebase.firestore();
@@ -93,6 +101,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
   const [appTheme, setTheme] = useState('');
   const [_userId, setUserId] = useState('');
   const [userImg, setUserImg] = useState('');
+  const [shareLink, setShareLink] = useState('');
 
   const getTheme = async () => {
     const res = await AsyncStorage.getItem('appTheme');
@@ -106,7 +115,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
   };
 
   const getUserImg = async () => {
-    const res = await AsyncStorage.getItem('userImg');
+    const res = await AsyncStorage.getItem('userImage');
     setUserImg(res);
   };
 
@@ -148,10 +157,105 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
     setUserList([...users]);
   };
 
-  const handleShare = async () => {
+  const generateLink = async (params, value) => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      json: true,
+      body: JSON.stringify({
+        dynamicLinkInfo: {
+          // ios: {
+          //   bundleId: 'app.woozeee.com',
+          //   appStoreId: '1549457766',
+          // },
+          // android: {
+          //   packageName: 'app.woozeee.com',
+          // },
+          domainUriPrefix: 'https://app.woozeee.com',
+          link: `https://app.woozeee.com/entry/?${params}=${value}`,
+          // social: JSON.stringify({
+          //   title: 'woozeee Challenges',
+          //   descriptionText: 'Challenge entry on woozeee',
+          //   imageUrl:
+          //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxO_eYxfA2ZQaIuJIIEuYm8d72bH2jgHwvBA&usqp=CAU',
+          // }),
+        },
+      }),
+    };
+
+    const res = await fetch(
+      'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      requestOptions,
+    );
+    const _res = await res.json();
+    console.log(_res);
+  };
+
+  const handleShare = async (params, value) => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
     try {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        json: true,
+        body: JSON.stringify({
+          dynamicLinkInfo: {
+            // ios: {
+            //   bundleId: 'app.woozeee.com',
+            //   appStoreId: '1549457766',
+            // },
+            // android: {
+            //   packageName: 'app.woozeee.com',
+            // },
+            domainUriPrefix: 'https://app.woozeee.com',
+            link: `https://app.woozeee.com/entry/?${params}=${value}`,
+            // social: JSON.stringify({
+            //   title: 'woozeee Challenges',
+            //   descriptionText: 'Challenge entry on woozeee',
+            //   imageUrl:
+            //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxO_eYxfA2ZQaIuJIIEuYm8d72bH2jgHwvBA&usqp=CAU',
+            // }),
+          },
+        }),
+      };
+
+      const res = await fetch(
+        'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+        requestOptions,
+      );
+      const _res = await res.json();
+      // console.log(_res);
+
       const result = await Share.share({
-        message: `woozeee://entries/${item._id}`,
+        message: _res.shortLink,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -164,12 +268,11 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
           sheetRef.current.close();
         }
       } else if (result.action === Share.dismissedAction) {
-        alert('Action dismissed');
+        // alert('Action dismissed');
       }
       sheetRef.current.close();
-    } catch (error) {
-      alert('An error occured');
-      console.log(error.message);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -284,8 +387,13 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
       });
   };
 
-  const sharePostToDm = async (currentUserId, guestUserId, postUrl, name) => {
-    // console.log(currentUserId, guestUserId, postUrl);
+  const sharePostToDm = async (
+    currentUserId,
+    guestUserId,
+    postUrl,
+    name,
+    guestUserImg,
+  ) => {
     SendMessage(currentUserId, guestUserId, postUrl, '')
       .then((res) => {
         // console.log(res);
@@ -303,7 +411,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
         alert(err);
       });
 
-    AddUser(name, guestUserId);
+    AddUser(name, guestUserId, guestUserImg);
 
     sendSheet.current.close();
   };
@@ -334,6 +442,44 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
   };
 
   const handleSend = async () => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    try {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        json: true,
+        body: JSON.stringify({
+          dynamicLinkInfo: {
+            domainUriPrefix: 'https://app.woozeee.com',
+            link: `https://app.woozeee.com/entry/?$entries=${item._id}`,
+          },
+        }),
+      };
+
+      const res = await fetch(
+        'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+        requestOptions,
+      );
+      const _res = await res.json();
+      setShareLink(_res.shortLink);
+    } catch (e) {
+      console.log(e);
+    }
+
     sendSheet.current.open();
   };
 
@@ -353,120 +499,138 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
     }));
   };
 
-  // useEffect(() => {
-  //   fetchUsers();
-  // }, [searchForm.value]);
+  let params = { chat: null };
+  let _route = { params };
 
-  return (
-    <Root>
-      <View
-        style={{
-          flex: 1,
-          paddingVertical: 20,
-          borderBottomWidth: 1,
-          borderColor: 'rgba(143, 155, 179, 0.08)',
-        }}
-      >
+  return useMemo(
+    () => (
+      <Root>
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingLeft: 10,
+            flex: 1,
+            paddingVertical: 20,
+            borderBottomWidth: 1,
+            borderColor: 'rgba(143, 155, 179, 0.08)',
           }}
         >
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity
-              activeOpacity={0.75}
-              style={{ flexDirection: 'row', alignItems: 'center' }}
-              onPress={routeUserProfile}
-            >
-              <LinearGradient
-                colors={['#043F7C', '#FF5757']}
-                style={{
-                  height: 40,
-                  width: 40,
-                  borderRadius: 20,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingLeft: 10,
+            }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <TouchableOpacity
+                activeOpacity={0.75}
+                style={{ flexDirection: 'row', alignItems: 'center' }}
+                onPress={routeUserProfile}
               >
-                <Image
-                  source={{ uri: item.userImageURL }}
-                  // defaultSource={require('assets/images/user/user2.png')}
+                <LinearGradient
+                  colors={['#043F7C', '#FF5757']}
                   style={{
-                    height: 36,
-                    width: 36,
-                    borderRadius: 18,
-                    borderColor: 'white',
+                    height: 40,
+                    width: 40,
+                    borderRadius: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
-                  resizeMode="cover"
-                />
-              </LinearGradient>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  paddingRight: 5,
-                  paddingLeft: 5,
-                  maxWidth: 190,
-                }}
-              >
-                <Text status="primary" category="s2" style={{ marginRight: 5 }}>
-                  {item.userDisplayName}
-                </Text>
-                <Text status="danger" category="s2">
-                  {/* {item.userDisplayName} */}
-                </Text>
-              </View>
-              <Image
-                source={require('assets/images/icon/verified-1.png')}
-                defaultSource={require('assets/images/icon/verified-1.png')}
+                >
+                  <FastImage
+                    style={{
+                      height: 36,
+                      width: 36,
+                      borderRadius: 18,
+                      borderColor: 'white',
+                    }}
+                    source={{
+                      uri: item.userImageURL,
+                      priority: FastImage.priority.normal,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                  />
+                </LinearGradient>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    paddingRight: 5,
+                    paddingLeft: 5,
+                    maxWidth: 190,
+                  }}
+                >
+                  <Text
+                    status="primary"
+                    category="s2"
+                    style={{ marginRight: 5 }}
+                  >
+                    {item.userDisplayName}
+                  </Text>
+                  <Text status="danger" category="s2">
+                    {/* {item.userDisplayName} */}
+                  </Text>
+                </View>
+                {/* <FastImage
                 style={{
                   height: 16,
                   width: 16,
                   borderRadius: 8,
                 }}
-                resizeMode="cover"
+                source={{
+                  uri: item.mediaURL,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              /> */}
+                {/* <Image
+                  source={require('assets/images/icon/verified-1.png')}
+                  defaultSource={require('assets/images/icon/verified-1.png')}
+                  style={{
+                    height: 16,
+                    width: 16,
+                    borderRadius: 8,
+                  }}
+                  resizeMode="cover"
+                /> */}
+              </TouchableOpacity>
+            </View>
+            <View>
+              <InteractIcon
+                style={{ marginHorizontal: 5 }}
+                Accessory={IconMoreHorizontal}
+                status="basic"
+                height={28}
+                width={28}
+                onPress={handleOpenSheet}
               />
-            </TouchableOpacity>
+            </View>
           </View>
-          <View>
-            <InteractIcon
-              style={{ marginHorizontal: 5 }}
-              Accessory={IconMoreHorizontal}
-              status="basic"
-              height={28}
-              width={28}
-              onPress={handleOpenSheet}
-            />
-          </View>
-        </View>
-        <TouchableWithoutFeedback
-        // onPress={
-        //   data.item.type && data.item.type == 'video'
-        //     ? () => toggleMute()
-        //     : null
-        // }
-        >
-          <View
-            style={{
-              flex: 1,
-              marginVertical: 10,
-              height: viewHeight - 100,
-            }}
+          <TouchableWithoutFeedback
+          // onPress={
+          //   data.item.type && data.item.type == 'video'
+          //     ? () => toggleMute()
+          //     : null
+          // }
           >
-            {data.item.description !== '' && (
-              <Text
-                // status="primary"
-                category="s2"
-                style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
-              >
-                {data.item.description}
-              </Text>
-            )}
-            <View style={{ flex: 1 }}>
-              {/* <Video
+            <View
+              style={{
+                flex: 1,
+                marginVertical: 10,
+                height: viewHeight - 100,
+              }}
+            >
+              {data.item.description !== '' && (
+                <Text
+                  // status="primary"
+                  category="s2"
+                  style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
+                >
+                  {data.item.description}
+                </Text>
+              )}
+              <View style={{ flex: 1 }}>
+                {/* <Video
                   ref={videoRef}
                   source={{ uri: item.mediaURL }}
                   resizeMode="cover"
@@ -474,247 +638,267 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   isLooping={true}
                   style={{ height: '100%' }}
                 /> */}
-            </View>
+              </View>
 
-            <Image
-              source={{ uri: item.mediaURL }}
-              defaultSource={require('assets/images/banner/placeholder-image.png')}
-              style={{
-                height: '90%',
-                width: '100%',
-              }}
-              resizeMode="cover"
-            />
-          </View>
-        </TouchableWithoutFeedback>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-            justifyContent: 'space-between',
-          }}
-        >
+              <FastImage
+                style={{
+                  height: '90%',
+                  width: '100%',
+                }}
+                source={{
+                  uri: item.mediaURL,
+                  priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
+              {/* <Image
+                source={{ uri: item.mediaURL }}
+                defaultSource={require('assets/images/banner/placeholder-image.png')}
+                style={{
+                  height: '90%',
+                  width: '100%',
+                }}
+                resizeMode="cover"
+              /> */}
+            </View>
+          </TouchableWithoutFeedback>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'flex-start',
-              paddingHorizontal: 5,
+              justifyContent: 'space-between',
             }}
           >
             <View
               style={{
-                display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginHorizontal: 8,
+                alignItems: 'flex-start',
+                paddingHorizontal: 5,
               }}
             >
-              {isLiked ? (
-                <Ionicons
-                  name="md-heart-sharp"
-                  style={{
-                    marginVertical: 1,
-                    marginRight: 5,
-                  }}
-                  size={22}
-                  color="red"
-                  onPress={toggleLike}
-                />
-              ) : (
-                <Ionicons
-                  name="ios-heart-outline"
-                  style={{
-                    marginVertical: 1,
-                    marginRight: 5,
-                  }}
-                  size={22}
-                  color={appTheme === '#F7F9FC' ? 'black' : 'white'}
-                  onPress={toggleLike}
-                />
-              )}
-              {totalLikes > 0 && (
-                <Text category="s2" style={{ color: isLiked ? 'red' : 'gray' }}>
-                  {totalLikes}
-                </Text>
-              )}
-            </View>
-            <Ionicons
-              name="ios-chatbox-ellipses-outline"
-              style={{
-                marginVertical: 2,
-                marginHorizontal: 10,
-              }}
-              size={21}
-              color={appTheme === '#F7F9FC' ? 'black' : 'white'}
-              onPress={routeComments}
-            />
-            <Feather
-              name="send"
-              size={20}
-              color={appTheme === '#F7F9FC' ? 'black' : 'white'}
-              style={{
-                marginVertical: 2,
-                marginHorizontal: 8,
-              }}
-              onPress={
-                () => handleSend()
-                // props.navigation.navigate('DeepLinkPost', { _id: item._id })
-              }
-            />
-          </View>
-          <View>
-            <InteractIcon
-              style={{ marginHorizontal: 5 }}
-              Accessory={(evaProps) => (
-                <IconBookmark {...evaProps} active={isBookmarked} />
-              )}
-              direction="row"
-              status={isBookmarked ? 'danger' : 'basic'}
-              height={24}
-              width={24}
-              onPress={toggleBookmark}
-            />
-          </View>
-        </View>
-        <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              // padding: 15,
-              alignItems: 'center',
-            }}
-          >
-            <LinearGradient
-              colors={['#043F7C', '#FF5757']}
-              style={{
-                height: 34,
-                width: 34,
-                borderRadius: 17,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Image
-                source={{ uri: userImg }}
-                // defaultSource={require('assets/images/user/user1.png')}
+              <View
                 style={{
-                  height: 30,
-                  width: 30,
-                  borderRadius: 15,
-                  borderColor: 'white',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginHorizontal: 8,
                 }}
-                resizeMode="cover"
+              >
+                {isLiked ? (
+                  <Ionicons
+                    name="md-heart-sharp"
+                    style={{
+                      marginVertical: 1,
+                      marginRight: 5,
+                    }}
+                    size={22}
+                    color="red"
+                    onPress={toggleLike}
+                  />
+                ) : (
+                  <Ionicons
+                    name="ios-heart-outline"
+                    style={{
+                      marginVertical: 1,
+                      marginRight: 5,
+                    }}
+                    size={22}
+                    color={appTheme === '#F7F9FC' ? 'black' : 'white'}
+                    onPress={toggleLike}
+                  />
+                )}
+                {totalLikes > 0 && (
+                  <Text
+                    category="s2"
+                    style={{ color: isLiked ? 'red' : 'gray' }}
+                  >
+                    {totalLikes}
+                  </Text>
+                )}
+              </View>
+              <Ionicons
+                name="ios-chatbox-ellipses-outline"
+                style={{
+                  marginVertical: 2,
+                  marginHorizontal: 10,
+                }}
+                size={21}
+                color={appTheme === '#F7F9FC' ? 'black' : 'white'}
+                onPress={routeComments}
               />
-            </LinearGradient>
-            <View style={{ flex: 1, marginHorizontal: 5 }}>
-              <TextInput
-                placeholder="Leave a comment"
-                onChangeText={(text) => setText(text)}
+              <Feather
+                name="send"
+                size={20}
+                color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                 style={{
-                  height: 40,
-                  paddingHorizontal: 5,
-                  color: 'grey',
+                  marginVertical: 2,
+                  marginHorizontal: 8,
                 }}
-                defaultValue={text}
+                onPress={
+                  () => handleSend()
+                  // props.navigation.navigate('DeepLinkPost', { _id: item._id })
+                }
               />
             </View>
-            <View style={{ alignSelf: 'flex-start', marginTop: 4 }}>
+            <View>
               <InteractIcon
-                Accessory={IconPaperPlane}
-                status="primary"
-                height={28}
-                width={28}
-                onPress={() => {
-                  if (text !== '') {
-                    sendComment(text);
-                    setText('');
-                  } else {
-                    console.log('enter a comment');
-                  }
-                }}
+                style={{ marginHorizontal: 5 }}
+                Accessory={(evaProps) => (
+                  <IconBookmark {...evaProps} active={isBookmarked} />
+                )}
+                direction="row"
+                status={isBookmarked ? 'danger' : 'basic'}
+                height={24}
+                width={24}
+                onPress={toggleBookmark}
               />
             </View>
           </View>
-          <View style={{ marginTop: 5 }}>
-            <Moment
-              fromNow
-              element={(momentProps) => (
-                <Text category="c1" {...momentProps} style={{ fontSize: 10 }} />
-              )}
+          <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                // padding: 15,
+                alignItems: 'center',
+              }}
             >
-              {item.createdAt}
-            </Moment>
+              <LinearGradient
+                colors={['#043F7C', '#FF5757']}
+                style={{
+                  height: 34,
+                  width: 34,
+                  borderRadius: 17,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <FastImage
+                  source={{
+                    uri: userImg,
+                    priority: FastImage.priority.normal,
+                  }}
+                  style={{
+                    height: 36,
+                    width: 36,
+                    borderRadius: 18,
+                    borderColor: 'white',
+                  }}
+                  resizeMode={FastImage.resizeMode.cover}
+                />
+              </LinearGradient>
+              <View style={{ flex: 1, marginHorizontal: 5 }}>
+                <TextInput
+                  placeholder="Leave a comment"
+                  onChangeText={(text) => setText(text)}
+                  style={{
+                    height: 40,
+                    paddingHorizontal: 5,
+                    color: 'grey',
+                  }}
+                  defaultValue={text}
+                />
+              </View>
+              <View style={{ alignSelf: 'flex-start', marginTop: 4 }}>
+                <InteractIcon
+                  Accessory={IconPaperPlane}
+                  status="primary"
+                  height={28}
+                  width={28}
+                  onPress={() => {
+                    if (text !== '') {
+                      sendComment(text);
+                      setText('');
+                    } else {
+                      console.log('enter a comment');
+                    }
+                  }}
+                />
+              </View>
+            </View>
+            <View style={{ marginTop: 5 }}>
+              <Moment
+                fromNow
+                element={(momentProps) => (
+                  <Text
+                    category="c1"
+                    {...momentProps}
+                    style={{ fontSize: 10 }}
+                  />
+                )}
+              >
+                {item.createdAt}
+              </Moment>
+            </View>
           </View>
         </View>
-      </View>
-      <RBSheet
-        ref={sheetRef}
-        height={205}
-        closeOnDragDown
-        animationType="fade"
-        customStyles={{
-          container: {
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'transparent',
-          },
-        }}
-      >
-        <Layout
-          level="5"
-          style={{
-            flex: 1,
-            width: '100%',
-            alignItems: 'flex-start',
-            justifyContent: 'flex-end',
-            paddingBottom: 30,
+        <RBSheet
+          ref={sheetRef}
+          height={205}
+          closeOnDragDown
+          animationType="fade"
+          customStyles={{
+            container: {
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'transparent',
+            },
           }}
         >
-          {item.userId !== _userId ? (
-            <Button
-              appearance="ghost"
-              status="basic"
-              style={{
-                width: '100%',
-                justifyContent: 'center',
-              }}
-              onPress={toggleFollow}
-            >
-              <Text style={{ fontSize: 16 }} status="basic">
-                {following ? t('unfollow') : t('follow')}
-              </Text>
-            </Button>
-          ) : (
-            <Button
-              appearance="ghost"
-              status="basic"
-              style={{
-                width: '100%',
-                justifyContent: 'center',
-              }}
-              onPress={() => deletePost(item._id)}
-            >
-              <Text style={{ fontSize: 16 }} status="basic">
-                Delete Post
-              </Text>
-            </Button>
-          )}
-          <Divider style={{ marginVertical: 2, width: '100%' }} />
-          <Button
-            appearance="ghost"
-            status="basic"
+          <Layout
+            level="5"
             style={{
+              flex: 1,
               width: '100%',
-              justifyContent: 'center',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-end',
+              paddingBottom: 30,
             }}
-            onPress={routeReport}
           >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {t('makeReport')}
-            </Text>
-          </Button>
-          {/* <Divider style={{ marginVertical: 2, width: '100%' }} />
+            {item.userId !== _userId ? (
+              <Button
+                appearance="ghost"
+                status="basic"
+                style={{
+                  width: '100%',
+                  justifyContent: 'center',
+                }}
+                onPress={toggleFollow}
+              >
+                <Text style={{ fontSize: 16 }} status="basic">
+                  {following ? t('unfollow') : t('follow')}
+                </Text>
+              </Button>
+            ) : (
+              <Button
+                appearance="ghost"
+                status="basic"
+                style={{
+                  width: '100%',
+                  justifyContent: 'center',
+                }}
+                onPress={() => deletePost(item._id)}
+              >
+                <Text style={{ fontSize: 16 }} status="basic">
+                  Delete Post
+                </Text>
+              </Button>
+            )}
+            <Divider style={{ marginVertical: 2, width: '100%' }} />
+            <Button
+              appearance="ghost"
+              status="basic"
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+              }}
+              onPress={routeReport}
+            >
+              <Text style={{ fontSize: 16 }} status="basic">
+                {t('makeReport')}
+              </Text>
+            </Button>
+            {/* <Divider style={{ marginVertical: 2, width: '100%' }} />
             <Button
               appearance="ghost"
               status="basic"
@@ -727,137 +911,91 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                 {t('downloadMedia')}
               </Text>
             </Button> */}
-          <Divider style={{ marginVertical: 2, width: '100%' }} />
-          <Button
-            appearance="ghost"
-            status="basic"
-            style={{
-              width: '100%',
+            <Divider style={{ marginVertical: 2, width: '100%' }} />
+            <Button
+              appearance="ghost"
+              status="basic"
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+              }}
+              onPress={
+                () => handleShare('entries', item._id)
+                // () => generateLink('entries', item._id)
+              }
+            >
+              <Text style={{ fontSize: 16 }} status="basic">
+                {t('shareTo')}
+              </Text>
+            </Button>
+          </Layout>
+        </RBSheet>
+        <RBSheet
+          ref={sendSheet}
+          height={400}
+          closeOnDragDown
+          animationType="fade"
+          customStyles={{
+            container: {
               justifyContent: 'center',
-            }}
-            onPress={handleShare}
-          >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {t('shareTo')}
-            </Text>
-          </Button>
-        </Layout>
-      </RBSheet>
-      <RBSheet
-        ref={sendSheet}
-        height={400}
-        closeOnDragDown
-        animationType="fade"
-        customStyles={{
-          container: {
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'transparent',
-          },
-        }}
-      >
-        <Layout
-          level="5"
-          style={{
-            flex: 1,
-            width: '100%',
-            // paddingBottom: 30,
+              alignItems: 'center',
+              backgroundColor: 'transparent',
+            },
           }}
         >
-          <View
+          <Layout
+            level="5"
             style={{
-              height: '90%',
+              flex: 1,
+              width: '100%',
+              // paddingBottom: 30,
             }}
           >
             <View
               style={{
-                borderTopRightRadius: 5,
-                borderTopLeftRadius: 5,
-                marginHorizontal: 20,
-                marginTop: 15,
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+                height: '90%',
               }}
             >
-              <Text category="h6" status="primary">
-                Share Post To
-              </Text>
-              <Feather
-                name="x"
-                size={24}
-                color="#2E5894"
-                onPress={() => sendSheet.current.close()}
-              />
-            </View>
-            <View
-              style={{
-                paddingTop: 20,
-                paddingHorizontal: 20,
-              }}
-            >
-              <Input
-                style={{
-                  width: '100%',
-                }}
-                size="medium"
-                value={searchForm.value}
-                accessibilityLabel="Search"
-                placeholder={'Search'}
-                status={searchForm.status}
-                onChangeText={handleChange}
-                accessoryLeft={IconSearch}
-              />
-            </View>
-            {userList.length > 0 ? (
-              <List
-                style={{ backgroundColor: 'transparent', paddingVertical: 10 }}
-                alwaysBounceVertical
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                data={userList}
-                keyExtractor={(_, i) => i.toString()}
-                renderItem={(user, index) =>
-                  searchForm.value.length > 1 && (
-                    <UserTemplate
-                      key={index}
-                      userProfilePic={require('../../assets/images/user/user1.png')}
-                      displayName={`${user.item.fName} ${user.item.sName}`}
-                      userId={user.item._id}
-                      navigation={navigation}
-                      sendTo={() =>
-                        sharePostToDm(
-                          _userId,
-                          user.item._id,
-                          `woozeee://entries/${item._id}`,
-                          user.item.fName + user.item.sName,
-                        )
-                      }
-                    />
-                  )
-                }
-                getItemLayout={(data, index) => ({
-                  length: 150,
-                  offset: 150 * index,
-                  index,
-                })}
-              />
-            ) : (
               <View
                 style={{
+                  borderTopRightRadius: 5,
+                  borderTopLeftRadius: 5,
+                  marginHorizontal: 20,
+                  marginTop: 15,
                   display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                 }}
               >
-                <Text>User not found</Text>
+                <Text category="h6" status="primary">
+                  Share Post To
+                </Text>
+                <Feather
+                  name="x"
+                  size={24}
+                  color="#2E5894"
+                  onPress={() => sendSheet.current.close()}
+                />
               </View>
-            )}
-          </View>
-        </Layout>
-      </RBSheet>
-    </Root>
+              <Search
+                route={_route}
+                shareToDm={true}
+                shareToDmFn={(_name, _guestUserId, _guestUserImg) =>
+                  sharePostToDm(
+                    _userId,
+                    _guestUserId, //user's dm
+                    shareLink,
+                    _name,
+                    _guestUserImg,
+                  )
+                }
+              />
+            </View>
+          </Layout>
+        </RBSheet>
+      </Root>
+    ),
+    [data, isBookmarked, isLiked, totalLikes, following, navigation],
   );
 }

@@ -11,7 +11,11 @@ export const getToken = () => {
   return AsyncStorage.getItem('USER_AUTH_TOKEN');
 };
 
-const createInstance = async () => {
+export const getEmail = () => {
+  return AsyncStorage.getItem('email');
+};
+
+export const createInstance = async () => {
   return axios.create({
     baseURL: `https://apis.woozeee.com/api/v1/`,
     timeout: 60000,
@@ -29,6 +33,13 @@ export default {
     const instance = await createInstance();
 
     const res = await instance.get(`user/search?q=${name}`);
+    const { data } = res;
+    return data;
+  },
+  getUserByEmail: async (email) => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`user/user?email=${email}`);
     const { data } = res;
     return data;
   },
@@ -62,6 +73,16 @@ export default {
       pageData: data,
     };
   },
+  getTrendingChallenges: async () => {
+    const instance = await createInstance();
+
+    const res = await instance.get('challenges-category');
+
+    const { data } = res;
+    return {
+      pageData: data,
+    };
+  },
   getChallenges: async () => {
     const instance = await createInstance();
 
@@ -83,6 +104,18 @@ export default {
       pageData: data,
       previousID: 1,
       nextID: page + 1,
+    };
+  },
+  getWoozVideos: async () => {
+    const instance = await createInstance();
+
+    const res = await instance.get(`entries?pageSize=50`);
+
+    const { data } = res;
+    return {
+      pageData: data,
+      previousID: 1,
+      // nextID: page + 1,
     };
   },
   getDeepLinkPost: async (entryId) => {

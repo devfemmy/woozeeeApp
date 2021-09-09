@@ -32,7 +32,6 @@ const PreviewEntry = (props) => {
     feeds: false,
     wooz: false,
   });
-
   const handleUploadLoc = (loc) => {
     setUploadLocations((prevState) => ({
       ...prevState,
@@ -76,7 +75,7 @@ const PreviewEntry = (props) => {
           });
           setTimeout(() => {
             props.navigation.popToTop();
-          }, 3000);
+          }, 1000);
         })
         .catch((err) => {
           console.log(err.response);
@@ -90,7 +89,7 @@ const PreviewEntry = (props) => {
           });
           setTimeout(() => {
             props.navigation.popToTop();
-          }, 3000);
+          }, 1000);
         });
     } else {
       const wooz = uploadLocations.wooz ? 'wooz' : null;
@@ -243,7 +242,6 @@ const PreviewEntry = (props) => {
       measurementId: 'G-XQKMT94R9R',
     };
     
-    console.log('here2')
     if (!firebase.apps.length) {
       console.log("here1")
       firebase.initializeApp(firebaseConfig);
@@ -371,12 +369,12 @@ const PreviewEntry = (props) => {
                 }}
               >
                 <Text category="s2" style={{ marginLeft: 0 }}>
-                  {t('wooz')}
+                  {t('feeds')}
                 </Text>
               </View>
               <Toggle
-                checked={uploadLocations.wooz}
-                onChange={(e) => handleUploadLoc('wooz')}
+                checked={uploadLocations.feeds}
+                onChange={(e) => handleUploadLoc('feeds')}
               />
             </View>
             <View
@@ -394,14 +392,15 @@ const PreviewEntry = (props) => {
                 }}
               >
                 <Text category="s2" style={{ marginLeft: 0 }}>
-                  {t('feeds')}
+                  {t('wooz')}
                 </Text>
               </View>
               <Toggle
-                checked={uploadLocations.feeds}
-                onChange={(e) => handleUploadLoc('feeds')}
+                checked={uploadLocations.wooz}
+                onChange={(e) => handleUploadLoc('wooz')}
               />
             </View>
+
             {/* <View
                   style={{
                     flexDirection: 'row',

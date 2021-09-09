@@ -15,7 +15,7 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
-import BankOptions from '../../../../components/BankOptionButton.js';
+import BankOptions from '../../../../components/BankOptionButton';
 
 import zenith from '../../../../assets/images/icon/zenith.png';
 import access from '../../../../assets/images/icon/accessColored.png';
@@ -65,7 +65,7 @@ export default function SelectBanks({ navigation }) {
   let res;
   useEffect(() => {
     res = banksData.filter((bank) => bank.selected !== false);
-    console.log(res);
+    // console.log(res);
   }, [banksData]);
 
   const routeActivateWalletOTPVerify = () =>

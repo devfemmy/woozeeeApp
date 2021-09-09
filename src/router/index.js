@@ -1,4 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+
+import { Alert, Platform, BackHandler } from 'react-native';
+
+import { useNetInfo } from '@react-native-community/netinfo';
 
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -7,6 +11,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { AuthContext } from 'src/contexts';
+
+import { Toast, Content, Root } from 'native-base';
+
+import { firebase as fb } from '@react-native-firebase/dynamic-links';
 
 /* Screens import */
 import Intro from 'src/screens/Authentication';
@@ -27,6 +35,7 @@ import Settings from 'src/screens/User/Common/Settings';
 import SettingsGlobal from 'src/screens/User/Common/SettingsGlobal';
 import EditProfile from 'src/screens/User/Common/EditProfile';
 import ChangePassword from 'src/screens/User/Common/ChangePassword';
+import GeneratePin from 'src/screens/User/Common/GeneratePin';
 import UploadEntries from 'src/screens/User/Common/VideoUpload/UploadEntries';
 import PreviewEntry from 'src/screens/User/Common/VideoUpload/PreviewEntry';
 
@@ -68,7 +77,7 @@ import ActivateCareElitePlan from 'src/screens/User/Onboarding/ActivateCare/Elit
 import TransactionHistory from 'src/screens/User/WalletTab/TransactionHistory';
 
 // BillPay Screens
-import BillPaymentSuccess from 'src/screens/User/BillPayTab/Success';
+import Success from 'src/screens/User/BillPayTab/Success';
 import BillAirtime from 'src/screens/User/BillPayTab/Bills/Airtime';
 import BillMobileData from 'src/screens/User/BillPayTab/Bills/MobileData';
 import BillCableTv from 'src/screens/User/BillPayTab/Bills/CableTv';
@@ -100,11 +109,56 @@ import Duration from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyM
 import SearchResults from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/SearchResults';
 import AdditionalInfo from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/AdditionalInfo';
 import MoneyMattersConfirmation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/Confirmation';
-
+import FlutterPay from '../screens/Common/FlutterPay';
+import DataFlutterPay from '../screens/Common/DataFlutterPay';
+import CableFlutterPay from '../screens/Common/CableFlutterPay';
+import ElectricFlutterPay from '../screens/Common/ElectricFlutterPay';
+import OtherCategories from 'src/screens/User/Common/Movies/OtherCategories/index';
+import TransactionSummary from '../screens/User/Common/TransactionSummary';
+import PaymentSchedule from 'src/screens/User/Onboarding/ActivateCare/PaymentSchedule';
+import WoozeePaySummary from 'src/screens/User/Onboarding/ActivateCare/PaySummary';
+import TransferMoney from 'src/screens/User/WalletTab/TransferMoney';
+import Accounts from 'src/screens/User/WalletTab/Accounts';
 const { Navigator, Screen } = createStackNavigator();
 
 export default function Router() {
   const { authState } = useContext(AuthContext);
+
+  const netInfo = useNetInfo();
+
+  const checkForConnectivity = () => {
+    if (netInfo.isConnected == false || netInfo.isInternetReachable == false) {
+      Toast.show({
+        text: 'You are offline',
+        // buttonText: ',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+      console.log(netInfo);
+    } else if (
+      netInfo.isConnected == true &&
+      netInfo.isInternetReachable == false
+    ) {
+      Toast.show({
+        text: 'You are offline',
+        // buttonText: ',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+      console.log('from else ', netInfo);
+    } else {
+      return;
+      // Toast.show({
+      //   text: 'You are online',
+      //   // buttonText: ',
+      //   position: 'top',
+      //   type: 'success',
+      //   duration: 3000,
+      // });
+    }
+  };
 
   const screens = {
     Auth: {
@@ -124,11 +178,13 @@ export default function Router() {
       ActivateWalletSelectBanks,
       ActivateWalletCreatePin,
       ActivateWalletOTPVerification,
+      PaymentSchedule,
       ActivateCare,
       ActivateCareSoloLitePlan,
       ActivateCareSoloPlan,
       ActivateCareFamilyPlan,
       ActivateCareElitePlan,
+      WoozeePaySummary,
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,
@@ -137,6 +193,7 @@ export default function Router() {
       CharityRoute,
       EditProfile,
       ChangePassword,
+      GeneratePin,
       Consultation,
       MoneyMattersServices,
       SearchResults,
@@ -149,6 +206,7 @@ export default function Router() {
       SettingsGlobal,
       Movies,
       ViewMovies,
+      OtherCategories,
       MoviePage,
       MoreOptions,
       PreviouslyViewed,
@@ -167,7 +225,7 @@ export default function Router() {
       ProfileLikedPosts,
       Follow,
       TransactionHistory,
-      BillPaymentSuccess,
+      Success,
       BillAirtime,
       BillMobileData,
       BillCableTv,
@@ -181,6 +239,13 @@ export default function Router() {
       AppointmentDetails,
       InnerPages,
       DetailsPage,
+      FlutterPay,
+      DataFlutterPay,
+      ElectricFlutterPay,
+      CableFlutterPay,
+      TransactionSummary,
+      TransferMoney,
+      Accounts,
     },
 
     Common: {
@@ -194,29 +259,52 @@ export default function Router() {
     (async () => {
       await SplashScreen.hideAsync();
     })();
-  }, []);
+    checkForConnectivity();
+  }, [netInfo]);
 
   const config = {
     screens: {
-      DeepLinkPost: 'entries/:_id',
+      DeepLinkPost: '/:_id',
     },
   };
 
   const linking = {
-    prefixes: ['app.woozeee.com/', 'woozeee://'],
+    prefixes: ['https://app.woozeee.com/entry'],
     config,
   };
 
+  const getAppLaunchLink = async () => {
+    // Linking.addEventListener('verify', (url) => {
+    //   alert(url);
+    // });
+
+    // const res = await Linking.getInitialURL();
+    // alert(res);
+
+    try {
+      const res = await fb.dynamicLinks().getInitialLink();
+      alert(res.url);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getAppLaunchLink();
+  }, []);
+
   return (
-    <NavigationContainer linking={linking}>
-      <Navigator detachInactiveScreens headerMode="none">
-        {Object.entries({
-          ...(authState.loginToken ? screens.User : screens.Auth),
-          ...screens.Common,
-        }).map(([name, component]) => (
-          <Screen name={name} component={component} key={name} />
-        ))}
-      </Navigator>
-    </NavigationContainer>
+    <Root>
+      <NavigationContainer linking={linking}>
+        <Navigator detachInactiveScreens headerMode="none">
+          {Object.entries({
+            ...(authState.loginToken ? screens.User : screens.Auth),
+            ...screens.Common,
+          }).map(([name, component]) => (
+            <Screen name={name} component={component} key={name} />
+          ))}
+        </Navigator>
+      </NavigationContainer>
+    </Root>
   );
 }

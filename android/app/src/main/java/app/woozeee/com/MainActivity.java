@@ -9,6 +9,8 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 import expo.modules.splashscreen.singletons.SplashScreen;
 import expo.modules.splashscreen.SplashScreenImageResizeMode;
+import android.content.Intent; 
+import android.content.res.Configuration; 
 
 public class MainActivity extends ReactActivity {
   @Override
@@ -28,6 +30,13 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "woozeee";
     }
+    @Override
+      public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Intent intent = new Intent("onConfigurationChanged");
+        intent.putExtra("newConfig", newConfig);
+        this.sendBroadcast(intent);
+    }
 
     @Override
     protected ReactActivityDelegate createReactActivityDelegate() {
@@ -38,4 +47,5 @@ public class MainActivity extends ReactActivity {
             }
         };
     }
+    
 }

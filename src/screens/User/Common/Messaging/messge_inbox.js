@@ -123,6 +123,27 @@ class MessageInbox extends Component {
     }
   }
   async componentDidMount() {
+    // try {
+    //   Firebase.database()
+    //     .ref('signaling')
+    //     .child(guestUid)
+    //     .child(currentUid)
+    //     .on('value', (dataSnapshot) => {
+    //         console.log(dataSnapshot)
+    //         if (dataSnapshot.val().signal === true) {
+    //           if (this.state.currentUid === dataSnapshot.val().sender) {
+    //             this.setState({status: false})
+    //           }else {
+    //             console.log("receiver here", dataSnapshot.val().signal)
+    //             this.setState({status: true})
+    //           }
+    //         } else {
+    //           this.setState({status: false})
+    //         }
+    //     });
+    // } catch (error) {
+    //   alert(error);
+    // }
     this.setState({ loader: true });
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       // fetch messages when screen is focused
@@ -232,7 +253,7 @@ class MessageInbox extends Component {
                       ? <Image
                       defaultSource={require('../../../../assets/images/user/user1.png')}
                       source={require('../../../../assets/images/user/user1.png')}
-                      style={{ height: 50, width: 50, borderRadius: 25 }}
+                      style={{ height: 50, width: 50, borderRadius: 25, resizeMode: 'contain' }}
                                           /> 
                     :   
                     <Image
@@ -240,7 +261,7 @@ class MessageInbox extends Component {
                     source={{
                       uri: item.imageUrl,
                     }}
-                    style={{ height: 50, width: 50, borderRadius: 25 }}
+                    style={{ height: 50, width: 50, borderRadius: 25, }}
                   />
                     }
 
@@ -256,7 +277,7 @@ class MessageInbox extends Component {
                       <Text
                         category="h5"
                         style={{
-                          color: 'rgba(0, 0, 0, 0.8)',
+                          // color: 'rgba(0, 0, 0, 0.8)',
                           fontSize: 16,
                           fontWeight: 'bold',
                         }}
@@ -264,10 +285,12 @@ class MessageInbox extends Component {
                         {item.userName}
                       </Text>
                       <Text
+                      numberOfLines= {1}
                         style={{
-                          color: 'rgba(0, 0, 0, 0.5)',
+                          // color: 'rgba(0, 0, 0, 0.5)',
                           fontSize: 14,
                           fontWeight: '600',
+                          opacity: 0.5
                         }}
                       >
                         {item.lastMessage}
@@ -283,9 +306,10 @@ class MessageInbox extends Component {
                     >
                       <Text
                         style={{
-                          color: 'rgba(0, 0, 0, 0.5)',
+                          // color: 'rgba(0, 0, 0, 0.5)',
                           fontSize: 13,
                           fontWeight: '400',
+                          opacity: 0.5
                         }}
                       >
                         {item.lastTime}

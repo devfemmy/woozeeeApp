@@ -234,11 +234,11 @@ export default function Explore({ navigation }) {
     },
     activeTabTextColor: {
       color: 'rgba(255, 87, 87, 1)',
-      fontSize: 15,
+      fontSize: 13,
     },
     tabTextColor: {
       // color: '#494949',
-      fontSize: 15,
+      fontSize: 13,
     },
     overlay: {
       backgroundColor: 'transparent',
@@ -288,6 +288,7 @@ export default function Explore({ navigation }) {
       style={{ backgroundColor: 'transparent' }}
       renderLabel={({ route, focused, color }) => (
         <Text
+          numberOfLines= {1}
           style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}
           status="basic"
         >

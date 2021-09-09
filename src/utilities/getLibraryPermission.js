@@ -13,11 +13,12 @@ export default async function getLibraryPermission() {
         status,
       } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
-        Alert.alert(
-          'Permission Denied',
-          'Permission is required to access phone Library',
-          [{ text: 'Ok', style: 'default' }],
-        );
+        return null
+        // Alert.alert(
+        //   'Permission Denied',
+        //   'Permission is required to access phone Library',
+        //   [{ text: 'Ok', style: 'default' }],
+        // );
       }
     }
   } catch (e) {

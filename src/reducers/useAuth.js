@@ -24,6 +24,8 @@ import {
   initializeState,
 } from 'src/store/Authentication';
 
+import { getToken } from '../api/index';
+
 export default function useAuth() {
   const [authState, dispatch] = useReducer(
     reducer,
@@ -80,7 +82,7 @@ export default function useAuth() {
           body: JSON.stringify(userInfo),
         });
 
-        console.log(res);
+        // console.log(res);
       },
 
       // login user then set token (use login details) in storage
@@ -95,7 +97,101 @@ export default function useAuth() {
         });
 
         const result = await res.json();
+
+        let token = null;
+        let msg = null;
+
+        const storeData = async (value) => {
+          try {
+            const jsonValue = JSON.stringify(value)
+            await AsyncStorage.setItem('userData', jsonValue)
+          } catch (e) {
+            // saving error
+          }
+        }
+
+        try {
+          //  TODO: implement authenticate login details:{email, password}
+
+          // prettier-ignore
+          msg = await result.error == true
+            ? 'loginNotFound'
+            : null;
+
+          if (!msg) {
+            token = result.token;
+            storeData(result?.user)
+            const userImage = result?.user.imgUrl;
+            const email = result?.user.email;
+            // const bankAccounts = result?.user.accounts;
+
+            // console.log('bankAccounts', JSON.stringify(bankAccounts));
+
+            AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
+            AsyncStorage.setItem('userImage', userImage);
+            // AsyncStorage.setItem('bankAccounts', JSON.stringify(bankAccounts));
+
+            AsyncStorage.setItem('email', email);
+
+            const user_id = result.user._id;
+            AsyncStorage.setItem('userid', user_id);
+            const insure_num = result.user.insurranceCard.cardNumber;
+            const insureamt = result.user.insurranceCard.credits;
+            const stringedAmt = insureamt.toString();
+            //(stringedAmt);
+            const wallet_num = result.user.walletCard.cardNumber;
+            const wallet_amt = result.user.walletCard.credits;
+            const stringedWallet = wallet_amt.toString();
+            //(stringedWallet);
+            const reward_num = result.user.rewardCard.cardNumber;
+            const reward_amt = result.user.rewardCard.credits;
+            const stringedReward = reward_amt.toString();
+            //(stringedReward);
+            const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
+            AsyncStorage.setItem('insureCardNo', insure_num);
+            AsyncStorage.setItem('walletCardNo', wallet_num);
+            AsyncStorage.setItem('rewardCardNo', reward_num);
+            AsyncStorage.setItem('insureAmt', stringedAmt);
+            AsyncStorage.setItem('walletAmt', stringedWallet);
+            AsyncStorage.setItem('rewardAmt', stringedReward);
+            AsyncStorage.setItem('fullName', fullname);
+            // console.log('end here');
+          }
+
+          dispatch({
+            type: 'LOG_IN',
+            token,
+          });
+        } catch (e) {
+          msg = e;
+        }
+        return msg;
+      },
+
+      googleSignup: async (userData) => {
+        // alert('Google sign in called!');
+        const userInfo = {
+          email: userData.email,
+          fName: userData.fName,
+          sName: userData.sName,
+          source: userData.source,
+        };
+
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/user/login?social=true',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify(userInfo),
+          },
+        );
+        const result = await res.json();
+
         const email = result.user.email;
+        const userImage = result.user.imgUrl;
         AsyncStorage.setItem('email', email);
         const user_id = result.user._id;
         const insure_num = result.user.insurranceCard.cardNumber;
@@ -119,79 +215,6 @@ export default function useAuth() {
         AsyncStorage.setItem('rewardAmt', stringedReward);
         AsyncStorage.setItem('fullName', fullname);
         AsyncStorage.setItem('userid', user_id);
-        let token = null;
-        let msg = null;
-
-        try {
-          //  TODO: implement authenticate login details:{email, password}
-
-          // prettier-ignore
-          msg = await result.error == true 
-            ? 'loginNotFound'
-            : null;
-
-          if (!msg) {
-            token = await result.token;
-
-            await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
-          }
-
-          await dispatch({
-            type: 'LOG_IN',
-            token,
-          });
-        } catch (e) {
-          msg = e;
-        }
-        return msg;
-      },
-
-      googleSignup: async (userData) => {
-        const userInfo = {
-          email: userData.email,
-          fName: userData.fName,
-          sName: userData.sName,
-          source: userData.source,
-        };
-
-        const res = await fetch(
-          'https://apis.woozeee.com/api/v1/user/login?social=true',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify(userInfo),
-          },
-        );
-        const result = await res.json();
-        //('results', result);
-        // const result = await res.json();
-        // const email = result.user.email;
-        // AsyncStorage.setItem('email', email);
-        // const user_id = result.user._id;
-        // const insure_num = result.user.insurranceCard.cardNumber;
-        // const insureamt = result.user.insurranceCard.credits;
-        // const stringedAmt = insureamt.toString();
-        // //(stringedAmt);
-        // const wallet_num = result.user.walletCard.cardNumber;
-        // const wallet_amt = result.user.walletCard.credits;
-        // const stringedWallet = wallet_amt.toString();
-        // //(stringedWallet);
-        // const reward_num = result.user.rewardCard.cardNumber;
-        // const reward_amt = result.user.rewardCard.credits
-        // const stringedReward = reward_amt.toString();
-        // //(stringedReward);
-        // const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
-        // AsyncStorage.setItem('insureCardNo', insure_num);
-        // AsyncStorage.setItem('walletCardNo', wallet_num);
-        // AsyncStorage.setItem('rewardCardNo', reward_num);
-        // AsyncStorage.setItem('insureAmt', stringedAmt);
-        // AsyncStorage.setItem('walletAmt', stringedWallet);
-        // AsyncStorage.setItem('rewardAmt', stringedReward);
-        // AsyncStorage.setItem('fullName', fullname);
-        // AsyncStorage.setItem('userid', user_id);
 
         let token = null;
         let msg = null;
@@ -208,6 +231,7 @@ export default function useAuth() {
             token = await result.token;
 
             await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
+            await AsyncStorage.setItem('userImage', userImage);
           }
 
           dispatch({
@@ -240,34 +264,35 @@ export default function useAuth() {
         );
 
         const result = await res.json();
-        console.log('Result is -> ', result);
+        // console.log('Result is -> ', result);
         // const result = await res.json();
         const email = result.user.email;
+        const userImage = result.user.imgUrl;
 
         // AsyncStorage.setItem('email', email);
 
-        // const user_id = result.user._id;
-        // const insure_num = result.user.insurranceCard.cardNumber;
-        // const insureamt = result.user.insurranceCard.credits;
-        // const stringedAmt = insureamt.toString();
-        // //(stringedAmt);
-        // const wallet_num = result.user.walletCard.cardNumber;
-        // const wallet_amt = result.user.walletCard.credits;
-        // const stringedWallet = wallet_amt.toString();
-        // //(stringedWallet);
-        // const reward_num = result.user.rewardCard.cardNumber;
-        // const reward_amt = result.user.rewardCard.credits;
-        // const stringedReward = reward_amt.toString();
-        // //(stringedReward);
-        // const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
-        // AsyncStorage.setItem('insureCardNo', insure_num);
-        // AsyncStorage.setItem('walletCardNo', wallet_num);
-        // AsyncStorage.setItem('rewardCardNo', reward_num);
-        // AsyncStorage.setItem('insureAmt', stringedAmt);
-        // AsyncStorage.setItem('walletAmt', stringedWallet);
-        // AsyncStorage.setItem('rewardAmt', stringedReward);
-        // AsyncStorage.setItem('fullName', fullname);
-        // AsyncStorage.setItem('userid', user_id);
+        const user_id = result.user._id;
+        const insure_num = result.user.insurranceCard.cardNumber;
+        const insureamt = result.user.insurranceCard.credits;
+        const stringedAmt = insureamt.toString();
+        //(stringedAmt);
+        const wallet_num = result.user.walletCard.cardNumber;
+        const wallet_amt = result.user.walletCard.credits;
+        const stringedWallet = wallet_amt.toString();
+        //(stringedWallet);
+        const reward_num = result.user.rewardCard.cardNumber;
+        const reward_amt = result.user.rewardCard.credits;
+        const stringedReward = reward_amt.toString();
+        //(stringedReward);
+        const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
+        AsyncStorage.setItem('insureCardNo', insure_num);
+        AsyncStorage.setItem('walletCardNo', wallet_num);
+        AsyncStorage.setItem('rewardCardNo', reward_num);
+        AsyncStorage.setItem('insureAmt', stringedAmt);
+        AsyncStorage.setItem('walletAmt', stringedWallet);
+        AsyncStorage.setItem('rewardAmt', stringedReward);
+        AsyncStorage.setItem('fullName', fullname);
+        AsyncStorage.setItem('userid', user_id);
         let token = null;
         let msg = null;
 
@@ -282,6 +307,7 @@ export default function useAuth() {
           if (!msg) {
             token = await userInfo.token;
             await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
+            await AsyncStorage.setItem('userImage', userImage);
           }
 
           dispatch({
@@ -318,6 +344,7 @@ export default function useAuth() {
         // //('results', result);
         // const result = await res.json();
         const email = result.user.email;
+        const userImage = result.user.imgUrl;
         AsyncStorage.setItem('email', email);
         const user_id = result.user._id;
         const insure_num = result.user.insurranceCard.cardNumber;
@@ -355,6 +382,7 @@ export default function useAuth() {
           if (!msg) {
             token = await userInfo.token;
             await AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
+            await AsyncStorage.setItem('userImage', userImage);
           }
 
           dispatch({
@@ -368,19 +396,90 @@ export default function useAuth() {
       },
 
       forgotPassword: async (data) => {
-        // const res = await fetch(
-        //   'https://apis.woozeee.com/api/v1/reset',
-        //   {
-        //     method: 'PUT',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //       Accept: 'application/json',
-        //     },
-        //     body: data,
-        //   },
-        // );
-        // const result = await res.json();
-        // //('from forgotPassword fn -> ', data);
+        const reqData = { email: data };
+        const res = await fetch('https://apis.woozeee.com/api/v1/reset', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(reqData),
+        });
+        const result = await res.json();
+        return result;
+      },
+
+      verifyNewPassword: async (form) => {
+        console.log(form);
+        const res = await fetch('https://apis.woozeee.com/api/v1/reset', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(form),
+        });
+        const result = await res.json();
+        return result;
+      },
+
+      verifyPin: async (pin) => {
+        const form = { pin };
+        // console.log(JSON.stringify(form));
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/user/verify-pin',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `${await getToken()}`,
+            },
+            body: JSON.stringify(form),
+          },
+        );
+        const result = await res.json();
+        return result;
+      },
+
+      //electric bill pay
+      verifyMeter: async (data) => {
+        // const form = { d };
+        // console.log(JSON.stringify(data));
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/bill-payment/verify-meter',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `${await getToken()}`,
+            },
+            body: JSON.stringify(data),
+          },
+        );
+        const result = await res.json();
+        return result;
+      },
+
+      //tv bill subscriptions
+      verifyCard: async (data) => {
+        // const form = { d };
+        // console.log(JSON.stringify(data));
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/bill-payment/verify-card',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `${await getToken()}`,
+            },
+            body: JSON.stringify(data),
+          },
+        );
+        const result = await res.json();
+        return result;
       },
 
       verifyAction: async (verificationCode) => {
@@ -461,6 +560,7 @@ export default function useAuth() {
 
         try {
           await AsyncStorage.removeItem('USER_AUTH_TOKEN');
+          await AsyncStorage.removeItem('userImage');
 
           dispatch({
             type: 'LOG_OUT',

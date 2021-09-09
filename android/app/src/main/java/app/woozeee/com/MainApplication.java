@@ -4,10 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 
+// import io.invertase.firebase.links.RNFirebaseLinksPackage;
+
 import co.apptailor.googlesignin.RNGoogleSigninPackage; 
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.github.yamill.orientation.OrientationPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -52,6 +55,7 @@ public class MainApplication extends androidx.multidex.MultiDexApplication imple
 
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
+      // packages.add(new RNFirebaseLinksPackage());
       // packages.add(new RNGoogleSigninPackage());
       return packages;
     }

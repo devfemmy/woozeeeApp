@@ -3,9 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../services/api';
 
 export default function getUserProfile(user_id) {
-  console.log('function called to get image');
-  //   const [userInfo, setUserInfo] = useState([]);
-  // setLoading(true)
   AsyncStorage.getItem('USER_AUTH_TOKEN')
     .then((res) => {
       axios

@@ -89,7 +89,7 @@ function VideoComponent(props) {
   };
 
   const getUserImg = async () => {
-    const res = await AsyncStorage.getItem('userImg');
+    const res = await AsyncStorage.getItem('userImage');
     setUserImg(res);
   };
 
@@ -99,7 +99,7 @@ function VideoComponent(props) {
 
   const { videoData, focusVideoIndex, videoIndex } = props;
 
-  console.log('videoData is ', videoData);
+  // console.log('videoData is ', videoData);
 
   //   const { item } = videoData;
 

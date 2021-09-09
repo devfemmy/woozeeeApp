@@ -252,7 +252,7 @@ export const IconCClock = (props) => {
 
   const type = active ? 'clock' : 'clock-outline';
 
-  return <Icon {...otherProps} name={type} pack="assets" />;
+  return <Icon {...otherProps} name="clock-outline" pack="assets" />;
 };
 
 export const IconCSocial = (props) => {
@@ -551,7 +551,9 @@ export const IconCLiveStreams = (props) => {
 export const IconCMobileTopUp = (props) => {
   const { active, ...otherProps } = props;
 
-  return <Icon {...otherProps} name="mobile-topup" pack="assets" />;
+  return (
+    <Icon {...otherProps} name="mobile-topup" pack="assets" fill="#8F9BB3" />
+  );
 };
 export const IconCCoin = (props) => {
   const { active, ...otherProps } = props;

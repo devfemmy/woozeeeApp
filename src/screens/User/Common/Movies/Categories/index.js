@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, List, Text } from '@ui-kitten/components';
-import { Overlay } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-
+import { StyleSheet, View, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { Layout, Text } from '@ui-kitten/components';
+import axios from '../../../../../services/api/index';
 const MyCategories = (props) => {
     const [visible, setVisible] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [categories, setCategories] = useState([]);
+
     const navigation = useNavigation()
     //   useEffect(() => {
     //     const unsubscribe = navigation.addListener('focus', () => {
@@ -16,6 +19,33 @@ const MyCategories = (props) => {
         
     //     return unsubscribe;
     //   }, [navigation]);
+    const getMovieCategory = () => {
+      setLoading(true);
+      AsyncStorage.getItem('USER_AUTH_TOKEN')
+        .then((res) => {
+          axios
+            .get(`/movies/categories?pageSize=40&pageNumber=1`, {
+              headers: { Authorization: res },
+            })
+            .then((response) => {
+              setLoading(false);
+              console.log("response", response);
+              const data = response.data.data;
+              setCategories(data)
+
+            })
+            .catch((err) => {
+              setLoading(false);
+              console.log(err.response);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    useEffect(() => {
+      getMovieCategory()
+    }, [])
   
       const toggleOverlay = () => {
         setVisible(false);
@@ -37,7 +67,8 @@ const MyCategories = (props) => {
           },
           scroll: {
             paddingVertical: 20,
-            marginVertical: 5
+            marginVertical: 5,
+            paddingBottom: 50
           },
           textStyle: {
             color: 'white',
@@ -47,152 +78,35 @@ const MyCategories = (props) => {
             marginVertical: 10
           }
       })
+      if (loading) {
+        return (
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+           <ActivityIndicator  size="large" color="#FF5757" />
+          </View>
+        );
+      }
       return (
         <Layout level="6" style={{ flex: 1 }}>
-        {/* <Overlay 
-        fullScreen = {false}
-        overlayStyle= {styles.overlay}
-        backdropStyle= {styles.backdropStyle} 
-        isVisible={visible} onBackdropPress={() => {}}>
-          <ScrollView showsVerticalScrollIndicator= {false} style= {styles.scroll}>
-              <Text onPress= {() => navigation.navigate('EditProfile')} category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                My View
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Comedy
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Anime
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Action
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Anime
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Comedy
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                My View
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Comedy
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Anime
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                My View
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Comedy
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Anime
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-          </ScrollView>
-          <View>
-              <TouchableOpacity onPress= {toggleOverlay}>
-                  <Image 
-                  style= {{width: 40, height: 40}}
-                  source= {require('../../../../../assets/images/movies/Vector.png')} 
-                  />
-              </TouchableOpacity>
-          </View>
-        </Overlay> */}
         <View style= {styles.overlay}>  
         <ScrollView showsVerticalScrollIndicator= {false} style= {styles.scroll}>
-              <Text onPress= {() => null} category= "c2" style= {styles.textStyle}>
-                All
+          {categories.map(
+            (category, index) => {
+              return (
+            <TouchableOpacity 
+            onPress= {() => 
+            navigation.navigate('OtherCategories', 
+            {name: category.name, category_id: category._id})} 
+            key= {index}>
+              <Text onPress= {() => 
+              navigation.navigate('OtherCategories', 
+            {name: category.name, category_id: category._id})} category= "c2" style= {styles.textStyle}>
+               {category.name}
               </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                My View
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Comedy
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Anime
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Action
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Anime
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Comedy
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                My View
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Comedy
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Anime
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                My View
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Comedy
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                Anime
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
-              <Text category= "c2" style= {styles.textStyle}>
-                All
-              </Text>
+            </TouchableOpacity>
+              )
+            }
+          )
+          }
           </ScrollView>
           <View>
               <TouchableOpacity onPress= {toggleOverlay}>

@@ -20,38 +20,38 @@ export default function MovieCard(props) {
 
   const IS_PORTRAIT = height > width;
 
-  return(
-      <View
+  return (
+    <View
+      style={{
+        width: IS_PORTRAIT
+          ? width / (2 + extraWidth)
+          : width / (4 + extraWidth),
+        paddingHorizontal: 5,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+      }}
+    >
+      <TouchableOpacity
+        onPress={props.pressed}
+        activeOpacity={0.75}
         style={{
-          width: IS_PORTRAIT
-            ? width / (2 + extraWidth)
-            : width / (4 + extraWidth),
-          paddingHorizontal: 5,
+          width: '100%',
+          position: 'relative',
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
       >
-        <TouchableOpacity
-          onPress={props.pressed}
-          activeOpacity={0.75}
+        <Image
+          source={{ uri: data.posterURL[0] }}
+          defaultSource={require('assets/images/banner/movie_placeholder.png')}
           style={{
+            height: 200,
             width: '100%',
-            position: 'relative',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
+            borderRadius: 5,
           }}
-        >
-          <Image
-            source={{uri: data.posterURL[0]}}
-            defaultSource={require('assets/images/banner/movie_placeholder.png')}
-            style={{
-              height: 200,
-              width: '100%',
-              borderRadius: 5,
-            }}
-            resizeMode="cover"
-          />
-          {/* <View
+          resizeMode="cover"
+        />
+        {/* <View
             style={{
               position: 'absolute',
               top: 10,
@@ -71,39 +71,42 @@ export default function MovieCard(props) {
               {data.totalViews}
             </Text>
           </View> */}
-          {data.posterURL ? (
-            <LinearGradient
-              colors={['#043F7C', '#FF5757']}
+        {data.posterURL ? (
+          <LinearGradient
+            colors={['#043F7C', '#FF5757']}
+            style={{
+              height: 48,
+              width: 48,
+              borderRadius: 24,
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              bottom: -20,
+            }}
+          >
+            <Image
+              source={{ uri: data.posterURL[0] }}
+              defaultSource={require('assets/images/banner/placeholder-image.png')}
               style={{
-                height: 48,
-                width: 48,
-                borderRadius: 24,
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'absolute',
-                bottom: -20,
+                height: 44,
+                width: 44,
+                borderRadius: 22,
+                borderColor: 'white',
               }}
-            >
-              <Image
-                 source={{uri: data.posterURL[0]}}
-                defaultSource={require('assets/images/banner/placeholder-image.png')}
-                style={{
-                  height: 44,
-                  width: 44,
-                  borderRadius: 22,
-                  borderColor: 'white',
-                }}
-                resizeMode="cover"
-              />
-            </LinearGradient>
-          ) : null}
-        </TouchableOpacity>
-        <View style={{ marginTop: 20 }}>
-          <Text numberOfLines={1} category="p2" style={{ textAlign: 'center', lineHeight: 20 }}>
-            {`${data.description}`}
-          </Text>
-        </View>
+              resizeMode="cover"
+            />
+          </LinearGradient>
+        ) : null}
+      </TouchableOpacity>
+      <View style={{ marginTop: 20 }}>
+        <Text
+          numberOfLines={1}
+          category="p2"
+          style={{ textAlign: 'center', lineHeight: 20 }}
+        >
+          {`${data.title}`}
+        </Text>
       </View>
-  
+    </View>
   );
 }

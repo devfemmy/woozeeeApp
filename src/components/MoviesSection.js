@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useEffect } from 'react';
 
 import { View } from 'react-native';
 
@@ -20,13 +20,16 @@ import MovieSectionCard from 'src/components/SocialCard/MovieSectionCard';
 import { moviesUrl } from 'src/api/dummy';
 
 import { IconForwardIos } from 'src/components/CustomIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from '../services/api/index'
 
 const MoviesSectionArea = (props) => {
   const { t, navigation, width, height } = props;
 
-  const routeMovies = useCallback(() => navigation.navigate('Movies'), [
-    navigation,
-  ]);
+  const routeMovies = useCallback(
+    () => navigation.navigate('Movies'),
+    [navigation],
+  );
 
   const { status, data, refetch } = useQuery(
     ['moviesSection', 1],
@@ -39,6 +42,42 @@ const MoviesSectionArea = (props) => {
       cacheTime: 1000 * 60 * 1,
     },
   );
+  const storeUserData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value)
+      await AsyncStorage.setItem('userData', jsonValue)
+    } catch (e) {
+      // saving error
+    }
+  }
+
+  const getUserData = (user_id) => {
+    AsyncStorage.getItem('USER_AUTH_TOKEN')
+      .then((res) => {
+        axios
+          .get(`user/user?userId=${user_id}`, {
+            headers: { Authorization: res },
+          })
+          .then((response) => {
+            const userData = response.data.user;
+            storeUserData(userData);
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    AsyncStorage.getItem('userid')
+    .then((response) => {
+      getUserData(response);
+    })
+    .catch((err) => err);
+  }, [])
 
   if (status === 'loading') {
     return (
@@ -81,7 +120,9 @@ const MoviesSectionArea = (props) => {
             alignItems: 'center',
           }}
         >
-          <Text category="h6">{t('movies')}</Text>
+          <Text category="h6" status="basic">
+            Trending Movies
+          </Text>
           <Button
             size="tiny"
             appearance="ghost"
@@ -108,7 +149,7 @@ const MoviesSectionArea = (props) => {
           renderItem={(renderData) => (
             <MovieSectionCard
               pressed={() =>
-                navigation.navigate('ViewMovies', { movie_data: renderData })
+                navigation.navigate('ViewMovies', { movie_data: renderData, signal: false })
               }
               data={renderData.item}
               extraWidth={0.5}

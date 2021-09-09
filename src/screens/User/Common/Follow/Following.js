@@ -13,6 +13,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {
   Layout, List, Text, Button,
 } from '@ui-kitten/components';
+
 import { t } from 'i18n-js';
 
 export default function Following({ userID, navigation }) {
@@ -23,7 +24,7 @@ export default function Following({ userID, navigation }) {
   const [followingList, setFollowingList] = useState([]);
 
   const res = async () => {
-    const following = await getFollowData(userID, 'following');
+    const following = await getFollowData(userID, 'followers');
     setFollowingList(following.data);
   };
 
