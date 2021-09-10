@@ -109,7 +109,7 @@ export default {
   getWoozVideos: async () => {
     const instance = await createInstance();
 
-    const res = await instance.get(`entries?pageSize=50`);
+    const res = await instance.get(`entries?pageSize=80&type=video`);
 
     const { data } = res;
     return {
