@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.econnectnp.woozeee</string>
+		<string>group.app.woozeee.com.onesignal</string>
 	</array>
 </dict>
 </plist>

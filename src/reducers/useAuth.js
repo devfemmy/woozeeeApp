@@ -25,6 +25,7 @@ import {
 } from 'src/store/Authentication';
 
 import { getToken } from '../api/index';
+import OneSignal from 'react-native-onesignal';
 
 export default function useAuth() {
   const [authState, dispatch] = useReducer(
@@ -135,6 +136,16 @@ export default function useAuth() {
 
             const user_id = result.user._id;
             AsyncStorage.setItem('userid', user_id);
+            OneSignal.setExternalUserId(result.user._id, (results) => {
+              // The results will contain push and email success statuses
+              console.log(results, "set Id");
+              
+              // Push can be expected in almost every situation with a success status, but
+              // as a pre-caution its good to verify it exists
+              if (results.push && results.push.success) {
+                console.log(results.push.success, "success");
+              }
+            });
             const insure_num = result.user.insurranceCard.cardNumber;
             const insureamt = result.user.insurranceCard.credits;
             const stringedAmt = insureamt.toString();
