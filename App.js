@@ -159,6 +159,7 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
+      OneSignal.addEventListener('opened', () => console.log(" opening here"));
       const deviceState = await OneSignal.getDeviceState();
       if (deviceState.isSubscribed === false) {
         OneSignal.promptForPushNotificationsWithUserResponse((response) => {

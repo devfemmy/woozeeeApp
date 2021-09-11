@@ -135,6 +135,7 @@ export default function useAuth() {
             AsyncStorage.setItem('email', email);
 
             const user_id = result.user._id;
+            console.log("userid", user_id)
             AsyncStorage.setItem('userid', user_id);
             OneSignal.setExternalUserId(result.user._id, (results) => {
               // The results will contain push and email success statuses
