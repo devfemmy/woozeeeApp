@@ -56,13 +56,15 @@ import useAuth from 'src/reducers/useAuth';
 import Router from 'src/router';
 
 import firebase from '@react-native-firebase/app';
+import OneSignal from 'react-native-onesignal';
 
 // import firestore from '@react-native-firebase/firestore';
-import OneSignal from 'react-native-onesignal';
+
 
 import en from 'src/translations/en.json';
 import fr from 'src/translations/fr.json';
 import { Platform } from 'react-native';
+import { oneSignalService } from './oneSignal';
 
 enableScreens();
 
@@ -74,32 +76,32 @@ i18n.fallbacks = true;
 
 // one signal
 
-OneSignal.setLogLevel(6, 0);
-OneSignal.setAppId('7f2e4740-3498-4c48-8925-a8ffe8168c2b');
-// END OneSignal Init Code
+// OneSignal.setLogLevel(6, 0);
+// OneSignal.setAppId('7f2e4740-3498-4c48-8925-a8ffe8168c2b');
+// // END OneSignal Init Code
 
-// Prompt for push on iOS
+// // Prompt for push on iOS
 
-// Method for handling notifications received while app in foreground
-OneSignal.setNotificationWillShowInForegroundHandler(
-  (notificationReceivedEvent) => {
-    console.log(
-      'OneSignal: notification will show in foreground:',
-      notificationReceivedEvent,
-    );
-    let notification = notificationReceivedEvent.getNotification();
-    console.log('notification: ', notification);
-    const data = notification.additionalData;
-    console.log('additionalData: ', data);
-    // Complete with null means don't show a notification.
-    notificationReceivedEvent.complete(notification);
-  },
-);
+// // Method for handling notifications received while app in foreground
+// OneSignal.setNotificationWillShowInForegroundHandler(
+//   (notificationReceivedEvent) => {
+//     console.log(
+//       'OneSignal: notification will show in foreground:',
+//       notificationReceivedEvent,
+//     );
+//     let notification = notificationReceivedEvent.getNotification();
+//     console.log('notification: ', notification);
+//     const data = notification.additionalData;
+//     console.log('additionalData: ', data);
+//     // Complete with null means don't show a notification.
+//     notificationReceivedEvent.complete(notification);
+//   },
+// );
 
-//Method for handling notifications opened
-OneSignal.setNotificationOpenedHandler((notification) => {
-  console.log('OneSignal: notification opened:', notification);
-});
+// //Method for handling notifications opened
+// OneSignal.setNotificationOpenedHandler((notification) => {
+//   console.log('OneSignal: notification opened:', notification);
+// });
 
 // if (Constants.platform.android) {
 //   VESDKLicense = require('src/constants/vesdk_android_license.json');
@@ -110,6 +112,7 @@ OneSignal.setNotificationOpenedHandler((notification) => {
 // VESDK.unlockWithLicense(VESDKLicense);
 
 export default function App() {
+  oneSignalService()
   SplashScreen.preventAutoHideAsync()
     .then(() => {})
     .catch(() => {});
@@ -156,6 +159,13 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
+      OneSignal.addEventListener('opened', () => console.log(" opening here"));
+      const deviceState = await OneSignal.getDeviceState();
+      if (deviceState.isSubscribed === false) {
+        OneSignal.promptForPushNotificationsWithUserResponse((response) => {
+            console.log("user Response", response)
+        });
+      }
       try {
         await ScreenOrientation.lockAsync(
           ScreenOrientation.OrientationLock.PORTRAIT_UP,
