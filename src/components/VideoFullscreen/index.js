@@ -334,14 +334,14 @@ const VideoView = forwardRef((props, ref) => {
                       width={20}
                       onPress={togglePause}
                     />
-                    <InteractIcon
+                    {/* <InteractIcon
                       Accessory={(evaProps) => <IconEye {...evaProps} />}
                       textContent={JSON.stringify(data.totalViews)}
                       height={20}
                       width={20}
                       direction="row"
                       style={{ marginRight: 7 }}
-                    />
+                    /> */}
                   </View>
                   <View>
                     <Text

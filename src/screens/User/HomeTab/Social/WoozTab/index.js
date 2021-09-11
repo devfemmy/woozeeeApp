@@ -151,11 +151,10 @@ export default function Wooz({ navigation }) {
 
     const onPlaybackStatusUpdate = async (playbackStatus, entryId) => {
       if (playbackStatus.didJustFinish) {
-        // toNext();
-        // setAutoIndex(autoIndex + 1);
-        // onMomentumScrollEnd();
-        // const res = await viewVideo(entryId);
-        // console.log('res from wooz is', res);
+        // console.log(entryId);
+
+        const res = await viewVideo(entryId);
+        console.log('res from wooz is', res);
       }
     };
 
@@ -438,7 +437,7 @@ export default function Wooz({ navigation }) {
                     onPlaybackStatusUpdate={(playbackStatus) =>
                       onPlaybackStatusUpdate(
                         playbackStatus,
-                        page.pageData.data[index].userEntryData.entryId,
+                        page.pageData.data[index]._id,
                       )
                     }
                     isMuted={false}

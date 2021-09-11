@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   actions: {
-    width: wp('70%'),
+    width: wp('90%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

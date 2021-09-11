@@ -107,16 +107,6 @@ export default function ActivateWallet({ navigation }) {
     postalCode: '',
   });
 
-  // function validateForm(formObj) {
-  //   formObj.map((item) => {
-  //     if (item == '') {
-  //       return false;
-  //     } else {
-  //       return;
-  //     }
-  //   });
-  // }
-
   let selectedState = _states.find((state) => state.title == form.state);
   let selectedLGAS = [{ title: 'Select' }];
   LGAS.find((item) => {
@@ -126,6 +116,25 @@ export default function ActivateWallet({ navigation }) {
       });
     } else return;
   });
+
+  function isFormValid(form) {
+    if (
+      form.firstName &&
+      form.maidenName &&
+      form.lastName &&
+      form.mobileNumber &&
+      form.dob &&
+      form.email &&
+      form.profession &&
+      form.bvn &&
+      form.street &&
+      form.lga &&
+      form.postalCode
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   const setNewDateHandler = (date) => {
     setDate(date);
@@ -140,27 +149,37 @@ export default function ActivateWallet({ navigation }) {
   const t = useContext(LocaleContext);
 
   async function handleSubmit() {
-    setLoading(!isLoading);
-    const res = await createGlobusAccount(form);
-    setLoading(false);
-    const { data, status } = res;
+    if (isFormValid(form)) {
+      setLoading(!isLoading);
+      // const res = await createGlobusAccount(form);
+      // setLoading(false);
+      // const { data, status } = res;
 
-    if (data.responseCode === '00') {
-      //route to complete page
-      Toast.show({
-        text: 'Account successfully created!!',
-        buttonText: 'Okay',
-        position: 'top',
-        type: 'success',
-        duration: 2000,
-      });
-      setTimeout(() => {
-        navigation.navigate('ActivateCare');
-      }, 3000);
+      // if (data.responseCode === '00') {
+      //   //route to complete page
+      //   Toast.show({
+      //     text: 'Account successfully created!!',
+      //     buttonText: 'Okay',
+      //     position: 'top',
+      //     type: 'success',
+      //     duration: 2000,
+      //   });
+      //   setTimeout(() => {
+      //     navigation.navigate('ActivateCare');
+      //   }, 3000);
+      // } else {
+      //   //show toast with response message
+      //   Toast.show({
+      //     text: data.responseMessage,
+      //     buttonText: 'Okay',
+      //     position: 'top',
+      //     type: 'danger',
+      //     duration: 2000,
+      //   });
+      // }
     } else {
-      //show toast with response message
       Toast.show({
-        text: data.responseMessage,
+        text: 'Please fill all form fields.',
         buttonText: 'Okay',
         position: 'top',
         type: 'danger',

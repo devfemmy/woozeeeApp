@@ -620,7 +620,7 @@ export default function VideoView({
               style={{
                 flex: 1,
                 marginVertical: 10,
-                height: viewHeight - 100,
+                height: viewHeight - 50,
               }}
             >
               {data.item.description !== '' && (

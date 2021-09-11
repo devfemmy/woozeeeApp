@@ -103,12 +103,12 @@ export default function useAuth() {
 
         const storeData = async (value) => {
           try {
-            const jsonValue = JSON.stringify(value)
-            await AsyncStorage.setItem('userData', jsonValue)
+            const jsonValue = JSON.stringify(value);
+            await AsyncStorage.setItem('userData', jsonValue);
           } catch (e) {
             // saving error
           }
-        }
+        };
 
         try {
           //  TODO: implement authenticate login details:{email, password}
@@ -120,7 +120,7 @@ export default function useAuth() {
 
           if (!msg) {
             token = result.token;
-            storeData(result?.user)
+            storeData(result?.user);
             const userImage = result?.user.imgUrl;
             const email = result?.user.email;
             // const bankAccounts = result?.user.accounts;
@@ -552,6 +552,26 @@ export default function useAuth() {
         }
 
         return msg;
+      },
+
+      checkExistingMail: async (email) => {
+        console.log(email);
+        let data = { email: email };
+
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/user/verify/email',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify(data),
+          },
+        );
+
+        console.log(res);
+        return res;
       },
 
       // Clear token from Storage then log user out
