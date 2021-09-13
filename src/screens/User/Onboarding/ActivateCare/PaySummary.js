@@ -168,7 +168,8 @@ const styles = StyleSheet.create({
         padding: 20
     },
     opacity: {
-        opacity: 0.7
+        opacity: 0.7,
+        width: '60%'
     },
     flexContainer: {
         flexDirection: 'row',
@@ -178,7 +179,8 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         paddingVertical: 10,
         borderBottomColor: 'rgba(0, 0, 0, 0.2)',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        width: '100%'
     }
 })
 

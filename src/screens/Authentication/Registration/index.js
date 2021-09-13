@@ -4,7 +4,7 @@ import { View, ScrollView, Image } from 'react-native';
 
 import Constants from 'expo-constants';
 
-import { Layout, Button, Text } from '@ui-kitten/components';
+import { Layout, Button, Text, CheckBox} from '@ui-kitten/components';
 
 import { AuthContext, LocaleContext } from 'src/contexts';
 
@@ -28,6 +28,7 @@ export default function Register({ navigation }) {
   const { signupWithGoogle, googleSignup, facebookSignup, appleSignup } =
     authOptions;
   const [isLoading, setLoading] = useState(false);
+  const [checked, setChecked] = React.useState(false);
 
   function callGoogleSigunp() {
     SignUpWithGoogle({ googleSignup });
@@ -105,7 +106,7 @@ export default function Register({ navigation }) {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
                 onPress={validateEmail}
-                disabled={isLoading}
+                disabled={!checked || isLoading }
               >
                 <Text status="control">{t('continue')}</Text>
               </Button>
@@ -120,6 +121,12 @@ export default function Register({ navigation }) {
                 flexWrap: 'wrap',
               }}
             >
+            <CheckBox
+              checked={checked}
+              onChange={nextChecked => setChecked(nextChecked)}
+              >
+                Accept Terms and Conditions
+              </CheckBox>
               <Text category="p2">{`${t('continueAgree')} woozeee's`}</Text>
               <Button
                 appearance="ghost"

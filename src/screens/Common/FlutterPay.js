@@ -68,7 +68,7 @@ const FlutterPay = ({ route, navigation }) => {
           onRedirect={handleRedirect}
           options={{
             tx_ref: uuidv4(),
-            authorization: 'FLWPUBK_TEST-6de3d70ac2e4f0b11def04ff70ca74fd-X',
+            authorization: 'FLWPUBK-390a836de9de85a9b5169e56fb6cc965-X',
             customer: {
               email: emailAddress,
             },
