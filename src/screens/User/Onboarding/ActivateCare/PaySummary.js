@@ -17,8 +17,9 @@ const WoozeePaySummary = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     // /loan/request
     // title: title, total: total, numberOfDays: numOfDays, amount: amount, rate: interestRate, scheme: scheme;
-    const navigateToNext = () => {
-        props.navigation.replace('ActivateCareSoloPlan', {slug: slug, amount: amount,trans_id: null})
+    const navigateToNext = (loanId) => {
+        props.navigation.replace('ActivateCareSoloPlan', {slug: slug, amount: amount,
+            trans_id: null, loanId: loanId})
     }
     const repaymentArr = []
     for(let i = 0; i < numberOfDays; i++) {
@@ -29,7 +30,6 @@ const WoozeePaySummary = (props) => {
         obj.dueDate = ''
         repaymentArr.push(obj)
     }
-    console.log('replayment Arr', repaymentArr)
     const requestLoan = () => {
         setIsLoading(true)
         AsyncStorage.getItem('USER_AUTH_TOKEN').then(res => {
@@ -49,6 +49,7 @@ const WoozeePaySummary = (props) => {
               }).then(res => {
                 setIsLoading(false)
                   console.log("loan", res);
+                  const loan_id = res.data.loan.loanId;
                   Toast.show({
                     text: 'Loan Request Successful',
                     buttonText: 'Okay',
@@ -57,13 +58,14 @@ const WoozeePaySummary = (props) => {
                     duration: 2000,
                   });
                   setTimeout(() => {
-                    navigateToNext()
+                    navigateToNext(loan_id)
                   }, 2000)
               }).catch(err => {
                 console.log("err.response", err.response)
+                const message = err.response.data.message;
                 setIsLoading(false)
                 Toast.show({
-                    text: 'Loan Request Failed',
+                    text: message,
                     buttonText: 'Okay',
                     position: 'bottom',
                     type: 'danger',

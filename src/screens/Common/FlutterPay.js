@@ -50,7 +50,7 @@ const FlutterPay = ({ route, navigation }) => {
     } else if (response.status === 'successful') {
       // navigation.navigate('MoviePage', { item: data });
       navigation.replace('ActivateCareSoloPlan', 
-      {slug: slug, amount: amount, trans_id: response.transaction_id })
+      {slug: slug, amount: amount, trans_id: response.transaction_id, loanId: null })
     }else {
       return;
     }

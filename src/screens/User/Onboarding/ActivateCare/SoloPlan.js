@@ -65,7 +65,7 @@ const LGAS = STATES_LGAS.map((data) => ({
 
 export default function SoloPlan({ navigation, route }) {
   const [isLoading, setLoading] = useState(false);
-  const { amount, slug, trans_id } = route.params;
+  const { amount, slug, trans_id, loanId } = route.params;
 
   const [form, setFormValues] = useState({
     firstName: '',
@@ -79,14 +79,18 @@ export default function SoloPlan({ navigation, route }) {
     plan: slug,
     title: '',
     beneficiaryName: '',
-    secondBeneficiaryName: '',
-    thirdBeneficiaryName: '',
-    fourthBeneficiaryName: '',
-    // transactionId: trans_id
+    beneficiaryPhoneNumber: '',
+    // thirdBeneficiaryName: '',
+    // fourthBeneficiaryName: '',
+    transactionId: trans_id,
+    loanId: loanId
   });
-  // if (trans_id === null) {
-  //   delete form.transactionId;
-  // }
+  if (trans_id === null) {
+    delete form.transactionId;
+  }else if (loanId === null) {
+    delete form.loanId;
+  }
+
 
   const t = useContext(LocaleContext);
 
@@ -142,6 +146,7 @@ export default function SoloPlan({ navigation, route }) {
             headers: { Authorization: res },
           })
           .then((res) => {
+            console.log("response", res)
             setLoading(false);
             Toast.show({
               text: 'Subscribtion completed successfully',
@@ -158,7 +163,7 @@ export default function SoloPlan({ navigation, route }) {
             setLoading(false);
             console.log(err.response);
             Toast.show({
-              text: 'Loan Request Failed',
+              text: 'Subscription Request Failed',
               buttonText: 'Okay',
               position: 'bottom',
               type: 'danger',
@@ -237,15 +242,15 @@ export default function SoloPlan({ navigation, route }) {
                   <View style={{ flex: 1, marginRight: 5 }}>
                     <GeneralTextField
                       type="beneficiaryName"
-                      label="First Beneficiary Name"
+                      label="Beneficiary Name"
                       validate="required"
                       setFormValues={setFormValues}
                     />
                   </View>
                   <View style={{ flex: 1, marginLeft: 5 }}>
                     <GeneralTextField
-                      type="secondBeneficiaryName"
-                      label="Second Beneficiary Name"
+                      type="beneficiaryNumber"
+                      label="Beneficiary Number"
                       autoCompleteType="name"
                       textContentType="familyName"
                       validate="required"
@@ -253,7 +258,7 @@ export default function SoloPlan({ navigation, route }) {
                     />
                   </View>
                 </View>
-                <View
+                {/* <View
                   style={{
                     paddingVertical: 10,
                     flexDirection: 'row',
@@ -278,7 +283,7 @@ export default function SoloPlan({ navigation, route }) {
                       setFormValues={setFormValues}
                     />
                   </View>
-                </View>
+                </View> */}
                 <View style={{ paddingVertical: 10 }}>
                   <GeneralTextField
                     type="mobileNumber"
