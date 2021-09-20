@@ -323,15 +323,21 @@ const VideoView = forwardRef((props, ref) => {
                   >
                     @{data.userDisplayName}
                   </Text>
-                  <Text category="h6" style={{ color: 'white', fontSize: 14 }}>
-                    {data.description}{' '}
+                  {data.description ? (
                     <Text
-                      status="control"
                       category="h6"
-                      style={{ fontWeight: 'bold' }}
+                      style={{ color: 'white', fontSize: 14 }}
                     >
-                      #havefun #makemoney #giveback #woozeee #woozeeet(wooz it)
+                      {data.description}
                     </Text>
+                  ) : null}
+                  <Text
+                    status="control"
+                    category="h6"
+                    style={{ fontWeight: 'bold' }}
+                  >
+                    #havefun💃 #makemoney💰 #giveback🎁 #woozeee #woozeeet(wooz
+                    it)
                   </Text>
                 </View>
                 <View>
@@ -362,7 +368,7 @@ const VideoView = forwardRef((props, ref) => {
                     onPress={toggleLike}
                   />
                   <InteractIcon
-                    style={{ marginBottom: 10 }}
+                    style={{ marginBottom: 15 }}
                     Accessory={(evaProps) => <IconCChat {...evaProps} active />}
                     textContent={data.totalComments}
                     onPress={routeComments}
