@@ -4,7 +4,7 @@ import { View, ScrollView, Image } from 'react-native';
 
 import Constants from 'expo-constants';
 
-import { Layout, Button, Text } from '@ui-kitten/components';
+import { Layout, Button, Text, CheckBox } from '@ui-kitten/components';
 
 import { Toast, Content, Root } from 'native-base';
 
@@ -30,6 +30,7 @@ export default function Register({ navigation }) {
   const { checkExistingMail, googleSignup, facebookSignup, appleSignup } =
     authOptions;
   const [isLoading, setLoading] = useState(false);
+  const [checked, setChecked] = React.useState(false);
 
   // function callGoogleSigunp() {
   //   SignUpWithGoogle({ googleSignup });

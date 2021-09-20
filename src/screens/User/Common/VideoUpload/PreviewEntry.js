@@ -19,6 +19,7 @@ import { Toast, Root } from 'native-base';
 import { LocaleContext } from 'src/contexts';
 import { Platform } from 'react-native';
 import axios from '../../../../services/api/index';
+import { useNetInfo } from '@react-native-community/netinfo';
 import CustomField from 'src/components/CustomField/index';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -37,6 +38,41 @@ const PreviewEntry = (props) => {
       ...prevState,
       [loc]: !prevState[loc],
     }));
+  };
+  const netInfo = useNetInfo();
+
+  const checkForConnectivity = () => {
+    if (netInfo.isConnected == false || netInfo.isInternetReachable == false) {
+      Toast.show({
+        text: 'You are offline',
+        // buttonText: ',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+      console.log(netInfo);
+    } else if (
+      netInfo.isConnected == true &&
+      netInfo.isInternetReachable == false
+    ) {
+      Toast.show({
+        text: 'You are offline',
+        // buttonText: ',
+        position: 'top',
+        type: 'danger',
+        duration: 3000,
+      });
+      console.log('from else ', netInfo);
+    } else {
+      return;
+      // Toast.show({
+      //   text: 'You are online',
+      //   // buttonText: ',
+      //   position: 'top',
+      //   type: 'success',
+      //   duration: 3000,
+      // });
+    }
   };
 
   const t = useContext(LocaleContext);
@@ -159,7 +195,15 @@ const PreviewEntry = (props) => {
         },
         (error) => {
           // Handle unsuccessful uploads
-          console.log(error);
+          console.log("upload error", error)
+          setLoading(false);
+          Toast.show({
+            text: 'Network failure',
+            buttonText: 'Okay',
+            position: 'top',
+            type: 'failed',
+            duration: 3000,
+          });
         },
         () => {
           // Handle successful uploads on complete
@@ -193,8 +237,16 @@ const PreviewEntry = (props) => {
           }
         },
         (error) => {
-          // Handle unsuccessful uploads
-          console.log(error);
+          // Handle unsuccessful uploads;
+          console.log("upload error", error)
+          setLoading(false);
+          Toast.show({
+            text: 'Network failure',
+            buttonText: 'Okay',
+            position: 'top',
+            type: 'failed',
+            duration: 3000,
+          });
         },
         () => {
           // Handle successful uploads on complete
@@ -243,7 +295,6 @@ const PreviewEntry = (props) => {
     };
     
     if (!firebase.apps.length) {
-      console.log("here1")
       firebase.initializeApp(firebaseConfig);
     }
     // if (editorResult === null) {
@@ -308,7 +359,7 @@ const PreviewEntry = (props) => {
   //     </Layout>
   //   );
   // }
-  console.log('value', caption);
+  console.log('value', uploadLocations);
   return (
     <Root>
       <Layout level="6" style={{ flex: 1, padding: 25 }}>

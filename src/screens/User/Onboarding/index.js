@@ -11,14 +11,14 @@ import { Layout, Text, Button } from '@ui-kitten/components';
 import { LocaleContext } from 'src/contexts';
 
 const SLIDE_CONTENT = [
-  {
-    id: 1,
-    banner: require('assets/images/onboarding/wallet.jpg'),
-    title: 'woozeee wallet',
-    description:
-      'Securely stores users payment information and passwords and allows you to make and receive electronic payments. It is linked to a bank account.',
-    activateAction: 'activateWallet',
-  },
+  // {
+  //   id: 1,
+  //   banner: require('assets/images/onboarding/wallet.jpg'),
+  //   title: 'woozeee wallet',
+  //   description:
+  //     'Securely stores users payment information and passwords and allows you to make and receive electronic payments. It is linked to a bank account.',
+  //   activateAction: 'activateWallet',
+  // },
   {
     id: 2,
     banner: require('assets/images/onboarding/care.jpg'),
@@ -27,14 +27,14 @@ const SLIDE_CONTENT = [
       'Opt-out insurance for all users covering, Medical assurance, Travel insurance (air and road travel) by Axa Mansard, Legal consultation and Road rescue).',
     activateAction: 'activateCare',
   },
-  {
-    id: 3,
-    banner: require('assets/images/onboarding/rewards.jpg'),
-    title: 'woozeee reward',
-    description:
-      'Earn money, points and gift cards for completing transactions in the woozeee ecosystem.',
-    activateAction: 'goHome',
-  },
+  // {
+  //   id: 3,
+  //   banner: require('assets/images/onboarding/rewards.jpg'),
+  //   title: 'woozeee reward',
+  //   description:
+  //     'Earn money, points and gift cards for completing transactions in the woozeee ecosystem.',
+  //   activateAction: 'goHome',
+  // },
 ];
 
 const RenderImage = ({ src }) => (
@@ -50,7 +50,7 @@ export default function Onboarding({ route, navigation }) {
   // const { isActivated } = route.params;
   // console.log(route);
   const [prevAction, setPrevAction] = useState(false);
-  const [lastIndex, setLastIndex] = useState(false);
+  const [lastIndex, setLastIndex] = useState(true);
 
   if (route.params !== undefined) {
     // console.log(route.params);
@@ -60,16 +60,16 @@ export default function Onboarding({ route, navigation }) {
 
   const t = useContext(LocaleContext);
 
-  const checkLastIndex = (nextIndex) => {
-    setTimeout(() => {
-      if (nextIndex >= SLIDE_CONTENT.length - 1) {
-        setLastIndex(true);
-        return;
-      }
+  // const checkLastIndex = (nextIndex) => {
+  //   setTimeout(() => {
+  //     if (nextIndex >= SLIDE_CONTENT.length - 1) {
+  //       setLastIndex(true);
+  //       return;
+  //     }
 
-      setLastIndex(false);
-    }, 0);
-  };
+  //     setLastIndex(false);
+  //   }, 0);
+  // };
 
   const ACTIVATE_SCREENS = {
     activateWallet: () => navigation.navigate('ActivateWallet'),
@@ -90,7 +90,7 @@ export default function Onboarding({ route, navigation }) {
       <Swiper
         loop={false}
         showsButtons
-        onIndexChanged={checkLastIndex}
+        // onIndexChanged={checkLastIndex}
         paginationStyle={{ bottom: '45%' }}
         activeDotColor="#043F7C"
         activeDotStyle={{ width: 16 }}

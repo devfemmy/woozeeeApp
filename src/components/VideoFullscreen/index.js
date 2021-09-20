@@ -306,9 +306,9 @@ const VideoView = forwardRef((props, ref) => {
               >
                 <View
                   style={{
-                    width: '80%',
-                    paddingHorizontal: 5,
-                    marginBottom: 50,
+                    width: '85%',
+                    // paddingHorizontal: 5,
+                    marginBottom: 30,
                     justifyContent: 'flex-end',
                     alignItems: 'flex-start',
                   }}

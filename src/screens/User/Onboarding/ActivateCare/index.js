@@ -240,7 +240,7 @@ export default function ActivateWallet({ navigation }) {
                 {item.title}
               </Text>
               <Text category="h6">Benefits</Text>
-              {item.benefits.consultation.map((benefit, i) => (
+              {item.benefits?.doctoora?.Consultation?.map((benefit, i) => (
                 <View
                   style={{
                     flexDirection: 'row',

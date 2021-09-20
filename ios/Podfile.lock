@@ -419,7 +419,7 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.0)
   - leveldb-library (1.22.1)
-  - libbambuser-ios (1.0.2)
+  - libbambuser-ios (1.0.3)
   - libwebp (1.2.0):
     - libwebp/demux (= 1.2.0)
     - libwebp/mux (= 1.2.0)
@@ -434,7 +434,7 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
-  - OneSignal (3.5.3)
+  - OneSignal (3.8.0)
   - OneSignalXCFramework (3.6.1)
   - PromisesObjC (1.2.12)
   - RCTRequired (0.63.4)
@@ -1125,10 +1125,10 @@ SPEC CHECKSUMS:
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
-  libbambuser-ios: a1e984609ee629d1ae4bafd6379ef7f6afa3ddf1
+  libbambuser-ios: 280cb4465431f85f9a1f55d9c7167a398b7ff15c
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  OneSignal: e12773ef3dfc68f42103c8cd28ad50660209528f
+  OneSignal: bb3c8da4467f2b48a89398da5ff107ba70cff06e
   OneSignalXCFramework: 674dd48705d0e1842a7c950177ae7569dbfc261c
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e

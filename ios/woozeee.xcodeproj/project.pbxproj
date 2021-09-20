@@ -80,7 +80,6 @@
 		6C28E7FAF1674789B3A6408E /* wooz.png in Resources */ = {isa = PBXBuildFile; fileRef = C093E780548744A4A4B6EBC3 /* wooz.png */; };
 		6E29EF7E3BF24B939FDA296E /* list-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CE69EF1ED304242901955C8 /* list-outline.png */; };
 		6F85F9107D334AC5BB47090B /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E76FDF59C343C58549C77B /* clock.png */; };
-		7668D82186AB65A355699F86 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1898B978CCAD90F9D24D9C3 /* libPods-OneSignalNotificationServiceExtension.a */; };
 		772C23440FC743B99FB19027 /* grid-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = A9F022E6F3754D719C972CE6 /* grid-outline.png */; };
 		7919EA0D80994024BF18975A /* montserrat-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 473BE264CF7C4145A82E0CB9 /* montserrat-regular.ttf */; };
 		79933E74F4024F22A2E17C09 /* rank3-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = FE6309931C0A4034BC487533 /* rank3-filled.png */; };
@@ -299,7 +298,6 @@
 		9737CCBF85DA4BEEA9984574 /* facebook.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = facebook.png; path = ../src/assets/images/icon/facebook.png; sourceTree = "<group>"; };
 		9A75B0C53DFF4087821C1CAE /* upload.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = upload.png; path = ../src/assets/images/icon/upload.png; sourceTree = "<group>"; };
 		9DD88589CB3A4E62BA12B132 /* wallet-fill.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "wallet-fill.png"; path = "../src/assets/images/icon/wallet-fill.png"; sourceTree = "<group>"; };
-		A1898B978CCAD90F9D24D9C3 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A248CA4A4C064E728B39CDAB /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		A29551CC493A404B8AC1AE2F /* video-outline.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "video-outline.png"; path = "../src/assets/images/icon/video-outline.png"; sourceTree = "<group>"; };
 		A2BB1748A91945548E2D0490 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
@@ -391,7 +389,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7668D82186AB65A355699F86 /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,7 +421,6 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				58EEBF8E8E6FB1BC6CAF49B5 /* libPods-woozeee.a */,
-				A1898B978CCAD90F9D24D9C3 /* libPods-OneSignalNotificationServiceExtension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1242,6 +1238,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.woozeee.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
