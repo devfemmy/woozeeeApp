@@ -375,7 +375,7 @@ export const ProfilePosts = (props) => {
     showsHorizontalScrollIndicator={true}
     showsVerticalScrollIndicator={false}
     numColumns={3}
-    data={firstTenEntries}
+    data={firstTenEntries.reverse()}
     keyExtractor={(_, i) => i.toString()}
     renderItem={(renderData) => (
       <UserProfilePostCard data={renderData} extraWidth={0} numColumns={3} allPosts={allEntries} />
@@ -519,7 +519,7 @@ export const LikedProfilePosts = ({ userId }) => {
         showsHorizontalScrollIndicator={true}
         showsVerticalScrollIndicator={false}
         numColumns={3}
-        data={data.pages[0].pageData.data}
+        data={data.pages[0].pageData.data.reverse()}
         keyExtractor={(_, i) => i.toString()}
         renderItem={(renderData) => (
           <UserPostLikedCard

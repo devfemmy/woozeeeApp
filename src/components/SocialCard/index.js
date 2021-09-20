@@ -163,16 +163,29 @@ export function UserProfilePostCard(props) {
         }}
         onPress={routeChallengeWooz}
       >
-        <Video
-          source={{ uri: data.item.mediaURL }}
-          paused={true}
-          style={{
-            height: 175,
-            width: '100%',
-            borderRadius: 5,
-          }}
-          resizeMode="cover"
-        />
+        {data.item.type === 'video' ? (
+          <Video
+            source={{ uri: data.item.mediaURL }}
+            paused={true}
+            style={{
+              height: 175,
+              width: '100%',
+              borderRadius: 5,
+            }}
+            resizeMode="cover"
+          />
+        ) : (
+          <Image
+            source={{ uri: data.item.mediaURL }}
+            defaultSource={require('assets/images/banner/placeholder-image.png')}
+            style={{
+              height: 175,
+              width: '100%',
+              borderRadius: 5,
+            }}
+            resizeMode="cover"
+          />
+        )}
       </TouchableOpacity>
     ),
     [COLUMN_COUNT, IS_PORTRAIT, extraWidth, width, data, routeChallengeWooz],
