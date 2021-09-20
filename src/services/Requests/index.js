@@ -86,6 +86,7 @@ export const handleVote = async (voteData) => {
 };
 
 export const handleLike = async (likeData) => {
+  console.log('likeData', likeData);
   const body = {
     entryId: likeData.entryId,
     isLike: true,
@@ -107,6 +108,7 @@ export const handleLike = async (likeData) => {
 
   try {
     res = await axios(config);
+    // console.log('res', res);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -114,6 +116,7 @@ export const handleLike = async (likeData) => {
 };
 
 export const handleFollow = async (userId, following) => {
+  // console.log(userId, following);
   const data = {
     userId,
     isFollow: true,

@@ -157,13 +157,13 @@ export default function ActivateWallet({ navigation }) {
 
       // if (data.responseCode === '00') {
       //   //route to complete page
-      //   Toast.show({
-      //     text: 'Account successfully created!!',
-      //     buttonText: 'Okay',
-      //     position: 'top',
-      //     type: 'success',
-      //     duration: 2000,
-      //   });
+      // Toast.show({
+      //   text: 'Account successfully created!!',
+      //   buttonText: 'Okay',
+      //   position: 'top',
+      //   type: 'success',
+      //   duration: 2000,
+      // });
       //   setTimeout(() => {
       //     navigation.navigate('ActivateCare');
       //   }, 3000);

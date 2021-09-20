@@ -60,7 +60,6 @@ import OneSignal from 'react-native-onesignal';
 
 // import firestore from '@react-native-firebase/firestore';
 
-
 import en from 'src/translations/en.json';
 import fr from 'src/translations/fr.json';
 import { Platform } from 'react-native';
@@ -112,7 +111,7 @@ i18n.fallbacks = true;
 // VESDK.unlockWithLicense(VESDKLicense);
 
 export default function App() {
-  oneSignalService()
+  oneSignalService();
   SplashScreen.preventAutoHideAsync()
     .then(() => {})
     .catch(() => {});
@@ -159,11 +158,11 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      OneSignal.addEventListener('opened', () => console.log(" opening here"));
+      // OneSignal.addEventListener('opened', () => console.log(" opening here"));
       const deviceState = await OneSignal.getDeviceState();
       if (deviceState.isSubscribed === false) {
         OneSignal.promptForPushNotificationsWithUserResponse((response) => {
-            console.log("user Response", response)
+          console.log('user Response', response);
         });
       }
       try {
