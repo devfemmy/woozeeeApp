@@ -126,6 +126,7 @@ const Stories = (props) => {
                   width: '100%',
                   borderRadius: 5,
                 }}
+                volume={0}
                 resizeMode="cover"
                 shouldPlay={true}
                 isMuted={true}
