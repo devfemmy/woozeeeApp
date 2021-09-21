@@ -434,7 +434,6 @@ PODS:
     - nanopb/encode (= 2.30908.0)
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
-  - OneSignal (3.8.0)
   - OneSignalXCFramework (3.6.1)
   - PromisesObjC (1.2.12)
   - RCTRequired (0.63.4)
@@ -803,7 +802,6 @@ DEPENDENCIES:
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - GoogleSignIn (~> 5.0.2)
-  - OneSignal (< 5.0, >= 3.0)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -897,7 +895,6 @@ SPEC REPOS:
     - libbambuser-ios
     - libwebp
     - nanopb
-    - OneSignal
     - OneSignalXCFramework
     - PromisesObjC
     - SDWebImage
@@ -1128,7 +1125,6 @@ SPEC CHECKSUMS:
   libbambuser-ios: 280cb4465431f85f9a1f55d9c7167a398b7ff15c
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  OneSignal: bb3c8da4467f2b48a89398da5ff107ba70cff06e
   OneSignalXCFramework: 674dd48705d0e1842a7c950177ae7569dbfc261c
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
@@ -1196,6 +1192,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4c60b43eaf3cb05a164bc9113258a171c18b7bf7
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
-PODFILE CHECKSUM: 0210d871221d0bd29297ebca1157e4729274667f
+PODFILE CHECKSUM: 8549340e29065ce021e845d76aaecaa839a574a4
 
 COCOAPODS: 1.10.1
