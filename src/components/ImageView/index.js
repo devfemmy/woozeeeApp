@@ -627,23 +627,13 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   category="s2"
                   style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
                 >
-                  {data.item.description}
+                  {data.item.description}Hello
                 </Text>
               )}
-              <View style={{ flex: 1 }}>
-                {/* <Video
-                  ref={videoRef}
-                  source={{ uri: item.mediaURL }}
-                  resizeMode="cover"
-                  shouldPlay={true}
-                  isLooping={true}
-                  style={{ height: '100%' }}
-                /> */}
-              </View>
               <ImageBackground
                 blurRadius={10}
                 style={{
-                  // flex: 1,
+                  flex: 1,
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -663,16 +653,6 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   resizeMode={FastImage.resizeMode.contain}
                 />
               </ImageBackground>
-
-              {/* <Image
-                source={{ uri: item.mediaURL }}
-                defaultSource={require('assets/images/banner/placeholder-image.png')}
-                style={{
-                  height: '90%',
-                  width: '100%',
-                }}
-                resizeMode="cover"
-              /> */}
             </View>
           </TouchableWithoutFeedback>
           <View
