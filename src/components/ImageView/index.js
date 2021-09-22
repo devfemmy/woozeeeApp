@@ -18,6 +18,7 @@ import {
   TouchableWithoutFeedback,
   Alert,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 
 import UserTemplate from '../UserTemplate/index';
@@ -639,18 +640,30 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   style={{ height: '100%' }}
                 /> */}
               </View>
-
-              <FastImage
+              <ImageBackground
+                blurRadius={10}
                 style={{
-                  height: '90%',
-                  width: '100%',
+                  // flex: 1,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
-                source={{
-                  uri: item.mediaURL,
-                  priority: FastImage.priority.normal,
-                }}
-                resizeMode={FastImage.resizeMode.cover}
-              />
+                source={{ uri: item.mediaURL }}
+                resizeMode="stretch"
+              >
+                <FastImage
+                  style={{
+                    height: '90%',
+                    width: '100%',
+                  }}
+                  source={{
+                    uri: item.mediaURL,
+                    priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+                />
+              </ImageBackground>
+
               {/* <Image
                 source={{ uri: item.mediaURL }}
                 defaultSource={require('assets/images/banner/placeholder-image.png')}
@@ -741,7 +754,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                 }
               />
             </View>
-            <View>
+            {/* <View>
               <InteractIcon
                 style={{ marginHorizontal: 5 }}
                 Accessory={(evaProps) => (
@@ -753,7 +766,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                 width={24}
                 onPress={toggleBookmark}
               />
-            </View>
+            </View> */}
           </View>
           <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
             <View

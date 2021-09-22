@@ -519,7 +519,7 @@ export const LikedProfilePosts = ({ userId }) => {
         showsHorizontalScrollIndicator={true}
         showsVerticalScrollIndicator={false}
         numColumns={3}
-        data={data.pages[0].pageData.data.reverse()}
+        data={data.pages[0].pageData.data}
         keyExtractor={(_, i) => i.toString()}
         renderItem={(renderData) => (
           <UserPostLikedCard

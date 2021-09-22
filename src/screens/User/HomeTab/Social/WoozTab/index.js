@@ -769,39 +769,6 @@ export default function Wooz({ navigation }) {
       }
     };
 
-    const onMomentumScrollEnd = async ({ nativeEvent }) => {
-      // console.log(nativeEvent);
-      const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
-
-      try {
-        const { sound: soundObject, status } = await Audio.Sound.createAsync(
-          sound,
-          { shouldPlay: true },
-        );
-        await soundObject.playAsync();
-      } catch (error) {
-        console.log(error);
-      }
-      // if (final.length - newIndex <= 3 && newIndex >= index) {
-      //   // fetchNextPage();
-      //   console.log('fetching new feeds...');
-      // }
-      // console.log('new index is -> ', newIndex);
-
-      if (
-        // prettier-ignore
-        newIndex !== index
-        && newIndex < videoLength.current
-        && newIndex >= 0
-      ) {
-        opacity.setValue(0);
-        setIndex(newIndex);
-        videoViewRef.current?.resetPlayState(true);
-      }
-
-      // (newIndex + 1) % 7 == 0 && fetchNextPage();
-    };
-
     if (status === 'loading') {
       return (
         <Placeholders
@@ -835,8 +802,42 @@ export default function Wooz({ navigation }) {
         return [...acc, ...element];
       }, []);
 
-      // console.log('final is ', final);
+      console.log('final is ', final);
+      console.log('final is ', data.pages);
       // data.pages.map((page) => console.log('page is', page));
+
+      const onMomentumScrollEnd = async ({ nativeEvent }) => {
+        // console.log(nativeEvent);
+        const newIndex = Math.ceil(nativeEvent.contentOffset.y / VIEW_HEIGHT);
+
+        try {
+          const { sound: soundObject, status } = await Audio.Sound.createAsync(
+            sound,
+            { shouldPlay: true },
+          );
+          await soundObject.playAsync();
+        } catch (error) {
+          console.log(error);
+        }
+        if (newIndex > index && final.length - newIndex < 3) {
+          // fetchNextPage();
+          console.log('fetching new feeds...');
+        }
+        // console.log('new index is -> ', newIndex);
+
+        if (
+          // prettier-ignore
+          newIndex !== index
+          && newIndex < videoLength.current
+          && newIndex >= 0
+        ) {
+          opacity.setValue(0);
+          setIndex(newIndex);
+          videoViewRef.current?.resetPlayState(true);
+        }
+
+        // (newIndex + 1) % 7 == 0 && fetchNextPage();
+      };
 
       //without pagination
       return (
@@ -915,78 +916,6 @@ export default function Wooz({ navigation }) {
             ))}
           </ScrollView>
         </View>
-
-        // <ScrollView
-        //   style={{
-        //     flex: 1,
-        //     backgroundColor: 'transparent',
-        //   }}
-        //   pagingEnabled
-        //   disableIntervalMomentum
-        //   showsHorizontalScrollIndicator={false}
-        //   showsVerticalScrollIndicator={false}
-        //   onMomentumScrollEnd={onMomentumScrollEnd}
-        // >
-        //   {final.map((item) => (
-        //     <React.Fragment key={item._id}>
-        //       <View style={{ flex: 1 }}>
-        //         {/* {final.map((item, i) => ( */}
-        //         <React.Fragment>
-        //           <View style={{ position: 'relative' }}>
-        //             <Image
-        //               resizeMode="contain"
-        //               style={{
-        //                 height: VIEW_HEIGHT,
-        //                 width: '100%',
-        //                 overflow: 'hidden',
-        //                 position: 'absolute',
-        //               }}
-        //               source={
-        //                 item
-        //                   ? { uri: item.mediaURL }
-        //                   : require('assets/images/banner/placeholder-image.png')
-        //               }
-        //             />
-        //           </View>
-        //           <VideoFullscreen
-        //             ref={videoViewRef}
-        //             data={item}
-        //             height={VIEW_HEIGHT}
-        //             navigation={navigation}
-        //           />
-        //         </React.Fragment>
-        //         {/* ))} */}
-        //         <Animated.View
-        //           style={[
-        //             StyleSheet.absoluteFillObject,
-        //             { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
-        //           ]}
-        //         >
-        //           <Video
-        //             ref={videoRef}
-        //             resizeMode="contain"
-        //             style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-        //             source={{ uri: item.mediaURL }}
-        //             isLooping
-        //             onPlaybackStatusUpdate={(playbackStatus) =>
-        //               onPlaybackStatusUpdate(
-        //                 playbackStatus,
-        //                 item.userEntryData.entryId,
-        //               )
-        //             }
-        //             shouldPlay={isFocused}
-        //             // prettier-ignore
-        //             onReadyForDisplay={() => Animated.timing(opacity, {
-        //           toValue: 1,
-        //           useNativeDriver: true,
-        //           duration: 500,
-        //         }).start()}
-        //           />
-        //         </Animated.View>
-        //       </View>
-        //     </React.Fragment>
-        //   ))}
-        // </ScrollView>
       );
     }
     return (

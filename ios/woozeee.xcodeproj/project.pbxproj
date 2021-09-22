@@ -129,6 +129,7 @@
 		CBAA04A6B5A24894ADB3E10A /* classroom-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = CF9DEDF24FD04D35A224F35D /* classroom-filled.png */; };
 		CD7D7B1B6BF54616AC69B4FF /* marketplace.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF4183C765E24249AFBEEAB9 /* marketplace.jpg */; };
 		CDB6DD0085374FB6BB470C4B /* montserrat-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF5DCFEA166F4285B596FF62 /* montserrat-medium.ttf */; };
+		CF83741D35EC67B0D9AA75DC /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E4D38F13F110C4D43824A2 /* libPods-OneSignalNotificationServiceExtension.a */; };
 		D0C487220AF44BE5BA83F80E /* cable-tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 08809013D14D4F91AFFDB3A1 /* cable-tv.png */; };
 		D2B7C7E681DF4FADB08B62BA /* back2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7AE99079783C470690E79863 /* back2.jpg */; };
 		D66AA787BA424271A2373532 /* globus.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CE6D2DB1404E77B5B0F96A /* globus.png */; };
@@ -320,6 +321,7 @@
 		B04030E619BE4307AA71BF52 /* verified.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = verified.png; path = ../src/assets/images/icon/verified.png; sourceTree = "<group>"; };
 		B13211F6D4BB4CA6BD2A29CE /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		B1A6D9453EA640D6B0CC72A7 /* qr-code-scan.gif */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "qr-code-scan.gif"; path = "../src/assets/images/gifs/qr-code-scan.gif"; sourceTree = "<group>"; };
+		B1E4D38F13F110C4D43824A2 /* libPods-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B299987EE3684387852470D9 /* woozeee-ad.jpg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "woozeee-ad.jpg"; path = "../src/assets/images/banner/woozeee-ad.jpg"; sourceTree = "<group>"; };
 		B69C17ED24FE453D8727C1F6 /* medal.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = medal.png; path = ../src/assets/images/icon/medal.png; sourceTree = "<group>"; };
 		B6B2D81F41A542AE916EDF85 /* check-filled.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "check-filled.png"; path = "../src/assets/images/icon/check-filled.png"; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF83741D35EC67B0D9AA75DC /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +424,7 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				58EEBF8E8E6FB1BC6CAF49B5 /* libPods-woozeee.a */,
+				B1E4D38F13F110C4D43824A2 /* libPods-OneSignalNotificationServiceExtension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

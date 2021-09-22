@@ -328,17 +328,26 @@ const VideoView = forwardRef((props, ref) => {
                       category="h6"
                       style={{ color: 'white', fontSize: 14 }}
                     >
-                      {data.description}
+                      {data.description}{' '}
+                      <Text
+                        status="control"
+                        category="h6"
+                        style={{ fontWeight: 'bold' }}
+                      >
+                        #havefun💃 #makemoney💰 #giveback🎁 #woozeee
+                        #woozeeet(wooz it)
+                      </Text>
                     </Text>
-                  ) : null}
-                  <Text
-                    status="control"
-                    category="h6"
-                    style={{ fontWeight: 'bold' }}
-                  >
-                    #havefun💃 #makemoney💰 #giveback🎁 #woozeee #woozeeet(wooz
-                    it)
-                  </Text>
+                  ) : (
+                    <Text
+                      status="control"
+                      category="h6"
+                      style={{ fontWeight: 'bold' }}
+                    >
+                      #havefun💃 #makemoney💰 #giveback🎁 #woozeee
+                      #woozeeet(wooz it)
+                    </Text>
+                  )}
                 </View>
                 <View>
                   <View

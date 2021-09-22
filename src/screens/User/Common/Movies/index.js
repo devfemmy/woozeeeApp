@@ -1,6 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { View, useWindowDimensions, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import {
+  View,
+  useWindowDimensions,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+} from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -18,7 +24,6 @@ import { LocaleContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
-
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
 import Placeholders from 'src/components/Placeholders';
@@ -32,7 +37,6 @@ import AllMovies from './AllMovies/index';
 import TvSeries from './TvSeries/index';
 import MyMovies from './MyMovies/index';
 import MyCategories from './Categories/index';
-
 
 // const MOVIE_CATEGORIES = [
 //   {
@@ -230,7 +234,7 @@ export default function Explore({ navigation }) {
       flexDirection: 'row',
       justifyContent: 'flex-end',
       alignItems: 'center',
-      paddingHorizontal: '2%'
+      paddingHorizontal: '2%',
     },
     activeTabTextColor: {
       color: 'rgba(255, 87, 87, 1)',
@@ -244,22 +248,22 @@ export default function Explore({ navigation }) {
       backgroundColor: 'transparent',
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     backdropStyle: {
-      backgroundColor: 'rgba(0,0,0,0.8)'
+      backgroundColor: 'rgba(0,0,0,0.8)',
     },
     scroll: {
       paddingVertical: 20,
-      marginVertical: 5
+      marginVertical: 5,
     },
     textStyle: {
       color: 'white',
       fontWeight: 'bold',
       fontSize: 20,
       textAlign: 'center',
-      marginVertical: 10
-    }
+      marginVertical: 10,
+    },
   });
 
   const layout = useWindowDimensions();
@@ -269,14 +273,14 @@ export default function Explore({ navigation }) {
     { key: 'first', title: 'All' },
     { key: 'second', title: 'TV series' },
     { key: 'third', title: 'Movies' },
-    { key: 'fourth', title: 'Categories' }
+    { key: 'fourth', title: 'Categories' },
   ]);
 
   const renderScene = SceneMap({
     first: AllMovies,
     second: TvSeries,
     third: MyMovies,
-    fourth: MyCategories
+    fourth: MyCategories,
   });
 
   // Some Updates
@@ -288,7 +292,7 @@ export default function Explore({ navigation }) {
       style={{ backgroundColor: 'transparent' }}
       renderLabel={({ route, focused, color }) => (
         <Text
-          numberOfLines= {1}
+          numberOfLines={1}
           style={[focused ? styles.activeTabTextColor : styles.tabTextColor]}
           status="basic"
         >
@@ -303,7 +307,7 @@ export default function Explore({ navigation }) {
         title="woozeee"
         navigation={navigation}
         icon="logout"
-        pressed= {() => navigation.navigate('MoreOptions')}
+        pressed={() => navigation.navigate('MoreOptions')}
         screen="search"
       />
       {/* <View style= {styles.tabView}>
@@ -315,13 +319,13 @@ export default function Explore({ navigation }) {
           icon_name= "arrow-ios-downward-outline" />
       </View> */}
       <TabView
-            renderTabBar={renderTabBar}
-            swipeEnabled={false}
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={{ width: layout.width }}
-          />
+        renderTabBar={renderTabBar}
+        swipeEnabled={false}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+      />
       {/* <SocialPostsArea /> */}
     </Layout>
   );

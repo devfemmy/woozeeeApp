@@ -51,9 +51,13 @@ const AssetIconsPack = {
     'user-2-outline': IconProvider(
       require('assets/images/icon/user-2-outline.png'),
     ),
-    'flag-ng': IconProvider(require('assets/images/icon/flag-ng.png')),
-    'movie-outline': IconProvider(
-      require('assets/images/icon/movie-outline.png'),
+    // wooz: IconProvider(require('assets/images/icon/wooz.png')),
+    // 'wooz-outline': IconProvider(
+    //   require('assets/images/icon/wooz-outline.png'),
+    // ),
+    movies: IconProvider(require('assets/images/icon/movies.png')),
+    'movies-outline': IconProvider(
+      require('assets/images/icon/movies-outline.png'),
     ),
     chat: IconProvider(require('assets/images/icon/chat.png')),
     'chat-outline': IconProvider(

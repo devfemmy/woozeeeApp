@@ -196,6 +196,7 @@ export default function Comments({ route, navigation }) {
       setCommentId('');
     } else {
       // console.log(commentMessage);
+      return;
     }
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
@@ -637,7 +638,7 @@ export default function Comments({ route, navigation }) {
             )}
           </View>
         </Card>
-        <Spinner visible={isLoading} />
+        {/* <Spinner visible={isLoading} /> */}
       </Layout>
     ),
     [height, INSETS, renderCardFooter, renderCardHeader],

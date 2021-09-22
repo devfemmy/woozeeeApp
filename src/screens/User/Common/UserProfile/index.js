@@ -148,48 +148,8 @@ export default function UserProfile({ route, navigation }) {
 
   const goBack = () => navigation.goBack();
 
-  // const [modalState, setModalState] = useState(false);
-
-  // const PlayVideoModal = () => {
-  //   return (
-  //     <View>
-  //       <Modal
-  //         style={{
-  //           backgroundColor: 'transparent',
-  //           borderTopLeftRadius: 20,
-  //           borderTopRightRadius: 20,
-  //         }}
-  //         animationType="slide"
-  //         position="center"
-  //         isOpen={modalState}
-  //         coverScreen={true}
-  //         swipeToClose={true}
-  //       >
-  //         <Video
-  //           source={{ uri: videoData.mediaURL }}
-  //           isLooping={true}
-  //           shouldPlay={modalState}
-  //           resizeMode="cover"
-  //           usePoster
-  //           posterSource={
-  //             videoData.medialThumbnail
-  //               ? { uri: videoData.medialThumbnail }
-  //               : require('assets/images/banner/placeholder-image.png')
-  //           }
-  //           style={{
-  //             flex: 1,
-  //             marginVertical: 150,
-  //             marginHorizontal: 10,
-  //             borderRadius: 15,
-  //           }}
-  //         />
-  //       </Modal>
-  //     </View>
-  //   );
-  // };
   return (
     <Layout level="6" style={{ flex: 1 }}>
-      {/* <PlayVideoModal /> */}
       <View
         style={{
           position: 'relative',
