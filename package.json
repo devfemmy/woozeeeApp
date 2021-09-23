@@ -70,6 +70,7 @@
     "react-native-elements": "^3.4.1",
     "react-native-fast-image": "^8.3.7",
     "react-native-fbsdk": "^3.0.0",
+    "react-native-geolocation-service": "*",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-hyperlink": "^0.0.19",
     "react-native-loading-spinner-overlay": "^2.0.0",
