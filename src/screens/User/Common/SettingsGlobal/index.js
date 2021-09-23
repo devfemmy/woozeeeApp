@@ -159,7 +159,7 @@ export default function Settings({ navigation }) {
             </Text>
           </Button> */}
           {/* <Divider style={{ marginVertical: 5 }} /> */}
-          <Button
+          {/* <Button
             appearance="outline"
             style={{
               flexDirection: 'row',
@@ -172,7 +172,7 @@ export default function Settings({ navigation }) {
             <Text category="s2" status="" style={{ marginLeft: 10 }}>
               {t('help')}
             </Text>
-          </Button>
+          </Button> */}
           <View style={{ marginVertical: 20 }}>
             <Button appearance="ghost" onPress={handleLogout}>
               <Text status="danger" category="s1">
