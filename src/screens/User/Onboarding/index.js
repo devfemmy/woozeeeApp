@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Layout, Text, Button } from '@ui-kitten/components';
 
 import { LocaleContext } from 'src/contexts';
+import OneSignal from 'react-native-onesignal';
 
 const SLIDE_CONTENT = [
   // {
@@ -59,6 +60,17 @@ export default function Onboarding({ route, navigation }) {
   // isActivated !== undefined && setLastIndex(lastIndex + 1);
 
   const t = useContext(LocaleContext);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      OneSignal.setNotificationOpenedHandler(notification => {
+        console.log('OneSignal: notification opened:', notification);
+        navigation.navigate('SocialRoute')
+      });
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   // const checkLastIndex = (nextIndex) => {
   //   setTimeout(() => {

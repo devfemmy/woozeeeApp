@@ -271,14 +271,14 @@ export default function Explore({ navigation }) {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'first', title: 'All' },
-    { key: 'second', title: 'TV series' },
     { key: 'third', title: 'Movies' },
+    { key: 'second', title: 'Drama' },
     { key: 'fourth', title: 'Categories' },
   ]);
 
   const renderScene = SceneMap({
     first: AllMovies,
-    second: TvSeries,
+    second: AllMovies,
     third: MyMovies,
     fourth: MyCategories,
   });

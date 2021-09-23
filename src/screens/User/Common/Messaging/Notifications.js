@@ -14,22 +14,22 @@ import {
 const MESSAGES = [
   {
     img: require('assets/images/drawable/icon.png'),
-    title: 'You got a bonus',
-    details: 'Notification from below',
-    date: '2021-03-10',
-  },
-  {
-    img: require('assets/images/drawable/icon.png'),
-    title: 'Complete Profile',
-    details: 'Notification from below and above',
-    date: '2021-01-10',
-  },
-  {
-    img: require('assets/images/drawable/icon.png'),
     title: 'Welcome to woozeee',
-    details: 'Notification from below and above and left and right and ok',
-    date: '2020-05-10',
+    details: 'Thank you for downloading our app, we will serve you well',
+    date: new Date(),
   },
+  // {
+  //   img: require('assets/images/drawable/icon.png'),
+  //   title: 'Complete Profile',
+  //   details: 'Notification from below and above',
+  //   date: '2021-01-10',
+  // },
+  // {
+  //   img: require('assets/images/drawable/icon.png'),
+  //   title: 'Welcome to woozeee',
+  //   details: 'Notification from below and above and left and right and ok',
+  //   date: '2020-05-10',
+  // },
 ];
 
 const renderItem = ({ index, item }) => (

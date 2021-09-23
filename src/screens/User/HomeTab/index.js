@@ -27,6 +27,7 @@ import {
 } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
+import OneSignal from 'react-native-onesignal';
 
 import OverlayLoader from 'src/components/OverlayLoader';
 
@@ -174,6 +175,10 @@ export default function Home({ navigation }) {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       fetchFromAsyncStorage();
+      OneSignal.setNotificationOpenedHandler(notification => {
+        console.log('OneSignal: notification opened:', notification);
+        navigation.navigate('SocialRoute')
+      });
     });
 
     return unsubscribe;

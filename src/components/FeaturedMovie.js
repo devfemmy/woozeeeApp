@@ -4,6 +4,7 @@ import { Video } from 'expo-av';
 import MovieDescription from './MovieDescription';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../services/api/index';
+import {Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 
 const FeaturedMovie = (props) => {
@@ -34,7 +35,7 @@ const FeaturedMovie = (props) => {
               // const movieDataArr = [1,2, 3,4]
               const shuffledArr = shuffleArray(movieDataArr);
               const firstIndexArr = shuffledArr[0];
-              console.log(firstIndexArr, 'shuffled Arr');
+              console.log(movieDataArr, 'shuffled Arr');
               setMovieData(firstIndexArr);
               // setMovieData(movieDataArr)
 
@@ -55,7 +56,7 @@ const FeaturedMovie = (props) => {
               // const movieDataArr = [1,2, 3,4]
               const shuffledArr = shuffleArray(movieDataArr);
               const firstIndexArr = shuffledArr[0];
-              console.log(firstIndexArr, 'shuffled Arr');
+              console.log(movieDataArr, 'shuffled Arr');
               setMovieData(firstIndexArr);
               // setMovieData(movieDataArr)
 
@@ -76,7 +77,7 @@ const FeaturedMovie = (props) => {
               // const movieDataArr = [1,2, 3,4]
               const shuffledArr = shuffleArray(movieDataArr);
               const firstIndexArr = shuffledArr[0];
-              console.log(firstIndexArr, 'shuffled Arr');
+              console.log(movieDataArr, 'shuffled Arr');
               setMovieData(firstIndexArr);
               // setMovieData(movieDataArr)
 
@@ -163,7 +164,11 @@ const FeaturedMovie = (props) => {
   }
   return (
     <View>
-      <VideoPreview />
+      {movieData?.length === 0 ? 
+    <Text>No Movie Available</Text>  :
+    <VideoPreview />
+    }
+
       {props.active ? null : (
         <MovieDescription
           onPress={() => watchMovie(movieData)}
