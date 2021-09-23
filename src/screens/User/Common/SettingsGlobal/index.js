@@ -39,6 +39,8 @@ export default function Settings({ navigation }) {
     }
   };
 
+  const routeAbout = () => navigation.navigate('About');
+  const routePrivacyPolicy = () => navigation.navigate('PrivacyPolicy');
   // const routeBack = () => navigation.goBack();
 
   return (
@@ -89,13 +91,14 @@ export default function Settings({ navigation }) {
               borderColor: 'transparent',
             }}
             accessoryRight={IconForwardIos}
+            onPress={routePrivacyPolicy}
           >
             <Text category="s2" status="" style={{ marginLeft: 10 }}>
               {t('privacySafety')}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 5 }} />
-          <Button
+          {/* <Button
             appearance="outline"
             style={{
               flexDirection: 'row',
@@ -108,9 +111,9 @@ export default function Settings({ navigation }) {
             <Text category="s2" status="" style={{ marginLeft: 10 }}>
               {t('notifications')}
             </Text>
-          </Button>
-          <Divider style={{ marginVertical: 5 }} />
-          <Button
+          </Button> */}
+          {/* <Divider style={{ marginVertical: 5 }} /> */}
+          {/* <Button
             appearance="outline"
             style={{
               flexDirection: 'row',
@@ -123,8 +126,8 @@ export default function Settings({ navigation }) {
             <Text category="s2" status="" style={{ marginLeft: 10 }}>
               {t('display')}
             </Text>
-          </Button>
-          <Divider style={{ marginVertical: 5 }} />
+          </Button> */}
+          {/* <Divider style={{ marginVertical: 5 }} /> */}
           <Button
             appearance="outline"
             style={{
@@ -134,13 +137,14 @@ export default function Settings({ navigation }) {
               borderColor: 'transparent',
             }}
             accessoryRight={IconForwardIos}
+            onPress={routeAbout}
           >
             <Text category="s2" status="" style={{ marginLeft: 10 }}>
               {t('aboutWoozeee')}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 5 }} />
-          <Button
+          {/* <Button
             appearance="outline"
             style={{
               flexDirection: 'row',
@@ -153,8 +157,8 @@ export default function Settings({ navigation }) {
             <Text category="s2" status="" style={{ marginLeft: 10 }}>
               {t('referrals')}
             </Text>
-          </Button>
-          <Divider style={{ marginVertical: 5 }} />
+          </Button> */}
+          {/* <Divider style={{ marginVertical: 5 }} /> */}
           <Button
             appearance="outline"
             style={{

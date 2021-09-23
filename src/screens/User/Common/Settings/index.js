@@ -129,7 +129,7 @@ export default function Settings({ navigation }) {
               {t('accountSettings')}
             </Text>
           </View>
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -150,9 +150,9 @@ export default function Settings({ navigation }) {
               checked={autoPlay}
               onChange={() => setAutoPlay((prevState) => !prevState)}
             />
-          </View>
-          <Divider style={{ marginVertical: 10 }} />
-          <View
+          </View> */}
+          {/* <Divider style={{ marginVertical: 10 }} /> */}
+          {/* <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -173,9 +173,9 @@ export default function Settings({ navigation }) {
               checked={postNotif}
               onChange={() => setPostNotif((prevState) => !prevState)}
             />
-          </View>
-          <Divider style={{ marginVertical: 10 }} />
-          <View
+          </View> */}
+          {/* <Divider style={{ marginVertical: 10 }} /> */}
+          {/* <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -196,7 +196,7 @@ export default function Settings({ navigation }) {
               checked={autoUpdate}
               onChange={() => setAutoUpdate((prevState) => !prevState)}
             />
-          </View>
+          </View> */}
           <Divider style={{ marginVertical: 10 }} />
           <View
             style={{
@@ -220,8 +220,8 @@ export default function Settings({ navigation }) {
               onChange={() => setHideAccount((prevState) => !prevState)}
             />
           </View>
-          <Divider style={{ marginVertical: 10 }} />
-          <View
+          {/* <Divider style={{ marginVertical: 10 }} /> */}
+          {/* <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -242,7 +242,7 @@ export default function Settings({ navigation }) {
               checked={disableAccount}
               onChange={() => setDisableAccount((prevState) => !prevState)}
             />
-          </View>
+          </View> */}
           <Divider style={{ marginVertical: 10 }} />
           <TouchableOpacity
             onPress={() => navigation.navigate('ChangePassword')}

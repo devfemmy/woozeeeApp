@@ -29,6 +29,7 @@ import RecoveryFull from '../screens/Authentication/Recovery/RecoveryFull';
 import FAQs from 'src/screens/Common/FAQs';
 import TermsConditions from 'src/screens/Common/TermsConditions';
 import PrivacyPolicy from 'src/screens/Common/PrivacyPolicy';
+import About from 'src/screens/Common/About';
 
 // Common User Screens
 import Settings from 'src/screens/User/Common/Settings';
@@ -252,6 +253,7 @@ export default function Router() {
       FAQs,
       TermsConditions,
       PrivacyPolicy,
+      About,
     },
   };
 

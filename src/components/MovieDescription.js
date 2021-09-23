@@ -1,9 +1,12 @@
 import React, { useRef, useContext, useState, useEffect } from 'react';
-import { StyleSheet, View, Image, Linking } from 'react-native';
+import { StyleSheet, View, Image, Linking, Share } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { v4 as uuidv4 } from 'uuid';
+
+import firebase from '@react-native-firebase/app';
 import { Layout, List, Text } from '@ui-kitten/components';
 import { TextIcon } from './IconPacks/TextIcon';
 import MovieComponent from './MovieComponent';
@@ -77,6 +80,63 @@ const MovieDescription = (props) => {
       })
       .catch((err) => err);
   }, []);
+
+  const handleShare = async (params, value) => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    try {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        json: true,
+        body: JSON.stringify({
+          dynamicLinkInfo: {
+            // ios: {
+            //   bundleId: 'app.woozeee.com',
+            //   appStoreId: '1549457766',
+            // },
+            // android: {
+            //   packageName: 'app.woozeee.com',
+            // },
+            domainUriPrefix: 'https://app.woozeee.com',
+            link: `https://app.woozeee.com/entry/?${params}=${value}`,
+            // social: JSON.stringify({
+            //   title: 'woozeee Challenges',
+            //   descriptionText: 'Challenge entry on woozeee',
+            //   imageUrl:
+            //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxO_eYxfA2ZQaIuJIIEuYm8d72bH2jgHwvBA&usqp=CAU',
+            // }),
+          },
+        }),
+      };
+
+      const res = await fetch(
+        'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+        requestOptions,
+      );
+      const _res = await res.json();
+      // console.log(_res);
+
+      const result = await Share.share({
+        message: _res.shortLink,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Layout level="6" style={styles.container}>
       <Text category="h1" style={styles.textStyle}>
@@ -167,7 +227,7 @@ const MovieDescription = (props) => {
             icon_name="alert-circle-outline"
           />
           <TextIcon
-            onPress={() => Linking.openURL('https://woozeee.com')}
+            onPress={() => handleShare('entries', uuidv4())}
             bg="transparent"
             color="#494949"
             fill="#494949"
