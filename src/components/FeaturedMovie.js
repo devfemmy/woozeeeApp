@@ -4,6 +4,7 @@ import { Video } from 'expo-av';
 import MovieDescription from './MovieDescription';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../services/api/index';
+import {Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 
 const FeaturedMovie = (props) => {
@@ -34,7 +35,7 @@ const FeaturedMovie = (props) => {
               // const movieDataArr = [1,2, 3,4]
               const shuffledArr = shuffleArray(movieDataArr);
               const firstIndexArr = shuffledArr[0];
-              console.log(firstIndexArr, 'shuffled Arr');
+              console.log(movieDataArr, 'shuffled Arr');
               setMovieData(firstIndexArr);
               // setMovieData(movieDataArr)
 
@@ -55,7 +56,7 @@ const FeaturedMovie = (props) => {
               // const movieDataArr = [1,2, 3,4]
               const shuffledArr = shuffleArray(movieDataArr);
               const firstIndexArr = shuffledArr[0];
-              console.log(firstIndexArr, 'shuffled Arr');
+              console.log(movieDataArr, 'shuffled Arr');
               setMovieData(firstIndexArr);
               // setMovieData(movieDataArr)
 
@@ -76,7 +77,7 @@ const FeaturedMovie = (props) => {
               // const movieDataArr = [1,2, 3,4]
               const shuffledArr = shuffleArray(movieDataArr);
               const firstIndexArr = shuffledArr[0];
-              console.log(firstIndexArr, 'shuffled Arr');
+              console.log(movieDataArr, 'shuffled Arr');
               setMovieData(firstIndexArr);
               // setMovieData(movieDataArr)
 
@@ -93,7 +94,7 @@ const FeaturedMovie = (props) => {
       });
   };
   const watchMovie = (data) => {
-    console.log("userData?.accounts", userData)
+    console.log('userData?.accounts', userData);
     if (userData?.accounts.length != 0 && userData?.hasCare) {
       //if I have account and I have care,
       if (userData.isPinSet === false) {
@@ -109,16 +110,16 @@ const FeaturedMovie = (props) => {
 
   const getUserData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('userData')
+      const jsonValue = await AsyncStorage.getItem('userData');
       return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch(e) {
+    } catch (e) {
       // error reading value
     }
-  }
+  };
   useEffect(() => {
     getFeaturedMovies();
-    const userData = getUserData()
-    userData.then(res => setUserData(res)).catch(err => err);
+    const userData = getUserData();
+    userData.then((res) => setUserData(res)).catch((err) => err);
   }, []);
 
   const VideoPreview = () => (
@@ -137,10 +138,10 @@ const FeaturedMovie = (props) => {
         isMuted={props.mute}
         isLooping
         source={{
-          uri: props.uri
-            ? movieData.landscapePreviewURL === undefined
+          uri: props?.uri
+            ? movieData?.landscapePreviewURL === undefined
               ? null
-              : movieData.posterURL[0]
+              : movieData?.posterURL[0]
             : props?.url?.landscapePreviewURL,
         }}
         // source = {{uri: videoUri}}
@@ -163,7 +164,11 @@ const FeaturedMovie = (props) => {
   }
   return (
     <View>
-      <VideoPreview />
+      {movieData?.length === 0 ? 
+    <Text>No Movie Available</Text>  :
+    <VideoPreview />
+    }
+
       {props.active ? null : (
         <MovieDescription
           onPress={() => watchMovie(movieData)}

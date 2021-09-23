@@ -96,18 +96,33 @@ const MovieDescription = (props) => {
       />
 
       <Text category="h4">
-        {props.price === '$undefined' ? null : props.price}
+        {props?.price === '₦undefined' ? null : props?.price}
       </Text>
       <View>
         {props.paid ? (
+        <View style= {{flexDirection: 'row', justifyContent: 'space-between', width: '75%'}}>
           <TextIcon
-            onPress={props.onPress}
+            width= "80%"
+            onPress={props?.onPress}
             bg="#FF5757"
             color="white"
             fill="white"
             text="Watch"
             icon_name="play-circle-outline"
           />
+          <TextIcon
+            addBorder
+            borderWidth= {2}
+            borderColor= "#FF5757"
+            width= "80%"
+            onPress={handleOpenSheet}
+            bg="#FFf"
+            color="#FF5757"
+            fill="#FF5757"
+            text="More Info"
+            icon_name="alert-circle-outline"
+          />
+        </View>
         ) : (
           <TextIcon
             // onPress= {() => console.log('Hello')}
@@ -158,14 +173,14 @@ const MovieDescription = (props) => {
             />
           )}
 
-          <TextIcon
+          {/* <TextIcon
             onPress={handleOpenSheet}
             bg="transparent"
             color="grey"
             fill="grey"
             text="More Info"
             icon_name="alert-circle-outline"
-          />
+          /> */}
           <TextIcon
             onPress={() => Linking.openURL('https://woozeee.com')}
             bg="transparent"
@@ -218,7 +233,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   actions: {
-    width: wp('70%'),
+    width: wp(50),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

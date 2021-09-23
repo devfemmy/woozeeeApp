@@ -106,10 +106,13 @@ export default {
       nextID: page + 1,
     };
   },
-  getWoozVideos: async () => {
+  getWoozVideos: async (pageNumber) => {
     const instance = await createInstance();
-
-    const res = await instance.get(`entries?pageSize=80&type=video`);
+    console.log(pageNumber);
+    const res = await instance.get(
+      `entries?pageSize=10&type=video`,
+      // `entries?pageSize=10&type=video&pageNumber=${pageNumber}`,
+    );
 
     const { data } = res;
     return {

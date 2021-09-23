@@ -17,6 +17,7 @@ import {
   Share,
   TouchableWithoutFeedback,
   Alert,
+  ImageBackground,
   ScrollView,
 } from 'react-native';
 
@@ -59,6 +60,8 @@ import InteractIcon from 'src/components/InteractIcon';
 
 import getUserProfile from '../../services/Requests/FetchUserProfile';
 
+import Modal from 'react-native-modalbox';
+
 import { Toast, Content, Root } from 'native-base';
 
 import {
@@ -86,6 +89,8 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import { TextInput } from 'react-native';
 
 import Search from '../../screens/User/Common/Search/index';
+import FastImage from 'react-native-fast-image';
+import { Dimensions } from 'react-native';
 
 export default function VideoView({
   data,
@@ -99,14 +104,66 @@ export default function VideoView({
 
   const { appState } = useContext(AppSettingsContext);
 
+  const [modalState, setModalState] = useState(false);
+
+  const [isVisible, setIsVisible] = useState(false);
+
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
   const [shareData, setShareData] = useState(null);
+
+  const [videoData, setVideoData] = useState([]);
 
   const [appTheme, setTheme] = useState('');
   const [_userId, setUserId] = useState('');
   const [userImg, setUserImg] = useState('');
   const [shareLink, setShareLink] = useState('');
+
+  const handleVideoView = (val) => {
+    console.log('val', val);
+    setVideoData(data.item);
+    setIsVisible(val);
+  };
+
+  const PlayVideoModal = () => {
+    return (
+      <View>
+        <Modal
+          style={{
+            backgroundColor: 'transparent',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          }}
+          animationType="slide"
+          position="center"
+          isOpen={isVisible}
+          backdrop={true}
+          backdropPressToClose={true}
+          coverScreen={true}
+          swipeToClose={true}
+        >
+          <Video
+            source={{ uri: videoData.mediaURL }}
+            isLooping={true}
+            shouldPlay={isVisible}
+            resizeMode="contain"
+            usePoster
+            posterSource={
+              videoData.medialThumbnail
+                ? { uri: videoData.medialThumbnail }
+                : require('assets/images/banner/placeholder-image.png')
+            }
+            style={{
+              flex: 1,
+              marginVertical: 100,
+              marginHorizontal: 5,
+              borderRadius: 15,
+            }}
+          />
+        </Modal>
+      </View>
+    );
+  };
 
   const getTheme = async () => {
     const res = await AsyncStorage.getItem('appTheme');
@@ -150,6 +207,8 @@ export default function VideoView({
   const sheetRef = useRef(null);
 
   const sendSheet = useRef(null);
+
+  const videoSheet = useRef(null);
 
   const [isBookmarked, setBookmarked] = useState(item.userEntryData.isBookmark);
 
@@ -366,7 +425,7 @@ export default function VideoView({
     guestUserImg,
   ) => {
     // console.log('shareData', shareData);
-    console.log(currentUserId, guestUserId, postUrl, name);
+    // console.log(currentUserId, guestUserId, postUrl, name);
     SendMessage(currentUserId, guestUserId, postUrl, '')
       .then((res) => {
         // console.log(res);
@@ -462,8 +521,6 @@ export default function VideoView({
   };
 
   const handleOpenSheet = () => sheetRef.current.open();
-
-  const [muteState, setIsMuted] = useState(false);
 
   let lastTap = null;
 
@@ -620,7 +677,7 @@ export default function VideoView({
               style={{
                 flex: 1,
                 marginVertical: 10,
-                height: viewHeight - 100,
+                height: viewHeight,
               }}
             >
               {data.item.description !== '' && (
@@ -633,19 +690,36 @@ export default function VideoView({
                 </Text>
               )}
 
-              <View style={{ flex: 1 }}>
+              <View style={{ flex: 1, backgroundColor: 'grey' }}>
+                <Video
+                  source={{ uri: item.mediaURL }}
+                  resizeMode="cover"
+                  shouldPlay={false}
+                  style={{
+                    height: '100%',
+                    zIndex: 1000,
+                  }}
+                />
+
                 <Video
                   ref={videoRef}
                   source={{ uri: item.mediaURL }}
-                  resizeMode="cover"
+                  resizeMode="contain"
                   shouldPlay={
                     screenIsFocused &&
                     viewable.length &&
                     viewable[0]._id === item._id
                   }
                   isLooping={true}
-                  style={{ height: '100%' }}
+                  style={{
+                    position: 'relative',
+                    bottom: '100%',
+                    height: '100%',
+                    zIndex: 1000,
+                  }}
                 />
+
+                {/* </ImageBackground> */}
               </View>
             </View>
           </TouchableWithoutFeedback>
@@ -725,10 +799,11 @@ export default function VideoView({
                 onPress={
                   () => handleSend(data)
                   // props.navigation.navigate('DeepLinkPost', { _id: item._id })
+                  // handleSend(data)
                 }
               />
             </View>
-            <View>
+            {/* <View>
               <InteractIcon
                 style={{ marginHorizontal: 5 }}
                 Accessory={(evaProps) => (
@@ -740,7 +815,7 @@ export default function VideoView({
                 width={24}
                 onPress={toggleBookmark}
               />
-            </View>
+            </View> */}
           </View>
           <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
             <View
@@ -898,6 +973,7 @@ export default function VideoView({
             </Button>
           </Layout>
         </RBSheet>
+        {/* <PlayVideoModal />  */}
         <RBSheet
           ref={sendSheet}
           height={400}

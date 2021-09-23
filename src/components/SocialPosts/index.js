@@ -23,6 +23,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { List, Text } from '@ui-kitten/components';
 
+import FastImage from 'react-native-fast-image';
+
+import { LinearGradient } from 'expo-linear-gradient';
+
+import { AntDesign } from '@expo/vector-icons';
+
 import { LocaleContext } from 'src/contexts';
 
 import FetchFailed from 'src/components/DataFetch/FetchFailed';
@@ -87,6 +93,12 @@ export const StoryPosts = ({ info }) => {
 
   const navigation = useNavigation();
 
+  const { width, height } = useWindowDimensions();
+
+  const IS_PORTRAIT = height > width;
+
+  const COLUMN_COUNT = IS_PORTRAIT ? 3 : 5;
+
   const [userImg, setUserImg] = useState('');
 
   const getUserImg = async () => {
@@ -100,6 +112,88 @@ export const StoryPosts = ({ info }) => {
   const RenderCategoryHeader = () => (
     <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
       <TouchableOpacity
+        activeOpacity={0.75}
+        onPress={() => navigation.navigate('UploadEntries', { entries: true })}
+        style={{
+          height: 150,
+          width: IS_PORTRAIT
+            ? width / (COLUMN_COUNT + 0.5)
+            : width / (COLUMN_COUNT + 0.5),
+          // paddingHorizontal: 3,
+          position: 'relative',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          overflow: 'hidden',
+        }}
+      >
+        <FastImage
+          style={{
+            height: '100%',
+            width: '100%',
+            borderRadius: 5,
+          }}
+          source={{
+            uri: userImg,
+            priority: FastImage.priority.cover,
+          }}
+        />
+
+        <View
+          style={{
+            backgroundColor: 'white',
+            height: 50,
+            width: 50,
+            borderRadius: 25,
+            position: 'absolute',
+            backgroundColor: 'white',
+            right: 57,
+            bottom: 80,
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+          }}
+        >
+          <AntDesign name="plus" size={24} color="blue" />
+        </View>
+        <View
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            position: 'absolute',
+            // bottom: 0,
+            borderBottomLeftRadius: 5,
+            borderBottomRightRadius: 5,
+            padding: 5,
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden',
+            borderRadius: 5,
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            zIndex: 50,
+          }}
+        >
+          <Text
+            category="s2"
+            status="basic"
+            style={{
+              color: 'white',
+              marginLeft: 5,
+              marginTop: 50,
+              zIndex: 1000,
+            }}
+          >
+            Add
+          </Text>
+          <Text
+            category="s2"
+            status="basic"
+            style={{ color: 'white', marginLeft: 5, zIndex: 1000 }}
+          >
+            {t('yourStory')}
+          </Text>
+        </View>
+      </TouchableOpacity>
+      {/* <TouchableOpacity
         onPress={() => navigation.navigate('UploadEntries', { entries: true })}
         activeOpacity={0.75}
         style={{ position: 'relative' }}
@@ -127,10 +221,7 @@ export const StoryPosts = ({ info }) => {
         >
           <IconPlusCircle height={28} width={28} fill="#043F7C" />
         </View>
-      </TouchableOpacity>
-      <Text category="s2" style={{ marginTop: 10 }}>
-        {t('yourStory')}
-      </Text>
+      </TouchableOpacity> */}
     </View>
   );
 
@@ -144,7 +235,7 @@ export const StoryPosts = ({ info }) => {
         showsHorizontalScrollIndicator={false}
         style={{
           paddingHorizontal: 10,
-          paddingBottom: 10,
+          // paddingBottom: 5,
           display: 'flex',
           flexDirection: 'row',
         }}
@@ -284,7 +375,7 @@ export const ProfilePosts = (props) => {
     showsHorizontalScrollIndicator={true}
     showsVerticalScrollIndicator={false}
     numColumns={3}
-    data={firstTenEntries}
+    data={firstTenEntries.reverse()}
     keyExtractor={(_, i) => i.toString()}
     renderItem={(renderData) => (
       <UserProfilePostCard data={renderData} extraWidth={0} numColumns={3} allPosts={allEntries} />

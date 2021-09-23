@@ -124,7 +124,6 @@ const { Navigator, Screen } = createStackNavigator();
 export default function Router() {
   const { authState } = useContext(AuthContext);
 
-  
   const netInfo = useNetInfo();
 
   const checkForConnectivity = () => {

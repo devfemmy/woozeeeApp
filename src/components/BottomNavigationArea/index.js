@@ -32,6 +32,7 @@ import {
   IconGrid,
   IconSettings,
   IconClipboard,
+  IconCMovie,
 } from '../CustomIcons';
 
 // Screens
@@ -44,7 +45,7 @@ const screens = {
   },
   social: {
     social: IconCSocial,
-    wooz: IconCWooz,
+    movies: IconCMovie,
     upload: SocialUpload,
     challenge: IconCCup,
     profile: IconCUser,

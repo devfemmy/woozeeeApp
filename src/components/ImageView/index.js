@@ -18,6 +18,7 @@ import {
   TouchableWithoutFeedback,
   Alert,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 
 import UserTemplate from '../UserTemplate/index';
@@ -617,7 +618,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
               style={{
                 flex: 1,
                 marginVertical: 10,
-                height: viewHeight - 100,
+                height: viewHeight - 50,
               }}
             >
               {data.item.description !== '' && (
@@ -626,40 +627,32 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   category="s2"
                   style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
                 >
-                  {data.item.description}
+                  {data.item.description}Hello
                 </Text>
               )}
-              <View style={{ flex: 1 }}>
-                {/* <Video
-                  ref={videoRef}
-                  source={{ uri: item.mediaURL }}
-                  resizeMode="cover"
-                  shouldPlay={true}
-                  isLooping={true}
-                  style={{ height: '100%' }}
-                /> */}
-              </View>
-
-              <FastImage
+              <ImageBackground
+                blurRadius={10}
                 style={{
-                  height: '90%',
-                  width: '100%',
+                  flex: 1,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
-                source={{
-                  uri: item.mediaURL,
-                  priority: FastImage.priority.normal,
-                }}
-                resizeMode={FastImage.resizeMode.cover}
-              />
-              {/* <Image
                 source={{ uri: item.mediaURL }}
-                defaultSource={require('assets/images/banner/placeholder-image.png')}
-                style={{
-                  height: '90%',
-                  width: '100%',
-                }}
-                resizeMode="cover"
-              /> */}
+                resizeMode="stretch"
+              >
+                <FastImage
+                  style={{
+                    height: '90%',
+                    width: '100%',
+                  }}
+                  source={{
+                    uri: item.mediaURL,
+                    priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+                />
+              </ImageBackground>
             </View>
           </TouchableWithoutFeedback>
           <View
@@ -741,7 +734,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                 }
               />
             </View>
-            <View>
+            {/* <View>
               <InteractIcon
                 style={{ marginHorizontal: 5 }}
                 Accessory={(evaProps) => (
@@ -753,7 +746,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                 width={24}
                 onPress={toggleBookmark}
               />
-            </View>
+            </View> */}
           </View>
           <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
             <View

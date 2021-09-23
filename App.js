@@ -60,7 +60,6 @@ import OneSignal from 'react-native-onesignal';
 
 // import firestore from '@react-native-firebase/firestore';
 
-
 import en from 'src/translations/en.json';
 import fr from 'src/translations/fr.json';
 import { Platform } from 'react-native';
@@ -118,7 +117,6 @@ const openSetting = () => {
 };
 
 export default function App() {
-
   SplashScreen.preventAutoHideAsync()
     .then(() => {})
     .catch(() => {});
@@ -182,7 +180,7 @@ export default function App() {
       const deviceState = await OneSignal.getDeviceState();
       if (deviceState.isSubscribed === false) {
         OneSignal.promptForPushNotificationsWithUserResponse((response) => {
-            console.log("user Response", response)
+          console.log('user Response', response);
         });
       }
       try {

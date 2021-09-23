@@ -11739,6 +11739,13 @@
   "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.1.7.tgz"
   "version" "5.1.7"
 
+"react-native-progress@^5.0.0":
+  "integrity" "sha512-KjnGIt3r9i5Kn2biOD9fXLJocf0bwxPRxOyAgXEnZTJQU2O+HyzgGFRCbM5h3izm9kKIkSc1txh8aGmMafCD9A=="
+  "resolved" "https://registry.npmjs.org/react-native-progress/-/react-native-progress-5.0.0.tgz"
+  "version" "5.0.0"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-native-ratings@^7.3.0", "react-native-ratings@^7.6.1":
   "integrity" "sha512-V3y19iIifwemMr87KfovFIIzy/Rotqcds9k+ECaayQvrlucm/mXFC69R8xl/NivEdnxX7K87iurigByhpE37EQ=="
   "resolved" "https://registry.npmjs.org/react-native-ratings/-/react-native-ratings-7.6.1.tgz"
@@ -12003,7 +12010,12 @@
     "raf" "^3.1.0"
     "tween-functions" "^1.0.1"
 
-"react@*", "react@^0.14 || ^15.0.0-0 || ^16.0.0-0 || ^17.0.0-0", "react@^16.0", "react@^16.0 || ^17.0.0", "react@^16.13.1", "react@^16.2.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.3", "react@^16.8.6 || ^17.0.0", "react@>=15.0.0", "react@>=16", "react@>=16.0.0-alpha.3", "react@>=16.4.1", "react@>=16.5.1", "react@16 || 17", "react@16.13.1", "react@16.5.0":
+"react-video-progress@^1.2.0":
+  "integrity" "sha512-/W3qv5vVBgO44CxfM65rJhnPBIdMzGXXA/HvSI6CgdIn4bnkdwt2HfjG9h59QFECGZDIye54r7P3chjDcFA3mA=="
+  "resolved" "https://registry.npmjs.org/react-video-progress/-/react-video-progress-1.2.0.tgz"
+  "version" "1.2.0"
+
+"react@*", "react@^0.14 || ^15.0.0-0 || ^16.0.0-0 || ^17.0.0-0", "react@^16.0", "react@^16.0 || ^17.0.0", "react@^16.0.0", "react@^16.13.1", "react@^16.2.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.3", "react@^16.8.6 || ^17.0.0", "react@>=15.0.0", "react@>=16", "react@>=16.0.0-alpha.3", "react@>=16.4.1", "react@>=16.5.1", "react@16 || 17", "react@16.13.1", "react@16.5.0":
   "integrity" "sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w=="
   "resolved" "https://registry.npmjs.org/react/-/react-16.13.1.tgz"
   "version" "16.13.1"

@@ -153,14 +153,13 @@ export default function Comments({ route, navigation }) {
     // console.log('fetched replies are', _replies);
   };
 
-  setTimeout(() => {
-    fetchComments();
+  // setTimeout(() => {
 
-    setLoading(false);
-  }, 3000);
+  //   setLoading(false);
+  // }, 3000);
 
   useEffect(() => {
-    setLoading(true);
+    fetchComments();
   }, []);
 
   const closeComments = useCallback(() => navigation.pop(), [navigation]);
@@ -197,6 +196,7 @@ export default function Comments({ route, navigation }) {
       setCommentId('');
     } else {
       // console.log(commentMessage);
+      return;
     }
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
@@ -638,7 +638,7 @@ export default function Comments({ route, navigation }) {
             )}
           </View>
         </Card>
-        <Spinner visible={isLoading} />
+        {/* <Spinner visible={isLoading} /> */}
       </Layout>
     ),
     [height, INSETS, renderCardFooter, renderCardHeader],

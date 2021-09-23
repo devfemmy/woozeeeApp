@@ -40,6 +40,8 @@ import {
   getUserEntries,
 } from '../../services/Requests/index';
 
+import { LinearGradient } from 'expo-linear-gradient';
+
 const styles = StyleSheet.create({
   uiContainer: {
     flex: 1,
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     zIndex: 99,
-    paddingBottom: 25,
+    // paddingBottom: 25,
   },
 });
 
@@ -287,115 +289,127 @@ const VideoView = forwardRef((props, ref) => {
         </TouchableWithoutFeedback>
         <View style={styles.uiContainer}>
           <TouchableWithoutFeedback onPress={() => toggleMute()}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-                width: '100%',
-                paddingVertical: 5,
-                paddingHorizontal: 10,
-                paddingBottom: 20,
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              }}
+            <LinearGradient
+              colors={['transparent', 'rgba(0,0,0,.5)']}
+              // style={{ justifyContent: 'flex-end' }}
             >
-              <View style={{ flexDirection: 'row' }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                  width: '100%',
+                  paddingVertical: 5,
+                  paddingHorizontal: 10,
+                  paddingBottom: 20,
+                }}
+              >
                 <View
                   style={{
-                    paddingLeft: 5,
+                    width: '85%',
+                    // paddingHorizontal: 5,
+                    marginBottom: 30,
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-start',
                   }}
                 >
-                  <View>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontWeight: 'bold',
+                      fontSize: 16,
+                      marginBottom: 5,
+                    }}
+                  >
+                    @{data.userDisplayName}
+                  </Text>
+                  {data.description ? (
                     <Text
-                      status="primary"
                       category="h6"
-                      style={{ marginBottom: 5 }}
+                      style={{ color: 'white', fontSize: 14 }}
                     >
-                      @{data.userDisplayName}
+                      {data.description}{' '}
+                      <Text
+                        status="control"
+                        category="h6"
+                        style={{ fontWeight: 'bold' }}
+                      >
+                        #havefun💃 #makemoney💰 #giveback🎁 #woozeee
+                        #woozeeet(wooz it)
+                      </Text>
                     </Text>
-                    {/* <Text status="danger" category="h6">
-                      {data.userLastName}
-                    </Text> */}
-                  </View>
+                  ) : (
+                    <Text
+                      status="control"
+                      category="h6"
+                      style={{ fontWeight: 'bold' }}
+                    >
+                      #havefun💃 #makemoney💰 #giveback🎁 #woozeee
+                      #woozeeet(wooz it)
+                    </Text>
+                  )}
+                </View>
+                <View>
                   <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
-                      marginVertical: 5,
+                      marginBottom: 15,
                       // zIndex: 1,
                     }}
                   >
                     <InteractIcon
-                      status={!shouldPlay ? 'danger' : 'success'}
+                      status={!shouldPlay ? 'control' : 'success'}
                       Accessory={(evaProps) => (
                         <IconPlayPause {...evaProps} isPlaying={!shouldPlay} />
                       )}
-                      height={20}
-                      width={20}
+                      height={33}
+                      width={33}
                       onPress={togglePause}
                     />
-                    <InteractIcon
-                      Accessory={(evaProps) => <IconEye {...evaProps} />}
-                      textContent={JSON.stringify(data.totalViews)}
-                      height={20}
-                      width={20}
-                      direction="row"
-                      style={{ marginRight: 7 }}
-                    />
                   </View>
-                  <View>
-                    <Text
-                      status="control"
-                      category="s2"
+
+                  <InteractIcon
+                    style={{ marginBottom: 15 }}
+                    Accessory={IconCHeartToggle}
+                    status={isLiked ? 'danger' : 'control'}
+                    textContent={data.totalLikes}
+                    onPress={toggleLike}
+                  />
+                  <InteractIcon
+                    style={{ marginBottom: 15 }}
+                    Accessory={(evaProps) => <IconCChat {...evaProps} active />}
+                    textContent={data.totalComments}
+                    onPress={routeComments}
+                  />
+                  <InteractIcon
+                    style={{ marginBottom: 15 }}
+                    Accessory={(evaProps) => (
+                      <IconCShare {...evaProps} active />
+                    )}
+                    onPress={() => handleShare('entries', data._id)}
+                  />
+
+                  <TouchableOpacity
+                    style={{ alignItems: 'center', marginBottom: 5 }}
+                    onPress={() => routeUserProfile(data.userId)}
+                  >
+                    <Image
+                      source={{ uri: data.userImageURL }}
+                      defaultSource={require('assets/images/banner/profile.jpg')}
                       style={{
-                        backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-                        marginBottom: 2,
+                        height: 40,
+                        width: 40,
+                        borderRadius: 20,
+                        borderWidth: 2,
+                        borderColor: 'white',
                       }}
-                    >
-                      {data.userEntryData.categoryName}
-                    </Text>
-                  </View>
+                      resizeMode="cover"
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
-              <View>
-                <InteractIcon
-                  style={{ marginBottom: 15 }}
-                  Accessory={IconCHeartToggle}
-                  status={isLiked ? 'danger' : 'control'}
-                  textContent={data.likes}
-                  onPress={toggleLike}
-                />
-                <InteractIcon
-                  style={{ marginBottom: 10 }}
-                  Accessory={(evaProps) => <IconCChat {...evaProps} active />}
-                  textContent={data.totalComments}
-                  onPress={routeComments}
-                />
-                <InteractIcon
-                  style={{ marginBottom: 15 }}
-                  Accessory={(evaProps) => <IconCShare {...evaProps} active />}
-                  onPress={() => handleShare('entries', data._id)}
-                />
-
-                <TouchableOpacity
-                  style={{ alignItems: 'center', marginBottom: 5 }}
-                  onPress={() => routeUserProfile(data.userId)}
-                >
-                  <Image
-                    source={{ uri: data.userImageURL }}
-                    defaultSource={require('assets/images/banner/profile.jpg')}
-                    style={{
-                      height: 40,
-                      width: 40,
-                      borderRadius: 20,
-                      borderWidth: 2,
-                      borderColor: 'white',
-                    }}
-                    resizeMode="cover"
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
+            </LinearGradient>
           </TouchableWithoutFeedback>
         </View>
       </View>

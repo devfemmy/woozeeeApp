@@ -4,7 +4,9 @@ import { View, ScrollView, Image } from 'react-native';
 
 import Constants from 'expo-constants';
 
-import { Layout, Button, Text, CheckBox} from '@ui-kitten/components';
+import { Layout, Button, Text, CheckBox } from '@ui-kitten/components';
+
+import { Toast, Content, Root } from 'native-base';
 
 import { AuthContext, LocaleContext } from 'src/contexts';
 
@@ -25,21 +27,21 @@ import SignUpWithApple from 'src/services/Requests/appleSignIn';
 
 export default function Register({ navigation }) {
   const { authOptions } = useContext(AuthContext);
-  const { signupWithGoogle, googleSignup, facebookSignup, appleSignup } =
+  const { checkExistingMail, googleSignup, facebookSignup, appleSignup } =
     authOptions;
   const [isLoading, setLoading] = useState(false);
   const [checked, setChecked] = React.useState(false);
 
-  function callGoogleSigunp() {
-    SignUpWithGoogle({ googleSignup });
-  }
-  function callFBSigunp() {
-    SignUpWithFacebook({ facebookSignup });
-  }
+  // function callGoogleSigunp() {
+  //   SignUpWithGoogle({ googleSignup });
+  // }
+  // function callFBSigunp() {
+  //   SignUpWithFacebook({ facebookSignup });
+  // }
 
-  function callAppleSignup() {
-    SignUpWithApple({ appleSignup });
-  }
+  // function callAppleSignup() {
+  //   SignUpWithApple({ appleSignup });
+  // }
 
   const [form, setFormValues] = useState({
     email: '',
@@ -53,7 +55,21 @@ export default function Register({ navigation }) {
 
   const validateEmail = async () => {
     if (isEmailValid(form.email)) {
-      routeRegisterFull();
+      //does email already exist ? throw Toast else route to Full
+      const res = await checkExistingMail(form.email);
+      // console.log('res', res);
+      const { error, message } = res;
+      if (error == true) {
+        Toast.show({
+          text: message,
+          buttonText: 'Okay',
+          position: 'top',
+          type: 'danger',
+          duration: 2000,
+        });
+      } else {
+        routeRegisterFull();
+      }
     } else {
       return;
     }
@@ -68,87 +84,82 @@ export default function Register({ navigation }) {
   const routePrivacyPolicy = () => navigation.navigate('PrivacyPolicy');
 
   return (
-    <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title={t('signUp')}
-        navigation={navigation}
-        icon="back"
-        screen="auth"
-      />
-      <ScrollView
-        alwaysBounceVertical
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <View
-          style={{
-            flex: 1,
-            padding: 15,
-          }}
+    <Root>
+      <Layout level="6" style={{ flex: 1 }}>
+        <TopNavigationArea
+          title={t('signUp')}
+          navigation={navigation}
+          icon="back"
+          screen="auth"
+        />
+        <ScrollView
+          alwaysBounceVertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         >
-          <View style={{ paddingBottom: 10 }}>
-            <View style={{ paddingVertical: 10 }}>
-              <GeneralTextField
-                type="email"
-                label={t('emailAddress')}
-                autoCompleteType="email"
-                textContentType="emailAddress"
-                keyboardType="email-address"
-                validate="email"
-                setFormValues={setFormValues}
-              />
+          <View
+            style={{
+              flex: 1,
+              padding: 15,
+            }}
+          >
+            <View style={{ paddingBottom: 10 }}>
+              <View style={{ paddingVertical: 10 }}>
+                <GeneralTextField
+                  type="email"
+                  label={t('emailAddress')}
+                  autoCompleteType="email"
+                  textContentType="emailAddress"
+                  keyboardType="email-address"
+                  validate="email"
+                  setFormValues={setFormValues}
+                />
+              </View>
+              <View style={{ paddingVertical: 20 }}>
+                <Button
+                  status="danger"
+                  size="large"
+                  accessibilityLiveRegion="assertive"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Continue"
+                  onPress={validateEmail}
+                  disabled={isLoading}
+                >
+                  <Text status="control">{t('continue')}</Text>
+                </Button>
+              </View>
             </View>
-            <View style={{ paddingVertical: 20 }}>
-              <Button
-                status="danger"
-                size="large"
-                accessibilityLiveRegion="assertive"
-                accessibilityComponentType="button"
-                accessibilityLabel="Continue"
-                onPress={validateEmail}
-                disabled={!checked || isLoading }
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                }}
               >
-                <Text status="control">{t('continue')}</Text>
-              </Button>
-            </View>
-          </View>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-              }}
-            >
-            <CheckBox
-              checked={checked}
-              onChange={nextChecked => setChecked(nextChecked)}
-              >
-                Accept Terms and Conditions
-              </CheckBox>
-              <Text category="p2">{`${t('continueAgree')} woozeee's`}</Text>
-              <Button
-                appearance="ghost"
-                size="tiny"
-                onPress={routeTermsConditions}
-              >
-                <Text status="primary" category="s2">
-                  {t('termsConditions')}
-                </Text>
-              </Button>
-              <Text category="p2">{`${t('confirmRead')} woozeee's`}</Text>
-              <Button
-                appearance="ghost"
-                size="tiny"
-                onPress={routePrivacyPolicy}
-              >
-                <Text status="primary" category="s2">
-                  {t('privacyPolicy')}
-                </Text>
-              </Button>
-            </View>
-            {/* <View
+                <Text category="p2">{`${t('continueAgree')} woozeee's`}</Text>
+                <Button
+                  appearance="ghost"
+                  size="tiny"
+                  onPress={routeTermsConditions}
+                >
+                  <Text status="primary" category="s2">
+                    {t('termsConditions')}
+                  </Text>
+                </Button>
+                <Text category="p2">{`${t('confirmRead')} woozeee's`}</Text>
+                <Button
+                  appearance="ghost"
+                  size="tiny"
+                  onPress={routePrivacyPolicy}
+                >
+                  <Text status="primary" category="s2">
+                    {t('privacyPolicy')}
+                  </Text>
+                </Button>
+              </View>
+              {/* <View
               style={{
                 alignItems: 'center',
                 paddingTop: 50,
@@ -157,7 +168,7 @@ export default function Register({ navigation }) {
             >
               <Text>{t('orContinueWith')}</Text>
             </View> */}
-            {/* <View style={{ paddingVertical: 10 }}>
+              {/* <View style={{ paddingVertical: 10 }}>
               <Button
                 status="primary"
                 size="medium"
@@ -245,25 +256,26 @@ export default function Register({ navigation }) {
                 </Button>
               )}
             </View> */}
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-                paddingVertical: 10,
-              }}
-            >
-              <Text>{`${t('haveAccount')}?`}</Text>
-              <Button appearance="ghost" size="tiny" onPress={routeLogin}>
-                <Text status="primary" category="h6">
-                  {t('signIn')}
-                </Text>
-              </Button>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                  paddingVertical: 10,
+                }}
+              >
+                <Text>{`${t('haveAccount')}?`}</Text>
+                <Button appearance="ghost" size="tiny" onPress={routeLogin}>
+                  <Text status="primary" category="h6">
+                    {t('signIn')}
+                  </Text>
+                </Button>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </Layout>
+        </ScrollView>
+      </Layout>
+    </Root>
   );
 }

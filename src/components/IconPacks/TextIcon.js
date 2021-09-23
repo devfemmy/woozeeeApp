@@ -14,9 +14,9 @@ export const TextIcon = (props) => {
       flexDirection: 'row',
       backgroundColor: props.bg,
       marginVertical: 8,
-      borderColor: props.start ? props.borderColor : 'transparent',
+      borderColor:  props.borderColor,
       borderWidth: props.borderWidth,
-      borderBottomColor: props.start ? 'rgba(148, 148, 149, 0.3);' : 'transparent',
+      // borderBottomColor: props.start ? 'rgba(148, 148, 149, 0.3);' : 'transparent',
       width: props.width,
       paddingHorizontal: props.more ? 15 : 0,
 
