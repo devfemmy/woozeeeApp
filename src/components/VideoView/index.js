@@ -19,6 +19,7 @@ import {
   Alert,
   ImageBackground,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 
 import UserTemplate from '../UserTemplate/index';
@@ -90,7 +91,6 @@ import { TextInput } from 'react-native';
 
 import Search from '../../screens/User/Common/Search/index';
 import FastImage from 'react-native-fast-image';
-import { Dimensions } from 'react-native';
 
 export default function VideoView({
   data,
@@ -113,6 +113,9 @@ export default function VideoView({
   const [shareData, setShareData] = useState(null);
 
   const [videoData, setVideoData] = useState([]);
+
+  const width = Dimensions.get('window').width;
+  const height = Dimensions.get('window').height;
 
   const [appTheme, setTheme] = useState('');
   const [_userId, setUserId] = useState('');
@@ -678,29 +681,26 @@ export default function VideoView({
                 flex: 1,
                 marginVertical: 10,
                 height: viewHeight,
+                width,
               }}
             >
               {data.item.description !== '' && (
                 <Text
-                  // status="primary"
                   category="s2"
                   style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
                 >
                   {data.item.description}
                 </Text>
               )}
-
-              <View style={{ flex: 1, backgroundColor: 'grey' }}>
-                <Video
-                  source={{ uri: item.mediaURL }}
-                  resizeMode="cover"
-                  shouldPlay={false}
-                  style={{
-                    height: '100%',
-                    zIndex: 1000,
-                  }}
-                />
-
+              {/* {console.log(item)} */}
+              <View
+                style={{
+                  flex: 1,
+                  height,
+                  width: '100%',
+                  // backgroundColor: 'red',
+                }}
+              >
                 <Video
                   ref={videoRef}
                   source={{ uri: item.mediaURL }}
@@ -712,14 +712,13 @@ export default function VideoView({
                   }
                   isLooping={true}
                   style={{
-                    position: 'relative',
-                    bottom: '100%',
+                    alignSelf: 'center',
+                    aspectRatio: 1 / 1.5,
+                    width: undefined,
                     height: '100%',
-                    zIndex: 1000,
+                    filter: undefined,
                   }}
                 />
-
-                {/* </ImageBackground> */}
               </View>
             </View>
           </TouchableWithoutFeedback>

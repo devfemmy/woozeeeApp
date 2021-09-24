@@ -616,9 +616,8 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
           >
             <View
               style={{
-                flex: 1,
                 marginVertical: 10,
-                height: viewHeight - 50,
+                height: viewHeight - 100,
               }}
             >
               {data.item.description !== '' && (
@@ -627,24 +626,24 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   category="s2"
                   style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
                 >
-                  {data.item.description}Hello
+                  {data.item.description}
                 </Text>
               )}
               <ImageBackground
                 blurRadius={10}
                 style={{
                   flex: 1,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  zIndex: 100,
                 }}
                 source={{ uri: item.mediaURL }}
                 resizeMode="stretch"
               >
                 <FastImage
                   style={{
-                    height: '90%',
-                    width: '100%',
+                    flex: 1,
+                    width: undefined,
+                    height: undefined,
+                    zIndex: 1000,
                   }}
                   source={{
                     uri: item.mediaURL,
