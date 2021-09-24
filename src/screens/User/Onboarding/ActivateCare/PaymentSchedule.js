@@ -59,7 +59,7 @@ const PaymentSchedule = (props) => {
       <ScrollView style={styles.container}>
         <View style={styles.wrapper}>
           <Text style={styles.textStyle}>{title}</Text>
-          <Text style={styles.textStyle}>Loan Amount: ₦{price}</Text>
+          <Text style={styles.textStyle}>Loan Amount: ₦{price}.00</Text>
           <Text style={styles.textStyle}>
             Loan Repayment at {interestRate}% rate per month
           </Text>
@@ -94,7 +94,7 @@ const PaymentSchedule = (props) => {
             </View> */}
         <View style={styles.flexContainer}>
           <Text style={styles.opacity}>Total Amount to be paid</Text>
-          <Text category="h5">₦{total}</Text>
+          <Text category="h5">₦{total}.00</Text>
         </View>
         <View style={{ marginVertical: 25 }}>
           <Button

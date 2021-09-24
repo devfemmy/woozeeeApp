@@ -127,7 +127,6 @@
 		CBAA04A6B5A24894ADB3E10A /* classroom-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = CF9DEDF24FD04D35A224F35D /* classroom-filled.png */; };
 		CD7D7B1B6BF54616AC69B4FF /* marketplace.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF4183C765E24249AFBEEAB9 /* marketplace.jpg */; };
 		CDB6DD0085374FB6BB470C4B /* montserrat-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF5DCFEA166F4285B596FF62 /* montserrat-medium.ttf */; };
-		CF83741D35EC67B0D9AA75DC /* libPods-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1E4D38F13F110C4D43824A2 /* libPods-OneSignalNotificationServiceExtension.a */; };
 		D0C487220AF44BE5BA83F80E /* cable-tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 08809013D14D4F91AFFDB3A1 /* cable-tv.png */; };
 		D2B7C7E681DF4FADB08B62BA /* back2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7AE99079783C470690E79863 /* back2.jpg */; };
 		D66AA787BA424271A2373532 /* globus.png in Resources */ = {isa = PBXBuildFile; fileRef = B8CE6D2DB1404E77B5B0F96A /* globus.png */; };
@@ -1018,7 +1017,7 @@
 				CODE_SIGN_ENTITLEMENTS = woozeee/woozeee.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.90;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = TJNSRNUPZ7;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -1033,6 +1032,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1058,7 +1058,7 @@
 				CODE_SIGN_ENTITLEMENTS = woozeee/woozeee.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.90;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = TJNSRNUPZ7;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -1069,6 +1069,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
+				MARKETING_VERSION = 1.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

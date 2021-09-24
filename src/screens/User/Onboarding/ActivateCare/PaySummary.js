@@ -132,7 +132,7 @@ const WoozeePaySummary = (props) => {
                         Total Amount to be repayed
                     </Text>
                     <Text category="h5">
-                         ₦{total}
+                         ₦{total}.00
                     </Text>
                 </View>
                     <View style= {{marginVertical: 20}}>
