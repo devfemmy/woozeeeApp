@@ -12,13 +12,15 @@ import { GeneralTextField } from 'src/components/FormFields';
 
 import { useIsFocused } from '@react-navigation/native';
 
+import { Toast, Root } from 'native-base';
+
 export default function VerifyWithCode({ route, navigation }) {
   // prettier-ignore
   const {
     authOptions,
   } = useContext(AuthContext);
 
-  const { verifyAction } = authOptions;
+  const { verifyAction, resendToken } = authOptions;
 
   const { userInfo } = route.params;
 
@@ -47,6 +49,17 @@ export default function VerifyWithCode({ route, navigation }) {
     }
   };
 
+  const handleResend = async () => {
+    const res = await verifyAction(verifyCode);
+    Toast.show({
+      text: res.message,
+      buttonText: 'Okay',
+      position: 'bottom',
+      type: 'info',
+      duration: 3000,
+    });
+  };
+
   const verify = async () => {
     // let tokenError = null;
     await verifyAction(verifyCode);
@@ -65,77 +78,79 @@ export default function VerifyWithCode({ route, navigation }) {
   };
 
   return (
-    <Layout level="6" style={{ flex: 1 }}>
-      <TopNavigationArea
-        title={t('accountVerification')}
-        navigation={navigation}
-        screen="auth"
-      />
-      <ScrollView
-        alwaysBounceVertical
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <View
-          style={{
-            flex: 1,
-            padding: 15,
-          }}
+    <Root>
+      <Layout level="6" style={{ flex: 1 }}>
+        <TopNavigationArea
+          title={t('accountVerification')}
+          navigation={navigation}
+          screen="auth"
+        />
+        <ScrollView
+          alwaysBounceVertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         >
-          <View style={{ paddingBottom: 10 }}>
-            <View style={{ paddingVertical: 10 }}>
-              <GeneralTextField
-                type="code"
-                label={t('verificationCode')}
-                autoCompleteType="off"
-                textContentType="oneTimeCode"
-                validate="required"
-                setFormValues={setVerifyCode}
-              />
-              <Button
-                size="tiny"
-                appearance="ghost"
-                style={{ alignSelf: 'flex-end' }}
-                onPress={verify}
-              >
-                <Text status="primary" category="s2">
-                  {t('resendCode')}
-                </Text>
-              </Button>
+          <View
+            style={{
+              flex: 1,
+              padding: 15,
+            }}
+          >
+            <View style={{ paddingBottom: 10 }}>
+              <View style={{ paddingVertical: 10 }}>
+                <GeneralTextField
+                  type="code"
+                  label={t('verificationCode')}
+                  autoCompleteType="off"
+                  textContentType="oneTimeCode"
+                  validate="required"
+                  setFormValues={setVerifyCode}
+                />
+                <Button
+                  size="tiny"
+                  appearance="ghost"
+                  style={{ alignSelf: 'flex-end' }}
+                  onPress={handleResend}
+                >
+                  <Text status="primary" category="s2">
+                    {t('resendCode')}
+                  </Text>
+                </Button>
+              </View>
+              <View style={{ paddingVertical: 20 }}>
+                <Button
+                  status="danger"
+                  size="large"
+                  accessibilityLiveRegion="assertive"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Continue"
+                  disabled={isLoading}
+                  onPress={verifyAccount}
+                >
+                  <Text status="control">{t('submit')}</Text>
+                </Button>
+              </View>
             </View>
-            <View style={{ paddingVertical: 20 }}>
-              <Button
-                status="danger"
-                size="large"
-                accessibilityLiveRegion="assertive"
-                accessibilityComponentType="button"
-                accessibilityLabel="Continue"
-                disabled={isLoading}
-                onPress={verifyAccount}
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                }}
               >
-                <Text status="control">{t('submit')}</Text>
-              </Button>
+                <Text>{`${t('haveAccount')}?`}</Text>
+                <Button appearance="ghost" size="tiny" onPress={routeLogin}>
+                  <Text category="h6" status="primary">
+                    {t('signIn')}
+                  </Text>
+                </Button>
+              </View>
             </View>
           </View>
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-              }}
-            >
-              <Text>{`${t('haveAccount')}?`}</Text>
-              <Button appearance="ghost" size="tiny" onPress={routeLogin}>
-                <Text category="h6" status="primary">
-                  {t('signIn')}
-                </Text>
-              </Button>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-    </Layout>
+        </ScrollView>
+      </Layout>
+    </Root>
   );
 }

@@ -135,16 +135,16 @@ export default function useAuth() {
             AsyncStorage.setItem('email', email);
 
             const user_id = result.user._id;
-            console.log("userid", user_id)
+            console.log('userid', user_id);
             AsyncStorage.setItem('userid', user_id);
             OneSignal.setExternalUserId(result.user._id, (results) => {
               // The results will contain push and email success statuses
-              console.log(results, "set Id");
-              
+              console.log(results, 'set Id');
+
               // Push can be expected in almost every situation with a success status, but
               // as a pre-caution its good to verify it exists
               if (results.push && results.push.success) {
-                console.log(results.push.success, "success");
+                console.log(results.push.success, 'success');
               }
             });
             const insure_num = result.user.insurranceCard.cardNumber;
@@ -564,6 +564,29 @@ export default function useAuth() {
         }
 
         return msg;
+      },
+
+      resendToken: async (verificationCode) => {
+        const tokenValue = {
+          email: verificationCode.emailAddress,
+        };
+
+        const res = await fetch(
+          'https://apis.woozeee.com/api/v1/user/resend-token',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify(tokenValue),
+          },
+        );
+
+        // const result = await res.json();
+        const result = await res.json();
+
+        return result;
       },
 
       checkExistingMail: async (email) => {
