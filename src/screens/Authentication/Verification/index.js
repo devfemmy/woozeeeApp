@@ -50,7 +50,7 @@ export default function VerifyWithCode({ route, navigation }) {
   };
 
   const handleResend = async () => {
-    const res = await verifyAction(verifyCode);
+    const res = await resendToken(verifyCode);
     Toast.show({
       text: res.message,
       buttonText: 'Okay',
