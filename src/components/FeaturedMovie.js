@@ -4,7 +4,7 @@ import { Video } from 'expo-av';
 import MovieDescription from './MovieDescription';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../services/api/index';
-import {Text } from '@ui-kitten/components';
+import { Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 
 const FeaturedMovie = (props) => {
@@ -164,10 +164,11 @@ const FeaturedMovie = (props) => {
   }
   return (
     <View>
-      {movieData?.length === 0 ? 
-    <Text>No Movie Available</Text>  :
-    <VideoPreview />
-    }
+      {movieData?.length === 0 ? (
+        <Text>No Movie Available</Text>
+      ) : (
+        <VideoPreview />
+      )}
 
       {props.active ? null : (
         <MovieDescription
