@@ -23,6 +23,7 @@ import Register from 'src/screens/Authentication/Registration';
 import RegisterFull from 'src/screens/Authentication/Registration/RegisterFull';
 import VerifyWithCode from 'src/screens/Authentication/Verification';
 import RecoverWithEmail from 'src/screens/Authentication/Recovery';
+import ResendOTP from 'src/screens/Authentication/Recovery/ResendOTP';
 import RecoveryFull from '../screens/Authentication/Recovery/RecoveryFull';
 
 // Common screens
@@ -170,6 +171,7 @@ export default function Router() {
       RegisterFull,
       RecoverWithEmail,
       RecoveryFull,
+      ResendOTP,
     },
 
     User: {

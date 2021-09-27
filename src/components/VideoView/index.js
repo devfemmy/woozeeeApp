@@ -692,7 +692,6 @@ export default function VideoView({
                   {data.item.description}
                 </Text>
               )}
-              {/* {console.log(item)} */}
               <View
                 style={{
                   flex: 1,
@@ -704,6 +703,21 @@ export default function VideoView({
                 <Video
                   ref={videoRef}
                   source={{ uri: item.mediaURL }}
+                  resizeMode="cover"
+                  shouldPlay={false}
+                  // isPause={true}
+                  isLooping={true}
+                  style={{
+                    alignSelf: 'center',
+                    aspectRatio: 1 / 1,
+                    // width: undefined,s
+                    height: '100%',
+                    // filter: 'alpha(op)',
+                  }}
+                />
+                <Video
+                  ref={videoRef}
+                  source={{ uri: item.mediaURL }}
                   resizeMode="contain"
                   shouldPlay={
                     screenIsFocused &&
@@ -712,11 +726,11 @@ export default function VideoView({
                   }
                   isLooping={true}
                   style={{
+                    position: 'absolute',
                     alignSelf: 'center',
                     aspectRatio: 1 / 1.5,
                     width: undefined,
                     height: '100%',
-                    filter: undefined,
                   }}
                 />
               </View>
