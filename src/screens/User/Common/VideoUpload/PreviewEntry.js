@@ -33,12 +33,12 @@ const PreviewEntry = (props) => {
     feeds: false,
     wooz: false,
   });
-  const handleUploadLoc = (loc) => {
-    setUploadLocations((prevState) => ({
-      ...prevState,
-      [loc]: !prevState[loc],
-    }));
-  };
+  // const handleUploadLoc = (loc) => {
+  //   setUploadLocations((prevState) => ({
+  //     ...prevState,
+  //     [loc]: !prevState[loc],
+  //   }));
+  // };
   const netInfo = useNetInfo();
 
   const checkForConnectivity = () => {
@@ -128,12 +128,12 @@ const PreviewEntry = (props) => {
           }, 1000);
         });
     } else {
-      const wooz = uploadLocations.wooz ? 'wooz' : null;
-      const feeds = uploadLocations.feeds ? 'feed' : null;
+      // const wooz = uploadLocations.wooz ? 'wooz' : null;
+      // const feeds = uploadLocations.feeds ? 'feed' : null;
       // const stories = uploadLocations.stories ? 'story': null;
       const data = {
         mediaURL: url,
-        entryTypes: [wooz, feeds],
+        entryTypes: ['feeds', 'feed'],
         description: caption,
         type: type,
       };
@@ -392,7 +392,7 @@ const PreviewEntry = (props) => {
             onChangeText={(nextValue) => setCaption(nextValue)}
           />
         </View>
-        {entries ? null : (
+        {/* {entries ? null : (
           <View
             style={{
               flex: 1,
@@ -452,31 +452,8 @@ const PreviewEntry = (props) => {
               />
             </View>
 
-            {/* <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: 10,
-                  }}
-                >
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Text category="s2" style={{ marginLeft: 0 }}>
-                      {t('stories')}
-                    </Text>
-                  </View>
-                  <Toggle
-                    checked={uploadLocations.wooz}
-                    onChange={(e) => handleUploadLoc('stories')}
-                  />
-                </View> */}
           </View>
-        )}
+        )} */}
         {isLoading ? (
           <ActivityIndicator
             style={styles.loading}
