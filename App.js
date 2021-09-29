@@ -64,7 +64,7 @@ import en from 'src/translations/en.json';
 import fr from 'src/translations/fr.json';
 import { Platform } from 'react-native';
 import { oneSignalService } from './src/utilities/oneSignal';
-import { getUserLocation, requestLocationPermission } from './src/utilities/locationPermission';
+// import { getUserLocation, requestLocationPermission } from './src/utilities/locationPermission';
 
 enableScreens();
 
@@ -117,6 +117,7 @@ const openSetting = () => {
 };
 
 export default function App() {
+  oneSignalService();
   SplashScreen.preventAutoHideAsync()
     .then(() => {})
     .catch(() => {});
@@ -164,19 +165,19 @@ export default function App() {
   useEffect(() => {
     (async () => {
       // OneSignal.addEventListener('opened', () => console.log(" opening here"));
-      const isIOS = Platform.OS === 'ios';
-      const granted = await requestLocationPermission(isIOS);
-      if ((isIOS && granted) || !isIOS) {
-        oneSignalService();
-        const location = getUserLocation();
-        console.log("user location", location)
-      } else {
-        Alert.alert(
-          "It's important to grant permission.",
-          'Please grant location permission to woozeee to enjoy more from us. Enable the permission in your settings',
-          [{text: 'Go to Settings', onPress: openSetting}],
-        );
-      }
+      // const isIOS = Platform.OS === 'ios';
+      // // const granted = await requestLocationPermission(isIOS);
+      // if ((isIOS && granted) || !isIOS) {
+      
+      //   const location = getUserLocation();
+      //   console.log("user location", location)
+      // } else {
+      //   Alert.alert(
+      //     "It's important to grant permission.",
+      //     'Please grant location permission to woozeee to enjoy more from us. Enable the permission in your settings',
+      //     [{text: 'Go to Settings', onPress: openSetting}],
+      //   );
+      // }
       const deviceState = await OneSignal.getDeviceState();
       if (deviceState.isSubscribed === false) {
         OneSignal.promptForPushNotificationsWithUserResponse((response) => {
