@@ -15,10 +15,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { Toast, Root } from 'native-base';
 
 export default function VerifyWithCode({ route, navigation }) {
-  // prettier-ignore
-  const {
-    authOptions,
-  } = useContext(AuthContext);
+  const { authOptions } = useContext(AuthContext);
 
   const { verifyAction, resendToken } = authOptions;
 
@@ -43,14 +40,13 @@ export default function VerifyWithCode({ route, navigation }) {
   const verifyAccount = async () => {
     if (verifyCode.code.length > 0) {
       await verify();
-      await routeLogin();
     } else {
       return;
     }
   };
 
   const handleResend = async () => {
-    const res = await verifyAction(verifyCode);
+    const res = await resendToken(verifyCode);
     Toast.show({
       text: res.message,
       buttonText: 'Okay',
@@ -62,7 +58,25 @@ export default function VerifyWithCode({ route, navigation }) {
 
   const verify = async () => {
     // let tokenError = null;
-    await verifyAction(verifyCode);
+    const res = await verifyAction(verifyCode);
+    if (res.error) {
+      Toast.show({
+        text: res.message,
+        buttonText: 'Okay',
+        position: 'bottom',
+        type: 'danger',
+        duration: 3000,
+      });
+    } else {
+      Toast.show({
+        text: res.message,
+        buttonText: 'Okay',
+        position: 'bottom',
+        type: 'success',
+        duration: 3000,
+      });
+      routeLogin();
+    }
 
     // try {
     //   setLoading(true);

@@ -23,6 +23,7 @@ import Register from 'src/screens/Authentication/Registration';
 import RegisterFull from 'src/screens/Authentication/Registration/RegisterFull';
 import VerifyWithCode from 'src/screens/Authentication/Verification';
 import RecoverWithEmail from 'src/screens/Authentication/Recovery';
+import ResendOTP from 'src/screens/Authentication/Recovery/ResendOTP';
 import RecoveryFull from '../screens/Authentication/Recovery/RecoveryFull';
 
 // Common screens
@@ -45,6 +46,7 @@ import Search from 'src/screens/User/Common/Search';
 import Movies from 'src/screens/User/Common/Movies';
 import ViewMovies from 'src/screens/User/Common/ViewMovies';
 import MoviePage from 'src/screens/User/Common/ViewMovies/MoviePage';
+import ChallengePage from 'src/screens/User/Common/ChallengePage/index';
 import LiveStream from 'src/screens/User/Common/LiveStream';
 import Messaging from 'src/screens/User/Common/Messaging';
 import Comments from 'src/screens/User/Common/Comments';
@@ -170,6 +172,7 @@ export default function Router() {
       RegisterFull,
       RecoverWithEmail,
       RecoveryFull,
+      ResendOTP,
     },
 
     User: {
@@ -247,6 +250,7 @@ export default function Router() {
       TransactionSummary,
       TransferMoney,
       Accounts,
+      ChallengePage,
     },
 
     Common: {

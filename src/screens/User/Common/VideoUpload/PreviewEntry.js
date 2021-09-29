@@ -195,7 +195,7 @@ const PreviewEntry = (props) => {
         },
         (error) => {
           // Handle unsuccessful uploads
-          console.log("upload error", error)
+          console.log('upload error', error);
           setLoading(false);
           Toast.show({
             text: 'Network failure',
@@ -238,7 +238,7 @@ const PreviewEntry = (props) => {
         },
         (error) => {
           // Handle unsuccessful uploads;
-          console.log("upload error", error)
+          console.log('upload error', error);
           setLoading(false);
           Toast.show({
             text: 'Network failure',
@@ -293,7 +293,7 @@ const PreviewEntry = (props) => {
       appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
       measurementId: 'G-XQKMT94R9R',
     };
-    
+
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
@@ -486,9 +486,7 @@ const PreviewEntry = (props) => {
             )}
           </View>
         )}
-        <Spinner
-        visible={isLoading}
-          />
+        <Spinner visible={isLoading} />
       </Layout>
     </Root>
   );

@@ -117,6 +117,8 @@ export default function Login({ navigation }) {
 
   const routeRegister = () => navigation.navigate('Register');
 
+  const routeVerifyMail = () => navigation.navigate('ResendOTP');
+
   const routeRecoverWithEmail = () => navigation.navigate('RecoverWithEmail');
 
   const routeOnboarding = () => navigation.navigate('Onboarding');
@@ -184,14 +186,12 @@ export default function Login({ navigation }) {
                   setFormValues={setFormValues}
                 />
                 <Button
-                  size="tiny"
+                  size="medium"
                   appearance="ghost"
                   style={{ alignSelf: 'flex-end' }}
                   onPress={routeRecoverWithEmail}
                 >
-                  <Text status="primary" category="s2">
-                    {` ${t('forgotPassword')}?`}
-                  </Text>
+                  <Text status="primary">{` ${t('forgotPassword')}?`}</Text>
                 </Button>
               </View>
               <View style={{ paddingVertical: 20 }}>
@@ -315,8 +315,27 @@ export default function Login({ navigation }) {
                   flexWrap: 'wrap',
                 }}
               >
+                <Text>Unverified Email ?</Text>
+                <Button
+                  appearance="ghost"
+                  size="large"
+                  onPress={routeVerifyMail}
+                >
+                  <Text category="h6" status="primary">
+                    Verify Email
+                  </Text>
+                </Button>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                }}
+              >
                 <Text>{`${t('dontHaveAccount')}?`}</Text>
-                <Button appearance="ghost" size="tiny" onPress={routeRegister}>
+                <Button appearance="ghost" size="large" onPress={routeRegister}>
                   <Text category="h6" status="primary">
                     {t('signUp')}
                   </Text>

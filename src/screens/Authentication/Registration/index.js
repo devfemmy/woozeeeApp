@@ -54,20 +54,23 @@ export default function Register({ navigation }) {
   };
 
   const validateEmail = async () => {
+    setLoading(!isLoading);
     if (isEmailValid(form.email)) {
       //does email already exist ? throw Toast else route to Full
       const res = await checkExistingMail(form.email);
       // console.log('res', res);
       const { error, message } = res;
-      if (error == true) {
+      if (error) {
         Toast.show({
           text: message,
           buttonText: 'Okay',
-          position: 'top',
+          position: 'bottom',
           type: 'danger',
           duration: 2000,
         });
+        setLoading(false);
       } else {
+        setLoading(false);
         routeRegisterFull();
       }
     } else {
@@ -141,7 +144,7 @@ export default function Register({ navigation }) {
                 <Text category="p2">{`${t('continueAgree')} woozeee's`}</Text>
                 <Button
                   appearance="ghost"
-                  size="tiny"
+                  size="large"
                   onPress={routeTermsConditions}
                 >
                   <Text status="primary" category="s2">
@@ -151,7 +154,7 @@ export default function Register({ navigation }) {
                 <Text category="p2">{`${t('confirmRead')} woozeee's`}</Text>
                 <Button
                   appearance="ghost"
-                  size="tiny"
+                  size="large"
                   onPress={routePrivacyPolicy}
                 >
                   <Text status="primary" category="s2">
@@ -266,7 +269,7 @@ export default function Register({ navigation }) {
                 }}
               >
                 <Text>{`${t('haveAccount')}?`}</Text>
-                <Button appearance="ghost" size="tiny" onPress={routeLogin}>
+                <Button appearance="ghost" size="large" onPress={routeLogin}>
                   <Text status="primary" category="h6">
                     {t('signIn')}
                   </Text>
