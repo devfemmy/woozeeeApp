@@ -385,6 +385,7 @@ const PreviewEntry = (props) => {
                 /> */}
           <CustomField
             label="Caption"
+            
             placeholder={'Add Caption'}
             multiline
             height={100}
