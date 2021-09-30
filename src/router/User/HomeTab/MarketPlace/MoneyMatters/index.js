@@ -36,6 +36,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomNavigationArea from 'src/components/BottomNavigationArea';
 
 import MoneyMatters from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/index';
+import History from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/History';
 
 export default function MoneyMattersTab(props) {
   const { width, height } = useWindowDimensions();
@@ -100,8 +101,8 @@ export default function MoneyMattersTab(props) {
           )}
         >
           <Screen name="home" component={MoneyMatters} />
-          <Screen name="appointments" component={MoneyMatters} />
-          <Screen name="manage" component={MoneyMatters} />
+          <Screen name="appointments" component={History} />
+          {/* <Screen name="manage" component={MoneyMatters} /> */}
         </Navigator>
       </Layout>
     </>

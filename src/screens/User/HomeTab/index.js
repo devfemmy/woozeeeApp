@@ -175,9 +175,9 @@ export default function Home({ navigation }) {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       fetchFromAsyncStorage();
-      OneSignal.setNotificationOpenedHandler(notification => {
+      OneSignal.setNotificationOpenedHandler((notification) => {
         console.log('OneSignal: notification opened:', notification);
-        navigation.navigate('SocialRoute')
+        navigation.navigate('SocialRoute');
       });
     });
 

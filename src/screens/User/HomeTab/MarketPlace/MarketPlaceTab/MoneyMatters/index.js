@@ -78,22 +78,19 @@ const MoneyMatters = ({ route, navigation }) => {
     {
       id: 1,
       banner: {
-        uri:
-          'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/money1.mp4',
+        uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/money1.mp4',
       },
     },
     {
       id: 2,
       banner: {
-        uri:
-          'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/money2.mp4',
+        uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/money2.mp4',
       },
     },
     {
       id: 3,
       banner: {
-        uri:
-          'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/money3.mp4.mp4',
+        uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/money3.mp4.mp4',
       },
     },
   ];
@@ -245,33 +242,36 @@ const MoneyMatters = ({ route, navigation }) => {
 
   const Categories = ({ img, categoryTitle }) => {
     return (
-      <View
+      <Layout
+        level="2"
         style={{
+          flex: 1,
           marginLeft: 10,
           marginVertical: 20,
           width: 110,
           height: 110,
           borderRadius: 5,
-          backgroundColor: 'white',
           justifyContent: 'center',
           alignItems: 'center',
           padding: 5,
-          elevation: 5,
-          shadowColor: '#dcdcdc',
-          shadowOffset: { width: 0, height: 1 },
-          shadowOpacity: 1,
-          shadowRadius: 1,
         }}
       >
-        <Image source={img} />
-        <Text
-          //   status="basic"
-          category="s2"
-          style={{ color: 'black', marginTop: 5 }}
+        <View
+          style={{
+            marginVertical: 20,
+            width: 110,
+            height: 110,
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 5,
+          }}
         >
-          {categoryTitle}
-        </Text>
-      </View>
+          <Image source={img} />
+          <Text status="basic" category="s2" style={{ marginTop: 5 }}>
+            {categoryTitle}
+          </Text>
+        </View>
+      </Layout>
     );
   };
 
@@ -486,13 +486,13 @@ const MoneyMatters = ({ route, navigation }) => {
               accessibilityLabel="Continue"
               // disabled={isLoading}
               onPress={() => navigation.navigate('SearchResults')}
-              style={{
-                elevation: 5,
-                shadowColor: '#dcdcdc',
-                shadowOffset: { width: 0, height: 3 },
-                shadowOpacity: 1,
-                shadowRadius: 1,
-              }}
+              // style={{
+              //   elevation: 5,
+              //   shadowColor: '#dcdcdc',
+              //   shadowOffset: { width: 0, height: 3 },
+              //   shadowOpacity: 1,
+              //   shadowRadius: 1,
+              // }}
             >
               <Text status="control">{'Search'}</Text>
             </Button>

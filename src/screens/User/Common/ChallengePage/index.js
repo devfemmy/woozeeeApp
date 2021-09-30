@@ -48,33 +48,33 @@ export default function ChallengePage({ navigation }) {
 
   const layout = useWindowDimensions();
 
-  const VideoPrev = () => {
-    return (
-      //   <View
-      //     style={
-      //       {
-      //         //   flex: 1,
-      //         //   paddingTop: 10,
-      //         //   paddingHorizontal: 15,
-      //         //   marginBottom: 20,
-      //       }
-      //     }
-      //   >
-      <Video
-        source={require('../../../../assets/wwt.mp4')}
-        shouldPlay={true}
-        isMuted={true}
-        resizeMode="cover"
-        shouldPlay={screenIsFocused}
-        isLooping={true}
-        style={{
-          height: 300,
-          width: '100%',
-        }}
-      />
-      //   </View>
-    );
-  };
+  // const VideoPrev = () => {
+  //   return (
+  //     //   <View
+  //     //     style={
+  //     //       {
+  //     //         //   flex: 1,
+  //     //         //   paddingTop: 10,
+  //     //         //   paddingHorizontal: 15,
+  //     //         //   marginBottom: 20,
+  //     //       }
+  //     //     }
+  //     //   >
+  //     <Video
+  //       source={require('../../../../assets/wwt.mp4')}
+  //       shouldPlay={true}
+  //       isMuted={true}
+  //       resizeMode="cover"
+  //       shouldPlay={screenIsFocused}
+  //       isLooping={true}
+  //       style={{
+  //         height: 300,
+  //         width: '100%',
+  //       }}
+  //     />
+  //     //   </View>
+  //   );
+  // };
 
   return (
     <Layout
@@ -95,7 +95,7 @@ export default function ChallengePage({ navigation }) {
           width: width,
         }}
       >
-        <VideoPrev />
+        {/* <VideoPrev /> */}
         <View style={{ padding: 8 }}>
           <Text
             status="basic"

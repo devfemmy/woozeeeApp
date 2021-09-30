@@ -9,15 +9,22 @@ import {
   Divider,
   Radio,
   RadioGroup,
+  Toggle,
+  CheckBox,
 } from '@ui-kitten/components';
 
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  ScrollView,
+} from 'react-native';
 
 import { v4 as uuidv4 } from 'uuid';
 
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
-
-import { ScrollView } from 'react-native-gesture-handler';
 
 import {
   AntDesign,
@@ -61,6 +68,8 @@ const SearchResults = (props) => {
   const sheetRef = useRef(null);
 
   const sortSheetRef = useRef(null);
+
+  const filterSheetRef = useRef(null);
 
   const t = useContext(LocaleContext);
 
@@ -357,16 +366,158 @@ const SearchResults = (props) => {
             // disabled={isLoading}
             // onPress={routeAddInfo}
             style={{
-              elevation: 5,
-              shadowColor: '#dcdcdc',
-              shadowOffset: { width: 0, height: 3 },
-              shadowOpacity: 1,
-              shadowRadius: 1,
               marginTop: 30,
             }}
           >
             <Text status="control">{'Get Loan'}</Text>
           </Button>
+        </View>
+      </View>
+    );
+  };
+
+  let banks = [
+    {
+      id: 1,
+      title: 'Accion Microfinance Bank',
+    },
+    { id: 2, title: 'Asset Matrix Microfinance bank' },
+    { id: 3, title: 'Altitude Microfinnace Bank' },
+    { id: 4, title: 'FBN Microfinance Bank' },
+    { id: 5, title: 'Fina Trust Microfinance Bank' },
+    { id: 6, title: 'Rehoboth Microfinance Bank' },
+    { id: 7, title: 'Lapo Micorfinance Bank' },
+    { id: 8, title: 'Zedvance Microfinance Bank' },
+    { id: 9, title: 'Zedvance Microfinance Bank' },
+  ];
+
+  const FilterContent = () => {
+    return (
+      <View
+        style={{
+          height: '100%',
+        }}
+      >
+        <View
+          style={{
+            borderTopRightRadius: 5,
+            borderTopLeftRadius: 5,
+            // marginHorizontal: 20,
+            marginVertical: 15,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Text category="h6" status="primary">
+            Filters
+          </Text>
+          <Feather
+            name="x"
+            size={24}
+            color="#2E5894"
+            onPress={() => filterSheetRef.current.close()}
+          />
+        </View>
+        <View
+          style={{
+            paddingVertical: 30,
+            // paddingHorizontal: 20,
+          }}
+        >
+          <Text category="h6" status="primary">
+            Interest Rate
+          </Text>
+          <Text status="basic" style={{ marginTop: 20 }}>
+            0% - 25%
+          </Text>
+          {/* range slider here */}
+          <Divider style={{ marginTop: 20 }} />
+          <Text category="h6" status="primary" style={{ marginTop: 20 }}>
+            Repayment Flexibility
+          </Text>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: 20,
+            }}
+          >
+            <Text status="basic" style={{ fontSize: 12 }}>
+              Only shows loans offers with repayment flexibilty
+            </Text>
+            <Toggle />
+          </View>
+          <Divider style={{ marginTop: 20 }} />
+          <Text category="h6" status="primary" style={{ marginTop: 20 }}>
+            Microfinance Banks
+          </Text>
+          {banks.map((bank, index) => (
+            <View
+              style={{
+                display: 'flex',
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginVertical: 15,
+              }}
+              key={index}
+            >
+              <Text status="basic">{bank.title}</Text>
+              <CheckBox
+                status="basic"
+                checked={false}
+                // onChange={(nextChecked) => {
+                //   setChecked(nextChecked);
+                // }}
+                // style={styles.checkbox}
+              />
+            </View>
+          ))}
+          <View
+            style={{
+              display: 'flex',
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              marginBottom: 30,
+            }}
+          >
+            <Button
+              appearance="outline"
+              status="danger"
+              size="large"
+              accessibilityLiveRegion="assertive"
+              accessibilityComponentType="button"
+              accessibilityLabel="Continue"
+              // disabled={isLoading}
+              // onPress={routeAddInfo}
+              style={{
+                marginTop: 30,
+              }}
+            >
+              <Text status="control">{'Cancel'}</Text>
+            </Button>
+            <Button
+              status="success"
+              size="large"
+              accessibilityLiveRegion="assertive"
+              accessibilityComponentType="button"
+              accessibilityLabel="Continue"
+              // disabled={isLoading}
+              // onPress={routeAddInfo}
+              style={{
+                marginTop: 30,
+              }}
+            >
+              <Text status="control">{t('confirm')}</Text>
+            </Button>
+          </View>
         </View>
       </View>
     );
@@ -457,10 +608,10 @@ const SearchResults = (props) => {
           alignItems: 'center',
         }}
       >
-        <Text category="h5" status="basic" style={{ marginBottom: 5 }}>
+        <Text category="h5" status="basic" style={{ marginBottom: 3 }}>
           ₦100,000.00
         </Text>
-        <Text category="c1" status="basic" style={{ marginBottom: 5 }}>
+        <Text category="c1" status="basic">
           Fri, 25th Feb 2021 - Sat, 26th Mar 2021
         </Text>
       </View>
@@ -512,7 +663,7 @@ const SearchResults = (props) => {
               />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => filterSheetRef.current.open()}>
             <Fontisto
               name="equalizer"
               size={18}
@@ -608,6 +759,45 @@ const SearchResults = (props) => {
           }}
         >
           <SortContent />
+        </Layout>
+      </RBSheet>
+      <RBSheet
+        ref={filterSheetRef}
+        height={700}
+        animationType="fade"
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: BG_THEME,
+          },
+        }}
+      >
+        <Layout
+          level="5"
+          style={{
+            flex: 1,
+            width: '100%',
+            // paddingBottom: 30,
+          }}
+        >
+          <ScrollView
+            vertical
+            showsVerticalScrollIndicator={false}
+            alwaysBounceVertical
+            showsHorizontalScrollIndicator={false}
+            constentContainerStyle={{
+              display: 'flex',
+              flex: 1,
+              justifyContent: 'flex-end',
+            }}
+            style={{
+              paddingHorizontal: 10,
+              flexDirection: 'column',
+            }}
+          >
+            <FilterContent />
+          </ScrollView>
         </Layout>
       </RBSheet>
     </Layout>

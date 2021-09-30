@@ -65,7 +65,7 @@ const screens = {
   moneyMatters: {
     moneyMatters: IconCHome,
     history: IconClipboard,
-    manage: IconSettings,
+    // manage: IconSettings,
   },
   charity: {
     charity: IconCCharity,

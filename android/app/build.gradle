@@ -183,7 +183,7 @@ android {
         applicationId "app.woozeee.com"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 91
+        versionCode 93
         versionName "1.0"
         multiDexEnabled true
     }
@@ -266,7 +266,7 @@ dependencies {
     implementation "com.google.firebase:firebase-dynamic-links:19.0.0" //Add this line
     implementation "com.google.firebase:firebase-invites:17.0.0"
 
-    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    implementation 'com.facebook.android:facebook-android-sdk:5.11.0'
     implementation(project(":react-native-google-signin"))
     implementation project(path: ':libbambuser')
 

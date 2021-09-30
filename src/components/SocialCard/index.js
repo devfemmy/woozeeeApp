@@ -268,7 +268,7 @@ export function ChallengeVideoCard(props) {
     navigation.navigate('ChallengeWooz', challenge), [navigation];
   });
 
-  const routeChallengePage = () => navigation.navigate('ChallengePage');
+  // const routeChallengePage = () => navigation.navigate('ChallengePage');
 
   // console.log('challenge -> ', challenge);
   return useMemo(
@@ -285,7 +285,7 @@ export function ChallengeVideoCard(props) {
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
-        onPress={routeChallengePage}
+        // onPress={routeChallengePage}
       >
         <Image
           source={{ uri: challenge.imageURL }}
