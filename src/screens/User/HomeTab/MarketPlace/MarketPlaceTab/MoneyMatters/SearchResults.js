@@ -179,91 +179,97 @@ const SearchResults = (props) => {
             </Text>
           </View>
         </View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderRadius: 5,
-            backgroundColor: 'white',
-            height: 100,
-            padding: 15,
-            marginHorizontal: 10,
-            elevation: 5,
-            shadowColor: '#dcdcdc',
-            shadowOffset: { width: 0, height: 3 },
-            shadowOpacity: 1,
-            shadowRadius: 1,
-          }}
-        >
-          <View style={{ marginRight: 30 }}>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <EvilIcons
-                name="clock"
-                size={20}
-                color="rgba(0,0,0,.5)"
-                style={{ marginRight: 5 }}
-              />
-              <Text category="c1" style={{ color: 'rgba(0,0,0,.8)' }}>
-                Loan Duration
+        <View>
+          <Layout
+            level="1"
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              borderRadius: 5,
+              height: 100,
+              padding: 15,
+              marginHorizontal: 10,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 3,
+              },
+              shadowOpacity: 0.05,
+              shadowRadius: 3,
+              elevation: 2,
+            }}
+          >
+            <View style={{ marginRight: 30 }}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <EvilIcons
+                  name="clock"
+                  size={20}
+                  color="rgba(0,0,0,.8)"
+                  style={{ marginRight: 5 }}
+                />
+                <Text category="c1" status="basic">
+                  Loan Duration
+                </Text>
+              </View>
+              <Text
+                category="h6"
+                style={{
+                  // color: 'rgba(0,0,0,.8)',
+                  marginVertical: 10,
+                  marginLeft: 25,
+                }}
+                status="basic"
+              >
+                30 Days
               </Text>
             </View>
-            <Text
-              category="h6"
-              style={{
-                color: 'rgba(0,0,0,.8)',
-                marginVertical: 10,
-                marginLeft: 25,
-              }}
-            >
-              30 Days
-            </Text>
-          </View>
-          <View style={{ marginRight: 10 }}>
-            <Entypo
-              name="flow-line"
-              size={24}
-              color="rgba(0,0,0,.5)"
-              //   style={{ marginHorizontal: 10 }}
-            />
-          </View>
-          <View style={{ marginRight: 30 }}>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <MaterialCommunityIcons
-                name="transfer-up"
-                size={18}
-                color="rgba(0,0,0,.5)"
-                style={{ marginRight: 5 }}
+            <View style={{ marginRight: 10 }}>
+              <Entypo
+                name="flow-line"
+                size={24}
+                color="rgba(0,0,0,.8)"
+                //   style={{ marginHorizontal: 10 }}
               />
-              <Text category="c1" style={{ color: 'rgba(0,0,0,.8)' }}>
-                Interest Rate
+            </View>
+            <View style={{ marginRight: 30 }}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="transfer-up"
+                  size={18}
+                  color="rgba(0,0,0,.7)"
+                  style={{ marginRight: 5 }}
+                />
+                <Text category="c1" status="basic">
+                  Interest Rate
+                </Text>
+              </View>
+              <Text
+                category="h6"
+                status="basic"
+                style={{
+                  marginVertical: 10,
+                  marginLeft: 25,
+                  // color: 'rgba(0,0,0,.8)',
+                }}
+              >
+                4%
               </Text>
             </View>
-            <Text
-              category="h6"
-              status="basic"
-              style={{
-                marginVertical: 10,
-                marginLeft: 25,
-                color: 'rgba(0,0,0,.8)',
-              }}
-            >
-              4%
-            </Text>
-          </View>
+          </Layout>
         </View>
         <View
           style={{
@@ -299,13 +305,6 @@ const SearchResults = (props) => {
             accessibilityLabel="Continue"
             // disabled={isLoading}
             onPress={routeAddInfo}
-            style={{
-              elevation: 5,
-              shadowColor: '#dcdcdc',
-              shadowOffset: { width: 0, height: 3 },
-              shadowOpacity: 1,
-              shadowRadius: 1,
-            }}
           >
             <Text status="control">{'Get Loan'}</Text>
           </Button>
@@ -528,71 +527,81 @@ const SearchResults = (props) => {
       <View
         style={{
           display: 'flex',
-          borderRadius: 5,
-          justifyContent: 'center',
-          backgroundColor: 'white',
-          height: 120,
-          padding: 15,
           marginVertical: 10,
-          elevation: 5,
-          shadowColor: '#dcdcdc',
-          shadowOffset: { width: 0, height: 3 },
-          shadowOpacity: 1,
-          shadowRadius: 1,
         }}
       >
-        <View
+        <Layout
+          level="1"
           style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: 20,
+            flex: 1,
+            padding: 15,
+            borderRadius: 5,
+            justifyContent: 'center',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 3,
+            },
+            shadowOpacity: 0.05,
+            shadowRadius: 3,
+            elevation: 2,
           }}
         >
-          <Text category="c2" style={{ color: '#27D0AD' }}>
-            {level}
-          </Text>
           <View
             style={{
               display: 'flex',
               flexDirection: 'row',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              justifyContent: 'center',
+              marginBottom: 20,
             }}
           >
-            <MaterialCommunityIcons
-              name="clock-time-nine-outline"
-              size={13}
-              color="rgba(0,0,0,.4)"
-              style={{ marginHorizontal: 5 }}
-            />
-            <Text category="c1" status="primary">
-              30 days
+            <Text category="c2" style={{ color: '#27D0AD' }}>
+              {level}
+            </Text>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <MaterialCommunityIcons
+                name="clock-time-nine-outline"
+                size={13}
+                color="rgba(0,0,0,.8)"
+                style={{ marginHorizontal: 5 }}
+              />
+              <Text category="c1" status="basic">
+                30 days
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 5,
+            }}
+          >
+            <Image source={img} resizeMode="contain" />
+            <Text category="c2" style={{ color: 'red' }}>
+              {`+${interestRate}% Interest`}
+            </Text>
+            <Text
+              category="h5"
+              status="basic"
+              // style={{
+              //   color: 'rgba(255,255,255,.6)',
+              // }}
+            >
+              {`₦${amount}`}
             </Text>
           </View>
-        </View>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Image source={img} resizeMode="contain" />
-          <Text category="c2" style={{ color: 'red' }}>
-            {`+${interestRate}% Interest`}
-          </Text>
-          <Text
-            category="h5"
-            style={{
-              color: 'rgba(0,0,0,.6)',
-            }}
-          >
-            {`₦${amount}`}
-          </Text>
-        </View>
+        </Layout>
       </View>
     );
   };

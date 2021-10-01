@@ -243,7 +243,7 @@ const MoneyMatters = ({ route, navigation }) => {
   const Categories = ({ img, categoryTitle }) => {
     return (
       <Layout
-        level="2"
+        level="1"
         style={{
           flex: 1,
           marginLeft: 10,
@@ -254,6 +254,14 @@ const MoneyMatters = ({ route, navigation }) => {
           justifyContent: 'center',
           alignItems: 'center',
           padding: 5,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 3,
+          },
+          shadowOpacity: 0.05,
+          shadowRadius: 3,
+          elevation: 2,
         }}
       >
         <View
