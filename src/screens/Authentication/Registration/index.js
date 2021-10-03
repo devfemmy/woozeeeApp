@@ -126,7 +126,7 @@ export default function Register({ navigation }) {
                   accessibilityComponentType="button"
                   accessibilityLabel="Continue"
                   onPress={validateEmail}
-                  disabled={isLoading}
+                  disabled={isLoading || !checked}
                 >
                   <Text status="control">{t('continue')}</Text>
                 </Button>
@@ -141,6 +141,13 @@ export default function Register({ navigation }) {
                   flexWrap: 'wrap',
                 }}
               >
+              <CheckBox
+              checked={checked}
+              onChange={nextChecked => setChecked(nextChecked)}
+              >
+                Accept Terms and Conditions
+              </CheckBox>
+
                 <Text category="p2">{`${t('continueAgree')} woozeee's`}</Text>
                 <Button
                   appearance="ghost"
