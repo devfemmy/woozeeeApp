@@ -34,6 +34,8 @@ import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
 import Placeholders from 'src/components/Placeholders';
 
+import VideoFullscreen from 'src/components/VideoFullscreen';
+
 import { IconBackIos, IconCMovie } from 'src/components/CustomIcons';
 
 import Api from 'src/api';
@@ -257,82 +259,163 @@ export default function ExploreWooz({ route, navigation }) {
       && status !== 'loading'
       && data.pages[0].pageData.data.length > 0
     ) {
+      const res = data.pages.map((page) => page.pageData.data);
+      const final = res.reduce((acc, element) => {
+        return [...acc, ...element];
+      }, []);
+
       videoLength.current = data.pages[0].pageData.data.length;
-      return data.pages.map((page) => (
-        <React.Fragment key={page.nextID}>
-          <View style={{ flex: 1 }}>
-            <ScrollView
-              style={{
-                flex: 1,
-                backgroundColor: 'transparent',
-              }}
-              pagingEnabled
-              disableIntervalMomentum
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              onMomentumScrollEnd={onMomentumScrollEnd}
-            >
-              {page.pageData.data.map((item, i) => (
-                <React.Fragment key={i.toString()}>
-                  <View style={{ position: 'relative' }}>
-                    <Image
-                      resizeMode="contain"
-                      style={{
-                        height: VIEW_HEIGHT,
-                        width: '100%',
-                        overflow: 'hidden',
-                        position: 'absolute',
-                      }}
-                      source={
-                        data.pages
-                          ? { uri: item.mediaURL }
-                          : require('assets/images/banner/placeholder-image.png')
-                      }
+      return (
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            style={{
+              flex: 1,
+              backgroundColor: 'transparent',
+            }}
+            pagingEnabled
+            // scrollToIndex={autoIndex}
+            disableIntervalMomentum
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            onMomentumScrollEnd={onMomentumScrollEnd}
+          >
+            {data.pages.map((page) => (
+              <React.Fragment key={uuidv4()}>
+                {final.map((item, i) => (
+                  <React.Fragment key={i.toString()}>
+                    <View style={{ position: 'relative' }}>
+                      <Image
+                        resizeMode="contain"
+                        style={{
+                          height: VIEW_HEIGHT,
+                          width: '100%',
+                          overflow: 'hidden',
+                          position: 'absolute',
+                        }}
+                        source={
+                          item
+                            ? { uri: item.mediaURL }
+                            : require('assets/images/banner/placeholder-image.png')
+                        }
+                      />
+                    </View>
+                    <ChallengeVideo
+                      ref={videoViewRef}
+                      data={item}
+                      height={VIEW_HEIGHT}
+                      videoRef={videoRef}
+                      navigation={navigation}
                     />
-                  </View>
-                  <ChallengeVideo
-                    ref={videoViewRef}
-                    data={item}
-                    height={VIEW_HEIGHT}
-                    videoRef={videoRef}
-                    navigation={navigation}
-                  />
-                </React.Fragment>
-              ))}
-              <Animated.View
-                style={[
-                  StyleSheet.absoluteFillObject,
-                  { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
-                ]}
-              >
-                {page.pageData.data.length ? (
+                  </React.Fragment>
+                ))}
+                <Animated.View
+                  style={[
+                    StyleSheet.absoluteFillObject,
+                    { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
+                  ]}
+                >
                   <Video
                     ref={videoRef}
                     resizeMode="contain"
                     style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
                     source={{ uri: page.pageData.data[index].mediaURL }}
                     isLooping
-                    shouldPlay={isFocused}
                     onPlaybackStatusUpdate={(playbackStatus) =>
                       onPlaybackStatusUpdate(
                         playbackStatus,
                         page.pageData.data[index].userEntryData.entryId,
                       )
                     }
-                    onReadyForDisplay={() =>
-                      Animated.timing(opacity, {
-                        toValue: 1,
-                        useNativeDriver: true,
-                        duration: 500,
-                      }).start()
-                    }
+                    isMuted={false}
+                    shouldPlay={isFocused}
+                    // prettier-ignore
+                    onReadyForDisplay={() => Animated.timing(opacity, {
+                      toValue: 1,
+                      useNativeDriver: true,
+                      duration: 500,
+                    }).start()}
                   />
-                ) : null}
-              </Animated.View>
-            </ScrollView>
-          </View>
-        </React.Fragment>
-      ));
+                </Animated.View>
+              </React.Fragment>
+            ))}
+          </ScrollView>
+        </View>
+      );
+      // return data.pages.map((page) => (
+      //   <React.Fragment key={page.nextID}>
+      //     <View style={{ flex: 1 }}>
+      //       <ScrollView
+      //         style={{
+      //           flex: 1,
+      //           backgroundColor: 'transparent',
+      //         }}
+      //         pagingEnabled
+      //         disableIntervalMomentum
+      //         showsHorizontalScrollIndicator={false}
+      //         showsVerticalScrollIndicator={false}
+      //         onMomentumScrollEnd={onMomentumScrollEnd}
+      //       >
+      //         {page.pageData.data.map((item, i) => (
+      //           <React.Fragment key={i.toString()}>
+      //             <View style={{ position: 'relative' }}>
+      //               <Image
+      //                 resizeMode="contain"
+      //                 style={{
+      //                   height: VIEW_HEIGHT,
+      //                   width: '100%',
+      //                   overflow: 'hidden',
+      //                   position: 'absolute',
+      //                 }}
+      //                 source={
+      //                   data.pages
+      //                     ? { uri: item.mediaURL }
+      //                     : require('assets/images/banner/placeholder-image.png')
+      //                 }
+      //               />
+      //             </View>
+      // <ChallengeVideo
+      //   ref={videoViewRef}
+      //   data={item}
+      //   height={VIEW_HEIGHT}
+      //   videoRef={videoRef}
+      //   navigation={navigation}
+      // />
+      //           </React.Fragment>
+      //         ))}
+      //         <Animated.View
+      //           style={[
+      //             StyleSheet.absoluteFillObject,
+      //             { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
+      //           ]}
+      //         >
+      //           {page.pageData.data.length ? (
+      //             <Video
+      //               ref={videoRef}
+      //               resizeMode="contain"
+      //               style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
+      //               source={{ uri: page.pageData.data[index].mediaURL }}
+      //               isLooping
+      //               shouldPlay={isFocused}
+      //               onPlaybackStatusUpdate={(playbackStatus) =>
+      //                 onPlaybackStatusUpdate(
+      //                   playbackStatus,
+      //                   page.pageData.data[index].userEntryData.entryId,
+      //                 )
+      //               }
+      //               onReadyForDisplay={() =>
+      //                 Animated.timing(opacity, {
+      //                   toValue: 1,
+      //                   useNativeDriver: true,
+      //                   duration: 500,
+      //                 }).start()
+      //               }
+      //             />
+      //           ) : null}
+      //         </Animated.View>
+      //       </ScrollView>
+      //     </View>
+      //   </React.Fragment>
+      // ));
     }
     return (
       <FetchFailed
@@ -363,7 +446,6 @@ export default function ExploreWooz({ route, navigation }) {
             justifyContent: 'space-between',
             alignItems: 'center',
             width: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',
           }}
         >
           <InteractIcon

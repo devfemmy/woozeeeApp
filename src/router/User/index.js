@@ -10,6 +10,8 @@ import Home from 'src/screens/User/HomeTab';
 
 import Wallet from 'src/screens/User/WalletTab';
 
+import Activities from 'src/screens/User/Activities';
+
 import BillPay from 'src/screens/User/BillPayTab';
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -45,7 +47,7 @@ export default function UserRoute() {
       <Screen name="HomeTab" component={Home} />
       <Screen name="MyWalletTab" component={Wallet} />
       <Screen name="BillPayTab" component={BillPay} />
-      <Screen name="MyActivitiesTab" component={Home} />
+      <Screen name="MyActivitiesTab" component={Activities} />
     </Navigator>
   );
 }

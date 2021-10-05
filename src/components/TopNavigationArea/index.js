@@ -18,7 +18,7 @@ import {
 
 // Components import
 import BackButton from './components/BackButton';
-// import HelpButton from './components/HelpButton';
+import Calendar from './components/Calendar';
 import Title from './components/Title';
 import Logo from './components/Logo';
 import SearchField from './components/SearchField';
@@ -26,6 +26,7 @@ import SettingsButton from './components/SettingsButton';
 
 import TopNavigationGlobalMenu from './components/TopNavigationGlobalMenu';
 import TopNavigationUserMenu from './components/TopNavigationUserMenu';
+import TopNavigationUserActivities from './components/TopNavigationUserActivities';
 
 export default function TopNavigationArea(props) {
   const {
@@ -44,13 +45,15 @@ export default function TopNavigationArea(props) {
     onStreamClick,
   } = props;
 
-  const routeSearch = useCallback(() => navigation.navigate('Search', {chat: null}), [
-    navigation,
-  ]);
+  const routeSearch = useCallback(
+    () => navigation.navigate('Search', { chat: null }),
+    [navigation],
+  );
 
-  const routeMessaging = useCallback(() => navigation.navigate('Messaging'), [
-    navigation,
-  ]);
+  const routeMessaging = useCallback(
+    () => navigation.navigate('Messaging'),
+    [navigation],
+  );
 
   const renderSocialTools = useCallback(
     () => (
@@ -170,13 +173,39 @@ export default function TopNavigationArea(props) {
       <Layout level="5">
         <TopNavigation
           alignment="center"
-          title={(evaProps) => <Title {...evaProps} status= {status} title={title} />}
+          title={(evaProps) => (
+            <Title {...evaProps} status={status} title={title} />
+          )}
           accessoryLeft={(evaProps) => (
             <BackButton {...evaProps} navigation={navigation} icon={icon} />
           )}
           // accessoryRight={(evaProps) => (
           //   <HelpButton {...evaProps} navigation={navigation} />
           // )}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="screen navigation"
+          style={[style, { backgroundColor: 'transparent' }]}
+        />
+        <Divider />
+      </Layout>
+    ),
+    [navigation, title, icon, style],
+  );
+
+  const TopNavigationActivities = useMemo(
+    () => (
+      <Layout level="5">
+        <TopNavigation
+          alignment="center"
+          title={(evaProps) => (
+            <Title {...evaProps} status={status} title={title} />
+          )}
+          // accessoryLeft={(evaProps) => (
+          //   <Calendar {...evaProps} navigation={navigation} icon={icon} />
+          // )}
+          accessoryRight={() => (
+            <TopNavigationUserActivities navigation={navigation} />
+          )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -381,6 +410,7 @@ export default function TopNavigationArea(props) {
     marketPlace: TopNavigationGlobal,
     charity: TopNavigationGlobal,
     billPay: TopNavigationBillPay,
+    activities: TopNavigationActivities,
   };
 
   return navs[screen];

@@ -59,16 +59,16 @@ const MoneyMattersConfirmation = ({
         >
           <View>
             <Text category="c2" style={{ color: '#043F7C', marginVertical: 5 }}>
-              {currUserName}
+              {currUserName} Lapo Microfinance Bank
             </Text>
             <Text
               category="c1"
               style={{ color: 'rgba(0, 0, 0, 0.8)', marginVertical: 5 }}
             >
-              {currUserInfo}
+              {currUserInfo}Loanee
             </Text>
           </View>
-          <Image source={img} resizeMode="contain" />
+          <Image source={lapo2} resizeMode="contain" />
         </View>
         <View
           style={{
@@ -114,17 +114,17 @@ const MoneyMattersConfirmation = ({
       >
         <View>
           <Text category="c2" style={{ color: '#043F7C', marginVertical: 5 }}>
-            {guestUserName}
+            {guestUserName} Jace Wazobia
           </Text>
           <Text
             category="c1"
             style={{ color: 'rgba(0, 0, 0, 0.8)', marginVertical: 5 }}
           >
-            {guestUserInfo}
+            {guestUserInfo} 4189 4169 4597 1122 (Access Bank)
           </Text>
         </View>
         <Image
-          source={img}
+          source={access}
           resizeMode="contain"
           style={{ width: 50, height: 50 }}
         />
@@ -146,8 +146,8 @@ const MoneyMattersConfirmation = ({
         screen="auth"
       />
       <View style={styles.container}>
-        <Text category="h6">{action}</Text>
-        <Text category="h5">₦ {amount}</Text>
+        <Text category="h6">{action}Loan</Text>
+        <Text category="h5">₦ {amount}100000</Text>
       </View>
       <View style={styles.Loancontainer}>
         <LoaneeDetailsBlock

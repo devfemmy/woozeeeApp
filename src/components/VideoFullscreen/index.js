@@ -192,21 +192,6 @@ const VideoView = forwardRef((props, ref) => {
       const result = await Share.share({
         message: _res.shortLink,
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // console.log(result.activityType);
-          // alert('Done');
-          sheetRef.current.close();
-        } else {
-          // shared
-          // alert('Post Shared!');
-          sheetRef.current.close();
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // alert('Action dismissed');
-        sheetRef.current.close();
-      }
-      sheetRef.current.close();
     } catch (e) {
       console.log(e);
     }
