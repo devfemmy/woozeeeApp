@@ -874,9 +874,11 @@ export default function VideoView({
               <View
                 style={{
                   display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  // flexDirection: 'row',
+                  justifyContent: 'flex-start',
                   alignItems: 'center',
+                  width: '95%',
+                  // backgroundColor: 'red',
                 }}
               >
                 <Text
@@ -886,22 +888,29 @@ export default function VideoView({
                 >
                   {comments[0].userName}
                   {'  '}
-                  <Text category="s2" status="basic" numberOfLines={1}>
+                  <Text
+                    category="s2"
+                    status="basic"
+                    numberOfLines={1}
+                    style={{ marginRight: 15 }}
+                  >
                     {comments[0].text}
                   </Text>
                 </Text>
-                <Moment
+                {/* <Moment
                   fromNow
                   element={(momentProps) => (
                     <Text
                       category="c1"
                       {...momentProps}
-                      style={{ fontSize: 10, marginTop: 20, marginRight: 10 }}
+                      style={{
+                        fontSize: 10,
+                      }}
                     />
                   )}
                 >
                   {comments[0].sentAt}
-                </Moment>
+                </Moment> */}
               </View>
               <TouchableWithoutFeedback onPress={routeComments}>
                 <Text
