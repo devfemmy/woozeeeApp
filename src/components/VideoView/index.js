@@ -219,6 +219,8 @@ export default function VideoView({
 
   const [totalLikes, setTotalLikes] = useState(item.totalLikes);
 
+  const [comments, setComments] = useState([]);
+
   const [form, setFormValues] = useState({
     comment: '',
     entryId: item.userId,
@@ -460,10 +462,6 @@ export default function VideoView({
     const userData = await getUserData(item.userId);
     const { data } = userData;
     await navigation.navigate('UserProfile', data);
-
-    // item.userId !== _userId
-    //   ? await navigation.navigate('UserProfile', data)
-    //   : await navigation.navigate('ProfileTab');
   };
 
   const routeComments = async () => {
@@ -474,6 +472,46 @@ export default function VideoView({
       currUserData: data,
       postItem: item,
     });
+  };
+
+  const fetchComments = async (id) => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
+    const allComments = await firestore()
+      .collection('entryComments')
+      .doc(id.trim())
+      .collection('comments')
+      .orderBy('sentAt', 'asc')
+      .get();
+
+    const _comments = [];
+    // console.log(' allcomments is', allComments);
+    allComments.forEach((snap) => {
+      let replies = Object.assign(snap._data, {
+        replyId: snap.id,
+        parentCommentId: snap._ref._documentPath._parts[3],
+      });
+      _comments.push(replies);
+    });
+
+    setComments([..._comments]);
   };
 
   const handleView = async (item_id) => {
@@ -830,6 +868,53 @@ export default function VideoView({
               />
             </View> */}
           </View>
+          {/* comments */}
+          {fetchComments(data.item._id) && comments.length > 0 && (
+            <View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Text
+                  category="h6"
+                  status="basic"
+                  style={{ marginLeft: 10, marginTop: 10 }}
+                >
+                  {comments[0].userName}
+                  {'  '}
+                  <Text category="s2" status="basic" numberOfLines={1}>
+                    {comments[0].text}
+                  </Text>
+                </Text>
+                <Moment
+                  fromNow
+                  element={(momentProps) => (
+                    <Text
+                      category="c1"
+                      {...momentProps}
+                      style={{ fontSize: 10, marginTop: 20, marginRight: 10 }}
+                    />
+                  )}
+                >
+                  {comments[0].sentAt}
+                </Moment>
+              </View>
+              <TouchableWithoutFeedback onPress={routeComments}>
+                <Text
+                  category="c1"
+                  status="basic"
+                  style={{ marginHorizontal: 10, marginTop: 5 }}
+                >
+                  view all {comments.length}{' '}
+                  {comments.length > 1 ? 'comments' : 'comment'}
+                </Text>
+              </TouchableWithoutFeedback>
+            </View>
+          )}
           <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
             <View
               style={{
