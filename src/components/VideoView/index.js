@@ -386,6 +386,7 @@ export default function VideoView({
   };
 
   const sendComment = async (commentMessage) => {
+    console.log(commentMessage);
     const userId = await AsyncStorage.getItem('userid');
     const userData = await getUserData(userId);
 
@@ -421,7 +422,7 @@ export default function VideoView({
         sent: true,
       });
 
-    console.log('res =>', res);
+    setText('');
   };
 
   const sharePostToDm = async (
@@ -1145,6 +1146,15 @@ export default function VideoView({
         </RBSheet>
       </Root>
     ),
-    [data, isBookmarked, isLiked, totalLikes, following, navigation],
+    [
+      data,
+      isBookmarked,
+      isLiked,
+      totalLikes,
+      following,
+      navigation,
+      text,
+      comments,
+    ],
   );
 }

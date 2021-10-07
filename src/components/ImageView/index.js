@@ -388,6 +388,8 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
         delivered: false,
         sent: true,
       });
+
+    setText('');
   };
 
   const fetchComments = async (id) => {
@@ -1077,6 +1079,15 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
         </RBSheet>
       </Root>
     ),
-    [data, isBookmarked, isLiked, totalLikes, following, navigation],
+    [
+      data,
+      isBookmarked,
+      isLiked,
+      totalLikes,
+      following,
+      navigation,
+      text,
+      comments,
+    ],
   );
 }
