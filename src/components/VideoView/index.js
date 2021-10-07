@@ -404,7 +404,7 @@ export default function VideoView({
       firebase.initializeApp(firebaseConfig);
     }
 
-    await firestore()
+    const res = await firestore()
       .collection('entryComments')
       .doc(data.item._id.trim())
       .collection('comments')
@@ -420,6 +420,8 @@ export default function VideoView({
         delivered: false,
         sent: true,
       });
+
+    console.log('res =>', res);
   };
 
   const sharePostToDm = async (
@@ -875,24 +877,20 @@ export default function VideoView({
                 style={{
                   display: 'flex',
                   // flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
+                  // justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
                   width: '95%',
                   // backgroundColor: 'red',
                 }}
               >
-                <Text
-                  category="h6"
-                  status="basic"
-                  style={{ marginLeft: 10, marginTop: 10 }}
-                >
+                <Text category="h6" status="basic" style={{ marginLeft: 10 }}>
                   {comments[0].userName}
                   {'  '}
                   <Text
                     category="s2"
                     status="basic"
                     numberOfLines={1}
-                    style={{ marginRight: 15 }}
+                    style={{ marginRight: 15, textAlign: 'left' }}
                   >
                     {comments[0].text}
                   </Text>

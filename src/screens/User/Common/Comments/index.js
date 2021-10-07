@@ -190,14 +190,16 @@ export default function Comments({ route, navigation }) {
   );
 
   const sendComment = async (commentMessage) => {
-    // console.log(entryId);
-    if (commentId) {
-      // console.log(commentMessage, commentId);
-      setCommentId('');
-    } else {
-      // console.log(commentMessage);
-      return;
-    }
+    // console.log(commentMessage); Please take it back 🙏🏾 🙏🏾
+
+    //check if there's a comment i'm replying to
+    // if (commentId) {
+    //   // console.log(commentMessage, commentId);
+    //   setCommentId('');
+    // } else {
+    //   // console.log('noo');
+    //   return;
+    // }
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
       authDomain: 'woozeee-d7f6c.firebaseapp.com',
@@ -212,10 +214,10 @@ export default function Comments({ route, navigation }) {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-    // // console.log(item, commentMessage);
+    // console.log(item, commentMessage);
 
     if (commentId) {
-      await firestore()
+      const res = await firestore()
         .collection('entryComments')
         .doc(postItem._id.trim())
         .collection('comments')
@@ -232,8 +234,9 @@ export default function Comments({ route, navigation }) {
           delivered: false,
           sent: true,
         });
+      console.log('res', res);
     } else {
-      await firestore()
+      const res = await firestore()
         .collection('entryComments')
         .doc(postItem._id.trim())
         .collection('comments')
@@ -249,6 +252,8 @@ export default function Comments({ route, navigation }) {
           delivered: false,
           sent: true,
         });
+
+      console.log('res for stand alone comment', res);
     }
     setComments([
       ...comments,
