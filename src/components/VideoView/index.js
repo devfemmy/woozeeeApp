@@ -65,6 +65,8 @@ import Modal from 'react-native-modalbox';
 
 import { Toast, Content, Root } from 'native-base';
 
+import Hyperlink from 'react-native-hyperlink';
+
 import {
   sendComment,
   handleLike,
@@ -726,12 +728,18 @@ export default function VideoView({
               }}
             >
               {data.item.description !== '' && (
-                <Text
-                  category="s2"
-                  style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
+                <Hyperlink
+                  linkStyle={{ textDecorationLine: 'underline' }}
+                  linkDefault={true}
                 >
-                  {data.item.description}
-                </Text>
+                  <Text
+                    category="s2"
+                    style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
+                    numberOfLines={3}
+                  >
+                    {data.item.description}
+                  </Text>
+                </Hyperlink>
               )}
               <View
                 style={{

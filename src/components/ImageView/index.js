@@ -84,6 +84,8 @@ import {
   IconCEye,
 } from 'src/components/CustomIcons';
 
+import Hyperlink from 'react-native-hyperlink';
+
 import axios from 'axios';
 
 import { Feather, Ionicons } from '@expo/vector-icons';
@@ -665,13 +667,18 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
               }}
             >
               {data.item.description !== '' && (
-                <Text
-                  // status="primary"
-                  category="s2"
-                  style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
+                <Hyperlink
+                  linkStyle={{ textDecorationLine: 'underline' }}
+                  linkDefault={true}
                 >
-                  {data.item.description}
-                </Text>
+                  <Text
+                    category="s2"
+                    style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
+                    numberOfLines={3}
+                  >
+                    {data.item.description}
+                  </Text>
+                </Hyperlink>
               )}
               <ImageBackground
                 blurRadius={10}
