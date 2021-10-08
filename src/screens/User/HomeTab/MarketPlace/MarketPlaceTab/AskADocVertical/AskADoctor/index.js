@@ -8,7 +8,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Image, StyleSheet, View } from 'react-native';
 import { TextIcon } from 'src/components/IconPacks/TextIcon';
 import { IconCalendar } from 'src/components/CustomIcons';
-import { GeneralSelect } from 'src/components/FormFields/index';
+import { GeneralDatePicker, GeneralSelect } from 'src/components/FormFields/index';
 import services from './services.json';
 import specialty from './specialty.json'
 import DocLabel from 'src/components/DocLabel/index';
@@ -18,16 +18,15 @@ const AskADoctor = ({navigation}) => {
     const [date, setDate] = useState(new Date());
     const [_carousel, setCarousel] = useState(null)
     const [form, setFormValues] = useState({
-        fName: '',
-        sName: '',
-        displayName: '',
-        sex: '',
-        dob: '',
-        country: '',
-        state: '',
-        bio: '',
-        imgUrl: ''
+        visit_type: '',
+        location: '',
+        date: '',
+        specialization: '',
+        dob: ''
+
       });
+
+    console.log("forms", form)
     const sliders = [
         {
           id: 1,
@@ -172,7 +171,7 @@ const AskADoctor = ({navigation}) => {
                 icon_name= "arrow-ios-downward-outline" /> */}
                 <View style= {{marginVertical: 10}}>
                     <GeneralSelect
-                        type="services"
+                        type="visit_type"
                         label={'How do you want to access our Service?'}
                         data={SERVICES}
                         setFormValues={setFormValues}
@@ -180,7 +179,7 @@ const AskADoctor = ({navigation}) => {
                 </View>
                 <View style= {{marginVertical: 10}}>
                     <GeneralSelect
-                        type="specialty"
+                        type="specialization"
                         label={'Select Specialty'}
                         data={SPECIALTY}
                         setFormValues={setFormValues}
@@ -191,10 +190,20 @@ const AskADoctor = ({navigation}) => {
                     label={'Select Date'}
                     date={date}
                     onSelect={nextDate => setNewDateHandler(nextDate)}
-                    min = {new Date ('12-05-1880')}
-                    max= {new Date()}
+                    min = {new Date ('12-05-1990')}
+                    // max= {new Date()}
                     accessoryRight={IconCalendar}
+
                 />
+                  {/* <GeneralDatePicker
+                        type="dob"
+                        label={'Date'}
+                        date={new Date()}
+                        min = {new Date ('12-05-1880')}
+                        max= {new Date()}
+                        setFormValues={setFormValues}
+                        accessoryRight={IconCalendar}
+                      /> */}
                 </View>
                 <View style={{ paddingVertical: 20 }}>
                 <Button
