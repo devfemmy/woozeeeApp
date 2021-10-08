@@ -61,7 +61,10 @@ import fina from '../../../../../../assets/images/moneyMatters/fina.png';
 
 const SearchResults = (props) => {
   const { appState } = useContext(AppSettingsContext);
-  // console.log(props.route.params);
+
+  let loanServices = props?.route?.params[0];
+  let loanAmount = props?.route?.params[1];
+  // console.log('loans', props.route.params);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
@@ -77,32 +80,32 @@ const SearchResults = (props) => {
 
   const [selectedService, setSelectedService] = useState([]);
 
-  const services = [
-    {
-      img: lapo,
-      interestRate: '4',
-      amount: '104,000',
-      level: 'LOWEST INTEREST',
-    },
-    {
-      img: zed,
-      interestRate: '10',
-      amount: '110,000',
-      level: '2ND LOWEST INTEREST',
-    },
-    {
-      img: reho,
-      interestRate: '15',
-      amount: '115,000',
-      level: '3RD LOWEST INTEREST',
-    },
-    {
-      img: fina,
-      interestRate: '18',
-      amount: '118,000',
-      level: '4TH LOWEST INTEREST',
-    },
-  ];
+  // const services = [
+  //   "lapo"={
+  //     img: lapo,
+  //     interestRate: '4',
+  //     amount: '104,000',
+  //     level: 'LOWEST INTEREST',
+  //   },
+  //   "zed"={
+  //     img: zed,
+  //     interestRate: '10',
+  //     amount: '110,000',
+  //     level: '2ND LOWEST INTEREST',
+  //   },
+  //   "reho"={
+  //     img: reho,
+  //     interestRate: '15',
+  //     amount: '115,000',
+  //     level: '3RD LOWEST INTEREST',
+  //   },
+  //   "fina"={
+  //     img: fina,
+  //     interestRate: '18',
+  //     amount: '118,000',
+  //     level: '4TH LOWEST INTEREST',
+  //   },
+  // ];
 
   const selectOption = (option) => {
     setSelectedService(option);
@@ -708,16 +711,16 @@ const SearchResults = (props) => {
             the event of default.
           </Text>
         </View>
-        {services.map((service) => (
+        {loanServices.map((service) => (
           <TouchableOpacity
             key={uuidv4()}
             onPress={() => selectOption(service)}
           >
             <LoanOptions
-              img={service.img}
-              amount={service.amount}
-              level={service.level}
-              interestRate={service.interestRate}
+              img={lapo}
+              amount={(service.interest / 100) * loanAmount + +loanAmount}
+              level={'LOWEST INTEREST'}
+              interestRate={service.interest}
             />
           </TouchableOpacity>
         ))}

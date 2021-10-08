@@ -48,8 +48,7 @@ const MoneyMattersServices = (props) => {
     },
     {
       service: 'Mutual Funds',
-      desc:
-        'Get access to professionally managed portfolios of equities, and other securities.',
+      desc: 'Get access to professionally managed portfolios of equities, and other securities.',
       question: 'How much do you want to contribute ?',
       img: mutual,
     },
@@ -57,34 +56,37 @@ const MoneyMattersServices = (props) => {
 
   const ServiceOption = ({ service, desc, img }) => {
     return (
-      <View
+      <Layout
+        level="1"
         style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          flex: 1,
           borderRadius: 5,
-          backgroundColor: 'white',
           height: 90,
           padding: 15,
           marginVertical: 10,
-          elevation: 5,
-          shadowColor: '#dcdcdc',
-          shadowOffset: { width: 0, height: 1 },
-          shadowOpacity: 1,
-          shadowRadius: 1,
         }}
       >
-        <View style={{ width: '82%' }}>
-          <Text category="s2" style={{ color: 'black', marginBottom: 5 }}>
-            {service}
-          </Text>
-          <Text style={{ color: 'black', fontSize: 10 }}>{desc}</Text>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <View style={{ width: '80%' }}>
+            <Text category="s2" status="basic" style={{ marginBottom: 5 }}>
+              {service}
+            </Text>
+            <Text status="basic" style={{ fontSize: 10 }}>
+              {desc}
+            </Text>
+          </View>
+          <View style={{ width: '18%' }}>
+            <Image source={img} resizeMode="contain" />
+          </View>
         </View>
-        <View style={{ width: '18%' }}>
-          <Image source={img} resizeMode="contain" />
-        </View>
-      </View>
+      </Layout>
     );
   };
 
