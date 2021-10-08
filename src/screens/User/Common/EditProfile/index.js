@@ -179,6 +179,7 @@ export default function EditProfile({ navigation }) {
   };
 
   const uploadFileToFirebase = async (url, type, user) => {
+    setLoading(true);
     const name = `WoozeeImg${Math.random()}`;
     const uploadTask = storage()
       .ref(`profileImages/${'image'}${name}`)
@@ -207,6 +208,7 @@ export default function EditProfile({ navigation }) {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          setLoading(false);
           if (user === true) {
             setUserImage(downloadURL);
             AsyncStorage.setItem('userImage', downloadURL);
