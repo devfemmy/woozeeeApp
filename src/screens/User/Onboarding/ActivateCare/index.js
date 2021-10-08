@@ -223,7 +223,7 @@ export default function ActivateWallet({ navigation }) {
             </Text>
           </View>
           <Card
-            style={{ height: '100%', flex: 1, borderRadius: 10 }}
+            style={{ height: '100%', flex: 1, borderRadius: 10, }}
             // prettier-ignore
             footer={() => renderCardFooter(item.interest, item.scheme, item.loanSlug, item.loanAmtTo, item.title,)}
           >
@@ -240,7 +240,7 @@ export default function ActivateWallet({ navigation }) {
                 {item.title}
               </Text>
               <Text category="h6">Benefits</Text>
-              {item.benefits?.doctoora?.Consultation?.map((benefit, i) => (
+              {item.benefit?.map((benefit, i) => (
                 <View
                   style={{
                     flexDirection: 'row',
