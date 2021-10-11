@@ -51,13 +51,13 @@ const MoneyMatters = ({ route, navigation }) => {
       title: 'Select Duration',
     },
     {
-      title: '1 month',
+      title: '30 days',
     },
     {
-      title: '3 months',
+      title: '90 days',
     },
     {
-      title: '6 months',
+      title: '180 days',
     },
     {
       title: '1 Year',
@@ -83,7 +83,7 @@ const MoneyMatters = ({ route, navigation }) => {
     } = res;
     // console.log(loans);
 
-    navigation.navigate('SearchResults', [loans, loanAmount]);
+    navigation.navigate('SearchResults', [loans, loanAmount, form]);
   };
 
   const sliders = [
