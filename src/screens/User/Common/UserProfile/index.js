@@ -19,7 +19,7 @@ import {
   Layout, Text, Button, Tab, TabView, Divider,
 } from '@ui-kitten/components';
 
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { SimpleLineIcons, AntDesign } from '@expo/vector-icons';
 
 import { LoadingContext, LocaleContext } from 'src/contexts';
 
@@ -273,6 +273,30 @@ export default function UserProfile({ route, navigation }) {
               alignItems: 'center',
             }}
           >
+            <TouchableOpacity
+              // onPress={() =>
+              //   navigation.navigate('ChatScreen', {
+              //     guestUid: _id,
+              //     name: `${fName} ${sName}`,
+              //     image: imgUrl,
+              //   })
+              // }
+              status="primary"
+              style={{
+                // backgroundColor: 'transparent',
+                borderColor: '#003153',
+                borderWidth: 1,
+                marginHorizontal: 5,
+                width: 30,
+                height: 30,
+                borderRadius: 30,
+                alignItems: 'center',
+                // padding: 5,
+                justifyContent: 'center',
+              }}
+            >
+              <AntDesign name="deleteuser" size={20} color="#003153" />
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate('ChatScreen', {
