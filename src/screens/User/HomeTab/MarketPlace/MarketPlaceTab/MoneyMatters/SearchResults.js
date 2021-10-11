@@ -62,8 +62,25 @@ import fina from '../../../../../../assets/images/moneyMatters/fina.png';
 const SearchResults = (props) => {
   const { appState } = useContext(AppSettingsContext);
 
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  console.log(props.route.params);
+
   let loanServices = props?.route?.params[0];
+
   let loanAmount = props?.route?.params[1];
+
+  let _durations = props?.route?.params[2].duration;
+
+  console.log('duration is', +_durations[0]);
+
+  const [loanInterest, setLoanInterest] = useState(null);
+
+  const [loanDuration, setLoanDuration] = useState(null);
+
+  const [isAsc, setIsAsc] = useState(true);
   // console.log('loans', props.route.params);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
@@ -108,13 +125,16 @@ const SearchResults = (props) => {
   // ];
 
   const selectOption = (option) => {
+    console.log('options', option);
     setSelectedService(option);
+    setLoanInterest(option.interest);
+    setLoanDuration(option.tenorTo);
     sheetRef.current.open();
   };
 
   const routeAddInfo = () => {
     sheetRef.current.close();
-    props.navigation.navigate('AdditionalInfo');
+    props.navigation.navigate('AdditionalInfo', selectedService);
   };
 
   const ModalContent = () => {
@@ -178,7 +198,7 @@ const SearchResults = (props) => {
               Loan amount:
             </Text>
             <Text category="h6" status="basic">
-              ₦100,000.00
+              ₦{numberWithCommas(loanAmount)}.00
             </Text>
           </View>
         </View>
@@ -231,7 +251,7 @@ const SearchResults = (props) => {
                 }}
                 status="basic"
               >
-                30 Days
+                {loanDuration} Days
               </Text>
             </View>
             <View style={{ marginRight: 10 }}>
@@ -291,7 +311,7 @@ const SearchResults = (props) => {
             Repayment amount:
           </Text>
           <Text category="h5" status="primary">
-            ₦104,000.00
+            ₦{numberWithCommas((loanInterest / 100) * loanAmount + +loanAmount)}
           </Text>
         </View>
         <View
@@ -314,6 +334,16 @@ const SearchResults = (props) => {
         </View>
       </View>
     );
+  };
+
+  const handleSort = (option) => {
+    setSelectedIndex(option);
+    if (option !== 0) {
+      setIsAsc(false);
+    } else {
+      setIsAsc(true);
+    }
+    console.log(isAsc);
   };
 
   const SortContent = () => {
@@ -353,7 +383,7 @@ const SearchResults = (props) => {
         >
           <RadioGroup
             selectedIndex={selectedIndex}
-            onChange={(index) => setSelectedIndex(index)}
+            onChange={(index) => handleSort(index)}
           >
             <Radio>Low to High Interest</Radio>
             <Divider />
@@ -525,7 +555,7 @@ const SearchResults = (props) => {
     );
   };
 
-  const LoanOptions = ({ img, interestRate, amount, level }) => {
+  const LoanOptions = ({ img, interestRate, amount, level, duration }) => {
     return (
       <View
         style={{
@@ -577,7 +607,7 @@ const SearchResults = (props) => {
                 style={{ marginHorizontal: 5 }}
               />
               <Text category="c1" status="basic">
-                30 days
+                {duration} days
               </Text>
             </View>
           </View>
@@ -621,10 +651,10 @@ const SearchResults = (props) => {
         }}
       >
         <Text category="h5" status="basic" style={{ marginBottom: 3 }}>
-          ₦100,000.00
+          ₦{numberWithCommas(loanAmount)}
         </Text>
         <Text category="c1" status="basic">
-          Fri, 25th Feb 2021 - Sat, 26th Mar 2021
+          Loan Options
         </Text>
       </View>
     );
@@ -711,19 +741,25 @@ const SearchResults = (props) => {
             the event of default.
           </Text>
         </View>
-        {loanServices.map((service) => (
-          <TouchableOpacity
-            key={uuidv4()}
-            onPress={() => selectOption(service)}
-          >
-            <LoanOptions
-              img={lapo}
-              amount={(service.interest / 100) * loanAmount + +loanAmount}
-              level={'LOWEST INTEREST'}
-              interestRate={service.interest}
-            />
-          </TouchableOpacity>
-        ))}
+        {loanServices
+          .sort((i, j) => i.interest - j.interest)
+          .filter((service) => +_durations[0] * 10 >= service.tenorTo)
+          .map((service) => (
+            <TouchableOpacity
+              key={uuidv4()}
+              onPress={() => selectOption(service)}
+            >
+              <LoanOptions
+                img={lapo}
+                amount={numberWithCommas(
+                  (service.interest / 100) * loanAmount + +loanAmount,
+                )}
+                level={'LOWEST INTEREST'}
+                interestRate={service.interest}
+                duration={service.tenorTo}
+              />
+            </TouchableOpacity>
+          ))}
       </ScrollView>
       <RBSheet
         ref={sheetRef}

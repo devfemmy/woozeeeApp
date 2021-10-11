@@ -24,52 +24,36 @@ import savings from '../../../../../../assets/images/moneyMatters/savings.png';
 import lapo2 from '../../../../../../assets/images/moneyMatters/lapo2.png';
 import access from '../../../../../../assets/images/banks/access.png';
 
-const MoneyMattersConfirmation = ({
-  currUser,
-  currInfo,
-  currImg,
-  guestUser,
-  guestInfo,
-  guestImg,
-  navigation,
-  action,
-  amount,
-}) => {
+const MoneyMattersConfirmation = (props) => {
   const LoaneeDetailsBlock = ({ currUserName, currUserInfo, img }) => {
     return (
       <View style={{ display: 'flex' }}>
-        <View
+        <Layout
+          level="1"
           style={{
             display: 'flex',
+            // flex: 1,
             flexDirection: 'row',
             justifyContent: 'space-between',
             width: 350,
             alignItems: 'center',
             borderRadius: 5,
-            backgroundColor: 'white',
+            width: '100%',
             height: 100,
             padding: 15,
             marginBottom: 30,
-            elevation: 5,
-            shadowColor: '#dcdcdc',
-            shadowOffset: { width: 0, height: 3 },
-            shadowOpacity: 1,
-            shadowRadius: 1,
           }}
         >
           <View>
-            <Text category="c2" style={{ color: '#043F7C', marginVertical: 5 }}>
-              {currUserName} Lapo Microfinance Bank
+            <Text category="c2" status="primary" style={{ marginVertical: 5 }}>
+              {currUserName}Lapo Microfinance Bank
             </Text>
-            <Text
-              category="c1"
-              style={{ color: 'rgba(0, 0, 0, 0.8)', marginVertical: 5 }}
-            >
+            <Text category="c1" status="basic" style={{ marginVertical: 5 }}>
               {currUserInfo}Loanee
             </Text>
           </View>
           <Image source={lapo2} resizeMode="contain" />
-        </View>
+        </Layout>
         <View
           style={{
             width: 30,
@@ -93,7 +77,8 @@ const MoneyMattersConfirmation = ({
 
   const UserDetailBlock = ({ guestUserName, guestUserInfo, img }) => {
     return (
-      <View
+      <Layout
+        level="1"
         style={{
           display: 'flex',
           flexDirection: 'row',
@@ -101,25 +86,17 @@ const MoneyMattersConfirmation = ({
           width: 350,
           alignItems: 'center',
           borderRadius: 5,
-          backgroundColor: 'white',
+          width: '100%',
           height: 100,
           padding: 15,
           marginVertical: 10,
-          elevation: 5,
-          shadowColor: '#dcdcdc',
-          shadowOffset: { width: 0, height: 3 },
-          shadowOpacity: 1,
-          shadowRadius: 1,
         }}
       >
         <View>
-          <Text category="c2" style={{ color: '#043F7C', marginVertical: 5 }}>
+          <Text category="c2" status="primary" style={{ marginVertical: 5 }}>
             {guestUserName} Jace Wazobia
           </Text>
-          <Text
-            category="c1"
-            style={{ color: 'rgba(0, 0, 0, 0.8)', marginVertical: 5 }}
-          >
+          <Text category="c1" status="basic" style={{ marginVertical: 5 }}>
             {guestUserInfo} 4189 4169 4597 1122 (Access Bank)
           </Text>
         </View>
@@ -128,7 +105,7 @@ const MoneyMattersConfirmation = ({
           resizeMode="contain"
           style={{ width: 50, height: 50 }}
         />
-      </View>
+      </Layout>
     );
   };
 
@@ -137,6 +114,20 @@ const MoneyMattersConfirmation = ({
       params: { success: 'Transaction Successful!' },
     });
   };
+
+  console.log('props => ', props);
+
+  const {
+    currUser,
+    currInfo,
+    currImg,
+    guestUser,
+    guestInfo,
+    guestImg,
+    navigation,
+    action,
+    amount,
+  } = props;
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -175,13 +166,6 @@ const MoneyMattersConfirmation = ({
           accessibilityLabel="Continue"
           // disabled={isLoading}
           onPress={routeSuccess}
-          style={{
-            elevation: 5,
-            shadowColor: '#dcdcdc',
-            shadowOffset: { width: 0, height: 3 },
-            shadowOpacity: 1,
-            shadowRadius: 1,
-          }}
         >
           <Text status="control">{'Confirm'}</Text>
         </Button>

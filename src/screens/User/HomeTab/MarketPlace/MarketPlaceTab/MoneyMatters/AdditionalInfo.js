@@ -66,6 +66,7 @@ export default function AdditionalInfo(props) {
       image: require('assets/images/banks/zenith.png'),
     },
   ];
+
   const [form, setFormValues] = useState({
     mobile: '',
     amount: '',
@@ -98,7 +99,7 @@ export default function AdditionalInfo(props) {
     () => (
       <RBSheet
         ref={sheetRef}
-        height={400}
+        height={420}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -154,6 +155,8 @@ export default function AdditionalInfo(props) {
                       style={{ height: 25, width: 25 }}
                     />
                   </View>
+                  {/* somehow this makes the items align */}
+                  <View></View>
                 </Radio>
               ))}
             </RadioGroup>
@@ -222,7 +225,7 @@ export default function AdditionalInfo(props) {
   };
 
   const routeConfirm = () => {
-    props.navigation.navigate('MoneyMattersConfirmation');
+    props.navigation.navigate('MoneyMattersConfirmation', props.route.params);
   };
 
   return (
