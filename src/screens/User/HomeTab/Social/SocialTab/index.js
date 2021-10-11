@@ -4,6 +4,7 @@ import React, {
   useRef,
   useState,
   useEffect,
+  useMemo,
 } from 'react';
 
 import { View, useWindowDimensions, FlatList } from 'react-native';
@@ -266,6 +267,7 @@ export default function Social({ navigation }) {
             onEndThreshold={0}
             data={final}
             keyExtractor={(_, i) => i.toString()}
+            // extraData={final}
             renderItem={({ item, index }) => {
               return (
                 <>
