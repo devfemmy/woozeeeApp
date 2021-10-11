@@ -40,7 +40,7 @@ const AllMovies = () => {
           {/* <TouchableOpacity onPress= {toggleMuted} style={{flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 5}}>
                         <Octicons name={mute ? 'mute': 'unmute'} size={24} color="white" />
                     </TouchableOpacity> */}
-          <FeaturedMovie mute={false} uri movieType="all" category_id={'all'} />
+          <FeaturedMovie mute={true} uri movieType="all" category_id={'all'} />
         </View>
         {/* <MovieDescription 
                     price = "$1.00"

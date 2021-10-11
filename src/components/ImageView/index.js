@@ -798,7 +798,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
               />
             </View> */}
           </View>
-          {fetchComments(data.item._id) && comments.length > 0 && (
+          {/* {fetchComments(data.item._id) && comments.length > 0 && (
             <View>
               <View
                 style={{
@@ -843,7 +843,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                 </Text>
               </TouchableWithoutFeedback>
             </View>
-          )}
+          )} */}
 
           <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
             <View

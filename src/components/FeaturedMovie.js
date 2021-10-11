@@ -132,25 +132,25 @@ const FeaturedMovie = (props) => {
       }}
     >
       <Video
-        posterSource={{ uri: props.uri ? null : props.poster }}
+        posterSource={{ uri: props.uri ? movieData?.posters?.mobile?.landscape : props.poster }}
         usePoster
         ref={handleVideoRef}
         isMuted={props.mute}
         isLooping
         source={{
           uri: props?.uri
-            ? movieData?.landscapePreviewURL === undefined
-              ? null
-              : movieData?.posterURL[0]
+            ? movieData?.landscapePreviewURL
             : props?.url?.landscapePreviewURL,
         }}
         // source = {{uri: videoUri}}
         shouldPlay
+        useNativeControls
         resizeMode="cover"
         style={{ height: 250, width: '100%' }}
       />
     </View>
   );
+  console.log("movies data 3343", movieData)
   const styles = StyleSheet.create({});
   if (loading) {
     return (

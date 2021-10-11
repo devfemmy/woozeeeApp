@@ -880,7 +880,7 @@ export default function VideoView({
             </View> */}
           </View>
           {/* comments */}
-          {fetchComments(data.item._id) && comments.length > 0 && (
+          {/* {fetchComments(data.item._id) && comments.length > 0 && (
             <View>
               <View
                 style={{
@@ -904,20 +904,6 @@ export default function VideoView({
                     {comments[0].text}
                   </Text>
                 </Text>
-                {/* <Moment
-                  fromNow
-                  element={(momentProps) => (
-                    <Text
-                      category="c1"
-                      {...momentProps}
-                      style={{
-                        fontSize: 10,
-                      }}
-                    />
-                  )}
-                >
-                  {comments[0].sentAt}
-                </Moment> */}
               </View>
               <TouchableWithoutFeedback onPress={routeComments}>
                 <Text
@@ -930,7 +916,7 @@ export default function VideoView({
                 </Text>
               </TouchableWithoutFeedback>
             </View>
-          )}
+          )} */}
           <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
             <View
               style={{
