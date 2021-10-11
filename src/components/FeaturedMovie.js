@@ -157,7 +157,7 @@ const FeaturedMovie = (props) => {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Image
           style={{ width: '100%', height: 270 }}
-          source={require('../assets/images/movies/movie_placeholder.png')}
+          source={require('../assets/images/movies/movieslide.png')}
         />
       </View>
     );

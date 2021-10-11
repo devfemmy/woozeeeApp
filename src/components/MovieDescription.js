@@ -176,7 +176,7 @@ const MovieDescription = (props) => {
             borderColor= "#FF5757"
             width= "80%"
             onPress={handleOpenSheet}
-            bg="#FFf"
+            bg="transparent"
             color="#FF5757"
             fill="#FF5757"
             text="More Info"

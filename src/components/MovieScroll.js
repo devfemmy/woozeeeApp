@@ -199,13 +199,12 @@ const MovieScroll = (props) => {
     return (
         <View>
           <View style= {{marginVertical: 10}}>
-            {props.show ? 
+            {TopTenArr.length !== 0 ? 
             <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {topTen}
              </Text>  : null     
         }
-            {TopTenArr.length === 0 ? 
-            <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
+            {TopTenArr.length === 0 ? null : 
             <ScrollView horizontal>
                 {TopTenArr.map(
                     (data, index) => {
@@ -219,7 +218,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data?.posterURL[0],
+                        uri: data?.posters?.mobile?.portrait,
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
@@ -232,13 +231,12 @@ const MovieScroll = (props) => {
             }     
         </View>
         <View style= {{marginVertical: 10}}>
-            {props.show ? 
+            {popularArray.length !== 0 ? 
             <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {popular}
              </Text>  : null     
         }
-            {popularArray.length === 0 ? 
-        <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
+            {popularArray.length === 0 ? null: 
         <ScrollView horizontal>
         {popularArray.map(
             (data, index) => {
@@ -247,7 +245,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data?.posterURL[0],
+                        uri: data?.posters?.mobile?.portrait,
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
@@ -261,13 +259,12 @@ const MovieScroll = (props) => {
         }
         </View>
         <View style= {{marginVertical: 10}}>
-            {props.show ? 
+            {recommendedData.length !== 0 ? 
             <Text style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {recommended}
              </Text>  : null     
         }
-            {recommendedData.length === 0 ? 
-        <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
+            {recommendedData.length === 0 ? null: 
         <ScrollView horizontal>
         {recommendedData.map(
             (data, index) => {
@@ -276,7 +273,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data?.posterURL[0],
+                        uri: data?.posters?.mobile?.portrait,
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
@@ -290,13 +287,12 @@ const MovieScroll = (props) => {
         }
         </View>
         <View style= {{marginVertical: 10}}>
-            {props.show ? 
+            {myListData.length !== 0 ? 
             <Text  onPress= {() => navigation.navigate('MyList')} style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {myList}
              </Text>  : null     
         }
-            {myListData.length === 0 ? 
-        <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
+            {myListData.length === 0 ? null: 
         <ScrollView horizontal>
         {myListData.map(
             (data, index) => {
@@ -305,7 +301,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data?.posterURL[0],
+                        uri: data?.posters?.mobile?.portrait,
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
@@ -319,13 +315,12 @@ const MovieScroll = (props) => {
         }
         </View>
         <View style= {{marginVertical: 10}}>
-            {props.show ? 
+            {comingSoonData.length !== 0  ? 
             <Text onPress= {() => navigation.navigate('ComingSoon')} style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {comingSoon}
              </Text>  : null     
         }
-            {comingSoonData.length === 0 ? 
-        <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
+            {comingSoonData.length === 0 ? null: 
         <ScrollView horizontal>
         {comingSoonData.map(
             (data, index) => { 
@@ -334,7 +329,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data?.posterURL[0],
+                        uri: data?.posters?.mobile?.portrait,
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
@@ -348,13 +343,12 @@ const MovieScroll = (props) => {
         }
         </View>
         <View style= {{marginVertical: 10}}>
-            {props.show ? 
+            {prevListData.length !== 0 ? 
             <Text  onPress= {() => navigation.navigate('PreviouslyViewed')} style={{color: '#0959AB', marginBottom: 5}} category= "h5">
                {prevList}
              </Text>  : null     
         }
-            {prevListData.length === 0 ? 
-        <Text style= {{textAlign: 'center'}}>No data for this</Text> : 
+            {prevListData.length === 0 ? null : 
         <ScrollView horizontal>
         {prevListData.map(
             (data, index) => {
@@ -363,7 +357,7 @@ const MovieScroll = (props) => {
                     <FastImage
                     style={styles.image}
                     source={{
-                        uri: data?.posterURL[0],
+                        uri: data?.posters?.mobile?.portrait,
                         priority: FastImage.priority.normal,
                     }}
                     // resizeMode={FastImage.resizeMode.contain}
