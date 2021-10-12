@@ -64,7 +64,10 @@ export default function Profile({ navigation }) {
   return (
     <Layout level="6" style={{ flex: 1 }}>
       {user && user._id && (
-        <UserProfile navigation={navigation} route={{ params: { user } }} />
+        <UserProfile
+          navigation={navigation}
+          route={{ params: { id: _userId } }}
+        />
       )}
     </Layout>
   );

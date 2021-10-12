@@ -466,9 +466,10 @@ export default function VideoView({
   };
 
   const routeUserProfile = async () => {
-    const userData = await getUserData(item.userId);
-    const { data } = userData;
-    await navigation.navigate('UserProfile', data);
+    // console.log('from route ', item.userId, _userId);
+    item.userId !== _userId
+      ? await navigation.navigate('UserProfile', { id: item.userId })
+      : await navigation.navigate('ProfileTab');
   };
 
   const routeComments = async () => {

@@ -175,6 +175,7 @@ export const handleBlock = async (userId, _isBlock) => {
 };
 
 export const getUserData = async (id) => {
+  // console.log('from req =>', id);
   const config = {
     method: 'GET',
     headers: {
@@ -183,8 +184,14 @@ export const getUserData = async (id) => {
       Authorization: `${await getToken()}`,
     },
   };
-  const res = await axios.get(baseUrl + `user/user?userId=${id}`, config);
-  return res;
+  try {
+    const res = await axios.get(baseUrl + `user/user?userId=${id}`, config);
+    // console.log('result is ', res);
+    return res;
+  } catch (e) {
+    // console.log(e);
+    return e;
+  }
 };
 
 export const getUserEntries = async (id) => {

@@ -429,12 +429,8 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
   };
 
   const routeUserProfile = async () => {
-    const userData = await getUserData(item.userId);
-    const { data } = userData;
-    // await navigation.navigate('UserProfile', data);
-
     item.userId !== _userId
-      ? await navigation.navigate('UserProfile', data)
+      ? await navigation.navigate('UserProfile', { id: item.userId })
       : await navigation.navigate('ProfileTab');
   };
 
