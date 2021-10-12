@@ -186,16 +186,15 @@ const AskADoctor = ({navigation}) => {
                         />
                 </View>
                 <View style= {{marginVertical: 10}}>
-                    <Datepicker
-                    label={'Select Date'}
-                    date={date}
-                    onSelect={nextDate => setNewDateHandler(nextDate)}
-                    min = {new Date ('12-05-1990')}
-                    // max= {new Date()}
-                    accessoryRight={IconCalendar}
-
-                />
-                  {/* <GeneralDatePicker
+                    {/* <Datepicker
+                  label='Label'
+                  caption='Caption'
+                  placeholder='Pick Date'
+                  date={date}
+                  onSelect={nextDate => setDate(nextDate)}
+                  accessoryRight={IconCalendar}
+                /> */}
+                  <GeneralDatePicker
                         type="dob"
                         label={'Date'}
                         date={new Date()}
@@ -203,7 +202,7 @@ const AskADoctor = ({navigation}) => {
                         max= {new Date()}
                         setFormValues={setFormValues}
                         accessoryRight={IconCalendar}
-                      /> */}
+                      />
                 </View>
                 <View style={{ paddingVertical: 20 }}>
                 <Button

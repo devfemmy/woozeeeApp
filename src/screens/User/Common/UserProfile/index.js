@@ -452,7 +452,7 @@ export default function UserProfile({ route, navigation }) {
                 </View>
                 <View style={{ marginBottom: 10 }}>
                   <Text category="s2" status="primary">
-                    {referralCode?.toUpperCase()}Code
+                    {referralCode?.toUpperCase()}
                   </Text>
                 </View>
                 <View
