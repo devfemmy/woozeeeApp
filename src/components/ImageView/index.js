@@ -544,62 +544,70 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                     justifyContent: 'center',
                   }}
                 >
-                  <FastImage
+                  <Image
+                    source={{ uri: item.userImageURL }}
+                    // defaultSource={require('assets/images/user/user2.png')}
                     style={{
                       height: 36,
                       width: 36,
                       borderRadius: 18,
                       borderColor: 'white',
                     }}
-                    source={{
-                      uri: item.userImageURL,
-                      priority: FastImage.priority.normal,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
+                    resizeMode="cover"
                   />
                 </LinearGradient>
                 <View
                   style={{
-                    flexDirection: 'row',
+                    // flexDirection: 'row',
                     flexWrap: 'wrap',
                     paddingRight: 5,
                     paddingLeft: 5,
                     maxWidth: 190,
                   }}
                 >
-                  <Text
-                    status="primary"
-                    category="s2"
-                    style={{ marginRight: 5 }}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      paddingRight: 5,
+                      paddingLeft: 5,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      maxWidth: 190,
+                    }}
                   >
-                    {item.userDisplayName}
-                  </Text>
-                  <Text status="danger" category="s2">
-                    {/* {item.userDisplayName} */}
+                    <Text
+                      status="primary"
+                      category="s2"
+                      style={{ marginRight: 3 }}
+                    >
+                      {item.userFirstName}
+                    </Text>
+                    <Text status="danger" category="s2">
+                      {item.userLastName}
+                    </Text>
+                    <Image
+                      source={require('assets/images/icon/verified-1.png')}
+                      defaultSource={require('assets/images/icon/verified-1.png')}
+                      style={{
+                        height: 16,
+                        width: 16,
+                        borderRadius: 8,
+                        marginHorizontal: 5,
+                      }}
+                      resizeMode="cover"
+                    />
+                  </View>
+                  <Text
+                    status="basic"
+                    category="c1"
+                    style={{
+                      paddingRight: 5,
+                      paddingLeft: 5,
+                    }}
+                  >
+                    @{item.userDisplayName}
                   </Text>
                 </View>
-                {/* <FastImage
-                style={{
-                  height: 16,
-                  width: 16,
-                  borderRadius: 8,
-                }}
-                source={{
-                  uri: item.mediaURL,
-                  priority: FastImage.priority.normal,
-                }}
-                resizeMode={FastImage.resizeMode.cover}
-              /> */}
-                {/* <Image
-                  source={require('assets/images/icon/verified-1.png')}
-                  defaultSource={require('assets/images/icon/verified-1.png')}
-                  style={{
-                    height: 16,
-                    width: 16,
-                    borderRadius: 8,
-                  }}
-                  resizeMode="cover"
-                /> */}
               </TouchableOpacity>
             </View>
             <View>

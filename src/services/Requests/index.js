@@ -145,6 +145,35 @@ export const handleFollow = async (userId, following) => {
   }
 };
 
+export const handleBlock = async (userId, _isBlock) => {
+  console.log('block is ', _isBlock, userId);
+  const data = {
+    userId,
+  };
+
+  const token = await getToken();
+
+  const config = {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data,
+    url: `${baseUrl}/user/action?isblock=${_isBlock}`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getUserData = async (id) => {
   const config = {
     method: 'GET',
