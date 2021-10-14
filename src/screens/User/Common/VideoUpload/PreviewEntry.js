@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useContext, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { Layout, Text, Button, Divider, Toggle } from '@ui-kitten/components';
+import { Layout, Text, Button, Divider, Toggle, Spinner } from '@ui-kitten/components';
 import { Video } from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNFetchBlob from 'rn-fetch-blob';
-import firebase from '@react-native-firebase/app';
+import Firebase from 'src/services/Firebase/firebaseConfig';
+// import firebase from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
 import {
   StyleSheet,
@@ -21,7 +22,7 @@ import { Platform } from 'react-native';
 import axios from '../../../../services/api/index';
 import { useNetInfo } from '@react-native-community/netinfo';
 import CustomField from 'src/components/CustomField/index';
-import Spinner from 'react-native-loading-spinner-overlay';
+// import Spinner from 'react-native-loading-spinner-overlay';
 
 const PreviewEntry = (props) => {
   const { editorResult, imageUri, entries } = props.route.params;
@@ -40,6 +41,7 @@ const PreviewEntry = (props) => {
   //   }));
   // };
   const netInfo = useNetInfo();
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
   const checkForConnectivity = () => {
     if (netInfo.isConnected == false || netInfo.isInternetReachable == false) {
@@ -173,7 +175,7 @@ const PreviewEntry = (props) => {
   const uploadFileToFirebase = async (videoUri, video, type) => {
     if (editorResult === null) {
       const name = `Woozee${Math.random()}`;
-      const uploadTask = storage()
+      const uploadTask = Firebase.storage()
         .ref(`mediaEntries/${'image'}${name}`)
         .putString(videoUri, 'base64', { contentType: 'jpg' });
       uploadTask.on(
@@ -185,10 +187,10 @@ const PreviewEntry = (props) => {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
           switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: // or 'paused'
+            case Firebase.storage.TaskState.PAUSED: // or 'paused'
               console.log('Upload is paused');
               break;
-            case firebase.storage.TaskState.RUNNING: // or 'running'
+            case Firebase.storage.TaskState.RUNNING: // or 'running'
               console.log('Upload is running');
               break;
           }
@@ -216,7 +218,7 @@ const PreviewEntry = (props) => {
       );
     } else {
       const name = `Woozee${Math.random()}`;
-      const uploadTask = storage()
+      const uploadTask = Firebase.storage()
         .ref(`mediaEntries/${'video'}${name}`)
         .putString(videoUri, 'base64', { contentType: 'video/mp4' });
       uploadTask.on(
@@ -228,10 +230,10 @@ const PreviewEntry = (props) => {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
           switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: // or 'paused'
+            case Firebase.storage.TaskState.PAUSED: // or 'paused'
               console.log('Upload is paused');
               break;
-            case firebase.storage.TaskState.RUNNING: // or 'running'
+            case Firebase.storage.TaskState.RUNNING: // or 'running'
               console.log('Upload is running');
               break;
           }
@@ -271,8 +273,14 @@ const PreviewEntry = (props) => {
   const getImageUri = async (type = 'photo') => {
     setLoading(true);
     const image = imageUri;
-    // const filePath = normalizePath(video)
-    const realPath = await RNFetchBlob.fs.readFile(image, 'base64');
+    const filePath = await normalizePath(image);
+    let realPath;
+    if (Platform.OS === 'ios') {
+      realPath = await RNFetchBlob.fs.readFile(filePath, 'base64');
+    }else {
+      realPath = await RNFetchBlob.fs.readFile(filePath, 'base64');
+    }
+   
     // console.log('videoUri', videoUri);
     uploadFileToFirebase(realPath, image, type);
   };
@@ -283,20 +291,20 @@ const PreviewEntry = (props) => {
         setToken(res);
       })
       .catch((err) => err);
-    const firebaseConfig = {
-      apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
-      authDomain: 'woozeee-d7f6c.firebaseapp.com',
-      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
-      projectId: 'woozeee-d7f6c',
-      storageBucket: 'woozeee-d7f6c.appspot.com',
-      messagingSenderId: '979696525592',
-      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
-      measurementId: 'G-XQKMT94R9R',
-    };
+    // const firebaseConfig = {
+    //   apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+    //   authDomain: 'woozeee-d7f6c.firebaseapp.com',
+    //   databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+    //   projectId: 'woozeee-d7f6c',
+    //   storageBucket: 'woozeee-d7f6c.appspot.com',
+    //   messagingSenderId: '979696525592',
+    //   appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+    //   measurementId: 'G-XQKMT94R9R',
+    // };
 
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
+    // if (!firebase.apps.length) {
+    //   firebase.initializeApp(firebaseConfig);
+    // }
     // if (editorResult === null) {
     //   getImageUri()
     // }else {
@@ -455,17 +463,11 @@ const PreviewEntry = (props) => {
 
           </View>
         )} */}
-        {isLoading ? (
-          <ActivityIndicator
-            style={styles.loading}
-            size="large"
-            color="#ff2a00"
-          />
-        ) : (
           <View style={{ paddingHorizontal: 15, marginVertical: 30 }}>
             {imageUri === null ? (
               <Button
                 onPress={() => getVideoUri()}
+                accessoryLeft={isLoading ? renderSpinner : null}
                 disabled={isLoading}
                 status="danger"
               >
@@ -475,6 +477,7 @@ const PreviewEntry = (props) => {
               </Button>
             ) : (
               <Button
+                accessoryLeft={isLoading ? renderSpinner : null}
                 onPress={() => getImageUri()}
                 disabled={isLoading}
                 status="danger"
@@ -485,8 +488,6 @@ const PreviewEntry = (props) => {
               </Button>
             )}
           </View>
-        )}
-        <Spinner visible={isLoading} />
       </Layout>
     </Root>
   );
