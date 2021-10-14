@@ -481,36 +481,17 @@ export default function UserProfile({ route, navigation }) {
                         {displayName}
                       </Text>
                     </View>
-                    <View
-                      style={{
-                        maxWidth: 300,
-                        marginBottom: 10,
-                      }}
-                    >
-                      <Text
-                        category="c2"
-                        appearance="hint"
-                        style={{
-                          lineHeight: 15,
-                        }}
-                        numberOfLines={3}
-                      >
+                    <View>
+                      <Text category="c2" appearance="hint" numberOfLines={3}>
                         {bio}
                       </Text>
                     </View>
                   </View>
-                  <View style={{ marginBottom: 10 }}>
+                  <View style={{ marginVertical: 15 }}>
                     <Text category="s2" status="primary">
                       Referral Code: {referralCode?.toUpperCase()}
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      marginBottom: 10,
-                      marginTop: 5,
-                      flexDirection: 'row',
-                    }}
-                  ></View>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -559,7 +540,7 @@ export default function UserProfile({ route, navigation }) {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 paddingHorizontal: 30,
-                marginBottom: 10,
+                marginVertical: 10,
               }}
             >
               <TouchableOpacity onPress={() => setAllSelected(true)}>

@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNFetchBlob from 'rn-fetch-blob';
 import firebase from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   StyleSheet,
   BackHandler,
@@ -363,18 +364,23 @@ const PreviewEntry = (props) => {
   return (
     <Root>
       <Layout level="6" style={{ flex: 1, padding: 25 }}>
-        {imageUri === null ? (
-          <VideoPreview />
-        ) : (
-          <Image
-            style={{ height: 300, width: '100%', resizeMode: 'cover' }}
-            source={{ uri: imageUri }}
-          />
-        )}
-        <View
-          style={{ marginHorizontal: 5, marginBottom: 10, marginVertical: 20 }}
-        >
-          {/* <GeneralTextField
+        <KeyboardAwareScrollView>
+          {imageUri === null ? (
+            <VideoPreview />
+          ) : (
+            <Image
+              style={{ height: 300, width: '100%', resizeMode: 'cover' }}
+              source={{ uri: imageUri }}
+            />
+          )}
+          <View
+            style={{
+              marginHorizontal: 5,
+              marginBottom: 10,
+              marginVertical: 20,
+            }}
+          >
+            {/* <GeneralTextField
                   type="caption"
                   label={`Caption`}
                   placeholder={'AddCaption'}
@@ -383,17 +389,16 @@ const PreviewEntry = (props) => {
                   height={100}
                   value= {form.caption}
                 /> */}
-          <CustomField
-            label="Caption"
-            
-            placeholder={'Add Caption'}
-            multiline
-            height={100}
-            value={caption}
-            onChangeText={(nextValue) => setCaption(nextValue)}
-          />
-        </View>
-        {/* {entries ? null : (
+            <CustomField
+              label="Caption"
+              placeholder={'Add Caption'}
+              multiline
+              height={100}
+              value={caption}
+              onChangeText={(nextValue) => setCaption(nextValue)}
+            />
+          </View>
+          {/* {entries ? null : (
           <View
             style={{
               flex: 1,
@@ -455,38 +460,39 @@ const PreviewEntry = (props) => {
 
           </View>
         )} */}
-        {isLoading ? (
-          <ActivityIndicator
-            style={styles.loading}
-            size="large"
-            color="#ff2a00"
-          />
-        ) : (
-          <View style={{ paddingHorizontal: 15, marginVertical: 30 }}>
-            {imageUri === null ? (
-              <Button
-                onPress={() => getVideoUri()}
-                disabled={isLoading}
-                status="danger"
-              >
-                <Text status="control" category="h6">
-                  {`Post`}
-                </Text>
-              </Button>
-            ) : (
-              <Button
-                onPress={() => getImageUri()}
-                disabled={isLoading}
-                status="danger"
-              >
-                <Text status="control" category="h6">
-                  {`Post`}
-                </Text>
-              </Button>
-            )}
-          </View>
-        )}
-        <Spinner visible={isLoading} />
+          {isLoading ? (
+            <ActivityIndicator
+              style={styles.loading}
+              size="large"
+              color="#ff2a00"
+            />
+          ) : (
+            <View style={{ paddingHorizontal: 15, marginVertical: 30 }}>
+              {imageUri === null ? (
+                <Button
+                  onPress={() => getVideoUri()}
+                  disabled={isLoading}
+                  status="danger"
+                >
+                  <Text status="control" category="h6">
+                    {`Post`}
+                  </Text>
+                </Button>
+              ) : (
+                <Button
+                  onPress={() => getImageUri()}
+                  disabled={isLoading}
+                  status="danger"
+                >
+                  <Text status="control" category="h6">
+                    {`Post`}
+                  </Text>
+                </Button>
+              )}
+            </View>
+          )}
+          <Spinner visible={isLoading} />
+        </KeyboardAwareScrollView>
       </Layout>
     </Root>
   );
