@@ -13,6 +13,8 @@ import { useInfiniteQuery } from 'react-query';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 // prettier-ignore
@@ -272,20 +274,24 @@ export default function Social({ navigation }) {
               return (
                 <>
                   {item.type == 'video' ? (
-                    <VideoView
-                      data={{ item, index }}
-                      viewHeight={ITEM_HEIGHT}
-                      navigation={navigation}
-                      t={t}
-                      viewable={Viewable}
-                    />
+                    <KeyboardAwareScrollView>
+                      <VideoView
+                        data={{ item, index }}
+                        viewHeight={ITEM_HEIGHT}
+                        navigation={navigation}
+                        t={t}
+                        viewable={Viewable}
+                      />
+                    </KeyboardAwareScrollView>
                   ) : (
-                    <ImageView
-                      data={{ item, index }}
-                      viewHeight={ITEM_HEIGHT}
-                      navigation={navigation}
-                      t={t}
-                    />
+                    <KeyboardAwareScrollView>
+                      <ImageView
+                        data={{ item, index }}
+                        viewHeight={ITEM_HEIGHT}
+                        navigation={navigation}
+                        t={t}
+                      />
+                    </KeyboardAwareScrollView>
                   )}
                   {index === 2 || index === 12 ? (
                     <MoviesSection

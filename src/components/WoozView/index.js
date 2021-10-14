@@ -24,7 +24,7 @@ export default function WoozView({
   opacity,
   isFocused,
 }) {
-  console.log('item is => ', item);
+  // console.log('item is => ', item);
   return (
     <View style={{ flex: 1 }}>
       <React.Fragment>
