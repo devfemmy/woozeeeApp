@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Text } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import {
+  Text,
+  Button,
+  Divider,
+  Layout,
+  Input,
+  List,
+} from '@ui-kitten/components';
+
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 
@@ -54,7 +63,7 @@ function index({ postId, gotoComment }) {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <Layout level="6" style={styles.container}>
       {comments.length > 0 && (
         <View>
           <View
@@ -62,6 +71,7 @@ function index({ postId, gotoComment }) {
               display: 'flex',
               alignItems: 'flex-start',
               width: '95%',
+              marginTop: 5,
             }}
           >
             <Text category="h6" status="basic" style={{ marginLeft: 10 }}>
@@ -83,13 +93,13 @@ function index({ postId, gotoComment }) {
               status="basic"
               style={{ marginHorizontal: 10, marginTop: 5 }}
             >
-              view all {comments.length}{' '}
-              {comments.length > 1 ? 'comments' : 'comment'}
+              view {comments.length > 1 && 'all'} {comments.length}{' '}
+              {comments.length > 1 ? ' comments' : ' comment'}
             </Text>
           </TouchableWithoutFeedback>
         </View>
       )}
-    </View>
+    </Layout>
   );
 }
 
