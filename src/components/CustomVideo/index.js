@@ -18,6 +18,10 @@ import {
 
 import { Button, Text } from '@ui-kitten/components';
 
+import firebase from '@react-native-firebase/app';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   IconCHeartToggle,
   IconCShare,
@@ -36,6 +40,8 @@ import {
   getUserEntries,
 } from '../../services/Requests/index';
 
+import { LinearGradient } from 'expo-linear-gradient';
+
 const styles = StyleSheet.create({
   uiContainer: {
     flex: 1,
@@ -44,7 +50,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     zIndex: 99,
-    paddingBottom: 25,
+    // paddingBottom: 25,
   },
 });
 
@@ -108,9 +114,9 @@ const InteractIcon = (props) => {
 
 const CustomVideo = forwardRef((props, ref) => {
   // prettier-ignore
-  const {
-    data, height, videoRef, challenge, navigation
-  } = props;
+  // console.log(props, 'props');
+
+  const { data, height, videoRef, challenge, navigation } = props;
 
   // const { item } = data;
 
@@ -120,46 +126,74 @@ const CustomVideo = forwardRef((props, ref) => {
   const [shouldPlay, setShouldPlay] = useState(true);
 
   const [muteState, setIsMuted] = useState(false);
+  const likeData = {
+    entryId: data._id,
+    isLike: false,
+  };
 
-  // const likeData = {
-  //   entryId: data._id,
-  //   isLike: isLiked,
-  // };
+  const routeUserProfile = async (userId) => {
+    const userData = await getUserData(userId);
+    const { data } = userData;
+    await navigation.navigate('UserProfile', data);
+  };
 
-  // const routeUserProfile = async (userId) => {
-  //   const userData = await getUserData(userId);
-  //   const { data } = userData;
-  //   await navigation.navigate('UserProfile', data);
-  // };
+  const toggleLike = async () => {
+    setLiked(!isLiked);
+    const newLikesCount = isLiked ? totalLikes - 1 : totalLikes + 1;
+    setTotalLikes(newLikesCount);
 
-  // const toggleLike = async () => {
-  //   setLiked(!isLiked);
-  //   const newLikesCount = isLiked ? totalLikes - 1 : totalLikes + 1;
-  //   setTotalLikes(newLikesCount);
+    // We want to update the total like count that is returned from the server
+    // So we have fresh like count after interaction with the like icon (:
+    handleLike(likeData).then((resData) => {
+      // The meta contains new count for the entry
+      // resData.meta.totalLikes.totalLikes
+      // resData.meta.totalLikes.totalVotes
+      // resData.meta.totalLikes.totalViews
+      // resData.meta.totalLikes.totalComments
+      setTotalLikes(resData.meta.totalLikes);
+    });
+  };
 
-  //   handleLike(likeData).then((resData) => {
-  //     setTotalLikes(resData.meta.totalLikes);
-  //   });
-  // };
+  const handleShare = async (params, value) => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
 
-  const handleShare = async () => {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
     try {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        json: true,
+        body: JSON.stringify({
+          dynamicLinkInfo: {
+            domainUriPrefix: 'https://app.woozeee.com',
+            link: `https://app.woozeee.com/entry/?${params}=${value}`,
+          },
+        }),
+      };
+
+      const res = await fetch(
+        'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg',
+        requestOptions,
+      );
+      const _res = await res.json();
+      // console.log(_res);
+
       const result = await Share.share({
-        message: data.mediaURL,
+        message: _res.shortLink,
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          alert(result.activityType);
-        } else {
-          // shared
-          alert('Shared');
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-        // alert('Action dismissed');
-      }
-    } catch (error) {
-      console.log(error.message);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -193,7 +227,7 @@ const CustomVideo = forwardRef((props, ref) => {
     })();
   }, [videoRef]);
 
-  // const toggleVote = useCallback(() => setVoted((prevState) => !prevState), []);
+  const toggleVote = useCallback(() => setVoted((prevState) => !prevState), []);
 
   useImperativeHandle(ref, () => ({
     resetPlayState(playState) {
@@ -210,6 +244,15 @@ const CustomVideo = forwardRef((props, ref) => {
     } else {
       lastTap = now;
     }
+  };
+
+  const routeComments = async () => {
+    const userId = await AsyncStorage.getItem('userid');
+    const userData = await getUserData(userId);
+    await navigation.navigate('Comments', {
+      currUserData: userData.data,
+      postItem: data,
+    });
   };
 
   return useMemo(
@@ -231,128 +274,140 @@ const CustomVideo = forwardRef((props, ref) => {
         </TouchableWithoutFeedback>
         <View style={styles.uiContainer}>
           <TouchableWithoutFeedback onPress={() => toggleMute()}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-                width: '100%',
-                paddingVertical: 5,
-                paddingHorizontal: 10,
-                paddingBottom: 20,
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              }}
+            <LinearGradient
+              colors={['transparent', 'rgba(0,0,0,.5)']}
+              // style={{ justifyContent: 'flex-end' }}
             >
-              <View style={{ flexDirection: 'row' }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                  width: '100%',
+                  paddingVertical: 5,
+                  paddingHorizontal: 10,
+                  paddingBottom: 20,
+                }}
+              >
                 <View
                   style={{
-                    paddingLeft: 5,
+                    width: '85%',
+                    // paddingHorizontal: 5,
+                    marginBottom: 30,
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-start',
                   }}
                 >
-                  <View>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontWeight: 'bold',
+                      fontSize: 16,
+                      marginBottom: 5,
+                    }}
+                  >
+                    @{data.userDisplayName}
+                  </Text>
+                  {data.description ? (
                     <Text
-                      status="primary"
                       category="h6"
-                      style={{ marginBottom: 5 }}
+                      style={{ color: 'white', fontSize: 14 }}
                     >
-                      @{data.userDisplayName}
+                      {data.description}{' '}
+                      <Text
+                        status="control"
+                        category="h6"
+                        style={{ fontWeight: 'bold' }}
+                      >
+                        #havefun💃 #makemoney💰 #giveback🎁 #woozeee
+                        #woozeeet(wooz it)
+                      </Text>
                     </Text>
-                    {/* <Text status="danger" category="h6">
-                      {data.userLastName}
-                    </Text> */}
-                  </View>
+                  ) : (
+                    <Text
+                      status="control"
+                      category="h6"
+                      style={{ fontWeight: 'bold' }}
+                    >
+                      #havefun💃 #makemoney💰 #giveback🎁 #woozeee
+                      #woozeeet(wooz it)
+                    </Text>
+                  )}
+                </View>
+                <View>
                   <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
-                      marginVertical: 5,
+                      marginBottom: 15,
                       // zIndex: 1,
                     }}
                   >
                     <InteractIcon
-                      status={!shouldPlay ? 'danger' : 'success'}
+                      status={!shouldPlay ? 'control' : 'success'}
                       Accessory={(evaProps) => (
                         <IconPlayPause {...evaProps} isPlaying={!shouldPlay} />
                       )}
-                      height={20}
-                      width={20}
+                      height={33}
+                      width={33}
                       onPress={togglePause}
                     />
-                    <InteractIcon
-                      Accessory={(evaProps) => <IconEye {...evaProps} />}
-                      textContent={data.totalViews}
-                      height={20}
-                      width={20}
-                      direction="row"
-                      style={{ marginRight: 7 }}
-                    />
                   </View>
-                  <View>
-                    <Text
-                      status="control"
-                      category="s2"
+
+                  <InteractIcon
+                    style={{ marginBottom: 15 }}
+                    Accessory={IconCHeartToggle}
+                    // status={isLiked ? 'danger' : 'control'}
+                    textContent={data.totalLikes}
+                    onPress={toggleLike}
+                  />
+                  <InteractIcon
+                    style={{ marginBottom: 15 }}
+                    Accessory={(evaProps) => <IconCChat {...evaProps} active />}
+                    textContent={data.totalComments}
+                    onPress={routeComments}
+                  />
+                  <InteractIcon
+                    style={{ marginBottom: 15 }}
+                    Accessory={(evaProps) => (
+                      <IconCShare {...evaProps} active />
+                    )}
+                    onPress={() => handleShare('entries', data._id)}
+                  />
+
+                  <TouchableOpacity
+                    style={{ alignItems: 'center', marginBottom: 5 }}
+                    onPress={() => routeUserProfile(data.userId)}
+                  >
+                    <Image
+                      source={{ uri: data.userImageURL }}
                       style={{
-                        backgroundColor: 'rgba(0, 0, 0, 0.0125)',
-                        marginBottom: 2,
+                        height: 40,
+                        width: 40,
+                        borderRadius: 20,
+                        borderWidth: 2,
+                        borderColor: 'white',
                       }}
-                    >
-                      {/* {data.userEntryData.categoryName} */}
-                    </Text>
-                  </View>
+                      resizeMode="cover"
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
-              <View>
-                <InteractIcon
-                  style={{ marginBottom: 15 }}
-                  Accessory={IconCHeartToggle}
-                  // status={isLiked ? 'danger' : 'control'}
-                  textContent={data.likes}
-                  // onPress={toggleLike}
-                />
-                <InteractIcon
-                  style={{ marginBottom: 10 }}
-                  Accessory={(evaProps) => <IconCChat {...evaProps} active />}
-                  // textContent={data.totalComments}
-                />
-                <InteractIcon
-                  style={{ marginBottom: 15 }}
-                  Accessory={(evaProps) => <IconCShare {...evaProps} active />}
-                  // onPress={handleShare}
-                />
-
-                <TouchableOpacity
-                  style={{ alignItems: 'center', marginBottom: 5 }}
-                  // onPress={() => routeUserProfile(data.userId)}
-                >
-                  <Image
-                    source={{ uri: data.userImageURL }}
-                    defaultSource={require('assets/images/banner/profile.jpg')}
-                    style={{
-                      height: 40,
-                      width: 40,
-                      borderRadius: 20,
-                      borderWidth: 2,
-                      borderColor: 'white',
-                    }}
-                    resizeMode="cover"
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
+            </LinearGradient>
           </TouchableWithoutFeedback>
         </View>
       </View>
     ),
     [
       height,
-      data,
+      // item,
       challenge,
       shouldPlay,
       togglePause,
       // isLiked,
-      // toggleLike,
+      toggleLike,
       // isVoted,
-      // toggleVote,
+      toggleVote,
     ],
   );
 });
