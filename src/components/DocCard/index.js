@@ -40,7 +40,7 @@ const DocCard = (props) => {
                     <Text category= "h6" style= {styles.text}>
                         {props.doc}
                     </Text>
-                    <CustomLabel text= {props.upcoming ? props.hname : '5km Away'} source= {require('../../assets/images/askADoc/location.png')} />
+                    <CustomLabel text= {props.upcoming ? props.hname : props.email}  />
                     {props.profile ? 
                 <View style= {{flexDirection: 'row', justifyContent: 'space-between', width: '90%'}}>
                     <Text style= {{color: 'rgba(4, 63, 124, 0.75)', fontWeight: 'bold'}} category= {"s2"}>{props.title}</Text>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         // textAlign: 'center'
     },
     imagecard: {
-        backgroundColor: '#EFF4F8',
+        // backgroundColor: '#fff',
         borderRadius: 5,
         width: '25%'
        

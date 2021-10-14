@@ -1,32 +1,32 @@
 import React, { useState } from 'react';
 import {
-    Layout,Text,Datepicker,Button
+    Layout,Text,Datepicker,Button,Spinner
   } from '@ui-kitten/components';
 import Carousel from 'react-native-snap-carousel';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Image, StyleSheet, View } from 'react-native';
 import { TextIcon } from 'src/components/IconPacks/TextIcon';
+import qs from 'qs';
 import { IconCalendar } from 'src/components/CustomIcons';
-import { GeneralSelect } from 'src/components/FormFields/index';
+import { GeneralDatePicker, GeneralSelect } from 'src/components/FormFields/index';
 import services from './services.json';
-import specialty from './specialty.json'
+import specialty from './specialty.json';
+import location from './location.json';
 import DocLabel from 'src/components/DocLabel/index';
 import BackgroundVideo from 'src/components/BackgroundVideo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from '../../../../../../../services/api/index';
 import ConnectDocCard from 'src/components/ConnectDocCard/index';
 const AskADoctor = ({navigation}) => {
     const [date, setDate] = useState(new Date());
-    const [_carousel, setCarousel] = useState(null)
+    const [_carousel, setCarousel] = useState(null);
+    const [isLoading, setIsLoading] = useState(false)
     const [form, setFormValues] = useState({
-        fName: '',
-        sName: '',
-        displayName: '',
-        sex: '',
-        dob: '',
-        country: '',
-        state: '',
-        bio: '',
-        imgUrl: ''
+          visit_type: '',
+          location: '',
+          specialization: '',
+          date: ''
       });
     const sliders = [
         {
@@ -87,12 +87,14 @@ const AskADoctor = ({navigation}) => {
             </View>
         );
     }
+    const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
     const setNewDateHandler = (date) => {
         setDate(date);
       }
     const SERVICES = services;
     const SPECIALTY = specialty;
+    const AVAILABLE_LOCATIONS = location;
 
     const doctors = [
       {
@@ -142,6 +144,57 @@ const AskADoctor = ({navigation}) => {
       },
 
     ]
+    const searchProfessionals = () => {
+      setIsLoading(true);
+      const formattedDate =  form.date.split("/").reverse().join("-");
+      AsyncStorage.getItem('USER_AUTH_TOKEN')
+      .then((res) => {
+        // const data = form;
+        // axios({
+        //   method: 'post',
+        //   url: 'https://apis.woozeee.com/api/v1/care/professionals/search',
+        //   data: qs.stringify({
+        //     visit_type: form.visit_type,
+        //     location: form.location,
+        //     specialization: form.specialization,
+        //     date: formattedDate
+        //   }),
+        //   headers: {
+        //     'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+        //     Authorization: res,
+        //     'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzMDQzMTM5MiwiZXhwIjoxNjMxMDM2MTkyLCJuYmYiOjE2MzA0MzEzOTIsImp0aSI6ImNpUjQ4bVdlRVZGbjJNT3ciLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.8Mm7XgT818WudYASQSNp_YtbjGaLsYHxibVFxkoGRUo' 
+
+        //   }
+        // })
+        axios
+          .post(`care/professionals/search`, qs.stringify({
+            visit_type: form.visit_type,
+            location: form.location,
+            specialization: form.specialization,
+            date: formattedDate
+          }), {
+            headers: {
+              'content-type': 'application/x-www-form-urlencoded',
+              Authorization: res, 
+              'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzMDQzMTM5MiwiZXhwIjoxNjMxMDM2MTkyLCJuYmYiOjE2MzA0MzEzOTIsImp0aSI6ImNpUjQ4bVdlRVZGbjJNT3ciLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.8Mm7XgT818WudYASQSNp_YtbjGaLsYHxibVFxkoGRUo' 
+            },
+          })
+          .then((res) => {
+            console.log("response", res.data.message.alternateResult);
+            const professionals = res.data.message.alternateResult;
+            navigation.navigate('Consultation', {results: professionals, specialty: form.specialization, visit_type: form.visit_type})
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            setIsLoading(false);
+            console.log(err.response);
+            //   alert('Network Error')
+          });
+      })
+      .catch((err) => err);
+      // navigation.navigate('Consultation')
+    }
+    console.log("forms collected", form)
     return (
         <Layout level="6" style={{ flex: 1 }}>
             <TopNavigationArea
@@ -172,7 +225,7 @@ const AskADoctor = ({navigation}) => {
                 icon_name= "arrow-ios-downward-outline" /> */}
                 <View style= {{marginVertical: 10}}>
                     <GeneralSelect
-                        type="services"
+                        type="visit_type"
                         label={'How do you want to access our Service?'}
                         data={SERVICES}
                         setFormValues={setFormValues}
@@ -180,21 +233,39 @@ const AskADoctor = ({navigation}) => {
                 </View>
                 <View style= {{marginVertical: 10}}>
                     <GeneralSelect
-                        type="specialty"
+                        type="specialization"
                         label={'Select Specialty'}
                         data={SPECIALTY}
                         setFormValues={setFormValues}
                         />
                 </View>
                 <View style= {{marginVertical: 10}}>
-                    <Datepicker
+                    <GeneralSelect
+                        type="location"
+                        label={'Select Location'}
+                        data={AVAILABLE_LOCATIONS}
+                        setFormValues={setFormValues}
+                        />
+                </View>
+                <View style= {{marginVertical: 10}}>
+                    {/* <Datepicker
                     label={'Select Date'}
+                    type="date"
                     date={date}
                     onSelect={nextDate => setNewDateHandler(nextDate)}
                     min = {new Date ('12-05-1880')}
-                    max= {new Date()}
+                    max= {new Date('12-05-3030')}
                     accessoryRight={IconCalendar}
-                />
+                /> */}
+                  <GeneralDatePicker
+                      show
+                      type="date"
+                      label={'Date'}
+                      date={date}
+                      onSelect={(nextDate) => setNewDateHandler(nextDate)}
+                      setFormValues={setFormValues}
+                      accessoryRight={IconCalendar}
+                    />
                 </View>
                 <View style={{ paddingVertical: 20 }}>
                 <Button
@@ -203,8 +274,9 @@ const AskADoctor = ({navigation}) => {
                     accessibilityLiveRegion="assertive"
                     accessibilityComponentType="button"
                     accessibilityLabel="Continue"
-                    // disabled={isLoading}
-                    onPress= {() => navigation.navigate('Consultation')}
+                    accessoryLeft={isLoading ? renderSpinner : null}
+                    disabled={isLoading}
+                    onPress= {searchProfessionals}
                 >
                     <Text status="control">{'Search'}</Text>
                 </Button>

@@ -24,7 +24,7 @@ const CustomLabel = (props) => {
     });
     return (
         <View style= {styles.container}>
-            <Image style= {styles.imageStyle} source= {props.source}  />
+            {/* <Image style= {styles.imageStyle} source= {props.source}  /> */}
             {props.dark ? 
             <Text style= {styles.textStyle} category= {'c2'}>
                     {props.text}

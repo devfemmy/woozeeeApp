@@ -10,7 +10,8 @@ import CustomLabel from 'src/components/CustomLabel/index';
 import DoctorSlot from 'src/components/DoctorSlot/index';
 
 const DoctorProfile = (props) => {
-
+    const {profile, visit_type, specialty} = props.route.params;
+    const data = profile;
     const [active, setActive] = useState(true)
     return (
         <Layout level="6" style={{ flex: 1 }}>
@@ -22,19 +23,19 @@ const DoctorProfile = (props) => {
             <ScrollView style= {{padding: 20}}>
                 <DocCard
                 profile 
-                title= "General Practitioner"
-                onPress= {() => props.navigation.navigate('DoctorProfile')} 
-                mheight= {150} image= {require('../../../../../../../../assets/images/askADoc/doc1.png')} 
-                doc= "Dr. Jules Wazobia" />
+                title= {specialty}
+                onPress= {() => props.navigation.navigate('DoctorProfile', {profile: data})} 
+                mheight= {100} 
+                email={data.email}
+                image= {{uri: data.dp}} 
+                doc= {`${data.title} ${data.firstname} ${data.lastname}`} /> 
                 <View style= {{marginVertical: 10}}>
                     <View style= {styles.lowerCon}>
                         <Text style= {styles.catText} category= "h5">
                             About
                         </Text>
                         <Text category= "s2">
-                        Dr. Jules Wazobia is very 
-                        passionate about achieving excellent patient outcomes and continually develops and fine tunes 
-                        her aesthetic skills for 
+                        {data.info}
                         </Text>
                     </View>
                     <View style= {styles.lowerCon}>
@@ -56,7 +57,7 @@ const DoctorProfile = (props) => {
                         </View>  : null       
                     }
                     </View>
-                    <View style= {styles.lowerCon}>
+                    {/* <View style= {styles.lowerCon}>
                         <Text style= {styles.catText} category= "h5">
                             Language
                         </Text>
@@ -68,13 +69,13 @@ const DoctorProfile = (props) => {
                         <CustomLabel country text= "German" 
                         source= {require('../../../../../../../../assets/images/askADoc/german.png')} />
                     </View>
-                    </View>
+                    </View> */}
                     <View style= {styles.lowerCon}>
                         <Text style= {styles.catText} category= "h5">
-                            Hospital Location
+                             Location
                         </Text>
                         <Text category= "s2">
-                        15 Admiralty Way, Lekki Phase 1, Lagos
+                        {data.address}
                         </Text>
                     </View>
                     <View style= {styles.lowerCon}>
@@ -82,7 +83,7 @@ const DoctorProfile = (props) => {
                         Visit Type
                     </Text>
                     <Text category= "s2">
-                    Video Consulation
+                        {visit_type}
                     </Text>
                     </View>
                     <View style= {styles.lowerCon}>

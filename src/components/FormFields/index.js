@@ -289,7 +289,7 @@ export const GeneralSelect = (props) => {
 export const GeneralDatePicker = (props) => {
   // prettier-ignore
   const {
-    label, type, size, setFormValues, ...otherProps
+    label, type, size, show, setFormValues, ...otherProps
   } = props;
 
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -315,9 +315,9 @@ export const GeneralDatePicker = (props) => {
         date={selectedDate}
         onSelect={handleSelect}
         min={new Date('12-05-1880')}
-        max={new Date()}
+        max={show ? new Date('12-05-3033') : new Date()}
       />
     ),
-    [handleSelect, label, size, selectedDate, otherProps],
+    [handleSelect, label, size, show, selectedDate, otherProps],
   );
 };

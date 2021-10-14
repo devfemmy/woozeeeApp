@@ -8,6 +8,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import DocCard from 'src/components/DocCard/index';
 
 const Consultation = (props) => {
+    const {results, specialty, visit_type} = props.route.params;
+    console.log("results", results)
     return (
         <Layout level="6" style={{ flex: 1 }}>
             <TopNavigationArea
@@ -17,13 +19,20 @@ const Consultation = (props) => {
             />
             <ScrollView style= {styles.container}>
                 <Text style= {styles.textStyle} category= "h5">
-                    All General Practitioner
+                    All {specialty}(s)
                 </Text>
                 <View style= {styles.cardContainer}>
-                    <DocCard onPress= {() => props.navigation.navigate('DoctorProfile')} mheight= {100} image= {require('../../../../../../../../assets/images/askADoc/doc1.png')} doc= "Dr. Jules Wazobia" />
-                    <DocCard onPress= {() => props.navigation.navigate('DoctorProfile')} mheight= {100} image= {require('../../../../../../../../assets/images/askADoc/doc2.png')} doc= "Dr. Wasiu Vlenesmd" />
-                    <DocCard onPress= {() => props.navigation.navigate('DoctorProfile')} mheight= {100} image= {require('../../../../../../../../assets/images/askADoc/doc3.png')} doc= "Dr. Sifu Aredshsn" />
-                    <DocCard onPress= {() => props.navigation.navigate('DoctorProfile')} mheight= {100} image= {require('../../../../../../../../assets/images/askADoc/doc4.png')} doc= "Dr. Sifu Kinsuri" />
+                    {results.map((data, index) => {
+                        return (
+                            <DocCard 
+                            key={index}
+                            onPress= {() => props.navigation.navigate('DoctorProfile', {profile: data, visit_type: visit_type, specialty: specialty})} 
+                            mheight= {100} 
+                            email={data.email}
+                            image= {{uri: data.dp}} 
+                            doc= {`${data.title} ${data.firstname} ${data.lastname}`} /> 
+                        )
+                    })}
                 </View>
             </ScrollView>
         </Layout>
