@@ -735,12 +735,12 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                 onPress={routeComments}
               />
               <Feather
-                name="send"
+                name="share"
                 size={20}
                 color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                 style={{
-                  marginVertical: 2,
-                  marginHorizontal: 8,
+                  marginVertical: 1,
+                  marginHorizontal: 10,
                 }}
                 onPress={
                   () => handleSend()
@@ -798,11 +798,14 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
               <View style={{ flex: 1, marginHorizontal: 5 }}>
                 <TextInput
                   placeholder="Leave a comment"
+                  placeholderTextColor="rgba(40, 63,100, 1)"
                   onChangeText={(text) => setText(text)}
                   style={{
                     height: 40,
                     paddingHorizontal: 5,
-                    color: 'grey',
+                    backgroundColor: 'rgba(10, 50, 90, 0.1)',
+                    borderRadius: 10,
+                    color: 'rgba(40, 63,100, 1)',
                   }}
                   defaultValue={text}
                 />
