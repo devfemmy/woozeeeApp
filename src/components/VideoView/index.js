@@ -49,6 +49,8 @@ import { AppSettingsContext } from 'src/contexts';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import firebase from '@react-native-firebase/app';
 
 import firestore from '@react-native-firebase/firestore';
@@ -419,7 +421,7 @@ export default function VideoView({
         text: commentMessage,
         userFirstName: userData.data.user.fName,
         userLastName: userData.data.user.sName,
-        userName: `@iam${userData.data.user.fName.toLowerCase()}${userData.data.user.sName.toLowerCase()}`,
+        userName: `${userData.data.user.displayName.toLowerCase()}`,
         imgUrl: userData.data.user.sName.imgUrl,
         sentAt: Date(),
         delivered: false,
@@ -814,12 +816,12 @@ export default function VideoView({
                 onPress={routeComments}
               />
               <Feather
-                name="send"
+                name="share"
                 size={20}
                 color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                 style={{
-                  marginVertical: 2,
-                  marginHorizontal: 8,
+                  marginVertical: 1,
+                  marginHorizontal: 10,
                 }}
                 onPress={
                   () => handleSend(data)
@@ -876,11 +878,14 @@ export default function VideoView({
               <View style={{ flex: 1, marginHorizontal: 5 }}>
                 <TextInput
                   placeholder="Leave a comment"
+                  placeholderTextColor="rgba(40, 63,100, 1)"
                   onChangeText={(text) => setText(text)}
                   style={{
                     height: 40,
                     paddingHorizontal: 5,
-                    color: 'grey',
+                    backgroundColor: 'rgba(10, 50, 90, 0.1)',
+                    borderRadius: 10,
+                    color: 'rgba(40, 63,100, 1)',
                   }}
                   defaultValue={text}
                 />

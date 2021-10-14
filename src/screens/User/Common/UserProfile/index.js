@@ -21,7 +21,13 @@ import {
   Layout, Text, Button, Tab, TabView, Divider,
 } from '@ui-kitten/components';
 
-import { SimpleLineIcons, AntDesign } from '@expo/vector-icons';
+import {
+  SimpleLineIcons,
+  AntDesign,
+  Ionicons,
+  FontAwesome,
+  MaterialIcons,
+} from '@expo/vector-icons';
 
 import { LoadingContext, LocaleContext } from 'src/contexts';
 
@@ -98,6 +104,16 @@ export default function UserProfile({ route, navigation }) {
 
   const [loading, setLoading] = useState(false);
 
+  const [isAllSelected, setAllSelected] = useState(true);
+
+  function toggleTab() {
+    if (isAllSelected) {
+      setAllSelected(!isAllSelected);
+    } else {
+      return;
+    }
+  }
+
   const fetchUserProfileData = async () => {
     setLoading(true);
     const userData = await getUserData(id);
@@ -135,7 +151,6 @@ export default function UserProfile({ route, navigation }) {
     const {
       pageData: { data },
     } = res;
-    // console.log('inside fn => ', data);
     data.forEach((entry) => likedData.push(entry));
   };
 
@@ -150,16 +165,17 @@ export default function UserProfile({ route, navigation }) {
     getLikedData();
   }, []);
 
+  console.log(user);
+
   const [following, setFollowing] = useState(
-    userData ? userData.isFollow : false,
+    userData !== undefined ? userData.isFollow : false,
   );
 
-  const [block, setBlock] = useState(userData ? user.isBlocked : false);
+  const [block, setBlock] = useState(user ? user.isBlocked : false);
 
   const toggleFollow = async () => {
-    // console.log(userData);
     setFollowing(!following);
-    const res = await handleFollow(userData.userId, !following);
+    const res = await handleFollow(id, !following);
     console.log('res', res);
   };
 
@@ -325,7 +341,6 @@ export default function UserProfile({ route, navigation }) {
                 />
               </View>
             </View>
-            {console.log(currUserId, user._id, '======')}
             {currUserId !== user._id ? (
               <View
                 style={{
@@ -394,7 +409,7 @@ export default function UserProfile({ route, navigation }) {
                   onPress={toggleFollow}
                 >
                   <Text status="control" category="c2">
-                    {following ? t('following') : t('follow')}
+                    {!following ? t('following') : t('follow')}
                   </Text>
                 </Button>
               </View>
@@ -466,36 +481,17 @@ export default function UserProfile({ route, navigation }) {
                         {displayName}
                       </Text>
                     </View>
-                    <View
-                      style={{
-                        maxWidth: 300,
-                        marginBottom: 10,
-                      }}
-                    >
-                      <Text
-                        category="c2"
-                        appearance="hint"
-                        style={{
-                          lineHeight: 15,
-                        }}
-                        numberOfLines={3}
-                      >
+                    <View>
+                      <Text category="c2" appearance="hint" numberOfLines={3}>
                         {bio}
                       </Text>
                     </View>
                   </View>
-                  <View style={{ marginBottom: 10 }}>
+                  <View style={{ marginVertical: 15 }}>
                     <Text category="s2" status="primary">
-                      {referralCode?.toUpperCase()}
+                      Referral Code: {referralCode?.toUpperCase()}
                     </Text>
                   </View>
-                  <View
-                    style={{
-                      marginBottom: 10,
-                      marginTop: 5,
-                      flexDirection: 'row',
-                    }}
-                  ></View>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -534,10 +530,89 @@ export default function UserProfile({ route, navigation }) {
                 </View>
               </View>
             </View>
-            <Divider />
-            {/* {console.log('from ... -> ', likedData)} */}
+            {/* <Divider /> */}
+            <View
+              style={{
+                height: 50,
+                backgroundColor: 'transparent',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingHorizontal: 30,
+                marginVertical: 10,
+              }}
+            >
+              <TouchableOpacity onPress={() => setAllSelected(true)}>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 50,
+                    alignItems: 'center',
+                    backgroundColor: isAllSelected ? '#043F7C' : '#E8EAF6',
+                    borderColor: '#043F7C',
+                    borderWidth: 1,
+                    height: '100%',
+                    borderRadius: 5,
+                  }}
+                >
+                  <MaterialIcons
+                    name="dashboard"
+                    size={30}
+                    color={isAllSelected ? 'white' : '#043F7C'}
+                  />
+                  {isAllSelected ? (
+                    <Text style={{ color: 'white', marginHorizontal: 5 }}>
+                      All
+                    </Text>
+                  ) : (
+                    <Text style={{ color: '#043F7C', marginHorizontal: 5 }}>
+                      All
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={toggleTab}>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 50,
+                    alignItems: 'center',
+                    backgroundColor: !isAllSelected ? '#043F7C' : '#E8EAF6',
+                    borderColor: '#043F7C',
+                    borderWidth: 1,
+                    height: '100%',
+                    borderRadius: 5,
+                  }}
+                >
+                  <AntDesign
+                    name="heart"
+                    size={28}
+                    color={!isAllSelected ? 'white' : '#043F7C'}
+                  />
+                  {!isAllSelected ? (
+                    <Text style={{ color: 'white', marginHorizontal: 5 }}>
+                      Liked
+                    </Text>
+                  ) : (
+                    <Text style={{ color: '#043F7C', marginHorizontal: 5 }}>
+                      Liked
+                    </Text>
+                  )}
+                </View>
+              </TouchableOpacity>
+            </View>
+            {isAllSelected ? (
+              <ProfilePostsArea userPostData={user} />
+            ) : (
+              <LikedProfilePosts userId={_id} />
+            )}
 
-            <TabView
+            {/* <TabView
               style={{ flex: 1 }}
               indicatorStyle={{ backgroundColor: 'transparent' }}
               selectedIndex={selectedIndex}
@@ -547,16 +622,21 @@ export default function UserProfile({ route, navigation }) {
               <Tab title={t('all')} icon={IconGrid}>
                 <ProfilePostsArea userPostData={user} />
               </Tab>
-              {/* <Tab title={t('saved')} icon={IconBookmark}>
-            <ProfilePostsSavedArea userSavedData={user} />
-          </Tab> */}
               <Tab title={t('liked')} icon={IconHeart}>
                 <LikedProfilePosts userId={_id} />
               </Tab>
-            </TabView>
+            </TabView> */}
           </View>
         </Layout>
       ),
-    [user, block, user.isBlocked, loading],
+    [
+      user,
+      block,
+      user.isBlocked,
+      user.userData,
+      loading,
+      following,
+      isAllSelected,
+    ],
   );
 }

@@ -4,6 +4,7 @@ import {Input} from '@ui-kitten/components';
 const CustomField = (props) => {
     return (
         <Input
+        maxLength={props.maxLength}
         placeholder={props.placeholder}
         value={props.value}
         label= {props.label}

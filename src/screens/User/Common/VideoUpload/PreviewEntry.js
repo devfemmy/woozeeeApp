@@ -7,6 +7,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import Firebase from 'src/services/Firebase/firebaseConfig';
 // import firebase from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
   StyleSheet,
   BackHandler,
@@ -371,18 +372,23 @@ const PreviewEntry = (props) => {
   return (
     <Root>
       <Layout level="6" style={{ flex: 1, padding: 25 }}>
-        {imageUri === null ? (
-          <VideoPreview />
-        ) : (
-          <Image
-            style={{ height: 300, width: '100%', resizeMode: 'cover' }}
-            source={{ uri: imageUri }}
-          />
-        )}
-        <View
-          style={{ marginHorizontal: 5, marginBottom: 10, marginVertical: 20 }}
-        >
-          {/* <GeneralTextField
+        <KeyboardAwareScrollView>
+          {imageUri === null ? (
+            <VideoPreview />
+          ) : (
+            <Image
+              style={{ height: 300, width: '100%', resizeMode: 'cover' }}
+              source={{ uri: imageUri }}
+            />
+          )}
+          <View
+            style={{
+              marginHorizontal: 5,
+              marginBottom: 10,
+              marginVertical: 20,
+            }}
+          >
+            {/* <GeneralTextField
                   type="caption"
                   label={`Caption`}
                   placeholder={'AddCaption'}
@@ -391,17 +397,17 @@ const PreviewEntry = (props) => {
                   height={100}
                   value= {form.caption}
                 /> */}
-          <CustomField
-            label="Caption"
-            
-            placeholder={'Add Caption'}
-            multiline
-            height={100}
-            value={caption}
-            onChangeText={(nextValue) => setCaption(nextValue)}
-          />
-        </View>
-        {/* {entries ? null : (
+            <CustomField
+              maxLength={100}
+              label="Caption"
+              placeholder={'Add Caption'}
+              multiline
+              height={100}
+              value={caption}
+              onChangeText={(nextValue) => setCaption(nextValue)}
+            />
+          </View>
+          {/* {entries ? null : (
           <View
             style={{
               flex: 1,
@@ -488,6 +494,7 @@ const PreviewEntry = (props) => {
               </Button>
             )}
           </View>
+        </KeyboardAwareScrollView>
       </Layout>
     </Root>
   );

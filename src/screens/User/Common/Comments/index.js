@@ -17,6 +17,8 @@ import firebase from '@react-native-firebase/app';
 
 import firestore from '@react-native-firebase/firestore';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import Moment from 'react-moment';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -573,77 +575,79 @@ export default function Comments({ route, navigation }) {
   return useMemo(
     () => (
       <Layout level="5" style={{ flex: 1 }}>
-        <Card
-          style={{
-            flex: 1,
-            justifyContent: 'space-between',
-            backgroundColor: 'transparent',
-          }}
-          header={renderCardHeader}
-          footer={renderCardFooter}
-        >
-          <View
+        <KeyboardAwareScrollView>
+          <Card
             style={{
-              height: height - INSETS,
-              justifyContent: 'flex-end',
+              flex: 1,
+              justifyContent: 'space-between',
+              backgroundColor: 'transparent',
             }}
+            header={renderCardHeader}
+            footer={renderCardFooter}
           >
-            {!isLoading && comments.length > 0 ? (
-              <List
-                style={{
-                  backgroundColor: 'transparent',
-                  paddingVertical: 10,
-                  flex: 1,
-                }}
-                contentContainerStyle={{}}
-                alwaysBounceVertical
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                data={comments}
-                keyExtractor={(_, i) => i.toString()}
-                renderItem={(comment, index) => (
-                  <Message
-                    key={index}
-                    userName={`${comment.item.userFirstName} ${comment.item.userLastName}`}
-                    message={`${comment.item.text}`}
-                    time={`${comment.item.sentAt}`}
-                    replyId={comment.item.replyId}
-                    img={comment.item.imgUrl}
-                    parentCommentId={comment.item.parentCommentId}
-                  />
-                )}
-                getItemLayout={(data, index) => ({
-                  length: 150,
-                  offset: 150 * index,
-                  index,
-                })}
-              />
-            ) : (
-              <View
-                style={{
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Image
-                  source={require('../../../../assets/images/banner/addComment.png')}
-                  resizeMode="contain"
+            <View
+              style={{
+                height: height - INSETS,
+                justifyContent: 'flex-end',
+              }}
+            >
+              {!isLoading && comments.length > 0 ? (
+                <List
                   style={{
-                    width: 200,
-                    height: 200,
-                    marginVertical: 20,
+                    backgroundColor: 'transparent',
+                    paddingVertical: 10,
+                    flex: 1,
                   }}
+                  contentContainerStyle={{}}
+                  alwaysBounceVertical
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  data={comments}
+                  keyExtractor={(_, i) => i.toString()}
+                  renderItem={(comment, index) => (
+                    <Message
+                      key={index}
+                      userName={`${comment.item.userFirstName} ${comment.item.userLastName}`}
+                      message={`${comment.item.text}`}
+                      time={`${comment.item.sentAt}`}
+                      replyId={comment.item.replyId}
+                      img={comment.item.imgUrl}
+                      parentCommentId={comment.item.parentCommentId}
+                    />
+                  )}
+                  getItemLayout={(data, index) => ({
+                    length: 150,
+                    offset: 150 * index,
+                    index,
+                  })}
                 />
-                <Text category="s2" status="basic">
-                  No comments. Add comment
-                </Text>
-              </View>
-            )}
-          </View>
-        </Card>
-        {/* <Spinner visible={isLoading} /> */}
+              ) : (
+                <View
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Image
+                    source={require('../../../../assets/images/banner/addComment.png')}
+                    resizeMode="contain"
+                    style={{
+                      width: 200,
+                      height: 200,
+                      marginVertical: 20,
+                    }}
+                  />
+                  <Text category="s2" status="basic">
+                    No comments. Add comment
+                  </Text>
+                </View>
+              )}
+            </View>
+          </Card>
+          {/* <Spinner visible={isLoading} /> */}
+        </KeyboardAwareScrollView>
       </Layout>
     ),
     [height, INSETS, renderCardFooter, renderCardHeader],
