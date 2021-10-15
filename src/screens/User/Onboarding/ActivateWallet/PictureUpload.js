@@ -12,6 +12,8 @@ import {
 
 import RBSheet from 'react-native-raw-bottom-sheet';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import TopNavigationArea from 'src/components/TopNavigationArea';
@@ -73,129 +75,131 @@ export default function PictureUpload({ navigation }) {
         navigation={navigation}
         screen="auth"
       />
-      <ScrollView
-        alwaysBounceVertical
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-      >
-        <View
-          style={{
-            flex: 1,
-          }}
+      <KeyboardAwareScrollView>
+        <ScrollView
+          alwaysBounceVertical
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         >
           <View
             style={{
-              position: 'relative',
-              alignItems: 'center',
-              paddingVertical: 50,
+              flex: 1,
             }}
           >
-            <TouchableOpacity
-              activeOpacity={0.75}
+            <View
               style={{
-                backgroundColor: '#EDF1F7',
-                bottom: 0,
-                borderRadius: 100,
-                height: 200,
-                width: 200,
+                position: 'relative',
+                alignItems: 'center',
+                paddingVertical: 50,
               }}
-              onPress={() => handleOpenSheet()}
             >
-              <Image
-                source={{ uri: userImage }}
+              <TouchableOpacity
+                activeOpacity={0.75}
                 style={{
-                  borderColor: 'white',
-                  borderWidth: 3,
+                  backgroundColor: '#EDF1F7',
+                  bottom: 0,
                   borderRadius: 100,
-                  height: '100%',
-                  resizeMode: 'cover',
-                  width: '100%',
+                  height: 200,
+                  width: 200,
                 }}
-                resizeMode="cover"
-              />
-              <Image
-                source={require('assets/images/icon/camera-outline.png')}
-                defaultSource={require('assets/images/icon/camera-outline.png')}
-                style={{
-                  position: 'absolute',
-                  height: 50,
-                  width: 50,
-                  top: 75,
-                  left: 75,
-                }}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ padding: 15 }}>
-            <View style={{ paddingVertical: 20 }}>
-              <Button
-                status="danger"
-                size="large"
-                accessibilityLiveRegion="assertive"
-                accessibilityComponentType="button"
-                accessibilityLabel="Continue"
-                disabled={isLoading}
-                onPress={routeActivateWalletOTPVerify}
+                onPress={() => handleOpenSheet()}
               >
-                <Text status="control">{t('next')}</Text>
-              </Button>
+                <Image
+                  source={{ uri: userImage }}
+                  style={{
+                    borderColor: 'white',
+                    borderWidth: 3,
+                    borderRadius: 100,
+                    height: '100%',
+                    resizeMode: 'cover',
+                    width: '100%',
+                  }}
+                  resizeMode="cover"
+                />
+                <Image
+                  source={require('assets/images/icon/camera-outline.png')}
+                  defaultSource={require('assets/images/icon/camera-outline.png')}
+                  style={{
+                    position: 'absolute',
+                    height: 50,
+                    width: 50,
+                    top: 75,
+                    left: 75,
+                  }}
+                  resizeMode="cover"
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{ padding: 15 }}>
+              <View style={{ paddingVertical: 20 }}>
+                <Button
+                  status="danger"
+                  size="large"
+                  accessibilityLiveRegion="assertive"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Continue"
+                  disabled={isLoading}
+                  onPress={routeActivateWalletOTPVerify}
+                >
+                  <Text status="control">{t('next')}</Text>
+                </Button>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-      <RBSheet
-        ref={sheetRef}
-        height={170}
-        closeOnDragDown
-        animationType="fade"
-        customStyles={{
-          container: {
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: BG_THEME,
-          },
-        }}
-      >
-        <Layout
-          level="5"
-          style={{
-            flex: 1,
-            width: '100%',
-            alignItems: 'flex-start',
-            justifyContent: 'flex-end',
-            paddingBottom: 30,
+        </ScrollView>
+        <RBSheet
+          ref={sheetRef}
+          height={170}
+          closeOnDragDown
+          animationType="fade"
+          customStyles={{
+            container: {
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: BG_THEME,
+            },
           }}
         >
-          <Button
-            appearance="ghost"
-            status="basic"
+          <Layout
+            level="5"
             style={{
+              flex: 1,
               width: '100%',
-              justifyContent: 'center',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-end',
+              paddingBottom: 30,
             }}
-            onPress={handleSelectImage}
           >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {t('chooseFromLibrary')}
-            </Text>
-          </Button>
-          <Divider style={{ marginVertical: 2, width: '100%' }} />
-          <Button
-            appearance="ghost"
-            status="basic"
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-            }}
-            onPress={handleSnapImage}
-          >
-            <Text style={{ fontSize: 16 }} status="basic">
-              {t('takePhoto')}
-            </Text>
-          </Button>
-        </Layout>
-      </RBSheet>
+            <Button
+              appearance="ghost"
+              status="basic"
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+              }}
+              onPress={handleSelectImage}
+            >
+              <Text style={{ fontSize: 16 }} status="basic">
+                {t('chooseFromLibrary')}
+              </Text>
+            </Button>
+            <Divider style={{ marginVertical: 2, width: '100%' }} />
+            <Button
+              appearance="ghost"
+              status="basic"
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+              }}
+              onPress={handleSnapImage}
+            >
+              <Text style={{ fontSize: 16 }} status="basic">
+                {t('takePhoto')}
+              </Text>
+            </Button>
+          </Layout>
+        </RBSheet>
+      </KeyboardAwareScrollView>
     </Layout>
   );
 }
