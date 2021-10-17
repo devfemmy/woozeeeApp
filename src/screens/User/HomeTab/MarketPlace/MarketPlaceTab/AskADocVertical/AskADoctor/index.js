@@ -23,9 +23,9 @@ const AskADoctor = ({navigation}) => {
     const [_carousel, setCarousel] = useState(null);
     const [isLoading, setIsLoading] = useState(false)
     const [form, setFormValues] = useState({
-          visit_type: '',
-          location: '',
-          specialization: '',
+          visit_type: 'Video Consultation',
+          location: 'Ajah',
+          specialization: 'General Practitioner',
           date: ''
       });
     const sliders = [
@@ -90,6 +90,7 @@ const AskADoctor = ({navigation}) => {
     const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
     const setNewDateHandler = (date) => {
+        console.log("date,", date.toLocaleDateString())
         setDate(date);
       }
     const SERVICES = services;
@@ -146,7 +147,18 @@ const AskADoctor = ({navigation}) => {
     ]
     const searchProfessionals = () => {
       setIsLoading(true);
-      const formattedDate =  form.date.split("/").reverse().join("-");
+      console.log("new block", date.toLocaleDateString())
+      const formattedDate =  date.toLocaleDateString().split("/").reverse().join("-");
+      let weekday = new Array(7);
+      weekday[0] = "Sunday";
+      weekday[1] = "Monday";
+      weekday[2] = "Tuesday";
+      weekday[3] = "Wednesday";
+      weekday[4] = "Thursday";
+      weekday[5] = "Friday";
+      weekday[6] = "Saturday";
+      const dayOfTheWeek = new Date(formattedDate).getDay();
+      let formattedDay = weekday[dayOfTheWeek]
       AsyncStorage.getItem('USER_AUTH_TOKEN')
       .then((res) => {
         // const data = form;
@@ -182,7 +194,8 @@ const AskADoctor = ({navigation}) => {
           .then((res) => {
             console.log("response", res.data.message.alternateResult);
             const professionals = res.data.message.alternateResult;
-            navigation.navigate('Consultation', {results: professionals, specialty: form.specialization, visit_type: form.visit_type})
+            navigation.navigate('Consultation', {results: professionals, specialty: form.specialization, 
+              visit_type: form.visit_type, dayOfTheWeek: formattedDay})
             setIsLoading(false);
           })
           .catch((err) => {
@@ -248,7 +261,7 @@ const AskADoctor = ({navigation}) => {
                         />
                 </View>
                 <View style= {{marginVertical: 10}}>
-                    {/* <Datepicker
+                    <Datepicker
                     label={'Select Date'}
                     type="date"
                     date={date}
@@ -256,16 +269,16 @@ const AskADoctor = ({navigation}) => {
                     min = {new Date ('12-05-1880')}
                     max= {new Date('12-05-3030')}
                     accessoryRight={IconCalendar}
-                /> */}
-                  <GeneralDatePicker
+                />
+                  {/* <GeneralDatePicker
                       show
                       type="date"
                       label={'Date'}
-                      date={date}
-                      onSelect={(nextDate) => setNewDateHandler(nextDate)}
+                      // date={date}
+                      // onSelect={(nextDate) => setNewDateHandler(nextDate)}
                       setFormValues={setFormValues}
                       accessoryRight={IconCalendar}
-                    />
+                    /> */}
                 </View>
                 <View style={{ paddingVertical: 20 }}>
                 <Button
