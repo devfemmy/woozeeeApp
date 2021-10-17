@@ -885,7 +885,7 @@ export default function VideoView({
                     paddingHorizontal: 5,
                     backgroundColor: 'rgba(10, 50, 90, 0.1)',
                     borderRadius: 10,
-                    color: 'rgba(40, 63,100, 1)',
+                    color: appTheme === '#F7F9FC' ? 'black' : 'white',
                   }}
                   defaultValue={text}
                 />

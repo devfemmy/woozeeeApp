@@ -232,7 +232,7 @@ export default function DeepLinkPost({ route, navigation }) {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#04070C',
+          // backgroundColor: '#04070C',
         }}
       >
         <View
@@ -245,13 +245,14 @@ export default function DeepLinkPost({ route, navigation }) {
             right: 0,
             flexDirection: 'row',
             width: '100%',
+            zIndex: 1000,
           }}
         >
           <InteractIcon
             Accessory={IconBackIos}
             status="control"
-            height={28}
-            width={28}
+            // height={28}
+            // width={28}
             onPress={() => goBack()}
           />
         </View>

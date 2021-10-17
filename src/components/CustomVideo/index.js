@@ -114,9 +114,10 @@ const InteractIcon = (props) => {
 
 const CustomVideo = forwardRef((props, ref) => {
   // prettier-ignore
-  // console.log(props, 'props');
 
   const { data, height, videoRef, challenge, navigation } = props;
+
+  console.log(data, 'data');
 
   // const { item } = data;
 
@@ -126,6 +127,7 @@ const CustomVideo = forwardRef((props, ref) => {
   const [shouldPlay, setShouldPlay] = useState(true);
 
   const [muteState, setIsMuted] = useState(false);
+
   const likeData = {
     entryId: data._id,
     isLike: false,
