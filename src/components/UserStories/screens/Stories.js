@@ -142,9 +142,8 @@ const Stories = (props) => {
                 borderRadius: 25,
                 alignItems: 'center',
                 justifyContent: 'center',
-                position: 'absolute',
-                right: 57,
-                bottom: 80,
+                right: 20,
+                bottom: 130,
                 zIndex: 1000,
               }}
             >
