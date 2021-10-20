@@ -89,6 +89,7 @@ const MoviePage = ({navigation, route}) => {
       /> */}
     <View style= {styles.videoView}>
                 <Video
+                  // ignoreSilentSwitch
                   poster= {'https://res.cloudinary.com/oluwafemi/image/upload/v1630054534/iPhone_11_Pro_Max_-_1_2.png'}  
                   controls= {true}
                   resizeMode= {Platform.OS === 'android' ? 'cover' : 'contain'}

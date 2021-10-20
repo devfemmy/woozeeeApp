@@ -82,6 +82,7 @@ const PreviewEntry = (props) => {
   // Remove File Prefix from Path
 
   const normalizePath = async (path) => {
+    console.log("normalize path works")
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
       const filePrefix = 'file://';
       if (path.startsWith(filePrefix)) {
@@ -174,11 +175,14 @@ const PreviewEntry = (props) => {
     }
   };
   const uploadFileToFirebase = async (videoUri, video, type) => {
+    console.log('video 22', videoUri)
     if (editorResult === null) {
       const name = `Woozee${Math.random()}`;
+      console.log("I am here")
       const uploadTask = Firebase.storage()
         .ref(`mediaEntries/${'image'}${name}`)
-        .putString(videoUri, 'base64', { contentType: 'jpg' });
+        .putString(videoUri.substring(23), 'base64',);
+        console.log("I am here 2")
       uploadTask.on(
         'state_changed',
         (snapshot) => {
@@ -219,9 +223,11 @@ const PreviewEntry = (props) => {
       );
     } else {
       const name = `Woozee${Math.random()}`;
+      console.log("I am here 222")
       const uploadTask = Firebase.storage()
         .ref(`mediaEntries/${'video'}${name}`)
         .putString(videoUri, 'base64', { contentType: 'video/mp4' });
+        console.log("I am here 223")
       uploadTask.on(
         'state_changed',
         (snapshot) => {
@@ -278,6 +284,7 @@ const PreviewEntry = (props) => {
     let realPath;
     if (Platform.OS === 'ios') {
       realPath = await RNFetchBlob.fs.readFile(filePath, 'base64');
+      // console.log("real path", realPath)
     }else {
       realPath = await RNFetchBlob.fs.readFile(filePath, 'base64');
     }

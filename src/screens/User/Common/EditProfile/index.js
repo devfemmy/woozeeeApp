@@ -12,9 +12,10 @@ import {
   Datepicker
 } from '@ui-kitten/components';
 import RNFetchBlob from 'rn-fetch-blob';
-import firebase from '@react-native-firebase/app';
+// import firebase from '@react-native-firebase/app';
+import Firebase from 'src/services/Firebase/firebaseConfig';
 import { Toast, Content, Root } from 'native-base';
-import storage from '@react-native-firebase/storage';
+// import storage from '@react-native-firebase/storage';
 
 import { LocaleContext } from 'src/contexts';
 
@@ -181,7 +182,7 @@ export default function EditProfile({ navigation }) {
   const uploadFileToFirebase = async (url, type, user) => {
     setLoading(true);
     const name = `WoozeeImg${Math.random()}`;
-    const uploadTask = storage()
+    const uploadTask = Firebase.storage()
       .ref(`profileImages/${'image'}${name}`)
       .putString(url, 'base64', { contentType: 'jpg' });
     uploadTask.on(
@@ -192,10 +193,10 @@ export default function EditProfile({ navigation }) {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload is ' + progress + '% done');
         switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED: // or 'paused'
+          case Firebase.storage.TaskState.PAUSED: // or 'paused'
             console.log('Upload is paused');
             break;
-          case firebase.storage.TaskState.RUNNING: // or 'running'
+          case Firebase.storage.TaskState.RUNNING: // or 'running'
             // console.log('Upload is running');
             break;
         }
