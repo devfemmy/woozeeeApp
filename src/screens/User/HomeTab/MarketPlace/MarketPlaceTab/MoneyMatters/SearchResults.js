@@ -477,7 +477,7 @@ const SearchResults = (props) => {
         <View
           style={{
             paddingVertical: 30,
-            // paddingHorizontal: 20,
+            paddingHorizontal: 10,
           }}
         >
           <Text category="h6" status="primary">
