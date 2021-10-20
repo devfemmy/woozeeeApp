@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useCallback } from 'react';
 
 import {
   Layout,
@@ -23,6 +23,8 @@ import {
 } from 'react-native';
 
 import { v4 as uuidv4 } from 'uuid';
+
+import SliderScreen from '../../../../../../components/RangeSlider/screens/Slider/index';
 
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 
@@ -58,6 +60,11 @@ import zed from '../../../../../../assets/images/moneyMatters/zed.png';
 import reho from '../../../../../../assets/images/moneyMatters/reho.png';
 
 import fina from '../../../../../../assets/images/moneyMatters/fina.png';
+import Thumb from 'src/components/RangeSlider/Slider/Thumb';
+import Rail from 'src/components/RangeSlider/Slider/Rail';
+import RailSelected from 'src/components/RangeSlider/Slider/RailSelected';
+import Label from 'src/components/RangeSlider/Slider/Label';
+import Notch from 'src/components/RangeSlider/Slider/Notch';
 
 const SearchResults = (props) => {
   const { appState } = useContext(AppSettingsContext);
@@ -66,7 +73,22 @@ const SearchResults = (props) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
-  console.log(props.route.params);
+  const [rangeDisabled, setRangeDisabled] = useState(false);
+  const [low, setLow] = useState(0);
+  const [high, setHigh] = useState(100);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(100);
+  const [floatingLabel, setFloatingLabel] = useState(false);
+
+  const renderThumb = useCallback(() => <Thumb />, []);
+  const renderRail = useCallback(() => <Rail />, []);
+  const renderRailSelected = useCallback(() => <RailSelected />, []);
+  const renderLabel = useCallback((value) => <Label text={value} />, []);
+  const renderNotch = useCallback(() => <Notch />, []);
+  const handleValueChange = useCallback((low, high) => {
+    setLow(low);
+    setHigh(high);
+  }, []);
 
   let loanServices = props?.route?.params[0];
 
@@ -125,7 +147,7 @@ const SearchResults = (props) => {
   // ];
 
   const selectOption = (option) => {
-    console.log('options', option);
+    // console.log('options', option);
     setSelectedService(option);
     setLoanInterest(option.interest);
     setLoanDuration(option.tenorTo);
@@ -461,10 +483,10 @@ const SearchResults = (props) => {
           <Text category="h6" status="primary">
             Interest Rate
           </Text>
-          <Text status="basic" style={{ marginTop: 20 }}>
-            0% - 25%
-          </Text>
+
           {/* range slider here */}
+          <SliderScreen />
+
           <Divider style={{ marginTop: 20 }} />
           <Text category="h6" status="primary" style={{ marginTop: 20 }}>
             Repayment Flexibility
@@ -743,7 +765,7 @@ const SearchResults = (props) => {
         </View>
         {loanServices
           .sort((i, j) => i.interest - j.interest)
-          .filter((service) => +_durations[0] * 10 >= service.tenorTo)
+          .filter((service) => +_durations[0] * 10 === service.tenorTo)
           .map((service) => (
             <TouchableOpacity
               key={uuidv4()}
