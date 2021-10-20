@@ -147,7 +147,6 @@ const AskADoctor = ({navigation}) => {
     ]
     const searchProfessionals = () => {
       setIsLoading(true);
-      console.log("new block", date.toLocaleDateString())
       const formattedDate =  date.toLocaleDateString().split("/").reverse().join("-");
       let weekday = new Array(7);
       weekday[0] = "Sunday";
@@ -161,23 +160,6 @@ const AskADoctor = ({navigation}) => {
       let formattedDay = weekday[dayOfTheWeek]
       AsyncStorage.getItem('USER_AUTH_TOKEN')
       .then((res) => {
-        // const data = form;
-        // axios({
-        //   method: 'post',
-        //   url: 'https://apis.woozeee.com/api/v1/care/professionals/search',
-        //   data: qs.stringify({
-        //     visit_type: form.visit_type,
-        //     location: form.location,
-        //     specialization: form.specialization,
-        //     date: formattedDate
-        //   }),
-        //   headers: {
-        //     'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-        //     Authorization: res,
-        //     'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzMDQzMTM5MiwiZXhwIjoxNjMxMDM2MTkyLCJuYmYiOjE2MzA0MzEzOTIsImp0aSI6ImNpUjQ4bVdlRVZGbjJNT3ciLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.8Mm7XgT818WudYASQSNp_YtbjGaLsYHxibVFxkoGRUo' 
-
-        //   }
-        // })
         axios
           .post(`care/professionals/search`, qs.stringify({
             visit_type: form.visit_type,
@@ -194,8 +176,9 @@ const AskADoctor = ({navigation}) => {
           .then((res) => {
             console.log("response", res.data.message.alternateResult);
             const professionals = res.data.message.alternateResult;
-            navigation.navigate('Consultation', {results: professionals, specialty: form.specialization, 
-              visit_type: form.visit_type, dayOfTheWeek: formattedDay})
+            navigation.navigate('Consultation', {results: professionals, specialty: form.specialization,
+              location: form.location, 
+              visit_type: form.visit_type, dayOfTheWeek: formattedDate})
             setIsLoading(false);
           })
           .catch((err) => {

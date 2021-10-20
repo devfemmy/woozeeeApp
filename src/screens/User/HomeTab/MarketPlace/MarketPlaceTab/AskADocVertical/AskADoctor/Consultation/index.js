@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import DocCard from 'src/components/DocCard/index';
 
 const Consultation = (props) => {
-    const {results, specialty, visit_type, dayOfTheWeek} = props.route.params;
+    const {results, specialty, visit_type, dayOfTheWeek, location} = props.route.params;
     console.log("results", results)
     return (
         <Layout level="6" style={{ flex: 1 }}>
@@ -31,7 +31,8 @@ const Consultation = (props) => {
                         return (
                             <DocCard 
                             key={index}
-                            onPress= {() => props.navigation.navigate('DoctorProfile', {profile: data, visit_type: visit_type, 
+                            onPress= {() => props.navigation.navigate('DoctorProfile', {profile: data, 
+                            visit_type: visit_type, location: location,
                             specialty: specialty, dayOfTheWeek: dayOfTheWeek})} 
                             mheight= {100} 
                             email={data.email}

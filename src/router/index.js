@@ -121,7 +121,9 @@ import TransactionSummary from '../screens/User/Common/TransactionSummary';
 import PaymentSchedule from 'src/screens/User/Onboarding/ActivateCare/PaymentSchedule';
 import WoozeePaySummary from 'src/screens/User/Onboarding/ActivateCare/PaySummary';
 import TransferMoney from 'src/screens/User/WalletTab/TransferMoney';
+
 import Accounts from 'src/screens/User/WalletTab/Accounts';
+import AppDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/AppointmentDetails/index';
 const { Navigator, Screen } = createStackNavigator();
 
 export default function Router() {
@@ -189,6 +191,8 @@ export default function Router() {
       ActivateCareFamilyPlan,
       ActivateCareElitePlan,
       WoozeePaySummary,
+      AppointmentDetails,
+      AppDetails,
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,

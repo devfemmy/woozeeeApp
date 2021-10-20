@@ -57,6 +57,8 @@ export const GeneralTextField = (props) => {
     secure,
     value,
     status,
+    numberOfLines,
+    multiline,
     accessoryRight,
     ...otherProps
   } = props;
@@ -112,6 +114,8 @@ export const GeneralTextField = (props) => {
         caption={caption}
         value
         label={label ?? null}
+        multiline={multiline}
+        numberOfLines={numberOfLines}
         // label={label ? `${label} ${validate ? '*' : ''}` : null}
         secureTextEntry={isSecureEntry}
         accessibilityLabel={label}
@@ -149,6 +153,8 @@ export const GeneralTextField = (props) => {
       handleBlur,
       isSecureEntry,
       validate,
+      numberOfLines,
+      multiline,
       placeholder,
     ],
   );
