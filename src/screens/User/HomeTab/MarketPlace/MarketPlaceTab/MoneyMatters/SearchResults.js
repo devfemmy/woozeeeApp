@@ -73,30 +73,11 @@ const SearchResults = (props) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
-  const [rangeDisabled, setRangeDisabled] = useState(false);
-  const [low, setLow] = useState(0);
-  const [high, setHigh] = useState(100);
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(100);
-  const [floatingLabel, setFloatingLabel] = useState(false);
-
-  const renderThumb = useCallback(() => <Thumb />, []);
-  const renderRail = useCallback(() => <Rail />, []);
-  const renderRailSelected = useCallback(() => <RailSelected />, []);
-  const renderLabel = useCallback((value) => <Label text={value} />, []);
-  const renderNotch = useCallback(() => <Notch />, []);
-  const handleValueChange = useCallback((low, high) => {
-    setLow(low);
-    setHigh(high);
-  }, []);
-
   let loanServices = props?.route?.params[0];
 
   let loanAmount = props?.route?.params[1];
 
   let _durations = props?.route?.params[2].duration;
-
-  console.log('duration is', +_durations[0]);
 
   const [loanInterest, setLoanInterest] = useState(null);
 
@@ -156,7 +137,15 @@ const SearchResults = (props) => {
 
   const routeAddInfo = () => {
     sheetRef.current.close();
-    props.navigation.navigate('AdditionalInfo', selectedService);
+    props.navigation.navigate('AdditionalInfo', {
+      serviceType: 'Loan',
+      amount: loanAmount,
+      loanee: selectedService,
+      loaneeImg: selectedService,
+      customerName: 'Adeniyi Emmanuel',
+      bankImg: lapo,
+      accountNumber: '0167906059',
+    });
   };
 
   const ModalContent = () => {

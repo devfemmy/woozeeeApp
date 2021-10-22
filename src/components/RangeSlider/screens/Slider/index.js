@@ -29,22 +29,10 @@ const SliderScreen = () => {
     setLow(low);
     setHigh(high);
   }, []);
-  const toggleRangeEnabled = useCallback(
-    () => setRangeDisabled(!rangeDisabled),
-    [rangeDisabled],
-  );
-  const setMinTo50 = useCallback(() => setMin(50), []);
-  const setMinTo0 = useCallback(() => setMin(0), []);
-  const setMaxTo100 = useCallback(() => setMax(100), []);
-  const setMaxTo500 = useCallback(() => setMax(500), []);
-  const toggleFloatingLabel = useCallback(
-    () => setFloatingLabel(!floatingLabel),
-    [floatingLabel],
-  );
 
   return (
     <View style={styles.root}>
-      <Text status="basic">
+      <Text category="h6" status="basic">
         {low}% - {high}%
       </Text>
       <Slider
@@ -61,42 +49,6 @@ const SliderScreen = () => {
         renderNotch={renderNotch}
         onValueChanged={handleValueChange}
       />
-      {/* <View style={styles.horizontalContainer}>
-      <TextButton
-        text="Toggle floating"
-        containerStyle={styles.button}
-        onPress={toggleFloatingLabel}
-      />
-      <TextButton
-        text={rangeDisabled ? 'Enable range' : 'Disable range'}
-        containerStyle={styles.button}
-        onPress={toggleRangeEnabled}
-      />
-    </View>
-    <View style={styles.horizontalContainer}>
-      <TextButton
-        text="Set min to 0"
-        containerStyle={styles.button}
-        onPress={setMinTo0}
-      />
-      <TextButton
-        text="Set min to 50"
-        containerStyle={styles.button}
-        onPress={setMinTo50}
-      />
-    </View>
-    <View style={styles.horizontalContainer}>
-      <TextButton
-        text="Set max to 100"
-        containerStyle={styles.button}
-        onPress={setMaxTo100}
-      />
-      <TextButton
-        text="Set max to 500"
-        containerStyle={styles.button}
-        onPress={setMaxTo500}
-      />
-    </View> */}
     </View>
   );
 };

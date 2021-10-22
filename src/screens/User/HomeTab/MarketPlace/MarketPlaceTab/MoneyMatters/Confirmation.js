@@ -115,8 +115,6 @@ const MoneyMattersConfirmation = (props) => {
     });
   };
 
-  console.log('props => ', props);
-
   const {
     currUser,
     currInfo,
