@@ -17,7 +17,7 @@ const SLIDE_CONTENT = [
     banner: require('assets/images/onboarding/wallet.jpg'),
     title: 'woozeee wallet',
     description:
-      'Securely stores users payment information and passwords and allows you to make and receive electronic payments. It is linked to a bank account.',
+      'Open a Bank Account with our partner banks (Access Bank, Zenith Bank and Globus Bank) automatically.',
     activateAction: 'activateWallet',
   },
   {

@@ -110,27 +110,28 @@ export const StoryPosts = ({ info }) => {
   // console.log('info from StoryPosts -> ', info);
 
   const RenderCategoryHeader = () => (
-    <View style={{ paddingHorizontal: 10, alignItems: 'center' }}>
+    <View style={{ paddingHorizontal: 5, alignItems: 'center' }}>
       <TouchableOpacity
         activeOpacity={0.75}
         onPress={() => navigation.navigate('UploadEntries', { entries: true })}
         style={{
-          height: 150,
+          height: 185,
           width: IS_PORTRAIT
             ? width / (COLUMN_COUNT + 0.5)
             : width / (COLUMN_COUNT + 0.5),
-          // paddingHorizontal: 3,
           position: 'relative',
           alignItems: 'center',
           justifyContent: 'flex-start',
+          overflow: 'hidden',
+          borderTopRightRadius: 20,
+          borderTopLeftRadius: 20,
           overflow: 'hidden',
         }}
       >
         <FastImage
           style={{
-            height: '100%',
+            height: '60%',
             width: '100%',
-            borderRadius: 5,
           }}
           source={{
             uri: userImg,
@@ -144,38 +145,54 @@ export const StoryPosts = ({ info }) => {
             height: 50,
             width: 50,
             borderRadius: 25,
-            right: 20,
-            bottom: 130,
+            right: 0,
+            bottom: 25,
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 1000,
           }}
         >
-          <AntDesign name="plus" size={24} color="blue" />
+          <LinearGradient
+            colors={['#043F7C', '#FF5757']}
+            style={{
+              backgroundColor: 'black',
+              height: 45,
+              width: 45,
+              borderRadius: 22.5,
+              right: 0,
+              bottom: 0,
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1000,
+            }}
+          >
+            <AntDesign name="plus" size={24} color="white" />
+          </LinearGradient>
         </View>
         <View
           style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            backgroundColor: 'whitesmoke',
+            borderColor: 'rgba(0,0,0,0.2)',
+            borderWidth: 1,
             position: 'absolute',
-            borderBottomLeftRadius: 5,
-            borderBottomRightRadius: 5,
+            bottom: 0,
             padding: 5,
             width: '100%',
-            height: '100%',
+            height: '40%',
             overflow: 'hidden',
-            borderRadius: 5,
+            borderBottomRightRadius: 20,
+            borderBottomLeftRadius: 20,
             justifyContent: 'center',
-            alignItems: 'flex-start',
+            alignItems: 'center',
             zIndex: 50,
+            paddingTop: 20,
           }}
         >
           <Text
             category="s2"
             status="basic"
             style={{
-              color: 'white',
-              marginLeft: 5,
-              marginTop: 50,
+              color: 'black',
               zIndex: 1000,
             }}
           >
@@ -184,7 +201,7 @@ export const StoryPosts = ({ info }) => {
           <Text
             category="s2"
             status="basic"
-            style={{ color: 'white', marginLeft: 5, zIndex: 1000 }}
+            style={{ color: 'black', zIndex: 1000 }}
           >
             {t('yourStory')}
           </Text>
