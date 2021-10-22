@@ -6,6 +6,7 @@ import { StyleSheet, View, Image } from 'react-native';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import TimeSlotCard from 'src/components/TimeSlot';
 import { GeneralTextField } from 'src/components/FormFields/index';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const AppDetails = (props) => {
     const {profile, slot} = props.route.params;
@@ -20,7 +21,10 @@ const AppDetails = (props) => {
            resizeMode: 'contain'
        } 
     });
+    console.log('new slot', slot)
     return (
+        <>
+        <KeyboardAwareScrollView>
         <Layout level="6" style={{ flex: 1 }}>
             <TopNavigationArea
             title={`Appointment Details`}
@@ -57,12 +61,15 @@ const AppDetails = (props) => {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
                 disabled={!form.reason}
-                onPress= {() => props.navigation.navigate('ConfirmationPage', {profile: profile, slot: slot})}
+                onPress= {() => props.navigation.navigate('PaymentPage', {profile: profile, slot: slot, form: form})}
                     >
                 <Text status="control">{`Book Dr ${profile.firstname} ${profile.lastname}`}</Text>
                 </Button>
             </View>
+
         </Layout>
+        </KeyboardAwareScrollView>
+        </>
     )
     
 }

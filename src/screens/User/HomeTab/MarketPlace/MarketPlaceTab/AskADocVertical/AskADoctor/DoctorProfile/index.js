@@ -98,12 +98,15 @@ const DoctorProfile = (props) => {
                         {active ? 
                         <View style= {styles.slot}>
                           {availableTimes.map((slot, index) => {
+                              slot.appointmentDate = dayOfTheWeek;
+                              slot.location = location;
+                              const formattedDate =  new Date(dayOfTheWeek).toDateString();
                               return(
                                 <TimeSlotCard
                                 pressed={() => props.navigation.navigate('AppDetails', {slot: slot, profile: profile})}
                                 key={index} 
                                 type={slot.type}
-                                time={slot.time} price={slot.price}
+                                time={`${formattedDate} ${slot.time}`} price={slot.price}
                                 session={slot.session} />
                               )
                           })}
@@ -150,7 +153,7 @@ const DoctorProfile = (props) => {
                     </View> */}
                 </View>
             </ScrollView>
-            <View style= {styles.footer}>
+            {/* <View style= {styles.footer}>
                 <Button
                         status="danger"
                         size="large"
@@ -162,7 +165,7 @@ const DoctorProfile = (props) => {
                     >
                         <Text status="control">{'Book Dr Jules Wazobia'}</Text>
                 </Button>
-            </View>
+            </View> */}
         </Layout>
     )
     

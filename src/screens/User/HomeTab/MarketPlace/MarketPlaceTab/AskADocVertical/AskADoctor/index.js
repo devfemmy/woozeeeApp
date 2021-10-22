@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Layout,Text,Datepicker,Button,Spinner
   } from '@ui-kitten/components';
@@ -21,7 +21,8 @@ import ConnectDocCard from 'src/components/ConnectDocCard/index';
 const AskADoctor = ({navigation}) => {
     const [date, setDate] = useState(new Date());
     const [_carousel, setCarousel] = useState(null);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+    const [topRated, setTopRated] = useState([])
     const [form, setFormValues] = useState({
           visit_type: 'Video Consultation',
           location: 'Ajah',
@@ -96,7 +97,32 @@ const AskADoctor = ({navigation}) => {
     const SERVICES = services;
     const SPECIALTY = specialty;
     const AVAILABLE_LOCATIONS = location;
+    useEffect(() => {
+      AsyncStorage.getItem('USER_AUTH_TOKEN')
+      .then((res) => {
+        axios
+          .get(`care/professionals/ratings/most-booked`, {
+            headers: {
+              'content-type': 'application/x-www-form-urlencoded',
+              Authorization: res, 
+              'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzMDQzMTM5MiwiZXhwIjoxNjMxMDM2MTkyLCJuYmYiOjE2MzA0MzEzOTIsImp0aSI6ImNpUjQ4bVdlRVZGbjJNT3ciLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.8Mm7XgT818WudYASQSNp_YtbjGaLsYHxibVFxkoGRUo' 
+            },
+          })
+          .then((res) => {
+            console.log("response", res);
+            const doctors = res.data.data.mostBookedProfessional;
+            setTopRated(doctors)
 
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            setIsLoading(false);
+            console.log(err.response);
+            //   alert('Network Error')
+          });
+      })
+      .catch((err) => err);
+  }, [])
     const doctors = [
       {
         id: 1,
@@ -316,7 +342,7 @@ const AskADoctor = ({navigation}) => {
                         <Text category= "h5">
                             Available Doctors
                         </Text>
-                        <Text
+                        {/* <Text
                          onPress= {() => navigation.navigate('InnerPages', {title: 'Available Doctors', 
                          address: null,
                          name: 'Doctor Ade',
@@ -325,21 +351,24 @@ const AskADoctor = ({navigation}) => {
                          image= {require('../../../../../../../assets/images/askADoc/label1.png')} 
                         category= "h6" style= {{color: '#043F7C', fontWeight: 'bold'}}>
                             See All
-                        </Text>
+                        </Text> */}
                     </View>
                     <ScrollView horizontal>
-                      {doctors.map(
-                        (item, index) => {
+                      {topRated.map(
+                        (profile, index) => {
+                          const formattedDate =  date.toLocaleDateString().split("/").reverse().join("-");
                           return(
                             <View key= {index}>
                               <ConnectDocCard
-                              onPress= {() => navigation.navigate('DoctorProfile')}
-                              patient= {item.patients}
-                              review= {item.review}
-                              experience= {item.experience} 
-                              title= {item.title}
-                              source= {item.image} 
-                              doc= {item.name} />
+                            onPress= {() => navigation.navigate('DoctorProfile', {profile: profile, 
+                            visit_type: form.visit_type, location: form.location,
+                            specialty: profile.specialization, dayOfTheWeek: formattedDate})} 
+                              patient= {profile.appointment_count}
+                              review= {profile.review}
+                              experience= {profile.vcode} 
+                              title= {profile.specialization}
+                              source= {{uri: profile.dp}} 
+                              doc= {`${profile.title} ${profile.firstname} ${profile.lastname}`} />
                             </View>
                           )
                         }

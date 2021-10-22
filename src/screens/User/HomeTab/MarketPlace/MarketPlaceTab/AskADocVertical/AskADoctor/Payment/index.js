@@ -9,6 +9,7 @@ import { IconForwardIos } from 'src/components/CustomIcons';
 import CustomLabel from 'src/components/CustomLabel/index';
 
 const PaymentPage = (props) => {
+    const {slot, profile, form} = props.route.params
     const styles = StyleSheet.create({
        cardStyle: {
            width: 30,
@@ -114,7 +115,7 @@ const PaymentPage = (props) => {
                 accessibilityComponentType="button"
                 accessibilityLabel="Continue"
                 disabled={!checked}
-                onPress= {() => props.navigation.navigate('ConfirmationPage')}
+                onPress= {() => props.navigation.navigate('ConfirmationPage', {slot: slot, profile: profile, care: true, form: form})}
                     >
                 <Text status="control">{'Proceed'}</Text>
                 </Button>

@@ -124,6 +124,7 @@ import TransferMoney from 'src/screens/User/WalletTab/TransferMoney';
 
 import Accounts from 'src/screens/User/WalletTab/Accounts';
 import AppDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/AppointmentDetails/index';
+import AskADoctorFlutterPay from 'src/screens/Common/AskADocFPay';
 const { Navigator, Screen } = createStackNavigator();
 
 export default function Router() {
@@ -193,6 +194,7 @@ export default function Router() {
       WoozeePaySummary,
       AppointmentDetails,
       AppDetails,
+      AskADoctorFlutterPay,
       UserRoute,
       SocialRoute,
       MarketPlaceRoute,
