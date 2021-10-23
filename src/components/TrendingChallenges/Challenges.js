@@ -21,7 +21,7 @@ import MovieSectionCard from 'src/components/SocialCard/MovieSectionCard';
 
 import { IconForwardIos } from '../../components/CustomIcons';
 
-import { ChallengesVideoCard } from '../../components/SocialCard/index';
+import { ChallengeVideoCard } from '../../components/SocialCard/index';
 
 const TrendingSectionArea = (props) => {
   const { t, navigation, width, height } = props;
@@ -92,7 +92,7 @@ const TrendingSectionArea = (props) => {
           data={data.pageData.data[0].challenges}
           keyExtractor={(_, i) => i.toString()}
           renderItem={(renderData) => (
-            <ChallengesVideoCard data={renderData} extraWidth={0.5} />
+            <ChallengeVideoCard data={renderData} extraWidth={0.5} />
           )}
           getItemLayout={(data, index) => ({
             length: 200,

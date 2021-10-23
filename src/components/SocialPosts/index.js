@@ -17,6 +17,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Api from 'src/api';
 
+import Card from '../../components/Card/index';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -37,7 +39,6 @@ import { ChallengeVideoCard } from '../../components/SocialCard/index';
 
 import {
   UserProfilePostCard,
-  ExploreVideoCard,
   UserPostLikedCard,
 } from '../../components/SocialCard/index';
 

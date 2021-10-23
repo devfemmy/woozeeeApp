@@ -14,7 +14,6 @@ function index({
   width,
   index,
 }) {
-  console.log('Data', data);
   return (
     <View style={styles.container}>
       <TouchableOpacity
