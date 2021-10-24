@@ -692,7 +692,7 @@ export default function CableTv({ navigation }) {
         />
         <ScrollView
           style={{ flex: 1 }}
-          alwaysBounceVertical
+          always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
@@ -707,7 +707,7 @@ export default function CableTv({ navigation }) {
                   contentContainerStyle={{ paddingHorizontal: 5 }}
                   horizontal
                   alwaysBounceHorizontal
-                  alwaysBounceVertical
+                  always
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
                   data={woozeeeCards}

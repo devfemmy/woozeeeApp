@@ -96,7 +96,7 @@ export default function Register({ navigation }) {
           screen="auth"
         />
         <ScrollView
-          alwaysBounceVertical
+          // always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
@@ -141,12 +141,12 @@ export default function Register({ navigation }) {
                   flexWrap: 'wrap',
                 }}
               >
-              <CheckBox
-              checked={checked}
-              onChange={nextChecked => setChecked(nextChecked)}
-              >
-                Accept Terms and Conditions
-              </CheckBox>
+                <CheckBox
+                  checked={checked}
+                  onChange={(nextChecked) => setChecked(nextChecked)}
+                >
+                  Accept Terms and Conditions
+                </CheckBox>
 
                 <Text category="p2">{`${t('continueAgree')} woozeee's`}</Text>
                 <Button

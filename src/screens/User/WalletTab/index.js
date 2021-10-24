@@ -312,7 +312,7 @@ export default function Wallet({ navigation }) {
         style={{ backgroundColor: 'transparent' }}
         contentContainerStyle={{ paddingHorizontal: 5 }}
         alwaysBounceHorizontal
-        alwaysBounceVertical
+        always
         horizontal={IS_PORTRAIT}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}

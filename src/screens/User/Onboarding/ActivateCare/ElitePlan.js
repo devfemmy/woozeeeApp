@@ -118,7 +118,7 @@ export default function ElitePlan({ navigation }) {
           screen="auth"
         />
         <ScrollView
-          alwaysBounceVertical
+          always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >

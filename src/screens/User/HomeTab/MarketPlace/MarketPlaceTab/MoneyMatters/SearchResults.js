@@ -843,7 +843,7 @@ const SearchResults = (props) => {
           <ScrollView
             vertical
             showsVerticalScrollIndicator={false}
-            alwaysBounceVertical
+            always
             showsHorizontalScrollIndicator={false}
             constentContainerStyle={{
               display: 'flex',

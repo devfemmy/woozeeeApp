@@ -67,7 +67,7 @@ export default function MarketPlace({ navigation }) {
 
   const MarketplaceItem = ({ data, navigation }) => (
     <TouchableOpacity
-      onPress = {() => navigation.navigate(data.route)}
+      onPress={() => navigation.navigate(data.route)}
       activeOpacity={0.75}
       style={{
         justifyContent: 'flex-start',
@@ -139,7 +139,7 @@ export default function MarketPlace({ navigation }) {
           style={{ backgroundColor: 'transparent' }}
           contentContainerStyle={{ paddingHorizontal: 5 }}
           alwaysBounceHorizontal
-          alwaysBounceVertical
+          always
           horizontal={IS_PORTRAIT}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -186,7 +186,7 @@ export default function MarketPlace({ navigation }) {
           ListFooterComponentStyle={{ paddingBottom: 10 }}
           horizontal={!IS_PORTRAIT}
           alwaysBounceHorizontal
-          alwaysBounceVertical
+          always
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />

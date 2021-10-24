@@ -98,7 +98,7 @@ export default function RegisterFull({ route, navigation }) {
       />
       <KeyboardAwareScrollView>
         <ScrollView
-          alwaysBounceVertical
+          // always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >

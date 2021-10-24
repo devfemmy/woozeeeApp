@@ -72,7 +72,7 @@ export default function RecoveryFull({ route, navigation }) {
           screen="auth"
         />
         <ScrollView
-          alwaysBounceVertical
+          // always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >

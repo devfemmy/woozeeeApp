@@ -33,7 +33,7 @@ export default function OTPVerification({ route, navigation }) {
       />
       <KeyboardAwareScrollView>
         <ScrollView
-          alwaysBounceVertical
+          always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >

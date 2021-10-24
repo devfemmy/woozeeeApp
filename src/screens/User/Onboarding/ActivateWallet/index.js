@@ -200,7 +200,7 @@ export default function ActivateWallet({ navigation }) {
         />
         <KeyboardAwareScrollView>
           <ScrollView
-            alwaysBounceVertical
+            always
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
           >

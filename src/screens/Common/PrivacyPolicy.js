@@ -18,7 +18,7 @@ export default function PrivacyPolicy({ navigation }) {
         navigation={navigation}
         screen="auth"
       />
-      <ScrollView alwaysBounceVertical showsHorizontalScrollIndicator={false}>
+      <ScrollView always showsHorizontalScrollIndicator={false}>
         <View
           style={{
             flex: 1,

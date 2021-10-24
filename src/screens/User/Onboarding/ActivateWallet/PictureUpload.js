@@ -77,7 +77,7 @@ export default function PictureUpload({ navigation }) {
       />
       <KeyboardAwareScrollView>
         <ScrollView
-          alwaysBounceVertical
+          always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >

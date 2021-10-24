@@ -34,7 +34,7 @@ export default function AccountNumber({ navigation }) {
       />
       <KeyboardAwareScrollView>
         <ScrollView
-          alwaysBounceVertical
+          always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >

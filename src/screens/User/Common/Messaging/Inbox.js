@@ -102,7 +102,7 @@ export default function Inbox({ navigation }) {
   return (
     <List
       style={{ backgroundColor: 'transparent', paddingVertical: 10 }}
-      alwaysBounceVertical
+      always
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       data={MESSAGES}

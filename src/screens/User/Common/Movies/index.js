@@ -202,7 +202,7 @@ export default function Explore({ navigation }) {
   //               paddingHorizontal: 7,
   //             }}
   //             ListHeaderComponent={renderMovieCategories}
-  //             alwaysBounceVertical
+  //             always
   //             showsHorizontalScrollIndicator={false}
   //             showsVerticalScrollIndicator={false}
   //             numColumns={2}

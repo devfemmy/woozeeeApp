@@ -191,7 +191,7 @@ export default function VideoUpload({ route, navigation }) {
         />
         <ScrollView
           style={{ flex: 1, paddingVertical: 10 }}
-          alwaysBounceVertical
+          always
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         >

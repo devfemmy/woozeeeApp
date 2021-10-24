@@ -1,6 +1,11 @@
-import React, { useContext, useState, useRef, useEffect }from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 
-import { View, ScrollView, useWindowDimensions, ActivityIndicator } from 'react-native';
+import {
+  View,
+  ScrollView,
+  useWindowDimensions,
+  ActivityIndicator,
+} from 'react-native';
 
 // prettier-ignore
 import {
@@ -23,8 +28,7 @@ import { LocaleContext, AppSettingsContext } from 'src/contexts';
 import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { IconCheckmark } from 'src/components/CustomIcons';
-import axios from '../../../../services/api/index'
-
+import axios from '../../../../services/api/index';
 
 const MORE_PLANS = [
   {
@@ -77,34 +81,35 @@ const MORE_PLANS = [
 
 export default function ActivateWallet({ navigation }) {
   const { width, height } = useWindowDimensions();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [woozeePlans, setWoozeePlans] = useState([]);
   const [loanAmt, setLoanAmt] = useState('');
   const [title, setTitle] = useState('');
   const [scheme, setScheme] = useState('');
   const [interest, setInterest] = useState('');
-  const [slug, setSlug] = useState('')
+  const [slug, setSlug] = useState('');
 
   const t = useContext(LocaleContext);
   const { appState } = useContext(AppSettingsContext);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const subscribe = navigation.addListener('focus', () => {
-        axios.get('loan/woozeee/packages').then(
-          (res) => {
-            console.log("woozee care", res);
-            setLoading(false)
-            const data = res.data.loans.reverse();
-            setWoozeePlans(data);
-          }
-        ).catch(err => {
-          setLoading(false)
-          alert('Network Error')
+      axios
+        .get('loan/woozeee/packages')
+        .then((res) => {
+          console.log('woozee care', res);
+          setLoading(false);
+          const data = res.data.loans.reverse();
+          setWoozeePlans(data);
         })
+        .catch((err) => {
+          setLoading(false);
+          alert('Network Error');
+        });
     });
-    return subscribe
-  }, [navigation])
+    return subscribe;
+  }, [navigation]);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
@@ -112,43 +117,53 @@ export default function ActivateWallet({ navigation }) {
 
   const handleOpenSheet = () => sheetRef.current.open();
   const handleCloseSheet = () => sheetRef.current.close();
-  const handleNavigation = (interest, scheme,loanAmtTo, title, slug) => {
+  const handleNavigation = (interest, scheme, loanAmtTo, title, slug) => {
     setLoanAmt(loanAmtTo);
     setInterest(interest);
     setScheme(scheme);
     setTitle(title);
-    setSlug(slug)
-    handleOpenSheet()
-  }
+    setSlug(slug);
+    handleOpenSheet();
+  };
   const handleInstalment = () => {
     handleCloseSheet();
-    navigation.navigate('PaymentSchedule', {amount: loanAmt, scheme: scheme, interestRate: interest, title: title, slug: slug})
-
-  }
+    navigation.navigate('PaymentSchedule', {
+      amount: loanAmt,
+      scheme: scheme,
+      interestRate: interest,
+      title: title,
+      slug: slug,
+    });
+  };
   const handleFullPayment = () => {
     handleCloseSheet();
-    navigation.navigate('FlutterPay', {amount: loanAmt, scheme: scheme, interestRate: interest, title: title, slug: slug})
-  }
+    navigation.navigate('FlutterPay', {
+      amount: loanAmt,
+      scheme: scheme,
+      interestRate: interest,
+      title: title,
+      slug: slug,
+    });
+  };
   // prettier-ignore
   const routeTo = (route) => navigation.navigate(route);
   const renderCardFooter = (interest, scheme, slug, loanAmtTo, title) => {
-    console.log('slug', slug)
+    console.log('slug', slug);
     let color;
     let status;
     if (slug === 'elite-plan') {
-      color = "#BBBBBB";
-      status = "basic";
-    }else if (slug === 'family-plan') {
-      color = "#F9D65B";
-      status= "warning";
-    }else if(slug === 'solo-plan') {
-      status="success";
-      color = "#009456";
-    }else {
-      color= "black"
+      color = '#BBBBBB';
+      status = 'basic';
+    } else if (slug === 'family-plan') {
+      color = '#F9D65B';
+      status = 'warning';
+    } else if (slug === 'solo-plan') {
+      status = 'success';
+      color = '#009456';
+    } else {
+      color = 'black';
     }
     return (
-    
       <View
         style={{
           flex: 1,
@@ -159,8 +174,10 @@ export default function ActivateWallet({ navigation }) {
       >
         <Button
           status={status}
-          onPress={() => handleNavigation(interest, scheme,loanAmtTo, title, slug)}
-          style={{ backgroundColor: color, }}
+          onPress={() =>
+            handleNavigation(interest, scheme, loanAmtTo, title, slug)
+          }
+          style={{ backgroundColor: color }}
         >
           <Text status="control" category="h6">
             Activate Now
@@ -168,27 +185,26 @@ export default function ActivateWallet({ navigation }) {
         </Button>
       </View>
     );
-  } 
+  };
 
   const renderPlans = ({ item }) => {
     let colorCode;
     let status;
     let slug = item.loanSlug;
     if (slug === 'elite-plan') {
-      colorCode = "#BBBBBB";
-      status = "basic";
-    }else if (slug === 'family-plan') {
-      colorCode = "#F9D65B";
-      status= "warning";
-    }else if(slug === 'solo-plan') {
-      colorCode = "#009456";
-      status="success";
-
-    }else {
-      colorCode= "black"
+      colorCode = '#BBBBBB';
+      status = 'basic';
+    } else if (slug === 'family-plan') {
+      colorCode = '#F9D65B';
+      status = 'warning';
+    } else if (slug === 'solo-plan') {
+      colorCode = '#009456';
+      status = 'success';
+    } else {
+      colorCode = 'black';
     }
 
-    return(
+    return (
       <View style={{ width: width / 1.15 }}>
         <View
           style={{
@@ -223,7 +239,7 @@ export default function ActivateWallet({ navigation }) {
             </Text>
           </View>
           <Card
-            style={{ height: '100%', flex: 1, borderRadius: 10, }}
+            style={{ height: '100%', flex: 1, borderRadius: 10 }}
             // prettier-ignore
             footer={() => renderCardFooter(item.interest, item.scheme, item.loanSlug, item.loanAmtTo, item.title,)}
           >
@@ -267,19 +283,22 @@ export default function ActivateWallet({ navigation }) {
         </View>
       </View>
     );
-  }
+  };
   if (loading) {
     return (
-    <>
-    <TopNavigationArea
-    title={`woozeee ${t('care')}`}
-    navigation={navigation}
-    screen="auth"
+      <>
+        <TopNavigationArea
+          title={`woozeee ${t('care')}`}
+          navigation={navigation}
+          screen="auth"
         />
-      <Layout level= "6" style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-       <ActivityIndicator  size="large" color="#FF5757" />
-      </Layout>
-    </>
+        <Layout
+          level="6"
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        >
+          <ActivityIndicator size="large" color="#FF5757" />
+        </Layout>
+      </>
     );
   }
 
@@ -291,7 +310,7 @@ export default function ActivateWallet({ navigation }) {
         screen="auth"
       />
       <ScrollView
-        alwaysBounceVertical
+        always
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >

@@ -386,7 +386,7 @@ export const ProfilePosts = (props) => {
       paddingBottom: 25,
       paddingTop: 5,
     }}
-    // alwaysBounceVertical
+    // always
     showsHorizontalScrollIndicator={true}
     showsVerticalScrollIndicator={false}
     numColumns={3}
@@ -530,7 +530,7 @@ export const LikedProfilePosts = ({ userId }) => {
           paddingBottom: 25,
           paddingTop: 5,
         }}
-        // alwaysBounceVertical
+        // always
         showsHorizontalScrollIndicator={true}
         showsVerticalScrollIndicator={false}
         numColumns={3}
@@ -562,7 +562,7 @@ export const LikedProfilePosts = ({ userId }) => {
         paddingBottom: 25,
         paddingTop: 5,
       }}
-      // alwaysBounceVertical
+      // always
       showsHorizontalScrollIndicator={true}
       showsVerticalScrollIndicator={false}
       numColumns={3}
@@ -623,7 +623,7 @@ export const WoozPosts = ({ info }) => {
         backgroundColor: 'transparent',
         height: ITEM_HEIGHT,
       }}
-      alwaysBounceVertical
+      always
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       data={info}
@@ -672,7 +672,7 @@ export const WoozPosts = ({ info }) => {
 //           backgroundColor: 'transparent',
 //           height: ITEM_HEIGHT,
 //         }}
-//         alwaysBounceVertical
+//         always
 //         showsHorizontalScrollIndicator={false}
 //         showsVerticalScrollIndicator={false}
 //         data={info}
@@ -728,7 +728,7 @@ export const WoozPosts = ({ info }) => {
 //           paddingTop: 5,
 //           paddingBottom: 15,
 //         }}
-//         alwaysBounceVertical
+//         always
 //         showsHorizontalScrollIndicator={false}
 //         showsVerticalScrollIndicator={false}
 //         ListHeaderComponent={ListHeader}

@@ -114,7 +114,7 @@ export default function Settings({ navigation }) {
         screen="auth"
       />
       <ScrollView
-        alwaysBounceVertical
+        always
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >

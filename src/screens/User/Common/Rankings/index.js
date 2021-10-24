@@ -379,7 +379,7 @@ export default function LeaderBoard({ route, navigation }) {
           ListHeaderComponent={renderHeaderArea}
           data={ranks.slice(3)}
           alwaysBounceHorizontal
-          alwaysBounceVertical
+          always
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           renderItem={renderOtherRanks}
