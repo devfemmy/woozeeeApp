@@ -55,29 +55,25 @@ const sponsorsAd = [
   {
     id: 1,
     banner: {
-      uri:
-        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/accessAd.mp4',
+      uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/accessAd.mp4',
     },
   },
   {
     id: 2,
     banner: {
-      uri:
-        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/ubaAd.mp4',
+      uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/ubaAd.mp4',
     },
   },
   {
     id: 3,
     banner: {
-      uri:
-        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/globusAd.mp4',
+      uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/globusAd.mp4',
     },
   },
   {
     id: 1,
     banner: {
-      uri:
-        'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/axaAd.mp4',
+      uri: 'https://woozeee-socials-artifacts.s3.eu-central-1.amazonaws.com/marketplace/axaAd.mp4',
     },
   },
 ];
@@ -252,7 +248,7 @@ export default function MarketPlace({ navigation }) {
           ListFooterComponentStyle={{ paddingBottom: 10 }}
           horizontal={!IS_PORTRAIT}
           // alwaysBounceHorizontal
-          // alwaysBounceVertical
+          // always
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />

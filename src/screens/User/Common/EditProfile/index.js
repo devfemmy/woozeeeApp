@@ -321,7 +321,7 @@ export default function EditProfile({ navigation }) {
           screen="auth"
         />
         <ScrollView
-          alwaysBounceVertical
+          always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >

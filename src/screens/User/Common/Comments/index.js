@@ -599,7 +599,7 @@ export default function Comments({ route, navigation }) {
                     flex: 1,
                   }}
                   contentContainerStyle={{}}
-                  alwaysBounceVertical
+                  always
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
                   data={comments}

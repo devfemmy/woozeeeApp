@@ -203,9 +203,9 @@ export default function TopNavigationArea(props) {
           // accessoryLeft={(evaProps) => (
           //   <Calendar {...evaProps} navigation={navigation} icon={icon} />
           // )}
-          accessoryRight={() => (
-            <TopNavigationUserActivities navigation={navigation} />
-          )}
+          // accessoryRight={() => (
+          //   <TopNavigationUserActivities navigation={navigation} />
+          // )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}

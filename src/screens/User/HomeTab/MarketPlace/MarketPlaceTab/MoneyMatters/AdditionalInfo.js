@@ -39,6 +39,34 @@ import { LocaleContext, AppSettingsContext } from 'src/contexts';
 import { IconArrowDown } from 'src/components/CustomIcons';
 
 export default function AdditionalInfo(props) {
+  const {
+    route: { params },
+  } = props;
+
+  const {
+    serviceType,
+    amount,
+    loanee,
+    loaneeImg,
+    customerName,
+    bankImg,
+    accountNumber,
+  } = params;
+
+  const loadDetails = {
+    serviceType: serviceType,
+    amount: amount,
+    loanee: {
+      name: loanee,
+      image: loaneeImg,
+    },
+    customer: {
+      name: customerName,
+      bankImage: bankImg,
+      accountNumber: accountNumber,
+    },
+  };
+
   const ACCOUNTS = [
     {
       id: 1,
@@ -225,7 +253,7 @@ export default function AdditionalInfo(props) {
   };
 
   const routeConfirm = () => {
-    props.navigation.navigate('MoneyMattersConfirmation', props.route.params);
+    props.navigation.navigate('MoneyMattersConfirmation', loadDetails);
   };
 
   return (

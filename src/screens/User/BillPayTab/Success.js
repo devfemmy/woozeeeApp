@@ -35,7 +35,7 @@ export default function Success({ navigation, route }) {
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea navigation={navigation} screen="default" />
       <ScrollView
-        alwaysBounceVertical
+        always
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >

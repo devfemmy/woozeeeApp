@@ -75,7 +75,7 @@ export default function ChangePassword({ navigation }) {
         screen="auth"
       />
       <ScrollView
-        alwaysBounceVertical
+        always
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       >

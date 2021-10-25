@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useCallback } from 'react';
 
 import {
   Layout,
@@ -23,6 +23,8 @@ import {
 } from 'react-native';
 
 import { v4 as uuidv4 } from 'uuid';
+
+import SliderScreen from '../../../../../../components/RangeSlider/screens/Slider/index';
 
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 
@@ -58,6 +60,11 @@ import zed from '../../../../../../assets/images/moneyMatters/zed.png';
 import reho from '../../../../../../assets/images/moneyMatters/reho.png';
 
 import fina from '../../../../../../assets/images/moneyMatters/fina.png';
+import Thumb from 'src/components/RangeSlider/Slider/Thumb';
+import Rail from 'src/components/RangeSlider/Slider/Rail';
+import RailSelected from 'src/components/RangeSlider/Slider/RailSelected';
+import Label from 'src/components/RangeSlider/Slider/Label';
+import Notch from 'src/components/RangeSlider/Slider/Notch';
 
 const SearchResults = (props) => {
   const { appState } = useContext(AppSettingsContext);
@@ -66,15 +73,11 @@ const SearchResults = (props) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
-  console.log(props.route.params);
-
   let loanServices = props?.route?.params[0];
 
   let loanAmount = props?.route?.params[1];
 
   let _durations = props?.route?.params[2].duration;
-
-  console.log('duration is', +_durations[0]);
 
   const [loanInterest, setLoanInterest] = useState(null);
 
@@ -125,7 +128,7 @@ const SearchResults = (props) => {
   // ];
 
   const selectOption = (option) => {
-    console.log('options', option);
+    // console.log('options', option);
     setSelectedService(option);
     setLoanInterest(option.interest);
     setLoanDuration(option.tenorTo);
@@ -134,7 +137,15 @@ const SearchResults = (props) => {
 
   const routeAddInfo = () => {
     sheetRef.current.close();
-    props.navigation.navigate('AdditionalInfo', selectedService);
+    props.navigation.navigate('AdditionalInfo', {
+      serviceType: 'Loan',
+      amount: loanAmount,
+      loanee: selectedService,
+      loaneeImg: selectedService,
+      customerName: 'Adeniyi Emmanuel',
+      bankImg: lapo,
+      accountNumber: '0167906059',
+    });
   };
 
   const ModalContent = () => {
@@ -455,16 +466,16 @@ const SearchResults = (props) => {
         <View
           style={{
             paddingVertical: 30,
-            // paddingHorizontal: 20,
+            paddingHorizontal: 10,
           }}
         >
           <Text category="h6" status="primary">
             Interest Rate
           </Text>
-          <Text status="basic" style={{ marginTop: 20 }}>
-            0% - 25%
-          </Text>
+
           {/* range slider here */}
+          <SliderScreen />
+
           <Divider style={{ marginTop: 20 }} />
           <Text category="h6" status="primary" style={{ marginTop: 20 }}>
             Repayment Flexibility
@@ -743,7 +754,7 @@ const SearchResults = (props) => {
         </View>
         {loanServices
           .sort((i, j) => i.interest - j.interest)
-          .filter((service) => +_durations[0] * 10 >= service.tenorTo)
+          .filter((service) => +_durations[0] * 10 === service.tenorTo)
           .map((service) => (
             <TouchableOpacity
               key={uuidv4()}
@@ -832,7 +843,7 @@ const SearchResults = (props) => {
           <ScrollView
             vertical
             showsVerticalScrollIndicator={false}
-            alwaysBounceVertical
+            always
             showsHorizontalScrollIndicator={false}
             constentContainerStyle={{
               display: 'flex',

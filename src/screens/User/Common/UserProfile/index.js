@@ -442,6 +442,7 @@ export default function UserProfile({ route, navigation }) {
               </View>
             )}
           </View>
+          {/* <ScrollView> */}
           <View
             style={{
               flex: 1,
@@ -538,8 +539,8 @@ export default function UserProfile({ route, navigation }) {
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                paddingHorizontal: 30,
+                justifyContent: 'center',
+                paddingHorizontal: 10,
                 marginVertical: 10,
               }}
             >
@@ -548,7 +549,7 @@ export default function UserProfile({ route, navigation }) {
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    justifyContent: 'space-evenly',
                     paddingHorizontal: 50,
                     alignItems: 'center',
                     backgroundColor: isAllSelected ? '#043F7C' : '#E8EAF6',
@@ -556,6 +557,7 @@ export default function UserProfile({ route, navigation }) {
                     borderWidth: 1,
                     height: '100%',
                     borderRadius: 5,
+                    marginHorizontal: 5,
                   }}
                 >
                   <MaterialIcons
@@ -587,6 +589,7 @@ export default function UserProfile({ route, navigation }) {
                     borderWidth: 1,
                     height: '100%',
                     borderRadius: 5,
+                    marginHorizontal: 5,
                   }}
                 >
                   <AntDesign
@@ -627,6 +630,7 @@ export default function UserProfile({ route, navigation }) {
               </Tab>
             </TabView> */}
           </View>
+          {/* </ScrollView> */}
         </Layout>
       ),
     [

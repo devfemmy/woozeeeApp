@@ -1,13 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component } from 'react';
-import { View, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  FlatList,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import { Layout, List, Text, Divider } from '@ui-kitten/components';
 import Firebase from '../../../../services/Firebase/firebaseConfig';
 import Spinner from 'react-native-loading-spinner-overlay';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from 'moment';
-
 
 class MessageInbox extends Component {
   state = {
@@ -16,7 +21,7 @@ class MessageInbox extends Component {
     imageUrl: '',
     loggedInUserName: '',
   };
-  async fetchMessages () {
+  async fetchMessages() {
     try {
       await Firebase.database()
         .ref('users')
@@ -58,9 +63,9 @@ class MessageInbox extends Component {
                           lastMessage = child.val().messege.msg;
                           lastDate = child.val().messege.date;
                           lastTime = child.val().messege.time;
-                          properDate =
-                            `${child.val().messege.date} ${child.val().messege.time}`
-                          
+                          properDate = `${child.val().messege.date} ${
+                            child.val().messege.time
+                          }`;
                         });
                       } else {
                         lastMessage = '';
@@ -85,7 +90,6 @@ class MessageInbox extends Component {
                       userName: '',
                       imageUrl: '',
                     });
-
                   } else {
                     users.push({
                       userName: newUser.userName,
@@ -94,9 +98,7 @@ class MessageInbox extends Component {
                       lastMessage: newUser.lastMessage,
                       lastTime: newUser.lastTime,
                       lastDate: newUser.lastDate,
-                      properDate: newUser.lastDate
-                        ? (newUser.properDate)
-                        : null,
+                      properDate: newUser.lastDate ? newUser.properDate : null,
                     });
                     // const todayDate = moment(newUser.properDate);
                     // console.log("today, ", todayDate);
@@ -147,9 +149,8 @@ class MessageInbox extends Component {
     this.setState({ loader: true });
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       // fetch messages when screen is focused
-      this.fetchMessages()
+      this.fetchMessages();
     });
-
   }
   componentWillUnmount() {
     this._unsubscribe();
@@ -185,18 +186,20 @@ class MessageInbox extends Component {
   // }
   render() {
     const arr = this.state.allUsers;
-    const sortByDate = arr => {
-    const sorter = (a, b) => {
-        return new Date(b.properDate).getTime() - new Date(a.properDate).getTime();
-    }
-    arr.sort(sorter);
-  };
-  sortByDate(arr);
+    const sortByDate = (arr) => {
+      const sorter = (a, b) => {
+        return (
+          new Date(b.properDate).getTime() - new Date(a.properDate).getTime()
+        );
+      };
+      arr.sort(sorter);
+    };
+    sortByDate(arr);
     // const Moment = require('moment')
     // const array = [{date:"2018-05-11"},{date:"2018-05-12"},{date:"2018-05-10"}]
     // const sortedArray  = array.sort((a,b) => new Moment(a.date).format('YYYYMMDD') - new Moment(b.date).format('YYYYMMDD'))
     // console.log(sortedArray)
-    
+
     return (
       <Layout
         level="6"
@@ -213,14 +216,13 @@ class MessageInbox extends Component {
                     screen="auth"
                 /> */}
         {/* <AppHeader title="Messages" navigation={this.props.navigation} onPress={() => this.logOut()} /> */}
-        {this.state.allUsers.length === 0 ? 
-      <View style= {{flex: 1, alignItems: 'center', marginVertical: 20}}>
-        <Text category= "h6">Start A New Conversation</Text>
-      </View>
- : null
-      }
+        {this.state.allUsers.length === 0 ? (
+          <View style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
+            <Text category="h6">Start A New Conversation</Text>
+          </View>
+        ) : null}
         <FlatList
-          alwaysBounceVertical={false}
+          always={false}
           data={this.state.allUsers}
           style={{ padding: 5 }}
           keyExtractor={(_, index) => index.toString()}
@@ -249,22 +251,26 @@ class MessageInbox extends Component {
                         justifyContent: 'center',
                       }}
                     >
-                      {item.imageUrl === undefined
-                      ? <Image
-                      defaultSource={require('../../../../assets/images/user/user1.png')}
-                      source={require('../../../../assets/images/user/user1.png')}
-                      style={{ height: 50, width: 50, borderRadius: 25, resizeMode: 'contain' }}
-                                          /> 
-                    :   
-                    <Image
-                    defaultSource={require('../../../../assets/images/user/user1.png')}
-                    source={{
-                      uri: item.imageUrl,
-                    }}
-                    style={{ height: 50, width: 50, borderRadius: 25, }}
-                  />
-                    }
-
+                      {item.imageUrl === undefined ? (
+                        <Image
+                          defaultSource={require('../../../../assets/images/user/user1.png')}
+                          source={require('../../../../assets/images/user/user1.png')}
+                          style={{
+                            height: 50,
+                            width: 50,
+                            borderRadius: 25,
+                            resizeMode: 'contain',
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          defaultSource={require('../../../../assets/images/user/user1.png')}
+                          source={{
+                            uri: item.imageUrl,
+                          }}
+                          style={{ height: 50, width: 50, borderRadius: 25 }}
+                        />
+                      )}
                     </View>
                     <View
                       style={{
@@ -285,12 +291,12 @@ class MessageInbox extends Component {
                         {item.userName}
                       </Text>
                       <Text
-                      numberOfLines= {1}
+                        numberOfLines={1}
                         style={{
                           // color: 'rgba(0, 0, 0, 0.5)',
                           fontSize: 14,
                           fontWeight: '600',
-                          opacity: 0.5
+                          opacity: 0.5,
                         }}
                       >
                         {item.lastMessage}
@@ -309,7 +315,7 @@ class MessageInbox extends Component {
                           // color: 'rgba(0, 0, 0, 0.5)',
                           fontSize: 13,
                           fontWeight: '400',
-                          opacity: 0.5
+                          opacity: 0.5,
                         }}
                       >
                         {item.lastTime}

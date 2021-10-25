@@ -63,33 +63,11 @@ export default function Home({ navigation }) {
   const activityData = [
     {
       time: '10:57 pm',
-      activity: 'Subscribed for HMO for the month of December, 2020',
+      activity: 'Verified email address',
     },
     {
       time: '08:22 pm',
-      activity: 'Purchased Train Ticket to Kesington Station',
-    },
-    {
-      time: '07:05 pm',
-      activity: 'Paid $17 at Catina Bar for food and drinks',
-    },
-    {
-      time: '05:38 pm',
-      activity: 'Purchased train ticket to Downtown Station',
-    },
-    {
-      time: '12:26 pm',
-      activity: 'Booked a table at W Bar at Catina Bar, New York',
-    },
-    { time: '10: 49 am', activity: 'Successfully bought five (5) items' },
-    { time: '08:32 am', activity: 'Wallet credited with $1000 prize' },
-    {
-      time: '06:04am',
-      activity: 'Uploaded a video for the #DanceChallenge',
-    },
-    {
-      time: '06:01am',
-      activity: 'Subscribed for HMO for the month ofDecember, 2020.',
+      activity: 'Signed up to woozeee',
     },
   ];
   return (
@@ -111,7 +89,7 @@ export default function Home({ navigation }) {
           }}
         >
           <Text category="h6" status="basic">
-            Saturday, 10 October
+            Saturday, 10 April
           </Text>
 
           {activityData.map((item, index) => (

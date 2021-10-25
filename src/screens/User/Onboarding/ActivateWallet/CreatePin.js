@@ -15,6 +15,7 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import BankOptions from '../../../../components/BankOptionButton';
 
 import zenith from '../../../../assets/images/icon/zenith.png';
@@ -42,53 +43,55 @@ export default function CreatePin({ route, navigation }) {
           navigation={navigation}
           screen="auth"
         />
-        <Text
-          category="c2"
-          status="basic"
-          style={{ marginLeft: 15, marginTop: 15 }}
-        >
-          Selected Accounts
-        </Text>
-        <BankOptions logo={access} name="Access Bank" />
-        {selectedBanks.map((bank) => (
-          <BankOptions logo={banksData[bank.name]} name={bank.name} />
-        ))}
-        <Text
-          category="c2"
-          status="basic"
-          style={{ marginLeft: 15, marginTop: 15 }}
-        >
-          Account Setup
-        </Text>
-        <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
-          <GeneralTextField
-            status="primary"
-            type="pin"
-            label="Pin"
-            // setFormValues={setFormValues}
-          />
-        </View>
-        <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
-          <GeneralTextField
-            status="primary"
-            type="pin"
-            label="Confirm Pin"
-            // setFormValues={setFormValues}
-          />
-        </View>
-        <View style={{ marginVertical: 20, marginHorizontal: 15 }}>
-          <Button
-            status="danger"
-            size="large"
-            accessibilityLiveRegion="assertive"
-            accessibilityComponentType="button"
-            accessibilityLabel="Continue"
-            onPress={routeCare}
-            disabled={isLoading}
+        <KeyboardAwareScrollView>
+          <Text
+            category="c2"
+            status="basic"
+            style={{ marginLeft: 15, marginTop: 15 }}
           >
-            <Text status="control">{t('complete')}</Text>
-          </Button>
-        </View>
+            Selected Accounts
+          </Text>
+          <BankOptions logo={access} name="Access Bank" />
+          {selectedBanks.map((bank) => (
+            <BankOptions logo={banksData[bank.name]} name={bank.name} />
+          ))}
+          <Text
+            category="c2"
+            status="basic"
+            style={{ marginLeft: 15, marginTop: 15 }}
+          >
+            Account Setup
+          </Text>
+          <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
+            <GeneralTextField
+              status="primary"
+              type="pin"
+              label="Pin"
+              // setFormValues={setFormValues}
+            />
+          </View>
+          <View style={{ paddingVertical: 10, paddingHorizontal: 15 }}>
+            <GeneralTextField
+              status="primary"
+              type="pin"
+              label="Confirm Pin"
+              // setFormValues={setFormValues}
+            />
+          </View>
+          <View style={{ marginVertical: 20, marginHorizontal: 15 }}>
+            <Button
+              status="danger"
+              size="large"
+              accessibilityLiveRegion="assertive"
+              accessibilityComponentType="button"
+              accessibilityLabel="Continue"
+              onPress={routeCare}
+              disabled={isLoading}
+            >
+              <Text status="control">{t('complete')}</Text>
+            </Button>
+          </View>
+        </KeyboardAwareScrollView>
       </Layout>
     );
   }, [banksData]);
