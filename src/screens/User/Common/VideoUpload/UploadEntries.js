@@ -52,15 +52,18 @@ export default function UploadEntries(props) {
       allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
+      // base64: true
     });
 
 
     if (!result.cancelled) {
       if (result.type === 'video') {
-        props.navigation.navigate('PreviewEntry', {editorResult: result.uri, imageUri: null, entries: entries})
+        props.navigation.navigate('PreviewEntry', {editorResult: result.uri, 
+          imageUri: null, entries: entries})
       }else {
         setImage(result.uri);
-        props.navigation.navigate('PreviewEntry', {imageUri: result.uri, editorResult: null, entries: entries})
+        props.navigation.navigate('PreviewEntry', {imageUri: result.uri, 
+          editorResult: null, entries: entries})
       }
     }
   };
@@ -69,7 +72,8 @@ export default function UploadEntries(props) {
     if (cameraRef) {
         const data = await cameraRef.takePictureAsync(null);
         setImage(data.uri);
-        props.navigation.navigate('PreviewEntry', {imageUri: data.uri, editorResult: null, entries: entries})
+        props.navigation.navigate('PreviewEntry', {imageUri: data.uri, 
+          editorResult: null, entries: entries})
       }
   }
   // const recordCamera = async () => {

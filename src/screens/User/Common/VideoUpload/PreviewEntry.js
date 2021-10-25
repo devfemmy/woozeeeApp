@@ -23,6 +23,7 @@ import { Platform } from 'react-native';
 import axios from '../../../../services/api/index';
 import { useNetInfo } from '@react-native-community/netinfo';
 import CustomField from 'src/components/CustomField/index';
+import {decode as atob, encode as btoa} from 'base-64'
 // import Spinner from 'react-native-loading-spinner-overlay';
 
 const PreviewEntry = (props) => {
@@ -41,6 +42,11 @@ const PreviewEntry = (props) => {
   //     [loc]: !prevState[loc],
   //   }));
   // };
+
+  const newImageUri = imageUri;
+  console.log("image uri", newImageUri);
+
+ 
   const netInfo = useNetInfo();
   const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
@@ -82,11 +88,11 @@ const PreviewEntry = (props) => {
   // Remove File Prefix from Path
 
   const normalizePath = async (path) => {
-    console.log("normalize path works")
+    console.log("normalize path works", path)
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
       const filePrefix = 'file://';
-      if (path.startsWith(filePrefix)) {
-        path = path.substring(filePrefix.length);
+      if (path?.startsWith(filePrefix)) {
+        path = path?.substring(filePrefix.length);
         try {
           path = decodeURI(path);
         } catch (e) {}
@@ -104,7 +110,7 @@ const PreviewEntry = (props) => {
       axios
         .post(`stories`, data, { headers: { Authorization: token } })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setLoading(false);
           Toast.show({
             text: 'Upload Succesful!',
@@ -144,7 +150,7 @@ const PreviewEntry = (props) => {
       axios
         .post(`entries`, data, { headers: { Authorization: token } })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           const message = res.message;
           setLoading(false);
           Toast.show({
@@ -174,15 +180,15 @@ const PreviewEntry = (props) => {
         });
     }
   };
+
   const uploadFileToFirebase = async (videoUri, video, type) => {
-    console.log('video 22', videoUri)
+       
+    // console.log('video 22', videoUri)
     if (editorResult === null) {
       const name = `Woozee${Math.random()}`;
-      console.log("I am here")
       const uploadTask = Firebase.storage()
         .ref(`mediaEntries/${'image'}${name}`)
-        .putString(videoUri.substring(23), 'base64',);
-        console.log("I am here 2")
+        .putString(videoUri, 'base64', { contentType: 'image/jpg' });
       uploadTask.on(
         'state_changed',
         (snapshot) => {
@@ -222,12 +228,11 @@ const PreviewEntry = (props) => {
         },
       );
     } else {
+
       const name = `Woozee${Math.random()}`;
-      console.log("I am here 222")
       const uploadTask = Firebase.storage()
         .ref(`mediaEntries/${'video'}${name}`)
         .putString(videoUri, 'base64', { contentType: 'video/mp4' });
-        console.log("I am here 223")
       uploadTask.on(
         'state_changed',
         (snapshot) => {
@@ -279,18 +284,25 @@ const PreviewEntry = (props) => {
   };
   const getImageUri = async (type = 'photo') => {
     setLoading(true);
-    const image = imageUri;
-    const filePath = await normalizePath(image);
-    let realPath;
-    if (Platform.OS === 'ios') {
-      realPath = await RNFetchBlob.fs.readFile(filePath, 'base64');
-      // console.log("real path", realPath)
-    }else {
-      realPath = await RNFetchBlob.fs.readFile(filePath, 'base64');
-    }
-   
-    // console.log('videoUri', videoUri);
-    uploadFileToFirebase(realPath, image, type);
+    // const image = imageUri;
+    // console.log("image to normalize", image)
+    const filePath = await normalizePath(newImageUri);
+    const newFilePATH = await RNFetchBlob.fs.readFile(filePath, 'base64');
+    // console.log("file path", filePath)
+  
+    // let realPath;
+    // if (Platform.OS === 'ios') {
+    //   // realPath = await RNFetchBlob.fs.readFile(filePath, 'base64');
+    //   // realPath = await RNFetchBlob.ios.openDocument(filePath);
+    //   // RNFetchBlob.wrap(PATH_TO_THE_FILE))
+    //   // console.log("real path", realPath)
+    // }else {
+    //   realPath = await RNFetchBlob.fs.readFile(filePath, 'base64');
+    // }
+
+    
+    // console.log('videoUri', filePath);
+    uploadFileToFirebase(newFilePATH, newFilePATH, type);
   };
 
   useEffect(() => {
@@ -331,7 +343,6 @@ const PreviewEntry = (props) => {
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }, []),
   );
-  console.log('editor', editorResult);
   const handleVideoRef = useCallback(
     (ref) => {
       const videoComp = ref;
@@ -375,7 +386,6 @@ const PreviewEntry = (props) => {
   //     </Layout>
   //   );
   // }
-  console.log('value', uploadLocations);
   return (
     <Root>
       <Layout level="6" style={{ flex: 1, padding: 25 }}>
