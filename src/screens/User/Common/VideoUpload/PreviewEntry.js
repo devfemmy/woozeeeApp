@@ -24,6 +24,7 @@ import axios from '../../../../services/api/index';
 import { useNetInfo } from '@react-native-community/netinfo';
 import CustomField from 'src/components/CustomField/index';
 import {decode as atob, encode as btoa} from 'base-64'
+import TopNavigationArea from 'src/components/TopNavigationArea/index';
 // import Spinner from 'react-native-loading-spinner-overlay';
 
 const PreviewEntry = (props) => {
@@ -388,7 +389,12 @@ const PreviewEntry = (props) => {
   // }
   return (
     <Root>
-      <Layout level="6" style={{ flex: 1, padding: 25 }}>
+      <Layout level="6" style={{ flex: 1, paddingHorizontal: 20 }}>
+          <TopNavigationArea
+            title={`Upload Entry`}
+            navigation={props.navigation}
+            screen="auth"
+            />
         <KeyboardAwareScrollView>
           {imageUri === null ? (
             <VideoPreview />
