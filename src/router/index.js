@@ -122,6 +122,8 @@ import PaymentSchedule from 'src/screens/User/Onboarding/ActivateCare/PaymentSch
 import WoozeePaySummary from 'src/screens/User/Onboarding/ActivateCare/PaySummary';
 import TransferMoney from 'src/screens/User/WalletTab/TransferMoney';
 import Accounts from 'src/screens/User/WalletTab/Accounts';
+import AndroidPreview from 'src/screens/User/Common/VideoUpload/AndroidPreview';
+
 const { Navigator, Screen } = createStackNavigator();
 
 export default function Router() {
@@ -251,6 +253,7 @@ export default function Router() {
       TransferMoney,
       Accounts,
       ChallengePage,
+      AndroidPreview
     },
 
     Common: {
