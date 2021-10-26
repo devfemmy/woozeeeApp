@@ -9,13 +9,12 @@ import {
 import {
   Layout, Button, Text,
   RadioGroup, Radio,
-  Datepicker
+  Datepicker, Spinner
 } from '@ui-kitten/components';
 import RNFetchBlob from 'rn-fetch-blob';
-// import firebase from '@react-native-firebase/app';
-import Firebase from 'src/services/Firebase/firebaseConfig';
+import firebase from '@react-native-firebase/app';
 import { Toast, Content, Root } from 'native-base';
-// import storage from '@react-native-firebase/storage';
+import storage from '@react-native-firebase/storage';
 
 import { LocaleContext } from 'src/contexts';
 
@@ -37,7 +36,6 @@ import countries from './countries.json';
 import states from './states.json';
 import axios from '../../../../services/api/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {decode as atob, encode as btoa} from 'base-64';
 import CustomField from 'src/components/CustomField/index';
 
 const COUNTRIES = countries;
@@ -94,6 +92,7 @@ export default function EditProfile({ navigation }) {
           })
           .then((response) => {
             setLoading(false);
+            console.log('response', response);
             const user_data = response.data.user;
             const first_name = user_data.fName;
             const last_name = user_data.sName;
@@ -180,13 +179,10 @@ export default function EditProfile({ navigation }) {
   };
 
   const uploadFileToFirebase = async (url, type, user) => {
-    console.log("url", user,)
-
-    setLoading(false);
-    const name = `woozeeeImg${Math.random()}`;
-    const uploadTask = Firebase.storage()
-      .ref(`mediaEntries/${'image'}${name}`)
-      .putString(url, 'base64', { contentType: 'image/jpg' });
+    const name = `WoozeeImg${Math.random()}`;
+    const uploadTask = storage()
+      .ref(`profileImages/${'image'}${name}`)
+      .putString(url, 'base64', { contentType: 'jpg' });
     uploadTask.on(
       'state_changed',
       (snapshot) => {
@@ -195,10 +191,10 @@ export default function EditProfile({ navigation }) {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload is ' + progress + '% done');
         switch (snapshot.state) {
-          case Firebase.storage.TaskState.PAUSED: // or 'paused'
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
             console.log('Upload is paused');
             break;
-          case Firebase.storage.TaskState.RUNNING: // or 'running'
+          case firebase.storage.TaskState.RUNNING: // or 'running'
             // console.log('Upload is running');
             break;
         }
@@ -211,7 +207,6 @@ export default function EditProfile({ navigation }) {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          setLoading(false);
           if (user === true) {
             setUserImage(downloadURL);
             AsyncStorage.setItem('userImage', downloadURL);
@@ -228,20 +223,20 @@ export default function EditProfile({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      // const firebaseConfig = {
-      //   apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
-      //   authDomain: 'woozeee-d7f6c.firebaseapp.com',
-      //   databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
-      //   projectId: 'woozeee-d7f6c',
-      //   storageBucket: 'woozeee-d7f6c.appspot.com',
-      //   messagingSenderId: '979696525592',
-      //   appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
-      //   measurementId: 'G-XQKMT94R9R',
-      // };
+      const firebaseConfig = {
+        apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+        authDomain: 'woozeee-d7f6c.firebaseapp.com',
+        databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+        projectId: 'woozeee-d7f6c',
+        storageBucket: 'woozeee-d7f6c.appspot.com',
+        messagingSenderId: '979696525592',
+        appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+        measurementId: 'G-XQKMT94R9R',
+      };
 
-      // if (!firebase.apps.length) {
-      //   firebase.initializeApp(firebaseConfig);
-      // }
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
       AsyncStorage.getItem('userid')
         .then((response) => {
           getUserProfile(response);
@@ -284,8 +279,7 @@ export default function EditProfile({ navigation }) {
     setCoverImage(uri);
     const path = await normalizePath(uri);
     const imageUri = await RNFetchBlob.fs.readFile(path, 'base64');
-    setUserImage(imageUri)
-    // uploadFileToFirebase(imageUri, type, (user = false));
+    uploadFileToFirebase(imageUri, type, (user = false));
   };
 
   const selectUserImage = async () => {
@@ -298,10 +292,8 @@ export default function EditProfile({ navigation }) {
     const type = imageFile.type;
     setUserImage(uri);
     const path = await normalizePath(uri);
-    const base64Image = await RNFetchBlob.fs.readFile(path, 'base64');
-    // console.log("image path222", base64Image);
-    setUserImage(base64Image)
-    // uploadFileToFirebase(base64Image, type, user=true);
+    const imageUri = await RNFetchBlob.fs.readFile(path, 'base64');
+    uploadFileToFirebase(imageUri, type, (user = true));
   };
   const setSelectedHandler = (index) => {
     setSelectedValue(index);
@@ -317,6 +309,7 @@ export default function EditProfile({ navigation }) {
       dob: date,
     }));
   };
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
   return (
     <Root>
       <Layout level="6" style={{ flex: 1 }}>
@@ -326,7 +319,7 @@ export default function EditProfile({ navigation }) {
           screen="auth"
         />
         <ScrollView
-          always
+          alwaysBounceVertical
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
@@ -428,6 +421,14 @@ export default function EditProfile({ navigation }) {
                   />
                 </View>
               </View>
+              <View style={{ paddingVertical: 5 }}>
+                <CustomField
+                  label={t('username')}
+                  placeholder={'Username'}
+                  value={userName}
+                  onChangeText={(nextValue) => setUserName(nextValue)}
+                />
+              </View>
               <View
                 style={{
                   paddingVertical: 5,
@@ -435,7 +436,7 @@ export default function EditProfile({ navigation }) {
                   justifyContent: 'space-between',
                 }}
               >
-                <View style={{ flex: 1, marginRight: 5, }}>
+                <View style={{ flex: 1, marginRight: 5 }}>
                   <Text category="label" appearance="hint">
                     {t('gender')}
                   </Text>
@@ -456,15 +457,7 @@ export default function EditProfile({ navigation }) {
                   setFormValues={setFormValues}
                 /> */}
                 </View>
-                <View style={{ paddingVertical: 5, width: '50%' }}>
-                <CustomField
-                  label={t('username')}
-                  placeholder={'Username'}
-                  value={userName}
-                  onChangeText={(nextValue) => setUserName(nextValue)}
-                />
-              </View>
-                {/* <View style={{ flex: 1, marginLeft: 5 }}>
+                <View style={{ flex: 1, marginLeft: 5 }}>
                   <Datepicker
                     label={t('dob')}
                     date={date}
@@ -473,7 +466,13 @@ export default function EditProfile({ navigation }) {
                     // max= {new Date('22-06-2022')}
                     accessoryRight={IconCalendar}
                   />
-                </View> */}
+                  {/* <GeneralDatePicker
+                  type="dob"
+                  label={t('dob')}
+                  setFormValues={setFormValues}
+                  accessoryRight={IconCalendar}
+                /> */}
+                </View>
               </View>
               {/* <View
               style={{
@@ -511,6 +510,7 @@ export default function EditProfile({ navigation }) {
               </View>
               <View style={{ paddingVertical: 20 }}>
                 <Button
+                  accessoryLeft={isLoading ? renderSpinner : null}
                   status="danger"
                   size="large"
                   accessibilityLiveRegion="assertive"
