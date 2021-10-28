@@ -55,6 +55,8 @@ import lapo from '../../../../../../assets/images/moneyMatters/lapo.png';
 
 import lapoBig from '../../../../../../assets/images/moneyMatters/lapoBig.png';
 
+import numberWithCommas from '../../../../../../constants/numberWithCommas';
+
 import zed from '../../../../../../assets/images/moneyMatters/zed.png';
 
 import reho from '../../../../../../assets/images/moneyMatters/reho.png';
@@ -69,19 +71,19 @@ import Notch from 'src/components/RangeSlider/Slider/Notch';
 const SearchResults = (props) => {
   const { appState } = useContext(AppSettingsContext);
 
-  function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
+  console.log('props =>', props.route.params[3]);
 
-  let loanServices = props?.route?.params[0];
+  let _services = props?.route?.params[0];
 
-  let loanAmount = props?.route?.params[1];
+  let _serviceAmount = props?.route?.params[1];
 
   let _durations = props?.route?.params[2].duration;
 
-  const [loanInterest, setLoanInterest] = useState(null);
+  let _title = props?.route?.params[3];
 
-  const [loanDuration, setLoanDuration] = useState(null);
+  const [_serviceInterest, _setServiceInterest] = useState(null);
+
+  const [_serviceDuration, _setServiceDuration] = useState(null);
 
   const [isAsc, setIsAsc] = useState(true);
   // console.log('loans', props.route.params);
@@ -130,18 +132,18 @@ const SearchResults = (props) => {
   const selectOption = (option) => {
     // console.log('options', option);
     setSelectedService(option);
-    setLoanInterest(option.interest);
-    setLoanDuration(option.tenorTo);
+    _setServiceInterest(option.interest);
+    _setServiceDuration(option.tenorTo);
     sheetRef.current.open();
   };
 
   const routeAddInfo = () => {
     sheetRef.current.close();
     props.navigation.navigate('AdditionalInfo', {
-      serviceType: 'Loan',
-      amount: loanAmount,
-      loanee: selectedService,
-      loaneeImg: selectedService,
+      serviceType: { _title },
+      amount: _serviceAmount,
+      from: selectedService,
+      fromImg: selectedService,
       customerName: 'Adeniyi Emmanuel',
       bankImg: lapo,
       accountNumber: '0167906059',
@@ -168,7 +170,7 @@ const SearchResults = (props) => {
           }}
         >
           <Text category="h6" status="primary">
-            Loan Details
+            {_title} Details
           </Text>
           <Feather
             name="x"
@@ -206,10 +208,10 @@ const SearchResults = (props) => {
                 marginBottom: 5,
               }}
             >
-              Loan amount:
+              {_title} amount:
             </Text>
             <Text category="h6" status="basic">
-              ₦{numberWithCommas(loanAmount)}.00
+              ₦{numberWithCommas(_serviceAmount)}.00
             </Text>
           </View>
         </View>
@@ -250,7 +252,7 @@ const SearchResults = (props) => {
                   style={{ marginRight: 5 }}
                 />
                 <Text category="c1" status="basic">
-                  Loan Duration
+                  {_title} Duration
                 </Text>
               </View>
               <Text
@@ -262,7 +264,7 @@ const SearchResults = (props) => {
                 }}
                 status="basic"
               >
-                {loanDuration} Days
+                {_serviceDuration} Days
               </Text>
             </View>
             <View style={{ marginRight: 10 }}>
@@ -300,7 +302,7 @@ const SearchResults = (props) => {
                   // color: 'rgba(0,0,0,.8)',
                 }}
               >
-                4%
+                {_serviceInterest}%
               </Text>
             </View>
           </Layout>
@@ -322,7 +324,10 @@ const SearchResults = (props) => {
             Repayment amount:
           </Text>
           <Text category="h5" status="primary">
-            ₦{numberWithCommas((loanInterest / 100) * loanAmount + +loanAmount)}
+            ₦
+            {numberWithCommas(
+              (_serviceInterest / 100) * _serviceAmount + +_serviceAmount,
+            )}
           </Text>
         </View>
         <View
@@ -340,7 +345,9 @@ const SearchResults = (props) => {
             // disabled={isLoading}
             onPress={routeAddInfo}
           >
-            <Text status="control">{'Get Loan'}</Text>
+            <Text status="control">
+              {_title === 'Savings' ? 'Set Savings' : 'Get Loan'}
+            </Text>
           </Button>
         </View>
       </View>
@@ -412,7 +419,9 @@ const SearchResults = (props) => {
               marginTop: 30,
             }}
           >
-            <Text status="control">{'Get Loan'}</Text>
+            <Text status="control">
+              {_title === 'Savings' ? 'Set Savings' : 'Get Loan'}
+            </Text>
           </Button>
         </View>
       </View>
@@ -490,7 +499,7 @@ const SearchResults = (props) => {
             }}
           >
             <Text status="basic" style={{ fontSize: 12 }}>
-              Only shows loans offers with repayment flexibilty
+              Only shows offers with repayment flexibilty
             </Text>
             <Toggle />
           </View>
@@ -566,7 +575,7 @@ const SearchResults = (props) => {
     );
   };
 
-  const LoanOptions = ({ img, interestRate, amount, level, duration }) => {
+  const LoanOptions = ({ img, interestRate, amount, level, duration, id }) => {
     return (
       <View
         style={{
@@ -600,9 +609,16 @@ const SearchResults = (props) => {
               marginBottom: 20,
             }}
           >
-            <Text category="c2" style={{ color: '#27D0AD' }}>
-              {level}
-            </Text>
+            {id == 0 ? (
+              <Text category="c2" style={{ color: '#27D0AD' }}>
+                {level}
+              </Text>
+            ) : (
+              <Text category="c2" style={{ color: '#27D0AD' }}>
+                OTHER INTEREST
+              </Text>
+            )}
+
             <View
               style={{
                 display: 'flex',
@@ -662,10 +678,10 @@ const SearchResults = (props) => {
         }}
       >
         <Text category="h5" status="basic" style={{ marginBottom: 3 }}>
-          ₦{numberWithCommas(loanAmount)}
+          ₦{numberWithCommas(_serviceAmount)}
         </Text>
         <Text category="c1" status="basic">
-          Loan Options
+          {_title} Options
         </Text>
       </View>
     );
@@ -747,15 +763,23 @@ const SearchResults = (props) => {
             size={24}
             color="#B98E02"
           />
-          <Text category="c1" style={{ marginLeft: 5, color: '#B98E02' }}>
-            The accumulated Loan amount would be deducted from your account in
-            the event of default.
-          </Text>
+          {_title === 'Loans' ? (
+            <Text category="c1" style={{ marginLeft: 5, color: '#B98E02' }}>
+              The accumulated Loan amount would be deducted from your account in
+              the event of default.
+            </Text>
+          ) : (
+            <Text category="c1" style={{ marginLeft: 5, color: '#B98E02' }}>
+              The accumulated Savings amount would be added to your account in
+              the event of default.
+            </Text>
+          )}
         </View>
-        {loanServices
+        {/* {console.log('services result => ', _services)} */}
+        {_services
           .sort((i, j) => i.interest - j.interest)
-          .filter((service) => +_durations[0] * 10 === service.tenorTo)
-          .map((service) => (
+          .filter((service) => +_durations[0] * 10 <= service.tenorTo)
+          .map((service, index) => (
             <TouchableOpacity
               key={uuidv4()}
               onPress={() => selectOption(service)}
@@ -763,11 +787,12 @@ const SearchResults = (props) => {
               <LoanOptions
                 img={lapo}
                 amount={numberWithCommas(
-                  (service.interest / 100) * loanAmount + +loanAmount,
+                  (service.interest / 100) * _serviceAmount + +_serviceAmount,
                 )}
                 level={'LOWEST INTEREST'}
                 interestRate={service.interest}
                 duration={service.tenorTo}
+                id={index}
               />
             </TouchableOpacity>
           ))}

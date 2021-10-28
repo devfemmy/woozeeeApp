@@ -138,6 +138,7 @@ export const StoryPosts = ({ info }) => {
             uri: userImg,
             priority: FastImage.priority.cover,
           }}
+          defaultSource={require('../../assets/images/banner/placeholder-image.png')}
         />
 
         <View

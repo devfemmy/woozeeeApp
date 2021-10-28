@@ -185,7 +185,6 @@ export default function MarketPlace({ navigation }) {
           // ListFooterComponent={DealsPostsArea}
           ListFooterComponentStyle={{ paddingBottom: 10 }}
           horizontal={!IS_PORTRAIT}
-          alwaysBounceHorizontal
           always
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}

@@ -37,7 +37,10 @@ import deal2 from '../../../../../../assets/images/moneyMatters/deal2.png';
 import deal3 from '../../../../../../assets/images/moneyMatters/deal3.png';
 import deal4 from '../../../../../../assets/images/moneyMatters/deal4.png';
 
-import { searchLoans } from '../../../../../../services/Requests/moneyMatters/index';
+import {
+  searchLoans,
+  searchSavings,
+} from '../../../../../../services/Requests/moneyMatters/index';
 
 const MoneyMatters = ({ route, navigation }) => {
   const renderSpinner = () => <Spinner size="tiny" status="danger" />;
@@ -67,23 +70,39 @@ const MoneyMatters = ({ route, navigation }) => {
     },
   ];
 
-  const [loanAmount, setLoanAmount] = useState('');
+  const [_amount, setAmount] = useState('');
 
   const [isLoading, setLoading] = useState(false);
 
   const [form, setFormValues] = useState({});
 
   const search = async () => {
-    setLoading(true);
-    const res = await searchLoans(loanAmount);
-    setLoading(false);
+    if (serviceState === 'Loans') {
+      setLoading(true);
+      const res = await searchLoans(_amount);
 
-    const {
-      data: { loans },
-    } = res;
-    // console.log(loans);
+      setLoading(false);
 
-    navigation.navigate('SearchResults', [loans, loanAmount, form]);
+      const {
+        data: { loans },
+      } = res;
+      let title = 'Loan';
+
+      navigation.navigate('SearchResults', [loans, _amount, form, title]);
+    } else if (serviceState === 'Savings') {
+      setLoading(true);
+      const res = await searchSavings(_amount);
+      setLoading(false);
+
+      const {
+        data: { savings },
+      } = res;
+      let title = 'Savings';
+
+      navigation.navigate('SearchResults', [savings, _amount, form, title]);
+    } else {
+      return;
+    }
   };
 
   const sliders = [
@@ -425,7 +444,7 @@ const MoneyMatters = ({ route, navigation }) => {
                     ? route.params.data.question
                     : 'How much loan do you need'
                 }
-                onChangeText={(text) => setLoanAmount(text)}
+                onChangeText={(text) => setAmount(text)}
                 placeholderTextColor="gray"
                 status="primary"
                 style={{
@@ -577,7 +596,7 @@ const MoneyMatters = ({ route, navigation }) => {
         </ScrollView>
       </Layout>
     ),
-    [route, navigation, form, loanAmount, serviceState, isLoading],
+    [route, navigation, form, _amount, serviceState, isLoading],
   );
 };
 const styles = StyleSheet.create({

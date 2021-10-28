@@ -46,19 +46,19 @@ export default function AdditionalInfo(props) {
   const {
     serviceType,
     amount,
-    loanee,
-    loaneeImg,
+    from,
+    fromImg,
     customerName,
     bankImg,
     accountNumber,
   } = params;
 
-  const loadDetails = {
+  const serviceDetails = {
     serviceType: serviceType,
     amount: amount,
-    loanee: {
-      name: loanee,
-      image: loaneeImg,
+    serviceOrg: {
+      name: from,
+      image: fromImg,
     },
     customer: {
       name: customerName,
@@ -253,7 +253,7 @@ export default function AdditionalInfo(props) {
   };
 
   const routeConfirm = () => {
-    props.navigation.navigate('MoneyMattersConfirmation', loadDetails);
+    props.navigation.navigate('MoneyMattersConfirmation', serviceDetails);
   };
 
   return (

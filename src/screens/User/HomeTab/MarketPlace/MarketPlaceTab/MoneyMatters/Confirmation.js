@@ -23,9 +23,12 @@ import loan from '../../../../../../assets/images/moneyMatters/loan.png';
 import savings from '../../../../../../assets/images/moneyMatters/savings.png';
 import lapo2 from '../../../../../../assets/images/moneyMatters/lapo2.png';
 import access from '../../../../../../assets/images/banks/access.png';
+import numberWithCommas from 'src/constants/numberWithCommas';
 
 const MoneyMattersConfirmation = (props) => {
-  const LoaneeDetailsBlock = ({ currUserName, currUserInfo, img }) => {
+  const serviceDetails = props.route.params;
+
+  const LoaneeDetailsBlock = () => {
     return (
       <View style={{ display: 'flex' }}>
         <Layout
@@ -46,12 +49,13 @@ const MoneyMattersConfirmation = (props) => {
         >
           <View>
             <Text category="c2" status="primary" style={{ marginVertical: 5 }}>
-              {currUserName}Lapo Microfinance Bank
+              {serviceDetails.serviceOrg.name.scheme.toUpperCase()}
             </Text>
             <Text category="c1" status="basic" style={{ marginVertical: 5 }}>
-              {currUserInfo}Loanee
+              Organization
             </Text>
           </View>
+          {/* serviceDetails.serviceOrg.image  => when api complete*/}
           <Image source={lapo2} resizeMode="contain" />
         </Layout>
         <View
@@ -75,7 +79,7 @@ const MoneyMattersConfirmation = (props) => {
     );
   };
 
-  const UserDetailBlock = ({ guestUserName, guestUserInfo, img }) => {
+  const UserDetailBlock = () => {
     return (
       <Layout
         level="1"
@@ -94,13 +98,14 @@ const MoneyMattersConfirmation = (props) => {
       >
         <View>
           <Text category="c2" status="primary" style={{ marginVertical: 5 }}>
-            {guestUserName} Jace Wazobia
+            {serviceDetails.customer.name}
           </Text>
           <Text category="c1" status="basic" style={{ marginVertical: 5 }}>
-            {guestUserInfo} 4189 4169 4597 1122 (Access Bank)
+            {serviceDetails.customer.accountNumber}
           </Text>
         </View>
         <Image
+          // serviceDetails.customer.bankImage
           source={access}
           resizeMode="contain"
           style={{ width: 50, height: 50 }}
@@ -115,17 +120,7 @@ const MoneyMattersConfirmation = (props) => {
     });
   };
 
-  const {
-    currUser,
-    currInfo,
-    currImg,
-    guestUser,
-    guestInfo,
-    guestImg,
-    navigation,
-    action,
-    amount,
-  } = props;
+  const { navigation } = props;
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -135,20 +130,12 @@ const MoneyMattersConfirmation = (props) => {
         screen="auth"
       />
       <View style={styles.container}>
-        <Text category="h6">{action}Loan</Text>
-        <Text category="h5">₦ {amount}100000</Text>
+        <Text category="h6">{serviceDetails.serviceType._title}</Text>
+        <Text category="h5">₦{numberWithCommas(serviceDetails.amount)}</Text>
       </View>
       <View style={styles.Loancontainer}>
-        <LoaneeDetailsBlock
-          currUserName={currUser}
-          currUserInfo={currInfo}
-          img={currImg}
-        />
-        <UserDetailBlock
-          guestUserName={guestUser}
-          guestUserInfo={guestInfo}
-          img={guestImg}
-        />
+        <LoaneeDetailsBlock />
+        <UserDetailBlock />
       </View>
       <View
         style={{

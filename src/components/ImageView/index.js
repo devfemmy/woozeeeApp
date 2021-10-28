@@ -384,7 +384,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
         text: commentMessage,
         userFirstName: userData.data.user.fName,
         userLastName: userData.data.user.sName,
-        userName: `@iam${userData.data.user.fName.toLowerCase()}${userData.data.user.sName.toLowerCase()}`,
+        userName: `${userData.data.user.displayName.toLowerCase()}`,
         imgUrl: userData.data.user.sName.imgUrl,
         sentAt: Date(),
         delivered: false,

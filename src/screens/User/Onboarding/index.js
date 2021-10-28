@@ -15,7 +15,7 @@ const SLIDE_CONTENT = [
   {
     id: 1,
     banner: require('assets/images/onboarding/wallet.jpg'),
-    title: 'woozeee wallet',
+    title: 'woozeee Account',
     description:
       'Open a Bank Account with our partner banks (Access Bank, Zenith Bank and Globus Bank) automatically.',
     activateAction: 'activateWallet',
@@ -23,7 +23,7 @@ const SLIDE_CONTENT = [
   {
     id: 2,
     banner: require('assets/images/onboarding/care.jpg'),
-    title: 'woozeee care',
+    title: 'woozeee Care',
     description:
       'Opt-out insurance for all users covering, Medical assurance, Travel insurance (air and road travel) by Axa Mansard, Legal consultation and Road rescue).',
     activateAction: 'activateCare',
