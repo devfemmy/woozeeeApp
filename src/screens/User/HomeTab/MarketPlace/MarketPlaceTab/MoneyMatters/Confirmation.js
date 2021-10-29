@@ -24,9 +24,11 @@ import savings from '../../../../../../assets/images/moneyMatters/savings.png';
 import lapo2 from '../../../../../../assets/images/moneyMatters/lapo2.png';
 import access from '../../../../../../assets/images/banks/access.png';
 import numberWithCommas from 'src/constants/numberWithCommas';
+import { apply } from '../../../../../../services/Requests/moneyMatters/index';
 
 const MoneyMattersConfirmation = (props) => {
   const serviceDetails = props.route.params;
+  // console.log('serviceDetails.serviceOrg => ', serviceDetails);
 
   const LoaneeDetailsBlock = () => {
     return (
@@ -49,14 +51,24 @@ const MoneyMattersConfirmation = (props) => {
         >
           <View>
             <Text category="c2" status="primary" style={{ marginVertical: 5 }}>
-              {serviceDetails.serviceOrg.name.scheme.toUpperCase()}
+              {serviceDetails.serviceType._title === 'Savings'
+                ? serviceDetails.customer.name
+                : serviceDetails.serviceOrg.name.toUpperCase()}
             </Text>
             <Text category="c1" status="basic" style={{ marginVertical: 5 }}>
-              Organization
+              {serviceDetails.serviceType._title === 'Savings'
+                ? serviceDetails.customer.accountNumber
+                : 'Organization'}
             </Text>
           </View>
           {/* serviceDetails.serviceOrg.image  => when api complete*/}
-          <Image source={lapo2} resizeMode="contain" />
+          <Image
+            source={
+              serviceDetails.serviceType._title === 'Savings' ? access : lapo2
+            }
+            resizeMode="contain"
+            style={{ width: 50, height: 50 }}
+          />
         </Layout>
         <View
           style={{
@@ -98,15 +110,19 @@ const MoneyMattersConfirmation = (props) => {
       >
         <View>
           <Text category="c2" status="primary" style={{ marginVertical: 5 }}>
-            {serviceDetails.customer.name}
+            {serviceDetails.serviceType._title === 'Loan'
+              ? serviceDetails.customer.name
+              : serviceDetails.serviceOrg.name.toUpperCase()}
           </Text>
           <Text category="c1" status="basic" style={{ marginVertical: 5 }}>
-            {serviceDetails.customer.accountNumber}
+            {serviceDetails.serviceType._title === 'Loan'
+              ? serviceDetails.customer.accountNumber
+              : 'Organization'}
           </Text>
         </View>
         <Image
           // serviceDetails.customer.bankImage
-          source={access}
+          source={serviceDetails.serviceType._title === 'Loan' ? access : lapo2}
           resizeMode="contain"
           style={{ width: 50, height: 50 }}
         />
@@ -114,10 +130,20 @@ const MoneyMattersConfirmation = (props) => {
     );
   };
 
-  const routeSuccess = () => {
-    navigation.navigate('Success', {
-      params: { success: 'Transaction Successful!' },
-    });
+  const routeSuccess = async () => {
+    const res = await apply(
+      serviceDetails.serviceType._title,
+      serviceDetails.amount,
+      serviceDetails.offerId,
+      serviceDetails.serviceOrg.name,
+      serviceDetails.customer.name,
+      serviceDetails.customer.accountNumber,
+      'Access Bank',
+    );
+    console.log(res);
+    // navigation.navigate('Success', {
+    //   params: { success: 'Transaction Successful!' },
+    // });
   };
 
   const { navigation } = props;

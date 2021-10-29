@@ -44,6 +44,7 @@ export default function AdditionalInfo(props) {
   } = props;
 
   const {
+    offerId,
     serviceType,
     amount,
     from,
@@ -54,6 +55,7 @@ export default function AdditionalInfo(props) {
   } = params;
 
   const serviceDetails = {
+    offerId: offerId,
     serviceType: serviceType,
     amount: amount,
     serviceOrg: {

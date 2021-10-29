@@ -137,12 +137,16 @@ const SearchResults = (props) => {
     sheetRef.current.open();
   };
 
+  console.log('selectedservice is => ', selectedService);
+
   const routeAddInfo = () => {
     sheetRef.current.close();
     props.navigation.navigate('AdditionalInfo', {
       serviceType: { _title },
       amount: _serviceAmount,
-      from: selectedService,
+      offerId: selectedService._id,
+      from: selectedService.scheme_title,
+      provider: selectedService.scheme,
       fromImg: selectedService,
       customerName: 'Adeniyi Emmanuel',
       bankImg: lapo,

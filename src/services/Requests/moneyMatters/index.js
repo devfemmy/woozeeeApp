@@ -32,7 +32,7 @@ export const searchLoans = async (amount) => {
   }
 };
 
-export const searchSavings = async (amount, days) => {
+export const searchSavings = async (amount) => {
   const token = await getToken();
 
   const config = {
@@ -50,6 +50,51 @@ export const searchSavings = async (amount, days) => {
   try {
     res = await axios(config);
     return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const apply = async (
+  type,
+  amount,
+  offerId,
+  provider,
+  account_name,
+  account_number,
+  bank,
+) => {
+  const token = await getToken();
+
+  const body = {
+    amount: amount,
+    offer: offerId,
+    provider: 'lapo',
+    account_name: account_name,
+    account_number: account_number,
+    bank: bank,
+    paymentDetails: {},
+    channel: 'mobile',
+  };
+
+  console.log(body);
+
+  const config = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    },
+    data: JSON.stringify(body),
+    url: `${baseUrl}${type.toLowerCase()}/apply`,
+  };
+
+  let res;
+
+  try {
+    res = await axios(config);
+    return res.data;
   } catch (error) {
     console.log(error);
   }

@@ -54,8 +54,6 @@ export const createGlobusAccount = async (form) => {
     url: `${baseUrl}banks/globusbank/AccountOpening`,
   };
 
-  console.log(JSON.stringify(data));
-
   let res;
 
   try {
