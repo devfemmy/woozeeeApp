@@ -33,8 +33,8 @@ class UserView extends React.PureComponent {
 
 const styles = StyleSheet.create({
   image: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     borderRadius: 25,
     marginLeft: 8,
   },
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
-    fontSize: 18,
-    fontWeight: '500',
+    fontSize: 12,
+    fontWeight: '700',
     marginLeft: 12,
     color: 'white',
   },

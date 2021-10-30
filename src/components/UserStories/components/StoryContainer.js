@@ -147,13 +147,13 @@ const StoryContainer = (props) => {
         style={styles.container}
       >
         <View style={styles.container}>
-          <Story
+          {/* <Story
             onImageLoaded={onImageLoaded}
             pause={isPause}
             isNewStory={props.isNewStory}
             onVideoLoaded={onVideoLoaded}
             story={story}
-          />
+          /> */}
 
           {loading()}
 

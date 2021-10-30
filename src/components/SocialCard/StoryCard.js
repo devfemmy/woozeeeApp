@@ -14,8 +14,6 @@ import { Text } from '@ui-kitten/components';
 export default function StoryCard(props) {
   const { data, extraWidth } = props;
 
-  // console.log(data);
-
   const { width, height } = useWindowDimensions();
 
   const IS_PORTRAIT = height > width;

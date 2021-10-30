@@ -137,7 +137,7 @@ const SearchResults = (props) => {
     sheetRef.current.open();
   };
 
-  console.log('selectedservice is => ', selectedService);
+  // console.log('selectedservice is => ', selectedService);
 
   const routeAddInfo = () => {
     sheetRef.current.close();
