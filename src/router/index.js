@@ -107,6 +107,7 @@ import MyList from 'src/screens/User/Common/Movies/More/MyList/index';
 import ComingSoon from 'src/screens/User/Common/Movies/More/ComingSoon/index';
 // import MoneyMatters from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/index';
 import MoneyMatters from 'src/router/User/HomeTab/MarketPlace/MoneyMatters/index';
+import ClickNShop from 'src/router/User/HomeTab/MarketPlace/ClickNShop/index';
 import MoneyMattersServices from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/MoneyMattersServices';
 import Duration from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/Duration';
 import SearchResults from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/SearchResults';
@@ -196,6 +197,7 @@ export default function Router() {
       MarketPlaceRoute,
       AskADoctorRoute,
       MoneyMatters,
+      ClickNShop,
       CharityRoute,
       EditProfile,
       ChangePassword,
@@ -253,7 +255,7 @@ export default function Router() {
       TransferMoney,
       Accounts,
       ChallengePage,
-      AndroidPreview
+      AndroidPreview,
     },
 
     Common: {

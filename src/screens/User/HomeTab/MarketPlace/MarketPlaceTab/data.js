@@ -21,7 +21,7 @@ const marketPlaceItems = [
     id: 4,
     title: 'clickAndShop',
     icon: require('assets/images/icon/bag-filled.png'),
-    route: 'AskADoctor',
+    route: 'ClickNShop',
   },
   {
     id: 5,

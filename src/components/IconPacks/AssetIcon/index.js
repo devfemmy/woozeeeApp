@@ -63,6 +63,16 @@ const AssetIconsPack = {
     'chat-outline': IconProvider(
       require('assets/images/icon/chat-outline.png'),
     ),
+    category: IconProvider(require('assets/images/icon/category.png')),
+    'category-filled': IconProvider(
+      require('assets/images/icon/category-filled.png'),
+    ),
+    feeds: IconProvider(require('assets/images/icon/feed.png')),
+    'feeds-filled': IconProvider(
+      require('assets/images/icon/feeds-filled.png'),
+    ),
+    help: IconProvider(require('assets/images/icon/help.png')),
+    'help-filled': IconProvider(require('assets/images/icon/help-filled.png')),
     heart: IconProvider(require('assets/images/icon/heart.png')),
     'heart-outline': IconProvider(
       require('assets/images/icon/heart-outline.png'),
