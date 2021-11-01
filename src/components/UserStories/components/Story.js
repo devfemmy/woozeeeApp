@@ -9,6 +9,7 @@ const ScreenWidth = Dimensions.get('window').width;
 
 const Story = (props) => {
   const { story } = props;
+  // console.log(props);
   const { srcURL, type } = story || {};
 
   return (
@@ -26,6 +27,7 @@ const Story = (props) => {
           paused={props.pause || props.isNewStory}
           onLoad={(item) => props.onVideoLoaded(item)}
           style={styles.content}
+          onReadyForDisplay={(e) => console.log('on ready for display => ', e)}
           resizeMode="contain"
         />
       )}

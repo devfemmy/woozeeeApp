@@ -75,6 +75,10 @@ export const IconOptions = (props) => (
   <Icon {...props} name="options-outline" />
 );
 
+export const IconCart = (props) => (
+  <Icon {...props} name="shopping-cart-outline" />
+);
+
 export const IconStar = (props) => <Icon {...props} name="star" />;
 
 export const IconPaperPlane = (props) => (
@@ -309,6 +313,30 @@ export const IconCMovie = (props) => {
 
   return <Icon {...otherProps} name={type} pack="assets" />;
 };
+
+export const IconCCategories = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'category-filled' : 'category';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+export const IconCFeeds = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'feeds-filled' : 'feeds';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+
+export const IconCHelp = (props) => {
+  const { active, ...otherProps } = props;
+
+  const type = active ? 'help-filled' : 'help';
+
+  return <Icon {...otherProps} name={type} pack="assets" />;
+};
+
 export const IconCHeart = (props) => {
   const { active, ...otherProps } = props;
 
