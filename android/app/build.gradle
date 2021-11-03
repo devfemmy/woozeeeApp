@@ -183,7 +183,7 @@ android {
         applicationId "app.woozeee.com"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 97
+        versionCode 98
         versionName "1.0"
         multiDexEnabled true
     }
