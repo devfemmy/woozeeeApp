@@ -122,6 +122,8 @@ import PaymentSchedule from 'src/screens/User/Onboarding/ActivateCare/PaymentSch
 import WoozeePaySummary from 'src/screens/User/Onboarding/ActivateCare/PaySummary';
 import TransferMoney from 'src/screens/User/WalletTab/TransferMoney';
 import Accounts from 'src/screens/User/WalletTab/Accounts';
+import AskALawyerHome from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/ClientHome/index';
+
 const { Navigator, Screen } = createStackNavigator();
 
 export default function Router() {
@@ -236,6 +238,7 @@ export default function Router() {
       BillElectricity,
       Report,
       AskADoctor,
+      AskALawyerHome,
       Appointments,
       DoctorProfile,
       PaymentPage,

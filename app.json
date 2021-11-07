@@ -15,6 +15,9 @@
     "android": {
       "package": "app.woozeee.com"
     },
+    "permissions": [
+      "ACCESS_BACKGROUND_LOCATION"
+    ],
     "ios": {
       "requireFullScreen": true
     },

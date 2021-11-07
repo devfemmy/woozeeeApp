@@ -55,7 +55,7 @@ import useAuth from 'src/reducers/useAuth';
 
 import Router from 'src/router';
 
-import firebase from '@react-native-firebase/app';
+import * as firebase from 'firebase';
 import OneSignal from 'react-native-onesignal';
 
 // import firestore from '@react-native-firebase/firestore';
@@ -64,6 +64,9 @@ import en from 'src/translations/en.json';
 import fr from 'src/translations/fr.json';
 import { Platform } from 'react-native';
 import { oneSignalService } from './src/utilities/oneSignal';
+import Geocoder from "react-native-geocoding";
+import { Provider } from "react-redux";
+import { store } from "./src/redux/store";
 // import { getUserLocation, requestLocationPermission } from './src/utilities/locationPermission';
 
 enableScreens();
@@ -178,6 +181,7 @@ export default function App() {
       //     [{text: 'Go to Settings', onPress: openSetting}],
       //   );
       // }
+      Geocoder.init("AIzaSyA5kH1HxdiF085vwaYEZ3jTMSm1CMELJfg");
       const deviceState = await OneSignal.getDeviceState();
       if (deviceState.isSubscribed === false) {
         OneSignal.promptForPushNotificationsWithUserResponse((response) => {
@@ -215,6 +219,7 @@ export default function App() {
   const themeMode = appState.darkMode ? 'dark' : 'light';
 
   return isPreloaded ? (
+    <Provider store={store}>
     <SafeAreaProvider>
       <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
       <ApplicationProvider
@@ -270,5 +275,6 @@ export default function App() {
         style={themeMode === 'light' ? 'dark' : 'light'}
       />
     </SafeAreaProvider>
+    </Provider>
   ) : null;
 }

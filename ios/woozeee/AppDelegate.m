@@ -6,6 +6,8 @@
 #import <React/RCTLinkingManager.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "Orientation.h"
+#import <Firebase.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 // #import <FBSDKLoginKit/FBSDKLoginKit.h>
 // #import <FBSDKShareKit/FBSDKShareKit.h>
@@ -48,6 +50,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+   [GMSServices provideAPIKey:@"AIzaSyBpHcKBi3WWIyGneVwZgmS6Fu4sML52AxQ"];
 #if defined(FB_SONARKIT_ENABLED) && __has_include(<FlipperKit/FlipperClient.h>)
   InitializeFlipper(application);
 #endif

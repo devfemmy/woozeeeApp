@@ -27,7 +27,7 @@ const marketPlaceItems = [
     id: 5,
     title: 'askALawyer',
     icon: require('assets/images/icon/balance-filled.png'),
-    route: 'AskADoctor',
+    route: 'AskALawyerHome',
   },
   {
     id: 6,
