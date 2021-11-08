@@ -315,7 +315,7 @@ export function ChallengeVideoCard(props) {
           alignItems: 'center',
           justifyContent: 'flex-start',
         }}
-        // onPress={routeChallengePage}
+        onPress={routeChallengeWooz}
       >
         <FastImage
           source={{

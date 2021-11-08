@@ -350,7 +350,7 @@ const ChallengeVideo = forwardRef((props, ref) => {
                 <View>
                   <View
                     style={{
-                      flexDirection: 'row',
+                      // flexDirection: 'row',
                       alignItems: 'center',
                       marginBottom: 15,
                       // zIndex: 1,
