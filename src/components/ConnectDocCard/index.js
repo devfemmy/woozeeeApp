@@ -69,7 +69,7 @@ const ConnectDocCard = (props) => {
             <Image style= {styles.image} source= {props.source} />
             <View>
                 <View style= {{ marginLeft: 15}}>
-                        <Text category= "s1" style= {styles.text}>
+                        <Text category= "s1" style= {{...styles.text, textAlign: 'left'}}>
                             {props.doc}
                         </Text>
                         <Text style= {{marginBottom: 5}} category= "c1">
@@ -82,7 +82,7 @@ const ConnectDocCard = (props) => {
          <View style= {styles.lowerContainer}>
             <View>
                 <Text category= "c1">
-                    Experience
+                    Vcode
                 </Text>
                 <Text style= {styles.text} category= "h6">
                     {props.experience}

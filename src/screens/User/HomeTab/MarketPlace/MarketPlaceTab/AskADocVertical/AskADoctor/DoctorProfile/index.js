@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Layout,Text,Datepicker,Button
   } from '@ui-kitten/components';
@@ -7,12 +7,54 @@ import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import DocCard from 'src/components/DocCard/index';
 import CustomLabel from 'src/components/CustomLabel/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import DoctorSlot from 'src/components/DoctorSlot/index';
+import axios from '../../../../../../../../services/api/index'
+import TimeSlotCard from 'src/components/TimeSlot';
 
 const DoctorProfile = (props) => {
-    const {profile, visit_type, specialty} = props.route.params;
+    const {profile, location, visit_type, specialty, dayOfTheWeek} = props.route.params;
     const data = profile;
-    const [active, setActive] = useState(true)
+    console.log("doctor profile", data)
+    const [active, setActive] = useState(true);
+    const [loading, setIsLoading] = useState(false);
+    const availableTimes = [
+        {
+            time: "11:00 am",
+            price: 50000,
+            session: 60,
+            type: "Home Visit"
+        },
+        {
+            time: "12:00 pm",
+            price: 50000,
+            session: 60,
+            type: "Home Visit"
+        }
+    ]
+    useEffect(() => {
+        AsyncStorage.getItem('USER_AUTH_TOKEN')
+        .then((res) => {
+          axios
+            .get(`care/professionals/${data.professional_id}/sessions/${dayOfTheWeek}/${location}/${visit_type}`, {
+              headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                Authorization: res, 
+                'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzMDQzMTM5MiwiZXhwIjoxNjMxMDM2MTkyLCJuYmYiOjE2MzA0MzEzOTIsImp0aSI6ImNpUjQ4bVdlRVZGbjJNT3ciLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.8Mm7XgT818WudYASQSNp_YtbjGaLsYHxibVFxkoGRUo' 
+              },
+            })
+            .then((res) => {
+              console.log("response", res);
+              setIsLoading(false);
+            })
+            .catch((err) => {
+              setIsLoading(false);
+              console.log(err.response);
+              //   alert('Network Error')
+            });
+        })
+        .catch((err) => err);
+    }, [])
     return (
         <Layout level="6" style={{ flex: 1 }}>
             <TopNavigationArea
@@ -39,6 +81,14 @@ const DoctorProfile = (props) => {
                         </Text>
                     </View>
                     <View style= {styles.lowerCon}>
+                        <Text style= {styles.catText} category= "h5">
+                             Location
+                        </Text>
+                        <Text category= "s2">
+                        {data.address}
+                        </Text>
+                    </View>
+                    <View style= {styles.lowerCon}>
                         <TouchableOpacity onPress= {() => setActive(!active)} style= {{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                             <Text style= {styles.catText} category= "h5">
                                 Available Schedule
@@ -47,12 +97,19 @@ const DoctorProfile = (props) => {
                         </TouchableOpacity>
                         {active ? 
                         <View style= {styles.slot}>
-                            <DoctorSlot slot= "8:00" />
-                            <DoctorSlot slot= "10:00" />
-                            <DoctorSlot slot= "13:00" />
-                            <DoctorSlot slot= "15:00" />
-                            <DoctorSlot slot= "17:00" />
-                            <DoctorSlot slot= "18:00" />
+                          {availableTimes.map((slot, index) => {
+                              slot.appointmentDate = dayOfTheWeek;
+                              slot.location = location;
+                              const formattedDate =  new Date(dayOfTheWeek).toDateString();
+                              return(
+                                <TimeSlotCard
+                                pressed={() => props.navigation.navigate('AppDetails', {slot: slot, profile: profile})}
+                                key={index} 
+                                type={slot.type}
+                                time={`${formattedDate} ${slot.time}`} price={slot.price}
+                                session={slot.session} />
+                              )
+                          })}
                          
                         </View>  : null       
                     }
@@ -70,41 +127,33 @@ const DoctorProfile = (props) => {
                         source= {require('../../../../../../../../assets/images/askADoc/german.png')} />
                     </View>
                     </View> */}
-                    <View style= {styles.lowerCon}>
-                        <Text style= {styles.catText} category= "h5">
-                             Location
-                        </Text>
-                        <Text category= "s2">
-                        {data.address}
-                        </Text>
-                    </View>
-                    <View style= {styles.lowerCon}>
+                    {/* <View style= {styles.lowerCon}>
                     <Text style= {styles.catText} category= "h5">
                         Visit Type
                     </Text>
                     <Text category= "s2">
                         {visit_type}
                     </Text>
-                    </View>
-                    <View style= {styles.lowerCon}>
+                    </View> */}
+                    {/* <View style= {styles.lowerCon}>
                     <Text style= {styles.catText} category= "h5">
                         Session
                     </Text>
                     <Text category= "s1">
                         60 mins
                     </Text>
-                    </View>
-                    <View style= {styles.lowerCon}>
+                    </View> */}
+                    {/* <View style= {styles.lowerCon}>
                     <Text style= {styles.catText} category= "h5">
                         Price
                     </Text>
                     <Text category= "s1">
                         20,000
                     </Text>
-                    </View>
+                    </View> */}
                 </View>
             </ScrollView>
-            <View style= {styles.footer}>
+            {/* <View style= {styles.footer}>
                 <Button
                         status="danger"
                         size="large"
@@ -116,7 +165,7 @@ const DoctorProfile = (props) => {
                     >
                         <Text status="control">{'Book Dr Jules Wazobia'}</Text>
                 </Button>
-            </View>
+            </View> */}
         </Layout>
     )
     
@@ -142,10 +191,10 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     slot: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap'
+        // flexDirection: 'row',
+        // justifyContent: 'space-between',
+        // alignItems: 'center',
+        // flexWrap: 'wrap'
     }
 })
 

@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import DocCard from 'src/components/DocCard/index';
 
 const Consultation = (props) => {
-    const {results, specialty, visit_type} = props.route.params;
+    const {results, specialty, visit_type, dayOfTheWeek, location} = props.route.params;
     console.log("results", results)
     return (
         <Layout level="6" style={{ flex: 1 }}>
@@ -18,15 +18,22 @@ const Consultation = (props) => {
             screen="auth"
             />
             <ScrollView style= {styles.container}>
+                {results.length === 0 ? 
+                <Text style= {{...styles.textStyle, textAlign: 'center', marginVertical: 20}} category= "h5">
+                    No Specialist available
+                </Text> :
                 <Text style= {styles.textStyle} category= "h5">
                     All {specialty}(s)
-                </Text>
+                </Text>         
+            }
                 <View style= {styles.cardContainer}>
                     {results.map((data, index) => {
                         return (
                             <DocCard 
                             key={index}
-                            onPress= {() => props.navigation.navigate('DoctorProfile', {profile: data, visit_type: visit_type, specialty: specialty})} 
+                            onPress= {() => props.navigation.navigate('DoctorProfile', {profile: data, 
+                            visit_type: visit_type, location: location,
+                            specialty: specialty, dayOfTheWeek: dayOfTheWeek})} 
                             mheight= {100} 
                             email={data.email}
                             image= {{uri: data.dp}} 

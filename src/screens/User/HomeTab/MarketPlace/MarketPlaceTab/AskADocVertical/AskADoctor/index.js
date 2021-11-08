@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Layout,Text,Datepicker,Button,Spinner
   } from '@ui-kitten/components';
@@ -21,11 +21,12 @@ import ConnectDocCard from 'src/components/ConnectDocCard/index';
 const AskADoctor = ({navigation}) => {
     const [date, setDate] = useState(new Date());
     const [_carousel, setCarousel] = useState(null);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+    const [topRated, setTopRated] = useState([])
     const [form, setFormValues] = useState({
-          visit_type: '',
-          location: '',
-          specialization: '',
+          visit_type: 'Video Consultation',
+          location: 'Ajah',
+          specialization: 'General Practitioner',
           date: ''
       });
     const sliders = [
@@ -90,12 +91,38 @@ const AskADoctor = ({navigation}) => {
     const renderSpinner = () => <Spinner size="tiny" status="danger" />;
 
     const setNewDateHandler = (date) => {
+        console.log("date,", date.toLocaleDateString())
         setDate(date);
       }
     const SERVICES = services;
     const SPECIALTY = specialty;
     const AVAILABLE_LOCATIONS = location;
+    useEffect(() => {
+      AsyncStorage.getItem('USER_AUTH_TOKEN')
+      .then((res) => {
+        axios
+          .get(`care/professionals/ratings/most-booked`, {
+            headers: {
+              'content-type': 'application/x-www-form-urlencoded',
+              Authorization: res, 
+              'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzMDQzMTM5MiwiZXhwIjoxNjMxMDM2MTkyLCJuYmYiOjE2MzA0MzEzOTIsImp0aSI6ImNpUjQ4bVdlRVZGbjJNT3ciLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.8Mm7XgT818WudYASQSNp_YtbjGaLsYHxibVFxkoGRUo' 
+            },
+          })
+          .then((res) => {
+            console.log("response", res);
+            const doctors = res.data.data.mostBookedProfessional;
+            setTopRated(doctors)
 
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            setIsLoading(false);
+            console.log(err.response);
+            //   alert('Network Error')
+          });
+      })
+      .catch((err) => err);
+  }, [])
     const doctors = [
       {
         id: 1,
@@ -146,26 +173,19 @@ const AskADoctor = ({navigation}) => {
     ]
     const searchProfessionals = () => {
       setIsLoading(true);
-      const formattedDate =  form.date.split("/").reverse().join("-");
+      const formattedDate =  date.toLocaleDateString().split("/").reverse().join("-");
+      let weekday = new Array(7);
+      weekday[0] = "Sunday";
+      weekday[1] = "Monday";
+      weekday[2] = "Tuesday";
+      weekday[3] = "Wednesday";
+      weekday[4] = "Thursday";
+      weekday[5] = "Friday";
+      weekday[6] = "Saturday";
+      const dayOfTheWeek = new Date(formattedDate).getDay();
+      let formattedDay = weekday[dayOfTheWeek]
       AsyncStorage.getItem('USER_AUTH_TOKEN')
       .then((res) => {
-        // const data = form;
-        // axios({
-        //   method: 'post',
-        //   url: 'https://apis.woozeee.com/api/v1/care/professionals/search',
-        //   data: qs.stringify({
-        //     visit_type: form.visit_type,
-        //     location: form.location,
-        //     specialization: form.specialization,
-        //     date: formattedDate
-        //   }),
-        //   headers: {
-        //     'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-        //     Authorization: res,
-        //     'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzMDQzMTM5MiwiZXhwIjoxNjMxMDM2MTkyLCJuYmYiOjE2MzA0MzEzOTIsImp0aSI6ImNpUjQ4bVdlRVZGbjJNT3ciLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.8Mm7XgT818WudYASQSNp_YtbjGaLsYHxibVFxkoGRUo' 
-
-        //   }
-        // })
         axios
           .post(`care/professionals/search`, qs.stringify({
             visit_type: form.visit_type,
@@ -182,7 +202,9 @@ const AskADoctor = ({navigation}) => {
           .then((res) => {
             console.log("response", res.data.message.alternateResult);
             const professionals = res.data.message.alternateResult;
-            navigation.navigate('Consultation', {results: professionals, specialty: form.specialization, visit_type: form.visit_type})
+            navigation.navigate('Consultation', {results: professionals, specialty: form.specialization,
+              location: form.location, 
+              visit_type: form.visit_type, dayOfTheWeek: formattedDate})
             setIsLoading(false);
           })
           .catch((err) => {
@@ -248,7 +270,7 @@ const AskADoctor = ({navigation}) => {
                         />
                 </View>
                 <View style= {{marginVertical: 10}}>
-                    {/* <Datepicker
+                    <Datepicker
                     label={'Select Date'}
                     type="date"
                     date={date}
@@ -256,16 +278,16 @@ const AskADoctor = ({navigation}) => {
                     min = {new Date ('12-05-1880')}
                     max= {new Date('12-05-3030')}
                     accessoryRight={IconCalendar}
-                /> */}
-                  <GeneralDatePicker
+                />
+                  {/* <GeneralDatePicker
                       show
                       type="date"
                       label={'Date'}
-                      date={date}
-                      onSelect={(nextDate) => setNewDateHandler(nextDate)}
+                      // date={date}
+                      // onSelect={(nextDate) => setNewDateHandler(nextDate)}
                       setFormValues={setFormValues}
                       accessoryRight={IconCalendar}
-                    />
+                    /> */}
                 </View>
                 <View style={{ paddingVertical: 20 }}>
                 <Button
@@ -320,7 +342,7 @@ const AskADoctor = ({navigation}) => {
                         <Text category= "h5">
                             Available Doctors
                         </Text>
-                        <Text
+                        {/* <Text
                          onPress= {() => navigation.navigate('InnerPages', {title: 'Available Doctors', 
                          address: null,
                          name: 'Doctor Ade',
@@ -329,21 +351,24 @@ const AskADoctor = ({navigation}) => {
                          image= {require('../../../../../../../assets/images/askADoc/label1.png')} 
                         category= "h6" style= {{color: '#043F7C', fontWeight: 'bold'}}>
                             See All
-                        </Text>
+                        </Text> */}
                     </View>
                     <ScrollView horizontal>
-                      {doctors.map(
-                        (item, index) => {
+                      {topRated.map(
+                        (profile, index) => {
+                          const formattedDate =  date.toLocaleDateString().split("/").reverse().join("-");
                           return(
                             <View key= {index}>
                               <ConnectDocCard
-                              onPress= {() => navigation.navigate('DoctorProfile')}
-                              patient= {item.patients}
-                              review= {item.review}
-                              experience= {item.experience} 
-                              title= {item.title}
-                              source= {item.image} 
-                              doc= {item.name} />
+                            onPress= {() => navigation.navigate('DoctorProfile', {profile: profile, 
+                            visit_type: form.visit_type, location: form.location,
+                            specialty: profile.specialization, dayOfTheWeek: formattedDate})} 
+                              patient= {profile.appointment_count}
+                              review= {profile.review}
+                              experience= {profile.vcode} 
+                              title= {profile.specialization}
+                              source= {{uri: profile.dp}} 
+                              doc= {`${profile.title} ${profile.firstname} ${profile.lastname}`} />
                             </View>
                           )
                         }
