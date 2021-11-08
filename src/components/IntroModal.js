@@ -12,7 +12,7 @@ import { Colors } from "../theme";
 import Button from "./Button";
 import CloseButton from "./CloseButton";
 // import { Images } from "../../assets/images";
-import LogoIcon from '../assets/images/lawhandler.svg';
+// import LogoIcon from '../assets/images/lawhandler.svg';
 import TouchableOpacity from "./TouchableOpacity";
 
 const ModalComponent = (props) => {
@@ -47,7 +47,7 @@ const ModalComponent = (props) => {
             <>
               <View style={styles.gavel}>
                 {/* <Images.gavel /> */}
-                <LogoIcon width={50} height={60} />
+                {/* <LogoIcon width={50} height={60} /> */}
               </View>
               <Text style={styles.largeText}>Ask A Lawyer</Text>
               <View style={styles.copyContainer}>
