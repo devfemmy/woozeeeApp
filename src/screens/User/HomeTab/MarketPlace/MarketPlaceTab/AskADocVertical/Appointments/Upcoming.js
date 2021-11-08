@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import DocCard from 'src/components/DocCard/index';
+import {Text} from '@ui-kitten/components'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../../../../../../services/api/index'
 const Upcoming = (props) => {
@@ -17,7 +18,7 @@ const Upcoming = (props) => {
               headers: {
                 'content-type': 'application/x-www-form-urlencoded',
                 Authorization: res, 
-                'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzMDQzMTM5MiwiZXhwIjoxNjMxMDM2MTkyLCJuYmYiOjE2MzA0MzEzOTIsImp0aSI6ImNpUjQ4bVdlRVZGbjJNT3ciLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.8Mm7XgT818WudYASQSNp_YtbjGaLsYHxibVFxkoGRUo' 
+                'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzNTUxNjk1NCwiZXhwIjoxNjM2MTIxNzU0LCJuYmYiOjE2MzU1MTY5NTQsImp0aSI6Imo2Nkw2SUNjRmRUTFV6WjMiLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.c9_NG4kvOTMODEzzqthpzE-qtJf-e0jajU94XGwqyLY' 
               },
             })
             .then((res) => {
@@ -26,7 +27,9 @@ const Upcoming = (props) => {
             })
             .catch((err) => {
               setIsLoading(false);
-              console.log(err.response);
+              const message = err.response.data.data.message;
+              alert(message)
+
               //   alert('Network Error')
             });
         })
@@ -34,7 +37,8 @@ const Upcoming = (props) => {
     }, [])
     return(
         <ScrollView style= {styles.container}>
-        <DocCard
+          <Text>No data Available</Text>
+        {/* <DocCard
                 upcoming
                 profile 
                 date= "20 July, 2021, 10:00AM"
@@ -53,7 +57,7 @@ const Upcoming = (props) => {
                 title= "Cardiologist"
                 onPress= {() => navigation.navigate('AppointmentDetails')} 
                 mheight= {100} image= {require('../../../../../../../assets/images/askADoc/doc2.png')} 
-                doc= "Dr. Jules Wazobia" />
+                doc= "Dr. Jules Wazobia" /> */}
         </ScrollView>
     )
 }

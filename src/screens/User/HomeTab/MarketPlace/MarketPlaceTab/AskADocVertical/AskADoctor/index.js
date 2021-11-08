@@ -304,7 +304,7 @@ const AskADoctor = ({navigation}) => {
                 </Button>
                 </View>
                 <View style= {styles.lowerContainer}>
-                    <Text style= {{marginVertical: 5}} category= "h5">
+                    {/* <Text style= {{marginVertical: 5}} category= "h5">
                         Categories
                     </Text>
                     <ScrollView horizontal>
@@ -337,7 +337,7 @@ const AskADoctor = ({navigation}) => {
                         image: require('../../../../../../../assets/images/askADoc/item3.png')})}  
                         text= "Laboratories"
                         image= {require('../../../../../../../assets/images/askADoc/label2.png')} />
-                    </ScrollView>
+                    </ScrollView> */}
                     <View style= {{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                         <Text category= "h5">
                             Available Doctors

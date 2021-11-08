@@ -18,7 +18,6 @@ const ConfirmationPage = (props) => {
         setIsLoading(true)
         AsyncStorage.getItem('USER_AUTH_TOKEN')
         .then((res) => {
-        console.log("start");
         const data = {
             type: slot.type,
             price: slot.price,
@@ -39,15 +38,18 @@ const ConfirmationPage = (props) => {
               headers: {
                 // 'content-type': 'application/x-www-form-urlencoded',
                 Authorization: res, 
-                'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzMDQzMTM5MiwiZXhwIjoxNjMxMDM2MTkyLCJuYmYiOjE2MzA0MzEzOTIsImp0aSI6ImNpUjQ4bVdlRVZGbjJNT3ciLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.8Mm7XgT818WudYASQSNp_YtbjGaLsYHxibVFxkoGRUo' 
+                'Care-Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hbXMuZG9jdG9vcmEuY29tXC9hcGlcL2F1dGhcL2NvcnBvcmF0ZXNcL2FkbWluXC9sb2dpbiIsImlhdCI6MTYzNTUxNjk1NCwiZXhwIjoxNjM2MTIxNzU0LCJuYmYiOjE2MzU1MTY5NTQsImp0aSI6Imo2Nkw2SUNjRmRUTFV6WjMiLCJzdWIiOjE3MCwicHJ2IjoiNzUyODk1NjcxMGQxYzc1YjY3MTMwZDRlNGM1YzBlZTlhMGFlYjYxNCJ9.c9_NG4kvOTMODEzzqthpzE-qtJf-e0jajU94XGwqyLY' 
               },
             })
             .then((res) => {
-            console.log("response", res)
+            props.navigation.navigate('Success',
+            {success: 'Your Hospital Visit appointment with Dr. Jules Wazobia has been successfully confirmed. A notification will be sent to your inbox'})
               setIsLoading(false);
             })
             .catch((err) => {
               setIsLoading(false);
+              const message = err.response.data.data.message;
+              alert(message)
               console.log(err.response);
               //   alert('Network Error')
             });
@@ -170,7 +172,8 @@ const ConfirmationPage = (props) => {
                 accessibilityLabel="Continue"
                 // disabled={isLoading}
                 onPress= {() => props.navigation.navigate('BillPaymentSuccess',
-                {success: 'Your Hospital Visit appointment with Dr. Jules Wazobia has been successfully confirmed. A notification will be sent to your inbox'})}
+                {success: 'Your Hospital Visit appointment with Dr. Jules Wazobia has been successfully confirmed. A notification will be sent to your inbox'})
+            }
                 >
                 <Text status="control">{'Complete'}</Text>
                 </Button>             

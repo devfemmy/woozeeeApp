@@ -90,7 +90,9 @@ export default function Success({ navigation, route }) {
           </View>
           <View style={{ paddingHorizontal: 20, paddingTop: 50 }}>
             <View style={{ paddingVertical: 10 }}>
-              <Button status="danger" accessoryRight={IconForward}>
+              <Button 
+              onPress={() => navigation.popToTop()}
+              status="danger" accessoryRight={IconForward}>
                 <Text
                   category="h6"
                   status="control"

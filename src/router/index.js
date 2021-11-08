@@ -123,13 +123,10 @@ import WoozeePaySummary from 'src/screens/User/Onboarding/ActivateCare/PaySummar
 import TransferMoney from 'src/screens/User/WalletTab/TransferMoney';
 
 import Accounts from 'src/screens/User/WalletTab/Accounts';
-<<<<<<< HEAD
 import AskALawyerHome from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/ClientHome/index';
 
-=======
 import AppDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/AppointmentDetails/index';
 import AskADoctorFlutterPay from 'src/screens/Common/AskADocFPay';
->>>>>>> 37ad908ee7b426b3aaa2b466cbbaba9a5c2817d3
 const { Navigator, Screen } = createStackNavigator();
 
 export default function Router() {
