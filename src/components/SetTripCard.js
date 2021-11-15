@@ -13,6 +13,7 @@ import { setUserLocation, setUserToOnline } from "../redux/actions/user";
 import { getUserDetails } from "../redux/actions/auth";
 import * as firebase from 'firebase';
 import firestore from "@react-native-firebase/firestore";
+import { useNavigation } from '@react-navigation/native';
 
 const SetTripCard = (props) => {
   const [loading, setLoading] = useState(false);
@@ -21,6 +22,7 @@ const SetTripCard = (props) => {
   const userId = useSelector((state) => state.auth?.user?._id);
   const email = useSelector((state) => state.auth?.user?.email);
   const matchedTo = useSelector((state) => state.auth?.user?.matchedTo);
+  const navigation = useNavigation()
 
   const dispatch = useDispatch();
 
@@ -69,12 +71,13 @@ const SetTripCard = (props) => {
   };
 
   const navigateToTrip = async () => {
-    // NavigationService.navigate("Trip");
+    navigation.navigate("Trip");
   };
 
   const setAddressHandler = () => {
+    console.log("initialize")
     dispatch(setAddress(address));
-    // NavigationService.navigate("SetLocation");
+    navigation.navigate("SetLocation");
   };
 
   const modalHandler = () => {
@@ -83,7 +86,8 @@ const SetTripCard = (props) => {
 
   const cancelHandler = () => {
     setModalVisble(false);
-    // NavigationService.navigate("Home");
+    // alert('Cancelling')
+    navigation.navigate("AskALawyerHome");
   };
 
   return (

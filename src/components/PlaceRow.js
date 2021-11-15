@@ -1,13 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Images } from "../../assets/images";
+import { View, Text, StyleSheet, Image } from "react-native";
+// import { Images } from "../../assets/images";
 import { Colors } from "../theme";
 
 const PlaceRow = ({ data }) => {
   return (
     <View style={styles.row}>
       <View style={styles.iconContainer}>
-        <Images.locationPin />
+        {/* <Images.locationPin /> */}
+        <Image source={require('../assets/images/askALawyer/map-pin.png')} />
       </View>
       <Text numberOfLines={2} ellipsizeMode="tail" style={styles.locationText}>
         {data.description || data.vicinity}

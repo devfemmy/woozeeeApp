@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Images } from '../../assets/images';
+import { Image, View } from 'react-native';
+// import { Images } from '../../assets/images';
 import TouchableOpacity  from "./TouchableOpacity"
 
 const EditButton = (props) => {
@@ -21,7 +21,8 @@ const EditButton = (props) => {
                     height: 15,
                 }}
             >
-                <Images.edit />
+            <Image source={require('../assets/images/askALawyer/edit_icon.png')} />
+                {/* <Images.edit /> */}
             </View>
         </TouchableOpacity>
     );

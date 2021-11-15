@@ -14,16 +14,18 @@ import {
 } from "react-native";
 import * as Linking from "expo-linking";
 import { Colors } from "../theme";
-import { NavigationService } from "../navigation/navigation-service";
+// import { NavigationService } from "../navigation/navigation-service";
 import LawyerDetails from "./LawyerDetails";
 import ActionsComponent from "./ActionsComponent";
 import LocationComponent from "./LocationComponent";
 import ChatComponent from "./ChatComponent";
 import { useSelector } from "react-redux";
+import { useNavigation } from '@react-navigation/native';
 
 const TripCard = forwardRef((props, ref) => {
   const [chatShown, setChatShown] = useState(false);
   const [showActions, setShowActions] = useState(true);
+  const navigation = useNavigation()
 
   const address = useSelector((state) => state.address);
 
@@ -69,7 +71,7 @@ const TripCard = forwardRef((props, ref) => {
   }));
 
   const cancelAction = () => {
-    NavigationService.navigate("CancelTrip");
+    navigation.navigate("CancelTrip");
   };
 
   const getDirection = ({ dx, dy }) => {

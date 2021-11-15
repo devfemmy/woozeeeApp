@@ -1,14 +1,15 @@
 import React from "react";
-import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { TouchableOpacity, View, Text, StyleSheet, Image } from "react-native";
 import { Colors } from "../theme";
-import { Images } from "../../assets/images";
+// import { Images } from "../../assets/images";
 
 const SupportComponent = (props) => {
   return (
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <Text style={styles.title}>{props.title}</Text>
       <View style={styles.chevron}>
-        <Images.chevron />
+        {/* <Images.chevron /> */}
+        <Image source={require('../assets/images/askALawyer/chevron.png')} />
       </View>
     </TouchableOpacity>
   );

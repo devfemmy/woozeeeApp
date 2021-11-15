@@ -6,6 +6,7 @@ import {
   Modal,
   TouchableOpacity as Touchable,
   Platform,
+  Image,
 } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import { Colors } from "../theme";
@@ -48,6 +49,7 @@ const ModalComponent = (props) => {
               <View style={styles.gavel}>
                 {/* <Images.gavel /> */}
                 {/* <LogoIcon width={50} height={60} /> */}
+                <Image style={{resizeMode: 'contain'}} source={require('../assets/images/askALawyer/mask.png')} />
               </View>
               <Text style={styles.largeText}>Ask A Lawyer</Text>
               <View style={styles.copyContainer}>

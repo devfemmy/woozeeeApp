@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity as Touchable, Platform } from "react-native";
+import { View, TouchableOpacity as Touchable, Platform, Image } from "react-native";
 // import { Images } from "../../assets/images";
 import TouchableOpacity from "./TouchableOpacity";
 
@@ -24,6 +24,7 @@ const CloseButton = (props) => {
           height: 12,
         }}
       >
+        <Image source={require('../assets/images/askALawyer/clear.png')}/>
         {/* <Images.cancel /> */}
       </View>
     </Touches>

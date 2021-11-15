@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Image } from "react-native";
 // import { Images } from "../../assets/images";
 import { Colors } from "../theme";
 import TouchableOpacity from "./TouchableOpacity";
@@ -11,6 +11,7 @@ const AddressComponent = (props) => {
     <View style={styles.container}>
       <View style={styles.greenCircle}>
         {/* <Images.addressCircle /> */}
+        <Image source={require('../assets/images/askALawyer/ellipse.png')} />
       </View>
       <View style={styles.divider} />
       <View style={styles.addressContainer}>
@@ -22,6 +23,7 @@ const AddressComponent = (props) => {
       </View>
       <TouchableOpacity containerStyle={styles.cancelButton}>
         {/* <Images.cancel width={10} height={10} /> */}
+        <Image source={require('../assets/images/askALawyer/clear.png')} />
       </TouchableOpacity>
     </View>
   );

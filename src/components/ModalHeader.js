@@ -2,16 +2,19 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Colors } from "../theme";
 import BackButton from "./BackButton";
-import { NavigationService } from "../navigation/navigation-service";
+// import { NavigationService } from "../navigation/navigation-service";
+import { useNavigation } from '@react-navigation/native';
 
 const ModalHeader = (props) => {
+  const navigation = useNavigation()
+  
   return (
     <View style={styles.container}>
       <View style={styles.modalView}>
         <View style={styles.backButton}>
           <BackButton
             onPress={() => {
-              NavigationService.goBack();
+              navigation.goBack();
             }}
           />
         </View>

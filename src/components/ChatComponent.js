@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, StyleSheet, Dimensions, TextInput } from "react-native";
-import { Images } from "../../assets/images";
+import { View, StyleSheet, Dimensions, TextInput, Image } from "react-native";
+// import { Images } from "../../assets/images";
 import { Colors } from "../theme";
 import { GiftedChat, Send, Bubble } from "react-native-gifted-chat";
 import TouchableOpacity from "./TouchableOpacity";
@@ -89,7 +89,8 @@ const ChatComponent = () => {
     return (
       <Send {...props} containerStyle={styles.sendButtonContainer}>
         <View style={styles.sendButton}>
-          <Images.send />
+          {/* <Images.send /> */}
+          <Image source={require('../assets/images/askALawyer/send.png')} />
         </View>
       </Send>
     );

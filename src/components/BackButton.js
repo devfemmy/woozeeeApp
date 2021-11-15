@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 // import { Images } from "../../assets/images";
 import TouchableOpacity from "./TouchableOpacity";
 
@@ -21,6 +21,7 @@ const BacKButton = (props) => {
           height: 14,
         }}
       >
+        <Image source={require('../assets/images/askALawyer/arrow-left.png')}  />
         {/* <Images.backButton /> */}
       </View>
     </TouchableOpacity>

@@ -1,22 +1,24 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 // import { Images } from "../assets/images";
 import { Colors } from "../theme";
 import BackButton from "./BackButton";
 // import { NavigationService } from "../navigation/navigation-service";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from '@react-navigation/native';
 
 const Header = (props) => {
   const { address } = props;
+  const navigation = useNavigation()
 
   const drawerNavigationHandler = () => {
-    props.navigation.toggleDrawer();
+    navigation.navigate('MoreOptions', {show: true});
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.modalView}>
-        <BackButton onPress={() => null} />
+        <BackButton onPress={() => navigation.goBack()} />
         <View
           style={{
             flexDirection: "row",
@@ -26,11 +28,11 @@ const Header = (props) => {
         >
           <View style={styles.iconContainer}>
             {/* <Images.pin /> */}
+            <Image source={require('../assets/images/askALawyer/location_icon.png')} />
           </View>
           <TouchableOpacity
             onPress={() => {
-              null
-              // NavigationService.navigate("SetLocation", { address: address });
+              navigation.navigate("SetLocation", { address: address });
             }}
             containerStyle={styles.textContainer}
           >
@@ -44,6 +46,7 @@ const Header = (props) => {
           style={styles.iconContainer}
           onPress={drawerNavigationHandler}
         >
+          <Image source= {require('../assets/images/askALawyer/hamburger.png')} />
           {/* <Images.hamburger width={16} height={12} /> */}
         </TouchableOpacity>
       </View>

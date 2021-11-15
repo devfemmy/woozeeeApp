@@ -127,10 +127,21 @@ import AskALawyerHome from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/
 
 import AppDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskADocVertical/AskADoctor/AppointmentDetails/index';
 import AskADoctorFlutterPay from 'src/screens/Common/AskADocFPay';
+import SetLocation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/SetLocation/index';
+import SetMapLocation from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/SetMapLocation/index';
+import ClientHistory from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/History/index';
+import ClientSupport from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/ClientSupport/index';
+import CaseDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/ClientSupport/CaseDetails';
+import RatingScreen from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/Trips/Rating';
+import Trip from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/Trips/Trip';
+
+
 const { Navigator, Screen } = createStackNavigator();
 
 export default function Router() {
   const { authState } = useContext(AuthContext);
+
+  
 
   const netInfo = useNetInfo();
 
@@ -205,7 +216,11 @@ export default function Router() {
       CharityRoute,
       EditProfile,
       ChangePassword,
+      SetLocation,
+      SetMapLocation,
       GeneratePin,
+      RatingScreen,
+      Trip,
       Consultation,
       MoneyMattersServices,
       SearchResults,
@@ -227,6 +242,7 @@ export default function Router() {
       LiveStream,
       Messaging,
       Comments,
+      CaseDetails,
       DeepLinkPost,
       Chats,
       ChatScreen,
@@ -246,6 +262,8 @@ export default function Router() {
       AskADoctor,
       AskALawyerHome,
       Appointments,
+      ClientHistory,
+      ClientSupport,
       DoctorProfile,
       PaymentPage,
       ConfirmationPage,

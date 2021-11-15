@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import {
   View,
@@ -34,6 +34,7 @@ import { DealsPosts } from 'src/components/MarketPosts';
 import { marketDealsUrl } from 'src/api/dummy';
 
 import marketPlaceItems from './data';
+import { AddAskALawyerUser } from 'src/services/Firebase/Users';
 
 /* DATA */
 const woozeeeCards = [
@@ -81,7 +82,14 @@ const sponsorsAd = [
     },
   },
 ];
-
+// useEffect(() => {
+//   AddAskALawyerUser(email="test@gmail.com", uuid="1234567")
+//   .then(res => console.log("user", res))
+//   .catch((error) => {
+//     // this.setState({ loader: false });
+//     // alert(error);
+//   });
+// }, [])
 const _renderItem = ({ item, index }) => {
   return (
     <View key={index} style={styles.slide}>

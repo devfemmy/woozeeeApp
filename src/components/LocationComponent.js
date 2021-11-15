@@ -1,18 +1,21 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { Images } from "../../assets/images";
+import { View, StyleSheet, Text, Image } from "react-native";
+// import { Images } from "../../assets/images";
 import { Colors } from "../theme";
 import EditButton from "./EditButton";
-import { NavigationService } from "../navigation/navigation-service";
+// import { NavigationService } from "../navigation/navigation-service";
 import TouchableOpacity from "./TouchableOpacity";
+import { useNavigation } from '@react-navigation/native';
 
 const LocationComponent = (props) => {
+  const navigation = useNavigation()
   return (
     <View style={styles.container}>
       <View style={styles.modalView}>
         <View style={styles.pinAndLocation}>
           <View style={styles.pin}>
-            <Images.pin width={12} height={19} />
+            <Image source={require('../assets/images/askALawyer/location_icon.png')} />
+            {/* <Images.pin width={12} height={19} /> */}
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -28,7 +31,7 @@ const LocationComponent = (props) => {
         </View>
         <EditButton
           onPress={() => {
-            NavigationService.navigate("SetLocation");
+            navigation.navigate("SetLocation");
           }}
         />
       </View>

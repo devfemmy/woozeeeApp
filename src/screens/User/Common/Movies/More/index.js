@@ -4,7 +4,8 @@ import { Layout, List, Text } from '@ui-kitten/components';
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { TextIcon } from 'src/components/IconPacks/TextIcon';
 
-const MoreOptions = ({navigation}) => {
+const MoreOptions = ({navigation, route}) => {
+    const {show} = route.params;
     return (
       <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
@@ -12,60 +13,86 @@ const MoreOptions = ({navigation}) => {
         navigation={navigation}
         screen="auth"
       />
-       <View>
-        <TextIcon 
-        
-            borderWidth= {1}
-            onPress= {() => navigation.navigate('PreviouslyViewed')}
-            borderColor= "transparent"
-            start
-            more
-            bold= "bold"
-            bg= "transparent"
-            color= "grey" fill= "grey" 
-            text= "Previously Viewed" 
-            icon_name= "tv-outline" />
-        <TextIcon 
-            borderWidth= {1}
-            onPress= {() => navigation.navigate('MyList')}
-            borderColor= "transparent"
-            start
-            more
-            bg= "transparent"
-            color= "grey" fill= "grey" 
-            text= "My List" 
-            icon_name= "checkmark-outline" />
-        <TextIcon 
-            borderWidth= {1}
-            onPress= {() => navigation.navigate('ComingSoon')}
-            borderColor= "transparent"
-            start
-            more
-            bg= "transparent"
-            color= "grey" fill= "grey" 
-            text= "Coming Soon" 
-            icon_name= "film-outline" />
-        {/* <TextIcon 
-            borderWidth= {1}
-            borderColor= "transparent"
-            start
-            more
-            bg= "transparent"
-            color= "grey" fill= "grey" 
-            text= "Woozeee Care" 
-            icon_name= "shield-outline" />
-
-        <TextIcon 
-            borderWidth= {1}
-            borderColor= "transparent"
-            start
-            more
-            bg= "transparent"
-            color= "grey" fill= "grey" 
-            text= "Help" 
-            icon_name= "question-mark-circle-outline" /> */}
-
-        </View>                  
+      {show ? 
+      <View>
+            <TextIcon 
+                 borderWidth= {1}
+                 onPress= {() => navigation.navigate('ClientHistory')}
+                 borderColor= "transparent"
+                 start
+                 more
+                 bg= "transparent"
+                 color= "grey" fill= "grey" 
+                 text= "Case History" 
+                 icon_name= "briefcase-outline" />
+             <TextIcon 
+                 borderWidth= {1}
+                 onPress= {() => navigation.navigate('ClientSupport')}
+                 borderColor= "transparent"
+                 start
+                 more
+                 bg= "transparent"
+                 color= "grey" fill= "grey" 
+                 text= "Support" 
+                 icon_name= "question-mark-circle-outline" />
+      </View>
+      : 
+             <View>
+             <TextIcon 
+             
+                 borderWidth= {1}
+                 onPress= {() => navigation.navigate('PreviouslyViewed')}
+                 borderColor= "transparent"
+                 start
+                 more
+                 bold= "bold"
+                 bg= "transparent"
+                 color= "grey" fill= "grey" 
+                 text= "Previously Viewed" 
+                 icon_name= "tv-outline" />
+             <TextIcon 
+                 borderWidth= {1}
+                 onPress= {() => navigation.navigate('MyList')}
+                 borderColor= "transparent"
+                 start
+                 more
+                 bg= "transparent"
+                 color= "grey" fill= "grey" 
+                 text= "My List" 
+                 icon_name= "checkmark-outline" />
+             <TextIcon 
+                 borderWidth= {1}
+                 onPress= {() => navigation.navigate('ComingSoon')}
+                 borderColor= "transparent"
+                 start
+                 more
+                 bg= "transparent"
+                 color= "grey" fill= "grey" 
+                 text= "Coming Soon" 
+                 icon_name= "film-outline" />
+             {/* <TextIcon 
+                 borderWidth= {1}
+                 borderColor= "transparent"
+                 start
+                 more
+                 bg= "transparent"
+                 color= "grey" fill= "grey" 
+                 text= "Woozeee Care" 
+                 icon_name= "shield-outline" />
+     
+             <TextIcon 
+                 borderWidth= {1}
+                 borderColor= "transparent"
+                 start
+                 more
+                 bg= "transparent"
+                 color= "grey" fill= "grey" 
+                 text= "Help" 
+                 icon_name= "question-mark-circle-outline" /> */}
+     
+             </View> 
+      }
+                 
       </Layout>  
     )
 }

@@ -307,7 +307,7 @@ export default function Explore({ navigation }) {
         title="woozeee"
         navigation={navigation}
         icon="logout"
-        pressed={() => navigation.navigate('MoreOptions')}
+        pressed={() => navigation.navigate('MoreOptions', {show: false})}
         screen="search"
       />
       {/* <View style= {styles.tabView}>

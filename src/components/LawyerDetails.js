@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { Images } from "../../assets/images";
+// import { Images } from "../../assets/images";
 import { Colors } from "../theme";
 
 const LawyerDetails = (props) => {
@@ -20,7 +20,9 @@ const LawyerDetails = (props) => {
           />
           <View style={styles.ratingContainer}>
             <View style={{ width: 7, height: 7 }}>
-              <Images.star />
+              {/* <Images.star />
+               */}
+               <Image source={require('../assets/images/askALawyer/star.png')} />
             </View>
             <Text style={styles.rating}>{props.rating?.toFixed(1)}</Text>
           </View>

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Colors } from "../theme";
-import { Images } from "../../assets/images";
+// import { Images } from "../../assets/images";
 import TouchableOpacity from "./TouchableOpacity";
 
 const CancelComponent = (props) => {
@@ -14,7 +14,7 @@ const CancelComponent = (props) => {
           props.active ? { backgroundColor: Colors.green } : null,
         ]}
       >
-        {props.active ? <Images.checkmark width={13} height={13} /> : null}
+        {/* {props.active ? <Images.checkmark width={13} height={13} /> : null} */}
       </TouchableOpacity>
       <TouchableOpacity onPress={props.onPress}>
         <Text style={styles.cancelText}>{props.title}</Text>

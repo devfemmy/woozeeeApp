@@ -1,5 +1,6 @@
 import Firebase from './firebaseConfig';
 
+
 export const AddUser = async (name,uid,image) => {
     try {
         return await Firebase
@@ -10,6 +11,17 @@ export const AddUser = async (name,uid,image) => {
                 uuid: uid,
                 image: image
             });
+    } catch (error) {
+        return error;
+    }
+}
+
+export const AddAskALawyerUser = async (email,uid) => {
+    try {
+        return await Firebase.firestore().collection('Users').set({
+                email: email,
+                uuid: uid,
+            }); 
     } catch (error) {
         return error;
     }

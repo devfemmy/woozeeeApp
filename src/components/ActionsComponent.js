@@ -1,6 +1,6 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { Images } from "../../assets/images";
+import { View, StyleSheet, Image } from "react-native";
+// import { Images } from "../../assets/images";
 import { Colors } from "../theme";
 import ActionComponent from "./ActionComponent";
 
@@ -10,22 +10,22 @@ const ActionsComponent = (props) => {
       <View style={styles.modalView}>
         <ActionComponent
           title="Contact"
-          icon={<Images.phone width={24} />}
+          icon={<Image style={{width: 24}} source={require('../assets/images/askALawyer/phone1.png')} />}
           onPress={props.callAction}
         />
         <ActionComponent
           title="Chat"
-          icon={<Images.chat width={24} />}
+          icon={<Image style={{width: 24}} source={require('../assets/images/askALawyer/chat.png')} />}
           onPress={props.chatAction}
         />
         <ActionComponent
           title="Share"
-          icon={<Images.share width={24} />}
+          icon={<Image style={{width: 24}} source={require('../assets/images/askALawyer/share1.png')} />}
           onPress={props.shareAction}
         />
         <ActionComponent
           title="Cancel"
-          icon={<Images.cancel width={18} />}
+          icon={<Image style={{width: 24}} source={require('../assets/images/askALawyer/cancel.png')} />}
           onPress={props.cancelAction}
         />
       </View>

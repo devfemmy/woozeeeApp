@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import { Colors } from "../theme";
-import { Images } from "../../assets/images";
+// import { Images } from "../../assets/images";
 import moment from "moment";
 
 const HistoryComponent = (props) => {
@@ -22,7 +22,7 @@ const HistoryComponent = (props) => {
         </Text>
       </View>
       <View style={styles.chevron}>
-        <Images.chevron />
+        {/* <Images.chevron /> */}
       </View>
     </TouchableOpacity>
   );
