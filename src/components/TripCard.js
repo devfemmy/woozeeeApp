@@ -28,6 +28,7 @@ const TripCard = forwardRef((props, ref) => {
   const navigation = useNavigation()
 
   const address = useSelector((state) => state.address);
+const lawyerName = useSelector((state)=> state.user.matchedTo.sName)
 
   const phoneNumber = "+2348080-3393";
 
@@ -162,7 +163,7 @@ const TripCard = forwardRef((props, ref) => {
             </View>
             <View style={{ flex: 1, backgroundColor: Colors.white }}>
               <LawyerDetails
-                name={"Joy Nenelicious"}
+                name={lawyerName}
                 rating={5.0}
                 image={"https://picsum.photos/200"}
               />

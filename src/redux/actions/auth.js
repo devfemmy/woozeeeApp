@@ -2,14 +2,15 @@ export const GET_USER_DETAILS = "GET_USER_DETAILS";
 export const LOGOUT = "LOGOUT";
 
 import firestore from "@react-native-firebase/firestore";
+import Firebase from '../../services/Firebase/firebaseConfig';
 
 export const getUserDetails = (email) => {
   return async (dispatch, getState) => {
     let user;
 
-    await firestore()
-      .collection("Users")
-      .where("email", "==", email)
+    await Firebase.firestore()
+      .collection("users")
+      .where("email", "==", 'User@app.com')
       .get()
       .then((querySnapshot) => {
         console.log("Total users: ", querySnapshot.size);
@@ -31,7 +32,7 @@ export const endTrip = () => {
   return async (dispatch, getState) => {
     const userID = getState().auth.user?._id;
 
-    await firestore().collection("Users").doc(userID).update({
+    await Firebase.firestore().collection("users").doc(userID).update({
       matchedTo: "",
     });
 
@@ -43,7 +44,7 @@ export const logout = () => {
   return async (dispatch, getState) => {
     const userID = getState().auth.user?._id;
 
-    await firestore().collection("Users").doc(userID).update({
+    await Firebase.firestore().collection("users").doc(userID).update({
       isVisible: false,
       matchedTo: "",
     });

@@ -2,14 +2,15 @@ export const GET_LAWYER_DETAILS = "GET_LAWYER_DETAILS";
 export const GET_AVAILABLE_LAWYERS = "GET_AVAILABLE_LAWYERS";
 
 import firestore from "@react-native-firebase/firestore";
+import Firebase from '../../services/Firebase/firebaseConfig';
 
 import { getUserDetails } from "./auth";
 
 export const setUserToOnline = () => {
   return async (dispatch, getState) => {
     const userID = getState().auth.user?._id;
-
-    await firestore().collection("Users").doc(userID).update({
+    console.log("user id", userID)
+    await firestore().collection("users").doc(userID).update({
       isVisible: true,
     });
 
@@ -21,7 +22,7 @@ export const setUserToOffline = () => {
   return async (dispatch, getState) => {
     const userID = getState().auth.user?._id;
 
-    await firestore().collection("Users").doc(userID).update({
+    await Firebase.firestore().collection("users").doc(userID).update({
       isVisible: false,
     });
 
@@ -35,17 +36,17 @@ export const setUserLocation = (destination) => {
     const currentLocation = getState().address?.currentCoordinates;
 
     const location = {
-      destination: new firestore.GeoPoint(
+      destination: new Firebase.firestore.GeoPoint(
         destination.latitude,
         destination.longitude
       ),
-      location: new firestore.GeoPoint(
+      location: new Firebase.firestore.GeoPoint(
         currentLocation.coords.latitude,
         currentLocation.coords.longitude
       ),
     };
 
-    await firestore().collection("Users").doc(userID).update({
+    await Firebase.firestore().collection("users").doc(userID).update({
       location: location,
       isVisible: true,
     });
@@ -60,8 +61,8 @@ export const getLawyerDetails = () => {
 
     let lawyer;
 
-    await firestore()
-      .collection("Users")
+    await Firebase.firestore()
+      .collection("users")
       .doc(lawyerID)
       .onSnapshot((documentSnapshot) => {
         console.log("User ID: ", documentSnapshot.id, documentSnapshot.data());
@@ -73,13 +74,15 @@ export const getLawyerDetails = () => {
 };
 
 export const getAvailableLawyers = () => {
+  console.log("start here")
   return async (dispatch, getState) => {
+    console.log("start here 2")
     const userID = getState().auth.user?._id;
 
     const availableLawyers = [];
 
-    await firestore()
-      .collection("Users")
+    await Firebase.firestore()
+      .collection("users")
       .where("role", "==", "lawyer")
       .where("isVisible", "==", true)
       .where("matchedTo", "==", "")
@@ -97,7 +100,7 @@ export const getAvailableLawyers = () => {
           const user = { _id: documentSnapshot.id, ...documentSnapshot.data() };
           availableLawyers.push(user);
         });
-      });
+      }).catch(err => console.log("failed", err))
 
     await dispatch({
       type: GET_AVAILABLE_LAWYERS,

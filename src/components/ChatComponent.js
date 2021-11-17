@@ -4,6 +4,7 @@ import { View, StyleSheet, Dimensions, TextInput, Image } from "react-native";
 import { Colors } from "../theme";
 import { GiftedChat, Send, Bubble } from "react-native-gifted-chat";
 import TouchableOpacity from "./TouchableOpacity";
+import firebase from '../services/Firebase/firebaseConfig'
 import firestore from "@react-native-firebase/firestore";
 import { useSelector } from "react-redux";
 
@@ -34,7 +35,7 @@ const ChatComponent = () => {
   const [text, setText] = useState("");
 
   useEffect(() => {
-    const unsubscribeListener = firestore()
+    const unsubscribeListener = firebase.firestore()
       .collection("Messages")
       .doc(chatID())
       .collection("Chat")
@@ -70,6 +71,7 @@ const ChatComponent = () => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, newMessages)
     );
+    firebase.
     firestore()
       .collection("Messages")
       .doc(chatID())

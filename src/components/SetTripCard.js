@@ -11,7 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAddress, setCoordinates } from "../redux/actions/address";
 import { setUserLocation, setUserToOnline } from "../redux/actions/user";
 import { getUserDetails } from "../redux/actions/auth";
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
+
+import firebase from '../services/Firebase/firebaseConfig'
 import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from '@react-navigation/native';
 
@@ -27,27 +29,28 @@ const SetTripCard = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const firebaseConfig = {
-      apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
-      authDomain: 'woozeee-d7f6c.firebaseapp.com',
-      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
-      projectId: 'woozeee-d7f6c',
-      storageBucket: 'woozeee-d7f6c.appspot.com',
-      messagingSenderId: '979696525592',
-      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
-      measurementId: 'G-XQKMT94R9R',
-    };
+    // const firebaseConfig = {
+    //   apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+    //   authDomain: 'woozeee-d7f6c.firebaseapp.com',
+    //   databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+    //   projectId: 'woozeee-d7f6c',
+    //   storageBucket: 'woozeee-d7f6c.appspot.com',
+    //   messagingSenderId: '979696525592',
+    //   appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+    //   measurementId: 'G-XQKMT94R9R',
+    // };
   
-    if (!firebase.apps.length) {
-      console.log("initialize")
-      firebase.initializeApp(firebaseConfig);
-    }else {
-      return
-    }
-    const subscriber = firestore()
-      .collection("Users")
+    // if (!firebase.apps.length) {
+    //   console.log("initialize")
+    //   firebase.initializeApp(firebaseConfig);
+    // }else {
+    //   return
+    // }
+    const subscriber = firebase.firestore()
+      .collection("users")
       .doc(userId)
       .onSnapshot((documentSnapshot) => {
+        console.log(documentSnapshot, "documentSnapshot")
         console.log("User data: ", documentSnapshot.data());
         dispatch(getUserDetails(email));
       });
