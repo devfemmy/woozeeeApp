@@ -56,6 +56,8 @@ import dl from '@react-native-firebase/dynamic-links';
 
 import '@react-native-firebase/auth';
 
+import SeeMore from 'react-native-see-more-inline';
+
 import firestore from '@react-native-firebase/firestore';
 
 import { SendMessage, RecieveMessage } from '../../services/Firebase/Message';
@@ -90,7 +92,7 @@ import Hyperlink from 'react-native-hyperlink';
 
 import axios from 'axios';
 
-import { Feather, Ionicons, Entypo } from '@expo/vector-icons';
+import { Feather, Ionicons, Entypo, EvilIcons } from '@expo/vector-icons';
 
 import { TextInput } from 'react-native';
 
@@ -617,33 +619,29 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
               />
             </View>
           </View>
-          <TouchableWithoutFeedback
-          // onPress={
-          //   data.item.type && data.item.type == 'video'
-          //     ? () => toggleMute()
-          //     : null
-          // }
-          >
+          {data.item.description !== '' && (
+            <View style={{ marginLeft: 10, marginVertical: 5 }}>
+              <Hyperlink
+                linkStyle={{ textDecorationLine: 'underline' }}
+                linkDefault={true}
+              >
+                <SeeMore
+                  numberOfLines={3}
+                  style={{ fontFamily: 'Montserrat' }}
+                  seeLessText={true}
+                >
+                  {data.item.description}
+                </SeeMore>
+              </Hyperlink>
+            </View>
+          )}
+          <TouchableWithoutFeedback>
             <View
               style={{
                 marginVertical: 10,
                 height: viewHeight - 100,
               }}
             >
-              {data.item.description !== '' && (
-                <Hyperlink
-                  linkStyle={{ textDecorationLine: 'underline' }}
-                  linkDefault={true}
-                >
-                  <Text
-                    category="s2"
-                    style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
-                    numberOfLines={3}
-                  >
-                    {data.item.description}
-                  </Text>
-                </Hyperlink>
-              )}
               <ImageBackground
                 blurRadius={10}
                 style={{
@@ -699,7 +697,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                       marginVertical: 1,
                       marginRight: 5,
                     }}
-                    size={22}
+                    size={28}
                     color="red"
                     onPress={toggleLike}
                   />
@@ -710,7 +708,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                       marginVertical: 1,
                       marginRight: 5,
                     }}
-                    size={22}
+                    size={28}
                     color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                     onPress={toggleLike}
                   />
@@ -724,19 +722,19 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   </Text>
                 )}
               </View>
-              <Ionicons
-                name="ios-chatbox-ellipses-outline"
+              <EvilIcons
+                name="comment"
                 style={{
-                  marginVertical: 2,
+                  marginVertical: 3,
                   marginHorizontal: 10,
                 }}
-                size={21}
+                size={33}
                 color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                 onPress={routeComments}
               />
               <Entypo
                 name="forward"
-                size={20}
+                size={26}
                 color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                 style={{
                   marginVertical: 1,
