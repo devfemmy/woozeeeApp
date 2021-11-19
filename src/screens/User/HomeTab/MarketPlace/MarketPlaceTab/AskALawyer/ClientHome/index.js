@@ -25,6 +25,7 @@ const AskALawyerHome = (props) => {
     (async () => {
       await dispatch(getLocation());
       await dispatch(getAvailableLawyers());
+      
     })();
   }, []);
 

@@ -10,7 +10,7 @@ export const setUserToOnline = () => {
   return async (dispatch, getState) => {
     const userID = getState().auth.user?._id;
     console.log("user id", userID)
-    await firestore().collection("users").doc(userID).update({
+    await Firebase.firestore().collection("users").doc(userID).update({
       isVisible: true,
     });
 
@@ -58,7 +58,7 @@ export const setUserLocation = (destination) => {
 export const getLawyerDetails = () => {
   return async (dispatch, getState) => {
     const lawyerID = getState().auth.user?.matchedTo;
-
+    console.log("lawyer id", lawyerID)
     let lawyer;
 
     await Firebase.firestore()
@@ -67,6 +67,7 @@ export const getLawyerDetails = () => {
       .onSnapshot((documentSnapshot) => {
         console.log("User ID: ", documentSnapshot.id, documentSnapshot.data());
         lawyer = { _id: documentSnapshot.id, ...documentSnapshot.data() };
+        console.log("lawyer details", lawyer)
       });
 
     await dispatch({ type: GET_LAWYER_DETAILS, payload: { lawyer: lawyer } });

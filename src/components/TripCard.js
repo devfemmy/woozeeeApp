@@ -28,7 +28,9 @@ const TripCard = forwardRef((props, ref) => {
   const navigation = useNavigation()
 
   const address = useSelector((state) => state.address);
-const lawyerName = useSelector((state)=> state.user.matchedTo.sName)
+  // const lawyerName = useSelector((state)=> console.log(state));
+  // const availableLawyers = useSelector((state) => console.log("available lawyer", state.user.availableLawyers));
+
 
   const phoneNumber = "+2348080-3393";
 
@@ -127,7 +129,7 @@ const lawyerName = useSelector((state)=> state.user.matchedTo.sName)
                   <TouchableOpacity
                     style={styles.imageContainer}
                     onPress={() => {
-                      NavigationService.navigate("Rating");
+                      Navigation.navigate("Rating");
                     }}
                   >
                     <Image
@@ -163,7 +165,7 @@ const lawyerName = useSelector((state)=> state.user.matchedTo.sName)
             </View>
             <View style={{ flex: 1, backgroundColor: Colors.white }}>
               <LawyerDetails
-                name={lawyerName}
+                name={"Test"}
                 rating={5.0}
                 image={"https://picsum.photos/200"}
               />

@@ -3,6 +3,7 @@ export const GET_AVAILABLE_CLIENTS = "GET_AVAILABLE_CLIENTS";
 export const SET_MATCHED_CLIENT = "SET_MATCHED_CLIENT";
 
 import firestore from "@react-native-firebase/firestore";
+import Firebase from '../../services/Firebase/firebaseConfig';
 
 import { getUserDetails } from "./auth";
 
@@ -10,7 +11,7 @@ export const setOnlineStatus = (status) => {
   return async (dispatch, getState) => {
     const userID = getState().auth.user?._id;
 
-    await firestore().collection("Users").doc(userID).update({
+    await Firebase.firestore().collection("users").doc(userID).update({
       isVisible: !status,
     });
 
@@ -24,12 +25,12 @@ export const setLawyerLocation = () => {
     const userID = getState().auth.user?._id;
     const currentLocation = getState().address?.currentCoordinates;
 
-    const location = new firestore.GeoPoint(
+    const location = new Firebase.firestore.GeoPoint(
       currentLocation.coords.latitude,
       currentLocation.coords.longitude
     );
 
-    await firestore().collection("Users").doc(userID).update({
+    await Firebase.firestore().collection("users").doc(userID).update({
       "location.location": location,
     });
 
@@ -43,8 +44,8 @@ export const getAvailableClients = () => {
 
     const availableClients = [];
 
-    await firestore()
-      .collection("Users")
+    await Firebase.firestore()
+      .collection("users")
       .where("role", "==", "user")
       .where("isVisible", "==", true)
       .where("matchedTo", "==", "")
@@ -75,11 +76,11 @@ export const acceptRequest = (client) => {
   return async (dispatch, getState) => {
     const userID = getState().auth.user?._id;
 
-    await firestore().collection("Users").doc(userID).update({
+    await Firebase.firestore().collection("users").doc(userID).update({
       matchedTo: client?._id,
     });
 
-    await firestore().collection("Users").doc(client?._id).update({
+    await Firebase.firestore().collection("users").doc(client?._id).update({
       matchedTo: userID,
     });
 

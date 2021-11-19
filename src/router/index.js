@@ -134,6 +134,7 @@ import ClientSupport from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/A
 import CaseDetails from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/ClientSupport/CaseDetails';
 import RatingScreen from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/Trips/Rating';
 import Trip from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/Trips/Trip';
+import CancelTrip from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/Trips/CancelTrip';
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -207,6 +208,7 @@ export default function Router() {
       WoozeePaySummary,
       AppointmentDetails,
       AppDetails,
+      CancelTrip,
       AskADoctorFlutterPay,
       UserRoute,
       SocialRoute,

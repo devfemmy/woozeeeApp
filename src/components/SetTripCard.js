@@ -9,7 +9,7 @@ import * as Progress from "react-native-progress";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddress, setCoordinates } from "../redux/actions/address";
-import { setUserLocation, setUserToOnline } from "../redux/actions/user";
+import { getLawyerDetails, setUserLocation, setUserToOnline } from "../redux/actions/user";
 import { getUserDetails } from "../redux/actions/auth";
 // import * as firebase from 'firebase';
 
@@ -29,6 +29,9 @@ const SetTripCard = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    (async () => {
+      // await dispatch(getLawyerDetails());  
+    })();
     // const firebaseConfig = {
     //   apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
     //   authDomain: 'woozeee-d7f6c.firebaseapp.com',
@@ -46,6 +49,7 @@ const SetTripCard = (props) => {
     // }else {
     //   return
     // }
+
     const subscriber = firebase.firestore()
       .collection("users")
       .doc(userId)

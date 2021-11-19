@@ -17,7 +17,7 @@ const CancelTrip = (props) => {
   const cancelHandler = () => {
     setCancelModal(false);
     dispatch(endTrip());
-    props.navigation.navigate("ClientHome");
+    props.navigation.navigate("AskALawyerHome");
   };
 
   const selectionHandler = (num) => {
