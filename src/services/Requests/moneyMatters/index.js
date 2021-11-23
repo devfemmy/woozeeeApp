@@ -77,8 +77,6 @@ export const apply = async (
     channel: 'mobile',
   };
 
-  console.log(body);
-
   const config = {
     method: 'POST',
     headers: {
