@@ -49,7 +49,6 @@ export default function Explore({ navigation, route }) {
   const t = useContext(LocaleContext);
 
   const watchMovie = (data) => {
-    console.log("userData?.accounts", userData)
     if (userData?.accounts.length != 0 && userData?.hasCare) {
       //if I have account and I have care,
       if (userData.isPinSet === false) {
@@ -158,7 +157,7 @@ export default function Explore({ navigation, route }) {
             year={movie_data?.year}
             // casts = {movie_data?.casts[0][0]?.value}
             title={movie_data?.title}
-            price={`₦${movie_data?.price}`}
+            price={`${movie_data?.price === null ? 'Free' : `₦${movie_data?.price}`}`}
             description={movie_data?.description}
             paid
           />
@@ -171,8 +170,8 @@ export default function Explore({ navigation, route }) {
             year={movie_data?.item?.year}
             // casts = {movie_data?.item?.casts[0][0]?.value}
             title={movie_data?.item?.title}
-            price={`₦${movie_data?.item.price}`}
-            description={movie_data?.item.description}
+            price={`${movie_data?.item?.price === null ? 'Free' : `₦${movie_data?.item?.price}`}`}
+            description={movie_data?.item?.description}
             paid
           />
         )}

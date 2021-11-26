@@ -144,7 +144,7 @@ const FeaturedMovie = (props) => {
         }}
         // source = {{uri: videoUri}}
         shouldPlay
-        useNativeControls
+        // useNativeControls
         resizeMode="cover"
         style={{ height: 250, width: '100%' }}
       />
