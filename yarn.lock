@@ -11789,6 +11789,14 @@
   "resolved" "https://registry.npmjs.org/react-native-screens/-/react-native-screens-2.15.2.tgz"
   "version" "2.15.2"
 
+"react-native-see-more-inline@^1.3.0":
+  "integrity" "sha512-H7Fn+M3Z/bBdgBYk9Z50Y9U93RuR8KI1MiZz5Osz9qbg+B1w9BjEJBDaiCVjcf0r+EhgAkKA+KBSapOBvzILYw=="
+  "resolved" "https://registry.npmjs.org/react-native-see-more-inline/-/react-native-see-more-inline-1.3.0.tgz"
+  "version" "1.3.0"
+  dependencies:
+    "lodash" "^4.17.19"
+    "prop-types" "^15.7.2"
+
 "react-native-share@^6.0.1":
   "integrity" "sha512-K7mw2ep4cg++K6GUab32Kic3DeDUveonsQhTElwb6pZyjp0R/TLGQ11+pxcZBVlTiZhdOttyrLdCA6TsMX1lzg=="
   "resolved" "https://registry.npmjs.org/react-native-share/-/react-native-share-6.0.1.tgz"
@@ -11843,6 +11851,11 @@
   "integrity" "sha512-L7qXtYz5Z+NdWyu38zaJrlHA/8H6rNFRZXe3ydym12UEEPPoefbVZ71b9YK2O6QP0u4pUlzMpMVM/Lsz2DJ4jg=="
   "resolved" "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-3.0.1.tgz"
   "version" "3.0.1"
+
+"react-native-text-size@^4.0.0-rc.1":
+  "integrity" "sha512-CysqjU2jK6Yc+a+kEI222pUyTY2ywcU2HqbFqf1KHymW6OPTdvBBHqbEJKL0QiLhQaFYDbqicM+h990s9TP00g=="
+  "resolved" "https://registry.npmjs.org/react-native-text-size/-/react-native-text-size-4.0.0-rc.1.tgz"
+  "version" "4.0.0-rc.1"
 
 "react-native-unimodules@~0.12.0":
   "integrity" "sha512-/c1d3hr+3C3yIwhSoX+KTzy0+C9cnjUvenXP2uV8X2V3ZflnPB/HQXwZPHHWITmD89HP2n3NcPBTu4UgOv/KzQ=="
