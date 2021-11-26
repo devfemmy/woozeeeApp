@@ -15,6 +15,7 @@ import {
   ScrollView,
   Dimensions,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -38,10 +39,12 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { Toast, Content, Root } from 'native-base';
 
+import { getAccountDetails } from '../../../services/Requests/banks/index';
 import zenith from '../../../assets/images/icon/zenith.png';
 import access from '../../../assets/images/icon/accessColored.png';
 import uba from '../../../assets/images/icon/uba.png';
 import globus from '../../../assets/images/icon/globus.png';
+import finaTrust from '../../../assets/images/banks/finaTrust.png';
 
 const BankOptions = ({ name, logo, balance, acctNo }) => {
   return (
@@ -96,24 +99,25 @@ const BankOptions = ({ name, logo, balance, acctNo }) => {
 };
 
 function Accounts(props) {
-  console.log('props', props);
+  // console.log('props', props);
   const {
     route: { params },
   } = props;
-  const {
-    userAccounts: { accounts },
-  } = params;
+
+  // const {
+  //   userAccounts: { accounts },
+  // } = params;
+
   // console.log(accounts);
+  const [accounts, setAccounts] = useState([]);
   const [accountNumber, setAccountNumber] = useState('');
   const [accountBalance, setAccountBalance] = useState('');
 
   async function getBankDetails() {
-    AsyncStorage.getItem('globusAcn').then((res) => {
-      setAccountNumber(res);
-    });
-
-    AsyncStorage.getItem('globusBal').then((res) => {
-      setAccountBalance(res);
+    await getAccountDetails().then((res) => {
+      setAccounts(res[0]);
+      // setAccountNumber(res.data.accountNumber);
+      // setAccountBalance(res.data.accountBalance);
     });
   }
 
@@ -158,17 +162,22 @@ function Accounts(props) {
           </Text>
         </TouchableOpacity>
       </View>
-      {/* fetch card and account details from user obj */}
-      {accounts.length &&
+      {accounts?.length > 0 ? (
         accounts.map((account, index) => (
           <BankOptions
             key={index}
-            name={account.bankName}
-            balance={JSON.stringify(account.accountBalance)}
-            logo={globus}
-            acctNo={account.custAccount}
+            name={'Fina Trust'}
+            balance={JSON.stringify(account.Balance.WithdrawableAmount)}
+            logo={finaTrust}
+            acctNo={account.Number}
           />
-        ))}
+        ))
+      ) : (
+        <ActivityIndicator
+          color="red"
+          style={{ alignSelf: 'auto', marginTop: 50 }}
+        />
+      )}
     </Layout>
   );
 }
@@ -195,6 +204,8 @@ const styles = StyleSheet.create({
     // borderColor: '#dcdcdc',
   },
   img: {
+    width: 40,
+    height: 40,
     marginRight: 10,
   },
   innerContainer: {

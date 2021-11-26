@@ -2,9 +2,11 @@ import React, {
   useState,
   useMemo,
   useEffect,
+  useContext,
   useCallback,
   forwardRef,
   useImperativeHandle,
+  useRef,
 } from 'react';
 
 import {
@@ -14,6 +16,7 @@ import {
   TouchableOpacity,
   Share,
   TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
 
 import { Text, Button } from '@ui-kitten/components';
@@ -114,10 +117,9 @@ const InteractIcon = (props) => {
 };
 
 const ChallengeVideo = forwardRef((props, ref) => {
-  // prettier-ignore
-  const {
-      data, height, videoRef, navigation, viewComments
-    } = props;
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const { data, height, videoRef, navigation, viewComments } = props;
 
   const { item } = data;
 
@@ -125,16 +127,15 @@ const ChallengeVideo = forwardRef((props, ref) => {
     viewComments();
   };
 
-  // console.log('from challenge videoref -> ', videoRef);
-
   const [isVoted, setVoted] = useState(data.userEntryData.isVote);
 
-  // const [isPlaying, setIsPlaying] = useState(false);
-
   const [isLiked, setLiked] = useState(data.userEntryData.isLike);
+
   const [totalLikes, setTotalLikes] = useState(data.totalLikes);
 
   const [shouldPlay, setShouldPlay] = useState(true);
+
+  const [_userData, setUserData] = useState();
 
   const [muteState, setIsMuted] = useState(false);
 
@@ -149,13 +150,32 @@ const ChallengeVideo = forwardRef((props, ref) => {
   };
 
   const routeUserProfile = async () => {
-    const userData = await getUserData(data.userId);
-    await navigation.navigate('UserProfile', userData.data);
+    await navigation.navigate('UserProfile', { id: _userData.data.user._id });
   };
 
   const toggleVote = async () => {
-    setVoted(!isVoted);
-    await handleVote(voteData);
+    //call to check if user has a bank account
+
+    if (_userData.data.user.accounts.length > 0) {
+      setVoted(!isVoted);
+      await handleVote(voteData);
+    } else {
+      Alert.alert(
+        'Create a woozeee Account',
+        'Please add a bank account to vote',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => {},
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => navigation.navigate('ActivateWallet'),
+          },
+        ],
+      );
+    }
   };
 
   const toggleLike = async () => {
@@ -225,6 +245,7 @@ const ChallengeVideo = forwardRef((props, ref) => {
       console.log(e);
     }
   };
+
   const togglePause = useCallback(() => {
     (async () => {
       try {
@@ -246,6 +267,7 @@ const ChallengeVideo = forwardRef((props, ref) => {
       }
     })();
   }, [videoRef]);
+
   useImperativeHandle(ref, () => ({
     resetPlayState(playState) {
       setShouldPlay(playState);
@@ -267,6 +289,18 @@ const ChallengeVideo = forwardRef((props, ref) => {
       lastTap = now;
     }
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      const userData = await getUserData(data.userId);
+      setUserData(userData);
+    }
+    fetchData();
+
+    return () => {
+      // code to run on component unmount
+    };
+  }, []);
 
   return useMemo(
     () => (
