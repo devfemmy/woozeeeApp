@@ -102,6 +102,7 @@ export default function EditProfile({ navigation }) {
             const coverPhotoUrl = user_data.coverPhotoUrl;
             const bio = user_data.bio;
             setFirstName(first_name);
+            AsyncStorage.setItem('firstName', first_name)
             setLastName(last_name);
             setUserName(user_name);
             setBio(bio);

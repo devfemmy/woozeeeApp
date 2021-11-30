@@ -22,12 +22,14 @@ import Firebase from '../../../../services/Firebase/firebaseConfig';
 
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { AddUser } from 'src/services/Firebase/Users';
+import axios from '../../../../services/api/index'
 
 class ChatScreen extends Component {
   state = {
     message: '',
     guestUid: '',
     currentUid: '',
+    fullName: '',
     allMessages: [],
     image: '',
     signal: false,
@@ -37,9 +39,11 @@ class ChatScreen extends Component {
 
   async componentDidMount() {
     const currentUid = await AsyncStorage.getItem('userid');
+    const fullName = await AsyncStorage.getItem('fullName')
     // console.log(currentUid)
     const { guestUid, name } = this.props.route.params;
-    this.setState({ currentUid: currentUid, guestUid: guestUid });
+    this.setState({ currentUid: currentUid, guestUid: guestUid, 
+      fullName: fullName });
     try {
       Firebase.database()
         .ref('messages')
@@ -111,9 +115,23 @@ class ChatScreen extends Component {
         (err)
       })
   }
+  sendNotification = (guestId, fullName, message) => {
+    const data = {
+      message: `${message} (${fullName})`,
+      data: {
+          _id: guestId,
+      }
+    }
+      axios.post('notification', data).then(res => 
+        console.log("response", res)
+        ).catch(err => console.log(err))
+  }
   sendMessage = async () => {
     const { guestUid, name, image } = this.props.route.params;
+
     if (this.state.message) {
+      this.sendNotification(guestUid, this.state.fullName, 
+        this.state.message)
       SendMessage(
         this.state.currentUid,
         this.state.guestUid,
@@ -164,6 +182,7 @@ class ChatScreen extends Component {
 
     }
   };
+  
 
   render() {
     const { name } = this.props.route.params;
