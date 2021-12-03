@@ -18,6 +18,7 @@ export const SendMessage = async (
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
   }
+  console.log(imgSource, "imgValue")
   // console.log("date", todayDate)
   try {
     return await firebase
