@@ -147,6 +147,8 @@ export default function useAuth() {
                 console.log(results.push.success, 'success');
               }
             });
+
+            const userBankAccounts = result?.user.accounts;
             const insure_num = result.user.insurranceCard.cardNumber;
             const insureamt = result.user.insurranceCard.credits;
             const stringedAmt = insureamt.toString();
@@ -160,6 +162,10 @@ export default function useAuth() {
             const stringedReward = reward_amt.toString();
             //(stringedReward);
             const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
+            AsyncStorage.setItem(
+              'userBankAccountsId',
+              userBankAccounts[0].cifid,
+            );
             AsyncStorage.setItem('insureCardNo', insure_num);
             AsyncStorage.setItem('walletCardNo', wallet_num);
             AsyncStorage.setItem('rewardCardNo', reward_num);
@@ -568,8 +574,8 @@ export default function useAuth() {
         let msg = null;
 
         try {
-          await AsyncStorage.removeItem('USER_AUTH_TOKEN');
-          await AsyncStorage.removeItem('userImage');
+          // await AsyncStorage.removeItem('USER_AUTH_TOKEN');
+          await AsyncStorage.clear();
 
           dispatch({
             type: 'LOG_OUT',

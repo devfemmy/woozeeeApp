@@ -40,11 +40,13 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 import { Toast, Content, Root } from 'native-base';
 
 import { getAccountDetails } from '../../../services/Requests/banks/index';
+import numberWithCommas from '../../../constants/numberWithCommas';
 import zenith from '../../../assets/images/icon/zenith.png';
 import access from '../../../assets/images/icon/accessColored.png';
 import uba from '../../../assets/images/icon/uba.png';
 import globus from '../../../assets/images/icon/globus.png';
 import finaTrust from '../../../assets/images/banks/finaTrust.png';
+import GlobalAccount from '../../../components/AccountSheet';
 
 const BankOptions = ({ name, logo, balance, acctNo }) => {
   return (
@@ -104,22 +106,29 @@ function Accounts(props) {
     route: { params },
   } = props;
 
-  // const {
-  //   userAccounts: { accounts },
-  // } = params;
-
-  // console.log(accounts);
+  const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [accountNumber, setAccountNumber] = useState('');
   const [accountBalance, setAccountBalance] = useState('');
 
   async function getBankDetails() {
-    await getAccountDetails().then((res) => {
-      setAccounts(res[0]);
-      // setAccountNumber(res.data.accountNumber);
-      // setAccountBalance(res.data.accountBalance);
-    });
+    try {
+      setLoading(true);
+      await getAccountDetails().then((res) => {
+        setLoading(false);
+
+        setAccounts(res[0]);
+        // setAccountNumber(res.data.accountNumber);
+        // setAccountBalance(res.data.accountBalance);
+      });
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      console.log('e => ', e);
+    }
   }
+
+  // console.log(accounts);
 
   useEffect(() => {
     getBankDetails();
@@ -155,6 +164,7 @@ function Accounts(props) {
             width: 120,
             borderRadius: 5,
           }}
+          onPress={() => props.navigation.navigate('ActivateWallet')}
         >
           <Feather name="plus" size={24} color="#043F7C" />
           <Text category="s2" style={{ color: '#043F7C', marginHorizontal: 5 }}>
@@ -162,22 +172,43 @@ function Accounts(props) {
           </Text>
         </TouchableOpacity>
       </View>
-      {accounts?.length > 0 ? (
-        accounts.map((account, index) => (
-          <BankOptions
-            key={index}
-            name={'Fina Trust'}
-            balance={JSON.stringify(account.Balance.WithdrawableAmount)}
-            logo={finaTrust}
-            acctNo={account.Number}
-          />
-        ))
-      ) : (
+      {loading === true && (
         <ActivityIndicator
           color="red"
           style={{ alignSelf: 'auto', marginTop: 50 }}
         />
       )}
+      {!loading && accounts?.Balance ? (
+        <BankOptions
+          name={'Fina Trust'}
+          balance={numberWithCommas(
+            JSON.stringify(accounts?.Balance?.WithdrawableAmount),
+          )}
+          logo={finaTrust}
+          acctNo={accounts?.Number}
+        />
+      ) : (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 100,
+          }}
+        >
+          <Image
+            source={require('../../../assets/images/moneyMatters/addMoney.png')}
+            resizeMode="contain"
+            style={{
+              width: 300,
+              height: 200,
+            }}
+          />
+          <Text category="s1" status="basic">
+            No available Bank Account
+          </Text>
+        </View>
+      )}
+      <GlobalAccount show={true} price="10000" />
     </Layout>
   );
 }

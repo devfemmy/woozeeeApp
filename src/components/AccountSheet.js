@@ -1,10 +1,16 @@
-import React, { useCallback, useRef, useState, useContext } from 'react';
+import React, {
+  useCallback,
+  useRef,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
 import {
   View,
   StyleSheet,
   Image,
   TouchableOpacity,
-  Share,
+  Alert,
   TouchableWithoutFeedback,
   ActivityIndicator,
 } from 'react-native';
@@ -23,8 +29,10 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 
 import { LocaleContext, AppSettingsContext, AuthContext } from 'src/contexts';
 import { getAccountDetails } from 'src/services/Requests/banks/index';
+import finatrust from '../assets/images/banks/finaTrust.png';
+import numberWithCommas from 'src/constants/numberWithCommas';
 
-const AccountSheet = () => {
+const GlobalAccount = ({ price, show }) => {
   const [accounts, setAccounts] = useState([]);
 
   const accountSheetRef = useRef(null);
@@ -37,22 +45,61 @@ const AccountSheet = () => {
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
+  const [form, setFormValues] = useState({
+    cardNumber: '',
+    accountBalance: '',
+    account: '',
+  });
+
+  const handleAccountChange = (index) => {
+    console.log(price);
+    setSelectedOption(index);
+    setFormValues((prevState) => ({
+      ...prevState,
+      account: accounts[index].Number,
+      accountBalance: accounts[index].Balance?.WithdrawableAmount,
+    }));
+  };
+
   async function getBankDetails() {
     await getAccountDetails().then((res) => {
-      console.log('res => ', res);
-      setAccounts(res[0]);
+      setAccounts(res);
     });
   }
 
-  const handleAccountChange = (index) => {
-    setSelectedOption(index);
+  const handleTransaction = () => {
+    accountSheetRef.current.close();
+    Alert.alert(
+      'Transaction',
+      `You will be charged ₦${numberWithCommas(price)} for this transaction.`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            form.accountBalance >= price
+              ? alert('Transaction Successful') //call api to handle payment
+              : alert('Insufficient Funds');
+          },
+        },
+      ],
+    );
   };
 
-  return useCallback(
+  useEffect(() => {
+    show && accountSheetRef.current.open();
+    getBankDetails();
+    return () => {};
+  }, []);
+
+  const AccountsSheet = useCallback(
     () => (
       <RBSheet
         ref={accountSheetRef}
-        height={410}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -85,32 +132,43 @@ const AccountSheet = () => {
               {t('source')}
             </Text>
           </View>
-          <View style={{ paddingHorizontal: 20 }}>
+          <View style={{ paddingHorizontal: 25 }}>
             <RadioGroup
               selectedIndex={selectedOption}
               onChange={handleAccountChange}
             >
-              {/* {ACCOUNTS.map((option) => (
-                <Radio key={option.id}>
+              {accounts.map((account, id) => (
+                <Radio key={id}>
                   <View
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      width: wp('80%'),
+                      width: '100%',
                     }}
                   >
-                    <Text category="s2">{option.title}</Text>
+                    <View>
+                      <Text category="s2">
+                        {(account?.name || 'Fina Trust -  ') +
+                          '₦' +
+                          numberWithCommas(
+                            JSON.stringify(
+                              account?.Balance?.WithdrawableAmount,
+                            ),
+                          )}
+                      </Text>
+                      <Text category="c1">{account?.Number}</Text>
+                    </View>
                     <Image
-                      source={option.image}
-                      defaultSource={option.image}
+                      source={finatrust}
+                      defaultSource={finatrust}
                       resizeMode="cover"
-                      style={{ height: 25, width: 25 }}
+                      style={{ height: 40, width: 40 }}
                     />
                   </View>
                   <Text>{}</Text>
                 </Radio>
-              ))} */}
+              ))}
             </RadioGroup>
           </View>
           <Divider style={{ marginVertical: 20, width: '100%', height: 2 }} />
@@ -120,15 +178,13 @@ const AccountSheet = () => {
               width: '100%',
             }}
           >
-            {/* <Button onPress={() => console.log('+++++')}>Press</Button> */}
-
             <Button
               status="danger"
               accessibilityLiveRegion="assertive"
               accessibilityComponentType="button"
               accessibilityLabel="Continue"
               style={{ width: '100%' }}
-              onPress={() => accountSheetRef.current.close()}
+              onPress={() => handleTransaction()}
             >
               <Text status="control">{t('done')}</Text>
             </Button>
@@ -138,10 +194,24 @@ const AccountSheet = () => {
     ),
     [BG_THEME, t, selectedOption],
   );
+  return <AccountsSheet />;
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    marginHorizontal: 15,
+    marginVertical: 15,
+    borderRadius: 5,
+  },
+  img: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
+  },
+  innerContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
 });
 
-export default AccountSheet;
+export default GlobalAccount;

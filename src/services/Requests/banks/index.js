@@ -8,7 +8,7 @@ import { getEmail, getToken } from '../../../api/index';
 
 const { CancelToken } = axios;
 
-const baseUrl = 'https://s.moneymatters.woozeee.com/api/v1/';
+const baseUrl = 'https://smoneymattersapis.woozeee.com/api/v1/';
 
 const source = CancelToken.source();
 
@@ -68,25 +68,31 @@ const source = CancelToken.source();
 // };
 
 export const getAccountDetails = async () => {
-  const account = [];
+  let account;
   const token = await getToken();
-  const accountDetails = await AsyncStorage.getItem('finaTrustAccount');
-  const { CustomerID } = JSON.parse(accountDetails);
-  try {
-    await fetch(`${baseUrl}finaTrust/AccountDetails?customerId=${CustomerID}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: token,
-      },
-    })
-      .then((response) => response.json())
-      .then((res) => {
-        account.push(res);
-      });
-  } catch (error) {
-    console.log(error);
+  const accountID = await AsyncStorage.getItem('userBankAccountsId');
+  if (accountID === null) {
+    return account;
+  } else {
+    try {
+      await fetch(
+        `${baseUrl}finaTrust/AccountDetails?customerId=${accountID}`,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+        },
+      )
+        .then((response) => response.json())
+        .then((res) => {
+          account = res;
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
   return account;
 };
@@ -127,6 +133,6 @@ export const createFinaAccount = async (form) => {
     getAccountDetails();
     return res;
   } catch (error) {
-    console.log(error);
+    console.log(error, 'error');
   }
 };
