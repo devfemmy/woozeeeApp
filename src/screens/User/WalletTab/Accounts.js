@@ -46,7 +46,6 @@ import access from '../../../assets/images/icon/accessColored.png';
 import uba from '../../../assets/images/icon/uba.png';
 import globus from '../../../assets/images/icon/globus.png';
 import finaTrust from '../../../assets/images/banks/finaTrust.png';
-import GlobalAccount from '../../../components/AccountSheet';
 
 const BankOptions = ({ name, logo, balance, acctNo }) => {
   return (
@@ -208,7 +207,6 @@ function Accounts(props) {
           </Text>
         </View>
       )}
-      <GlobalAccount show={true} price="10000" />
     </Layout>
   );
 }
