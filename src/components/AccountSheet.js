@@ -4,6 +4,7 @@ import React, {
   useState,
   useContext,
   useEffect,
+  useMemo,
 } from 'react';
 import {
   View,
@@ -32,7 +33,7 @@ import { getAccountDetails } from 'src/services/Requests/banks/index';
 import finatrust from '../assets/images/banks/finaTrust.png';
 import numberWithCommas from 'src/constants/numberWithCommas';
 
-const GlobalAccount = ({ price, show }) => {
+const GlobalAccount = ({ start, price, show }) => {
   const [accounts, setAccounts] = useState([]);
 
   const accountSheetRef = useRef(null);
@@ -60,12 +61,15 @@ const GlobalAccount = ({ price, show }) => {
       accountBalance: accounts[index].Balance?.WithdrawableAmount,
     }));
   };
-
   async function getBankDetails() {
     await getAccountDetails().then((res) => {
       setAccounts(res);
+      console.log('accounts =>', accounts);
     });
+    accounts.length > 0 && accountSheetRef.current.open();
   }
+
+  // show && getBankDetails()
 
   const handleTransaction = () => {
     accountSheetRef.current.close();
@@ -91,8 +95,7 @@ const GlobalAccount = ({ price, show }) => {
   };
 
   useEffect(() => {
-    show && accountSheetRef.current.open();
-    getBankDetails();
+    start && getBankDetails();
     return () => {};
   }, []);
 
@@ -133,43 +136,67 @@ const GlobalAccount = ({ price, show }) => {
             </Text>
           </View>
           <View style={{ paddingHorizontal: 25 }}>
-            <RadioGroup
-              selectedIndex={selectedOption}
-              onChange={handleAccountChange}
-            >
-              {accounts.map((account, id) => (
-                <Radio key={id}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      width: '100%',
-                    }}
-                  >
-                    <View>
-                      <Text category="s2">
-                        {(account?.name || 'Fina Trust -  ') +
-                          '₦' +
-                          numberWithCommas(
-                            JSON.stringify(
-                              account?.Balance?.WithdrawableAmount,
-                            ),
-                          )}
-                      </Text>
-                      <Text category="c1">{account?.Number}</Text>
+            {accounts.length > 0 ? (
+              <RadioGroup
+                selectedIndex={selectedOption}
+                onChange={handleAccountChange}
+              >
+                {accounts.map((account, id) => (
+                  <Radio key={id}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        width: '100%',
+                      }}
+                    >
+                      <View>
+                        <Text category="s2">
+                          {(account?.name || 'Fina Trust -  ') +
+                            '₦' +
+                            numberWithCommas(
+                              JSON.stringify(
+                                account?.Balance?.WithdrawableAmount,
+                              ),
+                            )}
+                        </Text>
+                        <Text category="c1">{account?.Number}</Text>
+                      </View>
+                      <Image
+                        source={finatrust}
+                        defaultSource={finatrust}
+                        resizeMode="cover"
+                        style={{ height: 40, width: 40 }}
+                      />
                     </View>
-                    <Image
-                      source={finatrust}
-                      defaultSource={finatrust}
-                      resizeMode="cover"
-                      style={{ height: 40, width: 40 }}
-                    />
-                  </View>
-                  <Text>{}</Text>
-                </Radio>
-              ))}
-            </RadioGroup>
+                    <Text>{}</Text>
+                  </Radio>
+                ))}
+                {/* <Radio>
+                 <View
+                   style={{
+                     flexDirection: 'row',
+                     justifyContent: 'space-between',
+                     alignItems: 'center',
+                     width: '100%',
+                   }}
+                 >
+                   <Text category="c1">Online Payment</Text>
+ 
+                   <Image
+                     source={require('../assets/images/banks/others.png')}
+                     defaultSource={require('../assets/images/banks/others.png')}
+                     resizeMode="cover"
+                     style={{ height: 40, width: 40 }}
+                   />
+                 </View>
+                 <Text>{}</Text>
+               </Radio> */}
+              </RadioGroup>
+            ) : (
+              <Spinner size="tiny" color="primary" />
+            )}
           </View>
           <Divider style={{ marginVertical: 20, width: '100%', height: 2 }} />
           <View
@@ -183,6 +210,7 @@ const GlobalAccount = ({ price, show }) => {
               accessibilityLiveRegion="assertive"
               accessibilityComponentType="button"
               accessibilityLabel="Continue"
+              disabled={accounts.length <= 0}
               style={{ width: '100%' }}
               onPress={() => handleTransaction()}
             >
@@ -194,7 +222,7 @@ const GlobalAccount = ({ price, show }) => {
     ),
     [BG_THEME, t, selectedOption],
   );
-  return <AccountsSheet />;
+  return useMemo(() => <AccountsSheet />, [show, accounts]);
 };
 
 const styles = StyleSheet.create({
