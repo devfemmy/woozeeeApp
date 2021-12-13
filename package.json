@@ -73,6 +73,8 @@
     "react-native-fbsdk": "^3.0.0",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-hyperlink": "^0.0.19",
+    "react-native-image-base64": "^0.1.4",
+    "react-native-image-picker": "^4.4.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-loading-spinner-overlay": "^2.0.0",
     "react-native-modalbox": "^2.0.2",

@@ -178,6 +178,7 @@ export default function Home({ navigation }) {
       OneSignal.setNotificationOpenedHandler((notification) => {
         console.log('OneSignal: notification opened:', notification);
         navigation.navigate('SocialRoute');
+
       });
     });
 
@@ -751,7 +752,7 @@ export default function Home({ navigation }) {
           ListHeaderComponent={renderWoozeeeCards}
           style={{ backgroundColor: 'transparent' }}
           horizontal={!IS_PORTRAIT}
-          alwaysBounceHorizontal
+          // alwaysBounceHorizontal
           always
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
