@@ -5,6 +5,7 @@ import {
   ScrollView,
   useWindowDimensions,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 
 // prettier-ignore
@@ -454,6 +455,13 @@ export default function ActivateWallet({ navigation }) {
           </Button>
         </Layout>
       </RBSheet>
+      <View style={{ alignItems: 'center', bottom: 50 }}>
+        <TouchableOpacity onPress={() => navigation.navigate('UserRoute')}>
+          <Text status="basic" category="c1">
+            Skip
+          </Text>
+        </TouchableOpacity>
+      </View>
     </Layout>
   );
 }

@@ -124,7 +124,7 @@ export default function ActivateWallet({ navigation }) {
       form.firstName &&
       form.maidenName &&
       form.lastName &&
-      form.mobileNumber &&
+      form.mobileNumber.length === 11 &&
       form.dob &&
       form.email &&
       form.profession &&
@@ -173,20 +173,20 @@ export default function ActivateWallet({ navigation }) {
       } else {
         //show toast with response message
         Toast.show({
-          text: 'Account creation unsuccessful!!',
+          text: `Account Creation Failed. ${Message.CreationMessage}`,
           buttonText: 'Okay',
           position: 'top',
           type: 'danger',
-          duration: 2000,
+          duration: 3000,
         });
       }
     } else {
       Toast.show({
-        text: 'Please fill all form fields.',
+        text: 'Please Validate that all form fields are correct.',
         buttonText: 'Okay',
         position: 'top',
         type: 'danger',
-        duration: 2000,
+        duration: 3000,
       });
     }
   }

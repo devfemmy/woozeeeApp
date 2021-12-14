@@ -116,6 +116,7 @@ function Accounts(props) {
       await getAccountDetails().then((res) => {
         setLoading(false);
 
+        console.log('res => ', res);
         setAccounts(res[0]);
         // setAccountNumber(res.data.accountNumber);
         // setAccountBalance(res.data.accountBalance);

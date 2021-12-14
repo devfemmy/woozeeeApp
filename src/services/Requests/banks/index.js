@@ -70,13 +70,16 @@ const source = CancelToken.source();
 export const getAccountDetails = async () => {
   let account;
   const token = await getToken();
-  const accountID = await AsyncStorage.getItem('userBankAccountsId');
-  if (accountID === null) {
+  const accountData = await AsyncStorage.getItem('userBankAccountsId');
+
+  const { CustomerID } = JSON.parse(accountData);
+  // console.log('accountID', CustomerID);
+  if (CustomerID === null) {
     return account;
   } else {
     try {
       await fetch(
-        `${baseUrl}finaTrust/AccountDetails?customerId=${accountID}`,
+        `${baseUrl}finaTrust/AccountDetails?customerId=${CustomerID}`,
         {
           method: 'GET',
           headers: {
@@ -126,11 +129,12 @@ export const createFinaAccount = async (form) => {
 
   try {
     res = await axios(config);
+    console.log('account res => ', res);
     await AsyncStorage.setItem(
-      'finaTrustAccount',
+      'userBankAccountsId',
       JSON.stringify(res.data.Message),
     );
-    getAccountDetails();
+    // getAccountDetails();
     return res;
   } catch (error) {
     console.log(error, 'error');
