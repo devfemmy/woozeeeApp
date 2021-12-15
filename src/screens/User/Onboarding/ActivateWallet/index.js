@@ -27,7 +27,7 @@ import {
   GeneralSelect,
 } from 'src/components/FormFields';
 
-import { createGlobusAccount } from '../../../../services/Requests/banks/index';
+import { createFinaAccount } from '../../../../services/Requests/banks/index';
 
 import { IconCalendar } from 'src/components/CustomIcons';
 
@@ -83,7 +83,7 @@ const LGAS = STATES_LGAS.map((data) => ({
 })).sort((a, b) => genericCompare(a.alias, b.alias));
 
 export default function ActivateWallet({ navigation }) {
-  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
+  const renderSpinner = () => <Spinner size="tiny" status="basic" />;
 
   const [isLoading, setLoading] = useState(false);
 
@@ -124,7 +124,7 @@ export default function ActivateWallet({ navigation }) {
       form.firstName &&
       form.maidenName &&
       form.lastName &&
-      form.mobileNumber &&
+      form.mobileNumber.length === 11 &&
       form.dob &&
       form.email &&
       form.profession &&
@@ -153,39 +153,40 @@ export default function ActivateWallet({ navigation }) {
   async function handleSubmit() {
     if (isFormValid(form)) {
       setLoading(!isLoading);
-      // const res = await createGlobusAccount(form);
-      // setLoading(false);
-      // const { data, status } = res;
+      const res = await createFinaAccount(form);
+      console.log('Res => ', res);
+      setLoading(false);
+      const { IsSuccessful, Message } = res.data;
 
-      // if (data.responseCode === '00') {
-      //   //route to complete page
-      // Toast.show({
-      //   text: 'Account successfully created!!',
-      //   buttonText: 'Okay',
-      //   position: 'top',
-      //   type: 'success',
-      //   duration: 2000,
-      // });
-      //   setTimeout(() => {
-      //     navigation.navigate('ActivateCare');
-      //   }, 3000);
-      // } else {
-      //   //show toast with response message
-      //   Toast.show({
-      //     text: data.responseMessage,
-      //     buttonText: 'Okay',
-      //     position: 'top',
-      //     type: 'danger',
-      //     duration: 2000,
-      //   });
-      // }
+      if (IsSuccessful) {
+        //route to complete page
+        Toast.show({
+          text: 'Account successfully created!!',
+          buttonText: 'Okay',
+          position: 'top',
+          type: 'success',
+          duration: 2000,
+        });
+        setTimeout(() => {
+          navigation.navigate('ActivateCare');
+        }, 3000);
+      } else {
+        //show toast with response message
+        Toast.show({
+          text: `Account Creation Failed. ${Message.CreationMessage}`,
+          buttonText: 'Okay',
+          position: 'top',
+          type: 'danger',
+          duration: 3000,
+        });
+      }
     } else {
       Toast.show({
-        text: 'Please fill all form fields.',
+        text: 'Please Validate that all form fields are correct.',
         buttonText: 'Okay',
         position: 'top',
         type: 'danger',
-        duration: 2000,
+        duration: 3000,
       });
     }
   }

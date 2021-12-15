@@ -122,6 +122,10 @@ import TransactionSummary from '../screens/User/Common/TransactionSummary';
 import PaymentSchedule from 'src/screens/User/Onboarding/ActivateCare/PaymentSchedule';
 import WoozeePaySummary from 'src/screens/User/Onboarding/ActivateCare/PaySummary';
 import TransferMoney from 'src/screens/User/WalletTab/TransferMoney';
+import FillCardDetails from 'src/screens/User/WalletTab/FillCardDetails';
+import AddMoney from 'src/screens/User/WalletTab/AddMoney';
+import Deposit from 'src/screens/User/WalletTab/Deposit';
+import Freeze from 'src/screens/User/WalletTab/Freeze';
 import Accounts from 'src/screens/User/WalletTab/Accounts';
 import AndroidPreview from 'src/screens/User/Common/VideoUpload/AndroidPreview';
 
@@ -253,6 +257,10 @@ export default function Router() {
       CableFlutterPay,
       TransactionSummary,
       TransferMoney,
+      Deposit,
+      Freeze,
+      FillCardDetails,
+      AddMoney,
       Accounts,
       ChallengePage,
       AndroidPreview,

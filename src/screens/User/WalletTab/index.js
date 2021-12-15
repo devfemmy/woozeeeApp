@@ -88,22 +88,24 @@ const WALLET_ITEMS = [
     content: 'accounts',
     action: 'showAccounts',
   },
-  // {
-  //   id: 2,
-  //   icon: IconCPlus,
-  //   content: 'addMoney',
-  // },
-  // {
-  //   id: 3,
-  //   icon: IconCArrowUp,
-  //   content: 'transferMoney',
-  //   action: 'transferMoney',
-  // },
-  // {
-  //   id: 4,
-  //   icon: IconCSnow,
-  //   content: 'freeze',
-  // },
+  {
+    id: 2,
+    icon: IconCPlus,
+    content: 'addMoney',
+    action: 'addMoney',
+  },
+  {
+    id: 3,
+    icon: IconCArrowUp,
+    content: 'transferMoney',
+    action: 'transferMoney',
+  },
+  {
+    id: 4,
+    icon: IconCSnow,
+    content: 'freeze',
+    action: 'freezeAccount',
+  },
 ];
 
 const ACCOUNTS = [
@@ -255,6 +257,14 @@ export default function Wallet({ navigation }) {
     // accountsRef.current.open();
   };
 
+  const addMoney = () => {
+    navigation.navigate('AddMoney');
+  };
+
+  const freezeAccount = () => {
+    navigation.navigate('Freeze');
+  };
+
   const transferMoney = () => {
     navigation.navigate('TransferMoney');
   };
@@ -262,7 +272,9 @@ export default function Wallet({ navigation }) {
   const ACTIONS = {
     toggleBalanceShown,
     showAccounts,
+    addMoney,
     transferMoney,
+    freezeAccount,
   };
 
   const routeAllHistory = () => navigation.navigate('TransactionHistory');
@@ -435,9 +447,9 @@ export default function Wallet({ navigation }) {
           paddingHorizontal: 5,
         }}
       >
-        {/* {WALLET_ITEMS.map((data) => (
+        {WALLET_ITEMS.map((data) => (
           <WalletItem data={data} key={data.id} />
-        ))} */}
+        ))}
       </View>
     </View>
   );

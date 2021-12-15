@@ -36,16 +36,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LocaleContext, AppSettingsContext } from 'src/contexts';
 
 import globus from '../../../assets/images/icon/globus.png';
+import TopNavigationArea from 'src/components/TopNavigationArea/index';
 
 const _sendTo = [
   { id: 1, title: 'Self' },
   { id: 2, title: 'Others' },
 ];
 
-function WalletProcess(props) {
+function Deposit(props) {
   const [accountNumber, setAccountNumber] = useState('');
   const [accountBalance, setAccountBalance] = useState('');
-  const [accounts, setAccounts] = useState([]);
   const [selectedOption, setSelectedOption] = useState(0);
   const [selectedSource, setSelectedSource] = useState(0);
   const [selectedReciepient, setSelectedReciepient] = useState(0);
@@ -68,55 +68,18 @@ function WalletProcess(props) {
 
   const ACCOUNTS = [
     {
-      id: 1,
-      title: 'woozeee Wallet - ₦ 99,394.99',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/woozeee.png'),
-    },
-    {
-      id: 2,
-      title: 'Access Bank - ₦ 34,677.02',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/access.png'),
-    },
-    {
-      id: 3,
-      title: 'UBA - ₦ 25,500.44',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/uba.png'),
-    },
-    {
       id: 4,
-      title: 'Globus Bank -₦ 24,222.18',
+      title: `Globus Bank - ₦${accountBalance}`,
       acctNo: accountNumber,
       image: require('assets/images/banks/globus.png'),
     },
-    {
-      id: 5,
-      title: 'Zenith Bank -₦ 1,000.00',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/zenith.png'),
-    },
-    {
-      id: 6,
-      title: 'Online Payment',
-      acctNo: accountNumber,
-      image: require('assets/images/banks/others.png'),
-    },
   ];
-  // const ACCOUNTS = [
-  //   {
-  //     id: 4,
-  //     title: `Globus Bank - ₦${accountBalance}`,
-  //     acctNo: accountNumber,
-  //     image: require('assets/images/banks/globus.png'),
-  //   },
-  // ];
 
   const [form, setFormValues] = useState({
-    source: '',
     _sendTo: '',
+    source: '',
     receipient: '',
+    accountNumber: '',
     amount: '',
     message: '',
   });
@@ -230,7 +193,7 @@ function WalletProcess(props) {
     () => (
       <RBSheet
         ref={accountSheetRef}
-        height={450}
+        height={250}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -316,19 +279,11 @@ function WalletProcess(props) {
     [BG_THEME, t, selectedSource],
   );
 
-  const openReceipientOption = () => {
-    setAccounts(ACCOUNTS.filter((item) => item.title !== form.source));
-    console.log(accounts);
-    receipientAccountSheetRef.current.open(accounts);
-  };
-
-  useEffect(() => {}, [form.source]);
-
   const ReceipientAccountSheet = useCallback(
     () => (
       <RBSheet
         ref={receipientAccountSheetRef}
-        height={430}
+        height={250}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -366,7 +321,7 @@ function WalletProcess(props) {
               selectedIndex={selectedReciepient}
               onChange={handleReceipientOption}
             >
-              {accounts.map((option) => (
+              {ACCOUNTS.map((option) => (
                 <Radio key={option.id}>
                   <View
                     style={{
@@ -416,85 +371,11 @@ function WalletProcess(props) {
 
   return (
     <Layout level="6" style={styles.container}>
-      <Text category="s1" status="basic" style={{ marginBottom: 10 }}>
-        Send to*
-      </Text>
-      <Button
-        appearance="outline"
-        accessoryRight={IconArrowDown}
-        style={{ justifyContent: 'space-between' }}
-        onPress={() => sendToSheet.current.open()}
-      >
-        <Text category="s2" status="basic">
-          {form._sendTo || 'Select'}
-        </Text>
-      </Button>
-      <Text category="s1" status="basic" style={{ marginVertical: 10 }}>
-        Source*
-      </Text>
-      <Button
-        appearance="outline"
-        accessoryRight={IconArrowDown}
-        style={{ justifyContent: 'space-between' }}
-        onPress={() => accountSheetRef.current.open()}
-      >
-        <Text>{form.source || 'Select'}</Text>
-      </Button>
-
-      {form._sendTo === 'Self' ? (
-        <>
-          <Text category="s1" status="basic" style={{ marginVertical: 10 }}>
-            Receipient*
-          </Text>
-          <Button
-            appearance="outline"
-            accessoryRight={IconArrowDown}
-            style={{ justifyContent: 'space-between' }}
-            onPress={openReceipientOption}
-          >
-            <Text>{form.receipient || 'Select'}</Text>
-          </Button>
-        </>
-      ) : (
-        <>
-          <Text category="s1" status="basic" style={{ marginVertical: 10 }}>
-            Receipient's Bank*
-          </Text>
-          <Button
-            appearance="outline"
-            accessoryRight={IconArrowDown}
-            style={{ justifyContent: 'space-between' }}
-            onPress={() => receipientAccountSheetRef.current.open()}
-          >
-            <Text>{form.receipient || 'Select'}</Text>
-          </Button>
-          <Text category="s1" status="basic" style={{ marginVertical: 10 }}>
-            Account Number*
-          </Text>
-          <TextInput
-            placeholder={'XXXXXXXXXXX'}
-            placeholderTextColor="gray"
-            status="primary"
-            style={{
-              textAlign: 'left',
-              paddingLeft: 10,
-              backgroundColor: '#F3F3F7',
-              width: '100%',
-              height: 50,
-              justifyContent: 'center',
-              borderRadius: 5,
-            }}
-            onChangeText={(text) =>
-              setFormValues((prevState) => {
-                return {
-                  ...prevState,
-                  accountNumber: text,
-                };
-              })
-            }
-          />
-        </>
-      )}
+      <TopNavigationArea
+        title={'Deposit'}
+        navigation={props.navigation}
+        screen="default"
+      />
       <Text category="s1" status="basic" style={{ marginVertical: 10 }}>
         Amount*
       </Text>
@@ -502,6 +383,7 @@ function WalletProcess(props) {
         style={{
           width: '100%',
           height: 50,
+          marginBottom: 20,
         }}
       >
         <View
@@ -554,11 +436,33 @@ function WalletProcess(props) {
           </View>
         </View>
       </View>
+      <Text category="s1" status="basic" style={{ marginBottom: 10 }}>
+        Source*
+      </Text>
+      <Button
+        appearance="outline"
+        accessoryRight={IconArrowDown}
+        style={{ justifyContent: 'space-between', marginBottom: 20 }}
+        onPress={() => accountSheetRef.current.open()}
+      >
+        <Text>{form.source || 'Select Source'}</Text>
+      </Button>
       <Text category="s1" status="basic" style={{ marginVertical: 10 }}>
-        Message
+        Destination*
+      </Text>
+      <Button
+        appearance="outline"
+        accessoryRight={IconArrowDown}
+        style={{ justifyContent: 'space-between', marginBottom: 20 }}
+        onPress={() => receipientAccountSheetRef.current.open()}
+      >
+        <Text>{form.receipient || 'Select Destination'}</Text>
+      </Button>
+      <Text category="s1" status="basic" style={{ marginVertical: 10 }}>
+        Transaction Pin*
       </Text>
       <TextInput
-        placeholder={'Enter Message'}
+        placeholder={'Enter Pin'}
         placeholderTextColor="gray"
         status="primary"
         style={{
@@ -574,11 +478,30 @@ function WalletProcess(props) {
           setFormValues((prevState) => {
             return {
               ...prevState,
-              message: text,
+              accountNumber: text,
             };
           })
         }
       />
+
+      <View
+        style={{
+          marginVertical: 30,
+          width: '100%',
+          //   paddingHorizontal: 15,
+        }}
+      >
+        <Button
+          status="primary"
+          accessibilityLiveRegion="assertive"
+          accessibilityComponentType="button"
+          accessibilityLabel="Continue"
+          style={{ width: '100%' }}
+          //   onPress={routeConfirm}
+        >
+          <Text status="control">{t('proceed')}</Text>
+        </Button>
+      </View>
 
       <SendTo />
       <AccountSheet />
@@ -589,8 +512,9 @@ function WalletProcess(props) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 15,
   },
 });
 
-export default WalletProcess;
+export default Deposit;

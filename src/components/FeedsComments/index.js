@@ -20,6 +20,7 @@ function index({ postId, gotoComment }) {
   };
 
   const fetchComments = async (postId) => {
+    // Refactor at your own risk...
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
       authDomain: 'woozeee-d7f6c.firebaseapp.com',

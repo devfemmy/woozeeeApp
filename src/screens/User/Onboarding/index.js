@@ -17,7 +17,7 @@ const SLIDE_CONTENT = [
     banner: require('assets/images/onboarding/wallet.jpg'),
     title: 'woozeee Account',
     description:
-      'Open a Bank Account with our partner banks (Access Bank, Zenith Bank and Globus Bank) automatically.',
+      'Open a Bank Account with our partner banks (Access Bank, Fina Trust Microfinance Bank, Globus Bank and Asset Matrix Microfinance Bank) automatically.',
     activateAction: 'activateWallet',
   },
   {

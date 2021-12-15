@@ -74,6 +74,7 @@ export default function Comments({ route, navigation }) {
 
   const fetchComments = async () => {
     setLoading(true);
+    // Refactor this at your own risk...
     const firebaseConfig = {
       apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
       authDomain: 'woozeee-d7f6c.firebaseapp.com',
