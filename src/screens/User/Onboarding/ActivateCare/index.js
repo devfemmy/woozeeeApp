@@ -30,54 +30,6 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 import { IconCheckmark } from 'src/components/CustomIcons';
 import axios from '../../../../services/api/index';
 
-const MORE_PLANS = [
-  {
-    id: 1,
-    title: 'Solo Plan',
-    price: '24,000',
-    benefits: [
-      'Free medical care covering medical bills up to ₦ 200,000 annually',
-      'Free Travel Insurance (For Road & Air)',
-      'Free Legal Assistance Call-out up to 4 times annually',
-      'Free Road Recovery up to 4 times annually',
-    ],
-    colorCode: '#009456',
-    status: 'success',
-    route: 'ActivateCareSoloPlan',
-  },
-  {
-    id: 2,
-    title: 'Family Plan',
-    price: '144,000',
-    benefits: [
-      'Free medical care covering medical bills up to ₦ 1,000,000 annually',
-      'Free Road recovery up to 12 times annually',
-      'Free Legal assistance Call-out up to 12 times annually',
-      'Free Travel Insurance (For Road & Air)',
-      'Free Movie Premiere',
-      'Free access to VIP at selected locations',
-    ],
-    colorCode: '#F9D65B',
-    status: 'warning',
-    route: 'ActivateCareFamilyPlan',
-  },
-  {
-    id: 3,
-    title: 'Elite Plan',
-    price: '288,000',
-    benefits: [
-      'Free medical care covering medical bills up to ₦ 2,000,000 annually',
-      'Free Road recovery up to 12 times annually',
-      'Free Legal assistance Call-out up to 12 times annually',
-      'Free Travel Insurance (For Road & Air)',
-      'Free Movie Premiere',
-      'Free access to VIP at selected locations',
-    ],
-    colorCode: '#BBBBBB',
-    status: 'basic',
-    route: 'ActivateCareElitePlan',
-  },
-];
 
 export default function ActivateWallet({ navigation }) {
   const { width, height } = useWindowDimensions();
@@ -161,6 +113,7 @@ export default function ActivateWallet({ navigation }) {
       status = 'success';
       color = '#009456';
     } else {
+      status = 'black';
       color = 'black';
     }
     return (
