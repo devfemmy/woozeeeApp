@@ -128,7 +128,7 @@ function Accounts(props) {
     }
   }
 
-  // console.log(accounts);
+  // console.log('accounts => ', accounts);
 
   useEffect(() => {
     getBankDetails();
