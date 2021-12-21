@@ -311,7 +311,7 @@ export default function Wooz({ route, navigation }) {
             justifyContent: 'space-between',
             alignItems: 'center',
             width: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+            // backgroundColor: 'rgba(0, 0, 0, 0.1)',
           }}
         >
           <InteractIcon

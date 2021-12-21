@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useCallback } from 'react';
 
 import {
   Layout,
@@ -23,6 +23,8 @@ import {
 } from 'react-native';
 
 import { v4 as uuidv4 } from 'uuid';
+
+import SliderScreen from '../../../../../../components/RangeSlider/screens/Slider/index';
 
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 
@@ -53,15 +55,38 @@ import lapo from '../../../../../../assets/images/moneyMatters/lapo.png';
 
 import lapoBig from '../../../../../../assets/images/moneyMatters/lapoBig.png';
 
+import numberWithCommas from '../../../../../../constants/numberWithCommas';
+
 import zed from '../../../../../../assets/images/moneyMatters/zed.png';
 
 import reho from '../../../../../../assets/images/moneyMatters/reho.png';
 
 import fina from '../../../../../../assets/images/moneyMatters/fina.png';
+import Thumb from 'src/components/RangeSlider/Slider/Thumb';
+import Rail from 'src/components/RangeSlider/Slider/Rail';
+import RailSelected from 'src/components/RangeSlider/Slider/RailSelected';
+import Label from 'src/components/RangeSlider/Slider/Label';
+import Notch from 'src/components/RangeSlider/Slider/Notch';
 
 const SearchResults = (props) => {
   const { appState } = useContext(AppSettingsContext);
-  // console.log(props.route.params);
+
+  console.log('props =>', props.route.params[3]);
+
+  let _services = props?.route?.params[0];
+
+  let _serviceAmount = props?.route?.params[1];
+
+  let _durations = props?.route?.params[2].duration;
+
+  let _title = props?.route?.params[3];
+
+  const [_serviceInterest, _setServiceInterest] = useState(null);
+
+  const [_serviceDuration, _setServiceDuration] = useState(null);
+
+  const [isAsc, setIsAsc] = useState(true);
+  // console.log('loans', props.route.params);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
 
@@ -77,41 +102,56 @@ const SearchResults = (props) => {
 
   const [selectedService, setSelectedService] = useState([]);
 
-  const services = [
-    {
-      img: lapo,
-      interestRate: '4',
-      amount: '104,000',
-      level: 'LOWEST INTEREST',
-    },
-    {
-      img: zed,
-      interestRate: '10',
-      amount: '110,000',
-      level: '2ND LOWEST INTEREST',
-    },
-    {
-      img: reho,
-      interestRate: '15',
-      amount: '115,000',
-      level: '3RD LOWEST INTEREST',
-    },
-    {
-      img: fina,
-      interestRate: '18',
-      amount: '118,000',
-      level: '4TH LOWEST INTEREST',
-    },
-  ];
+  // const services = [
+  //   "lapo"={
+  //     img: lapo,
+  //     interestRate: '4',
+  //     amount: '104,000',
+  //     level: 'LOWEST INTEREST',
+  //   },
+  //   "zed"={
+  //     img: zed,
+  //     interestRate: '10',
+  //     amount: '110,000',
+  //     level: '2ND LOWEST INTEREST',
+  //   },
+  //   "reho"={
+  //     img: reho,
+  //     interestRate: '15',
+  //     amount: '115,000',
+  //     level: '3RD LOWEST INTEREST',
+  //   },
+  //   "fina"={
+  //     img: fina,
+  //     interestRate: '18',
+  //     amount: '118,000',
+  //     level: '4TH LOWEST INTEREST',
+  //   },
+  // ];
 
   const selectOption = (option) => {
+    // console.log('options', option);
     setSelectedService(option);
+    _setServiceInterest(option.interest);
+    _setServiceDuration(option.tenorTo);
     sheetRef.current.open();
   };
 
+  // console.log('selectedservice is => ', selectedService);
+
   const routeAddInfo = () => {
     sheetRef.current.close();
-    props.navigation.navigate('AdditionalInfo');
+    props.navigation.navigate('AdditionalInfo', {
+      serviceType: { _title },
+      amount: _serviceAmount,
+      offerId: selectedService._id,
+      from: selectedService.scheme_title,
+      provider: selectedService.scheme,
+      fromImg: selectedService,
+      customerName: 'Adeniyi Emmanuel',
+      bankImg: lapo,
+      accountNumber: '0167906059',
+    });
   };
 
   const ModalContent = () => {
@@ -134,7 +174,7 @@ const SearchResults = (props) => {
           }}
         >
           <Text category="h6" status="primary">
-            Loan Details
+            {_title} Details
           </Text>
           <Feather
             name="x"
@@ -172,10 +212,10 @@ const SearchResults = (props) => {
                 marginBottom: 5,
               }}
             >
-              Loan amount:
+              {_title} amount:
             </Text>
             <Text category="h6" status="basic">
-              ₦100,000.00
+              ₦{numberWithCommas(_serviceAmount)}.00
             </Text>
           </View>
         </View>
@@ -216,7 +256,7 @@ const SearchResults = (props) => {
                   style={{ marginRight: 5 }}
                 />
                 <Text category="c1" status="basic">
-                  Loan Duration
+                  {_title} Duration
                 </Text>
               </View>
               <Text
@@ -228,7 +268,7 @@ const SearchResults = (props) => {
                 }}
                 status="basic"
               >
-                30 Days
+                {_serviceDuration} Days
               </Text>
             </View>
             <View style={{ marginRight: 10 }}>
@@ -266,7 +306,7 @@ const SearchResults = (props) => {
                   // color: 'rgba(0,0,0,.8)',
                 }}
               >
-                4%
+                {_serviceInterest}%
               </Text>
             </View>
           </Layout>
@@ -288,7 +328,10 @@ const SearchResults = (props) => {
             Repayment amount:
           </Text>
           <Text category="h5" status="primary">
-            ₦104,000.00
+            ₦
+            {numberWithCommas(
+              (_serviceInterest / 100) * _serviceAmount + +_serviceAmount,
+            )}
           </Text>
         </View>
         <View
@@ -306,11 +349,23 @@ const SearchResults = (props) => {
             // disabled={isLoading}
             onPress={routeAddInfo}
           >
-            <Text status="control">{'Get Loan'}</Text>
+            <Text status="control">
+              {_title === 'Savings' ? 'Set Savings' : 'Get Loan'}
+            </Text>
           </Button>
         </View>
       </View>
     );
+  };
+
+  const handleSort = (option) => {
+    setSelectedIndex(option);
+    if (option !== 0) {
+      setIsAsc(false);
+    } else {
+      setIsAsc(true);
+    }
+    console.log(isAsc);
   };
 
   const SortContent = () => {
@@ -350,7 +405,7 @@ const SearchResults = (props) => {
         >
           <RadioGroup
             selectedIndex={selectedIndex}
-            onChange={(index) => setSelectedIndex(index)}
+            onChange={(index) => handleSort(index)}
           >
             <Radio>Low to High Interest</Radio>
             <Divider />
@@ -368,7 +423,9 @@ const SearchResults = (props) => {
               marginTop: 30,
             }}
           >
-            <Text status="control">{'Get Loan'}</Text>
+            <Text status="control">
+              {_title === 'Savings' ? 'Set Savings' : 'Get Loan'}
+            </Text>
           </Button>
         </View>
       </View>
@@ -422,16 +479,16 @@ const SearchResults = (props) => {
         <View
           style={{
             paddingVertical: 30,
-            // paddingHorizontal: 20,
+            paddingHorizontal: 10,
           }}
         >
           <Text category="h6" status="primary">
             Interest Rate
           </Text>
-          <Text status="basic" style={{ marginTop: 20 }}>
-            0% - 25%
-          </Text>
+
           {/* range slider here */}
+          <SliderScreen />
+
           <Divider style={{ marginTop: 20 }} />
           <Text category="h6" status="primary" style={{ marginTop: 20 }}>
             Repayment Flexibility
@@ -446,7 +503,7 @@ const SearchResults = (props) => {
             }}
           >
             <Text status="basic" style={{ fontSize: 12 }}>
-              Only shows loans offers with repayment flexibilty
+              Only shows offers with repayment flexibilty
             </Text>
             <Toggle />
           </View>
@@ -522,7 +579,7 @@ const SearchResults = (props) => {
     );
   };
 
-  const LoanOptions = ({ img, interestRate, amount, level }) => {
+  const LoanOptions = ({ img, interestRate, amount, level, duration, id }) => {
     return (
       <View
         style={{
@@ -556,9 +613,16 @@ const SearchResults = (props) => {
               marginBottom: 20,
             }}
           >
-            <Text category="c2" style={{ color: '#27D0AD' }}>
-              {level}
-            </Text>
+            {id == 0 ? (
+              <Text category="c2" style={{ color: '#27D0AD' }}>
+                {level}
+              </Text>
+            ) : (
+              <Text category="c2" style={{ color: '#27D0AD' }}>
+                OTHER INTEREST
+              </Text>
+            )}
+
             <View
               style={{
                 display: 'flex',
@@ -574,7 +638,7 @@ const SearchResults = (props) => {
                 style={{ marginHorizontal: 5 }}
               />
               <Text category="c1" status="basic">
-                30 days
+                {duration} days
               </Text>
             </View>
           </View>
@@ -618,10 +682,10 @@ const SearchResults = (props) => {
         }}
       >
         <Text category="h5" status="basic" style={{ marginBottom: 3 }}>
-          ₦100,000.00
+          ₦{numberWithCommas(_serviceAmount)}
         </Text>
         <Text category="c1" status="basic">
-          Fri, 25th Feb 2021 - Sat, 26th Mar 2021
+          {_title} Options
         </Text>
       </View>
     );
@@ -703,24 +767,39 @@ const SearchResults = (props) => {
             size={24}
             color="#B98E02"
           />
-          <Text category="c1" style={{ marginLeft: 5, color: '#B98E02' }}>
-            The accumulated Loan amount would be deducted from your account in
-            the event of default.
-          </Text>
+          {_title === 'Loans' ? (
+            <Text category="c1" style={{ marginLeft: 5, color: '#B98E02' }}>
+              The accumulated Loan amount would be deducted from your account in
+              the event of default.
+            </Text>
+          ) : (
+            <Text category="c1" style={{ marginLeft: 5, color: '#B98E02' }}>
+              The accumulated Savings amount would be added to your account in
+              the event of default.
+            </Text>
+          )}
         </View>
-        {services.map((service) => (
-          <TouchableOpacity
-            key={uuidv4()}
-            onPress={() => selectOption(service)}
-          >
-            <LoanOptions
-              img={service.img}
-              amount={service.amount}
-              level={service.level}
-              interestRate={service.interestRate}
-            />
-          </TouchableOpacity>
-        ))}
+        {/* {console.log('services result => ', _services)} */}
+        {_services
+          .sort((i, j) => i.interest - j.interest)
+          .filter((service) => +_durations[0] * 10 <= service.tenorTo)
+          .map((service, index) => (
+            <TouchableOpacity
+              key={uuidv4()}
+              onPress={() => selectOption(service)}
+            >
+              <LoanOptions
+                img={lapo}
+                amount={numberWithCommas(
+                  (service.interest / 100) * _serviceAmount + +_serviceAmount,
+                )}
+                level={'LOWEST INTEREST'}
+                interestRate={service.interest}
+                duration={service.tenorTo}
+                id={index}
+              />
+            </TouchableOpacity>
+          ))}
       </ScrollView>
       <RBSheet
         ref={sheetRef}
@@ -793,7 +872,7 @@ const SearchResults = (props) => {
           <ScrollView
             vertical
             showsVerticalScrollIndicator={false}
-            alwaysBounceVertical
+            always
             showsHorizontalScrollIndicator={false}
             constentContainerStyle={{
               display: 'flex',

@@ -65,14 +65,14 @@ function BankProcess(props) {
     // getBankDetails();
   }, []);
 
-  // const ACCOUNTS = [
-  //   {
-  //     id: 4,
-  //     title: `Globus Bank - ₦${accountBalance}`,
-  //     acctNo: accountNumber,
-  //     image: require('assets/images/banks/globus.png'),
-  //   },
-  // ];
+  const ACCOUNTS = [
+    {
+      id: 4,
+      title: `Globus Bank - ₦${accountBalance}`,
+      acctNo: accountNumber,
+      image: require('assets/images/banks/globus.png'),
+    },
+  ];
 
   const [form, setFormValues] = useState({
     _sendTo: '',
@@ -502,9 +502,9 @@ function BankProcess(props) {
         }
       />
 
-      {/* <SendTo />
+      <SendTo />
       <AccountSheet />
-      <ReceipientAccountSheet /> */}
+      <ReceipientAccountSheet />
     </Layout>
   );
 }

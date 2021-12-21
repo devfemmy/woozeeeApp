@@ -96,7 +96,7 @@ export default function Register({ navigation }) {
           screen="auth"
         />
         <ScrollView
-          alwaysBounceVertical
+          // always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
@@ -118,19 +118,6 @@ export default function Register({ navigation }) {
                   setFormValues={setFormValues}
                 />
               </View>
-              <View style={{ paddingVertical: 20 }}>
-                <Button
-                  status="danger"
-                  size="large"
-                  accessibilityLiveRegion="assertive"
-                  accessibilityComponentType="button"
-                  accessibilityLabel="Continue"
-                  onPress={validateEmail}
-                  disabled={isLoading || !checked}
-                >
-                  <Text status="control">{t('continue')}</Text>
-                </Button>
-              </View>
             </View>
             <View>
               <View
@@ -141,14 +128,16 @@ export default function Register({ navigation }) {
                   flexWrap: 'wrap',
                 }}
               >
-              <CheckBox
-              checked={checked}
-              onChange={nextChecked => setChecked(nextChecked)}
-              >
-                Accept Terms and Conditions
-              </CheckBox>
+                <CheckBox
+                  checked={checked}
+                  onChange={(nextChecked) => setChecked(nextChecked)}
+                >
+                  Accept Terms and Conditions
+                </CheckBox>
 
-                <Text category="p2">{`${t('continueAgree')} woozeee's`}</Text>
+                <Text category="p2" style={{ marginVertical: 10 }}>{`${t(
+                  'continueAgree',
+                )} woozeee's`}</Text>
                 <Button
                   appearance="ghost"
                   size="large"
@@ -266,6 +255,19 @@ export default function Register({ navigation }) {
                 </Button>
               )}
             </View> */}
+              <View style={{ paddingVertical: 20 }}>
+                <Button
+                  status="danger"
+                  size="large"
+                  accessibilityLiveRegion="assertive"
+                  accessibilityComponentType="button"
+                  accessibilityLabel="Continue"
+                  onPress={validateEmail}
+                  disabled={isLoading || !checked}
+                >
+                  <Text status="control">{t('continue')}</Text>
+                </Button>
+              </View>
               <View
                 style={{
                   flexDirection: 'row',

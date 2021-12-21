@@ -6,24 +6,26 @@ import {
   Datepicker,
   Button,
   Divider,
+  Spinner,
 } from '@ui-kitten/components';
+
+import { Video } from 'expo-av';
+
+import { GeneralSelect } from 'src/components/FormFields/index';
+
+import { Image, StyleSheet, TextInput, View } from 'react-native';
+
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Carousel from 'react-native-snap-carousel';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import TopNavigationArea from 'src/components/TopNavigationArea/index';
-
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-import { Image, StyleSheet, TextInput, View } from 'react-native';
+import TopNavigationArea from 'src/components/TopNavigationArea/index';
 
 import { TextIcon } from 'src/components/IconPacks/TextIcon';
-
-import { Video } from 'expo-av';
-
-import { GeneralSelect } from 'src/components/FormFields/index';
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import loansImg from '../../../../../../assets/images/moneyMatters/loansImg.png';
 import savingsImg from '../../../../../../assets/images/moneyMatters/savingsImg.png';
@@ -35,24 +37,30 @@ import deal2 from '../../../../../../assets/images/moneyMatters/deal2.png';
 import deal3 from '../../../../../../assets/images/moneyMatters/deal3.png';
 import deal4 from '../../../../../../assets/images/moneyMatters/deal4.png';
 
+import {
+  searchLoans,
+  searchSavings,
+} from '../../../../../../services/Requests/moneyMatters/index';
+
 const MoneyMatters = ({ route, navigation }) => {
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
+
   //   console.log(navigation, route);
   const serviceState =
     route.params !== undefined ? route.params.data.service : 'Loans';
 
-  //   const [serviceState, setServiceState] = useState(
-  //     route.params !== undefined ? route.params.data.service : 'Loans',
-  //   );
-
   const duration = [
     {
-      title: '1 month',
+      title: 'Select Duration',
     },
     {
-      title: '3 months',
+      title: '30 days',
     },
     {
-      title: '6 months',
+      title: '90 days',
+    },
+    {
+      title: '180 days',
     },
     {
       title: '1 Year',
@@ -62,17 +70,40 @@ const MoneyMatters = ({ route, navigation }) => {
     },
   ];
 
-  const [form, setFormValues] = useState({
-    fName: '',
-    sName: '',
-    displayName: '',
-    sex: '',
-    dob: '',
-    country: '',
-    state: '',
-    bio: '',
-    imgUrl: '',
-  });
+  const [_amount, setAmount] = useState('');
+
+  const [isLoading, setLoading] = useState(false);
+
+  const [form, setFormValues] = useState({});
+
+  const search = async () => {
+    if (serviceState === 'Loans') {
+      setLoading(true);
+      const res = await searchLoans(_amount);
+
+      setLoading(false);
+
+      const {
+        data: { loans },
+      } = res;
+      let title = 'Loan';
+
+      navigation.navigate('SearchResults', [loans, _amount, form, title]);
+    } else if (serviceState === 'Savings') {
+      setLoading(true);
+      const res = await searchSavings(_amount);
+      setLoading(false);
+
+      const {
+        data: { savings },
+      } = res;
+      let title = 'Savings';
+
+      navigation.navigate('SearchResults', [savings, _amount, form, title]);
+    } else {
+      return;
+    }
+  };
 
   const sliders = [
     {
@@ -413,6 +444,7 @@ const MoneyMatters = ({ route, navigation }) => {
                     ? route.params.data.question
                     : 'How much loan do you need'
                 }
+                onChangeText={(text) => setAmount(text)}
                 placeholderTextColor="gray"
                 status="primary"
                 style={{
@@ -467,22 +499,6 @@ const MoneyMatters = ({ route, navigation }) => {
                 data={duration}
                 setFormValues={setFormValues}
               />
-              {/* <TextInput
-                placeholder="Duration"
-                placeholderTextColor="gray"
-                onTouchStart={() => navigation.navigate('Duration')}
-                status="primary"
-                style={{
-                  textAlign: 'left',
-                  paddingLeft: 10,
-                  backgroundColor: '#F3F3F7',
-                  width: 320,
-                  height: 40,
-                  justifyContent: 'center',
-                  borderTopRightRadius: 5,
-                  borderBottomRightRadius: 5,
-                }}
-              /> */}
             </View>
           </View>
           <View style={{ paddingVertical: 20, paddingHorizontal: 15 }}>
@@ -492,15 +508,9 @@ const MoneyMatters = ({ route, navigation }) => {
               accessibilityLiveRegion="assertive"
               accessibilityComponentType="button"
               accessibilityLabel="Continue"
-              // disabled={isLoading}
-              onPress={() => navigation.navigate('SearchResults')}
-              // style={{
-              //   elevation: 5,
-              //   shadowColor: '#dcdcdc',
-              //   shadowOffset: { width: 0, height: 3 },
-              //   shadowOpacity: 1,
-              //   shadowRadius: 1,
-              // }}
+              disabled={isLoading}
+              accessoryLeft={isLoading ? renderSpinner : null}
+              onPress={search}
             >
               <Text status="control">{'Search'}</Text>
             </Button>
@@ -586,7 +596,7 @@ const MoneyMatters = ({ route, navigation }) => {
         </ScrollView>
       </Layout>
     ),
-    [route, navigation],
+    [route, navigation, form, _amount, serviceState, isLoading],
   );
 };
 const styles = StyleSheet.create({

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button, Dimensions, Image, Platform } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import getLibraryPermission from 'src/utilities/getLibraryPermission';
@@ -49,18 +49,32 @@ export default function UploadEntries(props) {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
+      allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      durationLimit: 5,
+      // base64: true
     });
 
 
     if (!result.cancelled) {
       if (result.type === 'video') {
-        props.navigation.navigate('PreviewEntry', {editorResult: result.uri, imageUri: null, entries: entries})
+        if (Platform.OS === 'ios') {
+          props.navigation.navigate('PreviewEntry', {editorResult: result.uri, 
+            imageUri: null, entries: entries})
+        }else {
+          props.navigation.navigate('AndroidPreview', {editorResult: result.uri, 
+            imageUri: null, entries: entries})
+        }
       }else {
         setImage(result.uri);
-        props.navigation.navigate('PreviewEntry', {imageUri: result.uri, editorResult: null, entries: entries})
+        if (Platform.OS === 'ios') {
+          props.navigation.navigate('PreviewEntry', {imageUri: result.uri, 
+            editorResult: null, entries: entries})
+        }else {
+          props.navigation.navigate('AndroidPreview', {imageUri: result.uri, 
+            editorResult: null, entries: entries})
+        }
       }
     }
   };
@@ -69,7 +83,13 @@ export default function UploadEntries(props) {
     if (cameraRef) {
         const data = await cameraRef.takePictureAsync(null);
         setImage(data.uri);
-        props.navigation.navigate('PreviewEntry', {imageUri: data.uri, editorResult: null, entries: entries})
+        if (Platform.OS === 'ios'){
+          props.navigation.navigate('PreviewEntry', {imageUri: data.uri, 
+            editorResult: null, entries: entries})
+        }else {
+          props.navigation.navigate('AndroidPreview', {imageUri: data.uri, 
+            editorResult: null, entries: entries})
+        }
       }
   }
   // const recordCamera = async () => {

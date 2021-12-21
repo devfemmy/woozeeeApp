@@ -4,13 +4,16 @@ import React, {
   useRef,
   useState,
   useEffect,
+  useMemo,
 } from 'react';
 
-import { View, useWindowDimensions, FlatList } from 'react-native';
+import { View, useWindowDimensions, FlatList, ScrollView } from 'react-native';
 
 import { useInfiniteQuery } from 'react-query';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
 
@@ -53,7 +56,11 @@ import VideoComponent from 'src/components/VideoComponent/VideoComponent';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useIsFocused,
+  useScrollToTop,
+} from '@react-navigation/native';
 
 import getUserProfile from '../../../../../services/Requests/FetchUserProfile';
 
@@ -74,6 +81,9 @@ const VIEWABILITY_CONFIG = {
 
 export default function Social({ navigation }) {
   useDisableAndroidExit();
+
+  const ref = React.useRef(null);
+  useScrollToTop(ref);
 
   const { width, height } = useWindowDimensions();
 
@@ -116,21 +126,7 @@ export default function Social({ navigation }) {
     setUserImg(res);
   };
 
-  // useEffect(() => {
-  //   getUserProfile(_userId);
-  // }, [navigation]);
-
   getUserImg();
-
-  //view all async stuff
-  // AsyncStorage.getAllKeys((err, keys) => {
-  //   AsyncStorage.multiGet(keys, (error, stores) => {
-  //     stores.map((result, i, store) => {
-  //       console.log('async stuff ', { [store[i][0]]: store[i][1] });
-  //       return true;
-  //     });
-  //   });
-  // });
 
   const refreshFeeds = useCallback(() => {
     setShouldRefresh(true);
@@ -248,7 +244,9 @@ export default function Social({ navigation }) {
       // console.log(final);
       return (
         <View style={{ flex: 1 }}>
+          {/* <ScrollView vertical ref={ref} nestedScrollEnabled={true}> */}
           <FlatList
+            nestedScrollEnabled={true}
             initialNumToRender={3}
             maxToRenderPerBatch={3}
             windowSize={5}
@@ -266,24 +264,29 @@ export default function Social({ navigation }) {
             onEndThreshold={0}
             data={final}
             keyExtractor={(_, i) => i.toString()}
+            // extraData={final}
             renderItem={({ item, index }) => {
               return (
                 <>
                   {item.type == 'video' ? (
-                    <VideoView
-                      data={{ item, index }}
-                      viewHeight={ITEM_HEIGHT}
-                      navigation={navigation}
-                      t={t}
-                      viewable={Viewable}
-                    />
+                    <KeyboardAwareScrollView>
+                      <VideoView
+                        data={{ item, index }}
+                        viewHeight={ITEM_HEIGHT}
+                        navigation={navigation}
+                        t={t}
+                        viewable={Viewable}
+                      />
+                    </KeyboardAwareScrollView>
                   ) : (
-                    <ImageView
-                      data={{ item, index }}
-                      viewHeight={ITEM_HEIGHT}
-                      navigation={navigation}
-                      t={t}
-                    />
+                    <KeyboardAwareScrollView>
+                      <ImageView
+                        data={{ item, index }}
+                        viewHeight={ITEM_HEIGHT}
+                        navigation={navigation}
+                        t={t}
+                      />
+                    </KeyboardAwareScrollView>
                   )}
                   {index === 2 || index === 12 ? (
                     <MoviesSection
@@ -305,10 +308,11 @@ export default function Social({ navigation }) {
                 </>
               );
             }}
-            ref={ref}
             onViewableItemsChanged={onViewRef.current}
             viewabilityConfig={viewConfigRef.current}
+            ref={ref}
           />
+          {/* </ScrollView> */}
         </View>
       );
       //

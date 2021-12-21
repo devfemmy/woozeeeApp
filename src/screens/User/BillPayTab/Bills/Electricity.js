@@ -623,7 +623,7 @@ export default function Electricity({ navigation }) {
         />
         <ScrollView
           style={{ flex: 1 }}
-          alwaysBounceVertical
+          always
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >

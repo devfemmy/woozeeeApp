@@ -98,7 +98,7 @@ export default function Notifications(props) {
   return (
     <List
       style={{ backgroundColor: 'transparent', paddingVertical: 10 }}
-      alwaysBounceVertical
+      always
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       data={MESSAGES}

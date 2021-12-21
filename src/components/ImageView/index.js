@@ -37,6 +37,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import FastImage from 'react-native-fast-image';
 
+import FeedsComments from '../../components/FeedsComments';
+
 // prettier-ignore
 import {
     Text, Button, Divider, Layout, Input, List
@@ -53,6 +55,8 @@ import firebase from '@react-native-firebase/app';
 import dl from '@react-native-firebase/dynamic-links';
 
 import '@react-native-firebase/auth';
+
+import SeeMore from 'react-native-see-more-inline';
 
 import firestore from '@react-native-firebase/firestore';
 
@@ -84,9 +88,11 @@ import {
   IconCEye,
 } from 'src/components/CustomIcons';
 
+import Hyperlink from 'react-native-hyperlink';
+
 import axios from 'axios';
 
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons, Entypo, EvilIcons } from '@expo/vector-icons';
 
 import { TextInput } from 'react-native';
 
@@ -380,12 +386,14 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
         text: commentMessage,
         userFirstName: userData.data.user.fName,
         userLastName: userData.data.user.sName,
-        userName: `@iam${userData.data.user.fName.toLowerCase()}${userData.data.user.sName.toLowerCase()}`,
+        userName: `${userData.data.user.displayName.toLowerCase()}`,
         imgUrl: userData.data.user.sName.imgUrl,
         sentAt: Date(),
         delivered: false,
         sent: true,
       });
+
+    setText('');
   };
 
   const sharePostToDm = async (
@@ -423,12 +431,8 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
   };
 
   const routeUserProfile = async () => {
-    const userData = await getUserData(item.userId);
-    const { data } = userData;
-    // await navigation.navigate('UserProfile', data);
-
     item.userId !== _userId
-      ? await navigation.navigate('UserProfile', data)
+      ? await navigation.navigate('UserProfile', { id: item.userId })
       : await navigation.navigate('ProfileTab');
   };
 
@@ -538,62 +542,70 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                     justifyContent: 'center',
                   }}
                 >
-                  <FastImage
+                  <Image
+                    source={{ uri: item.userImageURL }}
+                    // defaultSource={require('assets/images/user/user2.png')}
                     style={{
                       height: 36,
                       width: 36,
                       borderRadius: 18,
                       borderColor: 'white',
                     }}
-                    source={{
-                      uri: item.userImageURL,
-                      priority: FastImage.priority.normal,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover}
+                    resizeMode="cover"
                   />
                 </LinearGradient>
                 <View
                   style={{
-                    flexDirection: 'row',
+                    // flexDirection: 'row',
                     flexWrap: 'wrap',
                     paddingRight: 5,
                     paddingLeft: 5,
                     maxWidth: 190,
                   }}
                 >
-                  <Text
-                    status="primary"
-                    category="s2"
-                    style={{ marginRight: 5 }}
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      paddingRight: 5,
+                      paddingLeft: 5,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      maxWidth: 190,
+                    }}
                   >
-                    {item.userDisplayName}
-                  </Text>
-                  <Text status="danger" category="s2">
-                    {/* {item.userDisplayName} */}
+                    <Text
+                      status="primary"
+                      category="s2"
+                      style={{ marginRight: 3 }}
+                    >
+                      {item.userFirstName}
+                    </Text>
+                    <Text status="danger" category="s2">
+                      {item.userLastName}
+                    </Text>
+                    <Image
+                      source={require('assets/images/icon/verified-1.png')}
+                      defaultSource={require('assets/images/icon/verified-1.png')}
+                      style={{
+                        height: 16,
+                        width: 16,
+                        borderRadius: 8,
+                        marginHorizontal: 5,
+                      }}
+                      resizeMode="cover"
+                    />
+                  </View>
+                  <Text
+                    status="basic"
+                    category="c1"
+                    style={{
+                      paddingRight: 5,
+                      paddingLeft: 5,
+                    }}
+                  >
+                    @{item.userDisplayName}
                   </Text>
                 </View>
-                {/* <FastImage
-                style={{
-                  height: 16,
-                  width: 16,
-                  borderRadius: 8,
-                }}
-                source={{
-                  uri: item.mediaURL,
-                  priority: FastImage.priority.normal,
-                }}
-                resizeMode={FastImage.resizeMode.cover}
-              /> */}
-                {/* <Image
-                  source={require('assets/images/icon/verified-1.png')}
-                  defaultSource={require('assets/images/icon/verified-1.png')}
-                  style={{
-                    height: 16,
-                    width: 16,
-                    borderRadius: 8,
-                  }}
-                  resizeMode="cover"
-                /> */}
               </TouchableOpacity>
             </View>
             <View>
@@ -607,28 +619,29 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
               />
             </View>
           </View>
-          <TouchableWithoutFeedback
-          // onPress={
-          //   data.item.type && data.item.type == 'video'
-          //     ? () => toggleMute()
-          //     : null
-          // }
-          >
+          {data.item.description !== '' && (
+            <View style={{ marginLeft: 10, marginVertical: 5 }}>
+              <Hyperlink
+                linkStyle={{ textDecorationLine: 'underline' }}
+                linkDefault={true}
+              >
+                <SeeMore
+                  numberOfLines={3}
+                  style={{ fontFamily: 'Montserrat' }}
+                  seeLessText={true}
+                >
+                  {data.item.description}
+                </SeeMore>
+              </Hyperlink>
+            </View>
+          )}
+          <TouchableWithoutFeedback>
             <View
               style={{
                 marginVertical: 10,
                 height: viewHeight - 100,
               }}
             >
-              {data.item.description !== '' && (
-                <Text
-                  // status="primary"
-                  category="s2"
-                  style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
-                >
-                  {data.item.description}
-                </Text>
-              )}
               <ImageBackground
                 blurRadius={10}
                 style={{
@@ -684,7 +697,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                       marginVertical: 1,
                       marginRight: 5,
                     }}
-                    size={22}
+                    size={28}
                     color="red"
                     onPress={toggleLike}
                   />
@@ -695,7 +708,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                       marginVertical: 1,
                       marginRight: 5,
                     }}
-                    size={22}
+                    size={28}
                     color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                     onPress={toggleLike}
                   />
@@ -709,23 +722,23 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
                   </Text>
                 )}
               </View>
-              <Ionicons
-                name="ios-chatbox-ellipses-outline"
+              <EvilIcons
+                name="comment"
                 style={{
-                  marginVertical: 2,
+                  marginVertical: 3,
                   marginHorizontal: 10,
                 }}
-                size={21}
+                size={33}
                 color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                 onPress={routeComments}
               />
-              <Feather
-                name="send"
-                size={20}
+              <Entypo
+                name="forward"
+                size={26}
                 color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                 style={{
-                  marginVertical: 2,
-                  marginHorizontal: 8,
+                  marginVertical: 1,
+                  marginHorizontal: 10,
                 }}
                 onPress={
                   () => handleSend()
@@ -747,6 +760,7 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
               />
             </View> */}
           </View>
+          <FeedsComments postId={data.item._id} gotoComment={routeComments} />
           <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
             <View
               style={{
@@ -782,11 +796,14 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
               <View style={{ flex: 1, marginHorizontal: 5 }}>
                 <TextInput
                   placeholder="Leave a comment"
+                  placeholderTextColor="rgba(40, 63,100, 1)"
                   onChangeText={(text) => setText(text)}
                   style={{
                     height: 40,
                     paddingHorizontal: 5,
-                    color: 'grey',
+                    backgroundColor: 'rgba(10, 50, 90, 0.1)',
+                    borderRadius: 10,
+                    color: appTheme === '#F7F9FC' ? 'black' : 'white',
                   }}
                   defaultValue={text}
                 />
@@ -988,6 +1005,6 @@ export default function ImageView({ data, viewHeight, navigation, t }) {
         </RBSheet>
       </Root>
     ),
-    [data, isBookmarked, isLiked, totalLikes, following, navigation],
+    [data, isBookmarked, isLiked, totalLikes, following, navigation, text],
   );
 }

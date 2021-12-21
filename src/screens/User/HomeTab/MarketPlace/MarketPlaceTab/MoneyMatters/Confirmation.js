@@ -23,53 +23,53 @@ import loan from '../../../../../../assets/images/moneyMatters/loan.png';
 import savings from '../../../../../../assets/images/moneyMatters/savings.png';
 import lapo2 from '../../../../../../assets/images/moneyMatters/lapo2.png';
 import access from '../../../../../../assets/images/banks/access.png';
+import numberWithCommas from 'src/constants/numberWithCommas';
+import { apply } from '../../../../../../services/Requests/moneyMatters/index';
 
-const MoneyMattersConfirmation = ({
-  currUser,
-  currInfo,
-  currImg,
-  guestUser,
-  guestInfo,
-  guestImg,
-  navigation,
-  action,
-  amount,
-}) => {
-  const LoaneeDetailsBlock = ({ currUserName, currUserInfo, img }) => {
+const MoneyMattersConfirmation = (props) => {
+  const serviceDetails = props.route.params;
+  // console.log('serviceDetails.serviceOrg => ', serviceDetails);
+
+  const LoaneeDetailsBlock = () => {
     return (
       <View style={{ display: 'flex' }}>
-        <View
+        <Layout
+          level="1"
           style={{
             display: 'flex',
+            // flex: 1,
             flexDirection: 'row',
             justifyContent: 'space-between',
             width: 350,
             alignItems: 'center',
             borderRadius: 5,
-            backgroundColor: 'white',
+            width: '100%',
             height: 100,
             padding: 15,
             marginBottom: 30,
-            elevation: 5,
-            shadowColor: '#dcdcdc',
-            shadowOffset: { width: 0, height: 3 },
-            shadowOpacity: 1,
-            shadowRadius: 1,
           }}
         >
           <View>
-            <Text category="c2" style={{ color: '#043F7C', marginVertical: 5 }}>
-              {currUserName} Lapo Microfinance Bank
+            <Text category="c2" status="primary" style={{ marginVertical: 5 }}>
+              {serviceDetails.serviceType._title === 'Savings'
+                ? serviceDetails.customer.name
+                : serviceDetails.serviceOrg.name.toUpperCase()}
             </Text>
-            <Text
-              category="c1"
-              style={{ color: 'rgba(0, 0, 0, 0.8)', marginVertical: 5 }}
-            >
-              {currUserInfo}Loanee
+            <Text category="c1" status="basic" style={{ marginVertical: 5 }}>
+              {serviceDetails.serviceType._title === 'Savings'
+                ? serviceDetails.customer.accountNumber
+                : 'Organization'}
             </Text>
           </View>
-          <Image source={lapo2} resizeMode="contain" />
-        </View>
+          {/* serviceDetails.serviceOrg.image  => when api complete*/}
+          <Image
+            source={
+              serviceDetails.serviceType._title === 'Savings' ? access : lapo2
+            }
+            resizeMode="contain"
+            style={{ width: 50, height: 50 }}
+          />
+        </Layout>
         <View
           style={{
             width: 30,
@@ -91,9 +91,10 @@ const MoneyMattersConfirmation = ({
     );
   };
 
-  const UserDetailBlock = ({ guestUserName, guestUserInfo, img }) => {
+  const UserDetailBlock = () => {
     return (
-      <View
+      <Layout
+        level="1"
         style={{
           display: 'flex',
           flexDirection: 'row',
@@ -101,42 +102,51 @@ const MoneyMattersConfirmation = ({
           width: 350,
           alignItems: 'center',
           borderRadius: 5,
-          backgroundColor: 'white',
+          width: '100%',
           height: 100,
           padding: 15,
           marginVertical: 10,
-          elevation: 5,
-          shadowColor: '#dcdcdc',
-          shadowOffset: { width: 0, height: 3 },
-          shadowOpacity: 1,
-          shadowRadius: 1,
         }}
       >
         <View>
-          <Text category="c2" style={{ color: '#043F7C', marginVertical: 5 }}>
-            {guestUserName} Jace Wazobia
+          <Text category="c2" status="primary" style={{ marginVertical: 5 }}>
+            {serviceDetails.serviceType._title === 'Loan'
+              ? serviceDetails.customer.name
+              : serviceDetails.serviceOrg.name.toUpperCase()}
           </Text>
-          <Text
-            category="c1"
-            style={{ color: 'rgba(0, 0, 0, 0.8)', marginVertical: 5 }}
-          >
-            {guestUserInfo} 4189 4169 4597 1122 (Access Bank)
+          <Text category="c1" status="basic" style={{ marginVertical: 5 }}>
+            {serviceDetails.serviceType._title === 'Loan'
+              ? serviceDetails.customer.accountNumber
+              : 'Organization'}
           </Text>
         </View>
         <Image
-          source={access}
+          // serviceDetails.customer.bankImage
+          source={serviceDetails.serviceType._title === 'Loan' ? access : lapo2}
           resizeMode="contain"
           style={{ width: 50, height: 50 }}
         />
-      </View>
+      </Layout>
     );
   };
 
-  const routeSuccess = () => {
-    navigation.navigate('Success', {
-      params: { success: 'Transaction Successful!' },
-    });
+  const routeSuccess = async () => {
+    const res = await apply(
+      serviceDetails.serviceType._title,
+      serviceDetails.amount,
+      serviceDetails.offerId,
+      serviceDetails.serviceOrg.name,
+      serviceDetails.customer.name,
+      serviceDetails.customer.accountNumber,
+      'Access Bank',
+    );
+    console.log(res);
+    // navigation.navigate('Success', {
+    //   params: { success: 'Transaction Successful!' },
+    // });
   };
+
+  const { navigation } = props;
 
   return (
     <Layout level="6" style={{ flex: 1 }}>
@@ -146,20 +156,12 @@ const MoneyMattersConfirmation = ({
         screen="auth"
       />
       <View style={styles.container}>
-        <Text category="h6">{action}Loan</Text>
-        <Text category="h5">₦ {amount}100000</Text>
+        <Text category="h6">{serviceDetails.serviceType._title}</Text>
+        <Text category="h5">₦{numberWithCommas(serviceDetails.amount)}</Text>
       </View>
       <View style={styles.Loancontainer}>
-        <LoaneeDetailsBlock
-          currUserName={currUser}
-          currUserInfo={currInfo}
-          img={currImg}
-        />
-        <UserDetailBlock
-          guestUserName={guestUser}
-          guestUserInfo={guestInfo}
-          img={guestImg}
-        />
+        <LoaneeDetailsBlock />
+        <UserDetailBlock />
       </View>
       <View
         style={{
@@ -175,13 +177,6 @@ const MoneyMattersConfirmation = ({
           accessibilityLabel="Continue"
           // disabled={isLoading}
           onPress={routeSuccess}
-          style={{
-            elevation: 5,
-            shadowColor: '#dcdcdc',
-            shadowOffset: { width: 0, height: 3 },
-            shadowOpacity: 1,
-            shadowRadius: 1,
-          }}
         >
           <Text status="control">{'Confirm'}</Text>
         </Button>

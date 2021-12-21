@@ -23,7 +23,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const StoryContainer = (props) => {
   const { user } = props;
-  // console.log('from story container user is -> ', user);
+
   const { items = [] } = user || {};
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModelOpen, setModel] = useState(false);
@@ -36,6 +36,7 @@ const StoryContainer = (props) => {
   const [reply, setReply] = useState('');
 
   // const onVideoLoaded = (length) => {
+  //   setLoaded(true);
   //   props.onVideoLoaded(length.duration);
   // };
 
@@ -74,8 +75,8 @@ const StoryContainer = (props) => {
   };
 
   const onVideoLoaded = (length) => {
-    setLoaded(true);
     setDuration(length.duration);
+    setLoaded(true);
   };
 
   const onPause = (result) => {

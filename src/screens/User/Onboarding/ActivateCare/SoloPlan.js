@@ -83,14 +83,13 @@ export default function SoloPlan({ navigation, route }) {
     // thirdBeneficiaryName: '',
     // fourthBeneficiaryName: '',
     transactionId: trans_id,
-    loanId: loanId
+    loanId: loanId,
   });
   if (trans_id === null) {
     delete form.transactionId;
-  }else if (loanId === null) {
+  } else if (loanId === null) {
     delete form.loanId;
   }
-
 
   const t = useContext(LocaleContext);
 
@@ -127,8 +126,14 @@ export default function SoloPlan({ navigation, route }) {
   };
 
   const subscribeToInsurance = () => {
-    if (form.firstName === '' || form.surname === '' || 
-    form.mobileNumber === '' || form.DOB === '' || form.address === '' || form.title === '') {
+    if (
+      form.firstName === '' ||
+      form.surname === '' ||
+      form.mobileNumber === '' ||
+      form.DOB === '' ||
+      form.address === '' ||
+      form.title === ''
+    ) {
       Toast.show({
         text: 'Please fill all the form',
         buttonText: 'Important!',
@@ -136,43 +141,43 @@ export default function SoloPlan({ navigation, route }) {
         type: 'warning',
         duration: 2000,
       });
-    }else {
+    } else {
       setLoading(true);
       AsyncStorage.getItem('USER_AUTH_TOKEN')
-      .then((res) => {
-        const data = form;
-        axios
-          .post(`insurance/subscribe`, data, {
-            headers: { Authorization: res },
-          })
-          .then((res) => {
-            console.log("response", res)
-            setLoading(false);
-            Toast.show({
-              text: 'Subscribtion completed successfully',
-              buttonText: 'Okay',
-              position: 'top',
-              type: 'success',
-              duration: 2000,
+        .then((res) => {
+          const data = form;
+          axios
+            .post(`insurance/subscribe`, data, {
+              headers: { Authorization: res },
+            })
+            .then((res) => {
+              console.log('response', res);
+              setLoading(false);
+              Toast.show({
+                text: 'Subscribtion completed successfully',
+                buttonText: 'Okay',
+                position: 'top',
+                type: 'success',
+                duration: 2000,
+              });
+              setTimeout(() => {
+                navigateToNext();
+              }, 2000);
+            })
+            .catch((err) => {
+              setLoading(false);
+              console.log(err.response);
+              Toast.show({
+                text: 'Subscription Request Failed',
+                buttonText: 'Okay',
+                position: 'bottom',
+                type: 'danger',
+                duration: 2000,
+              });
+              //   alert('Network Error')
             });
-            setTimeout(() => {
-              navigateToNext();
-            }, 2000);
-          })
-          .catch((err) => {
-            setLoading(false);
-            console.log(err.response);
-            Toast.show({
-              text: 'Subscription Request Failed',
-              buttonText: 'Okay',
-              position: 'bottom',
-              type: 'danger',
-              duration: 2000,
-            });
-            //   alert('Network Error')
-          });
-      })
-      .catch((err) => err);
+        })
+        .catch((err) => err);
     }
   };
 
@@ -186,7 +191,7 @@ export default function SoloPlan({ navigation, route }) {
             screen="auth"
           />
           <ScrollView
-            alwaysBounceVertical
+            always
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
           >

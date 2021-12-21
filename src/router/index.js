@@ -107,6 +107,7 @@ import MyList from 'src/screens/User/Common/Movies/More/MyList/index';
 import ComingSoon from 'src/screens/User/Common/Movies/More/ComingSoon/index';
 // import MoneyMatters from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/index';
 import MoneyMatters from 'src/router/User/HomeTab/MarketPlace/MoneyMatters/index';
+import ClickNShop from 'src/router/User/HomeTab/MarketPlace/ClickNShop/index';
 import MoneyMattersServices from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/MoneyMattersServices';
 import Duration from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/Duration';
 import SearchResults from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/MoneyMatters/SearchResults';
@@ -136,6 +137,11 @@ import RatingScreen from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/As
 import Trip from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/Trips/Trip';
 import CancelTrip from 'src/screens/User/HomeTab/MarketPlace/MarketPlaceTab/AskALawyer/Trips/CancelTrip';
 
+import FillCardDetails from 'src/screens/User/WalletTab/FillCardDetails';
+import AddMoney from 'src/screens/User/WalletTab/AddMoney';
+import Deposit from 'src/screens/User/WalletTab/Deposit';
+import Freeze from 'src/screens/User/WalletTab/Freeze';
+import AndroidPreview from 'src/screens/User/Common/VideoUpload/AndroidPreview';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -215,6 +221,7 @@ export default function Router() {
       MarketPlaceRoute,
       AskADoctorRoute,
       MoneyMatters,
+      ClickNShop,
       CharityRoute,
       EditProfile,
       ChangePassword,
@@ -278,8 +285,13 @@ export default function Router() {
       CableFlutterPay,
       TransactionSummary,
       TransferMoney,
+      Deposit,
+      Freeze,
+      FillCardDetails,
+      AddMoney,
       Accounts,
       ChallengePage,
+      AndroidPreview,
     },
 
     Common: {

@@ -34,7 +34,7 @@ import FetchFailed from 'src/components/DataFetch/FetchFailed';
 
 import Placeholders from 'src/components/Placeholders';
 
-import { IconBackIos, IconCMedal } from 'src/components/CustomIcons';
+import { IconBackIos, IconCMovie } from 'src/components/CustomIcons';
 
 import Api from 'src/api';
 import CustomVideo from '../CustomVideo/index';
@@ -107,7 +107,7 @@ export default function DeepLinkPost({ route, navigation }) {
 
   const { _id } = route.params;
 
-  // console.log('from deep link, id is ', route.params);
+  const goBack = () => navigation.goBack();
 
   const { width, height } = useWindowDimensions();
 
@@ -177,6 +177,7 @@ export default function DeepLinkPost({ route, navigation }) {
         />
       );
     }
+    // console.log('data ', _data);
     return (
       <>
         <React.Fragment>
@@ -231,7 +232,7 @@ export default function DeepLinkPost({ route, navigation }) {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#04070C',
+          // backgroundColor: '#04070C',
         }}
       >
         <View
@@ -242,66 +243,19 @@ export default function DeepLinkPost({ route, navigation }) {
             position: 'absolute',
             top: 0,
             right: 0,
+            flexDirection: 'row',
             width: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.05)',
+            zIndex: 1000,
           }}
         >
-          {/* <InteractIcon
+          <InteractIcon
             Accessory={IconBackIos}
             status="control"
-            height={28}
-            width={28}
-            onPress={goBack}
-          /> */}
+            // height={28}
+            // width={28}
+            onPress={() => goBack()}
+          />
         </View>
-
-        {/* {_data !== undefined && (
-          <>
-            <React.Fragment>
-              <View style={{ position: 'relative' }}>
-                <Image
-                  resizeMode="contain"
-                  style={{
-                    height: VIEW_HEIGHT,
-                    width: '100%',
-                    overflow: 'hidden',
-                    position: 'absolute',
-                  }}
-                  source={{ uri: _data.mediaURL }}
-                />
-              </View>
-              <CustomVideo
-                ref={videoViewRef}
-                data={_data}
-                height={VIEW_HEIGHT}
-                videoRef={videoRef}
-                navigation={navigation}
-              />
-            </React.Fragment>
-            <Animated.View
-              style={[
-                StyleSheet.absoluteFillObject,
-                { height: VIEW_HEIGHT, top: index * VIEW_HEIGHT, opacity },
-              ]}
-            >
-              <Video
-                ref={videoRef}
-                resizeMode="contain"
-                style={[StyleSheet.absoluteFillObject, { flex: 1 }]}
-                source={{ uri: _data.mediaURL }}
-                isLooping
-                shouldPlay={true}
-                onReadyForDisplay={() =>
-                  Animated.timing(opacity, {
-                    toValue: 1,
-                    useNativeDriver: true,
-                    duration: 500,
-                  }).start()
-                }
-              />
-            </Animated.View>
-          </>
-        )} */}
         <WoozPostsArea />
       </View>
     </Layout>

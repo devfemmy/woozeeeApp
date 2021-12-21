@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import {
   View,
   TouchableOpacity,
-  Image,
   TextInput,
   FlatList,
   Dimensions,
   StyleSheet,
+  Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Layout, List, Text, Divider } from '@ui-kitten/components';
@@ -22,12 +22,16 @@ import Firebase from '../../../../services/Firebase/firebaseConfig';
 
 import TopNavigationArea from 'src/components/TopNavigationArea/index';
 import { AddUser } from 'src/services/Firebase/Users';
+import axios from '../../../../services/api/index';
+import ImgToBase64 from 'react-native-image-base64';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 class ChatScreen extends Component {
   state = {
     message: '',
     guestUid: '',
     currentUid: '',
+    fullName: '',
     allMessages: [],
     image: '',
     signal: false,
@@ -37,9 +41,11 @@ class ChatScreen extends Component {
 
   async componentDidMount() {
     const currentUid = await AsyncStorage.getItem('userid');
+    const fullName = await AsyncStorage.getItem('fullName')
     // console.log(currentUid)
     const { guestUid, name } = this.props.route.params;
-    this.setState({ currentUid: currentUid, guestUid: guestUid });
+    this.setState({ currentUid: currentUid, guestUid: guestUid, 
+      fullName: fullName });
     try {
       Firebase.database()
         .ref('messages')
@@ -111,9 +117,23 @@ class ChatScreen extends Component {
         (err)
       })
   }
+  sendNotification = (guestId, fullName, message) => {
+    const data = {
+      message: `${message} (${fullName})`,
+      data: {
+          _id: guestId,
+      }
+    }
+      axios.post('notification', data).then(res => 
+        console.log("response", res)
+        ).catch(err => console.log(err))
+  }
   sendMessage = async () => {
     const { guestUid, name, image } = this.props.route.params;
+
     if (this.state.message) {
+      this.sendNotification(guestUid, this.state.fullName, 
+        this.state.message)
       SendMessage(
         this.state.currentUid,
         this.state.guestUid,
@@ -164,6 +184,32 @@ class ChatScreen extends Component {
 
     }
   };
+  openGallery() {
+    launchImageLibrary('photo', (response) => {
+      console.log(response.assets[0].uri)
+        this.setState({ loader: true });
+        ImgToBase64.getBase64String(response.assets[0].uri)
+            .then(async (base64String) => {
+                let source = "data:image/jpeg;base64," + base64String;
+                SendMessage(this.state.currentUid, this.state.guestUid, "attachment", source).
+                    then((res) => {
+                      console.log(res)
+                      this.setState({ message: '' });
+                    }).catch((err) => {
+                        alert(err)
+                    })
+
+                RecieveMessage(this.state.currentUid, this.state.guestUid, "attachment", source).
+                    then((res) => {
+                      this.setState({ message: '' });
+                    }).catch((err) => {
+                        alert(err)
+                    })
+            })
+            .catch(err => this.setState({ loader: false }));
+    })
+}
+  
 
   render() {
     const { name } = this.props.route.params;
@@ -233,7 +279,7 @@ class ChatScreen extends Component {
                 borderRadius: 20,
                }}
              >
-               <Hyperlink
+               {item.image === '' ? <Hyperlink
                  linkStyle={{ textDecorationLine: 'underline' }}
                  linkDefault={true}
                >
@@ -247,6 +293,11 @@ class ChatScreen extends Component {
                    {item.msg}
                  </Text>
                </Hyperlink>
+              :<View style= {{width: Dimensions.get('window').width/2,}}>
+              <Image source={{ uri: item?.image }} style={{ borderRadius: 30, aspectRatio: 3/4 }} />
+              {/* <Text style={{ fontSize: 12,position:'absolute',bottom:5,right:5 }}>{item.time}</Text> */}
+          </View> 
+              }
              </Layout>: 
               <View
               style={{
@@ -254,20 +305,28 @@ class ChatScreen extends Component {
                 backgroundColor: 'rgba(4, 63, 124, 1)',
               }}
             >
-              <Hyperlink
-                linkStyle={{ textDecorationLine: 'underline' }}
-                linkDefault={true}
-              >
-                <Text
-                  style={{
-                    padding: 10,
-                    fontSize: 16,
-                    color: 'white',
-                  }}
-                >
-                  {item.msg}
-                </Text>
-              </Hyperlink>
+              {item.image === "" ? 
+                     <Hyperlink
+                     linkStyle={{ textDecorationLine: 'underline' }}
+                     linkDefault={true}
+                   >
+                     <Text
+                       style={{
+                         padding: 10,
+                         fontSize: 16,
+                         color: 'white',
+                       }}
+                     >
+                       {item.msg}
+                     </Text>
+                   </Hyperlink>
+                   : 
+            <View style= {{width: Dimensions.get('window').width/2,}}>
+              <Image source={{ uri: item?.image }} style={{ borderRadius: 30, aspectRatio: 3/4 }} />
+              {/* <Text style={{ fontSize: 12,position:'absolute',bottom:5,right:5 }}>{item.time}</Text> */}
+          </View>
+                         
+            }
             </View>
             }
 
@@ -297,12 +356,12 @@ class ChatScreen extends Component {
             width: '100%',
             position: 'absolute',
             flexDirection: 'row',
-            paddingHorizontal: '5%',
+            paddingHorizontal: '8%',
           }}
         >
-          {/* <TouchableOpacity style={{ width: '10%', justifyContent: 'center', alignItems: 'center', marginRight: 5 }} onPress={() => null}>
-                        <Icons name="camera" size={30} color="#fff" />
-                    </TouchableOpacity> */}
+          <TouchableOpacity style={{ width: '10%', justifyContent: 'center', alignItems: 'center', marginRight: 5 }} onPress={() => this.openGallery()}>
+              <Icons name="camera" size={30} color="grey" />
+            </TouchableOpacity>
           <View style={{ width: '90%', justifyContent: 'center' }}>
             <TextInput
               value={this.state.message}

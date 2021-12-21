@@ -24,6 +24,8 @@ import {
 
 import UserTemplate from '../UserTemplate/index';
 
+import SeeMore from 'react-native-see-more-inline';
+
 import Moment from 'react-moment';
 
 import Api from 'src/api';
@@ -49,6 +51,8 @@ import { AppSettingsContext } from 'src/contexts';
 
 import { GeneralTextField } from 'src/components/FormFields';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import firebase from '@react-native-firebase/app';
 
 import firestore from '@react-native-firebase/firestore';
@@ -64,6 +68,10 @@ import getUserProfile from '../../services/Requests/FetchUserProfile';
 import Modal from 'react-native-modalbox';
 
 import { Toast, Content, Root } from 'native-base';
+
+import Hyperlink from 'react-native-hyperlink';
+
+import FeedsComments from '../../components/FeedsComments';
 
 import {
   sendComment,
@@ -85,7 +93,7 @@ import {
   IconCEye,
 } from 'src/components/CustomIcons';
 
-import { Feather, Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons, Entypo, EvilIcons } from '@expo/vector-icons';
 
 import { TextInput } from 'react-native';
 
@@ -218,6 +226,8 @@ export default function VideoView({
   const [isLiked, setLiked] = useState(item.userEntryData.isLike);
 
   const [totalLikes, setTotalLikes] = useState(item.totalLikes);
+
+  const [comments, setComments] = useState([]);
 
   const [form, setFormValues] = useState({
     comment: '',
@@ -384,6 +394,7 @@ export default function VideoView({
   };
 
   const sendComment = async (commentMessage) => {
+    console.log(commentMessage);
     const userId = await AsyncStorage.getItem('userid');
     const userData = await getUserData(userId);
 
@@ -402,7 +413,7 @@ export default function VideoView({
       firebase.initializeApp(firebaseConfig);
     }
 
-    await firestore()
+    const res = await firestore()
       .collection('entryComments')
       .doc(data.item._id.trim())
       .collection('comments')
@@ -412,12 +423,14 @@ export default function VideoView({
         text: commentMessage,
         userFirstName: userData.data.user.fName,
         userLastName: userData.data.user.sName,
-        userName: `@iam${userData.data.user.fName.toLowerCase()}${userData.data.user.sName.toLowerCase()}`,
+        userName: `${userData.data.user.displayName.toLowerCase()}`,
         imgUrl: userData.data.user.sName.imgUrl,
         sentAt: Date(),
         delivered: false,
         sent: true,
       });
+
+    setText('');
   };
 
   const sharePostToDm = async (
@@ -457,13 +470,10 @@ export default function VideoView({
   };
 
   const routeUserProfile = async () => {
-    const userData = await getUserData(item.userId);
-    const { data } = userData;
-    await navigation.navigate('UserProfile', data);
-
-    // item.userId !== _userId
-    //   ? await navigation.navigate('UserProfile', data)
-    //   : await navigation.navigate('ProfileTab');
+    // console.log('from route ', item.userId, _userId);
+    item.userId !== _userId
+      ? await navigation.navigate('UserProfile', { id: item.userId })
+      : await navigation.navigate('ProfileTab');
   };
 
   const routeComments = async () => {
@@ -562,6 +572,8 @@ export default function VideoView({
 
   let params = { chat: null };
   let _route = { params };
+  let _testText =
+    'lorem ipsum dolor sit amet, consectetur adipiscing lorem ipsum dolor lorem ipsum dolor sit amet, consectetur adipiscing lorem ipsum dolor,lorem ipsum dolor sit amet, consectetur adipiscing lorem ipsum dolor sit amet, consectetur adipiscinglorem ipsum dolor sit amet, consectetur adipiscing';
 
   return useMemo(
     () => (
@@ -675,23 +687,32 @@ export default function VideoView({
               />
             </View>
           </View>
+          {data.item.description !== '' && (
+            <View style={{ marginLeft: 10, marginVertical: 5 }}>
+              <Hyperlink
+                linkStyle={{ textDecorationLine: 'underline' }}
+                linkDefault={true}
+              >
+                <SeeMore
+                  numberOfLines={3}
+                  style={{ fontFamily: 'Montserrat' }}
+                  seeMoreText={true}
+                  seeLessText={true}
+                >
+                  {data.item.description}
+                </SeeMore>
+              </Hyperlink>
+            </View>
+          )}
           <TouchableWithoutFeedback onPress={() => handleDoubleTap()}>
             <View
               style={{
-                flex: 1,
+                flex: 5,
                 marginVertical: 10,
                 height: viewHeight,
                 width,
               }}
             >
-              {data.item.description !== '' && (
-                <Text
-                  category="s2"
-                  style={{ marginLeft: 10, marginBottom: 8, width: '90%' }}
-                >
-                  {data.item.description}
-                </Text>
-              )}
               <View
                 style={{
                   flex: 1,
@@ -766,7 +787,7 @@ export default function VideoView({
                       marginVertical: 1,
                       marginRight: 5,
                     }}
-                    size={22}
+                    size={28}
                     color="red"
                     onPress={toggleLike}
                   />
@@ -777,7 +798,7 @@ export default function VideoView({
                       marginVertical: 1,
                       marginRight: 5,
                     }}
-                    size={22}
+                    size={28}
                     color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                     onPress={toggleLike}
                   />
@@ -791,23 +812,23 @@ export default function VideoView({
                   </Text>
                 )}
               </View>
-              <Ionicons
-                name="ios-chatbox-ellipses-outline"
+              <EvilIcons
+                name="comment"
                 style={{
-                  marginVertical: 2,
+                  marginVertical: 3,
                   marginHorizontal: 10,
                 }}
-                size={21}
+                size={33}
                 color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                 onPress={routeComments}
               />
-              <Feather
-                name="send"
-                size={20}
+              <Entypo
+                name="forward"
+                size={26}
                 color={appTheme === '#F7F9FC' ? 'black' : 'white'}
                 style={{
-                  marginVertical: 2,
-                  marginHorizontal: 8,
+                  marginVertical: 1,
+                  marginHorizontal: 10,
                 }}
                 onPress={
                   () => handleSend(data)
@@ -830,6 +851,8 @@ export default function VideoView({
               />
             </View> */}
           </View>
+          {/* comments */}
+          <FeedsComments postId={data.item._id} gotoComment={routeComments} />
           <View style={{ marginTop: 15, paddingHorizontal: 10 }}>
             <View
               style={{
@@ -862,11 +885,14 @@ export default function VideoView({
               <View style={{ flex: 1, marginHorizontal: 5 }}>
                 <TextInput
                   placeholder="Leave a comment"
+                  placeholderTextColor="rgba(40, 63,100, 1)"
                   onChangeText={(text) => setText(text)}
                   style={{
                     height: 40,
                     paddingHorizontal: 5,
-                    color: 'grey',
+                    backgroundColor: 'rgba(10, 50, 90, 0.1)',
+                    borderRadius: 10,
+                    color: appTheme === '#F7F9FC' ? 'black' : 'white',
                   }}
                   defaultValue={text}
                 />
@@ -1053,6 +1079,15 @@ export default function VideoView({
         </RBSheet>
       </Root>
     ),
-    [data, isBookmarked, isLiked, totalLikes, following, navigation],
+    [
+      data,
+      isBookmarked,
+      isLiked,
+      totalLikes,
+      following,
+      navigation,
+      text,
+      comments,
+    ],
   );
 }

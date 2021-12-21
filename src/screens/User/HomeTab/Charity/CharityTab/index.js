@@ -137,7 +137,7 @@ export default function Charity({ navigation }) {
           style={{ backgroundColor: 'transparent' }}
           contentContainerStyle={{ paddingHorizontal: 5 }}
           alwaysBounceHorizontal
-          alwaysBounceVertical
+          always
           horizontal={IS_PORTRAIT}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -184,7 +184,7 @@ export default function Charity({ navigation }) {
           ListFooterComponentStyle={{ paddingBottom: 10 }}
           horizontal={!IS_PORTRAIT}
           alwaysBounceHorizontal
-          alwaysBounceVertical
+          always
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
         />

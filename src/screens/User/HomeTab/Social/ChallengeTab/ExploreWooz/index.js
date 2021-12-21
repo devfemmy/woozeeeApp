@@ -29,7 +29,7 @@ export default function Explore({ navigation }) {
     <Layout level="6" style={{ flex: 1 }}>
       <ScrollView
         style={{ flex: 1, paddingVertical: 10 }}
-        alwaysBounceVertical
+        always
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >

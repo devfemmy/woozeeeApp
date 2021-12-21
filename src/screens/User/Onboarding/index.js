@@ -15,15 +15,15 @@ const SLIDE_CONTENT = [
   {
     id: 1,
     banner: require('assets/images/onboarding/wallet.jpg'),
-    title: 'woozeee wallet',
+    title: 'woozeee Account',
     description:
-      'Securely stores users payment information and passwords and allows you to make and receive electronic payments. It is linked to a bank account.',
+      'Open a Bank Account with our partner banks (Access Bank, Fina Trust Microfinance Bank, Globus Bank and Asset Matrix Microfinance Bank) automatically.',
     activateAction: 'activateWallet',
   },
   {
     id: 2,
     banner: require('assets/images/onboarding/care.jpg'),
-    title: 'woozeee care',
+    title: 'woozeee Care',
     description:
       'Opt-out insurance for all users covering, Medical assurance, Travel insurance (air and road travel) by Axa Mansard, Legal consultation and Road rescue).',
     activateAction: 'activateCare',

@@ -70,7 +70,7 @@ export default function All({ navigation }) {
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <ScrollView
-        alwaysBounceVertical
+        always
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={{ paddingHorizontal: 15, paddingVertical: 10 }}

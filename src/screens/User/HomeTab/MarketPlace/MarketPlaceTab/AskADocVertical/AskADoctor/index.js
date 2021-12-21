@@ -24,11 +24,15 @@ const AskADoctor = ({navigation}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [topRated, setTopRated] = useState([])
     const [form, setFormValues] = useState({
-          visit_type: 'Video Consultation',
-          location: 'Ajah',
-          specialization: 'General Practitioner',
-          date: ''
+        visit_type: '',
+        location: '',
+        date: '',
+        specialization: '',
+        dob: ''
+
       });
+
+    console.log("forms", form)
     const sliders = [
         {
           id: 1,
@@ -262,32 +266,23 @@ const AskADoctor = ({navigation}) => {
                         />
                 </View>
                 <View style= {{marginVertical: 10}}>
-                    <GeneralSelect
-                        type="location"
-                        label={'Select Location'}
-                        data={AVAILABLE_LOCATIONS}
+                    {/* <Datepicker
+                  label='Label'
+                  caption='Caption'
+                  placeholder='Pick Date'
+                  date={date}
+                  onSelect={nextDate => setDate(nextDate)}
+                  accessoryRight={IconCalendar}
+                /> */}
+                  <GeneralDatePicker
+                        type="dob"
+                        label={'Date'}
+                        date={new Date()}
+                        min = {new Date ('12-05-1880')}
+                        max= {new Date()}
                         setFormValues={setFormValues}
-                        />
-                </View>
-                <View style= {{marginVertical: 10}}>
-                    <Datepicker
-                    label={'Select Date'}
-                    type="date"
-                    date={date}
-                    onSelect={nextDate => setNewDateHandler(nextDate)}
-                    min = {new Date ('12-05-1880')}
-                    max= {new Date('12-05-3030')}
-                    accessoryRight={IconCalendar}
-                />
-                  {/* <GeneralDatePicker
-                      show
-                      type="date"
-                      label={'Date'}
-                      // date={date}
-                      // onSelect={(nextDate) => setNewDateHandler(nextDate)}
-                      setFormValues={setFormValues}
-                      accessoryRight={IconCalendar}
-                    /> */}
+                        accessoryRight={IconCalendar}
+                      />
                 </View>
                 <View style={{ paddingVertical: 20 }}>
                 <Button

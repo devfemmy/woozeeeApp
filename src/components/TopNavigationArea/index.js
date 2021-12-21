@@ -14,6 +14,7 @@ import {
   IconCVideo,
   IconCSearch,
   IconCPlus,
+  IconCart,
 } from 'src/components/CustomIcons';
 
 // Components import
@@ -146,6 +147,19 @@ export default function TopNavigationArea(props) {
     [props, pressed],
   );
 
+  const renderCart = useCallback(
+    () => (
+      <TopNavigationAction
+        {...props}
+        icon={IconCart}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel="Options"
+        onPress={pressed}
+      />
+    ),
+    [props],
+  );
+
   const renderAddStreamIcon = useCallback(
     () => (
       <TopNavigationAction
@@ -203,9 +217,9 @@ export default function TopNavigationArea(props) {
           // accessoryLeft={(evaProps) => (
           //   <Calendar {...evaProps} navigation={navigation} icon={icon} />
           // )}
-          accessoryRight={() => (
-            <TopNavigationUserActivities navigation={navigation} />
-          )}
+          // accessoryRight={() => (
+          //   <TopNavigationUserActivities navigation={navigation} />
+          // )}
           accessibilityLiveRegion="polite"
           accessibilityLabel="screen navigation"
           style={[style, { backgroundColor: 'transparent' }]}
@@ -260,6 +274,26 @@ export default function TopNavigationArea(props) {
       </Layout>
     ),
     [style, navigation, icon, renderOptionsIcon, renderAddStreamIcon],
+  );
+
+  const TopNavigationClickNShop = useMemo(
+    () => (
+      <Layout level="5">
+        <TopNavigation
+          alignment="center"
+          accessoryLeft={(evaProps) => (
+            <BackButton {...evaProps} navigation={navigation} icon="back" />
+          )}
+          title={(evaProps) => <SearchField {...evaProps} />}
+          accessoryRight={renderCart}
+          accessibilityLiveRegion="polite"
+          accessibilityLabel="screen navigation"
+          style={[style, { backgroundColor: 'transparent' }]}
+        />
+        <Divider />
+      </Layout>
+    ),
+    [style, navigation, renderOptionsIcon],
   );
 
   const TopNavigationProfile = useMemo(
@@ -411,6 +445,7 @@ export default function TopNavigationArea(props) {
     charity: TopNavigationGlobal,
     billPay: TopNavigationBillPay,
     activities: TopNavigationActivities,
+    clickNshop: TopNavigationClickNShop,
   };
 
   return navs[screen];

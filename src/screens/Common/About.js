@@ -18,7 +18,7 @@ export default function About({ navigation }) {
         navigation={navigation}
         screen="auth"
       />
-      <ScrollView alwaysBounceVertical showsHorizontalScrollIndicator={false}>
+      <ScrollView showsHorizontalScrollIndicator={false}>
         <View
           style={{
             flex: 1,

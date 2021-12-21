@@ -9,7 +9,7 @@ import {
 import {
   Layout, Button, Text,
   RadioGroup, Radio,
-  Datepicker
+  Datepicker, Spinner
 } from '@ui-kitten/components';
 import RNFetchBlob from 'rn-fetch-blob';
 import firebase from '@react-native-firebase/app';
@@ -179,6 +179,20 @@ export default function EditProfile({ navigation }) {
   };
 
   const uploadFileToFirebase = async (url, type, user) => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
+      authDomain: 'woozeee-d7f6c.firebaseapp.com',
+      databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
+      projectId: 'woozeee-d7f6c',
+      storageBucket: 'woozeee-d7f6c.appspot.com',
+      messagingSenderId: '979696525592',
+      appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
+      measurementId: 'G-XQKMT94R9R',
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
     const name = `WoozeeImg${Math.random()}`;
     const uploadTask = storage()
       .ref(`profileImages/${'image'}${name}`)
@@ -223,20 +237,7 @@ export default function EditProfile({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      const firebaseConfig = {
-        apiKey: 'AIzaSyARWCPqpauNDiveSI26tvmKsyn4p_XNzh8',
-        authDomain: 'woozeee-d7f6c.firebaseapp.com',
-        databaseURL: 'https://woozeee-d7f6c.firebaseio.com',
-        projectId: 'woozeee-d7f6c',
-        storageBucket: 'woozeee-d7f6c.appspot.com',
-        messagingSenderId: '979696525592',
-        appId: '1:979696525592:web:ec27a203184d23e0dcfe6d',
-        measurementId: 'G-XQKMT94R9R',
-      };
 
-      if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-      }
       AsyncStorage.getItem('userid')
         .then((response) => {
           getUserProfile(response);
@@ -309,6 +310,7 @@ export default function EditProfile({ navigation }) {
       dob: date,
     }));
   };
+  const renderSpinner = () => <Spinner size="tiny" status="danger" />;
   return (
     <Root>
       <Layout level="6" style={{ flex: 1 }}>
@@ -428,6 +430,16 @@ export default function EditProfile({ navigation }) {
                   onChangeText={(nextValue) => setUserName(nextValue)}
                 />
               </View>
+              <View style={{ paddingVertical: 5 }}>
+                <CustomField
+                  multiline
+                  height={50}
+                  label={t('bio')}
+                  placeholder={'Bio'}
+                  value={bio}
+                  onChangeText={(nextValue) => setBio(nextValue)}
+                />
+              </View>
               <View
                 style={{
                   paddingVertical: 5,
@@ -456,7 +468,7 @@ export default function EditProfile({ navigation }) {
                   setFormValues={setFormValues}
                 /> */}
                 </View>
-                <View style={{ flex: 1, marginLeft: 5 }}>
+                {/* <View style={{ flex: 1, marginLeft: 5 }}>
                   <Datepicker
                     label={t('dob')}
                     date={date}
@@ -465,13 +477,7 @@ export default function EditProfile({ navigation }) {
                     // max= {new Date('22-06-2022')}
                     accessoryRight={IconCalendar}
                   />
-                  {/* <GeneralDatePicker
-                  type="dob"
-                  label={t('dob')}
-                  setFormValues={setFormValues}
-                  accessoryRight={IconCalendar}
-                /> */}
-                </View>
+                </View> */}
               </View>
               {/* <View
               style={{
@@ -497,18 +503,9 @@ export default function EditProfile({ navigation }) {
                 />
               </View>
             </View> */}
-              <View style={{ paddingVertical: 5 }}>
-                <CustomField
-                  multiline
-                  height={50}
-                  label={t('bio')}
-                  placeholder={'Bio'}
-                  value={bio}
-                  onChangeText={(nextValue) => setBio(nextValue)}
-                />
-              </View>
               <View style={{ paddingVertical: 20 }}>
                 <Button
+                  accessoryLeft={isLoading ? renderSpinner : null}
                   status="danger"
                   size="large"
                   accessibilityLiveRegion="assertive"

@@ -15,6 +15,7 @@ import {
   ScrollView,
   Dimensions,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -38,10 +39,13 @@ import TopNavigationArea from 'src/components/TopNavigationArea';
 
 import { Toast, Content, Root } from 'native-base';
 
+import { getAccountDetails } from '../../../services/Requests/banks/index';
+import numberWithCommas from '../../../constants/numberWithCommas';
 import zenith from '../../../assets/images/icon/zenith.png';
 import access from '../../../assets/images/icon/accessColored.png';
 import uba from '../../../assets/images/icon/uba.png';
 import globus from '../../../assets/images/icon/globus.png';
+import finaTrust from '../../../assets/images/banks/finaTrust.png';
 
 const BankOptions = ({ name, logo, balance, acctNo }) => {
   return (
@@ -96,26 +100,35 @@ const BankOptions = ({ name, logo, balance, acctNo }) => {
 };
 
 function Accounts(props) {
-  console.log('props', props);
+  // console.log('props', props);
   const {
     route: { params },
   } = props;
-  const {
-    userAccounts: { accounts },
-  } = params;
-  // console.log(accounts);
+
+  const [loading, setLoading] = useState(false);
+  const [accounts, setAccounts] = useState([]);
   const [accountNumber, setAccountNumber] = useState('');
   const [accountBalance, setAccountBalance] = useState('');
 
   async function getBankDetails() {
-    AsyncStorage.getItem('globusAcn').then((res) => {
-      setAccountNumber(res);
-    });
+    try {
+      setLoading(true);
+      await getAccountDetails().then((res) => {
+        setLoading(false);
 
-    AsyncStorage.getItem('globusBal').then((res) => {
-      setAccountBalance(res);
-    });
+        console.log('res => ', res);
+        setAccounts(res[0]);
+        // setAccountNumber(res.data.accountNumber);
+        // setAccountBalance(res.data.accountBalance);
+      });
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      console.log('e => ', e);
+    }
   }
+
+  // console.log('accounts => ', accounts);
 
   useEffect(() => {
     getBankDetails();
@@ -151,6 +164,7 @@ function Accounts(props) {
             width: 120,
             borderRadius: 5,
           }}
+          onPress={() => props.navigation.navigate('ActivateWallet')}
         >
           <Feather name="plus" size={24} color="#043F7C" />
           <Text category="s2" style={{ color: '#043F7C', marginHorizontal: 5 }}>
@@ -158,17 +172,42 @@ function Accounts(props) {
           </Text>
         </TouchableOpacity>
       </View>
-      {/* fetch card and account details from user obj */}
-      {accounts.length &&
-        accounts.map((account, index) => (
-          <BankOptions
-            key={index}
-            name={account.bankName}
-            balance={JSON.stringify(account.accountBalance)}
-            logo={globus}
-            acctNo={account.custAccount}
+      {loading === true && (
+        <ActivityIndicator
+          color="red"
+          style={{ alignSelf: 'auto', marginTop: 50 }}
+        />
+      )}
+      {!loading && accounts?.Balance ? (
+        <BankOptions
+          name={'Fina Trust'}
+          balance={numberWithCommas(
+            JSON.stringify(accounts?.Balance?.WithdrawableAmount),
+          )}
+          logo={finaTrust}
+          acctNo={accounts?.Number}
+        />
+      ) : (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 100,
+          }}
+        >
+          <Image
+            source={require('../../../assets/images/moneyMatters/addMoney.png')}
+            resizeMode="contain"
+            style={{
+              width: 300,
+              height: 200,
+            }}
           />
-        ))}
+          <Text category="s1" status="basic">
+            No available Bank Account
+          </Text>
+        </View>
+      )}
     </Layout>
   );
 }
@@ -195,6 +234,8 @@ const styles = StyleSheet.create({
     // borderColor: '#dcdcdc',
   },
   img: {
+    width: 40,
+    height: 40,
     marginRight: 10,
   },
   innerContainer: {

@@ -39,6 +39,36 @@ import { LocaleContext, AppSettingsContext } from 'src/contexts';
 import { IconArrowDown } from 'src/components/CustomIcons';
 
 export default function AdditionalInfo(props) {
+  const {
+    route: { params },
+  } = props;
+
+  const {
+    offerId,
+    serviceType,
+    amount,
+    from,
+    fromImg,
+    customerName,
+    bankImg,
+    accountNumber,
+  } = params;
+
+  const serviceDetails = {
+    offerId: offerId,
+    serviceType: serviceType,
+    amount: amount,
+    serviceOrg: {
+      name: from,
+      image: fromImg,
+    },
+    customer: {
+      name: customerName,
+      bankImage: bankImg,
+      accountNumber: accountNumber,
+    },
+  };
+
   const ACCOUNTS = [
     {
       id: 1,
@@ -66,6 +96,7 @@ export default function AdditionalInfo(props) {
       image: require('assets/images/banks/zenith.png'),
     },
   ];
+
   const [form, setFormValues] = useState({
     mobile: '',
     amount: '',
@@ -98,7 +129,7 @@ export default function AdditionalInfo(props) {
     () => (
       <RBSheet
         ref={sheetRef}
-        height={400}
+        height={420}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -154,6 +185,8 @@ export default function AdditionalInfo(props) {
                       style={{ height: 25, width: 25 }}
                     />
                   </View>
+                  {/* somehow this makes the items align */}
+                  <View></View>
                 </Radio>
               ))}
             </RadioGroup>
@@ -222,7 +255,7 @@ export default function AdditionalInfo(props) {
   };
 
   const routeConfirm = () => {
-    props.navigation.navigate('MoneyMattersConfirmation');
+    props.navigation.navigate('MoneyMattersConfirmation', serviceDetails);
   };
 
   return (

@@ -13,6 +13,8 @@ import {
   useWindowDimensions,
   ScrollView,
   Dimensions,
+  StyleSheet,
+  Alert,
 } from 'react-native';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -63,38 +65,9 @@ import {
 
 import { Toast, Content, Root } from 'native-base';
 
-const ACCOUNTS = [
-  {
-    id: 1,
-    title: 'Select',
-    // image: require('assets/images/banks/woozeee.png'),
-  },
-  // {
-  //   id: 2,
-  //   title: 'Access Bank - ₦ 34,677.02',
-  //   image: require('assets/images/banks/access.png'),
-  // },
-  // {
-  //   id: 3,
-  //   title: 'UBA - ₦ 25,500.44',
-  //   image: require('assets/images/banks/uba.png'),
-  // },
-  // {
-  //   id: 4,
-  //   title: 'Globus Bank -₦ 24,222.18',
-  //   image: require('assets/images/banks/globus.png'),
-  // },
-  // {
-  //   id: 5,
-  //   title: 'Zenith Bank -₦ 1,000.00',
-  //   image: require('assets/images/banks/zenith.png'),
-  // },
-  {
-    id: 6,
-    title: 'Online Payment',
-    image: require('assets/images/banks/others.png'),
-  },
-];
+import { getAccountDetails } from 'src/services/Requests/banks/index';
+import numberWithCommas from 'src/constants/numberWithCommas';
+import finatrust from '../../../../assets/images/banks/finaTrust.png';
 
 function TransactionSummary(props) {
   const renderSpinner = () => <Sp size="tiny" status="basic" />;
@@ -109,7 +82,6 @@ function TransactionSummary(props) {
     const res = await getEmail();
     setEmail(res);
   };
-  email();
 
   const {
     route: { params },
@@ -136,16 +108,17 @@ function TransactionSummary(props) {
     amount: '',
     pin: '',
     network: '',
+    accountBalance: '',
     account: '',
   });
 
   const t = useContext(LocaleContext);
 
+  const [accounts, setAccounts] = useState([]);
+
   const { appState } = useContext(AppSettingsContext);
 
   const BG_THEME = appState.darkMode ? '#070A0F' : '#F7F9FC';
-
-  const accountSheetRef = useRef(null);
 
   const confirmSheetRef = useRef(null);
 
@@ -154,31 +127,36 @@ function TransactionSummary(props) {
       success: 'Transaction Complete!',
     });
 
-  const handleOpenAccountSheet = async () => accountSheetRef.current.open();
-
-  const handleConfirmTransaction = async () => {
-    confirmSheetRef.current.close();
-    setLoading(false);
+  const handleOpenAccountSheet = async () => {
+    accountSheetRef.current.open();
   };
 
-  const handleAccountChange = (index) => {
-    setSelectedOption(index);
-    setFormValues((prevState) => ({
-      ...prevState,
-      account: ACCOUNTS[index].title,
-    }));
+  const handleConfirmTransaction = async () => {
+    handleTransaction();
+    setLoading(false);
   };
 
   const handleOpenConfirmSheet = () => {
     confirmSheetRef.current.open();
   };
 
+  async function getBankDetails() {
+    await getAccountDetails().then((res) => {
+      setAccounts(res);
+    });
+  }
+
   useEffect(() => {
+    email();
+
+    getBankDetails();
+
     if (form.account === 'Online Payment') {
       setBtnState(true);
     } else {
       setBtnState(false);
     }
+    return () => {};
   }, [form.account]);
 
   const handleRedirect = async (res) => {
@@ -303,95 +281,6 @@ function TransactionSummary(props) {
       routeSuccess();
     }
   };
-
-  const AccountSheet = useCallback(
-    () => (
-      <RBSheet
-        ref={accountSheetRef}
-        height={300}
-        closeOnDragDown
-        animationType="fade"
-        customStyles={{
-          container: {
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: BG_THEME,
-          },
-        }}
-      >
-        <Layout
-          level="5"
-          style={{
-            flex: 1,
-            width: '100%',
-            alignItems: 'flex-start',
-            justifyContent: 'flex-start',
-            paddingBottom: 30,
-          }}
-        >
-          <View
-            style={{
-              width: '100%',
-              justifyContent: 'flex-start',
-              paddingBottom: 25,
-              paddingHorizontal: 20,
-            }}
-          >
-            <Text category="h6" style={{ fontSize: 16 }} status="primary">
-              {t('source')}
-            </Text>
-          </View>
-          <View style={{ paddingHorizontal: 20 }}>
-            <RadioGroup
-              selectedIndex={selectedOption}
-              onChange={handleAccountChange}
-            >
-              {ACCOUNTS.map((option) => (
-                <Radio key={option.id}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      width: wp('80%'),
-                    }}
-                  >
-                    <Text category="s2">{option.title}</Text>
-                    <Image
-                      source={option.image}
-                      defaultSource={option.image}
-                      resizeMode="cover"
-                      style={{ height: 25, width: 25 }}
-                    />
-                  </View>
-                  <Text>{}</Text>
-                </Radio>
-              ))}
-            </RadioGroup>
-          </View>
-          <Divider style={{ marginVertical: 20, width: '100%', height: 2 }} />
-          <View
-            style={{
-              paddingHorizontal: 20,
-              width: '100%',
-            }}
-          >
-            <Button
-              status="danger"
-              accessibilityLiveRegion="assertive"
-              accessibilityComponentType="button"
-              accessibilityLabel="Continue"
-              style={{ width: '100%' }}
-              onPress={() => accountSheetRef.current.close()}
-            >
-              <Text status="control">{t('done')}</Text>
-            </Button>
-          </View>
-        </Layout>
-      </RBSheet>
-    ),
-    [BG_THEME, t, selectedOption],
-  );
 
   const ConfirmSheet = () => (
     <RBSheet
@@ -526,6 +415,165 @@ function TransactionSummary(props) {
     </RBSheet>
   );
 
+  const accountSheetRef = useRef(null);
+
+  const handleAccountChange = (index) => {
+    setSelectedOption(index);
+    setFormValues((prevState) => ({
+      ...prevState,
+      account: accounts[index] ? 'Fina Trust -  ₦0' : 'Online Payment',
+      accountBalance:
+        accounts[index] && accounts[index].Balance?.WithdrawableAmount,
+    }));
+  };
+
+  const handleTransaction = () => {
+    Alert.alert(
+      'Transaction',
+      `You will be charged ₦${numberWithCommas(
+        params.form.amount,
+      )} for this transaction.`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            form.accountBalance >= form.amount
+              ? alert('Transaction Successful') //call api to handle payment
+              : alert('Insufficient Funds');
+          },
+        },
+      ],
+    );
+  };
+
+  const GlobalAccount = useCallback(
+    () => (
+      <RBSheet
+        ref={accountSheetRef}
+        closeOnDragDown
+        animationType="fade"
+        customStyles={{
+          container: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: BG_THEME,
+          },
+        }}
+      >
+        <Layout
+          level="5"
+          style={{
+            flex: 1,
+            width: '100%',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            // paddingBottom: 30,
+          }}
+        >
+          <View
+            style={{
+              width: '100%',
+              justifyContent: 'flex-start',
+              paddingBottom: 25,
+              paddingHorizontal: 20,
+            }}
+          >
+            <Text category="h6" style={{ fontSize: 16 }} status="primary">
+              {t('source')}
+            </Text>
+          </View>
+          <View style={{ paddingHorizontal: 25 }}>
+            {accounts.length > 0 ? (
+              <RadioGroup
+                selectedIndex={selectedOption}
+                onChange={handleAccountChange}
+              >
+                {accounts.map((account, id) => (
+                  <Radio key={id}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        width: '100%',
+                      }}
+                    >
+                      <View>
+                        <Text category="s2">
+                          {(account?.name || 'Fina Trust -  ') +
+                            '₦' +
+                            numberWithCommas(
+                              JSON.stringify(
+                                account?.Balance?.WithdrawableAmount,
+                              ),
+                            )}
+                        </Text>
+                        <Text category="c1">{account?.Number}</Text>
+                      </View>
+                      <Image
+                        source={finatrust}
+                        defaultSource={finatrust}
+                        resizeMode="cover"
+                        style={{ height: 40, width: 40 }}
+                      />
+                    </View>
+                    <Text>{}</Text>
+                  </Radio>
+                ))}
+                <Radio>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}
+                  >
+                    <Text category="s2">Online Payment</Text>
+                    <Image
+                      source={require('../../../../assets/images/banks/others.png')}
+                      defaultSource={require('../../../../assets/images/banks/others.png')}
+                      resizeMode="cover"
+                      style={{ height: 20, width: 20, marginRight: 10 }}
+                    />
+                  </View>
+                  <Text>{}</Text>
+                </Radio>
+              </RadioGroup>
+            ) : (
+              <Spinner size="tiny" color="primary" />
+            )}
+          </View>
+          <Divider style={{ marginVertical: 20, width: '100%', height: 2 }} />
+          {/* <View
+            style={{
+              paddingHorizontal: 20,
+              width: '100%',
+            }}
+          >
+            <Button
+              status="danger"
+              accessibilityLiveRegion="assertive"
+              accessibilityComponentType="button"
+              accessibilityLabel="Continue"
+              disabled={accounts.length <= 0}
+              style={{ width: '100%' }}
+              onPress={() => handleTransaction()}
+            >
+              <Text status="control">{t('done')}</Text>
+            </Button>
+          </View> */}
+        </Layout>
+      </RBSheet>
+    ),
+    [BG_THEME, t, selectedOption, accounts],
+  );
+
   return (
     <Layout level="6" style={{ flex: 1 }}>
       <TopNavigationArea
@@ -642,7 +690,9 @@ function TransactionSummary(props) {
             appearance="outline"
             accessoryRight={IconArrowDown}
             style={{ justifyContent: 'space-between' }}
-            onPress={handleOpenAccountSheet}
+            onPress={() => {
+              handleOpenAccountSheet();
+            }}
           >
             <Text>{form.account || t('paymentAccount')}</Text>
           </Button>
@@ -674,18 +724,26 @@ function TransactionSummary(props) {
               accessoryLeft={isLoading ? renderSpinner : null}
               accessibilityLabel="Continue"
               onPress={handleOpenConfirmSheet}
-              disabled={true}
+              disabled={form.account === '' ? true : false}
             >
               <Text status="control">{t('confirm')}</Text>
             </Button>
           </View>
         )}
       </View>
-      <AccountSheet />
+      <GlobalAccount />
       <ConfirmSheet />
       <Spinner visible={isLoadingSpin} />
     </Layout>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 15,
+    marginVertical: 15,
+    borderRadius: 5,
+  },
+});
 
 export default TransactionSummary;

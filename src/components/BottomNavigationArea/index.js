@@ -33,6 +33,9 @@ import {
   IconSettings,
   IconClipboard,
   IconCMovie,
+  IconCCategories,
+  IconCFeeds,
+  IconCHelp,
 } from '../CustomIcons';
 
 // Screens
@@ -66,6 +69,13 @@ const screens = {
     moneyMatters: IconCHome,
     history: IconClipboard,
     // manage: IconSettings,
+  },
+  clickNshop: {
+    home: IconCHome,
+    categories: IconCCategories,
+    feeds: IconCFeeds,
+    account: IconCUser,
+    help: IconCHelp,
   },
   charity: {
     charity: IconCCharity,

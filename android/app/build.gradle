@@ -183,7 +183,7 @@ android {
         applicationId "app.woozeee.com"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 93
+        versionCode 101
         versionName "1.0"
         multiDexEnabled true
     }
@@ -269,6 +269,8 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:5.11.0'
     implementation(project(":react-native-google-signin"))
     implementation project(path: ':libbambuser')
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.1")
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
