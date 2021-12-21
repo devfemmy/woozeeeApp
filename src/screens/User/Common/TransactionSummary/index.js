@@ -112,6 +112,7 @@ function TransactionSummary(props) {
     account: '',
   });
 
+
   const t = useContext(LocaleContext);
 
   const [accounts, setAccounts] = useState([]);
@@ -250,7 +251,9 @@ function TransactionSummary(props) {
       setIsLoading(false);
 
       routeSuccess();
-    } else {
+    }else if (params.serviceType == 'woozeee care') {
+      return null
+    }else {
       setIsLoading(true);
       const reqBody = {
         requestId: res.transaction_id,
@@ -347,7 +350,7 @@ function TransactionSummary(props) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {params.form.network.toUpperCase() || '----'}
+              {params?.form?.network?.toUpperCase() || '----'}
             </Text>
           </View>
           <View
@@ -370,7 +373,7 @@ function TransactionSummary(props) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {params.form.mobile || '----'}
+              {params?.form?.mobile || '----'}
             </Text>
           </View>
           <View
@@ -393,7 +396,7 @@ function TransactionSummary(props) {
               category="s2"
               style={{ flex: 1, marginHorizontal: 5, textAlign: 'left' }}
             >
-              {`₦ ${params.form.amount || 0}`}
+              {`₦ ${params?.form?.amount || 0}`}
             </Text>
           </View>
         </View>
@@ -643,7 +646,7 @@ function TransactionSummary(props) {
                 Service Provider
               </Text>
               <Text category="c2" status="basic">
-                {params.form.network.toUpperCase()}
+                {params?.form?.network?.toUpperCase()}
               </Text>
             </View>
             <View
@@ -660,7 +663,7 @@ function TransactionSummary(props) {
                 Price
               </Text>
               <Text category="c2" status="basic">
-                ₦{params.form.amount}
+                ₦{params?.form?.amount}
               </Text>
             </View>
             <View
@@ -677,7 +680,7 @@ function TransactionSummary(props) {
                 Total Price (+ VAT)
               </Text>
               <Text category="h5" status="basic">
-                ₦{params.form.amount}
+                ₦{params?.form?.amount}
               </Text>
             </View>
           </Layout>

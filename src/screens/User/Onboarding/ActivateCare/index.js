@@ -98,6 +98,25 @@ export default function ActivateWallet({ navigation }) {
       slug: slug,
     });
   };
+  const handleWalletPay = () => {
+    handleCloseSheet();
+    navigation.navigate('TransactionSummary', {
+      form: {
+        amount: loanAmt,
+        mobile: null,
+        variationCode: slug,
+        serviceId: scheme,
+        // scheme: scheme,
+        // interestRate: interest,
+        // title: title,
+        // slug: slug,
+
+      },
+      serviceType: 'woozeee care',
+
+      
+    });
+  }
   // prettier-ignore
   const routeTo = (route) => navigation.navigate(route);
   const renderCardFooter = (interest, scheme, slug, loanAmtTo, title) => {
@@ -358,7 +377,7 @@ export default function ActivateWallet({ navigation }) {
       </ScrollView>
       <RBSheet
         ref={sheetRef}
-        height={155}
+        height={190}
         closeOnDragDown
         animationType="fade"
         customStyles={{
@@ -390,6 +409,20 @@ export default function ActivateWallet({ navigation }) {
           >
             <Text style={{ fontSize: 16 }} status="basic">
               {t('makeFullPayment')}
+            </Text>
+          </Button>
+          <Divider style={{ marginVertical: 2, width: '100%' }} />
+          <Button
+            onPress={handleWalletPay}
+            appearance="ghost"
+            status="basic"
+            style={{
+              width: '100%',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={{ fontSize: 16 }} status="basic">
+              {'Pay from Wallet'}
             </Text>
           </Button>
           <Divider style={{ marginVertical: 2, width: '100%' }} />

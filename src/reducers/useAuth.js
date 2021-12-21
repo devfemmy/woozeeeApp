@@ -162,10 +162,10 @@ export default function useAuth() {
             const stringedReward = reward_amt.toString();
             //(stringedReward);
             const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
-            AsyncStorage.setItem(
-              'userBankAccountsId',
-              userBankAccounts[0].cifid,
-            );
+            // AsyncStorage.setItem(
+            //   'userBankAccountsId',
+            //   userBankAccounts[0].cifid,
+            // );
             AsyncStorage.setItem('insureCardNo', insure_num);
             AsyncStorage.setItem('walletCardNo', wallet_num);
             AsyncStorage.setItem('rewardCardNo', reward_num);
