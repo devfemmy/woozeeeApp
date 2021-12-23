@@ -129,7 +129,7 @@ export default function useAuth() {
             // console.log('bankAccounts', JSON.stringify(bankAccounts));
 
             AsyncStorage.setItem('USER_AUTH_TOKEN', `Bearer ${token}`);
-            AsyncStorage.setItem('userImage', userImage);
+            // AsyncStorage.setItem('userImage', userImage);
             // AsyncStorage.setItem('bankAccounts', JSON.stringify(bankAccounts));
 
             AsyncStorage.setItem('email', email);
@@ -148,7 +148,7 @@ export default function useAuth() {
               }
             });
 
-            const userBankAccounts = result?.user.accounts;
+            const userBankAccounts = result?.user?.accounts;
             const insure_num = result.user.insurranceCard.cardNumber;
             const insureamt = result.user.insurranceCard.credits;
             const stringedAmt = insureamt.toString();
@@ -162,10 +162,10 @@ export default function useAuth() {
             const stringedReward = reward_amt.toString();
             //(stringedReward);
             const fullname = `${result.user.fName.toUpperCase()} ${result.user.sName.toUpperCase()}`;
-            AsyncStorage.setItem(
-              'userBankAccountsId',
-              userBankAccounts[0].cifid,
-            );
+            // AsyncStorage.setItem(
+            //   'userBankAccountsId',
+            //   userBankAccounts[0].cifid,
+            // );
             AsyncStorage.setItem('insureCardNo', insure_num);
             AsyncStorage.setItem('walletCardNo', wallet_num);
             AsyncStorage.setItem('rewardCardNo', reward_num);
@@ -173,7 +173,7 @@ export default function useAuth() {
             AsyncStorage.setItem('walletAmt', stringedWallet);
             AsyncStorage.setItem('rewardAmt', stringedReward);
             AsyncStorage.setItem('fullName', fullname);
-            // console.log('end here');
+            console.log('end here');
           }
 
           dispatch({
