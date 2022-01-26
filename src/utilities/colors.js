@@ -1,0 +1,9 @@
+export const MAIN_BLUE = '#043E7D';
+export const MAIN_GREY = '#8A8A8A';
+export const LIGHT_GREY = '#D0D0D0';
+export const DARK_GREY = '#757575';
+export const LIGHTER_GREY = '#F5F5F5';
+export const BADGE_RED = '#FF5655';
+export const BLACK = '#282828';
+export const GOLD = '#FBC91A';
+export const GREEN = '#1EC94E';
